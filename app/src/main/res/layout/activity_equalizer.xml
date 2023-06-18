@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 均衡器界面 -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_smoke"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/statusbar_equalizer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/skin_theme_color" />
+
+        <com.lwh.jackknife.widget.TitleBar
+            android:id="@+id/titlebar_equalizer"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/skin_theme_color"
+            app:tb_title="均衡器" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_smoke">
+
+            <site.doramusic.app.widget.EqualizerView
+                android:id="@+id/ev_equalizer"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ev_equalizer"
+                android:layout_marginTop="20dp"
+                android:scrollbars="none">
+
+                <RadioGroup
+                    android:id="@+id/rg_equalizer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_gray"
+                    android:checkedButton="@+id/rb_equalizer_close"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="关闭"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_custom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="自定义"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_pop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="流行"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_dance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="舞曲"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="蓝调"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_classic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="古典"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_jazz"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="爵士"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_slow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="慢歌"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_slots"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="电子"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_shake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="摇滚"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+
+                    <RadioButton
+                        android:id="@+id/rb_equalizer_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/equalizer_radio_button"
+                        android:padding="10dp"
+                        android:text="乡村"
+                        android:textColor="@color/equalizer_radio_button_text_color" />
+                </RadioGroup>
+            </HorizontalScrollView>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "612178873735",
+    "project_id": "doramusic-8c392",
+    "storage_bucket": "doramusic-8c392.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612178873735:android:7930d346c15d1bdf3e9722",
+        "android_client_info": {
+          "package_name": "site.doramusic.app.alpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612178873735-cl4ni2dq9c32e0tmhavs598g1lf0ndp5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "site.doramusic.app.alpha",
+            "certificate_hash": "1485e4f548463a17b0e655dd444bdcc352a04cf1"
+          }
+        },
+        {
+          "client_id": "612178873735-ftsai2dk5ltnasif1cv1gkhi31ebj7m4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARtW2_ME6kZd2E_PqQOxkDJ7TReyMWl6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612178873735-ftsai2dk5ltnasif1cv1gkhi31ebj7m4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

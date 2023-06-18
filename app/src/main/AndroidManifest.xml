@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="site.doramusic.app">
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 媒体播放的时候加了WakeLock -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.SENSOR_ENABLE"/>
+    <uses-permission android:name="android.permission.SENSOR_INFO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+
+    <!-- 蓝牙耳机断开连接，暂停播放歌曲用 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application
+        android:name=".MusicApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:networkSecurityConfig="@xml/network_config"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="dora.lifecycle.config.TaskStackGlobalConfig"
+            android:value="GlobalConfig" />
+        <meta-data
+            android:name="dora.lifecycle.config.ARouterGlobalConfig"
+            android:value="GlobalConfig" />
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/AppTheme.Launch">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:label="主界面"
+            android:launchMode="singleTask"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.EqualizerActivity"
+            android:label="均衡器"
+            android:launchMode="singleTop"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.ChoiceColorActivity"
+            android:label="选择颜色"
+            android:launchMode="singleTop"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:exported="true"
+            android:label="设置"/>
+
+        <activity
+            android:name=".ui.activity.ProtocolActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:exported="true"/>
+        <!-- 单独开一个进程播放音乐 -->
+        <service
+            android:name=".media.MediaService"
+            android:process=":doramedia"
+            android:exported="true"
+            android:label="朵拉音乐媒体服务">
+            <intent-filter>
+                <action android:name="site.doramusic.app.service.ACTION_MEDIA_SERVICE" />
+            </intent-filter>
+        </service>
+        <receiver android:name=".receiver.BatteryLowReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
+        </receiver>
+<!--        <provider-->
+<!--            android:name="cn.bmob.v3.util.BmobContentProvider"-->
+<!--            android:authorities="${applicationId}.BmobContentProvider">-->
+<!--        </provider>-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+<!--        &lt;!&ndash; 友盟统计开始 &ndash;&gt;-->
+<!--        <meta-data-->
+<!--            android:name="UMENG_APPKEY"-->
+<!--            android:value="5e753ea20cafb2836d0007f0" />-->
+<!--        <meta-data-->
+<!--            android:name="UMENG_CHANNEL"-->
+<!--            android:value="${CHANNEL_VALUE}" />-->
+<!--        &lt;!&ndash; 友盟统计结束 &ndash;&gt;-->
+    </application>
+</manifest>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 主界面右下角弹出播放列表的条目 -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="m"
+            type="site.doramusic.app.db.Music" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/selector_item_common"
+        android:clickable="true"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:id="@+id/ll_playlist"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/tv_playlist_music_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/skin_theme_color"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_playlist_music_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:layout_marginLeft="2dp"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@{m.musicName}"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_playlist_music_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@{m.artist}"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+    </LinearLayout>
+</layout>

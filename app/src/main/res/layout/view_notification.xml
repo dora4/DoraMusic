@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 通知栏界面 -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_nc_album"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp"
+        android:scaleType="centerInside" />
+
+    <RelativeLayout
+        android:id="@+id/rl_nc_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_nc_album" >
+
+        <TextView
+            android:id="@+id/tv_nc_title"
+            style="@style/AppTheme.Text.NotificationTitle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fadingEdge="horizontal"
+            android:fadingEdgeLength="8dp"
+            android:singleLine="true"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/tv_nc_text"
+            style="@style/AppTheme.Text.NotificationText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_nc_title"
+            android:layout_marginTop="5dp"
+            android:fadingEdge="horizontal"
+            android:fadingEdgeLength="8dp"
+            android:ellipsize="none"
+            android:singleLine="true"
+            android:text="" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_nc_cancel"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/nc_clear" />
+    <LinearLayout
+        android:id="@+id/ll_nc_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:layout_toRightOf="@id/rl_nc_label"
+        android:layout_toLeftOf="@id/iv_nc_cancel"
+        android:layout_centerVertical="true" >
+
+        <ImageView
+            android:id="@+id/iv_nc_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/nc_prev" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+            <ImageView
+                android:id="@+id/iv_nc_pause_resume"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/nc_pause"/>
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_nc_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/nc_next" />
+
+    </LinearLayout>
+</RelativeLayout>

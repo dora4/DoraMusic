@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 专辑列表界面 -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/theme_bg"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/statusbar_album"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#3f000000" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/half_transparent">
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_music_btn"
+            android:padding="10dp"
+            android:src="@drawable/icon_titlebar_back" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="专辑"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_album"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <com.lwh.jackknife.widget.LetterView
+            android:id="@+id/lv_album"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            app:letterview_hoverBackgroundDrawable="@drawable/shape_letterview_bg"
+            app:letterview_hoverTextColor="#389CFF"
+            app:letterview_textColor="@color/white"
+            app:letterview_letters="↑ABCDEFGHIJKLMNOPQRSTUVWXYZ#"
+            app:letterview_textAllCaps="true" />
+        <TextView
+            android:id="@+id/tv_album_dialog"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_letterview_dialog_bg"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

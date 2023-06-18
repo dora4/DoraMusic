@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingDefaultResource">
+        <View
+            android:id="@+id/statusbar_privacy_policy"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/skin_theme_color" />
+        <com.lwh.jackknife.widget.TitleBar
+            android:id="@+id/titlebar_privacy_policy"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/skin_theme_color"/>
+
+        <FrameLayout
+            android:id="@+id/web_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"/>
+    </LinearLayout>
+</layout>
+

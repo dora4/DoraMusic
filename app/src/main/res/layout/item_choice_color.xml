@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 选择皮肤颜色界面的条目 -->
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <site.doramusic.app.widget.RoundCornerImageView
+        android:id="@+id/iv_choice_color_skin_bg"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+
+    <ImageView
+        android:id="@+id/iv_choice_color_skin_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/icon_skin_selected" />
+</FrameLayout>
