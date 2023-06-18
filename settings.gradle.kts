@@ -26,6 +26,6 @@ dependencyResolutionManagement {
         maven {  setUrl("https://jitpack.io") }
     }
 }
-rootProject.name = "DoraSample"
+rootProject.name = "DoraMusic"
 include(":app")
 
