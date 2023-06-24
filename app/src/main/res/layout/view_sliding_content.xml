@@ -7,7 +7,7 @@
     android:id="@+id/sliding_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@android:color/black">
     <ImageButton
         android:id="@+id/btn_music_play_volume"
         android:layout_width="wrap_content"
@@ -26,6 +26,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center_vertical">
 
             <TextView
@@ -68,7 +69,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/player_bottom_bar"
+            android:padding="@dimen/dp_10"
+            android:layout_marginTop="5dp"
+            android:background="@color/skin_theme_color"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -129,7 +132,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/selector_music_btn"
-                android:src="@drawable/icon_favorite_off" />
+                android:src="@drawable/ic_favorite_unchecked" />
         </LinearLayout>
     </LinearLayout>
     <androidx.viewpager.widget.ViewPager

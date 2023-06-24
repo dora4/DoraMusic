@@ -53,6 +53,9 @@
         <meta-data
             android:name="dora.lifecycle.config.ARouterGlobalConfig"
             android:value="GlobalConfig" />
+        <meta-data
+            android:name="dora.lifecycle.config.EventBusGlobalConfig"
+            android:value="GlobalConfig" />
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"

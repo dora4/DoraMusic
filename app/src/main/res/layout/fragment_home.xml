@@ -31,13 +31,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:background="@color/black">
+                android:layout_height="80dp"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/iv_home_bottom_album"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/dp_10"
                     android:background="@drawable/default_cover" />
 
                 <ImageButton
@@ -48,7 +50,8 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="4dp"
                     android:padding="6dp"
-                    android:background="@color/black"
+                    app:tint="@color/light_gray"
+                    android:background="@color/white"
                     android:src="@drawable/icon_menu_bottom_right" />
 
                 <View
@@ -67,7 +70,8 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/view_home_bottom_divider"
                     android:padding="6dp"
-                    android:background="@color/black"
+                    app:tint="@color/light_gray"
+                    android:background="@color/white"
                     android:src="@drawable/icon_bottom_next" />
 
                 <FrameLayout
@@ -83,7 +87,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:padding="6dp"
-                        android:background="@color/black"
+                        app:tint="@color/light_gray"
+                        android:background="@color/white"
                         android:src="@drawable/icon_bottom_pause"
                         android:visibility="gone" />
 
@@ -92,7 +97,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:padding="6dp"
-                        android:background="@color/black"
+                        app:tint="@color/light_gray"
+                        android:background="@color/white"
                         android:src="@drawable/icon_bottom_play" />
                 </FrameLayout>
 
@@ -100,6 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
+                    android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/fl_home_bottom_play_pause"
                     android:layout_toRightOf="@id/iv_home_bottom_album"
                     android:orientation="vertical">
@@ -111,7 +118,8 @@
                         android:layout_height="wrap_content"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:textColor="@color/white" />
+                        android:text="朵拉音乐"
+                        android:textColor="@color/gray" />
 
                     <com.lwh.jackknife.widget.MarqueeTextView
                         android:id="@+id/tv_home_bottom_artist"
@@ -120,7 +128,8 @@
                         android:layout_below="@id/tv_home_bottom_music_name"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:textColor="@color/white"
+                        android:text="想听就听"
+                        android:textColor="@color/gray"
                         android:textSize="12sp" />
 
                     <LinearLayout
@@ -137,13 +146,13 @@
                             android:focusableInTouchMode="false"
                             android:gravity="center_horizontal"
                             android:text="00:00"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/gray" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" - "
-                            android:textColor="@color/white" />
+                            android:textColor="@color/gray" />
 
                         <TextView
                             android:id="@+id/tv_home_bottom_duration"
@@ -151,7 +160,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:text="00:00"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/gray" />
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
@@ -170,89 +179,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@color/white"/>
+            <dora.widget.DoraTitleBar
+                android:id="@+id/titlebar_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/statusbar_home"
+                android:background="@color/white"
+                app:dview_title="@string/app_name"
+                app:dview_titleTextSize="18sp"
+                app:dview_isTitleTextBold="false"
+                app:dview_titleTextColor="@color/gray"
+                app:dview_isClickBackIconClose="false"
+                app:dview_backIcon="@drawable/ic_top_menu"
+                app:dview_backIconSize="24dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/statusbar_home">
-
-                <RelativeLayout
-                    android:id="@+id/rl_home_topbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/white">
-
-                    <ImageButton
-                        android:id="@+id/btn_home_sliding_menu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        app:tint="@color/black"
-                        android:background="@drawable/selector_music_btn"
-                        android:padding="6dp"
-                        android:src="@drawable/icon_menu_top_left" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/app_name"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_home_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rl_home_topbar"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="8dp"
-                    android:background="#3f000000"
-                    android:visibility="invisible">
-
-                    <LinearLayout
-                        android:id="@+id/ll_home_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="2dp">
-
-                        <ImageView
-                            android:id="@+id/iv_home_search"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:src="@drawable/icon_search" />
-
-                        <EditText
-                            android:id="@+id/et_home_search"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:gravity="left|center_vertical"
-                            android:hint="搜索歌曲、歌手、专辑"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:imeOptions="actionSearch"
-                            android:maxLines="1"
-                            android:textColor="@color/light_gray"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
+                android:layout_below="@+id/titlebar_home">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_home_module"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_below="@+id/rl_home_search"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp"
                     android:overScrollMode="never"
-                    app:spanCount="3"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="3" />
             </RelativeLayout>
         </RelativeLayout>
 

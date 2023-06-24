@@ -1,6 +1,5 @@
 package site.doramusic.app.ui.layout
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -40,7 +39,7 @@ import site.doramusic.app.util.PreferencesManager
 /**
  * 底部控制条。
  */
-class BottomBarUI(context: Context, manager: UIManager) : UIFactory(context, manager),
+class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
         View.OnClickListener, AppConfig {
 
     var handler: Handler
@@ -57,7 +56,7 @@ class BottomBarUI(context: Context, manager: UIManager) : UIFactory(context, man
     private var iv_home_bottom_album: ImageView? = null
     private var playbackProgress: ProgressBar? = null
     private var defaultAlbumIcon: Bitmap? = null
-    private val playModeControl: PlayModeControl = PlayModeControl(context)
+    private val playModeControl: PlayModeControl = PlayModeControl(manager.view.context)
     private var bindingAdapter: BindingAdapter? = null
     private lateinit var popupDialog: PopupDialog
     private val adapter = PlaylistItemAdapter()
@@ -95,15 +94,15 @@ class BottomBarUI(context: Context, manager: UIManager) : UIFactory(context, man
                 tv_home_bottom_music_name!!.text = music.musicName
                 tv_home_bottom_artist!!.text = music.artist
                  try {
-                     val bitmap = MusicUtils.getCachedArtwork(context, music.albumId.toLong(),
+                     val bitmap = MusicUtils.getCachedArtwork(manager.view.context, music.albumId.toLong(),
                          defaultAlbumIcon)
-                     iv_home_bottom_album!!.setBackgroundDrawable(BitmapDrawable(context
+                     iv_home_bottom_album!!.setBackgroundDrawable(BitmapDrawable(manager.view.context
                          .resources, bitmap))
                  } catch (e: UnsupportedOperationException) {
 //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
                  }
                 refreshUI(0, music.duration, music)
-                val manager = PreferencesManager(context)
+                val manager = PreferencesManager(manager.view.context)
                 val coldLaunchAutoPlay = manager.getColdLaunchAutoPlay()
                 if (coldLaunchAutoPlay) {
                     mediaManager.playById(music.songId)
@@ -134,10 +133,12 @@ class BottomBarUI(context: Context, manager: UIManager) : UIFactory(context, man
         playbackProgress = findViewById(R.id.sb_home_bottom_playback) as ProgressBar
 
         defaultAlbumIcon = BitmapFactory.decodeResource(
-                context.resources, R.drawable.default_cover)
+                manager.view.context.resources, R.drawable.default_cover)
 
         iv_home_bottom_album = findViewById(R.id.iv_home_bottom_album) as ImageView
-        iv_home_bottom_album!!.setOnClickListener { Apollo.emit(ApolloEvent.OPEN_SLIDING_DRAWER) }
+        iv_home_bottom_album!!.setOnClickListener {
+            drawer.showDrawer()
+        }
     }
 
     private fun refreshSeekProgress(curTime: Int, totalTime: Int, pendingProgress: Int) {
@@ -182,10 +183,10 @@ class BottomBarUI(context: Context, manager: UIManager) : UIFactory(context, man
         if (music.albumId != -1) {
             try {
 
-                val bitmap = MusicUtils.getCachedArtwork(context, music.albumId.toLong(),
+                val bitmap = MusicUtils.getCachedArtwork(manager.view.context, music.albumId.toLong(),
                     defaultAlbumIcon)
                 if (bitmap != null) {
-                    iv_home_bottom_album!!.setBackgroundDrawable(BitmapDrawable(context
+                    iv_home_bottom_album!!.setBackgroundDrawable(BitmapDrawable(manager.view.context
                         .resources, bitmap))
                 }
             } catch (e:UnsupportedOperationException) {
@@ -245,7 +246,7 @@ class BottomBarUI(context: Context, manager: UIManager) : UIFactory(context, man
                         iv_playlist_playmode)
             }
         }
-        popupDialog = PopupDialog.Builder(context)
+        popupDialog = PopupDialog.Builder(manager.view.context)
                 .setDialogView(dialogView)
                 .create()
         popupDialog.show()

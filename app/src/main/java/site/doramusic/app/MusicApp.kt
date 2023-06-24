@@ -1,14 +1,11 @@
 package site.doramusic.app
 
-import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.lsxiao.apollo.core.Apollo
 import com.lwh.jackknife.xskin.SkinManager
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
-import dora.util.IoUtils
-import dora.util.LogUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
@@ -64,7 +61,6 @@ class MusicApp : BaseApplication(), AppConfig {
     }
 
     private fun initDb() {
-        LogUtils.e("initDb")
         Orm.init(this, OrmConfig.Builder()
             .database("db_doramusic")
             .version(1)

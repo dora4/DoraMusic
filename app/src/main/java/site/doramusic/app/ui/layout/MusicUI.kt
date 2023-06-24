@@ -11,16 +11,19 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
 import com.lwh.jackknife.widget.LetterView
+import com.lwh.jackknife.xskin.SkinLoader
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
+import dora.widget.DoraTitleBar
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ApolloEvent
@@ -36,12 +39,12 @@ import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.adapter.MusicItemAdapter
 import site.doramusic.app.widget.LoadingDialog
 
-class MusicUI(context: Context, manager: UIManager) : UIFactory(context, manager), AppConfig {
+class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager), AppConfig {
 
     private var from: Int = 0
     private var table: OrmTable? = null
     private var statusbar_music: View? = null
-    private var backBtn: ImageButton? = null
+    private var titlebar: DoraTitleBar? = null
     private var defaultArtwork: Bitmap? = null
     private var rv_music: RecyclerView? = null
     private var adapter: MusicItemAdapter? = null
@@ -49,7 +52,7 @@ class MusicUI(context: Context, manager: UIManager) : UIFactory(context, manager
     private val mediaManager: MediaManager? = MusicApp.instance!!.mediaManager
     private var tv_music_dialog: TextView? = null
     private val musicDao = DaoFactory.getDao(Music::class.java)
-    private val loadingDialog: LoadingDialog = LoadingDialog(context)
+    private val loadingDialog: LoadingDialog = LoadingDialog(manager.view.context)
 
     init {
         Apollo.bind(this)
@@ -64,26 +67,35 @@ class MusicUI(context: Context, manager: UIManager) : UIFactory(context, manager
         statusbar_music = view.findViewById(R.id.statusbar_music)
         statusbar_music!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
+        statusbar_music!!.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
         lv_music = view.findViewById(R.id.lv_music)
         tv_music_dialog = view.findViewById(R.id.tv_music_dialog)
-        backBtn = view.findViewById(R.id.backBtn)
-        backBtn!!.setOnClickListener { manager.setCurrentItem() }
-        defaultArtwork = BitmapFactory.decodeResource(context.resources,
+        titlebar = view.findViewById(R.id.titlebar_music)
+        titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+
+            override fun onIconBackClick(icon: AppCompatImageView) {
+                manager.setCurrentItem()
+            }
+
+            override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+            }
+        })
+        defaultArtwork = BitmapFactory.decodeResource(view.resources,
                 R.mipmap.ic_launcher)
 
         rv_music = view.findViewById(R.id.rv_music)
 
-        (context as MainActivity).volumeControlStream = AudioManager.STREAM_MUSIC
+        (view.context as MainActivity).volumeControlStream = AudioManager.STREAM_MUSIC
 
-        rv_music!!.layoutManager = LinearLayoutManager(context)
-        rv_music!!.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        rv_music!!.layoutManager = LinearLayoutManager(view.context)
+        rv_music!!.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
         adapter = MusicItemAdapter()
         when (from) {
             AppConfig.ROUTE_START_FROM_LOCAL -> {
                 loadingDialog.show()
                 Thread(Runnable {
                     val playlist = musicDao.selectAll()
-                    (context as Activity).runOnUiThread {
+                    (view.context as Activity).runOnUiThread {
                         adapter = MusicItemAdapter()
                         adapter!!.setList(playlist)
                         adapter!!.sort()
@@ -99,7 +111,7 @@ class MusicUI(context: Context, manager: UIManager) : UIFactory(context, manager
                     val artist = table as Artist?
                     val artists = musicDao.select(QueryBuilder.create().where(
                             WhereBuilder.create().addWhereEqualTo("artist", artist!!.name)))
-                    (context as Activity).runOnUiThread {
+                    (view.context as Activity).runOnUiThread {
                         adapter = MusicItemAdapter()
                         adapter!!.setList(artists)
                         adapter!!.sort()
@@ -115,7 +127,7 @@ class MusicUI(context: Context, manager: UIManager) : UIFactory(context, manager
                     val album = table as Album?
                     val albums = musicDao.select(QueryBuilder.create().where(
                             WhereBuilder.create().addWhereEqualTo("album_id", album!!.album_id)))
-                    (context as Activity).runOnUiThread {
+                    (view.context as Activity).runOnUiThread {
                         adapter = MusicItemAdapter()
                         adapter!!.setList(albums)
                         adapter!!.sort()
@@ -130,7 +142,7 @@ class MusicUI(context: Context, manager: UIManager) : UIFactory(context, manager
                 Thread(Runnable {
                     val folder = table as Folder?
                     val music = musicDao.select(QueryBuilder.create().where(WhereBuilder.create().addWhereEqualTo("folder", folder!!.path)))
-                    (context as Activity).runOnUiThread {
+                    (view.context as Activity).runOnUiThread {
                         adapter = MusicItemAdapter()
                         adapter!!.setList(music)
                         adapter!!.sort()
@@ -144,7 +156,7 @@ class MusicUI(context: Context, manager: UIManager) : UIFactory(context, manager
                 loadingDialog.show()
                 Thread(Runnable {
                     val favorite = musicDao.select(QueryBuilder.create().where(WhereBuilder.create().addWhereEqualTo("favorite", 1)))
-                    (context as Activity).runOnUiThread {
+                    (view.context as Activity).runOnUiThread {
                         adapter = MusicItemAdapter()
                         adapter!!.setList(favorite)
                         adapter!!.sort()

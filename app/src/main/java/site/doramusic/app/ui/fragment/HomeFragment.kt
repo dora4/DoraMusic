@@ -6,27 +6,29 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
 import com.lwh.jackknife.av.util.MusicTimer
 import com.lwh.jackknife.av.util.MusicUtils
+import com.lwh.jackknife.xskin.SkinLoader
 import dora.BaseFragment
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
-import dora.util.DensityUtils
-import dora.util.ScreenUtils
-import dora.util.StatusBarUtils
-import dora.util.ViewUtils
+import dora.util.*
+import dora.widget.DoraTitleBar
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ApolloEvent
@@ -43,11 +45,12 @@ import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
 import site.doramusic.app.ui.layout.BottomBarUI
+import site.doramusic.app.ui.layout.ILyricDrawer
 import site.doramusic.app.ui.layout.MusicPlayUI
 import java.util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
-    MusicControl.OnConnectCompletionListener {
+    MusicControl.OnConnectCompletionListener, ILyricDrawer {
 
     private var uiManager: UIManager? = null
     private var bottomBarUI: BottomBarUI? = null
@@ -121,25 +124,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         homeItems.add(HomeItem(R.drawable.icon_local_favorite, "我的收藏", favoriteCount))
         homeItems.add(HomeItem(R.drawable.icon_local_latest, "最近播放", latestCount))
         return homeItems
-    }
-
-    /**
-     * 关闭侧边栏。
-     */
-    fun closeSlidingDrawer() {
-        if (musicPlayUI!!.isOpened) {
-            musicPlayUI!!.close()
-        }
-    }
-
-    /**
-     * 打开侧边栏。
-     */
-    @Receive(ApolloEvent.OPEN_SLIDING_DRAWER)
-    fun openSlidingDrawer() {
-        if (!musicPlayUI!!.isOpened) {
-            musicPlayUI!!.open()
-        }
     }
 
     inner class MusicPlayReceiver : BroadcastReceiver() {
@@ -300,19 +284,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
         )
-        mBinding.statusbarMusicPlay.layoutParams = RelativeLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            StatusBarUtils.getStatusBarHeight()
-        )
+        StatusBarUtils.setLightDarkStatusBar(activity, true, false)
         val drawable = BitmapDrawable()
         drawable.setBounds(
             0, 0, ScreenUtils.getScreenWidth(context),
             DensityUtils.dp2px(context, 26f).toInt()
         )
-        mBinding.btnHomeSlidingMenu.setOnClickListener(View.OnClickListener {
-            (context as MainActivity).openDrawer()
+        mBinding.titlebarHome.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+            override fun onIconBackClick(icon: AppCompatImageView) {
+                (context as MainActivity).openDrawer()
+            }
+
+            override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+            }
         })
         mBinding.rvHomeModule.adapter = adapter
+        mBinding.rvHomeModule.setBackgroundResource(R.drawable.shape_home_module)
         mBinding.rvHomeModule.itemAnimator = DefaultItemAnimator()
         mBinding.rvHomeModule.layoutManager = GridLayoutManager(context, 3)
         adapter.setOnItemClickListener { adapter, view, position ->
@@ -338,9 +325,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        uiManager = context?.let { UIManager(it, view) }
-        bottomBarUI = BottomBarUI(requireContext(), uiManager!!)
-        musicPlayUI = MusicPlayUI(requireContext(), uiManager!!)
+        uiManager = context?.let { UIManager(this, view) }
+        bottomBarUI = BottomBarUI(this, uiManager!!)
+        musicPlayUI = MusicPlayUI(this, uiManager!!)
         musicTimer = MusicTimer(bottomBarUI!!.handler, musicPlayUI!!.handler)
         musicPlayUI!!.setMusicTimer(musicTimer!!)
     }
@@ -351,5 +338,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_home
+    }
+
+    override fun showDrawer() {
+        openSlidingDrawer()
+    }
+
+    fun openSlidingDrawer() {
+        if (!musicPlayUI!!.isOpened) {
+            musicPlayUI!!.open()
+        }
+    }
+
+    /**
+     * 关闭侧边栏。
+     */
+    fun closeSlidingDrawer() {
+        if (musicPlayUI!!.isOpened) {
+            musicPlayUI!!.close()
+        }
+    }
+
+    override fun closeDrawer() {
+        closeSlidingDrawer()
     }
 }

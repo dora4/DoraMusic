@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.lwh.jackknife.xskin.SkinLoader
 import dora.util.StatusBarUtils
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.BaseSkinActivity
@@ -35,9 +37,8 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
     override fun initData(savedInstanceState: Bundle?) {
         mBinding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        mBinding.statusbarEqualizer.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        mBinding.statusbarEqualizer.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
         prefsManager = PreferencesManager(this)
-        mBinding.titlebarEqualizer.setOnBackListener { finish() }
         val equalizerFreq = MusicApp.instance!!.mediaManager!!.equalizerFreq
         val decibels = IntArray(equalizerFreq!!.size)
         if (prefsManager!!.getEqualizerDecibels() != "") {
@@ -58,8 +59,10 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         mBinding.rbEqualizerSlots.buttonDrawable = BitmapDrawable()
         mBinding.rbEqualizerShake.buttonDrawable = BitmapDrawable()
         mBinding.rbEqualizerCountry.buttonDrawable = BitmapDrawable()
-        val skinThemeColor = SkinLoader.getInstance().getColorRes("skin_theme_color")
-        val colors = intArrayOf(resources.getColor(skinThemeColor), Color.WHITE)
+
+        val skinThemeColor = ContextCompat.getColor(this,
+            SkinLoader.getInstance().getColorRes("skin_theme_color_orange"))
+        val colors = intArrayOf(skinThemeColor, Color.WHITE)
         val state = arrayOf(intArrayOf(android.R.attr.state_checked), IntArray(0))
         val colorStateList = ColorStateList(state, colors)
         mBinding.rbEqualizerClose.setTextColor(colorStateList)
@@ -179,5 +182,9 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
     override fun onUpdateDecibel(decibels: IntArray) {
         prefsManager!!.saveEqualizerDecibels(decibels)
         MusicApp.instance!!.mediaManager!!.setEqualizer(decibels)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(msg: String) {
     }
 }

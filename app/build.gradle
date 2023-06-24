@@ -29,11 +29,12 @@ android {
         buildFeatures {
             dataBinding true
         }
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
+        // 过时
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments = [AROUTER_MODULE_NAME: project.getName()]
+//            }
+//        }
     }
     flavorDimensions "app"
     productFlavors {
@@ -75,6 +76,14 @@ android {
     }
 }
 
+//这里使用Kotlin的ARouter配置，当然对Java的也是兼容的
+kapt {
+    generateStubs = true
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.name)
+    }
+}
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.10")
     implementation("androidx.core:core-ktx:1.10.1")
@@ -103,9 +112,6 @@ dependencies {
     //Apollo的编译时注解处理器
     kapt "com.github.lsxiao.Apollo:processor:1.0.2"
 
-    implementation("com.alibaba:arouter-api:1.5.2")
-    kapt 'com.alibaba:arouter-compiler:1.5.2'
-
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
 
@@ -113,7 +119,12 @@ dependencies {
     implementation "com.github.dora4:dcache-android:1.6.26"
     implementation "com.github.dora4:dora:1.0.131"
     implementation 'com.github.dora4:dora-arouter-support:1.1'
+    implementation 'com.github.dora4:dora-eventbus-support:1.1'
     implementation 'com.github.dora4:dview-toggle-button:1.0'
+    implementation 'com.github.dora4:dview-titlebar:1.8'
+
+    implementation("com.alibaba:arouter-api:1.5.2")
+    kapt("com.alibaba:arouter-compiler:1.5.2")
 
     implementation 'com.github.JackWHLiu:jackknife:75a681cd6f'
     implementation("com.github.getActivity:XXPermissions:18.0")

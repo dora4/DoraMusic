@@ -16,12 +16,17 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
+import com.lwh.jackknife.xskin.SkinLoader
+import com.lwh.jackknife.xskin.SkinManager
+import dora.arouter.open
 import dora.util.ApkUtils
 import dora.util.IoUtils
 import dora.util.StatusBarUtils
 import dora.util.TextUtils
 import dora.widget.DoraToggleButton
 import okhttp3.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.BuildConfig
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
@@ -84,10 +89,10 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
         )
-        mBinding.statusbarSettings.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        mBinding.statusbarSettings.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
+        mBinding.v = this
         updateDialog = LoadingDialog(this)
         prefsManager = PreferencesManager(this)
-        mBinding.titlebarSettings.setOnBackListener { finish() }
         mBinding.tvSettingsVersion.text = getString(R.string.app_version)
         if (UserManager.currentUser != null) {
             mBinding.rlSettingsLogout.visibility = View.VISIBLE
@@ -194,10 +199,14 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 }
             }
             R.id.rl_settings_user_protocol -> {
-                ARouter.getInstance().build(ARoutePath.ACTIVITY_PROTOCOL).withString("title", "用户协议").navigation()
+                open(ARoutePath.ACTIVITY_PROTOCOL) {
+                    withString("title", "用户协议")
+                }
             }
             R.id.rl_settings_privacy_policy -> {
-                ARouter.getInstance().build(ARoutePath.ACTIVITY_PROTOCOL).withString("title", "隐私政策").navigation()
+                open(ARoutePath.ACTIVITY_PROTOCOL) {
+                    withString("title", "隐私政策")
+                }
             }
         }
     }
@@ -267,5 +276,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             intent.setDataAndType(uri, "application/vnd.android.package-archive")
         }
         context.startActivity(intent)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(msg: String) {
     }
 }

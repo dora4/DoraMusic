@@ -10,7 +10,11 @@
     android:gravity="center_horizontal"
     android:layout_margin="10dp"
     android:id="@+id/sliding_handle"
-    android:background="@android:color/transparent">
+    android:background="@android:color/black">
+    <View
+        android:id="@+id/statusbar_lyric"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
     <TextView
         android:id="@+id/tv_sliding_music_name"
         android:layout_width="wrap_content"

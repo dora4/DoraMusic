@@ -4,24 +4,24 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
+    android:background="@color/white"
     android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        android:background="@android:color/transparent"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="18dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -38,7 +38,7 @@
                 android:layout_height="match_parent"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@color/white"
+                android:textColor="@color/gray"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@color/white"
+                android:textColor="@color/light_gray"
                 android:textSize="12sp" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/white"
+                android:textColor="@color/light_gray"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textSize="12sp" />

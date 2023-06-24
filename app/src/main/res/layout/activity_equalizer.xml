@@ -20,12 +20,12 @@
             android:layout_height="0dp"
             android:background="@color/skin_theme_color" />
 
-        <com.lwh.jackknife.widget.TitleBar
+        <dora.widget.DoraTitleBar
             android:id="@+id/titlebar_equalizer"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/skin_theme_color"
-            app:tb_title="均衡器" />
+            app:dview_title="均衡器"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

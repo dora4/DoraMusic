@@ -24,12 +24,12 @@
             android:layout_height="0dp"
             android:background="@color/skin_theme_color" />
 
-        <com.lwh.jackknife.widget.TitleBar
+        <dora.widget.DoraTitleBar
             android:id="@+id/titlebar_settings"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/skin_theme_color"
-            app:tb_title="设置" />
+            app:dview_title="设置"/>
 
 
             <LinearLayout
@@ -42,6 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
+                    android:visibility="gone"
                     android:background="@drawable/selector_item_common"
                     android:onClick="@{v}"
                     android:clickable="true"
@@ -61,8 +62,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        app:tb_show_indicator="false" />
+                        app:dora_showIndicator="false"
+                        android:scaleX="0.6"
+                        android:scaleY="0.6" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -80,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:text="冷启动自动播放"
+                        android:text="启动时自动播放"
                         android:textColor="@color/gray" />
 
                     <dora.widget.DoraToggleButton
@@ -89,15 +91,15 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        app:tb_show_indicator="false" />
+                        android:scaleX="0.6"
+                        android:scaleY="0.6"
+                        app:dora_showIndicator="false" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rl_settings_three"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
                     android:background="@drawable/selector_item_common"
                     android:onClick="@{v}"
                     android:clickable="true"
@@ -117,15 +119,16 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        app:tb_show_indicator="false" />
+                        android:scaleX="0.6"
+                        android:scaleY="0.6"
+                        app:dora_showIndicator="false" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rl_settings_four"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
+                    android:visibility="gone"
                     android:background="@drawable/selector_item_common"
                     android:onClick="@{v}"
                     android:clickable="true"
@@ -145,14 +148,14 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        app:tb_show_indicator="false" />
+                        android:scaleX="0.6"
+                        android:scaleY="0.6"
+                        app:dora_showIndicator="false" />
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/rl_settings_five"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
                     android:background="@drawable/selector_item_common"
                     android:onClick="@{v}"
                     android:clickable="true"
@@ -172,8 +175,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        app:tb_show_indicator="false" />
+                        android:scaleX="0.6"
+                        android:scaleY="0.6"
+                        app:dora_showIndicator="false" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -182,6 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
                     android:background="@drawable/selector_item_common"
+                    android:visibility="gone"
                     android:onClick="@{v}"
                     android:paddingLeft="7dp"
                     android:paddingTop="14dp"
@@ -202,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="5dp"
                         android:textColor="@color/gray" />
                 </RelativeLayout>
 
@@ -231,7 +236,6 @@
                     android:id="@+id/rl_settings_privacy_policy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
                     android:background="@drawable/selector_item_common"
                     android:onClick="@{v}"
                     android:paddingLeft="7dp"

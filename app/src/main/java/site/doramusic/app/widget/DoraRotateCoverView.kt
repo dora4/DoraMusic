@@ -12,6 +12,7 @@ import android.util.AttributeSet
 import android.view.animation.LinearInterpolator
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
+import dora.util.DensityUtils
 
 class DoraRotateCoverView @JvmOverloads constructor(
     context: Context,
@@ -46,7 +47,7 @@ class DoraRotateCoverView @JvmOverloads constructor(
             coverWidth = coverBitmap!!.width
             coverHeight = coverBitmap!!.height
             coverRect.set(borderRect)
-            coverRadius = Math.min(coverRect.width() / 2, coverRect.height() / 2)
+            coverRadius = (coverRect.width() / 2).coerceAtMost(coverRect.height() / 2)
             if (coverRadius > 0f && coverWidth > coverRect.width() && coverHeight > coverRect.height()) {
                 coverBitmap = Bitmap.createScaledBitmap(
                     coverBitmap!!,
@@ -200,7 +201,7 @@ class DoraRotateCoverView @JvmOverloads constructor(
         private val SCALE_TYPE = ScaleType.CENTER_CROP
         private val BITMAP_CONFIG = Bitmap.Config.ARGB_8888
         private const val COLOR_DRAWABLE_DIMENSION = 1
-        private const val DEFAULT_BORDER_WIDTH = 5
+        private var DEFAULT_BORDER_WIDTH = DensityUtils.dp2px(2f)
         private const val DEFAULT_BORDER_COLOR = Color.BLACK
     }
 

@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lwh.jackknife.widget.LetterView
+import com.lwh.jackknife.xskin.SkinLoader
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
+import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Artist
@@ -21,10 +24,10 @@ import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.ArtistItemAdapter
 import java.util.*
 
-class ArtistUI(context: Context, manager: UIManager) : UIFactory(context, manager) {
+class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private var rv_artist: RecyclerView? = null
-    private var backBtn: ImageButton? = null
+    private var titlebar: DoraTitleBar? = null
     private var adapter: ArtistItemAdapter? = null
     private var statusbar_artist: View? = null
     private var lv_artist: LetterView? = null
@@ -37,18 +40,27 @@ class ArtistUI(context: Context, manager: UIManager) : UIFactory(context, manage
         return view
     }
 
+
     private fun initViews(view: View) {
         statusbar_artist = view.findViewById(R.id.statusbar_artist)
         statusbar_artist!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-
+        statusbar_artist!!.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
         rv_artist = view.findViewById(R.id.rv_artist)
         lv_artist = view.findViewById(R.id.lv_artist)
         tv_artist_dialog = view.findViewById(R.id.tv_artist_dialog)
-        rv_artist!!.layoutManager = LinearLayoutManager(context)
-        rv_artist!!.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-        backBtn = view.findViewById(R.id.backBtn)
-        backBtn!!.setOnClickListener { manager.setCurrentItem() }
+        rv_artist!!.layoutManager = LinearLayoutManager(view.context)
+        rv_artist!!.addItemDecoration(DividerItemDecoration(view.context, LinearLayoutManager.VERTICAL))
+        titlebar = view.findViewById(R.id.titlebar_artist)
+        titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+
+            override fun onIconBackClick(icon: AppCompatImageView) {
+                manager.setCurrentItem()
+            }
+
+            override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+            }
+        })
         val artists = artistDao.selectAll() as ArrayList<Artist>
         adapter = ArtistItemAdapter(artists)
         adapter!!.setOnItemClickListener { adapter, view, position ->

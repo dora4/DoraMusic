@@ -4,14 +4,21 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.lwh.jackknife.xskin.SkinLoader
 import com.lwh.jackknife.xskin.SkinManager
+import dora.util.DensityUtils
 import dora.util.StatusBarUtils
+import dora.widget.DoraTitleBar
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.R
+import site.doramusic.app.annotation.SingleClick
 import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityChoiceColorBinding
@@ -44,41 +51,23 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
     override fun initData(savedInstanceState: Bundle?) {
         mBinding.statusbarChoiceColor.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        mBinding.statusbarChoiceColor.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-        mBinding.titlebarChoiceColor.setOnBackListener { finish() }
-        mBinding.titlebarChoiceColor.setOnMenuListener {
-            when (choiceColorAdapter!!.selectedPosition) {
-                0 -> {
-                    prefsManager.saveSkinType(1)
-                    SkinManager.getInstance().changeSkin("cyan")
-                }
-                1 -> {
-                    prefsManager.saveSkinType(2)
-                    SkinManager.getInstance().changeSkin("orange")
-                }
-                2 -> {
-                    prefsManager.saveSkinType(3)
-                    SkinManager.getInstance().changeSkin("black")
-                }
-                3 -> {
-                    prefsManager.saveSkinType(4)
-                    SkinManager.getInstance().changeSkin("green")
-                }
-                4 -> {
-                    prefsManager.saveSkinType(5)
-                    SkinManager.getInstance().changeSkin("red")
-                }
-                5 -> {
-                    prefsManager.saveSkinType(6)
-                    SkinManager.getInstance().changeSkin("blue")
-                }
-                6 -> {
-                    prefsManager.saveSkinType(7)
-                    SkinManager.getInstance().changeSkin("purple")
+        mBinding.statusbarChoiceColor.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
+        val imageView = AppCompatImageView(this)
+        val dp24 = DensityUtils.dp2px(24f)
+        imageView.layoutParams = RelativeLayout.LayoutParams(dp24, dp24)
+        imageView.setImageResource(R.drawable.ic_save)
+        mBinding.titlebarChoiceColor.addMenuButton(imageView)
+
+        mBinding.titlebarChoiceColor.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+            override fun onIconBackClick(icon: AppCompatImageView) {
+            }
+
+            override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+                if (position == 0) {
+                    aop()
                 }
             }
-            finish()
-        }
+        })
         prefsManager = PreferencesManager(this)
         colorDatas = mutableListOf(
             ColorData(R.drawable.block_cyan,
@@ -100,7 +89,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
         choiceColorAdapter!!.setList(colorDatas!!)
         mBinding.rvChoiceColor.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.HORIZONTAL, false)
-        mBinding.rvChoiceColor.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
+//        mBinding.rvChoiceColor.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         mBinding.rvChoiceColor.itemAnimator = DefaultItemAnimator()
         mBinding.rvChoiceColor.adapter = choiceColorAdapter
         choiceColorAdapter!!.selectedPosition = if (prefsManager.getSkinType() == 0) 0 else prefsManager.getSkinType() - 1
@@ -113,5 +102,44 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
             choiceColorAdapter!!.selectedPosition = position
             choiceColorAdapter!!.notifyDataSetChanged()
         }
+    }
+
+    @SingleClick
+    private fun aop() {
+        when (choiceColorAdapter!!.selectedPosition) {
+            0 -> {
+                prefsManager.saveSkinType(1)
+                SkinManager.getInstance().changeSkin("cyan")
+            }
+            1 -> {
+                prefsManager.saveSkinType(2)
+                SkinManager.getInstance().changeSkin("orange")
+            }
+            2 -> {
+                prefsManager.saveSkinType(3)
+                SkinManager.getInstance().changeSkin("black")
+            }
+            3 -> {
+                prefsManager.saveSkinType(4)
+                SkinManager.getInstance().changeSkin("green")
+            }
+            4 -> {
+                prefsManager.saveSkinType(5)
+                SkinManager.getInstance().changeSkin("red")
+            }
+            5 -> {
+                prefsManager.saveSkinType(6)
+                SkinManager.getInstance().changeSkin("blue")
+            }
+            6 -> {
+                prefsManager.saveSkinType(7)
+                SkinManager.getInstance().changeSkin("purple")
+            }
+        }
+        finish()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(msg: String) {
     }
 }

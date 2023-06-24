@@ -1,10 +1,5 @@
 package site.doramusic.app.ui.activity
 
-import android.app.Activity
-
-import android.content.pm.ActivityInfo
-import android.content.res.TypedArray
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -13,8 +8,9 @@ import com.hjq.permissions.XXPermissions
 import com.lwh.jackknife.av.util.MusicUtils
 import dora.arouter.openWithFinish
 import dora.crash.DoraCrash
-import dora.util.LogUtils
 import dora.util.StatusBarUtils
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.R
 import site.doramusic.app.annotation.RequirePermission
 import site.doramusic.app.base.BaseSkinActivity
@@ -65,14 +61,6 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
         }
     }
 
-    /**
-     * 播放启动页的hello，dora！
-     */
-    private fun playSplashSpeech() {
-        audioPlayer = SimpleAudioPlayer(this)
-        audioPlayer!!.playByRawId(R.raw.hello)
-    }
-
     @RequirePermission(Permission.WRITE_EXTERNAL_STORAGE)
     private fun init() {
         UserManager.update(this)
@@ -85,16 +73,9 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
     }
 
     private fun splashLoading(prefsManager: PreferencesManager) {
-        if (prefsManager.getHelloDora()) {
-            playSplashSpeech()
-            Handler().postDelayed({
-                openWithFinish(ARoutePath.ACTIVITY_MAIN)
-            }, 2000)
-        } else {
-            Handler().postDelayed({
-                openWithFinish(ARoutePath.ACTIVITY_MAIN)
-            }, SPLASH_TIME.toLong())
-        }
+        Handler().postDelayed({
+            openWithFinish(ARoutePath.ACTIVITY_MAIN)
+        }, SPLASH_TIME.toLong())
     }
 
     override fun onDestroy() {
@@ -104,5 +85,9 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_splash
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(msg: String) {
     }
 }

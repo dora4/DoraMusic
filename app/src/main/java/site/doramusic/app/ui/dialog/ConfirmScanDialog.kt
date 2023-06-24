@@ -14,6 +14,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 
 import com.lwh.jackknife.dialog.BaseDialog
+import dora.util.ScreenUtils
 
 import site.doramusic.app.R
 

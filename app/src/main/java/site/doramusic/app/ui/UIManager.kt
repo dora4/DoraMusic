@@ -1,6 +1,5 @@
 package site.doramusic.app.ui
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,20 +12,17 @@ import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.ui.activity.MainActivity
-import site.doramusic.app.ui.layout.AlbumUI
-import site.doramusic.app.ui.layout.ArtistUI
-import site.doramusic.app.ui.layout.FolderUI
-import site.doramusic.app.ui.layout.MusicUI
+import site.doramusic.app.ui.layout.*
 import java.util.*
 
-class UIManager(private val context: Context, val view: View) : AppConfig, OnBackListener {
+class UIManager(protected var drawer: ILyricDrawer, val view: View) : AppConfig, OnBackListener {
 
     private var ui: UIFactory? = null
     private var masterViewPager: ViewPager? = null
     private var slaveViewPager: ViewPager? = null
     private var masterViews: ArrayList<View>? = null
     private var slaveViews: ArrayList<View>? = null
-    private val inflater: LayoutInflater? = LayoutInflater.from(context)
+    val inflater: LayoutInflater = LayoutInflater.from(view.context)
     val isLocal: Boolean
         get() = masterViewPager!!.currentItem == 0
 
@@ -53,12 +49,12 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
     }
 
     fun setContentType(type: Int, table: OrmTable?) {
-        (context as IBack).registerBackListener(this)
-        val transView = inflater?.inflate(
+        (view.context as IBack).registerBackListener(this)
+        val transView = inflater.inflate(
                 R.layout.view_vp_trans, null)
         when (type) {
             AppConfig.ROUTE_START_FROM_LOCAL -> {
-                ui = MusicUI(context, this)
+                ui = MusicUI(drawer, this)
                 val contentView = ui!!.getView(AppConfig.ROUTE_START_FROM_LOCAL)
                 masterViewPager!!.visibility = View.VISIBLE
                 masterViews!!.clear()
@@ -69,7 +65,7 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
                 masterViewPager!!.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_FAVORITE -> {
-                ui = MusicUI(context, this)
+                ui = MusicUI(drawer, this)
                 val contentView = ui!!.getView(AppConfig.ROUTE_START_FROM_FAVORITE)
                 masterViewPager!!.visibility = View.VISIBLE
                 masterViews!!.clear()
@@ -80,7 +76,7 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
                 masterViewPager!!.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_LATEST -> {
-                ui = MusicUI(context, this)
+                ui = MusicUI(drawer, this)
                 val contentView = ui!!.getView(AppConfig.ROUTE_START_FROM_LATEST)
                 masterViewPager!!.visibility = View.VISIBLE
                 masterViews!!.clear()
@@ -91,7 +87,7 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
                 masterViewPager!!.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_FOLDER -> {
-                ui = FolderUI(context, this)
+                ui = FolderUI(drawer, this)
                 val contentView = ui!!.getView()
                 masterViewPager!!.visibility = View.VISIBLE
                 masterViews!!.clear()
@@ -102,7 +98,7 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
                 masterViewPager!!.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_ARTIST -> {
-                ui = ArtistUI(context, this)
+                ui = ArtistUI(drawer, this)
                 val contentView = ui!!.getView()
                 masterViewPager!!.visibility = View.VISIBLE
                 masterViews!!.clear()
@@ -113,7 +109,7 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
                 masterViewPager!!.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_ALBUM -> {
-                ui = AlbumUI(context, this)
+                ui = AlbumUI(drawer, this)
                 val contentView = ui!!.getView()
                 masterViewPager!!.visibility = View.VISIBLE
                 masterViews!!.clear()
@@ -124,7 +120,7 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
                 masterViewPager!!.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_FOLDER_TO_LOCAL -> {
-                ui = MusicUI(context, this)
+                ui = MusicUI(drawer, this)
                 val contentView = ui!!.getView(AppConfig.ROUTE_START_FROM_FOLDER, table)
                 slaveViewPager!!.visibility = View.VISIBLE
                 slaveViews!!.clear()
@@ -135,7 +131,7 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
                 slaveViewPager!!.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_ARTIST_TO_LOCAL -> {
-                ui = MusicUI(context, this)
+                ui = MusicUI(drawer, this)
                 val contentView = ui!!.getView(AppConfig.ROUTE_START_FROM_ARTIST, table)
                 slaveViewPager!!.visibility = View.VISIBLE
                 slaveViews!!.clear()
@@ -146,7 +142,7 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
                 slaveViewPager!!.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_ALBUM_TO_LOCAL -> {
-                ui = MusicUI(context, this)
+                ui = MusicUI(drawer, this)
                 val contentView = ui!!.getView(AppConfig.ROUTE_START_FROM_ALBUM, table)
                 slaveViewPager!!.visibility = View.VISIBLE
                 slaveViews!!.clear()
@@ -200,7 +196,7 @@ class UIManager(private val context: Context, val view: View) : AppConfig, OnBac
         // 当滑动状态改变时调用
         override fun onPageScrollStateChanged(state: Int) {
             if (onPageScrolled == 0 && state == 0) {
-                (context as MainActivity).unregisterBackListener(this@UIManager)
+                (view.context as MainActivity).unregisterBackListener(this@UIManager)
                 masterViewPager!!.removeAllViews()
                 masterViewPager!!.visibility = View.INVISIBLE
             }

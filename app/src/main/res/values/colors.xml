@@ -6,6 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="dora_cyan">#04d5d5</color>
+    <color name="colorPanelBg">#F5F5F9</color>
     <color name="skin_theme_color">@color/dora_cyan</color>
     <color name="skin_theme_color_red">#d23c3e</color>
     <color name="skin_theme_color_orange">#ff8400</color>

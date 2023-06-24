@@ -8,7 +8,10 @@ import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.lwh.jackknife.xskin.SkinLoader
 import dora.util.StatusBarUtils
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.R
 import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.conf.ARoutePath
@@ -41,7 +44,7 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
     override fun initData(savedInstanceState: Bundle?) {
         mBinding.statusbarPrivacyPolicy.layoutParams = LinearLayout
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
-        mBinding.statusbarPrivacyPolicy.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        mBinding.statusbarPrivacyPolicy.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
         webView = WebView(applicationContext)
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -52,8 +55,7 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
         webView!!.webViewClient = WebViewClient()
         // 动态添加WebView，解决在xml引用WebView持有Activity的Context对象，导致内存泄露
         mBinding.webViewContainer.addView(webView)
-        mBinding.titlebarPrivacyPolicy.setTitle(title)
-        mBinding.titlebarPrivacyPolicy.setOnBackListener { finish() }
+        mBinding.titlebarPrivacyPolicy.title = title.toString()
         if (title.equals("用户协议")) {
             webView!!.loadUrl("file:///android_asset/user_agreement.html")
         } else if (title.equals("隐私政策")) {
@@ -63,5 +65,9 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_protocol
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(msg: String) {
     }
 }

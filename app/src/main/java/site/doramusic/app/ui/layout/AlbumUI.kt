@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lwh.jackknife.widget.LetterView
+import com.lwh.jackknife.xskin.SkinLoader
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
+import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
@@ -21,10 +24,10 @@ import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.AlbumItemAdapter
 import java.util.*
 
-class AlbumUI(context: Context, manager: UIManager) : UIFactory(context, manager) {
+class AlbumUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private var statusbar_album: View? = null
-    private var backBtn: ImageButton? = null
+    private var titlebar: DoraTitleBar? = null
     private var rv_album: RecyclerView? = null
     private var adapter: AlbumItemAdapter? = null
     private var lv_album: LetterView? = null
@@ -41,13 +44,22 @@ class AlbumUI(context: Context, manager: UIManager) : UIFactory(context, manager
         statusbar_album = view.findViewById(R.id.statusbar_album)
         statusbar_album!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        backBtn = view.findViewById(R.id.backBtn)
-        backBtn!!.setOnClickListener { manager.setCurrentItem() }
+        statusbar_album!!.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
+        titlebar = view.findViewById(R.id.titlebar_album)
+        titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+
+            override fun onIconBackClick(icon: AppCompatImageView) {
+                manager.setCurrentItem()
+            }
+
+            override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+            }
+        })
         rv_album = view.findViewById(R.id.rv_album)
         lv_album = view.findViewById(R.id.lv_album)
         tv_album_dialog = view.findViewById(R.id.tv_album_dialog)
-        rv_album!!.layoutManager = LinearLayoutManager(context)
-        rv_album!!.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+        rv_album!!.layoutManager = LinearLayoutManager(view.context)
+        rv_album!!.addItemDecoration(DividerItemDecoration(view.context, RecyclerView.VERTICAL))
         val albums = albumDao.selectAll() as ArrayList<Album>
         adapter = AlbumItemAdapter(albums)
         adapter!!.setOnItemClickListener { adapter, view, position ->

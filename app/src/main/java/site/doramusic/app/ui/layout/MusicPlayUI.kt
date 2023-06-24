@@ -41,7 +41,7 @@ import site.doramusic.app.widget.SlidingView
 /**
  * 歌词滚动界面。
  */
-class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, manager),
+class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
         View.OnClickListener, AppConfig, SeekBar.OnSeekBarChangeListener,
         SlidingDrawer.OnDrawerCloseListener, SlidingDrawer.OnDrawerOpenListener {
 
@@ -66,6 +66,7 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
     private var btn_music_play_pause: ImageButton? = null
     private var btn_music_play_volume: ImageButton? = null
     private var btn_music_play_favorite: ImageButton? = null
+    private var statusbar_lyric: View? = null
     private var sv_home_drawer: SlidingView? = null
     private var curMusic: Music? = null
     private var vp_music_play_cover_lyric: ViewPager? = null
@@ -89,7 +90,7 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
 
     internal var r: Runnable = Runnable {
         ll_music_play_volume!!.visibility = View.INVISIBLE
-        ll_music_play_volume!!.startAnimation(AnimationUtils.loadAnimation(this.context, R.anim.anim_fade_out))
+        ll_music_play_volume!!.startAnimation(AnimationUtils.loadAnimation(this.manager.view.context, R.anim.anim_fade_out))
     }
 
     private val lyricListener = object : LyricScroller.LyricListener {
@@ -111,12 +112,12 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
     init {
         this.mediaManager = MusicApp.instance!!.mediaManager!!
         this.contentView = manager.view
-        this.lyricAdapter = LyricAdapter(context)
+        this.lyricAdapter = LyricAdapter(manager.view.context)
         this.lyricScroller = LyricScroller()
         this.musicDao = DaoFactory.getDao(Music::class.java)
-        this.playModeControl = PlayModeControl(context)
+        this.playModeControl = PlayModeControl(manager.view.context)
         volumeHandler = Handler()
-        audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager = manager.view.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         initViews()
@@ -133,6 +134,7 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
     private fun initViews() {
         rv_home_module = findViewById(R.id.rv_home_module) as RecyclerView
         sv_home_drawer = findViewById(R.id.sv_home_drawer) as SlidingView
+        statusbar_lyric = findViewById(R.id.statusbar_lyric)
         tv_sliding_music_name = findViewById(R.id.tv_sliding_music_name) as TextView
         tv_sliding_artist = findViewById(R.id.tv_sliding_artist) as TextView
         btn_music_play_prev = findViewById(R.id.btn_music_play_prev) as ImageButton
@@ -143,26 +145,28 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
         btn_music_play_mode = findViewById(R.id.btn_music_play_mode) as ImageButton
         btn_music_play_favorite = findViewById(R.id.btn_music_play_favorite) as ImageButton
         iv_sliding_favorite_flying = findViewById(R.id.iv_sliding_favorite_flying) as ImageView
-        rotateCoverView = DoraRotateCoverView(context)
+        statusbar_lyric!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            getStatusBarHeight())
+        rotateCoverView = DoraRotateCoverView(manager.view.context)
         rotateCoverView!!.scaleType = ImageView.ScaleType.CENTER_CROP
         rotateCoverView!!.scaleX = 0.8f
         rotateCoverView!!.scaleY = 0.8f
         vp_music_play_cover_lyric = findViewById(R.id.vp_music_play_cover_lyric) as ViewPager
 
-        lrcEmptyView = TextView(context)
+        lrcEmptyView = TextView(manager.view.context)
         lrcEmptyView!!.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT)
         lrcEmptyView!!.gravity = Gravity.CENTER
         lrcEmptyView!!.text = "暂无歌词"
         lrcEmptyView!!.setTextColor(Color.WHITE)
-        lrcListView = ListView(context)
+        lrcListView = ListView(manager.view.context)
         lrcListView!!.isVerticalScrollBarEnabled = false
         lrcListView!!.adapter = lyricAdapter
         lrcListView!!.emptyView = lrcEmptyView
         lrcListView!!.overScrollMode = AbsListView.OVER_SCROLL_NEVER
-        lrcListView!!.startAnimation(AnimationUtils.loadAnimation(context,
+        lrcListView!!.startAnimation(AnimationUtils.loadAnimation(manager.view.context,
             android.R.anim.fade_in))
-        coverLrcContainer = FrameLayout(context)
+        coverLrcContainer = FrameLayout(manager.view.context)
         coverLrcContainer!!.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT)
         coverLrcContainer!!.addView(lrcListView)
@@ -196,7 +200,7 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
                 MotionEvent.ACTION_DOWN -> volumeHandler.removeCallbacks(r)
                 MotionEvent.ACTION_UP -> {
                     ll_music_play_volume!!.visibility = View.INVISIBLE
-                    ll_music_play_volume!!.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_fade_out))
+                    ll_music_play_volume!!.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_out))
                 }
             }
             false
@@ -301,9 +305,9 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
 
     private fun refreshFavorite(favorite: Int) {
         if (favorite == 1) {
-            btn_music_play_favorite!!.setImageResource(R.drawable.icon_favorite_on)
+            btn_music_play_favorite!!.setImageResource(R.drawable.ic_favorite_checked)
         } else {
-            btn_music_play_favorite!!.setImageResource(R.drawable.icon_favorite_off)
+            btn_music_play_favorite!!.setImageResource(R.drawable.ic_favorite_unchecked)
         }
         curMusic!!.favorite = favorite
         mediaManager!!.setCurMusic(curMusic!!)
@@ -444,10 +448,10 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
             R.id.btn_music_play_volume -> if (ll_music_play_volume!!.isShown) {
                 volumeHandler.removeCallbacks(r)
                 ll_music_play_volume!!.visibility = View.INVISIBLE
-                ll_music_play_volume!!.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_fade_out))
+                ll_music_play_volume!!.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_out))
             } else {
                 ll_music_play_volume!!.visibility = View.VISIBLE
-                ll_music_play_volume!!.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_fade_in))
+                ll_music_play_volume!!.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_in))
                 volumeHandler.postDelayed(r, 3000)
             }
             //播放模式
@@ -455,7 +459,7 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
             //喜爱
             R.id.btn_music_play_favorite -> {
                 if (mediaManager!!.curMusic!!.favorite == 0) {
-                    startAnimation(iv_sliding_favorite_flying!!)
+//                    startAnimation(iv_sliding_favorite_flying!!)
                     refreshFavorite(1)
                 } else {
                     refreshFavorite(0)
@@ -498,9 +502,9 @@ class MusicPlayUI(context: Context, manager: UIManager) : UIFactory(context, man
      * 创建默认的转盘封面。
      */
     fun createDefaultCover() : Bitmap {
-        var bmp = BitmapFactory.decodeResource(context.resources, R.drawable.default_cover_rotate)
-        var dp50 = DensityUtils.dp2px(context, 50f).toFloat()
-        var dp100 = DensityUtils.dp2px(context, 100f)
+        var bmp = BitmapFactory.decodeResource(manager.view.context.resources, R.drawable.default_cover_rotate)
+        var dp50 = DensityUtils.dp2px(manager.view.context, 50f).toFloat()
+        var dp100 = DensityUtils.dp2px(manager.view.context, 100f)
         var width = bmp.width + dp100
         var height = bmp.height + dp100
         //创建一个空的Bitmap(内存区域),宽度等于第一张图片的宽度，高度等于两张图片高度总和

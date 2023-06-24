@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.lwh.jackknife.xskin.SkinLoader
+import com.lwh.jackknife.xskin.SkinManager
 import site.doramusic.app.R
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -36,6 +37,8 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     private var lastY = 0
     private var index = 0
     private var onUpdateDecibelListener: OnUpdateDecibelListener? = null
+    val skinThemeColor = ContextCompat.getColor(context,
+        SkinLoader.getInstance().getColorRes("skin_theme_color_orange"))
 
     private fun initAttrs(context: Context, attrs: AttributeSet?) {
         val a = context.obtainStyledAttributes(attrs, R.styleable.EqualizerView)
@@ -88,7 +91,6 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     }
 
     private fun initPaints() {
-        val skinThemeColor = resources.getColor(SkinLoader.getInstance().getColorRes("skin_theme_color"))
         paint = Paint()
         paint!!.isAntiAlias = true
         nodePaint = Paint()
@@ -158,8 +160,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
             }
             canvas.drawCircle(cx, cy, radius, nodePaint!!) //绘制大圆
             canvas.drawCircle(cx, cy, radius - 6, nodeConnectPaint!!) //绘制小圆
-            val themeColor = resources.getColor(SkinLoader.getInstance().getColorRes("skin_theme_color"))
-            paint!!.color = themeColor //下面的线的颜色
+            paint!!.color = skinThemeColor //下面的线的颜色
             paint!!.strokeWidth = 6f
             canvas.drawLine(cx, cy + radius + 3, stepSize * i.toFloat(), measuredHeight.toFloat(), paint!!)
             paint!!.color = ContextCompat.getColor(ctx, com.lwh.jackknife.widget.R.color.light_gray) //上面的线的颜色

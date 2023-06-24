@@ -1,6 +1,6 @@
 package site.doramusic.app.aop
 
-import com.lwh.jackknife.util.Logger
+import dora.util.LogUtils
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -17,7 +17,7 @@ class SingleClickAspect {
     @Throws(Throwable::class)
     fun aroundPointMethod(joinPoint: ProceedingJoinPoint) {
         if (isFastClick) {
-            Logger.debug("您的手速太赞了")
+            LogUtils.e("您的手速太赞了")
             return
         }
         joinPoint.proceed()

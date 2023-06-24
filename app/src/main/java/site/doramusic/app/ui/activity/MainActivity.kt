@@ -30,6 +30,8 @@ import dora.db.dao.DaoFactory
 import dora.util.DensityUtils
 import dora.util.StatusBarUtils
 import okhttp3.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.BaseSkinActivity
@@ -377,5 +379,9 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         if (!backListeners.contains(listener)) {
             backListeners.add(listener)
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(msg: String) {
     }
 }

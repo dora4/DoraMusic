@@ -7,12 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="240dp"
     android:background="@color/skin_theme_color">
+
     <ImageView
         android:id="@+id/iv_drawer_header_avatar"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_centerInParent="true"/>
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo_black" />
     <TextView
         android:id="@+id/tv_drawer_header_nickname"
         android:layout_width="wrap_content"

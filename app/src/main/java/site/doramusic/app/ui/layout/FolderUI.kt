@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lwh.jackknife.widget.LetterView
+import com.lwh.jackknife.xskin.SkinLoader
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
+import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Folder
@@ -21,10 +24,10 @@ import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.FolderItemAdapter
 import java.util.*
 
-class FolderUI(context: Context, manager: UIManager) : UIFactory(context, manager) {
+class FolderUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private var statusbar_folder: View? = null
-    private var backBtn: ImageButton? = null
+    private var titlebar: DoraTitleBar? = null
     private var adapter: FolderItemAdapter? = null
     private var rv_folder: RecyclerView? = null
 
@@ -44,10 +47,19 @@ class FolderUI(context: Context, manager: UIManager) : UIFactory(context, manage
         statusbar_folder!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
 
+        statusbar_folder!!.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
         lv_folder = view.findViewById(R.id.lv_folder)
         tv_folder_dialog = view.findViewById(R.id.tv_folder_dialog)
-        backBtn = view.findViewById(R.id.backBtn)
-        backBtn!!.setOnClickListener { manager.setCurrentItem() }
+        titlebar = view.findViewById(R.id.titlebar_folder)
+        titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+
+            override fun onIconBackClick(icon: AppCompatImageView) {
+                manager.setCurrentItem()
+            }
+
+            override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+            }
+        })
         val folders = folderDao.selectAll() as ArrayList<Folder>
         adapter = FolderItemAdapter(folders)
         adapter!!.setOnItemClickListener { adapter, view, position ->
@@ -56,8 +68,8 @@ class FolderUI(context: Context, manager: UIManager) : UIFactory(context, manage
             )
         }
         rv_folder = view.findViewById(R.id.rv_folder)
-        rv_folder!!.layoutManager = LinearLayoutManager(context)
-        rv_folder!!.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+        rv_folder!!.layoutManager = LinearLayoutManager(manager.view.context)
+        rv_folder!!.addItemDecoration(DividerItemDecoration(manager.view.context, RecyclerView.VERTICAL))
         rv_folder!!.adapter = adapter
         lv_folder!!.setOnLetterChangeListener { s ->
             tv_folder_dialog!!.text = s
