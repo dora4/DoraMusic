@@ -2,7 +2,6 @@ package site.doramusic.app.ui.activity
 
 import android.bluetooth.BluetoothHeadset
 import android.content.IntentFilter
-import android.graphics.Color
 import android.media.AudioManager
 import android.os.Bundle
 import android.view.View
@@ -13,23 +12,23 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
-import com.lsxiao.apollo.core.Apollo
 import com.lwh.jackknife.util.ApkUtils
 import com.lwh.jackknife.util.IoUtils
 import com.lwh.jackknife.util.Logger
 import com.lwh.jackknife.util.TextUtils
 import com.lwh.jackknife.xskin.SkinManager
 import dora.arouter.open
-import dora.crash.DoraCrash
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
-import dora.util.DensityUtils
+import dora.http.DoraHttp.net
+import dora.http.DoraHttp.request
 import dora.util.StatusBarUtils
+import dora.widget.DoraAlertDialog
 import okhttp3.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.MusicApp
@@ -37,8 +36,8 @@ import site.doramusic.app.R
 import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.ARoutePath
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.MessageEvent
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.http.DoraCallback
@@ -50,13 +49,12 @@ import site.doramusic.app.http.service.UserService
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.receiver.EarCupReceiver
 import site.doramusic.app.ui.IBack
-import site.doramusic.app.ui.dialog.ConfirmScanDialog
-import site.doramusic.app.ui.dialog.ConfirmScanDialog.OnConfirmScanListener
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.util.PreferencesManager
 import site.doramusic.app.util.UserManager
 import site.doramusic.app.widget.LoadingDialog
 import java.io.IOException
+import java.util.concurrent.Executors
 
 @Route(path = ARoutePath.ACTIVITY_MAIN)
 class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
@@ -275,13 +273,10 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                 .addWhereEqualTo(Music.COLUMN_FAVORITE, 1))
         val favoriteCount = DaoFactory.getDao(Music::class.java).count(builder)
         if (favoriteCount > 0) { //有收藏的歌曲
-            val dialog = ConfirmScanDialog(this)
-            dialog.setOnConfirmScanListener(object : OnConfirmScanListener {
-                override fun onScan() {
-                    scanMusic()
-                }
-            })
-            dialog.show()
+            DoraAlertDialog(this).show("您有收藏的歌曲，扫描将会强制清空收藏的歌曲，是否继续？") {
+                themeColorResId(R.color.colorPrimary)
+                positiveListener { scanMusic() }
+            }
         } else {
             scanMusic()
         }
@@ -291,19 +286,25 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
      * 扫描歌曲。
      */
     fun scanMusic() {
-        val dialog = LoadingDialog(this)
-        dialog.titleText = "正在扫描..."
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.show()
-        Thread(Runnable {
-            val playlist = MusicScanner.scan(this@MainActivity) as MutableList<Music>
-            MusicApp.instance!!.mediaManager!!.refreshPlaylist(playlist)
-            runOnUiThread {
-                Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
-                dialog.dismiss()
+        net {
+            val dialog = LoadingDialog(this)
+            dialog.titleText = "正在扫描..."
+            dialog.setCancelable(false)
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
+            request {
+                Executors.newCachedThreadPool().submit {
+                    try {
+                        val playlist = MusicScanner.scan(this@MainActivity) as MutableList<Music>
+                        MusicApp.instance!!.mediaManager!!.refreshPlaylist(playlist)
+                    } finally {
+                        it.releaseLock(null)
+                    }
+                }
             }
-        }).start()
+            EventBus.getDefault().post(MessageEvent(MessageEvent.REFRESH_MUSIC_INFOS))
+            dialog.dismiss()
+        }
     }
 
     override fun onDestroy() {
@@ -338,7 +339,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                     }
                     //这种方式返回首页也要刷新，另一种刷新是在UIManager#setCurrentItem()
                     if (homeFragment!!.isHome) {
-                        Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
+                        EventBus.getDefault().post(MessageEvent(MessageEvent.REFRESH_MUSIC_INFOS))
                     }
                 }
             }

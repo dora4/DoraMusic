@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.lsxiao.apollo.core.Apollo
 import dora.db.table.OrmTable
+import org.greenrobot.eventbus.EventBus
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.MessageEvent
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.layout.*
 import java.util.*
@@ -36,7 +36,7 @@ class UIManager(protected var drawer: ILyricDrawer, val view: View) : AppConfig,
         } else {
             masterViewPager!!.setCurrentItem(0, true)
             //返回首页要刷新界面
-            Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
+            EventBus.getDefault().post(MessageEvent(MessageEvent.REFRESH_MUSIC_INFOS))
         }
     }
 

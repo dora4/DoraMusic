@@ -98,9 +98,7 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 
     api 'com.tencent.bugly:crashreport:2.1.5'
-    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    implementation 'com.squareup.okhttp:okhttp:2.7.5'
 
 
     implementation 'org.aspectj:aspectjrt:1.8.10'
@@ -112,15 +110,14 @@ dependencies {
     //Apollo的编译时注解处理器
     kapt "com.github.lsxiao.Apollo:processor:1.0.2"
 
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-
     implementation "io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.6"
-    implementation "com.github.dora4:dcache-android:1.6.26"
+    implementation "com.github.dora4:dcache-android:1.7.8"
     implementation "com.github.dora4:dora:1.0.131"
     implementation 'com.github.dora4:dora-arouter-support:1.1'
     implementation 'com.github.dora4:dora-eventbus-support:1.1'
     implementation 'com.github.dora4:dview-toggle-button:1.0'
+    implementation 'com.github.dora4:dview-alert-dialog:1.0'
+//    implementation 'com.github.dora4:dview-avatar:1.4'
     implementation 'com.github.dora4:dview-titlebar:1.8'
 
     implementation("com.alibaba:arouter-api:1.5.2")

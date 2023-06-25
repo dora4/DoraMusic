@@ -55,9 +55,6 @@ class MusicApp : BaseApplication(), AppConfig {
         SkinManager.getInstance().init(this)
         //Apollo
         Apollo.init(AndroidSchedulers.mainThread(), this)
-        //ARouter
-        ARouter.init(this)
-        ARouter.openLog()
     }
 
     private fun initDb() {

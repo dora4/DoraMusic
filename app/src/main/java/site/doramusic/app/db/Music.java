@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import dora.db.constraint.AssignType;
 import dora.db.constraint.PrimaryKey;
+import dora.db.migration.OrmMigration;
 import dora.db.table.Column;
 import dora.db.table.Ignore;
 import dora.db.table.OrmTable;
@@ -72,6 +73,12 @@ public class Music implements OrmTable, Parcelable, Sort {
      */
     @Ignore
     private String coverPath;
+
+    @NonNull
+    @Override
+    public OrmMigration[] getMigrations() {
+        return new OrmMigration[0];
+    }
 
     public enum  Type {
         LOCAL, ONLINE

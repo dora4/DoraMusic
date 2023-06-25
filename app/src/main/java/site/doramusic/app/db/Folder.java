@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import dora.db.constraint.AssignType;
 import dora.db.constraint.PrimaryKey;
+import dora.db.migration.OrmMigration;
 import dora.db.table.Column;
 import dora.db.table.Ignore;
 import dora.db.table.OrmTable;
@@ -92,5 +95,11 @@ public class Folder implements OrmTable, Parcelable, Sort {
     @Override
     public int compareTo(Sort sort) {
         return getSortLetter().compareTo(sort.getSortLetter());
+    }
+
+    @NonNull
+    @Override
+    public OrmMigration[] getMigrations() {
+        return new OrmMigration[0];
     }
 }

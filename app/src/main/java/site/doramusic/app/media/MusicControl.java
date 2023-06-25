@@ -10,7 +10,7 @@ import android.media.audiofx.Equalizer;
 import android.os.Build;
 import android.os.PowerManager;
 
-import com.lsxiao.apollo.core.Apollo;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +23,8 @@ import dora.db.dao.OrmDao;
 import dora.util.LogUtils;
 import dora.util.TextUtils;
 import dora.util.ToastUtils;
-import site.doramusic.app.base.conf.ApolloEvent;
 import site.doramusic.app.base.conf.AppConfig;
+import site.doramusic.app.base.conf.MessageEvent;
 import site.doramusic.app.db.Music;
 import site.doramusic.app.util.PreferencesManager;
 
@@ -718,7 +718,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         Intent intent = new Intent(ACTION_PLAY);
         intent.putExtra("play_state", mPlayState);
         mContext.sendBroadcast(intent);
-        Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS);
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.REFRESH_MUSIC_INFOS));
     }
 
     /**

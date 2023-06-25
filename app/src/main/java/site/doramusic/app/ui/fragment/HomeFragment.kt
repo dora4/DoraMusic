@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
@@ -14,14 +13,12 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
 import com.lwh.jackknife.av.util.MusicTimer
 import com.lwh.jackknife.av.util.MusicUtils
-import com.lwh.jackknife.xskin.SkinLoader
 import dora.BaseFragment
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
@@ -29,10 +26,14 @@ import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.util.*
 import dora.widget.DoraTitleBar
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.MessageEvent
+import site.doramusic.app.base.conf.MessageEvent.REFRESH_MUSIC_INFOS
 import site.doramusic.app.databinding.FragmentHomeBinding
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
@@ -265,10 +266,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
-    @Receive(ApolloEvent.REFRESH_LOCAL_NUMS)
-    fun refreshNums() {
-        val homeItems = getHomeItems()
-        adapter.setList(homeItems)
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(msg: MessageEvent) {
+        when(msg.what) {
+            REFRESH_MUSIC_INFOS -> {
+                val homeItems = getHomeItems()
+                adapter.setList(homeItems)
+            }
+        }
     }
 
     override fun onDestroy() {

@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.provider.MediaStore
 import com.lwh.jackknife.av.util.MusicUtils
 import dora.db.Orm
+import dora.db.Transaction
 import dora.db.dao.DaoFactory
 import dora.db.table.TableManager
 import dora.util.PinyinUtils
@@ -51,7 +52,7 @@ object MusicScanner : AppConfig {
     }
 
     @JvmStatic
-    fun scan(context: Context): List<Music>? {
+    fun scan(context: Context): List<Music> {
         recreateTables()
         val musics = queryMusic(context, AppConfig.ROUTE_START_FROM_LOCAL)
         val albums = queryAlbum(context)

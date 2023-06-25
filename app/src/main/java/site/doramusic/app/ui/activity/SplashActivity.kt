@@ -3,6 +3,7 @@ package site.doramusic.app.ui.activity
 import android.os.Bundle
 import android.os.Handler
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.lwh.jackknife.av.util.MusicUtils
@@ -69,7 +70,8 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        init()
+        XXPermissions.with(this).permission(Permission.MANAGE_EXTERNAL_STORAGE)
+            .request { permissions, allGranted -> init() }
     }
 
     private fun splashLoading(prefsManager: PreferencesManager) {

@@ -14,18 +14,18 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.lsxiao.apollo.core.Apollo
 import com.lwh.jackknife.av.util.MusicTimer
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.util.DensityUtils
 import dora.widget.DoraRotateCoverView
+import org.greenrobot.eventbus.EventBus
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.annotation.SingleClick
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.MessageEvent
 import site.doramusic.app.db.Music
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.lrc.LyricScroller
@@ -465,7 +465,7 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                     refreshFavorite(0)
                 }
                 //此处最好只刷新收藏数目
-                Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
+                EventBus.getDefault().post(MessageEvent(MessageEvent.REFRESH_MUSIC_INFOS))
             }
         }
     }
