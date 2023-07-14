@@ -4,6 +4,7 @@ import dora.util.LogUtils
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
+import org.aspectj.lang.annotation.Pointcut
 
 /**
  * 能过注解@SingleClick aop切片的方式在编译期间织入源代码中，防止二次点击。
@@ -13,7 +14,11 @@ class SingleClickAspect {
 
     private var lastClickTime: Long = 0
 
-    @Around("execution(@site.doramusic.app.annotation.SingleClick * *(..))")
+    @Pointcut("execution(@site.doramusic.app.annotation.SingleClick * *(..))")
+    fun singleClick() {
+    }
+
+    @Around("singleClick()")
     @Throws(Throwable::class)
     fun aroundPointMethod(joinPoint: ProceedingJoinPoint) {
         if (isFastClick) {

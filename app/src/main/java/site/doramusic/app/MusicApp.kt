@@ -1,17 +1,21 @@
 package site.doramusic.app
 
-import com.alibaba.android.arouter.launcher.ARouter
 import com.lsxiao.apollo.core.Apollo
 import com.lwh.jackknife.xskin.SkinManager
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
+import dora.http.log.FormatLogInterceptor
+import dora.http.retrofit.RetrofitManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
+import site.doramusic.app.http.service.MusicService
+import site.doramusic.app.http.service.UpdateService
+import site.doramusic.app.http.service.UserService
 import site.doramusic.app.media.MediaManager
 
 /**
@@ -55,6 +59,14 @@ class MusicApp : BaseApplication(), AppConfig {
         SkinManager.getInstance().init(this)
         //Apollo
         Apollo.init(AndroidSchedulers.mainThread(), this)
+        RetrofitManager.initConfig {
+            okhttp {
+                interceptors().add(FormatLogInterceptor())
+                build()
+            }
+            mappingBaseUrl(MusicService::class.java, AppConfig.URL_APP_SERVER)
+            mappingBaseUrl(UserService::class.java, AppConfig.URL_APP_SERVER)
+        }
     }
 
     private fun initDb() {

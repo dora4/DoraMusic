@@ -1,0 +1,100 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.dorachat",
+    "module": "dora-aop-plugin",
+    "version": "1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.1.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 19,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "dora-aop-plugin-1.0.jar",
+          "url": "dora-aop-plugin-1.0.jar",
+          "size": 14645390,
+          "sha512": "5e6674fb4373875198bc3200afd9311e7974fd3a79dc14ce58ce1bb5b49070cd7a4ae5dc6d1d105a1c0b7485639e84ec3a265f78d33fc17bee71943334dda97c",
+          "sha256": "7e4776987f7ec5b4d264a8c9ebaca5067d6d6e3172d88c22861252a7f5ca0e39",
+          "sha1": "d8e0fc617614a439a6365398e798b80455edba86",
+          "md5": "cada11cd5a702d4b429eb21479864652"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 19,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "dora-aop-plugin-1.0.jar",
+          "url": "dora-aop-plugin-1.0.jar",
+          "size": 14645390,
+          "sha512": "5e6674fb4373875198bc3200afd9311e7974fd3a79dc14ce58ce1bb5b49070cd7a4ae5dc6d1d105a1c0b7485639e84ec3a265f78d33fc17bee71943334dda97c",
+          "sha256": "7e4776987f7ec5b4d264a8c9ebaca5067d6d6e3172d88c22861252a7f5ca0e39",
+          "sha1": "d8e0fc617614a439a6365398e798b80455edba86",
+          "md5": "cada11cd5a702d4b429eb21479864652"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "dora-aop-plugin-1.0-javadoc.jar",
+          "url": "dora-aop-plugin-1.0-javadoc.jar",
+          "size": 261,
+          "sha512": "f92654a1fb2039a6fdcda78769cde03999f90129c94ea90cf59d2e161bbe7fccff01343b0b73b2b1526c8020191e529379a3c7d88829d1393d013cb88b54d63e",
+          "sha256": "919473fc06566c4c7fd673b69c19da6909604db9bd89a57bc16a121b5f3d230f",
+          "sha1": "5b5facd73734616d8283de1ca7913a2f2704f56f",
+          "md5": "3a37363a96dcb6d1eaa7df82ba059605"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "dora-aop-plugin-1.0-sources.jar",
+          "url": "dora-aop-plugin-1.0-sources.jar",
+          "size": 4393,
+          "sha512": "617bb6f0049e8520c8cd9db833bd1b0b22e28fd90240ea814ee5dfeeafda0697d6688be1c9caeca5062447f9db19596238dc009508512702cce360fe3a66fd02",
+          "sha256": "c08795a940278bbb37bc670b0c2efd9966d190940a8814695616e7c5a52d308c",
+          "sha1": "76148063caf9910f95c9da097140c2cf3e107d1b",
+          "md5": "363762322b767eb9c0c7cb71d35bd02e"
+        }
+      ]
+    }
+  ]
+}

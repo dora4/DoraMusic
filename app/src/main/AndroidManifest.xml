@@ -46,16 +46,17 @@
         android:requestLegacyExternalStorage="true"
         android:networkSecurityConfig="@xml/network_config"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:targetApi="n">
         <meta-data
             android:name="dora.lifecycle.config.TaskStackGlobalConfig"
             android:value="GlobalConfig" />
         <meta-data
             android:name="dora.lifecycle.config.ARouterGlobalConfig"
             android:value="GlobalConfig" />
-        <meta-data
-            android:name="dora.lifecycle.config.EventBusGlobalConfig"
-            android:value="GlobalConfig" />
+<!--        <meta-data-->
+<!--            android:name="dora.lifecycle.config.EventBusGlobalConfig"-->
+<!--            android:value="GlobalConfig" />-->
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"

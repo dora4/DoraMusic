@@ -1,12 +1,13 @@
 package site.doramusic.app.http.service
 
+import dora.http.retrofit.ApiService
 import retrofit2.Call
 import retrofit2.http.*
 import site.doramusic.app.http.DoraResponse
 import site.doramusic.app.http.DoraSign
 import site.doramusic.app.http.DoraUser
 
-interface UserService {
+interface UserService : ApiService {
 
     @GET("/checkLogin")
     fun checkLogin(@Query("token") token: String): Call<DoraResponse<DoraUser>>

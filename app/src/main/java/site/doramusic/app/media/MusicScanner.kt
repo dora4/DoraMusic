@@ -19,6 +19,7 @@ import site.doramusic.app.db.Music
 import site.doramusic.app.util.PreferencesManager
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 媒体扫描器，用来扫描手机中的歌曲文件。
@@ -54,14 +55,22 @@ object MusicScanner : AppConfig {
     @JvmStatic
     fun scan(context: Context): List<Music> {
         recreateTables()
-        val musics = queryMusic(context, AppConfig.ROUTE_START_FROM_LOCAL)
-        val albums = queryAlbum(context)
-        val artists = queryArtist(context)
-        val folders = queryFolder(context)
-        musicDao.insert(musics)
-        artistDao.insert(artists)
-        albumDao.insert(albums)
-        folderDao.insert(folders)
+        var musics = arrayListOf<Music>()
+        Transaction.execute(Music::class.java) {
+            musics = queryMusic(context, AppConfig.ROUTE_START_FROM_LOCAL) as ArrayList<Music>
+            it.insert(musics)
+        }
+        if (musics.size > 0) {
+            // 歌曲都没有就没有必要查询歌曲信息了
+            Transaction.execute {
+                val artists = queryArtist(context)
+                artistDao.insert(artists)
+                val albums = queryAlbum(context)
+                albumDao.insert(albums)
+                val folders = queryFolder(context)
+                folderDao.insert(folders)
+            }
+        }
         return musics
     }
 
@@ -214,12 +223,12 @@ object MusicScanner : AppConfig {
         val cr = context.contentResolver
         val selection = StringBuilder(MediaStore.Files.FileColumns.MEDIA_TYPE
                 + " = " + MediaStore.Files.FileColumns.MEDIA_TYPE_AUDIO + " and " + "("
-                + MediaStore.Files.FileColumns.DATA + " like'%.mp3' or "
-                + MediaStore.Files.FileColumns.DATA + " like'%.flac' or "
-                + MediaStore.Files.FileColumns.DATA + " like'%.wav' or "
-                + MediaStore.Files.FileColumns.DATA + " like'%.ape' or "
-                + MediaStore.Files.FileColumns.DATA + " like'%.m4a' or "
-                + MediaStore.Audio.Media.DATA + " like'%.aac')")
+                + MediaStore.Files.FileColumns.DATA + " like '%.mp3' or "
+                + MediaStore.Files.FileColumns.DATA + " like '%.flac' or "
+                + MediaStore.Files.FileColumns.DATA + " like '%.wav' or "
+                + MediaStore.Files.FileColumns.DATA + " like '%.ape' or "
+                + MediaStore.Files.FileColumns.DATA + " like '%.m4a' or "
+                + MediaStore.Files.FileColumns.DATA + " like '%.aac')")
         // 查询语句：检索出.mp3为后缀名，时长大于1分钟，文件大小大于1MB的媒体文件
         if (sp.getFilterSize()) {
             selection.append(" and " + MediaStore.Audio.Media.SIZE + " > " + AppConfig.SCANNER_FILTER_SIZE)
@@ -227,11 +236,11 @@ object MusicScanner : AppConfig {
         if (sp.getFilterTime()) {
             selection.append(" and " + MediaStore.Audio.Media.DURATION + " > " + AppConfig.SCANNER_FILTER_DURATION)
         }
-        selection.append(") group by ( " + MediaStore.Files.FileColumns.PARENT)
+//        selection.append(") group by ( " + MediaStore.Files.FileColumns.PARENT)
         return if (folderDao.count() > 0) {
             folderDao.selectAll()
         } else {
-            getFolderList(cr.query(uri, proj_folder, null, null, null))
+            getFolderList(cr.query(uri, proj_folder, selection.toString(), null, null))
         }
     }
 

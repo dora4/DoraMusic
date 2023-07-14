@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.InflateException
 import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.collection.ArrayMap
 import androidx.core.view.LayoutInflaterCompat
 import androidx.core.view.LayoutInflaterFactory

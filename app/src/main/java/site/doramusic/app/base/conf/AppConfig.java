@@ -10,18 +10,6 @@ public interface AppConfig {
     String URL_APP_SERVER = "http://doramusic.site:8080";
 
     /**
-     * 朵拉音乐文件服务器。
-     */
-    String URL_FILE_SERVER = "http://47.111.72.9:8080";
-
-    /**
-     * 第三方appkey。
-     */
-    String BUGLY_APP_ID = "2efb8a5451";
-    String BMOB_APP_ID = "3511cb23ace2d895cafcc6c034d50033";
-    String UMENG_APP_KEY = "5e753ea20cafb2836d0007f0";
-
-    /**
      * Intent & Action。
      */
     String MEDIA_SERVICE = "site.doramusic.app.service.MEDIA_SERVICE";
@@ -31,7 +19,7 @@ public interface AppConfig {
     String ACTION_PAUSE_RESUME = "site.doramusic.app.intent.ACTION_PAUSE_RESUME";
     String ACTION_CANCEL = "site.doramusic.app.intent.ACTION_CANCEL";
 
-    //文件夹
+    // 文件夹
     String FOLDER_LRC = IoUtils.getSdRoot() + "/DoraMusic/lrc"; //歌词存放目录
     String FOLDER_SONG = IoUtils.getSdRoot() + "/DoraMusic/song";   //歌曲存放目录
     String FOLDER_APK = IoUtils.getSdRoot() + "/DoraMusic/apk"; //升级包存放目录
@@ -40,7 +28,7 @@ public interface AppConfig {
     String FOLDER_LOG = IoUtils.getSdRoot() + "/DoraMusic/log"; //日志存放目录
     String FOLDER_PATCH = IoUtils.getSdRoot() +"/DoraMusic/patch";  //热修复补丁临时存放目录
 
-    //页面路由
+    // 页面路由
     int ROUTE_START_FROM_LOCAL = 1;
     int ROUTE_START_FROM_ARTIST = 2;
     int ROUTE_START_FROM_ALBUM = 3;
@@ -65,6 +53,6 @@ public interface AppConfig {
     int MPM_SINGLE_LOOP_PLAY = 3; // 单曲循环
 
     // 扫描器过滤器
-    int SCANNER_FILTER_SIZE = 1 * 1024 * 1024;  // 1MB
-    int SCANNER_FILTER_DURATION = 1 * 60 * 1000;    // 1分钟
+    int SCANNER_FILTER_SIZE = 1024 * 1024;  // 1MB
+    int SCANNER_FILTER_DURATION = 60 * 1000;    // 1分钟
 }

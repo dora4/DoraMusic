@@ -7,7 +7,9 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 import dora.db.constraint.AssignType;
+import dora.db.constraint.NotNull;
 import dora.db.constraint.PrimaryKey;
+import dora.db.constraint.Unique;
 import dora.db.migration.OrmMigration;
 import dora.db.table.Column;
 import dora.db.table.Ignore;
@@ -34,6 +36,8 @@ public class Folder implements OrmTable, Parcelable, Sort {
     public int id;
     @Column(COLUMN_FOLDER_NAME)
     public String name;
+    @Unique
+    @NotNull
     @Column(COLUMN_FOLDER_PATH)
     public String path;
 
@@ -72,6 +76,7 @@ public class Folder implements OrmTable, Parcelable, Sort {
         }
     };
 
+    @NonNull
     @Override
     public PrimaryKeyEntry getPrimaryKey() {
         return new PrimaryKeyEntry(COLUMN_ID, id);

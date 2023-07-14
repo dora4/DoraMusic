@@ -13,6 +13,8 @@ import android.view.animation.LinearInterpolator
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
 import dora.util.DensityUtils
+import dora.util.ImageUtils
+import dora.util.ViewUtils
 
 class DoraRotateCoverView @JvmOverloads constructor(
     context: Context,
@@ -38,26 +40,31 @@ class DoraRotateCoverView @JvmOverloads constructor(
         private set
 
     private fun init() {
+        coverPaint.color = Color.BLUE
         borderPaint.style = Paint.Style.STROKE
         borderPaint.color = borderColor
         borderPaint.strokeWidth = borderWidth.toFloat()
         borderRect[0f, 0f, width.toFloat()] = height.toFloat()
-        borderRadius = ((borderRect.height() - borderWidth) / 2).coerceAtMost((borderRect.width() - borderWidth) / 2)
+        borderRadius = DensityUtils.dp2px(200f).toFloat()
         if (coverBitmap != null) {
-            coverWidth = coverBitmap!!.width
-            coverHeight = coverBitmap!!.height
+            val dp100 = DensityUtils.dp2px(100f)
+            val dp200 = DensityUtils.dp2px(200f)
+            val dp400 = DensityUtils.dp2px(400f)
+            coverWidth = dp400
+            coverHeight = dp400
             coverRect.set(borderRect)
             coverRadius = (coverRect.width() / 2).coerceAtMost(coverRect.height() / 2)
-            if (coverRadius > 0f && coverWidth > coverRect.width() && coverHeight > coverRect.height()) {
-                coverBitmap = Bitmap.createScaledBitmap(
-                    coverBitmap!!,
-                    coverRadius.toInt() * 2,
-                    coverRadius.toInt() * 2,
-                    true
-                )
-            }
-            bitmapShader =
-                BitmapShader(coverBitmap!!, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
+            coverBitmap = ImageUtils.decodeSampledBitmap(resources, site.doramusic.app.R.drawable.default_cover_rotate,
+                dp400, dp400)
+//            if (coverRadius > 0f && coverWidth > coverRect.width() && coverHeight > coverRect.height()) {
+//                coverBitmap = Bitmap.createScaledBitmap(
+//                    coverBitmap!!,
+//                    coverRadius.toInt() * 2,
+//                    coverRadius.toInt() * 2,
+//                    true
+//                )
+//            }
+            bitmapShader = BitmapShader(coverBitmap!!, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
             coverPaint.shader = bitmapShader
         }
     }
@@ -70,6 +77,12 @@ class DoraRotateCoverView @JvmOverloads constructor(
         }
     }
 
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val measuredWidth = ViewUtils.applyWrapContentSize(widthMeasureSpec, DensityUtils.dp2px(200f))
+        val measuredHeight = ViewUtils.applyWrapContentSize(widthMeasureSpec, DensityUtils.dp2px(200f))
+        setMeasuredDimension(measuredWidth, measuredHeight)
+    }
     override fun getScaleType(): ScaleType {
         return SCALE_TYPE
     }

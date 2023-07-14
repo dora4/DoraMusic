@@ -1,11 +1,12 @@
 package site.doramusic.app.http.service
 
+import dora.http.retrofit.ApiService
 import retrofit2.Call
 import retrofit2.http.*
 import site.doramusic.app.http.DoraPatch
 import site.doramusic.app.http.DoraResponse
 
-interface UpdateService {
+interface UpdateService : ApiService {
 
     @POST("/updateApk")
     @FormUrlEncoded

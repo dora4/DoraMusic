@@ -12,6 +12,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.lwh.jackknife.xskin.SkinLoader
 import com.lwh.jackknife.xskin.SkinManager
+import com.lwh.jackknife.xskin.util.PrefsUtils
 import site.doramusic.app.R
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -37,8 +38,6 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     private var lastY = 0
     private var index = 0
     private var onUpdateDecibelListener: OnUpdateDecibelListener? = null
-    val skinThemeColor = ContextCompat.getColor(context,
-        SkinLoader.getInstance().getColorRes("skin_theme_color_orange"))
 
     private fun initAttrs(context: Context, attrs: AttributeSet?) {
         val a = context.obtainStyledAttributes(attrs, R.styleable.EqualizerView)
@@ -91,6 +90,8 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     }
 
     private fun initPaints() {
+        val skinThemeColor = ContextCompat.getColor(context,
+            SkinLoader.getInstance().getColorRes("skin_theme_color_"+ PrefsUtils(context).suffix))
         paint = Paint()
         paint!!.isAntiAlias = true
         nodePaint = Paint()
@@ -149,6 +150,8 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     }
 
     private fun refreshView(canvas: Canvas, stepSize: Int) {
+        val skinThemeColor = ContextCompat.getColor(context,
+            SkinLoader.getInstance().getColorRes("skin_theme_color_"+PrefsUtils(context).suffix))
         val fontMetrics = freqPaint!!.fontMetrics
         for (i in 1..bandsNum) {
             val cx = stepSize * i.toFloat()

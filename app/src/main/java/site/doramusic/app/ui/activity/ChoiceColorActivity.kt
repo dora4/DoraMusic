@@ -7,18 +7,16 @@ import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.lwh.jackknife.xskin.SkinLoader
 import com.lwh.jackknife.xskin.SkinManager
+import com.lwh.jackknife.xskin.util.PrefsUtils
 import dora.util.DensityUtils
 import dora.util.StatusBarUtils
 import dora.widget.DoraTitleBar
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.R
-import site.doramusic.app.annotation.SingleClick
+import site.doramusic.app.annotation.TimeTrace
 import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityChoiceColorBinding
@@ -51,7 +49,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
     override fun initData(savedInstanceState: Bundle?) {
         mBinding.statusbarChoiceColor.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        mBinding.statusbarChoiceColor.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
+        mBinding.statusbarChoiceColor.background = ContextCompat.getDrawable(this, SkinLoader.getInstance().getColorRes("skin_theme_color_"+ PrefsUtils(this).suffix))
         val imageView = AppCompatImageView(this)
         val dp24 = DensityUtils.dp2px(24f)
         imageView.layoutParams = RelativeLayout.LayoutParams(dp24, dp24)
@@ -64,7 +62,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
 
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
                 if (position == 0) {
-                    aop()
+                    changeSkin()
                 }
             }
         })
@@ -104,8 +102,11 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
         }
     }
 
-    @SingleClick
-    private fun aop() {
+    /**
+     * 测试AOP。
+     */
+    @TimeTrace
+    private fun changeSkin() {
         when (choiceColorAdapter!!.selectedPosition) {
             0 -> {
                 prefsManager.saveSkinType(1)
@@ -136,10 +137,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
                 SkinManager.getInstance().changeSkin("purple")
             }
         }
+        mBinding.statusbarChoiceColor.background = ContextCompat.getDrawable(this, SkinLoader.getInstance().getColorRes("skin_theme_color_"+ PrefsUtils(this).suffix))
         finish()
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(msg: String) {
     }
 }

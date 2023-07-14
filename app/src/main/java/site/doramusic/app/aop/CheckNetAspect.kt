@@ -16,11 +16,12 @@
 package site.doramusic.app.aop
 
 import android.app.Activity
-import com.lwh.jackknife.util.NetworkUtils
+import dora.util.NetUtils
+import dora.widget.DoraAlertDialog
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
-import site.doramusic.app.ui.dialog.CheckNetDialog
+import site.doramusic.app.R
 
 /**
  * 如果用户使用移动网络下载则拦截。
@@ -32,15 +33,14 @@ class CheckNetAspect {
     @Throws(Throwable::class)
     fun aroundJoinPoint(joinPoint: ProceedingJoinPoint) {
         val activity = joinPoint.target as Activity
-        if (NetworkUtils.isMobileConnected(activity)) {
-            val dialog = CheckNetDialog(activity)
-            dialog.setListener(object: CheckNetDialog.OnPositiveListener{
-
-                override fun onConfirm() {
+        if (NetUtils.isMobileConnected(activity)) {
+            DoraAlertDialog(activity)
+                .show("当前处于移动网络，下载将消耗较多流量，是否继续下载？") {
+                themeColorResId(R.color.colorPrimary)
+                positiveListener {
                     joinPoint.proceed()
                 }
-            })
-            dialog.show()
+            }
         } else {
             joinPoint.proceed()
         }

@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven { setUrl("aop_plugin") }
     }
     resolutionStrategy {
         eachPlugin {
@@ -11,6 +12,9 @@ pluginManagement {
             }
             if (requested.id.namespace == "com.google.firebase") {
                 useModule("com.google.firebase:firebase-crashlytics-gradle:2.9.2")
+            }
+            if (requested.id.namespace == "com.dorachat") {
+                useModule("com.dorachat:dora-aop-plugin:1.0")
             }
         }
     }

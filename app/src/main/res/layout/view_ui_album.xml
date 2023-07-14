@@ -34,8 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            app:letterview_hoverBackgroundDrawable="@drawable/shape_letterview_bg"
-            app:letterview_hoverTextColor="#389CFF"
+            app:letterview_hoverBackgroundDrawable="@drawable/shape_letterview_hover_bg"
+            app:letterview_hoverTextColor="@color/colorPrimary"
+            android:background="@drawable/shape_letterview_normal_bg"
             app:letterview_textColor="@color/white"
             app:letterview_letters="↑ABCDEFGHIJKLMNOPQRSTUVWXYZ#"
             app:letterview_textAllCaps="true" />

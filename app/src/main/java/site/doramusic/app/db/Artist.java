@@ -77,6 +77,7 @@ public class Artist implements OrmTable, Parcelable, Sort {
         }
     };
 
+    @NonNull
     @Override
     public PrimaryKeyEntry getPrimaryKey() {
         return new PrimaryKeyEntry(COLUMN_ID, id);

@@ -1,15 +1,15 @@
 package site.doramusic.app.util
 
 import android.content.Context
+import dora.http.retrofit.RetrofitManager
 import dora.util.TextUtils
 import site.doramusic.app.http.DoraCallback
 import site.doramusic.app.http.DoraUser
-import site.doramusic.app.http.ServiceManager
 import site.doramusic.app.http.service.UserService
 
 object UserManager {
 
-    val service = ServiceManager.getService(UserService::class.java)
+    val service = RetrofitManager.getService(UserService::class.java)
 
     var currentUser: DoraUser? = null
         private set

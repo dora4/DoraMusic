@@ -17,7 +17,7 @@
         <FrameLayout
             android:id="@+id/fl_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
         <!--去掉background，会影响4.4系统的状态栏-->
         <com.google.android.material.navigation.NavigationView

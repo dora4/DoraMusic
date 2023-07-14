@@ -1,14 +1,12 @@
 package site.doramusic.app.ui.layout
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -23,6 +21,7 @@ import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
+import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
@@ -37,7 +36,6 @@ import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.adapter.MusicItemAdapter
-import site.doramusic.app.widget.LoadingDialog
 
 class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager), AppConfig {
 
@@ -52,7 +50,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
     private val mediaManager: MediaManager? = MusicApp.instance!!.mediaManager
     private var tv_music_dialog: TextView? = null
     private val musicDao = DaoFactory.getDao(Music::class.java)
-    private val loadingDialog: LoadingDialog = LoadingDialog(manager.view.context)
+    private val loadingDialog: DoraLoadingDialog = DoraLoadingDialog(manager.view.context)
 
     init {
         Apollo.bind(this)
@@ -117,7 +115,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         adapter!!.sort()
                         installItemClick()
                         rv_music!!.adapter = adapter
-                        loadingDialog.dismiss()
+                        loadingDialog.dismissWithAnimation()
                     }
                 }).start()
             }
@@ -133,7 +131,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         adapter!!.sort()
                         installItemClick()
                         rv_music!!.adapter = adapter
-                        loadingDialog.dismiss()
+                        loadingDialog.dismissWithAnimation()
                     }
                 }).start()
             }
@@ -148,7 +146,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         adapter!!.sort()
                         installItemClick()
                         rv_music!!.adapter = adapter
-                        loadingDialog.dismiss()
+                        loadingDialog.dismissWithAnimation()
                     }
                 }).start()
             }
@@ -162,7 +160,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         adapter!!.sort()
                         installItemClick()
                         rv_music!!.adapter = adapter
-                        loadingDialog.dismiss()
+                        loadingDialog.dismissWithAnimation()
                     }
                 }).start()
             }

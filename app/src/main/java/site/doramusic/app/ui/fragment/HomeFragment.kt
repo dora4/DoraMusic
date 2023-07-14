@@ -26,14 +26,10 @@ import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.util.*
 import dora.widget.DoraTitleBar
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.base.conf.MessageEvent
-import site.doramusic.app.base.conf.MessageEvent.REFRESH_MUSIC_INFOS
 import site.doramusic.app.databinding.FragmentHomeBinding
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
@@ -80,6 +76,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         fun getMusicNum(): String {
             return musicNum.toString()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Apollo.bind(this)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -266,14 +267,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(msg: MessageEvent) {
-        when(msg.what) {
-            REFRESH_MUSIC_INFOS -> {
-                val homeItems = getHomeItems()
-                adapter.setList(homeItems)
-            }
-        }
+    @Receive(ApolloEvent.REFRESH_LOCAL_NUMS)
+    fun onMessageEvent() {
+        val homeItems = getHomeItems()
+        adapter.setList(homeItems)
     }
 
     override fun onDestroy() {

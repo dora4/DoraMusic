@@ -3,6 +3,7 @@
 <!-- 歌曲列表条目 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -27,15 +28,16 @@
 
             <ImageView
                 android:id="@+id/iv_music_play_state"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/icon_cur_playing"
+                app:tint="@color/colorPrimary"
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_music_name"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="@color/gray"

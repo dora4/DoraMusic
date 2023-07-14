@@ -137,6 +137,7 @@ public class Music implements OrmTable, Parcelable, Sort {
         }
     };
 
+    @NonNull
     @Override
     public String toString() {
         return "DoraMusic{" +

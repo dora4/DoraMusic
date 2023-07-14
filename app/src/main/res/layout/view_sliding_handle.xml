@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="@dimen/dp_10"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -28,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="@dimen/dp_10"
         android:textColor="@color/white"
         android:textSize="15sp" />
 

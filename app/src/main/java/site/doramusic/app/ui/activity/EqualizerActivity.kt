@@ -9,9 +9,8 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.lwh.jackknife.xskin.SkinLoader
+import com.lwh.jackknife.xskin.util.PrefsUtils
 import dora.util.StatusBarUtils
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.BaseSkinActivity
@@ -37,7 +36,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
     override fun initData(savedInstanceState: Bundle?) {
         mBinding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        mBinding.statusbarEqualizer.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
+        mBinding.statusbarEqualizer.background = ContextCompat.getDrawable(this, SkinLoader.getInstance().getColorRes("skin_theme_color_"+PrefsUtils(this).suffix))
         prefsManager = PreferencesManager(this)
         val equalizerFreq = MusicApp.instance!!.mediaManager!!.equalizerFreq
         val decibels = IntArray(equalizerFreq!!.size)
@@ -61,7 +60,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         mBinding.rbEqualizerCountry.buttonDrawable = BitmapDrawable()
 
         val skinThemeColor = ContextCompat.getColor(this,
-            SkinLoader.getInstance().getColorRes("skin_theme_color_orange"))
+            SkinLoader.getInstance().getColorRes("skin_theme_color_"+PrefsUtils(this).suffix))
         val colors = intArrayOf(skinThemeColor, Color.WHITE)
         val state = arrayOf(intArrayOf(android.R.attr.state_checked), IntArray(0))
         val colorStateList = ColorStateList(state, colors)
@@ -182,9 +181,5 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
     override fun onUpdateDecibel(decibels: IntArray) {
         prefsManager!!.saveEqualizerDecibels(decibels)
         MusicApp.instance!!.mediaManager!!.setEqualizer(decibels)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(msg: String) {
     }
 }

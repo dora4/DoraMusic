@@ -87,6 +87,7 @@ public class Album implements OrmTable, Parcelable, Sort {
         }
     };
 
+    @NonNull
     @Override
     public PrimaryKeyEntry getPrimaryKey() {
         return new PrimaryKeyEntry(COLUMN_ID, id);

@@ -13,20 +13,19 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.lwh.jackknife.xskin.SkinLoader
-import com.lwh.jackknife.xskin.SkinManager
+import com.lwh.jackknife.xskin.util.PrefsUtils
 import dora.arouter.open
+import dora.http.retrofit.RetrofitManager
 import dora.util.ApkUtils
 import dora.util.IoUtils
 import dora.util.StatusBarUtils
 import dora.util.TextUtils
+import dora.widget.DoraLoadingDialog
 import dora.widget.DoraToggleButton
 import okhttp3.*
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.BuildConfig
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
@@ -35,12 +34,10 @@ import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.http.DoraCallback
-import site.doramusic.app.http.ServiceManager
 import site.doramusic.app.http.service.UpdateService
 import site.doramusic.app.http.service.UserService
 import site.doramusic.app.util.PreferencesManager
 import site.doramusic.app.util.UserManager
-import site.doramusic.app.widget.LoadingDialog
 import java.io.File
 import java.io.IOException
 
@@ -48,19 +45,17 @@ import java.io.IOException
 class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
 
     internal lateinit var prefsManager: PreferencesManager
-    internal var updateDialog: LoadingDialog? = null
+    internal var updateDialog: DoraLoadingDialog? = null
 
     internal var updateHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             when (msg.what) {
                 0 //显示对话框
-                ->
-                    if (updateDialog != null) {
-                        updateDialog!!.titleText = "正在更新"
-                        updateDialog!!.show()
-                        showShortToast("更新过程可能需要耗费几十秒的时间，请耐心等待...")
-                    }
+                -> {
+                    updateDialog?.show("正在更新")
+                    showShortToast("更新过程可能需要耗费几十秒的时间，请耐心等待...")
+                }
                 1 -> {
                     val savePath = msg.obj as String
                     val saveFile = File(savePath)
@@ -69,9 +64,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                         installApk(this@SettingsActivity, saveFile)
                     }
                 }
-                2 -> if (updateDialog != null) {
-                    updateDialog!!.dismiss()
-                }
+                2 -> updateDialog?.dismissWithAnimation()
             }
         }
     }
@@ -89,9 +82,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
         )
-        mBinding.statusbarSettings.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
+        mBinding.statusbarSettings.background = ContextCompat.getDrawable(this, SkinLoader.getInstance().getColorRes("skin_theme_color_"+ PrefsUtils(this).suffix))
         mBinding.v = this
-        updateDialog = LoadingDialog(this)
+        updateDialog = DoraLoadingDialog(this)
         prefsManager = PreferencesManager(this)
         mBinding.tvSettingsVersion.text = getString(R.string.app_version)
         if (UserManager.currentUser != null) {
@@ -146,7 +139,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         when(view.id) {
             R.id.rl_settings_check_version -> checkUpdate()
             R.id.rl_settings_logout -> {
-                val service = ServiceManager.getService(UserService::class.java)
+                val service = RetrofitManager.getService(UserService::class.java)
                 val prefsManager = PreferencesManager(this)
                 if (TextUtils.isNotEmpty(prefsManager.getToken())) {
                     val call = service.logout(prefsManager.getToken() ?: "")
@@ -214,7 +207,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
     private fun checkUpdate() {
         showShortToast("正在检测更新...")
         val versionCode = ApkUtils.getVersionCode(this)
-        val service = ServiceManager.getService(UpdateService::class.java)
+        val service = RetrofitManager.getService(UpdateService::class.java)
         val call = service.updateApk(versionCode)
         call.enqueue(object : DoraCallback<String>(){
             override fun onSuccess(body: String) {
@@ -276,9 +269,5 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             intent.setDataAndType(uri, "application/vnd.android.package-archive")
         }
         context.startActivity(intent)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(msg: String) {
     }
 }

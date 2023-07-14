@@ -1,8 +1,10 @@
 package site.doramusic.app.ui.layout
 
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.StateListDrawable
 import android.os.Handler
 import android.view.Gravity
 import android.view.View
@@ -10,7 +12,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.databinding.BindingAdapter
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
@@ -19,6 +21,8 @@ import com.lwh.jackknife.widget.MarqueeTextView
 import com.lwh.jackknife.widget.popupdialog.AbstractDialogView
 import com.lwh.jackknife.widget.popupdialog.DialogView
 import com.lwh.jackknife.widget.popupdialog.PopupDialog
+import com.lwh.jackknife.xskin.SkinLoader
+import com.lwh.jackknife.xskin.util.PrefsUtils
 import dora.db.builder.QueryBuilder
 import dora.db.dao.DaoFactory
 import dora.util.TextUtils
@@ -57,7 +61,6 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private var playbackProgress: ProgressBar? = null
     private var defaultAlbumIcon: Bitmap? = null
     private val playModeControl: PlayModeControl = PlayModeControl(manager.view.context)
-    private var bindingAdapter: BindingAdapter? = null
     private lateinit var popupDialog: PopupDialog
     private val adapter = PlaylistItemAdapter()
 
@@ -115,6 +118,11 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         return contentView.findViewById(id)
     }
 
+    fun updateProgressColor() {
+        playbackProgress!!.progressTintList = ColorStateList.valueOf(ContextCompat.getColor(contentView.context,
+            SkinLoader.getInstance().getColorRes("skin_theme_color_"+PrefsUtils(contentView.context).suffix)))
+    }
+
     private fun initViews() {
         tv_home_bottom_music_name = findViewById(R.id.tv_home_bottom_music_name) as MarqueeTextView
         tv_home_bottom_artist = findViewById(R.id.tv_home_bottom_artist) as MarqueeTextView
@@ -131,7 +139,7 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         btn_home_bottom_menu!!.setOnClickListener(this)
 
         playbackProgress = findViewById(R.id.sb_home_bottom_playback) as ProgressBar
-
+        updateProgressColor()
         defaultAlbumIcon = BitmapFactory.decodeResource(
                 manager.view.context.resources, R.drawable.default_cover)
 

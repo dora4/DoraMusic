@@ -2,10 +2,10 @@ package site.doramusic.app.lrc.loader
 
 import android.os.Handler
 import android.os.Looper
+import dora.http.retrofit.RetrofitManager
 import dora.util.TextUtils
 import site.doramusic.app.db.Music
 import site.doramusic.app.http.DoraCallback
-import site.doramusic.app.http.ServiceManager
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.lrc.DoraLyric
 import site.doramusic.app.lrc.LyricScroller
@@ -27,7 +27,7 @@ class DoraLyricLoader(helper: LyricScroller?, listener: LyricListener?) : LyricL
                 loadLocalLrc(file.absolutePath)
             } else {
                 clearLocalLrc()
-                val service = ServiceManager.getService(MusicService::class.java)
+                val service = RetrofitManager.getService(MusicService::class.java)
                 val call = service.searchLrc(musicName, artist)
                 call.enqueue(object: DoraCallback<DoraLyric>(){
 
@@ -54,7 +54,7 @@ class DoraLyricLoader(helper: LyricScroller?, listener: LyricListener?) : LyricL
     }
 
     override fun searchLrcBySongId(id: Long, lrcSaveFileName: String?) {
-        val service = ServiceManager.getService(MusicService::class.java)
+        val service = RetrofitManager.getService(MusicService::class.java)
         val call = service.lyric(id)
         call.enqueue(object: DoraCallback<DoraLyric>(){
 

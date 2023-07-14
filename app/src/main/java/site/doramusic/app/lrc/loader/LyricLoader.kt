@@ -3,7 +3,6 @@ package site.doramusic.app.lrc.loader
 import dora.util.GlobalContext
 import dora.util.IoUtils
 import dora.util.TextUtils
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Music

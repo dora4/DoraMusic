@@ -9,23 +9,24 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.*
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.lsxiao.apollo.core.Apollo
 import com.lwh.jackknife.av.util.MusicTimer
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.util.DensityUtils
 import dora.widget.DoraRotateCoverView
-import org.greenrobot.eventbus.EventBus
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.annotation.SingleClick
+import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.base.conf.MessageEvent
 import site.doramusic.app.db.Music
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.lrc.LyricScroller
@@ -148,9 +149,6 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         statusbar_lyric!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             getStatusBarHeight())
         rotateCoverView = DoraRotateCoverView(manager.view.context)
-        rotateCoverView!!.scaleType = ImageView.ScaleType.CENTER_CROP
-        rotateCoverView!!.scaleX = 0.8f
-        rotateCoverView!!.scaleY = 0.8f
         vp_music_play_cover_lyric = findViewById(R.id.vp_music_play_cover_lyric) as ViewPager
 
         lrcEmptyView = TextView(manager.view.context)
@@ -252,7 +250,7 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         } else {
             btn_music_play_play!!.visibility = View.GONE
             btn_music_play_pause!!.visibility = View.VISIBLE
-            rotateCoverView!!.start(R.drawable.default_cover_rotate)
+            rotateCoverView!!.start(R.drawable.default_cover_rotate, true)
         }
     }
 
@@ -465,7 +463,7 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                     refreshFavorite(0)
                 }
                 //此处最好只刷新收藏数目
-                EventBus.getDefault().post(MessageEvent(MessageEvent.REFRESH_MUSIC_INFOS))
+                Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
             }
         }
     }
@@ -516,7 +514,7 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         canvas.drawRect(Rect(0, 0, width, height), paint)
         canvas.drawBitmap(bmp, dp50, dp50, null)
         //将canvas传递进去并设置其边框
-//        setBitmapBorder(canvas)
+        setBitmapBorder(canvas)
         return bitmap
     }
 }

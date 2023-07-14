@@ -10,14 +10,14 @@ abstract class DoraCallback<T> : Callback<DoraResponse<T>> {
         if (response.code() == 200) {
             val body = response.body()
             if (body!!.ok) {
-                val result = body!!.result
+                val result = body.result
                 if (result != null) {
                     onSuccess(result)
                 } else {
                     onFailure(-2, "服务端数据返回错误")
                 }
             } else {
-                onFailure(body!!.code, body!!.msg)
+                onFailure(body.code, body.msg)
             }
         } else {
             onFailure(response.code(), response.message())

@@ -14,10 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
-import com.lwh.jackknife.util.ApkUtils
-import com.lwh.jackknife.util.IoUtils
-import com.lwh.jackknife.util.Logger
-import com.lwh.jackknife.util.TextUtils
+import com.lsxiao.apollo.core.Apollo
 import com.lwh.jackknife.xskin.SkinManager
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
@@ -25,25 +22,23 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.request
-import dora.util.StatusBarUtils
+import dora.http.retrofit.RetrofitManager
+import dora.util.*
 import dora.widget.DoraAlertDialog
+import dora.widget.DoraLoadingDialog
 import okhttp3.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.ARoutePath
+import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.base.conf.MessageEvent
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.http.DoraCallback
 import site.doramusic.app.http.DoraPatch
 import site.doramusic.app.http.DoraSign
-import site.doramusic.app.http.ServiceManager
 import site.doramusic.app.http.service.UpdateService
 import site.doramusic.app.http.service.UserService
 import site.doramusic.app.media.MusicScanner
@@ -52,7 +47,6 @@ import site.doramusic.app.ui.IBack
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.util.PreferencesManager
 import site.doramusic.app.util.UserManager
-import site.doramusic.app.widget.LoadingDialog
 import java.io.IOException
 import java.util.concurrent.Executors
 
@@ -106,7 +100,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
      * 拉取热修复补丁。
      */
     private fun fetchPatch() {
-        val service = ServiceManager.getService(UpdateService::class.java)
+        val service = RetrofitManager.getService(UpdateService::class.java)
         val call = service.getLatestPatchInfo(ApkUtils.getVersionName(this))
         call.enqueue(object : DoraCallback<DoraPatch>() {
             override fun onSuccess(patch: DoraPatch) {
@@ -142,7 +136,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                     val bytes = responseBody!!.bytes()
                     val savePath = (AppConfig.FOLDER_PATCH + "/patch_signed.apk")
                     IoUtils.write(bytes, savePath)
-                    Logger.debug("下载补丁${url}")
+                    LogUtils.d("下载补丁${url}")
                 } catch (e: IOException) {
                 }
             }
@@ -229,7 +223,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                 val userId = doraUser.id
                 if (userId != null) {
                     //用户签到
-                    val service = ServiceManager.getService(UserService::class.java)
+                    val service = RetrofitManager.getService(UserService::class.java)
                     val call = service.sign(userId)
                     call.enqueue(object : DoraCallback<DoraSign>() {
                         override fun onSuccess(sign: DoraSign) {
@@ -287,11 +281,10 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
      */
     fun scanMusic() {
         net {
-            val dialog = LoadingDialog(this)
-            dialog.titleText = "正在扫描..."
-            dialog.setCancelable(false)
-            dialog.setCanceledOnTouchOutside(false)
-            dialog.show()
+            val dialog = DoraLoadingDialog(this).show("正在扫描...") {
+                setCancelable(false)
+                setCanceledOnTouchOutside(false)
+            }
             request {
                 Executors.newCachedThreadPool().submit {
                     try {
@@ -302,7 +295,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                     }
                 }
             }
-            EventBus.getDefault().post(MessageEvent(MessageEvent.REFRESH_MUSIC_INFOS))
+            Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
             dialog.dismiss()
         }
     }
@@ -339,7 +332,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                     }
                     //这种方式返回首页也要刷新，另一种刷新是在UIManager#setCurrentItem()
                     if (homeFragment!!.isHome) {
-                        EventBus.getDefault().post(MessageEvent(MessageEvent.REFRESH_MUSIC_INFOS))
+                        Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
                     }
                 }
             }
@@ -355,14 +348,14 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         prefsManager = PreferencesManager(this)
         initMenu()
         if (savedInstanceState != null) {
-            Logger.info("后台启动")
+            LogUtils.i("后台启动")
         } else {
             //提供皮肤
             applySkin()
             //注册耳机监听器
             registerEarCupReceiver()
             //请求通知栏权限
-            requestNotificationPermission()
+//            requestNotificationPermission()
 //            if (prefsManager!!.getHotFix()) {
 //                //拉取热修复补丁
 //                fetchPatch()
@@ -380,9 +373,5 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         if (!backListeners.contains(listener)) {
             backListeners.add(listener)
         }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(msg: String) {
     }
 }
