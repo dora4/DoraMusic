@@ -61,6 +61,6 @@
             android:layout_marginBottom="30dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/select_skin_preview" />
+            android:src="@drawable/select_skin_preview_bg" />
     </RelativeLayout>
 </layout>

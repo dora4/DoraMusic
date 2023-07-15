@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.StateListDrawable
 import android.os.Handler
 import android.view.Gravity
 import android.view.View
@@ -141,7 +140,7 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         playbackProgress = findViewById(R.id.sb_home_bottom_playback) as ProgressBar
         updateProgressColor()
         defaultAlbumIcon = BitmapFactory.decodeResource(
-                manager.view.context.resources, R.drawable.default_cover)
+                manager.view.context.resources, R.drawable.bottom_bar_cover_bg)
 
         iv_home_bottom_album = findViewById(R.id.iv_home_bottom_album) as ImageView
         iv_home_bottom_album!!.setOnClickListener {

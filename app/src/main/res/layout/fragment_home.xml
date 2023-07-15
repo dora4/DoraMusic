@@ -27,7 +27,7 @@
                 android:max="100"
                 android:maxHeight="2dp"
                 android:minHeight="2dp"
-                android:progressDrawable="@drawable/home_bottom_seekbar" />
+                android:progressDrawable="@drawable/selector_bottom_bar_seekbar" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_10"
                     android:layout_marginBottom="@dimen/dp_10"
-                    android:background="@drawable/default_cover" />
+                    android:background="@drawable/bottom_bar_cover_bg" />
 
                 <ImageButton
                     android:id="@+id/btn_home_bottom_menu"
@@ -55,7 +55,7 @@
                     android:padding="6dp"
                     app:tint="@color/light_gray"
                     android:background="@color/white"
-                    android:src="@drawable/icon_menu_bottom_right" />
+                    android:src="@drawable/ic_bottom_bar_playlist" />
 
                 <View
                     android:id="@+id/view_home_bottom_divider"
@@ -75,7 +75,7 @@
                     android:padding="6dp"
                     app:tint="@color/light_gray"
                     android:background="@color/white"
-                    android:src="@drawable/icon_bottom_next" />
+                    android:src="@drawable/ic_bottom_bar_next" />
 
                 <FrameLayout
                     android:id="@+id/fl_home_bottom_play_pause"
@@ -92,7 +92,7 @@
                         android:padding="6dp"
                         app:tint="@color/light_gray"
                         android:background="@color/white"
-                        android:src="@drawable/icon_bottom_pause"
+                        android:src="@drawable/ic_bottom_bar_pause"
                         android:visibility="gone" />
 
                     <ImageButton
@@ -102,7 +102,7 @@
                         android:padding="6dp"
                         app:tint="@color/light_gray"
                         android:background="@color/white"
-                        android:src="@drawable/icon_bottom_play" />
+                        android:src="@drawable/ic_bottom_bar_play" />
                 </FrameLayout>
 
                 <RelativeLayout
@@ -193,7 +193,7 @@
                 app:dview_isTitleTextBold="false"
                 app:dview_titleTextColor="@color/gray"
                 app:dview_isClickBackIconClose="false"
-                app:dview_backIcon="@drawable/ic_top_menu"
+                app:dview_backIcon="@drawable/ic_titlebar_menu"
                 app:dview_backIconSize="24dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"

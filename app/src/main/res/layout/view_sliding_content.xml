@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:src="@drawable/icon_voice"
+        android:src="@drawable/ic_volume_voice"
         android:background="@drawable/selector_volume"/>
 
     <LinearLayout
@@ -50,8 +50,8 @@
                 android:minHeight="2dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:progressDrawable="@drawable/playback_seekbar"
-                android:thumb="@drawable/selector_playback_seekbar_thumb"
+                android:progressDrawable="@drawable/selector_player_seekbar"
+                android:thumb="@drawable/selector_player_seekbar_thumb"
                 android:thumbOffset="12dp"/>
 
             <TextView
@@ -82,7 +82,7 @@
                 android:layout_weight="1"
                 android:scaleX="0.9"
                 android:scaleY="0.9"
-                android:src="@drawable/icon_playmode_list_loop"
+                android:src="@drawable/ic_playmode_list_loop"
                 android:background="@drawable/selector_music_btn" />
 
             <ImageButton
@@ -93,7 +93,7 @@
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 android:background="@drawable/selector_music_btn"
-                android:src="@drawable/player_prev" />
+                android:src="@drawable/ic_player_prev" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/selector_music_btn"
-                    android:src="@drawable/player_pause"
+                    android:src="@drawable/ic_player_pause"
                     android:visibility="gone" />
 
                 <ImageButton
@@ -113,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/selector_music_btn"
-                    android:src="@drawable/player_play" />
+                    android:src="@drawable/ic_player_play" />
             </FrameLayout>
 
             <ImageButton
@@ -124,7 +124,7 @@
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 android:background="@drawable/selector_music_btn"
-                android:src="@drawable/player_next" />
+                android:src="@drawable/ic_player_next" />
 
             <ImageButton
                 android:id="@+id/btn_music_play_favorite"
@@ -158,7 +158,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/icon_volume_mute" />
+            android:background="@drawable/ic_volume_mute" />
 
         <SeekBar
             android:id="@+id/sb_music_play_volume"
@@ -170,7 +170,7 @@
             android:maxHeight="3dp"
             android:minHeight="3dp"
             android:progressDrawable="@drawable/volume_seekbar_layer"
-            android:thumb="@drawable/volume_seekbar_thumb_indicator"
+            android:thumb="@drawable/selector_volume_seekbar_thumb_indicator"
             android:thumbOffset="10dp" />
 
         <ImageView
@@ -178,15 +178,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/icon_volume_sound" />
+            android:background="@drawable/ic_volume_sound" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/iv_sliding_favorite_flying"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/icon_favorite_flying"
-        android:visibility="invisible" />
 
 </RelativeLayout>

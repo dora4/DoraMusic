@@ -57,7 +57,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/nc_clear" />
+        android:src="@drawable/ic_notification_clear" />
     <LinearLayout
         android:id="@+id/ll_nc_control"
         android:layout_width="match_parent"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
-            android:src="@drawable/nc_prev" />
+            android:src="@drawable/ic_notification_prev" />
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/nc_pause"/>
+                android:src="@drawable/ic_notification_pause"/>
         </FrameLayout>
 
         <ImageView
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginRight="5dp"
-            android:src="@drawable/nc_next" />
+            android:src="@drawable/ic_notification_next" />
 
     </LinearLayout>
 </RelativeLayout>

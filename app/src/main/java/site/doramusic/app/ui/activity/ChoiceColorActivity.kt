@@ -68,19 +68,19 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
         })
         prefsManager = PreferencesManager(this)
         colorDatas = mutableListOf(
-            ColorData(R.drawable.block_cyan,
+            ColorData(R.drawable.cyan_bg,
                 resources.getColor(R.color.skin_theme_color_cyan)),
-            ColorData(R.drawable.block_orange,
+            ColorData(R.drawable.orange_bg,
                 resources.getColor(R.color.skin_theme_color_orange)),
-            ColorData(R.drawable.block_black,
+            ColorData(R.drawable.black_bg,
                 resources.getColor(R.color.skin_theme_color_black)),
-            ColorData(R.drawable.block_green,
+            ColorData(R.drawable.green_bg,
                 resources.getColor(R.color.skin_theme_color_green)),
-            ColorData(R.drawable.block_red,
+            ColorData(R.drawable.red_bg,
                 resources.getColor(R.color.skin_theme_color_red)),
-            ColorData(R.drawable.block_blue,
+            ColorData(R.drawable.blue_bg,
                 resources.getColor(R.color.skin_theme_color_blue)),
-            ColorData(R.drawable.block_purple,
+            ColorData(R.drawable.purple_bg,
                 resources.getColor(R.color.skin_theme_color_purple)))
 
         choiceColorAdapter = ChoiceColorAdapter()

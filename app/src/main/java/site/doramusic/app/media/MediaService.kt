@@ -48,7 +48,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
     override fun onShake() {
         //先播放摇一摇切歌的音效
-        simplePlayer?.playByRawId(R.raw.shake)
+        simplePlayer?.playByRawId(R.raw.shaking)
         //再切到下一首播放
         Handler().postDelayed({ mc?.next() }, 2000)
     }
@@ -67,7 +67,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
                     val name = intent.getStringExtra(NOTIFICATION_NAME) ?: ""
                     val music = mc!!.curMusic
                     val defaultArtwork = BitmapFactory.decodeResource(this@MediaService.resources,
-                            R.drawable.default_cover)
+                            R.drawable.bottom_bar_cover_bg)
                     val bitmap = MusicUtils.getCachedArtwork(this@MediaService, music.albumId.toLong(),
                             defaultArtwork)
                     updateNotification(bitmap, title, name)

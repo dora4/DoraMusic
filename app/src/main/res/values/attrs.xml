@@ -41,22 +41,6 @@
         <attr name="selectorEnabled" format="boolean" />
         <attr name="selectorDrawable" format="reference" />
     </declare-styleable>
-    <declare-styleable name="HorizontalListView">
-        <attr name="dividerWidth" format="dimension" />
-        <attr name="android:divider" />
-        <attr name="android:requiresFadingEdge" />
-        <attr name="android:fadingEdgeLength" />
-    </declare-styleable>
-    <declare-styleable name="TitleBar">
-        <attr name="tb_title" format="string|reference" />
-        <attr name="tb_backName" format="string|reference" />
-        <attr name="tb_menuName" format="string|reference" />
-        <attr name="tb_noBack" format="boolean" />
-        <attr name="tb_backIcon" format="reference" />
-        <attr name="tb_menuIcon" format="reference" />
-        <attr name="tb_menuBg" format="reference" />
-        <attr name="tb_show_indicator" format="boolean"/>
-    </declare-styleable>
     <declare-styleable name="EqualizerView">
         <attr name="ev_bandsNum" format="integer"/>
     </declare-styleable>

@@ -16,7 +16,7 @@ import site.doramusic.app.media.SimpleAudioPlayer
 /**
  * 耳机拨出监听。
  */
-class EarCupReceiver : BroadcastReceiver() {
+class EarphoneReceiver : BroadcastReceiver() {
 
     private lateinit var player: SimpleAudioPlayer
 
@@ -28,7 +28,7 @@ class EarCupReceiver : BroadcastReceiver() {
             // 耳机拔出时，暂停音乐播放
             Handler().postDelayed({
                 player = SimpleAudioPlayer(context)
-                player.playByRawId(R.raw.ear_cup)
+                player.playByRawId(R.raw.earphone)
             }, 1000)
             pauseMusic()
         } else if (Intent.ACTION_HEADSET_PLUG == action) {

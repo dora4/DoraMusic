@@ -24,8 +24,6 @@ import site.doramusic.app.util.UserManager
 @Route(path = ARoutePath.ACTIVITY_SPLASH)
 class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
-    private var audioPlayer: SimpleAudioPlayer? = null
-
     companion object {
         private const val SPLASH_TIME = 300
     }
@@ -43,10 +41,7 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
     private fun initAppFolder() {
         if (dora.util.IoUtils.checkMediaMounted()) {
             dora.util.IoUtils.createFolder(arrayOf(
-                AppConfig.FOLDER_LOG, AppConfig.FOLDER_LRC,
-                AppConfig.FOLDER_SONG, AppConfig.FOLDER_APK,
-                AppConfig.FOLDER_CACHE, AppConfig.FOLDER_COVER,
-                AppConfig.FOLDER_PATCH)
+                AppConfig.FOLDER_LOG)
             )
         }
     }

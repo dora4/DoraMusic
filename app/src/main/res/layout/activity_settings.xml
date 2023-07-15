@@ -38,36 +38,6 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/rl_settings_one"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:visibility="gone"
-                    android:background="@drawable/selector_item_common"
-                    android:onClick="@{v}"
-                    android:clickable="true"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:text="启动页问候语"
-                        android:textColor="@color/gray" />
-
-                    <dora.widget.DoraToggleButton
-                        android:id="@+id/tb_settings_one"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        app:dora_showIndicator="false"
-                        android:scaleX="0.6"
-                        android:scaleY="0.6" />
-                </RelativeLayout>
-
-                <RelativeLayout
                     android:id="@+id/rl_settings_two"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -125,34 +95,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_settings_four"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:background="@drawable/selector_item_common"
-                    android:onClick="@{v}"
-                    android:clickable="true"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:text="启用热修复"
-                        android:textColor="@color/gray" />
-
-                    <dora.widget.DoraToggleButton
-                        android:id="@+id/tb_settings_four"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:scaleX="0.6"
-                        android:scaleY="0.6"
-                        app:dora_showIndicator="false" />
-                </RelativeLayout>
-                <RelativeLayout
                     android:id="@+id/rl_settings_five"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -178,37 +120,6 @@
                         android:scaleX="0.6"
                         android:scaleY="0.6"
                         app:dora_showIndicator="false" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_settings_check_version"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:background="@drawable/selector_item_common"
-                    android:visibility="gone"
-                    android:onClick="@{v}"
-                    android:paddingLeft="7dp"
-                    android:paddingTop="14dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="14dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:text="检测版本更新"
-                        android:textColor="@color/gray" />
-
-                    <TextView
-                        android:id="@+id/tv_settings_version"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="5dp"
-                        android:textColor="@color/gray" />
                 </RelativeLayout>
 
                 <RelativeLayout

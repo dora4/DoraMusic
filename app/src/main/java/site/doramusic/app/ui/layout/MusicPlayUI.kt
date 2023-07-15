@@ -9,7 +9,6 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.*
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +55,6 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private var ll_music_play_volume: LinearLayout? = null
     private var sb_music_play_playback: SeekBar? = null
     private var sb_music_play_volume: SeekBar? = null
-    private var iv_sliding_favorite_flying: ImageView? = null
     private var tv_sliding_music_name: TextView? = null
     private var tv_sliding_artist: TextView? = null
     private var tv_music_play_total_time: TextView? = null
@@ -145,7 +143,6 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         btn_music_play_volume = findViewById(R.id.btn_music_play_volume) as ImageButton
         btn_music_play_mode = findViewById(R.id.btn_music_play_mode) as ImageButton
         btn_music_play_favorite = findViewById(R.id.btn_music_play_favorite) as ImageButton
-        iv_sliding_favorite_flying = findViewById(R.id.iv_sliding_favorite_flying) as ImageView
         statusbar_lyric!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             getStatusBarHeight())
         rotateCoverView = DoraRotateCoverView(manager.view.context)
@@ -250,7 +247,7 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         } else {
             btn_music_play_play!!.visibility = View.GONE
             btn_music_play_pause!!.visibility = View.VISIBLE
-            rotateCoverView!!.start(R.drawable.default_cover_rotate, true)
+            rotateCoverView!!.start(R.drawable.cover_rotating_bg, true)
         }
     }
 
@@ -365,7 +362,6 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             rv_home_module!!.visibility = View.VISIBLE
         }
         sv_home_drawer!!.visibility = View.GONE
-        stopAnimation(iv_sliding_favorite_flying!!)
     }
 
     /**
@@ -500,7 +496,7 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
      * 创建默认的转盘封面。
      */
     fun createDefaultCover() : Bitmap {
-        var bmp = BitmapFactory.decodeResource(manager.view.context.resources, R.drawable.default_cover_rotate)
+        var bmp = BitmapFactory.decodeResource(manager.view.context.resources, R.drawable.cover_rotating_bg)
         var dp50 = DensityUtils.dp2px(manager.view.context, 50f).toFloat()
         var dp100 = DensityUtils.dp2px(manager.view.context, 100f)
         var width = bmp.width + dp100

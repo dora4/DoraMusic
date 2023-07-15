@@ -54,6 +54,9 @@
         <meta-data
             android:name="dora.lifecycle.config.ARouterGlobalConfig"
             android:value="GlobalConfig" />
+        <meta-data
+            android:name="dora.lifecycle.config.ApolloGlobalConfig"
+            android:value="GlobalConfig" />
 <!--        <meta-data-->
 <!--            android:name="dora.lifecycle.config.EventBusGlobalConfig"-->
 <!--            android:value="GlobalConfig" />-->
@@ -107,32 +110,20 @@
                 <action android:name="site.doramusic.app.service.ACTION_MEDIA_SERVICE" />
             </intent-filter>
         </service>
-        <receiver android:name=".receiver.BatteryLowReceiver"
+        <receiver android:name=".receiver.BatteryReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
             </intent-filter>
         </receiver>
-<!--        <provider-->
-<!--            android:name="cn.bmob.v3.util.BmobContentProvider"-->
-<!--            android:authorities="${applicationId}.BmobContentProvider">-->
-<!--        </provider>-->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="${applicationId}.file-provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-<!--        &lt;!&ndash; 友盟统计开始 &ndash;&gt;-->
-<!--        <meta-data-->
-<!--            android:name="UMENG_APPKEY"-->
-<!--            android:value="5e753ea20cafb2836d0007f0" />-->
-<!--        <meta-data-->
-<!--            android:name="UMENG_CHANNEL"-->
-<!--            android:value="${CHANNEL_VALUE}" />-->
-<!--        &lt;!&ndash; 友盟统计结束 &ndash;&gt;-->
     </application>
 </manifest>

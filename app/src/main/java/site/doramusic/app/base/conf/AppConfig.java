@@ -19,14 +19,12 @@ public interface AppConfig {
     String ACTION_PAUSE_RESUME = "site.doramusic.app.intent.ACTION_PAUSE_RESUME";
     String ACTION_CANCEL = "site.doramusic.app.intent.ACTION_CANCEL";
 
-    // 文件夹
-    String FOLDER_LRC = IoUtils.getSdRoot() + "/DoraMusic/lrc"; //歌词存放目录
-    String FOLDER_SONG = IoUtils.getSdRoot() + "/DoraMusic/song";   //歌曲存放目录
-    String FOLDER_APK = IoUtils.getSdRoot() + "/DoraMusic/apk"; //升级包存放目录
-    String FOLDER_CACHE = IoUtils.getSdRoot() + "/DoraMusic/cache"; //缓存存放目录
-    String FOLDER_COVER = IoUtils.getSdRoot() + "/DoraMusic/cover"; //专辑封面存放目录
+    // 文件夹相关
     String FOLDER_LOG = IoUtils.getSdRoot() + "/DoraMusic/log"; //日志存放目录
-    String FOLDER_PATCH = IoUtils.getSdRoot() +"/DoraMusic/patch";  //热修复补丁临时存放目录
+    String FOLDER_LRC = IoUtils.getSdRoot() + "/DoraMusic/lrc"; //歌词文件存放目录
+
+    String DB_NAME = "db_doramusic";
+    int DB_VERSION = 1;
 
     // 页面路由
     int ROUTE_START_FROM_LOCAL = 1;

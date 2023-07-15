@@ -1,20 +1,17 @@
 package site.doramusic.app
 
-import com.lsxiao.apollo.core.Apollo
 import com.lwh.jackknife.xskin.SkinManager
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
 import dora.http.log.FormatLogInterceptor
 import dora.http.retrofit.RetrofitManager
-import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.http.service.MusicService
-import site.doramusic.app.http.service.UpdateService
 import site.doramusic.app.http.service.UserService
 import site.doramusic.app.media.MediaManager
 
@@ -45,20 +42,18 @@ class MusicApp : BaseApplication(), AppConfig {
     }
 
     private fun init() {
-        initSdk()   //初始化第三方SDK
-        initDb()    //初始化SQLite数据库的表
-        initMedia() //初始化媒体管理器
+        initHttp()   // 初始化网络框架
+        initDb()    // 初始化SQLite数据库的表
+        initMedia() // 初始化媒体管理器
     }
 
     private fun initMedia() {
         mediaManager = MediaManager(this)
     }
 
-    private fun initSdk() {
-        //XSkin
+    private fun initHttp() {
+        // XSkin
         SkinManager.getInstance().init(this)
-        //Apollo
-        Apollo.init(AndroidSchedulers.mainThread(), this)
         RetrofitManager.initConfig {
             okhttp {
                 interceptors().add(FormatLogInterceptor())
@@ -71,8 +66,8 @@ class MusicApp : BaseApplication(), AppConfig {
 
     private fun initDb() {
         Orm.init(this, OrmConfig.Builder()
-            .database("db_doramusic")
-            .version(1)
+            .database(AppConfig.DB_NAME)
+            .version(AppConfig.DB_VERSION)
             .tables(Music::class.java, Artist::class.java,
                 Album::class.java, Folder::class.java)
             .build())

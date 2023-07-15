@@ -26,7 +26,6 @@ import dora.http.retrofit.RetrofitManager
 import dora.util.*
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
-import okhttp3.*
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.BaseSkinActivity
@@ -37,17 +36,14 @@ import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.http.DoraCallback
-import site.doramusic.app.http.DoraPatch
 import site.doramusic.app.http.DoraSign
-import site.doramusic.app.http.service.UpdateService
 import site.doramusic.app.http.service.UserService
 import site.doramusic.app.media.MusicScanner
-import site.doramusic.app.receiver.EarCupReceiver
+import site.doramusic.app.receiver.EarphoneReceiver
 import site.doramusic.app.ui.IBack
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.util.PreferencesManager
 import site.doramusic.app.util.UserManager
-import java.io.IOException
 import java.util.concurrent.Executors
 
 @Route(path = ARoutePath.ACTIVITY_MAIN)
@@ -56,7 +52,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
     private var lastTime: Long = 0
     private var homeFragment: HomeFragment? = null
     private val backListeners: MutableList<OnBackListener> = ArrayList()
-    private var earCupReceiver: EarCupReceiver? = null
+    private var earphoneReceiver: EarphoneReceiver? = null
     private var prefsManager: PreferencesManager? = null
 
     override fun getLayoutId(): Int {
@@ -96,52 +92,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         }
     }
 
-    /**
-     * 拉取热修复补丁。
-     */
-    private fun fetchPatch() {
-        val service = RetrofitManager.getService(UpdateService::class.java)
-        val call = service.getLatestPatchInfo(ApkUtils.getVersionName(this))
-        call.enqueue(object : DoraCallback<DoraPatch>() {
-            override fun onSuccess(patch: DoraPatch) {
-                //获取热修复后的版本号
-                val patchVersion = getString(R.string.app_version)
-                if (TextUtils.isNotEqualTo(patchVersion, patch.versionName)) {
-                    //补丁有更新，下载
-                    patch.url?.let { downloadPatch(it) }
-                }
-            }
-
-            override fun onFailure(code: Int, msg: String) {
-            }
-        })
-    }
-
-    /**
-     * 下载热修复补丁。
-     */
-    private fun downloadPatch(url: String) {
-        val client = OkHttpClient()
-        val request = Request.Builder()
-            .url(url)
-            .build()
-        val call = client.newCall(request)
-        call.enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {}
-
-            @Throws(IOException::class)
-            override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body
-                try {
-                    val bytes = responseBody!!.bytes()
-                    val savePath = (AppConfig.FOLDER_PATCH + "/patch_signed.apk")
-                    IoUtils.write(bytes, savePath)
-                    LogUtils.d("下载补丁${url}")
-                } catch (e: IOException) {
-                }
-            }
-        })
-    }
 
     /**
      * 请求通知栏权限。
@@ -156,11 +106,11 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
      * 注册耳机插拔监听。
      */
     private fun registerEarCupReceiver() {
-        earCupReceiver = EarCupReceiver()
+        earphoneReceiver = EarphoneReceiver()
         val filter = IntentFilter()
         filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
         filter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED)
-        registerReceiver(earCupReceiver, filter)
+        registerReceiver(earphoneReceiver, filter)
     }
 
     /**
@@ -302,8 +252,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (earCupReceiver != null) {
-            unregisterReceiver(earCupReceiver)
+        if (earphoneReceiver != null) {
+            unregisterReceiver(earphoneReceiver)
         }
     }
 

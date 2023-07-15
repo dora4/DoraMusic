@@ -2,7 +2,7 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <!-- colorPrimaryDark决定状态栏的颜色等 -->
+        <!-- colorPrimaryDark决定状态栏的默认颜色等 -->
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowTranslucentStatus">true</item>
@@ -23,7 +23,5 @@
     <style name="AppTheme.Text.NotificationTitle">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">?android:textColorPrimary</item>
-    </style>
-    <style name="CustomDialog" parent="android:Theme.Dialog">
     </style>
 </resources>

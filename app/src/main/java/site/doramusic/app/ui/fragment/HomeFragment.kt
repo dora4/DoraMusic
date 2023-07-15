@@ -78,11 +78,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Apollo.bind(this)
-    }
-
     override fun initData(savedInstanceState: Bundle?) {
         super.initData(savedInstanceState)
         musicDao = DaoFactory.getDao(Music::class.java)
@@ -94,7 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         mediaManager!!.setOnCompletionListener(this)
         defaultArtwork = BitmapFactory.decodeResource(
             resources,
-            R.drawable.default_cover
+            R.drawable.bottom_bar_cover_bg
         )
         musicPlayReceiver = MusicPlayReceiver()
 
@@ -119,12 +114,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         val latestCount =
             ViewUtils.clamp(musicDao!!.count(latestBuild).toFloat(), 100f, 0f).toLong()
         val homeItems = ArrayList<HomeItem>()
-        homeItems.add(HomeItem(R.drawable.icon_local_music, "我的歌曲", musicCount))
-        homeItems.add(HomeItem(R.drawable.icon_local_artist, "歌手", artistCount))
-        homeItems.add(HomeItem(R.drawable.icon_local_album, "专辑", albumCount))
-        homeItems.add(HomeItem(R.drawable.icon_local_folder, "文件夹", folderCount))
-        homeItems.add(HomeItem(R.drawable.icon_local_favorite, "我的收藏", favoriteCount))
-        homeItems.add(HomeItem(R.drawable.icon_local_latest, "最近播放", latestCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_music, "我的歌曲", musicCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_artist, "歌手", artistCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_album, "专辑", albumCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_folder, "文件夹", folderCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_favorite, "我的收藏", favoriteCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_latest, "最近播放", latestCount))
         return homeItems
     }
 

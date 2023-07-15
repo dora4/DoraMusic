@@ -10,7 +10,7 @@ import site.doramusic.app.media.SimpleAudioPlayer
 /**
  * 低电提醒。
  */
-class BatteryLowReceiver : BroadcastReceiver() {
+class BatteryReceiver : BroadcastReceiver() {
 
     private lateinit var player: SimpleAudioPlayer
 

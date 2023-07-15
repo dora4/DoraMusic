@@ -25,16 +25,16 @@ class PlayModeControl(internal val context: Context) : AppConfig {
     fun refreshButtonStatus(playModeBtn: ImageButton) {
         when (mediaManager!!.playMode) {
             AppConfig.MPM_LIST_LOOP_PLAY -> {   //列表循环
-                playModeBtn.setImageResource(R.drawable.icon_playmode_list_loop)
+                playModeBtn.setImageResource(R.drawable.ic_playmode_list_loop)
             }
             AppConfig.MPM_SINGLE_LOOP_PLAY -> {  //单曲循环
-                playModeBtn.setImageResource(R.drawable.icon_playmode_single_loop)
+                playModeBtn.setImageResource(R.drawable.ic_playmode_single_loop)
             }
             AppConfig.MPM_RANDOM_PLAY -> {   //随机播放
-                playModeBtn.setImageResource(R.drawable.icon_playmode_random)
+                playModeBtn.setImageResource(R.drawable.ic_playmode_random)
             }
             AppConfig.MPM_ORDER_PLAY -> {    //顺序播放
-                playModeBtn.setImageResource(R.drawable.icon_playmode_order)
+                playModeBtn.setImageResource(R.drawable.ic_playmode_order)
             }
         }
     }
@@ -47,22 +47,22 @@ class PlayModeControl(internal val context: Context) : AppConfig {
     fun changePlayMode(playModeBtn: ImageButton) {
         when (mediaManager!!.playMode) {
             AppConfig.MPM_LIST_LOOP_PLAY -> {
-                playModeBtn.setImageResource(R.drawable.icon_playmode_single_loop)
+                playModeBtn.setImageResource(R.drawable.ic_playmode_single_loop)
                 mediaManager.playMode = AppConfig.MPM_SINGLE_LOOP_PLAY
                 ToastUtils.showShort(context, "单曲循环")
             }
             AppConfig.MPM_SINGLE_LOOP_PLAY -> {
-                playModeBtn.setImageResource(R.drawable.icon_playmode_random)
+                playModeBtn.setImageResource(R.drawable.ic_playmode_random)
                 mediaManager.playMode = AppConfig.MPM_RANDOM_PLAY
                 ToastUtils.showShort(context, "随机播放")
             }
             AppConfig.MPM_RANDOM_PLAY -> {
-                playModeBtn.setImageResource(R.drawable.icon_playmode_order)
+                playModeBtn.setImageResource(R.drawable.ic_playmode_order)
                 mediaManager.playMode = AppConfig.MPM_ORDER_PLAY
                 ToastUtils.showShort(context, "顺序播放")
             }
             AppConfig.MPM_ORDER_PLAY -> {
-                playModeBtn.setImageResource(R.drawable.icon_playmode_list_loop)
+                playModeBtn.setImageResource(R.drawable.ic_playmode_list_loop)
                 mediaManager.playMode = AppConfig.MPM_LIST_LOOP_PLAY
                 ToastUtils.showShort(context, "列表循环")
             }
@@ -77,10 +77,10 @@ class PlayModeControl(internal val context: Context) : AppConfig {
      */
     fun getPlayModeImage(playMode: Int): Int {
         when (playMode) {
-            AppConfig.MPM_LIST_LOOP_PLAY -> return R.drawable.icon_playmode_list_loop
-            AppConfig.MPM_ORDER_PLAY -> return R.drawable.icon_playmode_order
-            AppConfig.MPM_RANDOM_PLAY -> return R.drawable.icon_playmode_random
-            AppConfig.MPM_SINGLE_LOOP_PLAY -> return R.drawable.icon_playmode_single_loop
+            AppConfig.MPM_LIST_LOOP_PLAY -> return R.drawable.ic_playmode_list_loop
+            AppConfig.MPM_ORDER_PLAY -> return R.drawable.ic_playmode_order
+            AppConfig.MPM_RANDOM_PLAY -> return R.drawable.ic_playmode_random
+            AppConfig.MPM_SINGLE_LOOP_PLAY -> return R.drawable.ic_playmode_single_loop
         }
         throw IllegalArgumentException("无效的播放模式")
     }
@@ -100,21 +100,21 @@ class PlayModeControl(internal val context: Context) : AppConfig {
             AppConfig.MPM_LIST_LOOP_PLAY -> {   //列表循环 -> 顺序播放
                 textView.text = "顺序播放"
                 mediaManager.playMode = AppConfig.MPM_ORDER_PLAY
-                imageView.setImageResource(R.drawable.icon_playmode_order)
+                imageView.setImageResource(R.drawable.ic_playmode_order)
             }
             AppConfig.MPM_ORDER_PLAY -> {    //顺序播放 -> 随机播放
                 textView.text = "随机播放"
-                imageView.setImageResource(R.drawable.icon_playmode_random)
+                imageView.setImageResource(R.drawable.ic_playmode_random)
                 mediaManager.playMode = AppConfig.MPM_RANDOM_PLAY
             }
             AppConfig.MPM_RANDOM_PLAY -> {   //随机播放 -> 单曲循环
                 textView.text = "单曲循环"
-                imageView.setImageResource(R.drawable.icon_playmode_single_loop)
+                imageView.setImageResource(R.drawable.ic_playmode_single_loop)
                 mediaManager.playMode = AppConfig.MPM_SINGLE_LOOP_PLAY
             }
             AppConfig.MPM_SINGLE_LOOP_PLAY -> {  //单曲循环 -> 列表循环
                 textView.text = "列表循环"
-                imageView.setImageResource(R.drawable.icon_playmode_list_loop)
+                imageView.setImageResource(R.drawable.ic_playmode_list_loop)
                 mediaManager.playMode = AppConfig.MPM_LIST_LOOP_PLAY
             }
         }

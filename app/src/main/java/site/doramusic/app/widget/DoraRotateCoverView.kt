@@ -54,7 +54,7 @@ class DoraRotateCoverView @JvmOverloads constructor(
             coverHeight = dp400
             coverRect.set(borderRect)
             coverRadius = (coverRect.width() / 2).coerceAtMost(coverRect.height() / 2)
-            coverBitmap = ImageUtils.decodeSampledBitmap(resources, site.doramusic.app.R.drawable.default_cover_rotate,
+            coverBitmap = ImageUtils.decodeSampledBitmap(resources, site.doramusic.app.R.drawable.cover_rotating_bg,
                 dp400, dp400)
 //            if (coverRadius > 0f && coverWidth > coverRect.width() && coverHeight > coverRect.height()) {
 //                coverBitmap = Bitmap.createScaledBitmap(
