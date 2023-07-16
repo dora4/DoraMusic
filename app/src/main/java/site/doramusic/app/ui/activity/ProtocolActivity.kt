@@ -8,11 +8,10 @@ import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.lwh.jackknife.xskin.SkinLoader
-import com.lwh.jackknife.xskin.util.PrefsUtils
+import dora.skin.SkinManager
+import dora.skin.base.BaseSkinActivity
 import dora.util.StatusBarUtils
 import site.doramusic.app.R
-import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityProtocolBinding
 
@@ -43,7 +42,7 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
     override fun initData(savedInstanceState: Bundle?) {
         mBinding.statusbarPrivacyPolicy.layoutParams = LinearLayout
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
-        mBinding.statusbarPrivacyPolicy.background = ContextCompat.getDrawable(this, SkinLoader.getInstance().getColorRes("skin_theme_color_"+ PrefsUtils(this).suffix))
+        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarPrivacyPolicy, "skin_theme_color")
         webView = WebView(applicationContext)
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,

@@ -9,15 +9,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.lwh.jackknife.xskin.SkinLoader
-import com.lwh.jackknife.xskin.SkinManager
-import com.lwh.jackknife.xskin.util.PrefsUtils
+import dora.skin.SkinManager
+import dora.skin.base.BaseSkinActivity
 import dora.util.DensityUtils
 import dora.util.StatusBarUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.annotation.TimeTrace
-import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityChoiceColorBinding
 import site.doramusic.app.ui.adapter.ChoiceColorAdapter
@@ -40,7 +38,6 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
         return R.layout.activity_choice_color
     }
 
-
     override fun onSetStatusBar() {
         super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
@@ -49,7 +46,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
     override fun initData(savedInstanceState: Bundle?) {
         mBinding.statusbarChoiceColor.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        mBinding.statusbarChoiceColor.background = ContextCompat.getDrawable(this, SkinLoader.getInstance().getColorRes("skin_theme_color_"+ PrefsUtils(this).suffix))
+        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, "skin_theme_color")
         val imageView = AppCompatImageView(this)
         val dp24 = DensityUtils.dp2px(24f)
         imageView.layoutParams = RelativeLayout.LayoutParams(dp24, dp24)
@@ -110,34 +107,34 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
         when (choiceColorAdapter!!.selectedPosition) {
             0 -> {
                 prefsManager.saveSkinType(1)
-                SkinManager.getInstance().changeSkin("cyan")
+                SkinManager.changeSkin("cyan")
             }
             1 -> {
                 prefsManager.saveSkinType(2)
-                SkinManager.getInstance().changeSkin("orange")
+                SkinManager.changeSkin("orange")
             }
             2 -> {
                 prefsManager.saveSkinType(3)
-                SkinManager.getInstance().changeSkin("black")
+                SkinManager.changeSkin("black")
             }
             3 -> {
                 prefsManager.saveSkinType(4)
-                SkinManager.getInstance().changeSkin("green")
+                SkinManager.changeSkin("green")
             }
             4 -> {
                 prefsManager.saveSkinType(5)
-                SkinManager.getInstance().changeSkin("red")
+                SkinManager.changeSkin("red")
             }
             5 -> {
                 prefsManager.saveSkinType(6)
-                SkinManager.getInstance().changeSkin("blue")
+                SkinManager.changeSkin("blue")
             }
             6 -> {
                 prefsManager.saveSkinType(7)
-                SkinManager.getInstance().changeSkin("purple")
+                SkinManager.changeSkin("purple")
             }
         }
-        mBinding.statusbarChoiceColor.background = ContextCompat.getDrawable(this, SkinLoader.getInstance().getColorRes("skin_theme_color_"+ PrefsUtils(this).suffix))
+        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, "skin_theme_color")
         finish()
     }
 }

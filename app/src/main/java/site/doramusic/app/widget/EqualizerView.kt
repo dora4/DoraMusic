@@ -10,9 +10,7 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.lwh.jackknife.xskin.SkinLoader
-import com.lwh.jackknife.xskin.SkinManager
-import com.lwh.jackknife.xskin.util.PrefsUtils
+import dora.skin.SkinManager
 import site.doramusic.app.R
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -90,8 +88,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     }
 
     private fun initPaints() {
-        val skinThemeColor = ContextCompat.getColor(context,
-            SkinLoader.getInstance().getColorRes("skin_theme_color_"+ PrefsUtils(context).suffix))
+        val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
         paint = Paint()
         paint!!.isAntiAlias = true
         nodePaint = Paint()
@@ -107,7 +104,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
         freqPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
         freqPaint!!.isFakeBoldText = true
         freqPaint!!.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10f, ctx.resources.displayMetrics)
-        freqPaint!!.color = ContextCompat.getColor(ctx, com.lwh.jackknife.widget.R.color.white_smoke)
+        freqPaint!!.color = ContextCompat.getColor(ctx, dora.widget.colors.R.color.white_smoke)
     }
 
     private fun measureView(measureSpec: Int, defaultSize: Int): Int {
@@ -150,8 +147,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     }
 
     private fun refreshView(canvas: Canvas, stepSize: Int) {
-        val skinThemeColor = ContextCompat.getColor(context,
-            SkinLoader.getInstance().getColorRes("skin_theme_color_"+PrefsUtils(context).suffix))
+        val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
         val fontMetrics = freqPaint!!.fontMetrics
         for (i in 1..bandsNum) {
             val cx = stepSize * i.toFloat()

@@ -6,17 +6,16 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.lwh.jackknife.xskin.SkinLoader
-import com.lwh.jackknife.xskin.util.PrefsUtils
 import dora.arouter.open
 import dora.http.retrofit.RetrofitManager
+import dora.skin.SkinManager
+import dora.skin.base.BaseSkinActivity
 import dora.util.StatusBarUtils
 import dora.util.TextUtils
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraToggleButton
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivitySettingsBinding
@@ -44,7 +43,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
         )
-        mBinding.statusbarSettings.background = ContextCompat.getDrawable(this, SkinLoader.getInstance().getColorRes("skin_theme_color_"+ PrefsUtils(this).suffix))
+        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarSettings, "skin_theme_color")
         mBinding.v = this
         updateDialog = DoraLoadingDialog(this)
         prefsManager = PreferencesManager(this)

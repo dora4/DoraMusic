@@ -1,6 +1,5 @@
 package site.doramusic.app
 
-import com.lwh.jackknife.xskin.SkinManager
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
@@ -52,8 +51,6 @@ class MusicApp : BaseApplication(), AppConfig {
     }
 
     private fun initHttp() {
-        // XSkin
-        SkinManager.getInstance().init(this)
         RetrofitManager.initConfig {
             okhttp {
                 interceptors().add(FormatLogInterceptor())

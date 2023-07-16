@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.lwh.jackknife.xskin.SkinLoader
-import com.lwh.jackknife.xskin.util.PrefsUtils
+import dora.skin.SkinManager
+import dora.skin.base.BaseSkinActivity
 import dora.util.StatusBarUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityEqualizerBinding
 import site.doramusic.app.util.PreferencesManager
@@ -36,7 +35,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
     override fun initData(savedInstanceState: Bundle?) {
         mBinding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        mBinding.statusbarEqualizer.background = ContextCompat.getDrawable(this, SkinLoader.getInstance().getColorRes("skin_theme_color_"+PrefsUtils(this).suffix))
+        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarEqualizer, "skin_theme_color")
         prefsManager = PreferencesManager(this)
         val equalizerFreq = MusicApp.instance!!.mediaManager!!.equalizerFreq
         val decibels = IntArray(equalizerFreq!!.size)
@@ -59,8 +58,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         mBinding.rbEqualizerShake.buttonDrawable = BitmapDrawable()
         mBinding.rbEqualizerCountry.buttonDrawable = BitmapDrawable()
 
-        val skinThemeColor = ContextCompat.getColor(this,
-            SkinLoader.getInstance().getColorRes("skin_theme_color_"+PrefsUtils(this).suffix))
+        val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
         val colors = intArrayOf(skinThemeColor, Color.WHITE)
         val state = arrayOf(intArrayOf(android.R.attr.state_checked), IntArray(0))
         val colorStateList = ColorStateList(state, colors)

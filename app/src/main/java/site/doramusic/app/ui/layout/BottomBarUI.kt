@@ -20,10 +20,10 @@ import com.lwh.jackknife.widget.MarqueeTextView
 import com.lwh.jackknife.widget.popupdialog.AbstractDialogView
 import com.lwh.jackknife.widget.popupdialog.DialogView
 import com.lwh.jackknife.widget.popupdialog.PopupDialog
-import com.lwh.jackknife.xskin.SkinLoader
-import com.lwh.jackknife.xskin.util.PrefsUtils
 import dora.db.builder.QueryBuilder
 import dora.db.dao.DaoFactory
+import dora.skin.SkinLoader
+import dora.skin.SkinManager
 import dora.util.TextUtils
 import dora.util.ViewUtils
 import site.doramusic.app.MusicApp
@@ -118,8 +118,7 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     fun updateProgressColor() {
-        playbackProgress!!.progressTintList = ColorStateList.valueOf(ContextCompat.getColor(contentView.context,
-            SkinLoader.getInstance().getColorRes("skin_theme_color_"+PrefsUtils(contentView.context).suffix)))
+        playbackProgress!!.progressTintList = SkinManager.getLoader().getColorStateList("skin_theme_color")
     }
 
     private fun initViews() {

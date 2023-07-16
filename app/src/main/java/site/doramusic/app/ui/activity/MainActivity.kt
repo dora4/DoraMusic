@@ -15,7 +15,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.lsxiao.apollo.core.Apollo
-import com.lwh.jackknife.xskin.SkinManager
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
@@ -23,12 +22,13 @@ import dora.db.dao.DaoFactory
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.request
 import dora.http.retrofit.RetrofitManager
+import dora.skin.SkinManager
+import dora.skin.base.BaseSkinActivity
 import dora.util.*
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-import site.doramusic.app.base.BaseSkinActivity
 import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.ApolloEvent
@@ -122,25 +122,25 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
             0 -> {
             }
             1 -> {
-                SkinManager.getInstance().changeSkin("cyan")
+                SkinManager.changeSkin("cyan")
             }
             2 -> {
-                SkinManager.getInstance().changeSkin("orange")
+                SkinManager.changeSkin("orange")
             }
             3 -> {
-                SkinManager.getInstance().changeSkin("black")
+                SkinManager.changeSkin("black")
             }
             4 -> {
-                SkinManager.getInstance().changeSkin("green")
+                SkinManager.changeSkin("green")
             }
             5 -> {
-                SkinManager.getInstance().changeSkin("red")
+                SkinManager.changeSkin("red")
             }
             6 -> {
-                SkinManager.getInstance().changeSkin("blue")
+                SkinManager.changeSkin("blue")
             }
             7 -> {
-                SkinManager.getInstance().changeSkin("purple")
+                SkinManager.changeSkin("purple")
             }
         }
     }
@@ -151,7 +151,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
     }
 
     private fun initMenu() {
-        //禁用手势滑动打开
+        // 禁用手势滑动打开
         mBinding.dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         val headerView = mBinding.nvMain.getHeaderView(0)
         val userAvatarView = headerView.findViewById<ImageView>(R.id.iv_drawer_header_avatar)
@@ -194,13 +194,13 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         }
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                //扫描歌曲
+                // 扫描歌曲
                 R.id.menu_scan_music -> performScanMusic()
-                //一键换肤
+                // 更换换肤
                 R.id.menu_change_skin -> open(ARoutePath.ACTIVITY_CHOICE_COLOR)
-                //均衡器
+                // 均衡器
                 R.id.menu_equalizer -> open(ARoutePath.ACTIVITY_EQUALIZER)
-                //设置
+                // 设置
                 R.id.menu_settings -> open(ARoutePath.ACTIVITY_SETTINGS)
             }
             true
