@@ -115,7 +115,7 @@
                     android:orientation="vertical">
 
 
-                    <com.lwh.jackknife.widget.MarqueeTextView
+                    <site.doramusic.app.widget.MarqueeTextView
                         android:id="@+id/tv_home_bottom_music_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                         android:text="朵拉音乐"
                         android:textColor="@color/gray" />
 
-                    <com.lwh.jackknife.widget.MarqueeTextView
+                    <site.doramusic.app.widget.MarqueeTextView
                         android:id="@+id/tv_home_bottom_artist"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

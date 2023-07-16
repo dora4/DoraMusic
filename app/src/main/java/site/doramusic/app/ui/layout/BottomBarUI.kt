@@ -1,6 +1,5 @@
 package site.doramusic.app.ui.layout
 
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -11,21 +10,18 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
-import com.lwh.jackknife.av.util.MusicUtils
-import com.lwh.jackknife.widget.MarqueeTextView
-import com.lwh.jackknife.widget.popupdialog.AbstractDialogView
-import com.lwh.jackknife.widget.popupdialog.DialogView
-import com.lwh.jackknife.widget.popupdialog.PopupDialog
+import site.doramusic.app.util.MusicUtils
 import dora.db.builder.QueryBuilder
 import dora.db.dao.DaoFactory
-import dora.skin.SkinLoader
 import dora.skin.SkinManager
 import dora.util.TextUtils
 import dora.util.ViewUtils
+import dora.widget.ADialogWindow
+import dora.widget.DoraDialog
+import dora.widget.DoraDialogWindow
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.annotation.SingleClick
@@ -38,6 +34,7 @@ import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.PlaylistItemAdapter
 import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.widget.MarqueeTextView
 
 /**
  * 底部控制条。
@@ -60,7 +57,7 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private var playbackProgress: ProgressBar? = null
     private var defaultAlbumIcon: Bitmap? = null
     private val playModeControl: PlayModeControl = PlayModeControl(manager.view.context)
-    private lateinit var popupDialog: PopupDialog
+    private lateinit var popupDialog: DoraDialog
     private val adapter = PlaylistItemAdapter()
 
     init {
@@ -225,36 +222,38 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     @SingleClick
     private fun showPlaylistDialog() {
-        val dialogView = DialogView(R.layout.view_popup_playlist,
-                AbstractDialogView.DEFAULT_SHADOW_COLOR)   //0x60000000
-        dialogView.setCanTouchOutside(false)    //仅当设置了阴影背景有效，默认false，阴影处控件不可点
-        dialogView.gravity = Gravity.BOTTOM
-        dialogView.setOnInflateListener {
-            val tv_playlist_playmode = dialogView.findViewById(R.id.tv_playlist_playmode) as TextView
-            val tv_playlist_count = dialogView.findViewById(R.id.tv_playlist_count) as TextView
-            val iv_playlist_playmode = dialogView.findViewById(R.id.iv_playlist_playmode) as ImageView
-            val recyclerView = dialogView.findViewById(R.id.rv_playlist) as RecyclerView
-            tv_playlist_playmode.text = playModeControl.printPlayMode(mediaManager!!.playMode)
-            tv_playlist_count.text = "(" + mediaManager.playlist!!.size + "首)"
-            adapter.setList(mediaManager.playlist)
-            adapter.setOnItemClickListener { adapter, view, position ->
-                mediaManager.playById(mediaManager.playlist!![position].songId)
+        val dialogWindow = DoraDialogWindow(R.layout.view_popup_playlist,
+                ADialogWindow.DEFAULT_SHADOW_COLOR)   //0x60000000
+        dialogWindow.setCanTouchOutside(false)    //仅当设置了阴影背景有效，默认false，阴影处控件不可点
+        dialogWindow.gravity = Gravity.BOTTOM
+        dialogWindow.setOnInflateListener(object : DoraDialogWindow.OnInflateListener {
+
+            override fun onInflateFinish(contentView: View?) {
+                val tv_playlist_playmode = contentView?.findViewById(R.id.tv_playlist_playmode) as TextView
+                val tv_playlist_count = contentView.findViewById(R.id.tv_playlist_count) as TextView
+                val iv_playlist_playmode = contentView.findViewById(R.id.iv_playlist_playmode) as ImageView
+                val recyclerView = contentView.findViewById(R.id.rv_playlist) as RecyclerView
+                tv_playlist_playmode.text = playModeControl.printPlayMode(mediaManager!!.playMode)
+                tv_playlist_count.text = "(" + mediaManager.playlist!!.size + "首)"
+                adapter.setList(mediaManager.playlist)
+                adapter.setOnItemClickListener { adapter, view, position ->
+                    mediaManager.playById(mediaManager.playlist!![position].songId)
+                }
+                ViewUtils.configRecyclerView(recyclerView)
+                recyclerView.adapter = adapter
+                iv_playlist_playmode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
+                tv_playlist_playmode.setOnClickListener {
+                    playModeControl.changePlayMode(tv_playlist_playmode,
+                            iv_playlist_playmode)
+                }
+                iv_playlist_playmode.setOnClickListener {
+                    playModeControl.changePlayMode(tv_playlist_playmode,
+                            iv_playlist_playmode)
+                }
             }
-            ViewUtils.configRecyclerView(recyclerView)
-            recyclerView.adapter = adapter
-            iv_playlist_playmode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
-            tv_playlist_playmode.setOnClickListener {
-                playModeControl.changePlayMode(tv_playlist_playmode,
-                        iv_playlist_playmode)
-            }
-            iv_playlist_playmode.setOnClickListener {
-                playModeControl.changePlayMode(tv_playlist_playmode,
-                        iv_playlist_playmode)
-            }
-        }
-        popupDialog = PopupDialog.Builder(manager.view.context)
-                .setDialogView(dialogView)
-                .create()
+        })
+        popupDialog = DoraDialog.Builder(manager.view.context)
+            .create(dialogWindow)
         popupDialog.show()
     }
 }

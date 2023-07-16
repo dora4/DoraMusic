@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 
-import com.lwh.jackknife.av.util.MusicUtils
+import site.doramusic.app.util.MusicUtils
 
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R

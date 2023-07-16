@@ -44,4 +44,13 @@
     <declare-styleable name="EqualizerView">
         <attr name="ev_bandsNum" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="LetterView">
+        <attr format="string|reference" name="letterview_letters"/>
+        <attr format="dimension|reference" name="letterview_textSize"/>
+        <attr format="color|reference" name="letterview_textColor"/>
+        <attr format="color|reference" name="letterview_hoverTextColor"/>
+        <attr format="reference" name="letterview_hoverBackgroundDrawable"/>
+        <attr format="boolean" name="letterview_textAllCaps"/>
+    </declare-styleable>
 </resources>

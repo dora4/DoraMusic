@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.provider.MediaStore
-import com.lwh.jackknife.av.util.MusicUtils
 import dora.db.Orm
 import dora.db.Transaction
 import dora.db.dao.DaoFactory
@@ -16,6 +15,7 @@ import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
+import site.doramusic.app.util.MusicUtils
 import site.doramusic.app.util.PreferencesManager
 import java.io.File
 import java.util.*

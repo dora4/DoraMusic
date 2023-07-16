@@ -17,8 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
-import com.lwh.jackknife.av.util.MusicTimer
-import com.lwh.jackknife.av.util.MusicUtils
+import site.doramusic.app.util.MusicUtils
 import dora.BaseFragment
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
@@ -44,6 +43,7 @@ import site.doramusic.app.ui.adapter.HomeAdapter
 import site.doramusic.app.ui.layout.BottomBarUI
 import site.doramusic.app.ui.layout.ILyricDrawer
 import site.doramusic.app.ui.layout.MusicPlayUI
+import site.doramusic.app.util.MusicTimer
 import java.util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,

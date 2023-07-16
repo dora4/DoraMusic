@@ -99,6 +99,7 @@ dependencies {
     map["dir"] = "libs"
     implementation(fileTree(map))
     implementation("com.github.dora4:dview-skins:1.4")
+    implementation("com.github.dora4:dview-bottom-dialog:1.1")
 //    implementation 'com.github.dora4:dview-avatar:1.4'
     implementation("com.github.dora4:dview-titlebar:1.9")
 
@@ -106,7 +107,6 @@ dependencies {
     implementation("com.alibaba:arouter-api:1.5.2")
     kapt("com.alibaba:arouter-compiler:1.5.2")
 
-    implementation("com.github.JackWHLiu:jackknife:75a681cd6f")
     // AspectJ
     implementation("org.aspectj:aspectjrt:1.9.19")
     // leakcanary

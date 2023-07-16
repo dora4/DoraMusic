@@ -9,10 +9,10 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lwh.jackknife.widget.LetterView
-import com.lwh.jackknife.xskin.SkinLoader
+import site.doramusic.app.widget.LetterView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
+import dora.skin.SkinManager
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
@@ -44,8 +44,7 @@ class FolderUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
         statusbar_folder = view.findViewById(R.id.statusbar_folder)
         statusbar_folder!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-
-        statusbar_folder!!.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(statusbar_folder!!, "skin_theme_color")
         lv_folder = view.findViewById(R.id.lv_folder)
         tv_folder_dialog = view.findViewById(R.id.tv_folder_dialog)
         titlebar = view.findViewById(R.id.titlebar_folder)

@@ -5,7 +5,6 @@ import android.os.Handler
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
-import com.lwh.jackknife.av.util.MusicUtils
 import dora.arouter.openWithFinish
 import dora.crash.DoraCrash
 import dora.skin.base.BaseSkinActivity
@@ -14,6 +13,7 @@ import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivitySplashBinding
+import site.doramusic.app.util.MusicUtils
 import site.doramusic.app.util.PreferencesManager
 import site.doramusic.app.util.UserManager
 

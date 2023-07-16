@@ -13,11 +13,11 @@ import android.os.IBinder
 import android.os.RemoteException
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
-import com.lwh.jackknife.av.util.MusicUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig.*
 import site.doramusic.app.db.Music
 import site.doramusic.app.shake.ShakeDetector
+import site.doramusic.app.util.MusicUtils
 import site.doramusic.app.util.PreferencesManager
 
 /**

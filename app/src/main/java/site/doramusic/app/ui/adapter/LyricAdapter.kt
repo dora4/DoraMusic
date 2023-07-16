@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.lwh.jackknife.xskin.SkinLoader
+import dora.skin.SkinManager
 import site.doramusic.app.R
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.util.PreferencesManager
@@ -100,10 +100,10 @@ class LyricAdapter(internal var context: Context) : BaseAdapter() {
             val skinType = prefsManager!!.getSkinType()
             // 当前播放到的句子设置为白色，字体大小更大
             if (skinType == 0) {
-                val skinColor = prefsManager!!.getSkinColor()
+                val skinColor = prefsManager.getSkinColor()
                 holder.lyric_line!!.setTextColor(context.resources.getColor(skinColor))
             } else {
-                val skinThemeColor = SkinLoader.getInstance().getColorRes("skin_theme_color")
+                val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
                 holder.lyric_line!!.setTextColor(context.resources.getColor(skinThemeColor))
             }
             holder.lyric_line!!.textSize = currentSize

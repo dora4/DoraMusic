@@ -162,7 +162,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
             paint!!.color = skinThemeColor //下面的线的颜色
             paint!!.strokeWidth = 6f
             canvas.drawLine(cx, cy + radius + 3, stepSize * i.toFloat(), measuredHeight.toFloat(), paint!!)
-            paint!!.color = ContextCompat.getColor(ctx, com.lwh.jackknife.widget.R.color.light_gray) //上面的线的颜色
+            paint!!.color = ContextCompat.getColor(ctx, dora.widget.colors.R.color.light_gray) //上面的线的颜色
             canvas.drawLine(cx, cy - radius - 3, stepSize * i.toFloat(), 0f, paint!!)
             val text = formatHz(freqs[i - 1])
             val textWidth = freqPaint!!.measureText(text)

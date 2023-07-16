@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.lsxiao.apollo.core.Apollo
-import com.lwh.jackknife.av.util.MusicTimer
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
@@ -36,6 +35,7 @@ import site.doramusic.app.media.PlayModeControl
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.LyricAdapter
+import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.widget.SlidingView
 
 /**

@@ -15,12 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
-import com.lwh.jackknife.widget.LetterView
-import com.lwh.jackknife.xskin.SkinLoader
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
+import dora.skin.SkinManager
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
 import site.doramusic.app.MusicApp
@@ -36,6 +35,7 @@ import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.adapter.MusicItemAdapter
+import site.doramusic.app.widget.LetterView
 
 class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager), AppConfig {
 
@@ -65,7 +65,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
         statusbar_music = view.findViewById(R.id.statusbar_music)
         statusbar_music!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        statusbar_music!!.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(statusbar_music!!, "skin_theme_color")
         lv_music = view.findViewById(R.id.lv_music)
         tv_music_dialog = view.findViewById(R.id.tv_music_dialog)
         titlebar = view.findViewById(R.id.titlebar_music)

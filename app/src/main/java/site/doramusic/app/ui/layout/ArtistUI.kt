@@ -9,10 +9,10 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lwh.jackknife.widget.LetterView
-import com.lwh.jackknife.xskin.SkinLoader
+import site.doramusic.app.widget.LetterView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
+import dora.skin.SkinManager
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
@@ -43,7 +43,7 @@ class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
         statusbar_artist = view.findViewById(R.id.statusbar_artist)
         statusbar_artist!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        statusbar_artist!!.background = SkinLoader.getInstance().getDrawable("skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(statusbar_artist!!, "skin_theme_color")
         rv_artist = view.findViewById(R.id.rv_artist)
         lv_artist = view.findViewById(R.id.lv_artist)
         tv_artist_dialog = view.findViewById(R.id.tv_artist_dialog)

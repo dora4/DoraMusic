@@ -29,7 +29,7 @@
             android:id="@+id/rv_artist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <com.lwh.jackknife.widget.LetterView
+        <site.doramusic.app.widget.LetterView
             android:id="@+id/lv_artist"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
