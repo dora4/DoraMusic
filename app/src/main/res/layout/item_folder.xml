@@ -21,7 +21,7 @@
         android:ellipsize="end"
         android:textSize="15sp" />
 
-    <com.lwh.jackknife.widget.MarqueeTextView
+    <site.doramusic.app.widget.MarqueeTextView
         android:id="@+id/tv_folder_path"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

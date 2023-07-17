@@ -10,6 +10,7 @@ import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
+import site.doramusic.app.http.service.CommonService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.http.service.UserService
 import site.doramusic.app.media.MediaManager
@@ -58,6 +59,7 @@ class MusicApp : BaseApplication(), AppConfig {
             }
             mappingBaseUrl(MusicService::class.java, AppConfig.URL_APP_SERVER)
             mappingBaseUrl(UserService::class.java, AppConfig.URL_APP_SERVER)
+            mappingBaseUrl(CommonService::class.java, AppConfig.URL_CHAT_SERVER)
         }
     }
 

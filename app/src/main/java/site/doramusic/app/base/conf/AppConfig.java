@@ -8,6 +8,7 @@ public interface AppConfig {
      * 朵拉音乐应用服务器。
      */
     String URL_APP_SERVER = "http://doramusic.site:8080";
+    String URL_CHAT_SERVER = "http://dorachat.com:9091";
 
     /**
      * Intent & Action。

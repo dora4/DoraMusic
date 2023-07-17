@@ -19,7 +19,7 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.util.DensityUtils
-import dora.widget.DoraRotateCoverView
+import site.doramusic.app.widget.DoraRotateCoverView
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.annotation.SingleClick
@@ -146,6 +146,8 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         statusbar_lyric!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             getStatusBarHeight())
         rotateCoverView = DoraRotateCoverView(manager.view.context)
+        rotateCoverView!!.scaleX = 0.8f
+        rotateCoverView!!.scaleY = 0.8f
         vp_music_play_cover_lyric = findViewById(R.id.vp_music_play_cover_lyric) as ViewPager
 
         lrcEmptyView = TextView(manager.view.context)

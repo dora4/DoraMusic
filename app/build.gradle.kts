@@ -107,6 +107,11 @@ dependencies {
     implementation("com.alibaba:arouter-api:1.5.2")
     kapt("com.alibaba:arouter-compiler:1.5.2")
 
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    //AgentWeb
+    implementation("com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx") // (必选)
+    implementation("com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx") // (可选)
+    implementation("com.github.Justson:Downloader:v5.0.0-androidx") // (可选)
     // AspectJ
     implementation("org.aspectj:aspectjrt:1.9.19")
     // leakcanary
@@ -115,4 +120,5 @@ dependencies {
     implementation("com.github.getActivity:XXPermissions:18.2")
     // BaseRecyclerViewAdapterHelper
     implementation("io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.6")
+    implementation("io.github.youth5201314:banner:2.2.2")
 }

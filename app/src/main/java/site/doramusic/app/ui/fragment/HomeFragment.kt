@@ -10,19 +10,28 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
+import com.youth.banner.adapter.BannerAdapter
 import site.doramusic.app.util.MusicUtils
 import dora.BaseFragment
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
+import dora.http.DoraHttp.net
+import dora.http.DoraHttp.result
+import dora.http.retrofit.RetrofitManager
 import dora.util.*
 import dora.widget.DoraTitleBar
 import site.doramusic.app.MusicApp
@@ -34,10 +43,13 @@ import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
+import site.doramusic.app.http.DoraHomeBanner
+import site.doramusic.app.http.service.CommonService
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MusicControl
 import site.doramusic.app.ui.UIManager
+import site.doramusic.app.ui.activity.BrowserActivity
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
 import site.doramusic.app.ui.layout.BottomBarUI
@@ -275,8 +287,55 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
+    class ImageAdapter(mDatas: List<String>) : BannerAdapter<String, ImageAdapter.BannerViewHolder>(mDatas) {
+        //创建ViewHolder，可以用viewType这个字段来区分不同的ViewHolder
+        override fun onCreateHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
+            val imageView = ImageView(parent.context)
+            //注意，必须设置为match_parent，这个是viewpager2强制要求的
+            imageView.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            //        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            return BannerViewHolder(imageView)
+        }
+
+        override fun onBindView(holder: BannerViewHolder, data: String, position: Int, size: Int) {
+
+            //图片加载自己实现
+            Glide.with(holder.itemView)
+                .load(data)
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
+                .into(holder.imageView)
+        }
+
+        inner class BannerViewHolder(var imageView: ImageView) : RecyclerView.ViewHolder(
+            imageView
+        )
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        net {
+            val bannerResult = result {
+                RetrofitManager.getService(CommonService::class.java).getHomeBannersV3()
+            }
+            val result = arrayListOf<String>()
+            val banners: MutableList<DoraHomeBanner> = bannerResult!!.data
+            if (banners.size > 0) {
+                for (banner in banners) {
+                    result.add(banner.imgUrl)
+                }
+            }
+            val imageAdapter = ImageAdapter(result)
+            imageAdapter.setOnBannerListener { data, position ->
+                val intent = Intent(activity, BrowserActivity::class.java)
+                intent.putExtra("title", "Dora Chat")
+                intent.putExtra("url", banners[position].detailUrl)
+                startActivity(intent)
+            }
+            mBinding!!.banner.setAdapter(imageAdapter)
+        }
         mBinding.statusbarHome.layoutParams = RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
