@@ -208,6 +208,7 @@
                     android:background="@color/colorPrimary"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:visibility="gone"
                     app:banner_indicator_normal_width="5dp"
                     app:banner_indicator_radius="5dp"
                     app:banner_indicator_selected_width="5dp" />

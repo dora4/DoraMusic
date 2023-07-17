@@ -317,24 +317,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         net {
-            val bannerResult = result {
-                RetrofitManager.getService(CommonService::class.java).getHomeBannersV3()
+            val bannerCheckResult = result {
+                RetrofitManager.getService(CommonService::class.java).homeBannersCheckV3("doramusic")
             }
-            val result = arrayListOf<String>()
-            val banners: MutableList<DoraHomeBanner> = bannerResult!!.data
-            if (banners.size > 0) {
-                for (banner in banners) {
-                    result.add(banner.imgUrl)
+            if (bannerCheckResult != null && bannerCheckResult.data == true) {
+                mBinding!!.banner.visibility = View.VISIBLE
+                val bannerResult = result {
+                    RetrofitManager.getService(CommonService::class.java).getHomeBannersV3()
                 }
+                val result = arrayListOf<String>()
+                val banners: MutableList<DoraHomeBanner> = bannerResult!!.data
+                if (banners.size > 0) {
+                    for (banner in banners) {
+                        result.add(banner.imgUrl)
+                    }
+                }
+                val imageAdapter = ImageAdapter(result)
+                imageAdapter.setOnBannerListener { data, position ->
+                    val intent = Intent(activity, BrowserActivity::class.java)
+                    intent.putExtra("title", "Dora Chat")
+                    intent.putExtra("url", banners[position].detailUrl)
+                    startActivity(intent)
+                }
+                mBinding!!.banner.setAdapter(imageAdapter)
             }
-            val imageAdapter = ImageAdapter(result)
-            imageAdapter.setOnBannerListener { data, position ->
-                val intent = Intent(activity, BrowserActivity::class.java)
-                intent.putExtra("title", "Dora Chat")
-                intent.putExtra("url", banners[position].detailUrl)
-                startActivity(intent)
-            }
-            mBinding!!.banner.setAdapter(imageAdapter)
         }
         mBinding.statusbarHome.layoutParams = RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
