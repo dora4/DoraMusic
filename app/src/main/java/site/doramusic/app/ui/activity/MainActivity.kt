@@ -43,7 +43,6 @@ import site.doramusic.app.receiver.EarphoneReceiver
 import site.doramusic.app.ui.IBack
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.util.PreferencesManager
-import site.doramusic.app.util.UserManager
 import java.util.concurrent.Executors
 
 @Route(path = ARoutePath.ACTIVITY_MAIN)
@@ -69,18 +68,18 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         val dobView = headerView.findViewById<TextView>(R.id.tv_drawer_header_dob)
         val scoreView = headerView.findViewById<TextView>(R.id.tv_drawer_header_score)
         val header = headerView.findViewById<LinearLayout>(R.id.ll_drawer_header)
-        val doraUser = UserManager.currentUser
-        if (doraUser != null) {
-            nicknameView.text = doraUser.username
-            dobView.text = "朵币:${doraUser.dob}"
-            scoreView.text = "积分:${doraUser.score}"
-            header.visibility = View.VISIBLE
-        } else {
-            nicknameView.text = ""
-            dobView.text = ""
-            scoreView.text = ""
-            header.visibility = View.INVISIBLE
-        }
+//        val doraUser = UserManager.currentUser
+//        if (doraUser != null) {
+//            nicknameView.text = doraUser.username
+//            dobView.text = "朵币:${doraUser.dob}"
+//            scoreView.text = "积分:${doraUser.score}"
+//            header.visibility = View.VISIBLE
+//        } else {
+//            nicknameView.text = ""
+//            dobView.text = ""
+//            scoreView.text = ""
+//            header.visibility = View.INVISIBLE
+//        }
     }
 
     /**
@@ -162,35 +161,35 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         val dobView = headerView.findViewById<TextView>(R.id.tv_drawer_header_dob)
         val scoreView = header.findViewById<TextView>(R.id.tv_drawer_header_score)
         userAvatarView.setOnClickListener {
-            if (UserManager.currentUser == null) {
+//            if (UserManager.currentUser == null) {
 //                open(ARoutePath.ACTIVITY_LOGIN)
-            }
+//            }
         }
         versionNameView.text = "客户端版本:" + getString(R.string.app_version)
         signView.setOnClickListener {
-            val doraUser = UserManager.currentUser
-            if (doraUser != null) {
-                val userId = doraUser.id
-                if (userId != null) {
-                    //用户签到
-                    val service = RetrofitManager.getService(UserService::class.java)
-                    val call = service.sign(userId)
-                    call.enqueue(object : DoraCallback<DoraSign>() {
-                        override fun onSuccess(sign: DoraSign) {
-                            doraUser.score = sign.score
-                            doraUser.dob = sign.dob
-                            UserManager.update(doraUser)
-                            dobView.text = "朵币:${sign.dob}"
-                            scoreView.text = "积分:${sign.score}"
-                            showShortToast("签到成功，连续签到${sign.signNum}天")
-                        }
-
-                        override fun onFailure(code: Int, msg: String) {
-                            showShortToast("签到失败，$msg")
-                        }
-                    })
-                }
-            }
+//            val doraUser = UserManager.currentUser
+//            if (doraUser != null) {
+//                val userId = doraUser.id
+//                if (userId != null) {
+//                    //用户签到
+//                    val service = RetrofitManager.getService(UserService::class.java)
+//                    val call = service.sign(userId)
+//                    call.enqueue(object : DoraCallback<DoraSign>() {
+//                        override fun onSuccess(sign: DoraSign) {
+//                            doraUser.score = sign.score
+//                            doraUser.dob = sign.dob
+//                            UserManager.update(doraUser)
+//                            dobView.text = "朵币:${sign.dob}"
+//                            scoreView.text = "积分:${sign.score}"
+//                            showShortToast("签到成功，连续签到${sign.signNum}天")
+//                        }
+//
+//                        override fun onFailure(code: Int, msg: String) {
+//                            showShortToast("签到失败，$msg")
+//                        }
+//                    })
+//                }
+//            }
         }
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.arouter.open
 import dora.http.retrofit.RetrofitManager
@@ -22,7 +21,6 @@ import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.http.DoraCallback
 import site.doramusic.app.http.service.UserService
 import site.doramusic.app.util.PreferencesManager
-import site.doramusic.app.util.UserManager
 
 @Route(path = ARoutePath.ACTIVITY_SETTINGS)
 class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
@@ -47,9 +45,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         mBinding.v = this
         updateDialog = DoraLoadingDialog(this)
         prefsManager = PreferencesManager(this)
-        if (UserManager.currentUser != null) {
-            mBinding.rlSettingsLogout.visibility = View.VISIBLE
-        }
+//        if (UserManager.currentUser != null) {
+//            mBinding.rlSettingsLogout.visibility = View.VISIBLE
+//        }
         mBinding.tbSettingsTwo.isChecked = prefsManager.getColdLaunchAutoPlay()
         mBinding.tbSettingsThree.isChecked = prefsManager.getShakeChangeMusic()
         mBinding.tbSettingsFive.isChecked = prefsManager.getBassBoost()
@@ -83,29 +81,29 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
 
     override fun onClick(view: View) {
         when(view.id) {
-            R.id.rl_settings_logout -> {
-                val service = RetrofitManager.getService(UserService::class.java)
-                val prefsManager = PreferencesManager(this)
-                if (TextUtils.isNotEmpty(prefsManager.getToken())) {
-                    val call = service.logout(prefsManager.getToken() ?: "")
-                    call.enqueue(object : DoraCallback<Long>() {
-
-                        override fun onSuccess(body: Long) {
-                            showShortToast("注销登录")
-                            UserManager.update(null)
-                            prefsManager.removeToken()
-                        }
-
-                        override fun onFailure(code: Int, msg: String) {
-                            showShortToast(msg)
-                        }
-                    })
-                    finish()
-                } else {
-                    showShortToast("注销登录")
-                    UserManager.update(null)
-                }
-            }
+//            R.id.rl_settings_logout -> {
+//                val service = RetrofitManager.getService(UserService::class.java)
+//                val prefsManager = PreferencesManager(this)
+//                if (TextUtils.isNotEmpty(prefsManager.getToken())) {
+//                    val call = service.logout(prefsManager.getToken() ?: "")
+//                    call.enqueue(object : DoraCallback<Long>() {
+//
+//                        override fun onSuccess(body: Long) {
+//                            showShortToast("注销登录")
+//                            UserManager.update(null)
+//                            prefsManager.removeToken()
+//                        }
+//
+//                        override fun onFailure(code: Int, msg: String) {
+//                            showShortToast(msg)
+//                        }
+//                    })
+//                    finish()
+//                } else {
+//                    showShortToast("注销登录")
+//                    UserManager.update(null)
+//                }
+//            }
             R.id.rl_settings_two -> {
                 val isChecked = mBinding.tbSettingsTwo.isChecked
                 mBinding.tbSettingsTwo.isChecked = !isChecked

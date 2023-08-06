@@ -15,7 +15,6 @@ import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivitySplashBinding
 import site.doramusic.app.util.MusicUtils
 import site.doramusic.app.util.PreferencesManager
-import site.doramusic.app.util.UserManager
 
 /**
  * 启动页，无法使用AppCompatActivity主题，所有直接继承Activity。
@@ -52,7 +51,7 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
             this@SplashActivity,
             "DoraMusic/log"
         )
-        UserManager.update(this)
+//        UserManager.update(this)
         val prefsManager = PreferencesManager(this)
         splashLoading(prefsManager)
     }
