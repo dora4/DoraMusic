@@ -131,5 +131,16 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- 蒲公英的SDK配置 -->
+        <meta-data
+            android:name="PGYER_API_KEY"
+            android:value="b32485d39298de8a302c67883e192107" />
+        <meta-data
+            android:name="PGYER_FRONTJS_KEY"
+            android:value="b821f25618d4adb1e3b6976bfc8daa09" />
+        <meta-data
+            android:name="PGYER_FEATURE_CHECK_UNPDATE"
+            android:value="true" />
     </application>
 </manifest>

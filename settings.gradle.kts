@@ -25,6 +25,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {  setUrl("https://jitpack.io") }
+
+        // 蒲公英的仓库
+        maven { setUrl("https://frontjs-static.pgyer.com/dist/sdk/pgyersdk") }
     }
 }
 rootProject.name = "DoraMusic"

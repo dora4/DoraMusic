@@ -19,7 +19,7 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.util.DensityUtils
-import site.doramusic.app.widget.DoraRotateCoverView
+import dora.util.ScreenUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.annotation.SingleClick
@@ -36,6 +36,7 @@ import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.LyricAdapter
 import site.doramusic.app.util.MusicTimer
+import site.doramusic.app.widget.RotateCoverView
 import site.doramusic.app.widget.SlidingView
 
 /**
@@ -70,7 +71,8 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private var curMusic: Music? = null
     private var vp_music_play_cover_lyric: ViewPager? = null
     private var coverLrcContainer: FrameLayout? = null
-    private var rotateCoverView: DoraRotateCoverView? = null
+    private var coverContainer: FrameLayout? = null
+    private var rotateCoverView: RotateCoverView? = null
     private var lrcEmptyView: TextView? = null
     private var lrcListView: ListView? = null
     private lateinit var lyricAdapter: LyricAdapter
@@ -145,9 +147,7 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         btn_music_play_favorite = findViewById(R.id.btn_music_play_favorite) as ImageButton
         statusbar_lyric!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             getStatusBarHeight())
-        rotateCoverView = DoraRotateCoverView(manager.view.context)
-        rotateCoverView!!.scaleX = 0.8f
-        rotateCoverView!!.scaleY = 0.8f
+        rotateCoverView = RotateCoverView(manager.view.context)
         vp_music_play_cover_lyric = findViewById(R.id.vp_music_play_cover_lyric) as ViewPager
 
         lrcEmptyView = TextView(manager.view.context)
@@ -166,10 +166,18 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         coverLrcContainer = FrameLayout(manager.view.context)
         coverLrcContainer!!.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT)
+        coverContainer = FrameLayout(manager.view.context)
+        coverContainer!!.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT)
+        val dp40 = DensityUtils.dp2px(40f)
+        val lp = FrameLayout.LayoutParams(ScreenUtils.getScreenWidth() - dp40,
+            ScreenUtils.getScreenWidth() - dp40)
+        lp.gravity = Gravity.CENTER
+        coverContainer!!.addView(rotateCoverView, lp)
         coverLrcContainer!!.addView(lrcListView)
         coverLrcContainer!!.addView(lrcEmptyView)
         var pageViews: MutableList<View>  = ArrayList()
-        pageViews.add(rotateCoverView!!)
+        pageViews.add(coverContainer!!)
         pageViews.add(coverLrcContainer!!)
         vp_music_play_cover_lyric!!.adapter = MusicPlayPagerAdapter(pageViews)
         sv_home_drawer!!.setOnDrawerCloseListener(this)
@@ -245,11 +253,11 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         if (flag) {
             btn_music_play_play!!.visibility = View.VISIBLE
             btn_music_play_pause!!.visibility = View.GONE
-            rotateCoverView!!.pause()
+            rotateCoverView!!.pauseRotateAnimation()
         } else {
             btn_music_play_play!!.visibility = View.GONE
             btn_music_play_pause!!.visibility = View.VISIBLE
-            rotateCoverView!!.start(R.drawable.cover_rotating_bg, true)
+            rotateCoverView!!.startRotateAnimation()
         }
     }
 
@@ -477,7 +485,7 @@ class MusicPlayUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
      * 加载转盘封面。
      */
     fun loadRotateCover(bitmap: Bitmap) {
-        rotateCoverView!!.setImageBitmap(createDefaultCover())
+        rotateCoverView!!.setImageBitmap(bitmap)
     }
 
     /**

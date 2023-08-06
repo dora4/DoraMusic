@@ -245,7 +245,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                     }
                 }
             }
-            Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
+            homeFragment!!.onRefreshLocalMusic()
             dialog.dismiss()
         }
     }

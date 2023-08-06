@@ -1,5 +1,6 @@
 package site.doramusic.app
 
+import com.pgyer.pgyersdk.PgyerSDKManager
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig

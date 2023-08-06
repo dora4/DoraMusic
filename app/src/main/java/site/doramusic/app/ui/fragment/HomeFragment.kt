@@ -275,7 +275,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     @Receive(ApolloEvent.REFRESH_LOCAL_NUMS)
-    fun onMessageEvent() {
+    fun onRefreshLocalMusic() {
         val homeItems = getHomeItems()
         adapter.setList(homeItems)
     }

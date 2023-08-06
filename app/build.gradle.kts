@@ -121,4 +121,7 @@ dependencies {
     // BaseRecyclerViewAdapterHelper
     implementation("io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.6")
     implementation("io.github.youth5201314:banner:2.2.2")
+
+
+    implementation("com.github.dora4:dora-pgyer-support:1.0")
 }
