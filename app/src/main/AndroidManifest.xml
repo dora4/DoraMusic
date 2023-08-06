@@ -111,7 +111,7 @@
             android:name=".media.MediaService"
             android:process=":doramedia"
             android:exported="true"
-            android:label="朵拉音乐媒体服务">
+            android:label="DoraMusic Media">
             <intent-filter>
                 <action android:name="site.doramusic.app.service.ACTION_MEDIA_SERVICE" />
             </intent-filter>

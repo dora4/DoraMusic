@@ -83,21 +83,22 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-config-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
+    val map = hashMapOf<String, Any>()
+    map["include"] = arrayOf("*.jar", "*.aar")
+    map["dir"] = "libs"
+    implementation(fileTree(map))
 
     // Dora全家桶
     implementation("com.github.dora4:dcache-android:1.7.9")
     implementation("com.github.dora4:dora:1.1.9")
     implementation("com.github.dora4:dora-arouter-support:1.1")
     implementation("com.github.dora4:dora-apollo-support:1.1")
+    implementation("com.github.dora4:dora-pgyer-support:1.0")
 //    implementation 'com.github.dora4:dora-eventbus-support:1.1'
     implementation("com.github.dora4:dview-toggle-button:1.0")
     implementation("com.github.dora4:dview-alert-dialog:1.0")
     implementation("com.github.dora4:dview-loading-dialog:1.2")
     implementation("com.github.dora4:dview-colors:1.0")
-    val map = hashMapOf<String, Any>()
-    map["include"] = arrayOf("*.jar", "*.aar")
-    map["dir"] = "libs"
-    implementation(fileTree(map))
     implementation("com.github.dora4:dview-skins:1.4")
     implementation("com.github.dora4:dview-bottom-dialog:1.1")
 //    implementation 'com.github.dora4:dview-avatar:1.4'
@@ -123,5 +124,4 @@ dependencies {
     implementation("io.github.youth5201314:banner:2.2.2")
 
 
-    implementation("com.github.dora4:dora-pgyer-support:1.0")
 }
