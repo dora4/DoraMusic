@@ -9,11 +9,11 @@ plugins {
 
 android {
     namespace = "site.doramusic.app"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         buildFeatures {
@@ -22,7 +22,7 @@ android {
     }
     flavorDimensions("app")
     productFlavors {
-        // 线上环境
+        // 线上/公测环境
         create("beta") {
             dimension = "app"
             versionNameSuffix = "-beta"
@@ -33,7 +33,7 @@ android {
             applicationIdSuffix = ".alpha"
             versionNameSuffix = "-alpha"
         }
-        // 开发环境
+        // 开发/调试环境
         create("dev") {
             dimension = "app"
             applicationIdSuffix = ".dev"
@@ -76,17 +76,19 @@ kotlin {
 }
 
 dependencies {
+    val map = hashMapOf<String, Any>()
+    map["include"] = arrayOf("*.jar", "*.aar")
+    map["dir"] = "libs"
+    implementation(fileTree(map))
     implementation("com.google.android.material:material:1.9.0")
     implementation("com.google.guava:guava:27.0.1-android")
+
+    // Firebase相关
     implementation(platform("com.google.firebase:firebase-bom:31.2.0"))
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-config-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
-    val map = hashMapOf<String, Any>()
-    map["include"] = arrayOf("*.jar", "*.aar")
-    map["dir"] = "libs"
-    implementation(fileTree(map))
 
     // Dora全家桶
     implementation("com.github.dora4:dcache-android:1.7.9")
@@ -108,20 +110,26 @@ dependencies {
     implementation("com.alibaba:arouter-api:1.5.2")
     kapt("com.alibaba:arouter-compiler:1.5.2")
 
+    // Glide
     implementation("com.github.bumptech.glide:glide:4.11.0")
+
     //AgentWeb
     implementation("com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx") // (必选)
     implementation("com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx") // (可选)
     implementation("com.github.Justson:Downloader:v5.0.0-androidx") // (可选)
+
     // AspectJ
     implementation("org.aspectj:aspectjrt:1.9.19")
+
     // leakcanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.10")
+
     // XXPermissions
     implementation("com.github.getActivity:XXPermissions:18.2")
+
     // BaseRecyclerViewAdapterHelper
     implementation("io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.6")
+
+    // banner
     implementation("io.github.youth5201314:banner:2.2.2")
-
-
 }

@@ -3,24 +3,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="site.doramusic.app">
-    <uses-permission android:name="android.permission.READ_LOGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
+
+    <!-- 允许访问互联网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- 文件管理权限 -->
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 媒体播放的时候加了WakeLock -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -62,6 +67,7 @@
 <!--            android:value="GlobalConfig" />-->
         <activity
             android:name=".ui.activity.SplashActivity"
+            android:label="启动页"
             android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/AppTheme.Launch">
@@ -97,16 +103,17 @@
 
         <activity
             android:name=".ui.activity.BrowserActivity"
+            android:label="浏览器"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:exported="true"/>
 
         <activity
             android:name=".ui.activity.ProtocolActivity"
+            android:label="用户协议和隐私政策"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:exported="true"/>
-        <!-- 单独开一个进程播放音乐 -->
         <service
             android:name=".media.MediaService"
             android:process=":doramedia"
@@ -116,12 +123,14 @@
                 <action android:name="site.doramusic.app.service.ACTION_MEDIA_SERVICE" />
             </intent-filter>
         </service>
+
         <receiver android:name=".receiver.BatteryReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
             </intent-filter>
         </receiver>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.file-provider"
