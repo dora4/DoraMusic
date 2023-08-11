@@ -1,33 +1,28 @@
-package site.doramusic.app.widget;
+package site.doramusic.app.widget
 
-import android.content.Context;
-import android.text.TextUtils;
-import android.util.AttributeSet;
+import android.content.Context
+import android.text.TextUtils
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
+import kotlin.jvm.JvmOverloads
 
-import androidx.appcompat.widget.AppCompatTextView;
-
-public class MarqueeTextView extends AppCompatTextView {
-
-    public MarqueeTextView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init();
+class MarqueeTextView @JvmOverloads constructor(
+    context: Context?,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : AppCompatTextView(
+    context!!, attrs, defStyle
+) {
+    init {
+        init()
     }
 
-    public MarqueeTextView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    private fun init() {
+        setSingleLine()
+        ellipsize = TextUtils.TruncateAt.MARQUEE
     }
 
-    public MarqueeTextView(Context context) {
-        this(context, null);
-    }
-
-    private void init() {
-        setSingleLine();
-        setEllipsize(TextUtils.TruncateAt.MARQUEE);
-    }
-
-    @Override
-    public boolean isFocused() {
-        return true;
+    override fun isFocused(): Boolean {
+        return true
     }
 }

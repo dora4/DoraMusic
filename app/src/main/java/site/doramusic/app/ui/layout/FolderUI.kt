@@ -9,7 +9,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import site.doramusic.app.widget.LetterView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
 import dora.skin.SkinManager
@@ -20,6 +19,7 @@ import site.doramusic.app.db.Folder
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.FolderItemAdapter
+import site.doramusic.app.widget.LetterView
 import java.util.*
 
 class FolderUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {

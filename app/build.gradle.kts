@@ -75,27 +75,35 @@ kotlin {
     jvmToolchain(11)
 }
 
-dependencies {
+fun libFileTree() : ConfigurableFileTree {
     val map = hashMapOf<String, Any>()
     map["include"] = arrayOf("*.jar", "*.aar")
     map["dir"] = "libs"
-    implementation(fileTree(map))
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("com.google.guava:guava:27.0.1-android")
+    return fileTree(map)
+}
 
-    // Firebase相关
-    implementation(platform("com.google.firebase:firebase-bom:31.2.0"))
+fun DependencyHandlerScope.firebase(version: String) {
+    implementation(platform("com.google.firebase:firebase-bom:$version"))
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-config-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
+}
+
+dependencies {
+    implementation(libFileTree())
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.guava:guava:27.0.1-android")
+
+    // Firebase相关
+    firebase("31.2.0")
 
     // Dora全家桶
     implementation("com.github.dora4:dcache-android:1.7.9")
-    implementation("com.github.dora4:dora:1.1.9")
+    implementation("com.github.dora4:dora:1.1.12")
     implementation("com.github.dora4:dora-arouter-support:1.1")
     implementation("com.github.dora4:dora-apollo-support:1.1")
-    implementation("com.github.dora4:dora-pgyer-support:1.0")
+    implementation("com.github.dora4:dora-pgyer-support:1.1")
 //    implementation 'com.github.dora4:dora-eventbus-support:1.1'
     implementation("com.github.dora4:dview-toggle-button:1.0")
     implementation("com.github.dora4:dview-alert-dialog:1.0")
