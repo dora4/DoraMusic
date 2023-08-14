@@ -1,5 +1,9 @@
 package site.doramusic.app
 
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.pgyer.pgyersdk.PgyerSDKManager
 import dora.BaseApplication
 import dora.db.Orm
@@ -48,6 +52,11 @@ class MusicApp : BaseApplication(), AppConfig {
         initHttp()   // 初始化网络框架
         initDb()    // 初始化SQLite数据库的表
         initMedia() // 初始化媒体管理器
+        val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 3600
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
     }
 
     private fun initMedia() {
