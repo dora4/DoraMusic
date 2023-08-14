@@ -103,7 +103,7 @@ dependencies {
     implementation("com.github.dora4:dora:1.1.12")
     implementation("com.github.dora4:dora-arouter-support:1.1")
     implementation("com.github.dora4:dora-apollo-support:1.1")
-    implementation("com.github.dora4:dora-pgyer-support:1.1")
+    implementation("com.github.dora4:dora-pgyer-support:1.0")
 //    implementation 'com.github.dora4:dora-eventbus-support:1.1'
     implementation("com.github.dora4:dview-toggle-button:1.0")
     implementation("com.github.dora4:dview-alert-dialog:1.0")

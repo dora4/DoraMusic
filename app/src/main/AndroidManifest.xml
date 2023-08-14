@@ -62,6 +62,9 @@
         <meta-data
             android:name="dora.lifecycle.config.ApolloGlobalConfig"
             android:value="GlobalConfig" />
+        <meta-data
+            android:name="dora.lifecycle.config.PgyerGlobalConfig"
+            android:value="GlobalConfig" />
 <!--        <meta-data-->
 <!--            android:name="dora.lifecycle.config.EventBusGlobalConfig"-->
 <!--            android:value="GlobalConfig" />-->
