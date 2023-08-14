@@ -85,9 +85,11 @@ fun libFileTree() : ConfigurableFileTree {
 fun DependencyHandlerScope.firebase(version: String) {
     implementation(platform("com.google.firebase:firebase-bom:$version"))
     implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-config-ktx")
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-config")
 }
 
 dependencies {
