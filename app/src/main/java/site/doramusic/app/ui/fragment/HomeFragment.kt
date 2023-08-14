@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.fragment
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -48,6 +49,7 @@ import site.doramusic.app.http.service.CommonService
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MusicControl
+import site.doramusic.app.receiver.MusicPlayReceiver
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.BrowserActivity
 import site.doramusic.app.ui.activity.MainActivity
@@ -103,10 +105,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             resources,
             R.drawable.bottom_bar_cover_bg
         )
-        musicPlayReceiver = MusicPlayReceiver()
-
-        val filter = IntentFilter(AppConfig.ACTION_PLAY)
-        requireActivity().registerReceiver(musicPlayReceiver, filter)
     }
 
     private fun getHomeItems(): List<HomeItem> {
@@ -133,145 +131,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         homeItems.add(HomeItem(R.drawable.ic_local_favorite, "我的收藏", favoriteCount))
         homeItems.add(HomeItem(R.drawable.ic_local_latest, "最近播放", latestCount))
         return homeItems
-    }
-
-    inner class MusicPlayReceiver : BroadcastReceiver() {
-
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            if (action != null && action == AppConfig.ACTION_PLAY) {
-                val music = mediaManager!!.curMusic
-                val playState = mediaManager!!.playState
-                val pendingProgress = intent.getIntExtra("pending_progress", 0)
-                when (playState) {
-                    AppConfig.MPS_INVALID -> {  // 考虑后面加上如果文件不可播放直接跳到下一首
-                        musicTimer!!.stopTimer()
-
-                        musicPlayUI!!.refreshUI(0, music!!.duration, music)
-                        musicPlayUI!!.showPlay(true)
-
-                        bottomBarUI!!.refreshUI(0, music.duration, music)
-                        bottomBarUI!!.setSecondaryProgress(pendingProgress)
-                        bottomBarUI!!.showPlay(true)
-                    }
-                    AppConfig.MPS_PAUSE -> {    //  刷新播放列表当前播放的条目
-                        Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-                        musicTimer!!.stopTimer()
-
-                        musicPlayUI!!.refreshUI(
-                            mediaManager!!.position(), music!!.duration,
-                            music
-                        )
-                        musicPlayUI!!.showPlay(true)
-
-                        bottomBarUI!!.refreshUI(
-                            mediaManager!!.position(), music.duration,
-                            music
-                        )
-                        bottomBarUI!!.setSecondaryProgress(pendingProgress)
-                        bottomBarUI!!.showPlay(true)
-
-                        if (music.albumId != -1) {
-                            try {
-                                val bitmap = MusicUtils.getCachedArtwork(
-                                    context,
-                                    music.albumId.toLong(), defaultArtwork
-                                )
-                                if (bitmap != null) {
-                                    mediaManager!!.updateNotification(
-                                        bitmap, music.musicName,
-                                        music.artist
-                                    )
-                                }
-                            } catch (e: UnsupportedOperationException) {
-//                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
-                            }
-                        } else {
-                            mediaManager!!.updateNotification(
-                                defaultArtwork!!,
-                                music.musicName,
-                                music.artist
-                            )
-                        }
-                    }
-                    AppConfig.MPS_PLAYING -> {  //刷新播放列表当前播放的条目
-                        Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-                        musicTimer!!.startTimer()
-
-                        musicPlayUI!!.refreshUI(
-                            mediaManager!!.position(), music!!.duration,
-                            music
-                        )
-                        musicPlayUI!!.showPlay(false)
-                        // 读取歌词
-                        musicPlayUI!!.loadLyric(music)
-
-                        bottomBarUI!!.refreshUI(
-                            mediaManager!!.position(), music.duration,
-                            music
-                        )
-                        bottomBarUI!!.setSecondaryProgress(pendingProgress)
-                        bottomBarUI!!.showPlay(false)
-                        try {
-                            val bitmap = MusicUtils.getCachedArtwork(
-                                context,
-                                music.albumId.toLong(), defaultArtwork
-                            )
-                            if (music.albumId != -1) {
-                                if (bitmap != null) {
-                                    mediaManager!!.updateNotification(
-                                        bitmap, music.musicName,
-                                        music.artist
-                                    )
-                                    musicPlayUI!!.loadRotateCover(bitmap)
-                                } else {
-                                    musicPlayUI!!.loadRotateCover(musicPlayUI!!.createDefaultCover())
-                                }
-                            } else {
-                                musicPlayUI!!.loadRotateCover(bitmap)
-                                mediaManager!!.updateNotification(
-                                    defaultArtwork!!,
-                                    music.musicName,
-                                    music.artist
-                                )
-                            }
-                        } catch (e: UnsupportedOperationException) {
-//                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
-                        }
-                    }
-                    AppConfig.MPS_PREPARE -> {
-                        musicTimer!!.stopTimer()
-
-                        musicPlayUI!!.refreshUI(0, music!!.duration, music)
-                        musicPlayUI!!.showPlay(true)
-
-                        bottomBarUI!!.setSecondaryProgress(pendingProgress)
-                        bottomBarUI!!.refreshUI(0, music.duration, music)
-                        bottomBarUI!!.showPlay(true)
-                        try {
-                            //暂停状态也要刷新Cover
-                            val bitmap = MusicUtils.getCachedArtwork(
-                                context,
-                                music.albumId.toLong(), defaultArtwork
-                            )
-                            if (music.albumId != -1) {
-                                if (bitmap != null) {
-                                    musicPlayUI!!.loadRotateCover(bitmap)
-                                } else {
-                                    musicPlayUI!!.loadRotateCover(musicPlayUI!!.createDefaultCover())
-                                }
-                            } else {
-                                musicPlayUI!!.loadRotateCover(bitmap)
-                            }
-                        } catch (e: UnsupportedOperationException) {
-//                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
-                        }
-
-
-                    }
-                }
-            }
-        }
     }
 
     @Receive(ApolloEvent.REFRESH_LOCAL_NUMS)
@@ -385,6 +244,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         adapter.setList(getHomeItems())
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         uiManager = context?.let { UIManager(this, view) }
@@ -392,6 +252,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         musicPlayUI = MusicPlayUI(this, uiManager!!)
         musicTimer = MusicTimer(bottomBarUI!!.handler, musicPlayUI!!.handler)
         musicPlayUI!!.setMusicTimer(musicTimer!!)
+        musicPlayReceiver = MusicPlayReceiver(mediaManager!!, musicTimer!!, musicPlayUI!!, bottomBarUI!!, defaultArtwork!!)
+        val filter = IntentFilter(AppConfig.ACTION_PLAY)
+        activity?.registerReceiver(musicPlayReceiver, filter)
     }
 
     override fun onConnectCompletion(service: IMediaService) {

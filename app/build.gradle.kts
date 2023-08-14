@@ -96,7 +96,7 @@ dependencies {
     implementation("com.google.guava:guava:27.0.1-android")
 
     // Firebase相关
-    firebase("31.2.0")
+    firebase("32.1.0")
 
     // Dora全家桶
     implementation("com.github.dora4:dcache-android:1.7.9")

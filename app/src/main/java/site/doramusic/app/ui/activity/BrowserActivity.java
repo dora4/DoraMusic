@@ -19,6 +19,7 @@ import dora.util.IntentUtils;
 import dora.util.StatusBarUtils;
 import site.doramusic.app.R;
 import site.doramusic.app.databinding.ActivityBrowserBinding;
+import site.doramusic.app.util.SpmUtils;
 
 public class BrowserActivity extends BaseActivity<ActivityBrowserBinding> {
 
@@ -48,6 +49,11 @@ public class BrowserActivity extends BaseActivity<ActivityBrowserBinding> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        SpmUtils.INSTANCE.screenEvent(this,
+                SpmUtils.SPM_ID_OPEN_SCREEN_BROWSER,
+                SpmUtils.SPM_NAME_SCREEN,
+                SpmUtils.SPM_TYPE_SCREEN_OPEN
+        );
         mBinding.titlebar.setTitle(title);
         WebIndicator webIndicator = new WebIndicator(this);
         webIndicator.setColor(getResources().getColor(R.color.colorPrimary));
@@ -111,6 +117,11 @@ public class BrowserActivity extends BaseActivity<ActivityBrowserBinding> {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        SpmUtils.INSTANCE.screenEvent(this,
+                SpmUtils.SPM_ID_CLOSE_SCREEN_BROWSER,
+                SpmUtils.SPM_NAME_SCREEN,
+                SpmUtils.SPM_TYPE_SCREEN_CLOSE
+        );
         agentWeb.destroy();
     }
 }

@@ -43,6 +43,8 @@ import site.doramusic.app.receiver.EarphoneReceiver
 import site.doramusic.app.ui.IBack
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.SpmUtils
+import site.doramusic.app.util.SpmUtils.spmScreen
 import java.util.concurrent.Executors
 
 @Route(path = ARoutePath.ACTIVITY_MAIN)
@@ -251,6 +253,11 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
 
     override fun onDestroy() {
         super.onDestroy()
+        spmScreen(
+            SpmUtils.SPM_ID_CLOSE_SCREEN_MAIN,
+            SpmUtils.SPM_NAME_SCREEN,
+            SpmUtils.SPM_TYPE_SCREEN_CLOSE
+        )
         if (earphoneReceiver != null) {
             unregisterReceiver(earphoneReceiver)
         }
@@ -291,6 +298,11 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+        spmScreen(
+            SpmUtils.SPM_ID_OPEN_SCREEN_MAIN,
+            SpmUtils.SPM_NAME_SCREEN,
+            SpmUtils.SPM_TYPE_SCREEN_OPEN
+        )
         StatusBarUtils.setStatusBarWithDrawerLayout(this, mBinding.dlMain, ContextCompat.getColor(this, R.color.colorPrimary), 255)
         homeFragment = HomeFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fl_main, homeFragment!!).commit()

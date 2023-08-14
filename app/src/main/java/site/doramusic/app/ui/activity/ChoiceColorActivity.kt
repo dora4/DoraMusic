@@ -20,6 +20,9 @@ import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityChoiceColorBinding
 import site.doramusic.app.ui.adapter.ChoiceColorAdapter
 import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.SpmUtils
+import site.doramusic.app.util.SpmUtils.spm
+import site.doramusic.app.util.SpmUtils.spmScreen
 
 /**
  * 换肤界面，选择颜色。
@@ -43,7 +46,21 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        spmScreen(
+            SpmUtils.SPM_ID_CLOSE_SCREEN_COLOR_CHOICE,
+            SpmUtils.SPM_NAME_SCREEN,
+            SpmUtils.SPM_TYPE_SCREEN_CLOSE
+        )
+    }
+
     override fun initData(savedInstanceState: Bundle?) {
+        spmScreen(
+            SpmUtils.SPM_ID_OPEN_SCREEN_COLOR_CHOICE,
+            SpmUtils.SPM_NAME_SCREEN,
+            SpmUtils.SPM_TYPE_SCREEN_OPEN
+        )
         mBinding.statusbarChoiceColor.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
         SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, "skin_theme_color")
@@ -59,6 +76,9 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
 
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
                 if (position == 0) {
+                    spm(SpmUtils.SPM_ID_CLICK_BUTTON_CHANGE_SKIN,
+                        SpmUtils.SPM_NAME_BUTTON_CLICK,
+                        SpmUtils.SPM_TYPE_BUTTON_CLICK)
                     changeSkin()
                 }
             }

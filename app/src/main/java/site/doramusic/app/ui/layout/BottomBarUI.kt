@@ -34,6 +34,7 @@ import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.PlaylistItemAdapter
 import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.SpmUtils
 import site.doramusic.app.widget.MarqueeTextView
 
 /**
@@ -202,6 +203,10 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     fun showPlay(flag: Boolean) {
+        SpmUtils.logEvent(contentView.context,
+            SpmUtils.SPM_ID_CLICK_BUTTON_PLAY_PAUSE,
+            SpmUtils.SPM_NAME_BUTTON_CLICK,
+            SpmUtils.SPM_TYPE_BUTTON_CLICK)
         if (flag) {
             btn_home_bottom_play!!.visibility = View.VISIBLE
             btn_home_bottom_pause!!.visibility = View.GONE

@@ -5,12 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.google.firebase.analytics.FirebaseAnalytics
 import dora.arouter.open
-import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.skin.base.BaseSkinActivity
 import dora.util.StatusBarUtils
-import dora.util.TextUtils
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraToggleButton
 import site.doramusic.app.MusicApp
@@ -18,9 +17,23 @@ import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivitySettingsBinding
-import site.doramusic.app.http.DoraCallback
-import site.doramusic.app.http.service.UserService
 import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.SpmUtils.SPM_ID_CLOSE_SCREEN_SETTINGS
+import site.doramusic.app.util.SpmUtils.SPM_ID_OPEN_SCREEN_SETTINGS
+import site.doramusic.app.util.SpmUtils.SPM_ID_TOGGLE_BUTTON_CLOSE_AUTO_PLAY
+import site.doramusic.app.util.SpmUtils.SPM_ID_TOGGLE_BUTTON_CLOSE_BASS_BOOST
+import site.doramusic.app.util.SpmUtils.SPM_ID_TOGGLE_BUTTON_CLOSE_SHAKE
+import site.doramusic.app.util.SpmUtils.SPM_ID_TOGGLE_BUTTON_OPEN_AUTO_PLAY
+import site.doramusic.app.util.SpmUtils.SPM_ID_TOGGLE_BUTTON_OPEN_BASS_BOOST
+import site.doramusic.app.util.SpmUtils.SPM_ID_TOGGLE_BUTTON_OPEN_SHAKE
+import site.doramusic.app.util.SpmUtils.SPM_NAME_SCREEN
+import site.doramusic.app.util.SpmUtils.SPM_NAME_TOGGLE_BUTTON
+import site.doramusic.app.util.SpmUtils.SPM_TYPE_SCREEN_CLOSE
+import site.doramusic.app.util.SpmUtils.SPM_TYPE_SCREEN_OPEN
+import site.doramusic.app.util.SpmUtils.SPM_TYPE_TOGGLE_BUTTON_CLOSE
+import site.doramusic.app.util.SpmUtils.SPM_TYPE_TOGGLE_BUTTON_OPEN
+import site.doramusic.app.util.SpmUtils.spm
+import site.doramusic.app.util.SpmUtils.spmScreen
 
 @Route(path = ARoutePath.ACTIVITY_SETTINGS)
 class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
@@ -36,7 +49,13 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        spmScreen(SPM_ID_CLOSE_SCREEN_SETTINGS, SPM_NAME_SCREEN, SPM_TYPE_SCREEN_CLOSE)
+    }
     override fun initData(savedInstanceState: Bundle?) {
+        spmScreen(SPM_ID_OPEN_SCREEN_SETTINGS, SPM_NAME_SCREEN, SPM_TYPE_SCREEN_OPEN)
         mBinding.statusbarSettings.layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
@@ -54,18 +73,33 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
 
         mBinding.tbSettingsTwo.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
+                if (isChecked) {
+                    spm(SPM_ID_TOGGLE_BUTTON_OPEN_AUTO_PLAY, SPM_NAME_TOGGLE_BUTTON, SPM_TYPE_TOGGLE_BUTTON_OPEN)
+                } else {
+                    spm(SPM_ID_TOGGLE_BUTTON_CLOSE_AUTO_PLAY, SPM_NAME_TOGGLE_BUTTON, SPM_TYPE_TOGGLE_BUTTON_CLOSE)
+                }
                 mBinding.tbSettingsTwo.isChecked = isChecked
                 prefsManager.saveColdLaunchAutoPlay(isChecked)
             }
         })
         mBinding.tbSettingsThree.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
+                if (isChecked) {
+                    spm(SPM_ID_TOGGLE_BUTTON_OPEN_SHAKE, SPM_NAME_TOGGLE_BUTTON, SPM_TYPE_TOGGLE_BUTTON_OPEN)
+                } else {
+                    spm(SPM_ID_TOGGLE_BUTTON_CLOSE_SHAKE, SPM_NAME_TOGGLE_BUTTON, SPM_TYPE_TOGGLE_BUTTON_CLOSE)
+                }
                 mBinding.tbSettingsThree.isChecked = isChecked
                 prefsManager.saveShakeChangeMusic(isChecked)
             }
         })
         mBinding.tbSettingsFive.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
+                if (isChecked) {
+                    spm(SPM_ID_TOGGLE_BUTTON_OPEN_BASS_BOOST, SPM_NAME_TOGGLE_BUTTON, SPM_TYPE_TOGGLE_BUTTON_OPEN)
+                } else {
+                    spm(SPM_ID_TOGGLE_BUTTON_CLOSE_BASS_BOOST, SPM_NAME_TOGGLE_BUTTON, SPM_TYPE_TOGGLE_BUTTON_CLOSE)
+                }
                 mBinding.tbSettingsFive.isChecked = isChecked
                 prefsManager.saveBassBoost(isChecked)
                 if (isChecked) {

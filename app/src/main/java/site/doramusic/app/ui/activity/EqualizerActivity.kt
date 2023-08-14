@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.skin.SkinManager
 import dora.skin.base.BaseSkinActivity
@@ -16,6 +15,8 @@ import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityEqualizerBinding
 import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.SpmUtils
+import site.doramusic.app.util.SpmUtils.spmScreen
 import site.doramusic.app.widget.EqualizerView
 
 @Route(path = ARoutePath.ACTIVITY_EQUALIZER)
@@ -32,7 +33,22 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        spmScreen(
+            SpmUtils.SPM_ID_CLOSE_SCREEN_EQUALIZER,
+            SpmUtils.SPM_NAME_SCREEN,
+            SpmUtils.SPM_TYPE_SCREEN_CLOSE
+        )
+    }
+
     override fun initData(savedInstanceState: Bundle?) {
+        spmScreen(
+            SpmUtils.SPM_ID_OPEN_SCREEN_EQUALIZER,
+            SpmUtils.SPM_NAME_SCREEN,
+            SpmUtils.SPM_TYPE_SCREEN_OPEN
+        )
         mBinding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
         SkinManager.getLoader().setBackgroundColor(mBinding.statusbarEqualizer, "skin_theme_color")

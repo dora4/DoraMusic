@@ -67,7 +67,6 @@
 <!--            android:value="GlobalConfig" />-->
         <activity
             android:name=".ui.activity.SplashActivity"
-            android:label="启动页"
             android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/AppTheme.Launch">
@@ -128,6 +127,14 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.MusicPlayReceiver"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="site.doramusic.app.intent.ACTION_PLAY" />
             </intent-filter>
         </receiver>
 
