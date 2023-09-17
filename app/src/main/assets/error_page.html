@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        #parent {
+            display: flex;
+            padding: 0;
+            background: #FFFFFF;
+            width: 100%; /* 宽度值，随便啦 */
+        }
+
+        } #item {
+            width: 100%;/* 宽度值，随便啦 */
+            height: auto;/* 高度值，随便啦 */
+            margin: auto;
+
+            font-size: 0.25rem;
+            text-align: center;
+        #item p{
+            margin: 0;
+            text-align: center;
+            line-height: 0.2rem;
+            font-size: 0.2rem;
+        }
+        #item p + p{
+            line-height: 0.2rem;
+            font-size: 0.2rem;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="parent">
+    <div id="item" style="margin:auto; font-size:12px;text-align:center;">
+        <!--<img src="wifi42.png" style="width: 1.9rem" alt="">-->
+        <p style="font-size:16px;">数据获取失败,请检查网络后,重新加载</p>
+    </div>
+</div>
+<script>
+    var head={};
+    head.fix=function(){
+        var html=document.documentElement;
+        var ww=window.innerWidth;
+        document.getElementById('parent').style.height = window.innerHeight + 'px';
+        html.style.fontSize=ww/7.5+"px";
+    }
+    head.fix();
+    window.onresize=function(){
+        head.fix();
+    }
+
+
+</script>
+</body>
+</html>
