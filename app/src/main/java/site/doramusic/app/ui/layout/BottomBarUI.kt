@@ -16,6 +16,8 @@ import com.lsxiao.apollo.core.annotations.Receive
 import site.doramusic.app.util.MusicUtils
 import dora.db.builder.QueryBuilder
 import dora.db.dao.DaoFactory
+import dora.firebase.SpmUtils
+import dora.firebase.SpmUtils.spmSelectContent
 import dora.skin.SkinManager
 import dora.util.TextUtils
 import dora.util.ViewUtils
@@ -34,7 +36,6 @@ import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.PlaylistItemAdapter
 import site.doramusic.app.util.PreferencesManager
-import site.doramusic.app.util.SpmUtils
 import site.doramusic.app.widget.MarqueeTextView
 
 /**
@@ -203,14 +204,12 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     fun showPlay(flag: Boolean) {
-        SpmUtils.logEvent(contentView.context,
-            SpmUtils.SPM_ID_CLICK_BUTTON_PLAY_PAUSE,
-            SpmUtils.SPM_NAME_BUTTON_CLICK,
-            SpmUtils.SPM_TYPE_BUTTON_CLICK)
         if (flag) {
+            SpmUtils.selectContent(manager.view.context, "暂停音乐")
             btn_home_bottom_play!!.visibility = View.VISIBLE
             btn_home_bottom_pause!!.visibility = View.GONE
         } else {
+            SpmUtils.selectContent(manager.view.context, "播放音乐")
             btn_home_bottom_play!!.visibility = View.GONE
             btn_home_bottom_pause!!.visibility = View.VISIBLE
         }

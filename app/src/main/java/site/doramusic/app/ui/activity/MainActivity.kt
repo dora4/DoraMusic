@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothHeadset
 import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -21,9 +20,7 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.request
-import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
-import dora.skin.base.BaseSkinActivity
 import dora.util.*
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
@@ -35,16 +32,11 @@ import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
-import site.doramusic.app.http.DoraCallback
-import site.doramusic.app.http.DoraSign
-import site.doramusic.app.http.service.UserService
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.receiver.EarphoneReceiver
 import site.doramusic.app.ui.IBack
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.util.PreferencesManager
-import site.doramusic.app.util.SpmUtils
-import site.doramusic.app.util.SpmUtils.spmScreen
 import java.util.concurrent.Executors
 
 @Route(path = ARoutePath.ACTIVITY_MAIN)
@@ -253,11 +245,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
 
     override fun onDestroy() {
         super.onDestroy()
-        spmScreen(
-            SpmUtils.SPM_ID_CLOSE_SCREEN_MAIN,
-            SpmUtils.SPM_NAME_SCREEN,
-            SpmUtils.SPM_TYPE_SCREEN_CLOSE
-        )
         if (earphoneReceiver != null) {
             unregisterReceiver(earphoneReceiver)
         }
@@ -297,12 +284,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         }
     }
 
-    override fun initData(savedInstanceState: Bundle?) {
-        spmScreen(
-            SpmUtils.SPM_ID_OPEN_SCREEN_MAIN,
-            SpmUtils.SPM_NAME_SCREEN,
-            SpmUtils.SPM_TYPE_SCREEN_OPEN
-        )
+    override fun initData(savedInstanceState: Bundle?, binding: ActivityMainBinding) {
         StatusBarUtils.setStatusBarWithDrawerLayout(this, mBinding.dlMain, ContextCompat.getColor(this, R.color.colorPrimary), 255)
         homeFragment = HomeFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fl_main, homeFragment!!).commit()

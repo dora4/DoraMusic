@@ -173,19 +173,21 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
         }
         installItemClick()
         rv_music!!.adapter = adapter
-        lv_music!!.setOnLetterChangeListener { s ->
-            tv_music_dialog!!.text = s
-            val position: Int
-            if (s == "↑") {
-                position = 0
-            } else if (s == "#") {
-                position = adapter!!.itemCount - 1
-            } else {
-                position = adapter!!.getPositionForSection(s[0])
+        lv_music!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+            override fun onChanged(letter: String) {
+                tv_music_dialog!!.text = letter
+                val position: Int
+                if (letter == "↑") {
+                    position = 0
+                } else if (letter == "#") {
+                    position = adapter!!.itemCount - 1
+                } else {
+                    position = adapter!!.getPositionForSection(letter[0])
+                }
+                val linearLayoutManager: LinearLayoutManager = rv_music!!.layoutManager as LinearLayoutManager
+                linearLayoutManager.scrollToPositionWithOffset(position, 0)
             }
-            val linearLayoutManager: LinearLayoutManager = rv_music!!.layoutManager as LinearLayoutManager
-            linearLayoutManager.scrollToPositionWithOffset(position, 0)
-        }
+        })
         lv_music!!.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> tv_music_dialog!!.visibility = View.GONE

@@ -92,8 +92,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
-    override fun initData(savedInstanceState: Bundle?) {
-        super.initData(savedInstanceState)
+    override fun initData(savedInstanceState: Bundle?, binding: FragmentHomeBinding) {
         musicDao = DaoFactory.getDao(Music::class.java)
         artistDao = DaoFactory.getDao(Artist::class.java)
         albumDao = DaoFactory.getDao(Album::class.java)
@@ -185,17 +184,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     RetrofitManager.getService(CommonService::class.java).getHomeBannersV3()
                 }
                 val result = arrayListOf<String>()
-                val banners: MutableList<DoraHomeBanner> = bannerResult!!.data
-                if (banners.size > 0) {
-                    for (banner in banners) {
-                        result.add(banner.imgUrl)
+                val banners: MutableList<DoraHomeBanner>? = bannerResult!!.data
+                if (banners != null) {
+                    if (banners.size > 0) {
+                        for (banner in banners) {
+                            banner.imgUrl?.let { result.add(it) }
+                        }
                     }
                 }
                 val imageAdapter = ImageAdapter(result)
                 imageAdapter.setOnBannerListener { data, position ->
                     val intent = Intent(activity, BrowserActivity::class.java)
                     intent.putExtra("title", "Dora Chat")
-                    intent.putExtra("url", banners[position].detailUrl)
+                    intent.putExtra("url", banners?.get(position)?.detailUrl)
                     startActivity(intent)
                 }
                 mBinding!!.banner.setAdapter(imageAdapter)

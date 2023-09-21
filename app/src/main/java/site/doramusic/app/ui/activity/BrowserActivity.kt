@@ -14,8 +14,6 @@ import dora.util.IntentUtils
 import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.databinding.ActivityBrowserBinding
-import site.doramusic.app.util.SpmUtils
-import site.doramusic.app.util.SpmUtils.screenEvent
 
 class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
     private var title = "扫码结果"
@@ -38,13 +36,7 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
         StatusBarUtils.setStatusBarColorRes(this, R.color.colorPrimaryDark)
     }
 
-    override fun initData(savedInstanceState: Bundle?) {
-        screenEvent(
-            this,
-            SpmUtils.SPM_ID_OPEN_SCREEN_BROWSER,
-            SpmUtils.SPM_NAME_SCREEN,
-            SpmUtils.SPM_TYPE_SCREEN_OPEN
-        )
+    override fun initData(savedInstanceState: Bundle?, binding: ActivityBrowserBinding) {
         mBinding!!.titlebar.title = title
         val webIndicator = WebIndicator(this)
         webIndicator.setColor(resources.getColor(R.color.colorPrimary))
@@ -95,12 +87,6 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        screenEvent(
-            this,
-            SpmUtils.SPM_ID_CLOSE_SCREEN_BROWSER,
-            SpmUtils.SPM_NAME_SCREEN,
-            SpmUtils.SPM_TYPE_SCREEN_CLOSE
-        )
         agentWeb!!.destroy()
     }
 }

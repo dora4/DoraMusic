@@ -6,16 +6,12 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.skin.SkinManager
-import dora.skin.base.BaseSkinActivity
 import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityProtocolBinding
-import site.doramusic.app.util.SpmUtils
-import site.doramusic.app.util.SpmUtils.spmScreen
 
 /**
  * 用户协议和隐私政策。
@@ -32,11 +28,6 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        spmScreen(
-            SpmUtils.SPM_ID_CLOSE_SCREEN_PROTOCOL,
-            SpmUtils.SPM_NAME_SCREEN,
-            SpmUtils.SPM_TYPE_SCREEN_CLOSE
-        )
         mBinding.webViewContainer.removeAllViews()
         webView!!.destroy()
     }
@@ -46,12 +37,7 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 
-    override fun initData(savedInstanceState: Bundle?) {
-        spmScreen(
-            SpmUtils.SPM_ID_OPEN_SCREEN_PROTOCOL,
-            SpmUtils.SPM_NAME_SCREEN,
-            SpmUtils.SPM_TYPE_SCREEN_OPEN
-        )
+    override fun initData(savedInstanceState: Bundle?, binding: ActivityProtocolBinding) {
         mBinding.statusbarPrivacyPolicy.layoutParams = LinearLayout
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
         SkinManager.getLoader().setBackgroundColor(mBinding.statusbarPrivacyPolicy, "skin_theme_color")

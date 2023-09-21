@@ -12,12 +12,15 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        applicationId = "site.doramusic.app"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         buildFeatures {
             dataBinding = true
+            aidl = true
+            buildConfig = true
         }
     }
     flavorDimensions("app")
@@ -55,11 +58,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_11)
-        targetCompatibility(JavaVersion.VERSION_11)
+        sourceCompatibility(JavaVersion.VERSION_19)
+        targetCompatibility(JavaVersion.VERSION_19)
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "19"
     }
 }
 
@@ -72,7 +75,7 @@ kapt {
 }
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(19)
 }
 
 fun libFileTree() : ConfigurableFileTree {
@@ -82,23 +85,11 @@ fun libFileTree() : ConfigurableFileTree {
     return fileTree(map)
 }
 
-fun DependencyHandlerScope.firebase(version: String) {
-    implementation(platform("com.google.firebase:firebase-bom:$version"))
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation("com.google.firebase:firebase-crashlytics")
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-config-ktx")
-    implementation("com.google.firebase:firebase-config")
-}
-
 dependencies {
     implementation(libFileTree())
+    implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("com.google.guava:guava:27.0.1-android")
-
-    // Firebase相关
-    firebase("32.1.0")
 
     // Dora全家桶
     implementation("com.github.dora4:dcache-android:1.7.9")
@@ -106,15 +97,16 @@ dependencies {
     implementation("com.github.dora4:dora-arouter-support:1.1")
     implementation("com.github.dora4:dora-apollo-support:1.1")
     implementation("com.github.dora4:dora-pgyer-support:1.0")
+    implementation("com.github.dora4:dora-firebase-support:1.2")
 //    implementation 'com.github.dora4:dora-eventbus-support:1.1'
     implementation("com.github.dora4:dview-toggle-button:1.0")
     implementation("com.github.dora4:dview-alert-dialog:1.0")
     implementation("com.github.dora4:dview-loading-dialog:1.2")
     implementation("com.github.dora4:dview-colors:1.0")
-    implementation("com.github.dora4:dview-skins:1.4")
+    implementation("com.github.dora4:dview-skins:1.7")
     implementation("com.github.dora4:dview-bottom-dialog:1.1")
 //    implementation 'com.github.dora4:dview-avatar:1.4'
-    implementation("com.github.dora4:dview-titlebar:1.9")
+    implementation("com.github.dora4:dview-titlebar:1.11")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")

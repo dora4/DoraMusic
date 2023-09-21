@@ -67,18 +67,21 @@ class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
             )
         }
         rv_artist!!.adapter = adapter
-        lv_artist!!.setOnLetterChangeListener { s ->
-            tv_artist_dialog!!.text = s
-            val position: Int
-            if (s == "↑") {
-                position = 0
-            } else if (s == "#") {
-                position = adapter!!.itemCount - 1
-            } else {
-                position = adapter!!.getPositionForSection(s[0])
+        lv_artist!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+            override fun onChanged(letter: String) {
+                tv_artist_dialog!!.text = letter
+                val position: Int
+                if (letter == "↑") {
+                    position = 0
+                } else if (letter == "#") {
+                    position = adapter!!.itemCount - 1
+                } else {
+                    position = adapter!!.getPositionForSection(letter[0])
+                }
+                rv_artist!!.scrollToPosition(position)
             }
-            rv_artist!!.scrollToPosition(position)
-        }
+
+        })
         lv_artist!!.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> tv_artist_dialog!!.visibility = View.GONE

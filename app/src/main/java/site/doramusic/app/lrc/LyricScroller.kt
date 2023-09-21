@@ -212,7 +212,7 @@ class LyricScroller {
         val matcher = timePattern.matcher(line)
         var lastIndex = -1 // 最后一个时间标签的下标
         var lastLength = -1 // 最后一个时间标签的长度
-        // 一行文本歌词可能对应多个时间戳，如“[01:02.3][01:11:22.33]在这阳光明媚的春天里”
+        // 一行文本歌词可能对应多个时间戳，如“[01:02.3][01:11:22.import site.doramusic.app.R;]在这阳光明媚的春天里”
 // 一行也可能包含多个句子，如“[01:02.3]在这阳光明媚的春天里[01:02:22.33]我的眼泪忍不住流淌”
         val times: MutableList<String> =
             ArrayList()

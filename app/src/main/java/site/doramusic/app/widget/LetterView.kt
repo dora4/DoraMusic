@@ -173,7 +173,7 @@ class LetterView @JvmOverloads constructor(
     }
 
     interface OnLetterChangeListener {
-        fun onChanged(letter: String?)
+        fun onChanged(letter: String)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -210,7 +210,7 @@ class LetterView @JvmOverloads constructor(
                     mSelected = index
                     invalidateView()
                     if (mOnLetterChangeListener != null) {
-                        mOnLetterChangeListener!!.onChanged(mLetters[index])
+                        mLetters[index]?.let { mOnLetterChangeListener!!.onChanged(it) }
                     }
                 }
             }

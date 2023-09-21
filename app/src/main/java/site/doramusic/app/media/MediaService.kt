@@ -15,6 +15,10 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig.*
+import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_CANCEL
+import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
+import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
+import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PREV
 import site.doramusic.app.db.Music
 import site.doramusic.app.shake.ShakeDetector
 import site.doramusic.app.util.MusicUtils

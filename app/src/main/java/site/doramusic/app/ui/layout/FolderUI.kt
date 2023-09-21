@@ -68,18 +68,21 @@ class FolderUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
         rv_folder!!.layoutManager = LinearLayoutManager(manager.view.context)
         rv_folder!!.addItemDecoration(DividerItemDecoration(manager.view.context, RecyclerView.VERTICAL))
         rv_folder!!.adapter = adapter
-        lv_folder!!.setOnLetterChangeListener { s ->
-            tv_folder_dialog!!.text = s
-            val position: Int
-            if (s == "↑") {
-                position = 0
-            } else if (s == "#") {
-                position = adapter!!.itemCount - 1
-            } else {
-                position = adapter!!.getPositionForSection(s[0])
+        lv_folder!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+            override fun onChanged(letter: String) {
+                tv_folder_dialog!!.text = letter
+                val position: Int
+                if (letter == "↑") {
+                    position = 0
+                } else if (letter == "#") {
+                    position = adapter!!.itemCount - 1
+                } else {
+                    position = adapter!!.getPositionForSection(letter[0])
+                }
+                rv_folder!!.scrollToPosition(position)
             }
-            rv_folder!!.scrollToPosition(position)
-        }
+
+        })
         lv_folder!!.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> tv_folder_dialog!!.visibility = View.GONE

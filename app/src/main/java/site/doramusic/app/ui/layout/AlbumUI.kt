@@ -66,22 +66,26 @@ class AlbumUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
             )
         }
         rv_album!!.adapter = adapter
-        lv_album!!.setOnLetterChangeListener { s ->
-            tv_album_dialog!!.text = s
-            val position: Int
-            when (s) {
-                "↑" -> {
-                    position = 0
+        lv_album!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+            override fun onChanged(letter: String) {
+
+                tv_album_dialog!!.text = letter
+                val position: Int
+                when (letter) {
+                    "↑" -> {
+                        position = 0
+                    }
+                    "#" -> {
+                        position = adapter!!.itemCount - 1
+                    }
+                    else -> {
+                        position = adapter!!.getPositionForSection(letter[0])
+                    }
                 }
-                "#" -> {
-                    position = adapter!!.itemCount - 1
-                }
-                else -> {
-                    position = adapter!!.getPositionForSection(s[0])
-                }
+                rv_album!!.scrollToPosition(position)
             }
-            rv_album!!.scrollToPosition(position)
-        }
+
+        })
         lv_album!!.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> tv_album_dialog!!.visibility = View.GONE
