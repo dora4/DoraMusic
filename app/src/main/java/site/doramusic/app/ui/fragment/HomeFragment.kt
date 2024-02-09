@@ -1,8 +1,5 @@
 package site.doramusic.app.ui.fragment
 
-import android.annotation.SuppressLint
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
@@ -21,10 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
 import com.youth.banner.adapter.BannerAdapter
-import site.doramusic.app.util.MusicUtils
 import dora.BaseFragment
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
@@ -104,6 +99,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             resources,
             R.drawable.bottom_bar_cover_bg
         )
+
+        uiManager = context?.let { UIManager(this, binding.root) }
+        bottomBarUI = BottomBarUI(this, uiManager!!)
+        musicPlayUI = MusicPlayUI(this, uiManager!!)
+        musicTimer = MusicTimer(bottomBarUI!!.handler, musicPlayUI!!.handler)
+        musicPlayUI!!.setMusicTimer(musicTimer!!)
+        musicPlayReceiver = MusicPlayReceiver(mediaManager!!, musicTimer!!, musicPlayUI!!, bottomBarUI!!, defaultArtwork!!)
+        val filter = IntentFilter(AppConfig.ACTION_PLAY)
+        activity?.registerReceiver(musicPlayReceiver, filter)
     }
 
     private fun getHomeItems(): List<HomeItem> {
@@ -243,19 +247,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             uiManager!!.setContentType(from)
         }
         adapter.setList(getHomeItems())
-    }
-
-    @SuppressLint("UnspecifiedRegisterReceiverFlag")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        uiManager = context?.let { UIManager(this, view) }
-        bottomBarUI = BottomBarUI(this, uiManager!!)
-        musicPlayUI = MusicPlayUI(this, uiManager!!)
-        musicTimer = MusicTimer(bottomBarUI!!.handler, musicPlayUI!!.handler)
-        musicPlayUI!!.setMusicTimer(musicTimer!!)
-        musicPlayReceiver = MusicPlayReceiver(mediaManager!!, musicTimer!!, musicPlayUI!!, bottomBarUI!!, defaultArtwork!!)
-        val filter = IntentFilter(AppConfig.ACTION_PLAY)
-        activity?.registerReceiver(musicPlayReceiver, filter)
     }
 
     override fun onConnectCompletion(service: IMediaService) {
