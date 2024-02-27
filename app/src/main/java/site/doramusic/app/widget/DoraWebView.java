@@ -122,27 +122,27 @@ public class DoraWebView extends WebView {
     /**
      * 多窗口的问题。
      */
-    private void newWindow(WebSettings mWebSettings) {
+    private void newWindow(WebSettings settings) {
         // html中的_bank标签就是新建窗口打开，有时会打不开，需要加以下
         // 然后 复写 WebChromeClient的onCreateWindow方法
-        mWebSettings.setSupportMultipleWindows(false);
-        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setSupportMultipleWindows(false);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
     }
 
     /**
      * 网页数据存储。
      */
-    private void saveData(WebSettings mWebSettings) {
+    private void saveData(WebSettings settings) {
         // 有时候网页需要自己保存一些关键数据, Android WebView 需要自己设置
         if (NetUtils.checkNetworkAvailable(getContext())) {
             // 根据cache-control决定是否从网络上取数据。
-            mWebSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         } else {
             // 没网，则从本地获取，即离线加载
-            mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         }
-        mWebSettings.setDomStorageEnabled(true);
-        mWebSettings.setDatabaseEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
     }
 
     public boolean parseThirdPartyPayScheme(String url) {
