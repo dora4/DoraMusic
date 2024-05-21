@@ -1,17 +1,21 @@
 package site.doramusic.app.ui.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -87,6 +91,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initData(savedInstanceState: Bundle?, binding: FragmentHomeBinding) {
         musicDao = DaoFactory.getDao(Music::class.java)
         artistDao = DaoFactory.getDao(Artist::class.java)
@@ -107,7 +112,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         musicPlayUI!!.setMusicTimer(musicTimer!!)
         musicPlayReceiver = MusicPlayReceiver(mediaManager!!, musicTimer!!, musicPlayUI!!, bottomBarUI!!, defaultArtwork!!)
         val filter = IntentFilter(AppConfig.ACTION_PLAY)
-        activity?.registerReceiver(musicPlayReceiver, filter)
+        activity?.registerReceiver(musicPlayReceiver, filter, Context.RECEIVER_EXPORTED)
     }
 
     private fun getHomeItems(): List<HomeItem> {

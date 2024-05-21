@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.layout
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -232,13 +233,14 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         dialogWindow.gravity = Gravity.BOTTOM
         dialogWindow.setOnInflateListener(object : DoraDialogWindow.OnInflateListener {
 
-            override fun onInflateFinish(contentView: View?) {
-                val tv_playlist_playmode = contentView?.findViewById(R.id.tv_playlist_playmode) as TextView
+            @SuppressLint("SetTextI18n")
+            override fun onInflateFinish(contentView: View) {
+                val tv_playlist_playmode = contentView.findViewById(R.id.tv_playlist_playmode) as TextView
                 val tv_playlist_count = contentView.findViewById(R.id.tv_playlist_count) as TextView
                 val iv_playlist_playmode = contentView.findViewById(R.id.iv_playlist_playmode) as ImageView
                 val recyclerView = contentView.findViewById(R.id.rv_playlist) as RecyclerView
                 tv_playlist_playmode.text = playModeControl.printPlayMode(mediaManager!!.playMode)
-                tv_playlist_count.text = "(" + mediaManager.playlist!!.size + "首)"
+                tv_playlist_count.text = "(${mediaManager.playlist!!.size}首)"
                 adapter.setList(mediaManager.playlist)
                 adapter.setOnItemClickListener { adapter, view, position ->
                     mediaManager.playById(mediaManager.playlist!![position].songId)

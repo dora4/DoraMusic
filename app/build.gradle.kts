@@ -92,21 +92,21 @@ dependencies {
     implementation("com.google.guava:guava:27.0.1-android")
 
     // Dora全家桶
-    implementation("com.github.dora4:dcache-android:2.2.9")
-    implementation("com.github.dora4:dora:1.1.61")
+    implementation("com.github.dora4:dcache-android:2.2.12")
+    implementation("com.github.dora4:dora:1.2.1")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-apollo-support:1.4")
-    implementation("com.github.dora4:dora-pgyer-support:1.5")
-    implementation("com.github.dora4:dora-firebase-support:1.10")
+    implementation("com.github.dora4:dora-pgyer-support:1.7")
+    implementation("com.github.dora4:dora-firebase-support:1.11")
 //    implementation 'com.github.dora4:dora-eventbus-support:1.1'
-    implementation("com.github.dora4:dview-toggle-button:1.0")
-    implementation("com.github.dora4:dview-alert-dialog:1.10")
-    implementation("com.github.dora4:dview-loading-dialog:1.4")
+    implementation("com.github.dora4:dview-toggle-button:1.3")
+    implementation("com.github.dora4:dview-alert-dialog:1.16")
+    implementation("com.github.dora4:dview-loading-dialog:1.5")
     implementation("com.github.dora4:dview-colors:1.0")
     implementation("com.github.dora4:dview-skins:1.7")
-    implementation("com.github.dora4:dview-bottom-dialog:1.11")
+    implementation("com.github.dora4:dview-bottom-dialog:1.12")
 //    implementation 'com.github.dora4:dview-avatar:1.4'
-    implementation("com.github.dora4:dview-titlebar:1.28")
+    implementation("com.github.dora4:dview-titlebar:1.37")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")
