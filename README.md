@@ -15,4 +15,4 @@ https://dorachat.oss-cn-hongkong.aliyuncs.com/Dora_Music_1.0-alpha.apk
 ![1041691281509_.pic.jpg](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/90a29d9bd41948738f2e235430bc25cd~tplv-k3u1fbpfcp-watermark.image?)
 
 
-Tip：BIP39助记词安全保存推荐使用[【隐私保险箱】](https://dorachat.oss-cn-hongkong.aliyuncs.com/Dora_Box_1.11.apk)🎉
+Tip：BIP39助记词安全保存推荐使用[【隐私保险箱】](https://dorachat.oss-cn-hongkong.aliyuncs.com/Dora_Box_1.12.apk)🎉
