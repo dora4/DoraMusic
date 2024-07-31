@@ -18,7 +18,6 @@ import site.doramusic.app.util.MusicUtils
 import dora.db.builder.QueryBuilder
 import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils
-import dora.firebase.SpmUtils.spmSelectContent
 import dora.skin.SkinManager
 import dora.util.TextUtils
 import dora.util.ViewUtils
@@ -42,10 +41,10 @@ import site.doramusic.app.widget.MarqueeTextView
 /**
  * 底部控制条。
  */
-class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
+class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
         View.OnClickListener, AppConfig {
 
-    var handler: Handler
+    private var handler: Handler
     private val mediaManager: MediaManager? = MusicApp.instance!!.mediaManager
     private val contentView: View = manager.view
     private var tv_home_bottom_music_name: MarqueeTextView? = null
@@ -66,13 +65,15 @@ class BottomBarUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     init {
         Apollo.bind(this)
         initViews()
-        handler = Handler(Handler.Callback { msg ->
+        handler = Handler { msg ->
             when (msg.what) {
-                0x100 -> refreshSeekProgress(mediaManager!!.position(),
-                        mediaManager.duration(), mediaManager.pendingProgress())
+                0x100 -> refreshSeekProgress(
+                    mediaManager!!.position(),
+                    mediaManager.duration(), mediaManager.pendingProgress()
+                )
             }
             false
-        })
+        }
     }
 
     @Receive(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)

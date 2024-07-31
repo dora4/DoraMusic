@@ -16,7 +16,7 @@ class LyricScroller {
     /**
      * 句子集合。
      */
-    private val lines: ArrayList<LyricLine>? = ArrayList()
+    private val lines: ArrayList<LyricLine> = ArrayList()
     private var lyricListener: LyricListener? = null
     /**
      * 是否有本地歌词。
@@ -25,7 +25,7 @@ class LyricScroller {
     /**
      * 当前正在播放的歌词句子的在句子集合中的索引号。
      */
-    var indexOfCurrentSentence = -1
+    private var indexOfCurrentSentence = -1
     /**
      * 用于缓存的一个正则表达式对象，识别[]中的内容，不包括中括号。
      */
@@ -58,10 +58,10 @@ class LyricScroller {
         fun onLyricSentenceChanged(indexOfCurSentence: Int)
     }
 
-    val lyricSentences: List<LyricLine>?
+    val lyricSentences: List<LyricLine>
         get() = lines
 
-    fun setLyricListener(listener: LyricListener?) {
+    fun setLyricListener(listener: LyricListener) {
         lyricListener = listener
     }
 
@@ -73,7 +73,7 @@ class LyricScroller {
      */
     fun loadLyric(lyricPath: String?): Boolean {
         hasLocalLyric = false
-        lines!!.clear()
+        lines.clear()
         if (lyricPath != null) {
             val file = File(lyricPath)
             if (file.exists()) {
@@ -90,21 +90,20 @@ class LyricScroller {
                         parseLine(line)
                     }
                     // 按时间排序句子集合
-                    Collections.sort(lines,
-                        Comparator { object1, object2 ->
-                            // 内嵌，匿名的compare类
-                            if (object1.startTime > object2
-                                    .startTime
-                            ) {
-                                1
-                            } else if (object1.startTime < object2
-                                    .startTime
-                            ) {
-                                -1
-                            } else {
-                                0
-                            }
-                        })
+                    lines.sortWith { object1, object2 ->
+                        // 内嵌，匿名的compare类
+                        if (object1.startTime > object2
+                                .startTime
+                        ) {
+                            1
+                        } else if (object1.startTime < object2
+                                .startTime
+                        ) {
+                            -1
+                        } else {
+                            0
+                        }
+                    }
                     for (i in 0 until lines.size - 1) {
                         lines[i].duringTime = lines[i + 1].startTime
                     }
@@ -143,12 +142,11 @@ class LyricScroller {
      * @param millisecond 已播放的毫秒数
      */
     fun notifyTime(millisecond: Long) {
-        if (hasLocalLyric && (lines != null) && (lines.size != 0)) {
+        if (hasLocalLyric && (lines.size != 0)) {
             val newLyricIndex = seekSentenceIndex(millisecond)
             if (newLyricIndex != -1 && newLyricIndex != indexOfCurrentSentence) { // 如果找到的歌词和现在的不是一句。
-                if (lyricListener != null) { // 告诉一声，歌词已经变成另外一句啦！
-                    lyricListener!!.onLyricSentenceChanged(newLyricIndex)
-                }
+                // 告诉一声，歌词已经变成另外一句啦！
+                lyricListener?.onLyricSentenceChanged(newLyricIndex)
                 indexOfCurrentSentence = newLyricIndex
             }
         }
@@ -160,21 +158,21 @@ class LyricScroller {
             findStart = indexOfCurrentSentence
         }
         try {
-            val lyricTime = lines!![findStart].startTime
+            val lyricTime = lines[findStart].startTime
             if (millisecond > lyricTime) { // 如果想要查找的时间在现在字幕的时间之后
                 // 如果开始位置经是最后一句了，直接返回最后一句。
                 if (findStart == (lines.size - 1)) {
                     return findStart
                 }
-                var new_index = findStart + 1
+                var newIndex = findStart + 1
                 // 找到第一句开始时间大于输入时间的歌词
-                while ((new_index < lines.size
-                            && lines[new_index].startTime <= millisecond)
+                while ((newIndex < lines.size
+                            && lines[newIndex].startTime <= millisecond)
                 ) {
-                    ++new_index
+                    ++newIndex
                 }
                 // 这句歌词的前一句就是我们要找的了。
-                return new_index - 1
+                return newIndex - 1
             } else if (millisecond < lyricTime) { // 如果想要查找的时间在现在字幕的时间之前
                 // 如果开始位置经是第一句了，直接返回第一句。
                 if (findStart == 0) {
@@ -234,7 +232,7 @@ class LyricScroller {
                             TAG,
                             "line content match-->$content"
                         )
-                        lines!!.add(LyricLine(t, content))
+                        lines.add(LyricLine(t, content))
                     }
                 }
                 times.clear()
@@ -259,7 +257,7 @@ class LyricScroller {
         for (s: String in times) {
             val t = parseTime(s)
             if (t != -1L) {
-                lines!!.add(LyricLine(t, content))
+                lines.add(LyricLine(t, content))
             }
         }
     }
@@ -300,7 +298,7 @@ class LyricScroller {
         }
         var intSeconds: Long = 0
         var counter = 0
-        while (beforeDot.length > 0) {
+        while (beforeDot.isNotEmpty()) {
             val colonPos = beforeDot.indexOf(":")
             try {
                 if (colonPos > 0) { // 找到冒号了。

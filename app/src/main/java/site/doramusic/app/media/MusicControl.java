@@ -762,7 +762,6 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         }
         int result = -1;
         if (playlist != null) {
-
             for (int i = 0; i < playlist.size(); i++) {
                 if (id == playlist.get(i).songId) {
                     result = i;

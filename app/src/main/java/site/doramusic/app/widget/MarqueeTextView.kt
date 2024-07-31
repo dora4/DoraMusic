@@ -7,11 +7,11 @@ import androidx.appcompat.widget.AppCompatTextView
 import kotlin.jvm.JvmOverloads
 
 class MarqueeTextView @JvmOverloads constructor(
-    context: Context?,
+    context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : AppCompatTextView(
-    context!!, attrs, defStyle
+    context, attrs, defStyle
 ) {
     init {
         init()

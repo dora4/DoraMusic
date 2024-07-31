@@ -86,35 +86,35 @@ class LyricAdapter(internal var context: Context) : BaseAdapter() {
             val inflater = context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = inflater.inflate(R.layout.item_lyric_line, null)
-            holder.lyric_line = convertView!!.findViewById(R.id.tv_lyric_line)
-            convertView!!.tag = holder
+            holder.lyricLine = convertView!!.findViewById(R.id.tv_lyric_line)
+            convertView.tag = holder
         } else {
-            holder = convertView!!.tag as ViewHolder
+            holder = convertView.tag as ViewHolder
         }
         if (position >= 0 && position < lyricLines!!.size) {
-            holder.lyric_line!!.text = lyricLines!![position]
+            holder.lyricLine!!.text = lyricLines!![position]
                 .contentText
         }
         if (indexOfCurrentSentence == position) {
             val prefsManager = PreferencesManager(context)
-            val skinType = prefsManager!!.getSkinType()
+            val skinType = prefsManager.getSkinType()
             // 当前播放到的句子设置为白色，字体大小更大
             if (skinType == 0) {
                 val skinColor = prefsManager.getSkinColor()
-                holder.lyric_line!!.setTextColor(context.resources.getColor(skinColor))
+                holder.lyricLine!!.setTextColor(context.resources.getColor(skinColor))
             } else {
                 val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
-                holder.lyric_line!!.setTextColor(context.resources.getColor(skinThemeColor))
+                holder.lyricLine!!.setTextColor(context.resources.getColor(skinThemeColor))
             }
-            holder.lyric_line!!.textSize = currentSize
+            holder.lyricLine!!.textSize = currentSize
         } else {
             // 其他的句子设置为暗色，字体大小较小
-            holder.lyric_line!!.setTextColor(
+            holder.lyricLine!!.setTextColor(
                 context.resources.getColor(
                     R.color.trans_white
                 )
             )
-            holder.lyric_line!!.textSize = notCurrentSize
+            holder.lyricLine!!.textSize = notCurrentSize
         }
         return convertView
     }
@@ -124,6 +124,6 @@ class LyricAdapter(internal var context: Context) : BaseAdapter() {
     }
 
     internal class ViewHolder {
-        var lyric_line: TextView? = null
+        var lyricLine: TextView? = null
     }
 }

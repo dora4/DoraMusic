@@ -15,7 +15,7 @@ import java.io.File
 /**
  * 朵拉音乐官方歌词加载器。
  */
-class DoraLyricLoader(helper: LyricScroller?, listener: LyricListener?) : LyricLoader(helper!!, listener!!) {
+class DoraLyricLoader(scroller: LyricScroller, listener: LyricListener) : LyricLoader(scroller, listener) {
 
     override fun searchLrc(music: Music?) {
         if (music != null) {
@@ -53,7 +53,7 @@ class DoraLyricLoader(helper: LyricScroller?, listener: LyricListener?) : LyricL
         }
     }
 
-    override fun searchLrcBySongId(id: Long, lrcSaveFileName: String?) {
+    override fun searchLrcBySongId(id: Long, lrcSaveFileName: String) {
         val service = RetrofitManager.getService(MusicService::class.java)
         val call = service.lyric(id)
         call.enqueue(object: DoraCallback<DoraLyric>(){
@@ -66,7 +66,7 @@ class DoraLyricLoader(helper: LyricScroller?, listener: LyricListener?) : LyricL
                         lyricScroller.loadLyric(lyricSavePath)
                         lyricScroller.setLyricListener(lyricListener)
                     }
-                    saveLrc(lrc!!, lrcSaveFileName!!)
+                    saveLrc(lrc!!, lrcSaveFileName)
                 }
             }
 

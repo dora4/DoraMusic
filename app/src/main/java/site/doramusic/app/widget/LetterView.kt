@@ -21,12 +21,11 @@ class LetterView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
     private var paint: TextPaint? = null
-    private var mTextSize = 0f
-    private var mTextColor = 0
-    private var mHoverTextColor = 0
-    private val mBackgroundDrawable: Drawable
-    var hoverBackgroundDrawable: Drawable? = null
-        private set
+    private var letterTextSize = 0f
+    private var letterTextColor = 0
+    private var letterHoverTextColor = 0
+    private val backgroundDrawable: Drawable = background
+    private var hoverBackgroundDrawable: Drawable? = null
     private var letters = arrayOf<String?>(
         "A", "B", "C", "D", "E", "F", "G", "H", "I",
         "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
@@ -34,14 +33,11 @@ class LetterView @JvmOverloads constructor(
     )
     private var textAllCaps = false
     private var selected = -1
-    private val metrics: DisplayMetrics
-    private val locale: Locale
+    private val metrics: DisplayMetrics = resources.displayMetrics
+    private val locale: Locale = resources.configuration.locale
     private var onLetterChangeListener: OnLetterChangeListener? = null
 
     init {
-        metrics = resources.displayMetrics
-        locale = resources.configuration.locale
-        mBackgroundDrawable = background
         initAttrs(context, attrs, defStyleAttr)
         initPaint()
     }
@@ -49,12 +45,12 @@ class LetterView @JvmOverloads constructor(
     private fun initAttrs(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
         val a = context.obtainStyledAttributes(attrs, R.styleable.LetterView, defStyleAttr, 0)
         letters = parseLetters(a.getString(R.styleable.LetterView_letterview_letters))
-        mTextSize = a.getDimension(
+        letterTextSize = a.getDimension(
             R.styleable.LetterView_letterview_textSize,
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 15f, metrics)
         )
-        mTextColor = a.getColor(R.styleable.LetterView_letterview_textColor, DEFAULT_TEXT_COLOR)
-        mHoverTextColor = a
+        letterTextColor = a.getColor(R.styleable.LetterView_letterview_textColor, DEFAULT_TEXT_COLOR)
+        letterHoverTextColor = a
             .getColor(R.styleable.LetterView_letterview_hoverTextColor, DEFAULT_HOVER_TEXT_COLOR)
         hoverBackgroundDrawable =
             a.getDrawable(R.styleable.LetterView_letterview_hoverBackgroundDrawable)
@@ -70,7 +66,7 @@ class LetterView @JvmOverloads constructor(
             val length = letters.length
             values = arrayOfNulls(length)
             if (!TextUtils.isEmpty(letters)) {
-                for (i in 0 until letters.length) {
+                for (i in letters.indices) {
                     var letter = letters[i].toString()
                     if (textAllCaps) {
                         letter = letter.uppercase(locale)
@@ -84,25 +80,25 @@ class LetterView @JvmOverloads constructor(
 
     private fun initPaint() {
         paint = TextPaint()
-        paint!!.textSize = mTextSize
-        paint!!.color = mTextColor
+        paint!!.textSize = letterTextSize
+        paint!!.color = letterTextColor
         paint!!.typeface = Typeface.DEFAULT
         paint!!.isAntiAlias = true
         paint!!.isDither = true
     }
 
     override fun onDraw(canvas: Canvas) {
-        if (letters.size > 0) {
+        if (letters.isNotEmpty()) {
             val width = width
             val height = height
             val singleHeight = height / letters.size
             for (i in letters.indices) {
                 if (i == selected) {
                     paint!!.typeface = Typeface.DEFAULT_BOLD
-                    paint!!.color = mHoverTextColor
+                    paint!!.color = letterHoverTextColor
                 } else {
                     paint!!.typeface = Typeface.DEFAULT
-                    paint!!.color = mTextColor
+                    paint!!.color = letterTextColor
                 }
                 val x = width / 2 - paint!!.measureText(letters[i]) / 2
                 val y = (singleHeight * (i + 1)).toFloat()
@@ -112,7 +108,7 @@ class LetterView @JvmOverloads constructor(
     }
 
     fun setLetters(letters: Array<String?>) {
-        if (letters != this.letters) {
+        if (!letters.contentEquals(this.letters)) {
             this.letters = letters
             invalidateView()
         }
@@ -134,26 +130,26 @@ class LetterView @JvmOverloads constructor(
     }
 
     var textSize: Float
-        get() = mTextSize
+        get() = letterTextSize
         set(size) {
-            if (size != mTextSize) {
-                mTextSize = size
+            if (size != letterTextSize) {
+                letterTextSize = size
                 invalidateView()
             }
         }
     var textColor: Int
-        get() = mTextColor
+        get() = letterTextColor
         set(color) {
-            if (color != mTextColor) {
-                mTextColor = color
+            if (color != letterTextColor) {
+                letterTextColor = color
                 invalidateView()
             }
         }
     var hoverTextColor: Int
-        get() = mHoverTextColor
+        get() = letterHoverTextColor
         set(color) {
-            if (color != mHoverTextColor) {
-                mHoverTextColor = color
+            if (color != letterHoverTextColor) {
+                letterHoverTextColor = color
                 invalidateView()
             }
         }
@@ -197,7 +193,7 @@ class LetterView @JvmOverloads constructor(
         val index = (y * letters.size / height).toInt()
         when (action) {
             MotionEvent.ACTION_UP -> {
-                setBackgroundDrawable(mBackgroundDrawable)
+                setBackgroundDrawable(backgroundDrawable)
                 selected = -1
                 invalidateView()
             }

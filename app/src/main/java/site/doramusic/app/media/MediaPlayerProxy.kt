@@ -13,24 +13,24 @@ import java.util.regex.Pattern
 /**
  * 本地播放器代理，用于边下边播。
  */
-class MediaPlayerProxy private constructor(private var audioCachePath: String, //是否缓存播放文件
+class MediaPlayerProxy private constructor(private var audioCachePath: String, // 是否缓存播放文件
                                            private var needCacheAudio: Boolean = true) : MediaPlayer() {
 
     private var localProxyPort = 9090
-    private var bufferingMusicUrlList: MutableList<String> = ArrayList() //正在缓存的网络音乐地址
+    private var bufferingMusicUrlList: MutableList<String> = ArrayList() // 正在缓存的网络音乐地址
     private var onCachedProgressUpdateListener: OnCachedProgressUpdateListener? = null
-    private var latestProxyId: Long = 0 //最新的代理ID
-    private var currProxyId: Long = 0 //当前代理ID
+    private var latestProxyId: Long = 0 // 最新的代理ID
+    private var currProxyId: Long = 0 // 当前代理ID
     private var localServerSocket: ServerSocket? = null
-    private var remoteHostAndPort = "" //这个用来到时替换本地地址的
+    private var remoteHostAndPort = "" // 这个用来到时替换本地地址的
     private var remoteAddress: SocketAddress? = null
-    private var socketRequestInfoStr = "" //音乐的远程socket请求地址
-    private var remoteUrl = "" //远程音乐地址
-    private val musicKey = "" //音乐对象的key
-    private var currPlayDegree = 0 //当前音乐播放进度
-    private var cachedFileLength: Long = 0 //已缓存的文件长度
-    private var fileTotalLength: Long = 0 //要缓存的文件总长度
-    private var currMusicCachedProgress = 0 //当前的音乐缓冲值（seek bar上的缓冲值）
+    private var socketRequestInfoStr = "" // 音乐的远程socket请求地址
+    private var remoteUrl = "" // 远程音乐地址
+    private val musicKey = "" // 音乐对象的key
+    private var currPlayDegree = 0 // 当前音乐播放进度
+    private var cachedFileLength: Long = 0 // 已缓存的文件长度
+    private var fileTotalLength: Long = 0 // 要缓存的文件总长度
+    private var currMusicCachedProgress = 0 // 当前的音乐缓冲值（seek bar上的缓冲值）
     private var musicControlInterface: MusicControlInterface? = null
 
     constructor() : this("", false)
@@ -60,8 +60,12 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
             val remoteHost = originalURI.host
             if (TextUtils.isNotEmpty(remoteHost)) {
                 if (originalURI.port != -1) { //URL带Port
-                    Thread(Runnable { remoteAddress = InetSocketAddress(remoteHost,
-                            originalURI.port) }).start()
+                    Thread {
+                        remoteAddress = InetSocketAddress(
+                            remoteHost,
+                            originalURI.port
+                        )
+                    }.start()
                     localProxyUrl = url.replace(remoteHost + ":" + originalURI.port,
                             "$LOCALHOST:$localProxyPort")
                     remoteHostAndPort = remoteHost + ":" + originalURI.port
@@ -89,19 +93,19 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
      */
     @Throws(Exception::class)
     fun getTrueSocketRequestInfo(localSocket: Socket) {
-        val in_localSocket = localSocket.getInputStream()
-        var trueSocketRequestInfoStr = "" //保存MediaPlayer的真实HTTP请求
-        val local_request = ByteArray(1024)
-        while (in_localSocket.read(local_request) != -1) {
-            val str = String(local_request)
+        val inLocalSocket = localSocket.getInputStream()
+        var trueSocketRequestInfoStr = "" // 保存MediaPlayer的真实HTTP请求
+        val localRequest = ByteArray(1024)
+        while (inLocalSocket.read(localRequest) != -1) {
+            val str = String(localRequest)
             trueSocketRequestInfoStr += str
             if (trueSocketRequestInfoStr.contains("GET")
                     && trueSocketRequestInfoStr.contains("\r\n\r\n")) {
-                //把request中的本地ip改为远程ip
+                // 把request中的本地ip改为远程ip
                 trueSocketRequestInfoStr = trueSocketRequestInfoStr
                         .replace("$LOCALHOST:$localProxyPort", remoteHostAndPort)
                 socketRequestInfoStr = trueSocketRequestInfoStr
-                //如果用户拖动了进度条，因为拖动了滚动条还有Range则表示本地歌曲还未缓存完，不再保存
+                // 如果用户拖动了进度条，因为拖动了滚动条还有Range则表示本地歌曲还未缓存完，不再保存
                 if (trueSocketRequestInfoStr.contains("Range")) {
                     needCacheAudio = false
                 }
@@ -117,7 +121,7 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
      * @throws Exception
      */
     @Throws(Exception::class)
-    fun sendRemoteRequest(): Socket { //创建远程socket用来请求网络数据
+    fun sendRemoteRequest(): Socket { // 创建远程socket用来请求网络数据
         val remoteSocket = Socket()
         remoteSocket.connect(remoteAddress, SOCKET_TIMEOUT)
         remoteSocket.getOutputStream().write(socketRequestInfoStr.toByteArray())
@@ -133,45 +137,45 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
      */
     private fun processTrueRequestInfo(remoteSocket: Socket, localSocket: Socket) { //如果要写入本地文件的实例声明
         var fileOutputStream: FileOutputStream? = null
-        var theFile: File? = null
-        try { //获取音乐网络数据
-            val in_remoteSocket = remoteSocket.getInputStream() ?: return
-            val out_localSocket = localSocket.getOutputStream() ?: return
-            //如果要写入文件，配置相关实例
+        var file: File? = null
+        try { // 获取音乐网络数据
+            val inRemoteSocket = remoteSocket.getInputStream() ?: return
+            val outLocalSocket = localSocket.getOutputStream() ?: return
+            // 如果要写入文件，配置相关实例
             if (needCacheAudio) {
-                theFile = File(audioCachePath)
-                fileOutputStream = FileOutputStream(theFile)
+                file = File(audioCachePath)
+                fileOutputStream = FileOutputStream(file)
             }
             try {
-                var readLenth: Int
-                val remote_reply = ByteArray(4096)
-                var firstData = true //是否循环中第一次获得数据
-                //当从远程还能取到数据且播放器还没切换另一首网络音乐
-                while (in_remoteSocket.read(remote_reply, 0, remote_reply.size).also
-                        { readLenth = it } != -1 && currProxyId == latestProxyId) { //首先从数据中获得文件总长度
+                var readLength: Int
+                val remoteReply = ByteArray(4096)
+                var firstData = true // 是否循环中第一次获得数据
+                // 当从远程还能取到数据且播放器还没切换另一首网络音乐
+                while (inRemoteSocket.read(remoteReply, 0, remoteReply.size).also
+                        { readLength = it } != -1 && currProxyId == latestProxyId) { // 首先从数据中获得文件总长度
                     try {
                         if (firstData) {
                             firstData = false
-                            val str = String(remote_reply, Charset.forName("utf-8"))
+                            val str = String(remoteReply, Charset.forName("utf-8"))
                             val pattern = Pattern.compile("Content-Length:\\s*(\\d+)")
                             val matcher = pattern.matcher(str)
-                            if (matcher.find()) { //获取数据的大小
-                                fileTotalLength = matcher.group(1).toLong()
+                            if (matcher.find()) { // 获取数据的大小
+                                fileTotalLength = matcher.group(1)?.toLong() ?: 0
                             }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-                    //把远程socket拿到的数据用本地socket写到media player中播放
+                    // 把远程socket拿到的数据用本地socket写到media player中播放
                     try {
-                        out_localSocket.write(remote_reply, 0, readLenth)
-                        out_localSocket.flush()
+                        outLocalSocket.write(remoteReply, 0, readLength)
+                        outLocalSocket.flush()
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-                    //计算当前播放时，其在seek bar上的缓冲值,并刷新进度条
+                    // 计算当前播放时，其在seek bar上的缓冲值,并刷新进度条
                     try {
-                        cachedFileLength += readLenth.toLong()
+                        cachedFileLength += readLength.toLong()
                         if (fileTotalLength > 0 && currProxyId == latestProxyId) {
                             currMusicCachedProgress = (cachedFileLength * 100.0f / fileTotalLength).toInt()
                             if (onCachedProgressUpdateListener != null && currMusicCachedProgress <= 100) {
@@ -181,10 +185,10 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-                    //如果需要缓存数据到本地，就缓存到本地
+                    // 如果需要缓存数据到本地，就缓存到本地
                     if (needCacheAudio) {
                         try {
-                            fileOutputStream?.write(remote_reply, 0, readLenth)
+                            fileOutputStream?.write(remoteReply, 0, readLength)
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -194,28 +198,28 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
                 if (onCachedProgressUpdateListener != null) {
                     onCachedProgressUpdateListener!!.updateCachedProgress(100)
                 }
-                //如果是因为切换音乐跳出循环的，当前音乐播放进度，小于 seek bar最大值的1/4,就把当前音乐缓存在本地的数据清除了
+                // 如果是因为切换音乐跳出循环的，当前音乐播放进度，小于 seek bar最大值的1/4，就把当前音乐缓存在本地的数据清除了
                 if (currProxyId != latestProxyId && currPlayDegree < 25) {
                     bufferingMusicUrlList.remove(remoteUrl)
-                    if (theFile != null) {
-                        IoUtils.delete(theFile)
+                    if (file != null) {
+                        IoUtils.delete(file)
                     }
                 }
             } catch (e: Exception) {
-                if (theFile != null) {
-                    IoUtils.delete(theFile)
+                if (file != null) {
+                    IoUtils.delete(file)
                 }
                 bufferingMusicUrlList.remove(remoteUrl)
             } finally {
-                in_remoteSocket.close()
-                out_localSocket.close()
+                inRemoteSocket.close()
+                outLocalSocket.close()
                 if (fileOutputStream != null) {
                     fileOutputStream.close()
-                    //音频文件缓存完后处理
-                    if (theFile != null && theFile.exists()) {
-                        convert2RightAudioFile(theFile)
+                    // 音频文件缓存完后处理
+                    if (file != null && file.exists()) {
+                        convert2RightAudioFile(file)
                         if (musicControlInterface != null) {
-                            musicControlInterface!!.updateBufferFinishMusicPath(musicKey, theFile.path)
+                            musicControlInterface!!.updateBufferFinishMusicPath(musicKey, file.path)
                             bufferingMusicUrlList.remove(remoteUrl)
                         }
                     }
@@ -224,8 +228,8 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
                 remoteSocket.close()
             }
         } catch (e: Exception) {
-            if (theFile != null) {
-                IoUtils.delete(theFile)
+            if (file != null) {
+                IoUtils.delete(file)
             }
             bufferingMusicUrlList.remove(remoteUrl)
         }
@@ -248,20 +252,20 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
      */
     fun startProxy() {
         Thread(Runnable {
-            try { //监听MediaPlayer的请求，MediaPlayer->代理服务器
+            try { // 监听MediaPlayer的请求，MediaPlayer->代理服务器
                 val localSocket = localServerSocket!!.accept()
-                //获得真实请求信息
+                // 获得真实请求信息
                 getTrueSocketRequestInfo(localSocket)
-                //保证创建了远程socket地址再进行下一步
+                // 保证创建了远程socket地址再进行下一步
                 while (remoteAddress == null) {
                     SystemClock.sleep(25)
                 }
-                //发送真实socket请求，并返回remote_socket
+                // 发送真实socket请求，并返回remote_socket
                 val remoteSocket = sendRemoteRequest()
-                //处理真实请求信息
+                // 处理真实请求信息
                 processTrueRequestInfo(remoteSocket, localSocket)
             } catch (e: Exception) {
-            } finally { //最后释放本地代理server socket
+            } finally { // 最后释放本地代理server socket
                 if (localServerSocket != null) {
                     try {
                         localServerSocket!!.close()
@@ -318,7 +322,7 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
     init {
         try {
             if (localServerSocket == null || localServerSocket!!.isClosed) {
-                //创建本地socket服务器，用来监听media player请求和给media player提供数据
+                // 创建本地socket服务器，用来监听media player请求和给media player提供数据
                 localServerSocket = ServerSocket()
                 localServerSocket!!.reuseAddress = true
                 val socketAddress = InetSocketAddress(InetAddress.getByName(LOCALHOST), localProxyPort)
@@ -329,8 +333,7 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
                 localProxyPort++
                 localServerSocket = ServerSocket(localProxyPort, 0, InetAddress.getByName(LOCALHOST))
                 localServerSocket!!.reuseAddress = true
-            } catch (e2: Exception) {
-                e2.printStackTrace()
+            } catch (ignore: Exception) {
             }
         }
     }

@@ -21,13 +21,13 @@ class MusicItemAdapter : BaseSortItemAdapter<Music>(R.layout.item_music) {
         holder.setText(R.id.tv_music_name, music.musicName)
         holder.setText(R.id.tv_music_artist, music.artist)
         holder.setText(R.id.tv_music_duration, MusicUtils.formatTime(music.duration.toLong()))
-        val iv_music_play_state = holder.getView(R.id.iv_music_play_state) as ImageView
+        val ivMusicPlayState = holder.getView(R.id.iv_music_play_state) as ImageView
         val mediaManager = MusicApp.instance!!.mediaManager
-        if (mediaManager!!.curMusicId !== -1 && mediaManager!!.curMusicId === music.songId
-            && mediaManager!!.playState === AppConfig.MPS_PLAYING) {
-            iv_music_play_state.visibility = View.VISIBLE
+        if (mediaManager?.curMusicId !== -1 && mediaManager?.curMusicId === music.songId
+            && mediaManager?.playState === AppConfig.MPS_PLAYING) {
+            ivMusicPlayState.visibility = View.VISIBLE
         } else {
-            iv_music_play_state.visibility = View.GONE
+            ivMusicPlayState.visibility = View.GONE
         }
     }
 }

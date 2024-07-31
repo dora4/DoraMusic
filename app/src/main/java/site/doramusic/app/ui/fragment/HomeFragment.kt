@@ -52,9 +52,9 @@ import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.BrowserActivity
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
-import site.doramusic.app.ui.layout.BottomBarUI
+import site.doramusic.app.ui.layout.UIBottomBar
 import site.doramusic.app.ui.layout.ILyricDrawer
-import site.doramusic.app.ui.layout.MusicPlayUI
+import site.doramusic.app.ui.layout.UIMusicPlay
 import site.doramusic.app.util.MusicTimer
 import java.util.*
 
@@ -62,8 +62,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     MusicControl.OnConnectCompletionListener, ILyricDrawer {
 
     private var uiManager: UIManager? = null
-    private var bottomBarUI: BottomBarUI? = null
-    private var musicPlayUI: MusicPlayUI? = null
+    private var bottomBar: UIBottomBar? = null
+    private var musicPlay: UIMusicPlay? = null
     private var mediaManager: MediaManager? = null
     private var musicTimer: MusicTimer? = null
     private var musicPlayReceiver: MusicPlayReceiver? = null
@@ -75,10 +75,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private val adapter = HomeAdapter()
 
     val isHome: Boolean
-        get() = uiManager!!.isLocal && !musicPlayUI!!.isOpened
+        get() = uiManager!!.isLocal && !musicPlay!!.isOpened
 
     val isSlidingDrawerOpened: Boolean
-        get() = musicPlayUI!!.isOpened
+        get() = musicPlay!!.isOpened
 
     data class HomeItem @JvmOverloads constructor(
         @DrawableRes val iconRes: Int, val name: String,
@@ -105,11 +105,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         )
 
         uiManager = context?.let { UIManager(this, binding.root) }
-        bottomBarUI = BottomBarUI(this, uiManager!!)
-        musicPlayUI = MusicPlayUI(this, uiManager!!)
-        musicTimer = MusicTimer(bottomBarUI!!.handler, musicPlayUI!!.handler)
-        musicPlayUI!!.setMusicTimer(musicTimer!!)
-        musicPlayReceiver = MusicPlayReceiver(mediaManager!!, musicTimer!!, musicPlayUI!!, bottomBarUI!!, defaultArtwork!!)
+        bottomBar = UIBottomBar(this, uiManager!!)
+        musicPlay = UIMusicPlay(this, uiManager!!)
+        musicTimer = MusicTimer(bottomBar!!.handler, musicPlay!!.handler)
+        musicPlay!!.setMusicTimer(musicTimer!!)
+        musicPlayReceiver = MusicPlayReceiver(mediaManager!!, musicTimer!!, musicPlay!!, bottomBar!!, defaultArtwork!!)
         val filter = IntentFilter(AppConfig.ACTION_PLAY)
         activity?.registerReceiver(musicPlayReceiver, filter, Context.RECEIVER_EXPORTED)
     }
@@ -184,12 +184,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         super.onActivityCreated(savedInstanceState)
         net {
             val bannerCheckResult = result {
-                RetrofitManager.getService(CommonService::class.java).homeBannersCheckV3("doramusic")
+                RetrofitManager.getService(CommonService::class.java).checkHomeBanners("doramusic")
             }
             if (bannerCheckResult != null && bannerCheckResult.data == true) {
                 mBinding!!.banner.visibility = View.VISIBLE
                 val bannerResult = result {
-                    RetrofitManager.getService(CommonService::class.java).getHomeBannersV3()
+                    RetrofitManager.getService(CommonService::class.java).getHomeBanners()
                 }
                 val result = arrayListOf<String>()
                 val banners: MutableList<DoraHomeBanner>? = bannerResult!!.data
@@ -254,7 +254,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     override fun onConnectCompletion(service: IMediaService) {
-        bottomBarUI!!.initData()
+        bottomBar!!.initData()
     }
 
     override fun getLayoutId(): Int {
@@ -266,8 +266,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     fun openSlidingDrawer() {
-        if (!musicPlayUI!!.isOpened) {
-            musicPlayUI!!.open()
+        if (!musicPlay!!.isOpened) {
+            musicPlay!!.open()
         }
     }
 
@@ -275,8 +275,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
      * 关闭侧边栏。
      */
     fun closeSlidingDrawer() {
-        if (musicPlayUI!!.isOpened) {
-            musicPlayUI!!.close()
+        if (musicPlay!!.isOpened) {
+            musicPlay!!.close()
         }
     }
 

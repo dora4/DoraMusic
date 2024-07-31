@@ -38,7 +38,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/rl_settings_two"
+                    android:id="@+id/rl_settings_auto_play"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
@@ -56,7 +56,7 @@
                         android:textColor="@color/gray" />
 
                     <dora.widget.DoraToggleButton
-                        android:id="@+id/tb_settings_two"
+                        android:id="@+id/tb_settings_auto_play"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -67,7 +67,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_settings_three"
+                    android:id="@+id/rl_settings_shake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_item_common"
@@ -84,7 +84,7 @@
                         android:textColor="@color/gray" />
 
                     <dora.widget.DoraToggleButton
-                        android:id="@+id/tb_settings_three"
+                        android:id="@+id/tb_settings_shake"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -95,7 +95,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_settings_five"
+                    android:id="@+id/rl_settings_bass_boost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_item_common"
@@ -112,7 +112,7 @@
                         android:textColor="@color/gray" />
 
                     <dora.widget.DoraToggleButton
-                        android:id="@+id/tb_settings_five"
+                        android:id="@+id/tb_settings_bass_boost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

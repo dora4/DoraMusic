@@ -4,15 +4,11 @@ import android.bluetooth.BluetoothHeadset
 import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hjq.permissions.Permission
-import com.hjq.permissions.XXPermissions
 import com.lsxiao.apollo.core.Apollo
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
@@ -43,7 +39,7 @@ import java.util.concurrent.Executors
 class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
 
     private var lastTime: Long = 0
-    private var homeFragment: HomeFragment? = null
+    private lateinit var homeFragment: HomeFragment
     private val backListeners: MutableList<OnBackListener> = ArrayList()
     private var earphoneReceiver: EarphoneReceiver? = null
     private var prefsManager: PreferencesManager? = null
@@ -57,23 +53,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
      */
     fun openDrawer() {
         mBinding.dlMain.openDrawer(GravityCompat.START)
-        val headerView = mBinding.nvMain.getHeaderView(0)
-        val nicknameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_nickname)
-        val dobView = headerView.findViewById<TextView>(R.id.tv_drawer_header_dob)
-        val scoreView = headerView.findViewById<TextView>(R.id.tv_drawer_header_score)
-        val header = headerView.findViewById<LinearLayout>(R.id.ll_drawer_header)
-//        val doraUser = UserManager.currentUser
-//        if (doraUser != null) {
-//            nicknameView.text = doraUser.username
-//            dobView.text = "朵币:${doraUser.dob}"
-//            scoreView.text = "积分:${doraUser.score}"
-//            header.visibility = View.VISIBLE
-//        } else {
-//            nicknameView.text = ""
-//            dobView.text = ""
-//            scoreView.text = ""
-//            header.visibility = View.INVISIBLE
-//        }
     }
 
     /**
@@ -83,16 +62,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         if (mBinding.dlMain.isDrawerOpen(GravityCompat.START)) {
             mBinding.dlMain.closeDrawer(GravityCompat.START)
         }
-    }
-
-
-    /**
-     * 请求通知栏权限。
-     */
-    private fun requestNotificationPermission() {
-        XXPermissions.with(this)
-            .permission(Permission.NOTIFICATION_SERVICE)
-            .request(null)
     }
 
     /**
@@ -147,44 +116,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         // 禁用手势滑动打开
         mBinding.dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         val headerView = mBinding.nvMain.getHeaderView(0)
-        val userAvatarView = headerView.findViewById<ImageView>(R.id.iv_drawer_header_avatar)
-        val nicknameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_nickname)
-        val signView = headerView.findViewById<TextView>(R.id.tv_drawer_header_sign)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
-        val header = headerView.findViewById<LinearLayout>(R.id.ll_drawer_header)
-        val dobView = headerView.findViewById<TextView>(R.id.tv_drawer_header_dob)
-        val scoreView = header.findViewById<TextView>(R.id.tv_drawer_header_score)
-        userAvatarView.setOnClickListener {
-//            if (UserManager.currentUser == null) {
-//                open(ARoutePath.ACTIVITY_LOGIN)
-//            }
-        }
-        versionNameView.text = "客户端版本:" + getString(R.string.app_version)
-        signView.setOnClickListener {
-//            val doraUser = UserManager.currentUser
-//            if (doraUser != null) {
-//                val userId = doraUser.id
-//                if (userId != null) {
-//                    //用户签到
-//                    val service = RetrofitManager.getService(UserService::class.java)
-//                    val call = service.sign(userId)
-//                    call.enqueue(object : DoraCallback<DoraSign>() {
-//                        override fun onSuccess(sign: DoraSign) {
-//                            doraUser.score = sign.score
-//                            doraUser.dob = sign.dob
-//                            UserManager.update(doraUser)
-//                            dobView.text = "朵币:${sign.dob}"
-//                            scoreView.text = "积分:${sign.score}"
-//                            showShortToast("签到成功，连续签到${sign.signNum}天")
-//                        }
-//
-//                        override fun onFailure(code: Int, msg: String) {
-//                            showShortToast("签到失败，$msg")
-//                        }
-//                    })
-//                }
-//            }
-        }
+        versionNameView.text = "客户端版本:${getString(R.string.app_version)}"
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 // 扫描歌曲
@@ -222,7 +155,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
     /**
      * 扫描歌曲。
      */
-    fun scanMusic() {
+    private fun scanMusic() {
         net {
             val dialog = DoraLoadingDialog(this).show("正在扫描...") {
                 setCancelable(false)
@@ -238,7 +171,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                     }
                 }
             }
-            homeFragment!!.onRefreshLocalMusic()
+            homeFragment.onRefreshLocalMusic()
             dialog.dismiss()
         }
     }
@@ -251,55 +184,46 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
     }
 
     override fun onBackPressed() {
-        if (homeFragment != null) {
-            if (homeFragment!!.isHome) {
-                if (mBinding.dlMain.isDrawerOpen(GravityCompat.START)) {
-                    mBinding.dlMain.closeDrawer(GravityCompat.START)
-                } else {
-                    val currTime = System.currentTimeMillis()
-                    if (currTime - lastTime > 2000) {
-                        showShortToast("再按一次返回到桌面")
-                        lastTime = currTime
-                    } else {
-                        moveTaskToBack(false)
-                    }
-                }
+        if (homeFragment.isHome) {
+            if (mBinding.dlMain.isDrawerOpen(GravityCompat.START)) {
+                mBinding.dlMain.closeDrawer(GravityCompat.START)
             } else {
-                if (homeFragment!!.isSlidingDrawerOpened) {
-                    homeFragment!!.closeSlidingDrawer()
+                val currTime = System.currentTimeMillis()
+                if (currTime - lastTime > 2000) {
+                    showShortToast("再按一次返回到桌面")
+                    lastTime = currTime
                 } else {
-                    if (backListeners.size > 0) {
-                        for (listener in backListeners) {
-                            listener.onBack()
-                        }
-                    }
-                    //这种方式返回首页也要刷新，另一种刷新是在UIManager#setCurrentItem()
-                    if (homeFragment!!.isHome) {
-                        Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
-                    }
+                    moveTaskToBack(false)
                 }
             }
         } else {
-            showShortToast("后台回收内存")
+            if (homeFragment.isSlidingDrawerOpened) {
+                homeFragment.closeSlidingDrawer()
+            } else {
+                if (backListeners.size > 0) {
+                    for (listener in backListeners) {
+                        listener.onBack()
+                    }
+                }
+                //这种方式返回首页也要刷新，另一种刷新是在UIManager#setCurrentItem()
+                if (homeFragment.isHome) {
+                    Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
+                }
+            }
         }
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityMainBinding) {
-        StatusBarUtils.setStatusBarWithDrawerLayout(this, mBinding.dlMain, ContextCompat.getColor(this, R.color.colorPrimary), 255)
+        StatusBarUtils.setStatusBarWithDrawerLayout(this, binding.dlMain,
+            ContextCompat.getColor(this, R.color.colorPrimary), 255)
         homeFragment = HomeFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.fl_main, homeFragment!!).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fl_main, homeFragment).commit()
         prefsManager = PreferencesManager(this)
         initMenu()
-        if (savedInstanceState != null) {
-            LogUtils.i("后台启动")
-        } else {
-            // 应用皮肤
-            applySkin()
-            // 注册耳机监听器
-            registerEarCupReceiver()
-            //请求通知栏权限
-//            requestNotificationPermission()
-        }
+        // 应用皮肤
+        applySkin()
+        // 注册耳机监听器
+        registerEarCupReceiver()
     }
 
     override fun registerBackListener(listener: OnBackListener) {

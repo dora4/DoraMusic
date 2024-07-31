@@ -15,41 +15,39 @@ import dora.skin.SkinManager
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.db.Artist
+import site.doramusic.app.db.Folder
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
-import site.doramusic.app.ui.adapter.ArtistItemAdapter
+import site.doramusic.app.ui.adapter.FolderItemAdapter
 import site.doramusic.app.widget.LetterView
 import java.util.*
 
-class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
+class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
-    private var rvArtist: RecyclerView? = null
+    private var statusBarFolder: View? = null
     private var titlebar: DoraTitleBar? = null
-    private var adapter: ArtistItemAdapter? = null
-    private var statusBarArtist: View? = null
-    private var lvArtist: LetterView? = null
-    private var tvArtistDialog: TextView? = null
-    private val artistDao = DaoFactory.getDao(Artist::class.java)
+    private var adapter: FolderItemAdapter? = null
+    private var rvFolder: RecyclerView? = null
+
+    private var lvFolder: LetterView? = null
+    private var tvFolderDialog: TextView? = null
+    private val folderDao = DaoFactory.getDao(Folder::class.java)
 
     override fun getView(from: Int, obj: OrmTable?): View {
-        val view = inflater.inflate(R.layout.view_ui_artist, null)
+        val view = inflater.inflate(R.layout.view_ui_folder, null)
         initViews(view)
         return view
     }
 
-
     private fun initViews(view: View) {
-        statusBarArtist = view.findViewById(R.id.statusbar_artist)
-        statusBarArtist!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+
+        statusBarFolder = view.findViewById(R.id.statusbar_folder)
+        statusBarFolder!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarArtist!!, "skin_theme_color")
-        rvArtist = view.findViewById(R.id.rv_artist)
-        lvArtist = view.findViewById(R.id.lv_artist)
-        tvArtistDialog = view.findViewById(R.id.tv_artist_dialog)
-        rvArtist!!.layoutManager = LinearLayoutManager(view.context)
-        rvArtist!!.addItemDecoration(DividerItemDecoration(view.context, LinearLayoutManager.VERTICAL))
-        titlebar = view.findViewById(R.id.titlebar_artist)
+        SkinManager.getLoader().setBackgroundColor(statusBarFolder!!, "skin_theme_color")
+        lvFolder = view.findViewById(R.id.lv_folder)
+        tvFolderDialog = view.findViewById(R.id.tv_folder_dialog)
+        titlebar = view.findViewById(R.id.titlebar_folder)
         titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
             override fun onIconBackClick(icon: AppCompatImageView) {
@@ -59,17 +57,20 @@ class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
             }
         })
-        val artists = artistDao.selectAll() as ArrayList<Artist>
-        adapter = ArtistItemAdapter(artists)
+        val folders = folderDao.selectAll() as ArrayList<Folder>
+        adapter = FolderItemAdapter(folders)
         adapter!!.setOnItemClickListener { adapter, view, position ->
-            manager.setContentType(AppConfig.ROUTE_ARTIST_TO_LOCAL,
+            manager.setContentType(AppConfig.ROUTE_FOLDER_TO_LOCAL,
                 adapter.getItem(position) as OrmTable?
             )
         }
-        rvArtist!!.adapter = adapter
-        lvArtist!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        rvFolder = view.findViewById(R.id.rv_folder)
+        rvFolder!!.layoutManager = LinearLayoutManager(manager.view.context)
+        rvFolder!!.addItemDecoration(DividerItemDecoration(manager.view.context, RecyclerView.VERTICAL))
+        rvFolder!!.adapter = adapter
+        lvFolder!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
-                tvArtistDialog!!.text = letter
+                tvFolderDialog!!.text = letter
                 val position: Int
                 if (letter == "↑") {
                     position = 0
@@ -78,14 +79,14 @@ class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
                 } else {
                     position = adapter!!.getPositionForSection(letter[0])
                 }
-                rvArtist!!.scrollToPosition(position)
+                rvFolder!!.scrollToPosition(position)
             }
 
         })
-        lvArtist!!.setOnTouchListener { _, event ->
+        lvFolder!!.setOnTouchListener { _, event ->
             when (event.action) {
-                MotionEvent.ACTION_UP -> tvArtistDialog!!.visibility = View.GONE
-                MotionEvent.ACTION_DOWN -> tvArtistDialog!!.visibility = View.VISIBLE
+                MotionEvent.ACTION_UP -> tvFolderDialog!!.visibility = View.GONE
+                MotionEvent.ACTION_DOWN -> tvFolderDialog!!.visibility = View.VISIBLE
             }
             false
         }

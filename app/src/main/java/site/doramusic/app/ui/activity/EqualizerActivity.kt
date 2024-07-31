@@ -20,7 +20,7 @@ import site.doramusic.app.widget.EqualizerView
 class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         EqualizerView.OnUpdateDecibelListener {
 
-    private var prefsManager: PreferencesManager? = null
+    private lateinit var prefsManager: PreferencesManager
 
     override fun getLayoutId(): Int {
         return R.layout.activity_equalizer
@@ -32,14 +32,14 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityEqualizerBinding) {
-        mBinding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        binding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarEqualizer, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(binding.statusbarEqualizer, "skin_theme_color")
         prefsManager = PreferencesManager(this)
         val equalizerFreq = MusicApp.instance!!.mediaManager!!.equalizerFreq
         val decibels = IntArray(equalizerFreq!!.size)
-        if (prefsManager!!.getEqualizerDecibels() != "") {
-            val values = prefsManager!!.getEqualizerDecibels().split(",".toRegex())
+        if (prefsManager.getEqualizerDecibels() != "") {
+            val values = prefsManager.getEqualizerDecibels().split(",".toRegex())
                 .dropLastWhile { it.isEmpty() }.toTypedArray()
             for (i in decibels.indices) {
                 decibels[i] = Integer.valueOf(values[i])
@@ -76,7 +76,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         binding.evEqualizer.freqs = equalizerFreq
         binding.evEqualizer.setOnUpdateDecibelListener(this)
 
-        //默认选中第一个
+        // 默认选中第一个
         binding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
         onUpdateDecibel(intArrayOf(0, 0, 0, 0, 0))
         binding.evEqualizer.setTouchable(false)
@@ -84,16 +84,16 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
 
         binding.rgEqualizer.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.rb_equalizer_close   //关闭
+                R.id.rb_equalizer_close   // 关闭
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(0, 0, 0, 0, 0))
                 }
-                R.id.rb_equalizer_custom  //自定义
+                R.id.rb_equalizer_custom  // 自定义
                 -> {
-                    val equalizerDecibels = prefsManager!!.getEqualizerDecibels()
+                    val equalizerDecibels = prefsManager.getEqualizerDecibels()
                     val splitDecibels = equalizerDecibels.split(",".toRegex()).dropLastWhile {
                         it.isEmpty()
                     }.toTypedArray()
@@ -108,63 +108,63 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(reverseResult)
                 }
-                R.id.rb_equalizer_pop //流行
+                R.id.rb_equalizer_pop // 流行
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(6, -6, 6, -6, 6))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(6, -6, 6, -6, 6))
                 }
-                R.id.rb_equalizer_dance   //舞曲
+                R.id.rb_equalizer_dance   // 舞曲
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(4, -5, 0, 4, 5))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(4, -5, 0, 4, 5))
                 }
-                R.id.rb_equalizer_blue    //蓝调
+                R.id.rb_equalizer_blue    // 蓝调
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(-2, 2, 1, -2, -2))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(-2, 2, 1, -2, -2))
                 }
-                R.id.rb_equalizer_classic //古典
+                R.id.rb_equalizer_classic // 古典
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(7, 2, 0, -7, -8))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(7, 2, 0, -7, -8))
                 }
-                R.id.rb_equalizer_jazz    //爵士
+                R.id.rb_equalizer_jazz    // 爵士
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(-5, -3, 3, 1, 2))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(-5, -3, 3, 1, 2))
                 }
-                R.id.rb_equalizer_slow    //慢摇
+                R.id.rb_equalizer_slow    // 慢摇
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(-7, -6, 2, 4, 0))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(-7, -6, 2, 4, 0))
                 }
-                R.id.rb_equalizer_slots   //电子
+                R.id.rb_equalizer_slots   // 电子
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(8, 1, -5, 0, 3))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(8, 1, -5, 0, 3))
                 }
-                R.id.rb_equalizer_shake   //摇滚
+                R.id.rb_equalizer_shake   // 摇滚
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(7, 2, -4, 1, 4))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(7, 2, -4, 1, 4))
                 }
-                R.id.rb_equalizer_country //乡村
+                R.id.rb_equalizer_country // 乡村
                 -> {
                     binding.evEqualizer.setDecibels(intArrayOf(-7, -6, 3, 4, -5))
                     binding.evEqualizer.setTouchable(false)
@@ -176,7 +176,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
     }
 
     override fun onUpdateDecibel(decibels: IntArray) {
-        prefsManager!!.saveEqualizerDecibels(decibels)
+        prefsManager.saveEqualizerDecibels(decibels)
         MusicApp.instance!!.mediaManager!!.setEqualizer(decibels)
     }
 }

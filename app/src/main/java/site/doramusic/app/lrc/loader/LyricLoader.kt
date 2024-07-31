@@ -17,11 +17,12 @@ import java.util.regex.Pattern
  */
 abstract class LyricLoader(protected var lyricScroller: LyricScroller, protected var lyricListener: LyricListener) {
 
-    @JvmField
-    protected val LRC_SAVE_FOLDER = AppConfig.FOLDER_LRC
-    protected val FLAC = ".flac"
-    protected val MP3 = ".mp3"
-    protected val LRC = ".lrc"
+    companion object {
+        protected val LRC_SAVE_FOLDER = AppConfig.FOLDER_LRC
+        protected const val FLAC = ".flac"
+        protected const val MP3 = ".mp3"
+        protected const val LRC = ".lrc"
+    }
 
     fun clearLocalLrc() {
         loadLocalLrc(null)
@@ -38,10 +39,7 @@ abstract class LyricLoader(protected var lyricScroller: LyricScroller, protected
      *
      * @return 如果存在返回路径，否则返回null
      */
-    fun getLrcFilePath(music: Music?): String {
-        if (music == null) {
-            return ""
-        }
+    fun getLrcFilePath(music: Music): String {
         var lrcFilePath = LRC_SAVE_FOLDER + getLrcFileName(music.artist, music.musicName)
         if (!exists(lrcFilePath)) {
             lrcFilePath = music.data.replace(FLAC, LRC).replace(MP3, LRC)
@@ -80,14 +78,14 @@ abstract class LyricLoader(protected var lyricScroller: LyricScroller, protected
     fun getFileName(artist: String?, title: String?): String {
         var artist = artist
         var title = title
-        artist = stringFilter(artist)
-        title = stringFilter(title)
         if (TextUtils.isEmpty(artist)) {
             artist = GlobalContext.get().getString(R.string.unknown)
         }
         if (TextUtils.isEmpty(title)) {
             title = GlobalContext.get().getString(R.string.unknown)
         }
+        artist = stringFilter(artist)
+        title = stringFilter(title)
         return "$artist - $title"
     }
 
@@ -105,11 +103,11 @@ abstract class LyricLoader(protected var lyricScroller: LyricScroller, protected
     }
 
     abstract fun searchLrc(music: Music?)
-    abstract fun searchLrcBySongId(id: Long, lrcSaveFileName: String?)
+    abstract fun searchLrcBySongId(id: Long, lrcSaveFileName: String)
     protected fun saveLrc(lyric: String, lrcFileName: String) {
         val lyricFile = File("$LRC_SAVE_FOLDER/$lrcFileName")
-        if (!lyricFile.parentFile.exists()) {
-            lyricFile.parentFile.mkdirs()
+        if (!lyricFile.parentFile?.exists()!!) {
+            lyricFile.parentFile?.mkdirs()
         }
         try {
             IoUtils.write(lyric.toByteArray(), lyricFile.absolutePath)

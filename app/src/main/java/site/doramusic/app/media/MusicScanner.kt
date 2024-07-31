@@ -27,18 +27,18 @@ import kotlin.collections.ArrayList
 @SuppressLint("Range")
 object MusicScanner : AppConfig {
 
-    private val proj_music = arrayOf(
+    private val projMusic = arrayOf(
             MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.ALBUM_ID,
             MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.ARTIST_ID,
             MediaStore.Audio.Media.DURATION)
-    private val proj_album = arrayOf(MediaStore.Audio.Albums.ALBUM,
+    private val projAlbum = arrayOf(MediaStore.Audio.Albums.ALBUM,
             MediaStore.Audio.Albums.NUMBER_OF_SONGS, MediaStore.Audio.Albums._ID,
             MediaStore.Audio.Albums.ALBUM_ART)
-    private val proj_artist = arrayOf(
+    private val projArtist = arrayOf(
             MediaStore.Audio.Artists.ARTIST,
             MediaStore.Audio.Artists.NUMBER_OF_TRACKS)
-    private val proj_folder = arrayOf(MediaStore.Files.FileColumns.DATA)
+    private val projFolder = arrayOf(MediaStore.Files.FileColumns.DATA)
 
     private val musicDao = DaoFactory.getDao(Music::class.java)
     private val artistDao = DaoFactory.getDao(Artist::class.java)
@@ -65,6 +65,7 @@ object MusicScanner : AppConfig {
         if (musics.size > 0) {
             // 歌曲都没有就没有必要查询歌曲信息了
             Transaction.execute {
+                // 事务操作
                 val artists = queryArtist(context)
                 artistDao.insert(artists)
                 val albums = queryAlbum(context)
@@ -104,7 +105,7 @@ object MusicScanner : AppConfig {
             AppConfig.ROUTE_START_FROM_LOCAL -> if (musicDao.count() > 0) {
                 musicDao.selectAll()
             } else {
-                getMusicList(cr.query(uri, proj_music,
+                getMusicList(cr.query(uri, projMusic,
                         select.toString(), null,
                         MediaStore.Audio.Media.ARTIST_KEY))
             }
@@ -112,7 +113,7 @@ object MusicScanner : AppConfig {
                 queryMusic(selection,
                         AppConfig.ROUTE_START_FROM_ARTIST)
             } else {
-                getMusicList(cr.query(uri, proj_music,
+                getMusicList(cr.query(uri, projMusic,
                         select.toString(), null,
                         MediaStore.Audio.Media.ARTIST_KEY))
             }
@@ -242,7 +243,7 @@ object MusicScanner : AppConfig {
         return if (folderDao.count() > 0) {
             folderDao.selectAll()
         } else {
-            getFolderList(cr.query(uri, proj_folder, selection.toString(), null, null))
+            getFolderList(cr.query(uri, projFolder, selection.toString(), null, null))
         }
     }
 
@@ -259,7 +260,7 @@ object MusicScanner : AppConfig {
         return if (artistDao.count() > 0) {
             artistDao.selectAll()
         } else {
-            getArtistList(cr.query(uri, proj_artist,
+            getArtistList(cr.query(uri, projArtist,
                     null, null, MediaStore.Audio.Artists.NUMBER_OF_TRACKS
                     + " desc"))
         }
@@ -290,7 +291,7 @@ object MusicScanner : AppConfig {
             albumDao.selectAll()
         } else { // Media.ALBUM_KEY 按专辑名称排序
             // FIXME:  Android11的Invalid token select问题
-            getAlbumList(cr.query(uri, proj_album,
+            getAlbumList(cr.query(uri, projAlbum,
                     null, null, MediaStore.Audio.Media.ALBUM_KEY))
         }
     }

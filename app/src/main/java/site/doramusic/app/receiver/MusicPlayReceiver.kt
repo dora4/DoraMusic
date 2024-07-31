@@ -8,15 +8,15 @@ import com.lsxiao.apollo.core.Apollo
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.media.MediaManager
-import site.doramusic.app.ui.layout.BottomBarUI
-import site.doramusic.app.ui.layout.MusicPlayUI
+import site.doramusic.app.ui.layout.UIBottomBar
+import site.doramusic.app.ui.layout.UIMusicPlay
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.MusicUtils
 
 class MusicPlayReceiver(val mediaManager: MediaManager,
                         private val musicTimer: MusicTimer,
-                        private val musicPlayUI: MusicPlayUI,
-                        private val bottomBarUI: BottomBarUI,
+                        private val musicPlay: UIMusicPlay,
+                        private val bottomBar: UIBottomBar,
                         private val defaultArtwork: Bitmap
 ) : BroadcastReceiver() {
 
@@ -30,29 +30,29 @@ class MusicPlayReceiver(val mediaManager: MediaManager,
                 AppConfig.MPS_INVALID -> {  // 考虑后面加上如果文件不可播放直接跳到下一首
                     musicTimer.stopTimer()
 
-                    musicPlayUI.refreshUI(0, music!!.duration, music)
-                    musicPlayUI.showPlay(true)
+                    musicPlay.refreshUI(0, music!!.duration, music)
+                    musicPlay.showPlay(true)
 
-                    bottomBarUI.refreshUI(0, music.duration, music)
-                    bottomBarUI.setSecondaryProgress(pendingProgress)
-                    bottomBarUI.showPlay(true)
+                    bottomBar.refreshUI(0, music.duration, music)
+                    bottomBar.setSecondaryProgress(pendingProgress)
+                    bottomBar.showPlay(true)
                 }
                 AppConfig.MPS_PAUSE -> {    //  刷新播放列表当前播放的条目
                     Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
                     musicTimer.stopTimer()
 
-                    musicPlayUI.refreshUI(
+                    musicPlay.refreshUI(
                         mediaManager.position(), music!!.duration,
                         music
                     )
-                    musicPlayUI.showPlay(true)
+                    musicPlay.showPlay(true)
 
-                    bottomBarUI.refreshUI(
+                    bottomBar.refreshUI(
                         mediaManager.position(), music.duration,
                         music
                     )
-                    bottomBarUI.setSecondaryProgress(pendingProgress)
-                    bottomBarUI.showPlay(true)
+                    bottomBar.setSecondaryProgress(pendingProgress)
+                    bottomBar.showPlay(true)
 
                     if (music.albumId != -1) {
                         try {
@@ -81,20 +81,20 @@ class MusicPlayReceiver(val mediaManager: MediaManager,
                     Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
                     musicTimer.startTimer()
 
-                    musicPlayUI.refreshUI(
+                    musicPlay.refreshUI(
                         mediaManager.position(), music!!.duration,
                         music
                     )
-                    musicPlayUI.showPlay(false)
+                    musicPlay.showPlay(false)
                     // 读取歌词
-                    musicPlayUI.loadLyric(music)
+                    musicPlay.loadLyric(music)
 
-                    bottomBarUI.refreshUI(
+                    bottomBar.refreshUI(
                         mediaManager.position(), music.duration,
                         music
                     )
-                    bottomBarUI.setSecondaryProgress(pendingProgress)
-                    bottomBarUI.showPlay(false)
+                    bottomBar.setSecondaryProgress(pendingProgress)
+                    bottomBar.showPlay(false)
                     try {
                         val bitmap = MusicUtils.getCachedArtwork(
                             context,
@@ -106,12 +106,12 @@ class MusicPlayReceiver(val mediaManager: MediaManager,
                                     bitmap, music.musicName,
                                     music.artist
                                 )
-                                musicPlayUI.loadRotateCover(bitmap)
+                                musicPlay.loadRotateCover(bitmap)
                             } else {
-                                musicPlayUI.loadRotateCover(musicPlayUI.createDefaultCover())
+                                musicPlay.loadRotateCover(musicPlay.createDefaultCover())
                             }
                         } else {
-                            musicPlayUI.loadRotateCover(bitmap)
+                            musicPlay.loadRotateCover(bitmap)
                             mediaManager.updateNotification(
                                 defaultArtwork,
                                 music.musicName,
@@ -125,12 +125,12 @@ class MusicPlayReceiver(val mediaManager: MediaManager,
                 AppConfig.MPS_PREPARE -> {
                     musicTimer.stopTimer()
 
-                    musicPlayUI.refreshUI(0, music!!.duration, music)
-                    musicPlayUI.showPlay(true)
+                    musicPlay.refreshUI(0, music!!.duration, music)
+                    musicPlay.showPlay(true)
 
-                    bottomBarUI.setSecondaryProgress(pendingProgress)
-                    bottomBarUI.refreshUI(0, music.duration, music)
-                    bottomBarUI.showPlay(true)
+                    bottomBar.setSecondaryProgress(pendingProgress)
+                    bottomBar.refreshUI(0, music.duration, music)
+                    bottomBar.showPlay(true)
                     try {
                         // 暂停状态也要刷新Cover
                         val bitmap = MusicUtils.getCachedArtwork(
@@ -139,12 +139,12 @@ class MusicPlayReceiver(val mediaManager: MediaManager,
                         )
                         if (music.albumId != -1) {
                             if (bitmap != null) {
-                                musicPlayUI.loadRotateCover(bitmap)
+                                musicPlay.loadRotateCover(bitmap)
                             } else {
-                                musicPlayUI.loadRotateCover(musicPlayUI.createDefaultCover())
+                                musicPlay.loadRotateCover(musicPlay.createDefaultCover())
                             }
                         } else {
-                            musicPlayUI.loadRotateCover(bitmap)
+                            musicPlay.loadRotateCover(bitmap)
                         }
                     } catch (e: UnsupportedOperationException) {
 //                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354

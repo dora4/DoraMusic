@@ -32,18 +32,17 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     /**
      * 音乐播放流程控制。
      */
-    private var mc: MusicControl? = null
+    private lateinit var mc: MusicControl
     private var binder: IBinder? = null
-    private var remoteViews: RemoteViews? = null
 
     /**
      * 更新通知栏。
      */
     private var notificationManager: NotificationManager? = null
     private var controlBroadcast: ControlBroadcast? = null
-    private var detector: ShakeDetector? = null
     private var prefsManager: PreferencesManager? = null
     private var simplePlayer: SimpleAudioPlayer? = null
+    private lateinit var detector: ShakeDetector
 
     override fun onBind(intent: Intent): IBinder? {
         binder = MediaServiceImpl()
@@ -54,7 +53,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         //先播放摇一摇切歌的音效
         simplePlayer?.playByRawId(R.raw.shaking)
         //再切到下一首播放
-        Handler().postDelayed({ mc?.next() }, 2000)
+        Handler().postDelayed({ mc.next() }, 2000)
     }
 
     inner class ControlBroadcast : BroadcastReceiver() {
@@ -62,22 +61,22 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 ACTION_PAUSE_RESUME -> {
-                    if (mc!!.isPlaying) {
-                        mc?.pause()
+                    if (mc.isPlaying) {
+                        mc.pause()
                     } else {
-                        mc?.replay()
+                        mc.replay()
                     }
                     val title = intent.getStringExtra(NOTIFICATION_TITLE) ?: ""
                     val name = intent.getStringExtra(NOTIFICATION_NAME) ?: ""
-                    val music = mc!!.curMusic
+                    val music = mc.curMusic
                     val defaultArtwork = BitmapFactory.decodeResource(this@MediaService.resources,
                             R.drawable.bottom_bar_cover_bg)
                     val bitmap = MusicUtils.getCachedArtwork(this@MediaService, music.albumId.toLong(),
                             defaultArtwork)
                     updateNotification(bitmap, title, name)
                 }
-                ACTION_NEXT -> mc?.next()
-                ACTION_PREV -> mc?.prev()
+                ACTION_NEXT -> mc.next()
+                ACTION_PREV -> mc.prev()
                 ACTION_CANCEL -> {
                     cancelNotification()
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
@@ -114,143 +113,143 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         simplePlayer = SimpleAudioPlayer(this)
         mc = MusicControl(this)
         detector = ShakeDetector(this)
-        detector!!.setOnShakeListener(this)
-        detector!!.start()
+        detector.setOnShakeListener(this)
+        detector.start()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(controlBroadcast)
-        mc!!.exit()
-        simplePlayer!!.exit()
+        mc.exit()
+        simplePlayer?.exit()
     }
 
     private inner class MediaServiceImpl : IMediaService.Stub() {
 
         @Throws(RemoteException::class)
         override fun play(pos: Int): Boolean {
-            return mc!!.play(pos)
+            return mc.play(pos)
         }
 
         @Throws(RemoteException::class)
         override fun playById(id: Int): Boolean {
-            return mc!!.playById(id)
+            return mc.playById(id)
         }
 
         @Throws(RemoteException::class)
         override fun playByPath(path: String) {
-            mc!!.play(path)
+            mc.play(path)
         }
 
         @Throws(RemoteException::class)
         override fun playByUrl(music: Music, url: String) {
-            mc!!.playByUrl(music, url)
+            mc.playByUrl(music, url)
         }
 
         @Throws(RemoteException::class)
         override fun replay(): Boolean {
-            return mc!!.replay()
+            return mc.replay()
         }
 
         @Throws(RemoteException::class)
         override fun pause(): Boolean {
-            return mc!!.pause()
+            return mc.pause()
         }
 
         @Throws(RemoteException::class)
         override fun prev(): Boolean {
-            return mc!!.prev()
+            return mc.prev()
         }
 
         @Throws(RemoteException::class)
         override fun next(): Boolean {
-            return mc!!.next()
+            return mc.next()
         }
 
         @Throws(RemoteException::class)
         override fun stop() {
-            mc!!.stop()
+            mc.stop()
         }
 
         @Throws(RemoteException::class)
         override fun duration(): Int {
-            return mc!!.duration()
+            return mc.duration()
         }
 
         @Throws(RemoteException::class)
         override fun setCurMusic(music: Music) {
-            return mc!!.setCurMusic(music)
+            return mc.setCurMusic(music)
         }
 
         @Throws(RemoteException::class)
         override fun position(): Int {
-            return mc!!.position()
+            return mc.position()
         }
 
         @Throws(RemoteException::class)
         override fun pendingProgress(): Int {
-            return mc!!.pendingProgress()
+            return mc.pendingProgress()
         }
 
         @Throws(RemoteException::class)
         override fun seekTo(progress: Int): Boolean {
-            return mc!!.seekTo(progress)
+            return mc.seekTo(progress)
         }
 
         @Throws(RemoteException::class)
         override fun refreshPlaylist(playlist: List<Music>) {
-            mc!!.refreshPlaylist(playlist)
+            mc.refreshPlaylist(playlist)
         }
 
         @Throws(RemoteException::class)
         override fun setBassBoost(strength: Int) {
-            mc!!.setBassBoost(strength)
+            mc.setBassBoost(strength)
         }
 
         @Throws(RemoteException::class)
         override fun setEqualizer(bandLevels: IntArray) {
-            mc!!.setEqualizer(bandLevels)
+            mc.setEqualizer(bandLevels)
         }
 
         @Throws(RemoteException::class)
         override fun getEqualizerFreq(): IntArray {
-            return mc!!.equalizerFreq
+            return mc.equalizerFreq
         }
 
         @Throws(RemoteException::class)
         override fun getPlayState(): Int {
-            return mc!!.playState
+            return mc.playState
         }
 
         @Throws(RemoteException::class)
         override fun getPlayMode(): Int {
-            return mc!!.playMode
+            return mc.playMode
         }
 
         @Throws(RemoteException::class)
         override fun setPlayMode(mode: Int) {
-            mc!!.playMode = mode
+            mc.playMode = mode
         }
 
         @Throws(RemoteException::class)
         override fun getCurMusicId(): Int {
-            //获取的是歌曲的id，而非数据库主键id
-            return mc!!.curMusic.songId
+            // 获取的是歌曲的id，而非数据库主键id
+            return mc.curMusic.songId
         }
 
         @Throws(RemoteException::class)
         override fun loadCurMusic(music: Music): Boolean {
-            return mc!!.loadCurMusic(music)
+            return mc.loadCurMusic(music)
         }
 
         @Throws(RemoteException::class)
         override fun getCurMusic(): Music {
-            return mc!!.curMusic
+            return mc.curMusic
         }
 
         @Throws(RemoteException::class)
         override fun getPlaylist(): List<Music> {
-            return mc!!.playlist
+            return mc.playlist
         }
 
         @Throws(RemoteException::class)
@@ -265,9 +264,9 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     }
 
     private fun updateNotification(bitmap: Bitmap, title: String, name: String) {
-//        //通知通道1的id
+//        // 通知通道1的id
 //        val channelId = "site.doramusic.app"
-//        //通知通道1的name
+//        // 通知通道1的name
 //        val channelName = "DoraMusic"
 //        val notificationChannel: NotificationChannel
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -313,7 +312,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 //        }
 //
 //        val pauseResumeIntent = Intent(ACTION_PAUSE_RESUME)
-//        //以下代码不能加
+//        // 以下代码不能加
 ////        pauseResumeIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
 //        pauseResumeIntent.putExtra(NOTIFICATION_TITLE, title)
 //        pauseResumeIntent.putExtra(NOTIFICATION_NAME, name)
@@ -336,7 +335,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 //        remoteViews!!.setOnClickPendingIntent(R.id.iv_nc_cancel, cancelPIntent)
 //
 //
-//        //显示通知
+//        // 显示通知
 //        notificationManager!!.notify(NOTIFICATION_ID, notification)
     }
 

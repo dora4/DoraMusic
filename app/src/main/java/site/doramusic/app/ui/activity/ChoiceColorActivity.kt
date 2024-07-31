@@ -28,8 +28,8 @@ import site.doramusic.app.util.PreferencesManager
 class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
 
     private lateinit var colorDrawable: ColorDrawable
-    private var choiceColorAdapter: ChoiceColorAdapter? = null
-    private var colorDatas: MutableList<ColorData>? = null
+    private lateinit var choiceColorAdapter: ChoiceColorAdapter
+    private var colors: MutableList<ColorData> = arrayListOf()
     private lateinit var prefsManager: PreferencesManager
 
     data class ColorData(val backgroundResId: Int, val backgroundColor: Int)
@@ -65,38 +65,37 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
             }
         })
         prefsManager = PreferencesManager(this)
-        colorDatas = mutableListOf(
+        colors = mutableListOf(
             ColorData(R.drawable.cyan_bg,
-                resources.getColor(R.color.skin_theme_color_cyan)),
+                ContextCompat.getColor(this, R.color.skin_theme_color_cyan)),
             ColorData(R.drawable.orange_bg,
-                resources.getColor(R.color.skin_theme_color_orange)),
+                ContextCompat.getColor(this, R.color.skin_theme_color_orange)),
             ColorData(R.drawable.black_bg,
-                resources.getColor(R.color.skin_theme_color_black)),
+                ContextCompat.getColor(this, R.color.skin_theme_color_black)),
             ColorData(R.drawable.green_bg,
-                resources.getColor(R.color.skin_theme_color_green)),
+                ContextCompat.getColor(this, R.color.skin_theme_color_green)),
             ColorData(R.drawable.red_bg,
-                resources.getColor(R.color.skin_theme_color_red)),
+                ContextCompat.getColor(this, R.color.skin_theme_color_red)),
             ColorData(R.drawable.blue_bg,
-                resources.getColor(R.color.skin_theme_color_blue)),
+                ContextCompat.getColor(this, R.color.skin_theme_color_blue)),
             ColorData(R.drawable.purple_bg,
-                resources.getColor(R.color.skin_theme_color_purple)))
+                ContextCompat.getColor(this, R.color.skin_theme_color_purple)))
 
         choiceColorAdapter = ChoiceColorAdapter()
-        choiceColorAdapter!!.setList(colorDatas!!)
+        choiceColorAdapter.setList(colors)
         binding.rvChoiceColor.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.HORIZONTAL, false)
-//        mBinding.rvChoiceColor.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         binding.rvChoiceColor.itemAnimator = DefaultItemAnimator()
         binding.rvChoiceColor.adapter = choiceColorAdapter
-        choiceColorAdapter!!.selectedPosition = if (prefsManager.getSkinType() == 0) 0 else prefsManager.getSkinType() - 1
+        choiceColorAdapter.selectedPosition = if (prefsManager.getSkinType() == 0) 0 else prefsManager.getSkinType() - 1
 
         colorDrawable = ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary))
         binding.ivChoiceColorPreview.background = colorDrawable
-        choiceColorAdapter!!.setOnItemClickListener { adapter, view, position ->
-            val color = colorDatas!![position].backgroundColor
+        choiceColorAdapter.setOnItemClickListener { _, _, position ->
+            val color = colors[position].backgroundColor
             colorDrawable.color = color
-            choiceColorAdapter!!.selectedPosition = position
-            choiceColorAdapter!!.notifyDataSetChanged()
+            choiceColorAdapter.selectedPosition = position
+            choiceColorAdapter.notifyDataSetChanged()
         }
     }
 
@@ -105,7 +104,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
      */
     @TimeTrace
     private fun changeSkin() {
-        when (choiceColorAdapter!!.selectedPosition) {
+        when (choiceColorAdapter.selectedPosition) {
             0 -> {
                 prefsManager.saveSkinType(1)
                 SkinManager.changeSkin("cyan")

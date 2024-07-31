@@ -15,9 +15,8 @@ import android.widget.TextView
 
 import site.doramusic.app.R
 
-class ProtocolFragment : DialogFragment(),
+class ProtocolFragment : DialogFragment(), View.OnClickListener {
 
-    View.OnClickListener {
     private var callback: Callback? = null
     private var protocolCallback: ProtocolCallback? = null
     private var tvProtocolPrivacyPolicy: TextView? = null
@@ -71,24 +70,17 @@ class ProtocolFragment : DialogFragment(),
     }
 
     override fun onClick(v: View) {
-        val id = v.id
-        if (id == R.id.tv_protocol_agree) {
+        if (v.id == R.id.tv_protocol_agree) {
             if (callback != null) {
                 dismissDialog()
                 callback!!.onAgree()
             }
-        } else if (id == R.id.tv_protocol_disagree) {
-            if (callback != null) {
-                callback!!.onDisagree()
-            }
-        } else if (id == R.id.tv_protocol_privacy_policy) {
-            if (protocolCallback != null) {
-                protocolCallback!!.onPrivacyPolicy()
-            }
-        } else if (id == R.id.tv_protocol_service_protocol) {
-            if (protocolCallback != null) {
-                protocolCallback!!.onServiceProtocol()
-            }
+        } else if (v.id == R.id.tv_protocol_disagree) {
+            callback?.onDisagree()
+        } else if (v.id == R.id.tv_protocol_privacy_policy) {
+            protocolCallback?.onPrivacyPolicy()
+        } else if (v.id == R.id.tv_protocol_service_protocol) {
+            protocolCallback?.onServiceProtocol()
         }
     }
 
@@ -136,7 +128,7 @@ class ProtocolFragment : DialogFragment(),
     }
 
     companion object {
-        const val TAG = "ProtocolFragment"
+
         fun newInstance(): ProtocolFragment {
             return ProtocolFragment()
         }

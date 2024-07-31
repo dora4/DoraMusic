@@ -14,13 +14,13 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
 
 class RotateCoverView @JvmOverloads constructor(
-    context: Context?,
+    context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : AppCompatImageView(
-    context!!, attrs, defStyleAttr
+    context, attrs, defStyleAttr
 ) {
-    private var mShadowRadius = 0
+    private var shadowRadius = 0
     private var paint = Paint()
     private var middleRect = RectF()
     private var innerRect = RectF()
@@ -40,22 +40,22 @@ class RotateCoverView @JvmOverloads constructor(
         density = context.resources.displayMetrics.density
         val shadowXOffset = (density * X_OFFSET).toInt()
         val shadowYOffset = (density * Y_OFFSET).toInt()
-        mShadowRadius = (density * SHADOW_RADIUS).toInt()
+        shadowRadius = (density * SHADOW_RADIUS).toInt()
         val circle: ShapeDrawable
         if (elevationSupported()) {
             circle = ShapeDrawable(OvalShape())
             ViewCompat.setElevation(this, SHADOW_ELEVATION * density)
         } else {
-            val oval: OvalShape = OvalShadow(mShadowRadius)
+            val oval: OvalShape = OvalShadow(shadowRadius)
             circle = ShapeDrawable(oval)
             ViewCompat.setLayerType(this, LAYER_TYPE_SOFTWARE, circle.paint)
             circle.paint.setShadowLayer(
-                mShadowRadius.toFloat(),
+                shadowRadius.toFloat(),
                 shadowXOffset.toFloat(),
                 shadowYOffset.toFloat(),
                 KEY_SHADOW_COLOR
             )
-            val padding = mShadowRadius
+            val padding = shadowRadius
             // set padding so the inner image sits correctly within the shadow.
             setPadding(padding, padding, padding, padding)
         }
@@ -68,10 +68,10 @@ class RotateCoverView @JvmOverloads constructor(
         paint.color = DEFAULT_ALBUM_COLOR
         paint.textSize = ALBUM_CIRCLE_TEXT_SIZE * density
         rotateAnimator = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f)
-        rotateAnimator!!.setDuration(10000)
-        rotateAnimator!!.setInterpolator(LinearInterpolator())
-        rotateAnimator!!.setRepeatMode(ValueAnimator.RESTART)
-        rotateAnimator!!.setRepeatCount(ValueAnimator.INFINITE)
+        rotateAnimator?.duration = 10000
+        rotateAnimator?.interpolator = LinearInterpolator()
+        rotateAnimator?.repeatMode = ValueAnimator.RESTART
+        rotateAnimator?.repeatCount = ValueAnimator.INFINITE
     }
 
     private fun elevationSupported(): Boolean {
@@ -82,8 +82,8 @@ class RotateCoverView @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         if (!elevationSupported()) {
             setMeasuredDimension(
-                measuredWidth + mShadowRadius * 2,
-                measuredHeight + mShadowRadius * 2
+                measuredWidth + shadowRadius * 2,
+                measuredHeight + shadowRadius * 2
             )
         }
     }
@@ -149,13 +149,13 @@ class RotateCoverView @JvmOverloads constructor(
     /**
      * Draw oval shadow below ImageView under lollipop.
      */
-    private inner class OvalShadow internal constructor(shadowRadius: Int) : OvalShape() {
-        private var mRadialGradient: RadialGradient? = null
-        private val mShadowPaint: Paint
+    private inner class OvalShadow(shadowRadius: Int) : OvalShape() {
+
+        private var radialGradient: RadialGradient? = null
+        private val shadowPaint: Paint = Paint()
 
         init {
-            mShadowPaint = Paint()
-            mShadowRadius = shadowRadius
+            this@RotateCoverView.shadowRadius = shadowRadius
             updateRadialGradient(rect().width().toInt())
         }
 
@@ -171,23 +171,23 @@ class RotateCoverView @JvmOverloads constructor(
                 (viewWidth / 2).toFloat(),
                 (viewHeight / 2).toFloat(),
                 (viewWidth / 2).toFloat(),
-                mShadowPaint
+                shadowPaint
             )
             canvas.drawCircle(
                 (viewWidth / 2).toFloat(),
                 (viewHeight / 2).toFloat(),
-                (viewWidth / 2 - mShadowRadius).toFloat(),
+                (viewWidth / 2 - shadowRadius).toFloat(),
                 paint
             )
         }
 
         private fun updateRadialGradient(diameter: Int) {
-            mRadialGradient = RadialGradient(
+            radialGradient = RadialGradient(
                 diameter / 2f, diameter / 2f,
-                mShadowRadius.toFloat(), intArrayOf(FILL_SHADOW_COLOR, Color.TRANSPARENT),
+                shadowRadius.toFloat(), intArrayOf(FILL_SHADOW_COLOR, Color.TRANSPARENT),
                 null, Shader.TileMode.CLAMP
             )
-            mShadowPaint.shader = mRadialGradient
+            shadowPaint.shader = radialGradient
         }
     }
 

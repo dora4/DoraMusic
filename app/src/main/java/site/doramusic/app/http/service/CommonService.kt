@@ -10,8 +10,8 @@ import site.doramusic.app.http.DoraHomeBanner
 interface CommonService : ApiService {
 
     @GET("v3/homeBannersGet")
-    fun getHomeBannersV3(): Call<ApiResult<MutableList<DoraHomeBanner>>>
+    fun getHomeBanners(): Call<ApiResult<MutableList<DoraHomeBanner>>>
 
     @GET("v3/homeBannersCheck")
-    fun homeBannersCheckV3(@Query("productName") productName: String): Call<ApiResult<Boolean>>
+    fun checkHomeBanners(@Query("productName") productName: String): Call<ApiResult<Boolean>>
 }

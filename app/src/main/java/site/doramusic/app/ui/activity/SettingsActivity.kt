@@ -22,7 +22,7 @@ import site.doramusic.app.util.PreferencesManager
 class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
 
     internal lateinit var prefsManager: PreferencesManager
-    internal var updateDialog: DoraLoadingDialog? = null
+    private var updateDialog: DoraLoadingDialog? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_settings
@@ -34,100 +34,74 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivitySettingsBinding) {
-        mBinding.statusbarSettings.layoutParams = LinearLayout.LayoutParams(
+        binding.statusbarSettings.layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
         )
-        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarSettings, "skin_theme_color")
-        mBinding.v = this
+        SkinManager.getLoader().setBackgroundColor(binding.statusbarSettings, "skin_theme_color")
+        binding.v = this
         updateDialog = DoraLoadingDialog(this)
         prefsManager = PreferencesManager(this)
-//        if (UserManager.currentUser != null) {
-//            mBinding.rlSettingsLogout.visibility = View.VISIBLE
-//        }
-        mBinding.tbSettingsTwo.isChecked = prefsManager.getColdLaunchAutoPlay()
-        mBinding.tbSettingsThree.isChecked = prefsManager.getShakeChangeMusic()
-        mBinding.tbSettingsFive.isChecked = prefsManager.getBassBoost()
+        binding.tbSettingsAutoPlay.isChecked = prefsManager.getColdLaunchAutoPlay()
+        binding.tbSettingsShake.isChecked = prefsManager.getShakeChangeMusic()
+        binding.tbSettingsBassBoost.isChecked = prefsManager.getBassBoost()
 
-        mBinding.tbSettingsTwo.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
+        binding.tbSettingsAutoPlay.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
                     spmSelectContent("打开自动播放开关")
                 } else {
                     spmSelectContent("关闭自动播放开关")
                 }
-                mBinding.tbSettingsTwo.isChecked = isChecked
+                binding.tbSettingsAutoPlay.isChecked = isChecked
                 prefsManager.saveColdLaunchAutoPlay(isChecked)
             }
         })
-        mBinding.tbSettingsThree.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
+        binding.tbSettingsShake.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
                     spmSelectContent("打开摇一摇切歌开关")
                 } else {
                     spmSelectContent("关闭摇一摇切歌开关")
                 }
-                mBinding.tbSettingsThree.isChecked = isChecked
+                binding.tbSettingsShake.isChecked = isChecked
                 prefsManager.saveShakeChangeMusic(isChecked)
             }
         })
-        mBinding.tbSettingsFive.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
+        binding.tbSettingsBassBoost.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
                     spmSelectContent("打开重低音开关")
                 } else {
                     spmSelectContent("关闭重低音开关")
                 }
-                mBinding.tbSettingsFive.isChecked = isChecked
+                binding.tbSettingsBassBoost.isChecked = isChecked
                 prefsManager.saveBassBoost(isChecked)
                 if (isChecked) {
                     MusicApp.instance!!.mediaManager!!.setBassBoost(1000)
                 } else {
                     MusicApp.instance!!.mediaManager!!.setBassBoost(1)
                 }
-                mBinding.tbSettingsFive.isChecked = isChecked
+                binding.tbSettingsBassBoost.isChecked = isChecked
             }
         })
     }
 
     override fun onClick(view: View) {
-        when(view.id) {
-//            R.id.rl_settings_logout -> {
-//                val service = RetrofitManager.getService(UserService::class.java)
-//                val prefsManager = PreferencesManager(this)
-//                if (TextUtils.isNotEmpty(prefsManager.getToken())) {
-//                    val call = service.logout(prefsManager.getToken() ?: "")
-//                    call.enqueue(object : DoraCallback<Long>() {
-//
-//                        override fun onSuccess(body: Long) {
-//                            showShortToast("注销登录")
-//                            UserManager.update(null)
-//                            prefsManager.removeToken()
-//                        }
-//
-//                        override fun onFailure(code: Int, msg: String) {
-//                            showShortToast(msg)
-//                        }
-//                    })
-//                    finish()
-//                } else {
-//                    showShortToast("注销登录")
-//                    UserManager.update(null)
-//                }
-//            }
-            R.id.rl_settings_two -> {
-                val isChecked = mBinding.tbSettingsTwo.isChecked
-                mBinding.tbSettingsTwo.isChecked = !isChecked
+        when (view.id) {
+            R.id.rl_settings_auto_play -> {
+                val isChecked = mBinding.tbSettingsAutoPlay.isChecked
+                mBinding.tbSettingsAutoPlay.isChecked = !isChecked
                 prefsManager.saveColdLaunchAutoPlay(!isChecked)
             }
-            R.id.rl_settings_three -> {
-                val isChecked = mBinding.tbSettingsThree.isChecked
-                mBinding.tbSettingsThree.isChecked = !isChecked
+            R.id.rl_settings_shake -> {
+                val isChecked = mBinding.tbSettingsShake.isChecked
+                mBinding.tbSettingsShake.isChecked = !isChecked
                 prefsManager.saveShakeChangeMusic(!isChecked)
             }
-            R.id.rl_settings_five -> {
-                val isChecked = mBinding.tbSettingsFive.isChecked
-                mBinding.tbSettingsFive.isChecked = !isChecked
+            R.id.rl_settings_bass_boost -> {
+                val isChecked = mBinding.tbSettingsBassBoost.isChecked
+                mBinding.tbSettingsBassBoost.isChecked = !isChecked
                 prefsManager.saveBassBoost(!isChecked)
                 if (isChecked) {
                     MusicApp.instance!!.mediaManager!!.setBassBoost(1000)

@@ -25,7 +25,7 @@ abstract class DoraCallback<T> : Callback<DoraResponse<T>> {
     }
 
     override fun onFailure(call: Call<DoraResponse<T>>, t: Throwable) {
-        onFailure(-1, t.message!!)
+        onFailure(-1, t.message ?: "")
     }
 
     abstract fun onSuccess(body: T)

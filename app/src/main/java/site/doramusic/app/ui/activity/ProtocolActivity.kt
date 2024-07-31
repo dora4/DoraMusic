@@ -29,7 +29,7 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         mBinding.webViewContainer.removeAllViews()
-        webView!!.destroy()
+        webView?.destroy()
     }
 
     override fun onSetStatusBar() {
@@ -40,22 +40,22 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
     override fun initData(savedInstanceState: Bundle?, binding: ActivityProtocolBinding) {
         binding.statusbarPrivacyPolicy.layoutParams = LinearLayout
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarPrivacyPolicy, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(binding.statusbarPrivacyPolicy, "skin_theme_color")
         webView = WebView(applicationContext)
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
-        webView!!.setOnLongClickListener { true }
-        webView!!.layoutParams = params
-        webView!!.webViewClient = WebViewClient()
+        webView?.setOnLongClickListener { true }
+        webView?.layoutParams = params
+        webView?.webViewClient = WebViewClient()
         // 动态添加WebView，解决在xml引用WebView持有Activity的Context对象，导致内存泄露
         binding.webViewContainer.addView(webView)
         binding.titlebarPrivacyPolicy.title = title.toString()
         if (title.equals("用户协议")) {
-            webView!!.loadUrl("file:///android_asset/user_agreement.html")
+            webView?.loadUrl("file:///android_asset/user_agreement.html")
         } else if (title.equals("隐私政策")) {
-            webView!!.loadUrl("file:///android_asset/privacy_policy.html")
+            webView?.loadUrl("file:///android_asset/privacy_policy.html")
         }
     }
 

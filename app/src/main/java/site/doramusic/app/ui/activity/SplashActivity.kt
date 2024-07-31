@@ -7,13 +7,13 @@ import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import dora.arouter.openWithFinish
 import dora.crash.DoraCrash
+import dora.util.IoUtils
 import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivitySplashBinding
 import site.doramusic.app.util.MusicUtils
-import site.doramusic.app.util.PreferencesManager
 
 /**
  * 启动页，无法使用AppCompatActivity主题，所有直接继承Activity。
@@ -31,22 +31,18 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
     }
 
     private fun initAppFolder() {
-        if (dora.util.IoUtils.checkMediaMounted()) {
-            dora.util.IoUtils.createFolder(arrayOf(
-                AppConfig.FOLDER_LOG)
-            )
+        if (IoUtils.checkMediaMounted()) {
+            IoUtils.createFolder(arrayOf(AppConfig.FOLDER_LOG))
         }
     }
 
-//    @RequirePermission(Permission.WRITE_EXTERNAL_STORAGE)
     private fun init() {
         initAppFolder()
         DoraCrash.initCrash(
             this@SplashActivity,
             "DoraMusic/log"
         )
-        val prefsManager = PreferencesManager(this)
-        splashLoading(prefsManager)
+        splashLoading()
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivitySplashBinding) {
@@ -59,7 +55,7 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
             }
     }
 
-    private fun splashLoading(prefsManager: PreferencesManager) {
+    private fun splashLoading() {
         Handler().postDelayed({
             openWithFinish(ARoutePath.ACTIVITY_MAIN)
         }, SPLASH_TIME)

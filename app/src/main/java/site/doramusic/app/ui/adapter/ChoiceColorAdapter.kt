@@ -14,13 +14,13 @@ class ChoiceColorAdapter : BaseQuickAdapter<ChoiceColorActivity
     var selectedPosition = -1 // 选中的位置
 
     override fun convert(holder: BaseViewHolder, item: ChoiceColorActivity.ColorData) {
-        val iv_choice_color_skin_bg = holder.getView(R.id.iv_choice_color_skin_bg) as ImageView
-        val iv_choice_color_skin_select = holder.getView(R.id.iv_choice_color_skin_select) as ImageView
-        iv_choice_color_skin_bg.setBackgroundResource(item.backgroundResId)
+        val ivChoiceColorSkinBg = holder.getView(R.id.iv_choice_color_skin_bg) as ImageView
+        val ivChoiceColorSkinSelect = holder.getView(R.id.iv_choice_color_skin_select) as ImageView
+        ivChoiceColorSkinBg.setBackgroundResource(item.backgroundResId)
         if (getItemPosition(item) == selectedPosition) {
-            iv_choice_color_skin_select.visibility = View.VISIBLE
+            ivChoiceColorSkinSelect.visibility = View.VISIBLE
         } else {
-            iv_choice_color_skin_select.visibility = View.GONE
+            ivChoiceColorSkinSelect.visibility = View.GONE
         }
     }
 }

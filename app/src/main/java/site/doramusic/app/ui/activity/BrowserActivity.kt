@@ -1,12 +1,11 @@
 package site.doramusic.app.ui.activity
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.ViewGroup
-import android.webkit.JavascriptInterface
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebIndicator
 import dora.BaseActivity
@@ -17,7 +16,7 @@ import site.doramusic.app.databinding.ActivityBrowserBinding
 
 class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
 
-    private var title = "扫码结果"
+    private var title: String? = null
     private var url: String? = null
     private var agentWeb: AgentWeb? = null
     override fun getLayoutId(): Int {
@@ -34,12 +33,12 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityBrowserBinding) {
-        binding.titlebar.title = title
+        title?.let { binding.titlebar.title = it }
         val webIndicator = WebIndicator(this)
-        webIndicator.setColor(resources.getColor(R.color.colorPrimary))
+        webIndicator.setColor(ContextCompat.getColor(this, R.color.colorPrimary))
         agentWeb = AgentWeb.with(this)
             .setAgentWebParent(
-                mBinding!!.rlBrowserWebPage,
+                binding.rlBrowserWebPage,
                 LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
@@ -49,41 +48,16 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
             .createAgentWeb()
             .ready()
             .go(url)
-        agentWeb!!.jsInterfaceHolder.addJavaObject(
-            "android",
-            AndroidInterface(agentWeb, this, object : WebJsInterfaceCallback {
-                override fun nativeApi(params: String?) {}
-            })
-        )
     }
 
     override fun onPointerCaptureChanged(hasCapture: Boolean) {}
-    interface WebJsInterfaceCallback {
-        fun nativeApi(params: String?)
-    }
-
-    inner class AndroidInterface(
-        private val agent: AgentWeb?,
-        private val context: Context,
-        private val interfaceCallback: WebJsInterfaceCallback?
-    ) {
-        private val TAG = "AndroidInterfaceWeb"
-
-        //定义h5要调用的本地方法
-        @JavascriptInterface
-        fun Android_BuyVip(mtdName: String?, params: String?) {
-            when (mtdName) {
-                "nativeApi" -> interfaceCallback?.nativeApi(params)
-            }
-        }
-    }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        return agentWeb!!.handleKeyEvent(keyCode, event)
+        return agentWeb?.handleKeyEvent(keyCode, event) ?: super.onKeyDown(keyCode, event)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        agentWeb!!.destroy()
+        agentWeb?.destroy()
     }
 }

@@ -11,7 +11,7 @@ class HomeAdapter : BaseQuickAdapter<HomeFragment.HomeItem, BaseViewHolder>(R.la
 
     override fun convert(holder: BaseViewHolder, item: HomeFragment.HomeItem) {
         holder.getView<ImageView>(R.id.iv_home_module_icon).setImageResource(item.iconRes)
-        holder.getView<TextView>(R.id.tv_home_module_name).setText(item.name)
-        holder.getView<TextView>(R.id.tv_home_module_num).setText("${item.musicNum}")
+        holder.getView<TextView>(R.id.tv_home_module_name).text = item.name
+        holder.getView<TextView>(R.id.tv_home_module_num).text = "${item.musicNum}"
     }
 }

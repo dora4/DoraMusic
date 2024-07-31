@@ -52,10 +52,6 @@ class PreferencesManager(val context: Context) {
         SPUtils.writeBoolean(context, PREFS_BASS_BOOST_ENABLE, flag)
     }
 
-    fun saveHotFix(flag: Boolean) {
-        SPUtils.writeBoolean(context, PREFS_HOT_FIX_ENABLE, flag)
-    }
-
     fun saveFilterSize(size: Boolean) {
         SPUtils.writeBoolean(context, PREFS_FILTER_SIZE, size)
     }

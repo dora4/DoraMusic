@@ -22,7 +22,7 @@ import site.doramusic.app.ui.adapter.AlbumItemAdapter
 import site.doramusic.app.widget.LetterView
 import java.util.*
 
-class AlbumUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
+class UIViewAlbum(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private var statusBarAlbum: View? = null
     private var titlebar: DoraTitleBar? = null
