@@ -293,16 +293,12 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         if (savedInstanceState != null) {
             LogUtils.i("后台启动")
         } else {
-            //提供皮肤
+            // 应用皮肤
             applySkin()
-            //注册耳机监听器
+            // 注册耳机监听器
             registerEarCupReceiver()
             //请求通知栏权限
 //            requestNotificationPermission()
-//            if (prefsManager!!.getHotFix()) {
-//                //拉取热修复补丁
-//                fetchPatch()
-//            }
         }
     }
 

@@ -22,7 +22,7 @@ import site.doramusic.app.util.PreferencesManager
 class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
     companion object {
-        private const val SPLASH_TIME = 300
+        private const val SPLASH_TIME = 300L
     }
 
     override fun onSetStatusBar() {
@@ -45,8 +45,6 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
             this@SplashActivity,
             "DoraMusic/log"
         )
-//    1/0
-//        UserManager.update(this)
         val prefsManager = PreferencesManager(this)
         splashLoading(prefsManager)
     }
@@ -64,7 +62,7 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
     private fun splashLoading(prefsManager: PreferencesManager) {
         Handler().postDelayed({
             openWithFinish(ARoutePath.ACTIVITY_MAIN)
-        }, SPLASH_TIME.toLong())
+        }, SPLASH_TIME)
     }
 
     override fun onDestroy() {

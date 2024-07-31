@@ -24,12 +24,12 @@ import java.util.*
 
 class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
-    private var rv_artist: RecyclerView? = null
+    private var rvArtist: RecyclerView? = null
     private var titlebar: DoraTitleBar? = null
     private var adapter: ArtistItemAdapter? = null
-    private var statusbar_artist: View? = null
-    private var lv_artist: LetterView? = null
-    private var tv_artist_dialog: TextView? = null
+    private var statusBarArtist: View? = null
+    private var lvArtist: LetterView? = null
+    private var tvArtistDialog: TextView? = null
     private val artistDao = DaoFactory.getDao(Artist::class.java)
 
     override fun getView(from: Int, obj: OrmTable?): View {
@@ -40,15 +40,15 @@ class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
 
 
     private fun initViews(view: View) {
-        statusbar_artist = view.findViewById(R.id.statusbar_artist)
-        statusbar_artist!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        statusBarArtist = view.findViewById(R.id.statusbar_artist)
+        statusBarArtist!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusbar_artist!!, "skin_theme_color")
-        rv_artist = view.findViewById(R.id.rv_artist)
-        lv_artist = view.findViewById(R.id.lv_artist)
-        tv_artist_dialog = view.findViewById(R.id.tv_artist_dialog)
-        rv_artist!!.layoutManager = LinearLayoutManager(view.context)
-        rv_artist!!.addItemDecoration(DividerItemDecoration(view.context, LinearLayoutManager.VERTICAL))
+        SkinManager.getLoader().setBackgroundColor(statusBarArtist!!, "skin_theme_color")
+        rvArtist = view.findViewById(R.id.rv_artist)
+        lvArtist = view.findViewById(R.id.lv_artist)
+        tvArtistDialog = view.findViewById(R.id.tv_artist_dialog)
+        rvArtist!!.layoutManager = LinearLayoutManager(view.context)
+        rvArtist!!.addItemDecoration(DividerItemDecoration(view.context, LinearLayoutManager.VERTICAL))
         titlebar = view.findViewById(R.id.titlebar_artist)
         titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
@@ -66,10 +66,10 @@ class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
                 adapter.getItem(position) as OrmTable?
             )
         }
-        rv_artist!!.adapter = adapter
-        lv_artist!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        rvArtist!!.adapter = adapter
+        lvArtist!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
-                tv_artist_dialog!!.text = letter
+                tvArtistDialog!!.text = letter
                 val position: Int
                 if (letter == "↑") {
                     position = 0
@@ -78,14 +78,14 @@ class ArtistUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
                 } else {
                     position = adapter!!.getPositionForSection(letter[0])
                 }
-                rv_artist!!.scrollToPosition(position)
+                rvArtist!!.scrollToPosition(position)
             }
 
         })
-        lv_artist!!.setOnTouchListener { _, event ->
+        lvArtist!!.setOnTouchListener { _, event ->
             when (event.action) {
-                MotionEvent.ACTION_UP -> tv_artist_dialog!!.visibility = View.GONE
-                MotionEvent.ACTION_DOWN -> tv_artist_dialog!!.visibility = View.VISIBLE
+                MotionEvent.ACTION_UP -> tvArtistDialog!!.visibility = View.GONE
+                MotionEvent.ACTION_DOWN -> tvArtistDialog!!.visibility = View.VISIBLE
             }
             false
         }

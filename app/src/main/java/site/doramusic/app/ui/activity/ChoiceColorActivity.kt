@@ -44,16 +44,16 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityChoiceColorBinding) {
-        mBinding.statusbarChoiceColor.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        binding.statusbarChoiceColor.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
         SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, "skin_theme_color")
         val imageView = AppCompatImageView(this)
         val dp24 = DensityUtils.dp2px(24f)
         imageView.layoutParams = RelativeLayout.LayoutParams(dp24, dp24)
         imageView.setImageResource(R.drawable.ic_save)
-        mBinding.titlebarChoiceColor.addMenuButton(imageView)
+        binding.titlebarChoiceColor.addMenuButton(imageView)
 
-        mBinding.titlebarChoiceColor.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+        binding.titlebarChoiceColor.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
             }
 
@@ -83,15 +83,15 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
 
         choiceColorAdapter = ChoiceColorAdapter()
         choiceColorAdapter!!.setList(colorDatas!!)
-        mBinding.rvChoiceColor.layoutManager = LinearLayoutManager(this,
+        binding.rvChoiceColor.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.HORIZONTAL, false)
 //        mBinding.rvChoiceColor.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
-        mBinding.rvChoiceColor.itemAnimator = DefaultItemAnimator()
-        mBinding.rvChoiceColor.adapter = choiceColorAdapter
+        binding.rvChoiceColor.itemAnimator = DefaultItemAnimator()
+        binding.rvChoiceColor.adapter = choiceColorAdapter
         choiceColorAdapter!!.selectedPosition = if (prefsManager.getSkinType() == 0) 0 else prefsManager.getSkinType() - 1
 
         colorDrawable = ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary))
-        mBinding.ivChoiceColorPreview.background = colorDrawable
+        binding.ivChoiceColorPreview.background = colorDrawable
         choiceColorAdapter!!.setOnItemClickListener { adapter, view, position ->
             val color = colorDatas!![position].backgroundColor
             colorDrawable.color = color

@@ -13,8 +13,11 @@ import site.doramusic.app.ui.layout.MusicPlayUI
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.MusicUtils
 
-class MusicPlayReceiver(val mediaManager: MediaManager, val musicTimer: MusicTimer,
-        val musicPlayUI: MusicPlayUI, val bottomBarUI: BottomBarUI, val defaultArtwork: Bitmap
+class MusicPlayReceiver(val mediaManager: MediaManager,
+                        private val musicTimer: MusicTimer,
+                        private val musicPlayUI: MusicPlayUI,
+                        private val bottomBarUI: BottomBarUI,
+                        private val defaultArtwork: Bitmap
 ) : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -129,7 +132,7 @@ class MusicPlayReceiver(val mediaManager: MediaManager, val musicTimer: MusicTim
                     bottomBarUI.refreshUI(0, music.duration, music)
                     bottomBarUI.showPlay(true)
                     try {
-                        //暂停状态也要刷新Cover
+                        // 暂停状态也要刷新Cover
                         val bitmap = MusicUtils.getCachedArtwork(
                             context,
                             music.albumId.toLong(), defaultArtwork
@@ -146,8 +149,6 @@ class MusicPlayReceiver(val mediaManager: MediaManager, val musicTimer: MusicTim
                     } catch (e: UnsupportedOperationException) {
 //                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
                     }
-
-
                 }
             }
         }

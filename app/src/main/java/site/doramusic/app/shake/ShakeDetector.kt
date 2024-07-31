@@ -62,7 +62,7 @@ class ShakeDetector(context: Context) : SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-        //传感器精度改变
+        // 传感器精度改变
     }
 
     /**

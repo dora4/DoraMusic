@@ -60,11 +60,11 @@ class SlidingView : SlidingDrawer {
                 }
             }
         }
-        //抽屉行为控件
+        // 抽屉行为控件
         if (event.action == MotionEvent.ACTION_DOWN && handleId != 0) {
             val view = findViewById<View>(handleId)
             val rect = getRectOnScreen(view)
-            return if (rect.contains(x, y)) { //点击抽屉控件时交由系统处理
+            return if (rect.contains(x, y)) { // 点击抽屉控件时交由系统处理
                 super.onInterceptTouchEvent(event)
             } else {
                 false

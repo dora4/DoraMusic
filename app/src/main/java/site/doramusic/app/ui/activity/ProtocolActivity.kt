@@ -38,7 +38,7 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityProtocolBinding) {
-        mBinding.statusbarPrivacyPolicy.layoutParams = LinearLayout
+        binding.statusbarPrivacyPolicy.layoutParams = LinearLayout
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
         SkinManager.getLoader().setBackgroundColor(mBinding.statusbarPrivacyPolicy, "skin_theme_color")
         webView = WebView(applicationContext)
@@ -50,8 +50,8 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
         webView!!.layoutParams = params
         webView!!.webViewClient = WebViewClient()
         // 动态添加WebView，解决在xml引用WebView持有Activity的Context对象，导致内存泄露
-        mBinding.webViewContainer.addView(webView)
-        mBinding.titlebarPrivacyPolicy.title = title.toString()
+        binding.webViewContainer.addView(webView)
+        binding.titlebarPrivacyPolicy.title = title.toString()
         if (title.equals("用户协议")) {
             webView!!.loadUrl("file:///android_asset/user_agreement.html")
         } else if (title.equals("隐私政策")) {

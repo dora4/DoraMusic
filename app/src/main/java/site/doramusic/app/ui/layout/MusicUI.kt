@@ -41,14 +41,14 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
 
     private var from: Int = 0
     private var table: OrmTable? = null
-    private var statusbar_music: View? = null
+    private var statusBarMusic: View? = null
     private var titlebar: DoraTitleBar? = null
     private var defaultArtwork: Bitmap? = null
-    private var rv_music: RecyclerView? = null
+    private var recyclerView: RecyclerView? = null
     private var adapter: MusicItemAdapter? = null
-    private var lv_music: LetterView? = null
+    private var lvMusic: LetterView? = null
     private val mediaManager: MediaManager? = MusicApp.instance!!.mediaManager
-    private var tv_music_dialog: TextView? = null
+    private var tvMusicDialog: TextView? = null
     private val musicDao = DaoFactory.getDao(Music::class.java)
     private val loadingDialog: DoraLoadingDialog = DoraLoadingDialog(manager.view.context)
 
@@ -62,12 +62,12 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
     }
 
     private fun initViews(view: View) {
-        statusbar_music = view.findViewById(R.id.statusbar_music)
-        statusbar_music!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        statusBarMusic = view.findViewById(R.id.statusbar_music)
+        statusBarMusic!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusbar_music!!, "skin_theme_color")
-        lv_music = view.findViewById(R.id.lv_music)
-        tv_music_dialog = view.findViewById(R.id.tv_music_dialog)
+        SkinManager.getLoader().setBackgroundColor(statusBarMusic!!, "skin_theme_color")
+        lvMusic = view.findViewById(R.id.lv_music)
+        tvMusicDialog = view.findViewById(R.id.tv_music_dialog)
         titlebar = view.findViewById(R.id.titlebar_music)
         titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
@@ -81,12 +81,12 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
         defaultArtwork = BitmapFactory.decodeResource(view.resources,
                 R.mipmap.ic_launcher)
 
-        rv_music = view.findViewById(R.id.rv_music)
+        recyclerView = view.findViewById(R.id.rv_music)
 
         (view.context as MainActivity).volumeControlStream = AudioManager.STREAM_MUSIC
 
-        rv_music!!.layoutManager = LinearLayoutManager(view.context)
-        rv_music!!.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
+        recyclerView!!.layoutManager = LinearLayoutManager(view.context)
+        recyclerView!!.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
         adapter = MusicItemAdapter()
         when (from) {
             AppConfig.ROUTE_START_FROM_LOCAL -> {
@@ -98,7 +98,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         adapter!!.setList(playlist)
                         adapter!!.sort()
                         installItemClick()
-                        rv_music!!.adapter = adapter
+                        recyclerView!!.adapter = adapter
                         loadingDialog.dismiss()
                     }
                 }).start()
@@ -114,7 +114,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         adapter!!.setList(artists)
                         adapter!!.sort()
                         installItemClick()
-                        rv_music!!.adapter = adapter
+                        recyclerView!!.adapter = adapter
                         loadingDialog.dismissWithAnimation()
                     }
                 }).start()
@@ -130,7 +130,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         adapter!!.setList(albums)
                         adapter!!.sort()
                         installItemClick()
-                        rv_music!!.adapter = adapter
+                        recyclerView!!.adapter = adapter
                         loadingDialog.dismissWithAnimation()
                     }
                 }).start()
@@ -145,7 +145,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         adapter!!.setList(music)
                         adapter!!.sort()
                         installItemClick()
-                        rv_music!!.adapter = adapter
+                        recyclerView!!.adapter = adapter
                         loadingDialog.dismissWithAnimation()
                     }
                 }).start()
@@ -159,7 +159,7 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         adapter!!.setList(favorite)
                         adapter!!.sort()
                         installItemClick()
-                        rv_music!!.adapter = adapter
+                        recyclerView!!.adapter = adapter
                         loadingDialog.dismissWithAnimation()
                     }
                 }).start()
@@ -168,14 +168,14 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                 adapter!!.setList(musicDao.select(QueryBuilder.create()
                         .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))
                         .orderBy(Music.COLUMN_LAST_PLAY_TIME + " desc")))
-                lv_music!!.visibility = View.GONE
+                lvMusic!!.visibility = View.GONE
             }
         }
         installItemClick()
-        rv_music!!.adapter = adapter
-        lv_music!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        recyclerView!!.adapter = adapter
+        lvMusic!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
-                tv_music_dialog!!.text = letter
+                tvMusicDialog!!.text = letter
                 val position: Int
                 if (letter == "↑") {
                     position = 0
@@ -184,14 +184,14 @@ class MusicUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                 } else {
                     position = adapter!!.getPositionForSection(letter[0])
                 }
-                val linearLayoutManager: LinearLayoutManager = rv_music!!.layoutManager as LinearLayoutManager
+                val linearLayoutManager: LinearLayoutManager = recyclerView!!.layoutManager as LinearLayoutManager
                 linearLayoutManager.scrollToPositionWithOffset(position, 0)
             }
         })
-        lv_music!!.setOnTouchListener { _, event ->
+        lvMusic!!.setOnTouchListener { _, event ->
             when (event.action) {
-                MotionEvent.ACTION_UP -> tv_music_dialog!!.visibility = View.GONE
-                MotionEvent.ACTION_DOWN -> tv_music_dialog!!.visibility = View.VISIBLE
+                MotionEvent.ACTION_UP -> tvMusicDialog!!.visibility = View.GONE
+                MotionEvent.ACTION_DOWN -> tvMusicDialog!!.visibility = View.VISIBLE
             }
             false
         }

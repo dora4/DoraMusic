@@ -5,6 +5,7 @@
     package="site.doramusic.app">
 
     <!-- 允许访问互联网 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- 文件管理权限 -->

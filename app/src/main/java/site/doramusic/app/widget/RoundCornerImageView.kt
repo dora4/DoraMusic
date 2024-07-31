@@ -5,11 +5,12 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatImageView
 import kotlin.math.max
 
 class RoundCornerImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
-                                                     defStyleAttr: Int = 0) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
-    //圆角大小，默认为10
+                                                     defStyleAttr: Int = 0) : AppCompatImageView(context, attrs, defStyleAttr) {
+    // 圆角大小，默认为10
     private val borderRadius = 10
 
     private val paint: Paint = Paint()
@@ -17,7 +18,7 @@ class RoundCornerImageView @JvmOverloads constructor(context: Context, attrs: At
     // 3x3 矩阵，主要用于缩小放大
     private val scaleMatrix: Matrix = Matrix()
 
-    //渲染图像，使用图像为绘制图形着色
+    // 渲染图像，使用图像为绘制图形着色
     private var bitmapShader: BitmapShader? = null
 
     init {

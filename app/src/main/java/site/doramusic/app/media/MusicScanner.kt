@@ -45,6 +45,8 @@ object MusicScanner : AppConfig {
     private val albumDao = DaoFactory.getDao(Album::class.java)
     private val folderDao = DaoFactory.getDao(Folder::class.java)
 
+    private const val DEFENSE_SQL_INJECTION_HEADER = " 1=1 "
+
     private fun recreateTables() {
         TableManager.recreateTable(Music::class.java)
         TableManager.recreateTable(Artist::class.java)
@@ -85,7 +87,7 @@ object MusicScanner : AppConfig {
         val sp = PreferencesManager(context)
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val cr = context.contentResolver
-        val select = StringBuffer(" 1=1 ")
+        val select = StringBuffer(DEFENSE_SQL_INJECTION_HEADER)
         // 查询语句：检索出.mp3为后缀名，时长大于1分钟，文件大小大于1MB的媒体文件
         if (sp.getFilterSize()) {
             select.append(" and ${MediaStore.Audio.Media.SIZE} > " +

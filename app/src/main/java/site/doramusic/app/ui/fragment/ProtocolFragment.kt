@@ -18,12 +18,12 @@ import site.doramusic.app.R
 class ProtocolFragment : DialogFragment(),
 
     View.OnClickListener {
-    private var mCallback: Callback? = null
-    private var mProtocolCallback: ProtocolCallback? = null
-    private var tv_protocol_privacy_policy: TextView? = null
-    private var tv_protocol_service_protocol: TextView? = null
-    private var tv_protocol_disagree: TextView? = null
-    private var tv_protocol_agree: TextView? = null
+    private var callback: Callback? = null
+    private var protocolCallback: ProtocolCallback? = null
+    private var tvProtocolPrivacyPolicy: TextView? = null
+    private var tvProtocolServiceProtocol: TextView? = null
+    private var tvProtocolDisagree: TextView? = null
+    private var tvProtocolAgree: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,16 +42,16 @@ class ProtocolFragment : DialogFragment(),
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-        tv_protocol_agree =
+        tvProtocolAgree =
             view.findViewById<View>(R.id.tv_protocol_agree) as TextView
-        tv_protocol_disagree =
+        tvProtocolDisagree =
             view.findViewById<View>(R.id.tv_protocol_disagree) as TextView
-        tv_protocol_privacy_policy = view.findViewById(R.id.tv_protocol_privacy_policy) as TextView
-        tv_protocol_service_protocol = view.findViewById(R.id.tv_protocol_service_protocol)
-        tv_protocol_privacy_policy!!.setOnClickListener(this)
-        tv_protocol_service_protocol!!.setOnClickListener(this)
-        tv_protocol_agree!!.setOnClickListener(this)
-        tv_protocol_disagree!!.setOnClickListener(this)
+        tvProtocolPrivacyPolicy = view.findViewById(R.id.tv_protocol_privacy_policy) as TextView
+        tvProtocolServiceProtocol = view.findViewById(R.id.tv_protocol_service_protocol)
+        tvProtocolPrivacyPolicy!!.setOnClickListener(this)
+        tvProtocolServiceProtocol!!.setOnClickListener(this)
+        tvProtocolAgree!!.setOnClickListener(this)
+        tvProtocolDisagree!!.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -73,21 +73,21 @@ class ProtocolFragment : DialogFragment(),
     override fun onClick(v: View) {
         val id = v.id
         if (id == R.id.tv_protocol_agree) {
-            if (mCallback != null) {
+            if (callback != null) {
                 dismissDialog()
-                mCallback!!.onAgree()
+                callback!!.onAgree()
             }
         } else if (id == R.id.tv_protocol_disagree) {
-            if (mCallback != null) {
-                mCallback!!.onDisagree()
+            if (callback != null) {
+                callback!!.onDisagree()
             }
         } else if (id == R.id.tv_protocol_privacy_policy) {
-            if (mProtocolCallback != null) {
-                mProtocolCallback!!.onPrivacyPolicy()
+            if (protocolCallback != null) {
+                protocolCallback!!.onPrivacyPolicy()
             }
         } else if (id == R.id.tv_protocol_service_protocol) {
-            if (mProtocolCallback != null) {
-                mProtocolCallback!!.onServiceProtocol()
+            if (protocolCallback != null) {
+                protocolCallback!!.onServiceProtocol()
             }
         }
     }
@@ -128,11 +128,11 @@ class ProtocolFragment : DialogFragment(),
     }
 
     fun setCallback(callback: Callback) {
-        mCallback = callback
+        this.callback = callback
     }
 
     fun setProtocolCallback(protocolCallback: ProtocolCallback?) {
-        mProtocolCallback = protocolCallback
+        this.protocolCallback = protocolCallback
     }
 
     companion object {

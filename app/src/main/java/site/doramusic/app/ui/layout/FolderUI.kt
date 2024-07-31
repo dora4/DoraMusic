@@ -24,13 +24,13 @@ import java.util.*
 
 class FolderUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
-    private var statusbar_folder: View? = null
+    private var statusBarFolder: View? = null
     private var titlebar: DoraTitleBar? = null
     private var adapter: FolderItemAdapter? = null
-    private var rv_folder: RecyclerView? = null
+    private var recyclerView: RecyclerView? = null
 
-    private var lv_folder: LetterView? = null
-    private var tv_folder_dialog: TextView? = null
+    private var lvFolder: LetterView? = null
+    private var tvFolderDialog: TextView? = null
     private val folderDao = DaoFactory.getDao(Folder::class.java)
 
     override fun getView(from: Int, obj: OrmTable?): View {
@@ -41,12 +41,12 @@ class FolderUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
 
     private fun initViews(view: View) {
 
-        statusbar_folder = view.findViewById(R.id.statusbar_folder)
-        statusbar_folder!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        statusBarFolder = view.findViewById(R.id.statusbar_folder)
+        statusBarFolder!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusbar_folder!!, "skin_theme_color")
-        lv_folder = view.findViewById(R.id.lv_folder)
-        tv_folder_dialog = view.findViewById(R.id.tv_folder_dialog)
+        SkinManager.getLoader().setBackgroundColor(statusBarFolder!!, "skin_theme_color")
+        lvFolder = view.findViewById(R.id.lv_folder)
+        tvFolderDialog = view.findViewById(R.id.tv_folder_dialog)
         titlebar = view.findViewById(R.id.titlebar_folder)
         titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
@@ -64,13 +64,13 @@ class FolderUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
                 adapter.getItem(position) as OrmTable?
             )
         }
-        rv_folder = view.findViewById(R.id.rv_folder)
-        rv_folder!!.layoutManager = LinearLayoutManager(manager.view.context)
-        rv_folder!!.addItemDecoration(DividerItemDecoration(manager.view.context, RecyclerView.VERTICAL))
-        rv_folder!!.adapter = adapter
-        lv_folder!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        recyclerView = view.findViewById(R.id.rv_folder)
+        recyclerView!!.layoutManager = LinearLayoutManager(manager.view.context)
+        recyclerView!!.addItemDecoration(DividerItemDecoration(manager.view.context, RecyclerView.VERTICAL))
+        recyclerView!!.adapter = adapter
+        lvFolder!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
-                tv_folder_dialog!!.text = letter
+                tvFolderDialog!!.text = letter
                 val position: Int
                 if (letter == "↑") {
                     position = 0
@@ -79,14 +79,14 @@ class FolderUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, man
                 } else {
                     position = adapter!!.getPositionForSection(letter[0])
                 }
-                rv_folder!!.scrollToPosition(position)
+                recyclerView!!.scrollToPosition(position)
             }
 
         })
-        lv_folder!!.setOnTouchListener { _, event ->
+        lvFolder!!.setOnTouchListener { _, event ->
             when (event.action) {
-                MotionEvent.ACTION_UP -> tv_folder_dialog!!.visibility = View.GONE
-                MotionEvent.ACTION_DOWN -> tv_folder_dialog!!.visibility = View.VISIBLE
+                MotionEvent.ACTION_UP -> tvFolderDialog!!.visibility = View.GONE
+                MotionEvent.ACTION_DOWN -> tvFolderDialog!!.visibility = View.VISIBLE
             }
             false
         }

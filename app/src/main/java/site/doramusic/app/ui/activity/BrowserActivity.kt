@@ -16,6 +16,7 @@ import site.doramusic.app.R
 import site.doramusic.app.databinding.ActivityBrowserBinding
 
 class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
+
     private var title = "扫码结果"
     private var url: String? = null
     private var agentWeb: AgentWeb? = null
@@ -24,12 +25,8 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
     }
 
     override fun onGetExtras(action: String?, bundle: Bundle?, intent: Intent) {
-        if (IntentUtils.hasExtra(intent, "title")) {
-            title = IntentUtils.getStringExtra(intent, "title")
-        }
-        if (IntentUtils.hasExtra(intent, "url")) {
-            url = IntentUtils.getStringExtra(intent, "url")
-        }
+        title = IntentUtils.getStringExtra(intent, "title")
+        url = IntentUtils.getStringExtra(intent, "url")
     }
 
     override fun onSetStatusBar() {
@@ -37,7 +34,7 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityBrowserBinding) {
-        mBinding!!.titlebar.title = title
+        binding.titlebar.title = title
         val webIndicator = WebIndicator(this)
         webIndicator.setColor(resources.getColor(R.color.colorPrimary))
         agentWeb = AgentWeb.with(this)

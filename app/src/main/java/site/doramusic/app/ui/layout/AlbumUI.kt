@@ -24,12 +24,12 @@ import java.util.*
 
 class AlbumUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
-    private var statusbar_album: View? = null
+    private var statusBarAlbum: View? = null
     private var titlebar: DoraTitleBar? = null
-    private var rv_album: RecyclerView? = null
+    private var rvAlbum: RecyclerView? = null
     private var adapter: AlbumItemAdapter? = null
-    private var lv_album: LetterView? = null
-    private var tv_album_dialog: TextView? = null
+    private var lvAlbum: LetterView? = null
+    private var tvAlbumDialog: TextView? = null
     private val albumDao = DaoFactory.getDao(Album::class.java)
 
     override fun getView(from: Int, obj: OrmTable?): View {
@@ -39,10 +39,10 @@ class AlbumUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
     }
 
     private fun initViews(view: View) {
-        statusbar_album = view.findViewById(R.id.statusbar_album)
-        statusbar_album!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        statusBarAlbum = view.findViewById(R.id.statusbar_album)
+        statusBarAlbum!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusbar_album!!, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(statusBarAlbum!!, "skin_theme_color")
         titlebar = view.findViewById(R.id.titlebar_album)
         titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
@@ -53,11 +53,11 @@ class AlbumUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
             }
         })
-        rv_album = view.findViewById(R.id.rv_album)
-        lv_album = view.findViewById(R.id.lv_album)
-        tv_album_dialog = view.findViewById(R.id.tv_album_dialog)
-        rv_album!!.layoutManager = LinearLayoutManager(view.context)
-        rv_album!!.addItemDecoration(DividerItemDecoration(view.context, RecyclerView.VERTICAL))
+        rvAlbum = view.findViewById(R.id.rv_album)
+        lvAlbum = view.findViewById(R.id.lv_album)
+        tvAlbumDialog = view.findViewById(R.id.tv_album_dialog)
+        rvAlbum!!.layoutManager = LinearLayoutManager(view.context)
+        rvAlbum!!.addItemDecoration(DividerItemDecoration(view.context, RecyclerView.VERTICAL))
         val albums = albumDao.selectAll() as ArrayList<Album>
         adapter = AlbumItemAdapter(albums)
         adapter!!.setOnItemClickListener { adapter, view, position ->
@@ -65,11 +65,11 @@ class AlbumUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                 adapter.getItem(position) as OrmTable?
             )
         }
-        rv_album!!.adapter = adapter
-        lv_album!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        rvAlbum!!.adapter = adapter
+        lvAlbum!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
 
-                tv_album_dialog!!.text = letter
+                tvAlbumDialog!!.text = letter
                 val position: Int
                 when (letter) {
                     "↑" -> {
@@ -82,14 +82,14 @@ class AlbumUI(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, mana
                         position = adapter!!.getPositionForSection(letter[0])
                     }
                 }
-                rv_album!!.scrollToPosition(position)
+                rvAlbum!!.scrollToPosition(position)
             }
 
         })
-        lv_album!!.setOnTouchListener { _, event ->
+        lvAlbum!!.setOnTouchListener { _, event ->
             when (event.action) {
-                MotionEvent.ACTION_UP -> tv_album_dialog!!.visibility = View.GONE
-                MotionEvent.ACTION_DOWN -> tv_album_dialog!!.visibility = View.VISIBLE
+                MotionEvent.ACTION_UP -> tvAlbumDialog!!.visibility = View.GONE
+                MotionEvent.ACTION_DOWN -> tvAlbumDialog!!.visibility = View.VISIBLE
             }
             false
         }

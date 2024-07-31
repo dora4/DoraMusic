@@ -5,10 +5,6 @@ import dora.util.SPUtils
 
 class PreferencesManager(val context: Context) {
 
-    fun getHelloDora(): Boolean {
-        return SPUtils.readBoolean(context, PREFS_HELLO_DORA, true)
-    }
-
     fun getColdLaunchAutoPlay(): Boolean {
         return SPUtils.readBoolean(
             context, PREFS_COLD_LAUNCH_AUTO_PLAY,
@@ -22,10 +18,6 @@ class PreferencesManager(val context: Context) {
 
     fun getBassBoost(): Boolean {
         return SPUtils.readBoolean(context, PREFS_BASS_BOOST_ENABLE, false)
-    }
-
-    fun getHotFix(): Boolean {
-        return SPUtils.readBoolean(context, PREFS_HOT_FIX_ENABLE, true)
     }
 
     fun getFilterSize(): Boolean {
@@ -48,22 +40,6 @@ class PreferencesManager(val context: Context) {
         return SPUtils.readInteger(context, PREFS_SKIN_COLOR, 0)
     }
 
-    fun getToken(): String? {
-        return SPUtils.readString(context, PREFS_TOKEN, null)
-    }
-
-    fun getUsername(): String? {
-        return SPUtils.readString(context, PREFS_USERNAME, null)
-    }
-
-    fun getPassword(): String? {
-        return SPUtils.readString(context, PREFS_PASSWORD, null)
-    }
-
-    fun saveHelloDora(flag: Boolean) {
-        SPUtils.writeBoolean(context, PREFS_HELLO_DORA, flag)
-    }
-
     fun saveColdLaunchAutoPlay(flag: Boolean) {
         SPUtils.writeBoolean(context, PREFS_COLD_LAUNCH_AUTO_PLAY, flag)
     }
@@ -78,22 +54,6 @@ class PreferencesManager(val context: Context) {
 
     fun saveHotFix(flag: Boolean) {
         SPUtils.writeBoolean(context, PREFS_HOT_FIX_ENABLE, flag)
-    }
-
-    fun saveToken(token: String) {
-        SPUtils.writeString(context, PREFS_TOKEN, token)
-    }
-
-    fun saveUsername(username: String) {
-        SPUtils.writeString(context, PREFS_USERNAME, username)
-    }
-
-    fun savePassword(password: String) {
-        SPUtils.writeString(context, PREFS_PASSWORD, password)
-    }
-
-    fun removeToken() {
-        SPUtils.remove(context, PREFS_TOKEN)
     }
 
     fun saveFilterSize(size: Boolean) {
@@ -132,17 +92,13 @@ class PreferencesManager(val context: Context) {
         const val PREFS_FILTER_SIZE = "prefs_filter_size"
         const val PREFS_FILTER_TIME = "prefs_filter_time"
 
-        const val PREFS_HELLO_DORA = "prefs_hello_dora"
         const val PREFS_COLD_LAUNCH_AUTO_PLAY = "prefs_auto_play"
         const val PREFS_SHAKE_CHANGE_MUSIC = "prefs_shake"
         const val PREFS_BASS_BOOST_ENABLE = "prefs_bass_boost_enable"
         const val PREFS_HOT_FIX_ENABLE = "prefs_hot_fix_enable"
         const val PREFS_EQUALIZER_DECIBELS = "prefs_equalizer_decibels"
         const val PREFS_SKIN_COLOR = "prefs_skin_color"
-        const val PREFS_SKIN_TYPE = "prefs_skin_type" //皮肤类型 1.红  2.橙 3.黑 4.绿 5.青 6.蓝 7.紫色  8.自选
-        const val PREFS_TOKEN = "prefs_token"
-        const val PREFS_USERNAME = "prefs_username"
-        const val PREFS_PASSWORD = "prefs_password"
+        const val PREFS_SKIN_TYPE = "prefs_skin_type" // 皮肤类型 1.红  2.橙 3.黑 4.绿 5.青 6.蓝 7.紫色  8.自选
         const val FIRST_LOADING = "first_loading"
     }
 }

@@ -45,50 +45,50 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
                 decibels[i] = Integer.valueOf(values[i])
             }
         }
-        mBinding.rbEqualizerClose.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerCustom.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerPop.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerDance.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerBlue.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerClassic.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerJazz.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerSlow.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerSlots.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerShake.buttonDrawable = BitmapDrawable()
-        mBinding.rbEqualizerCountry.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerClose.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerCustom.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerPop.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerDance.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerBlue.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerClassic.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerJazz.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerSlow.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerSlots.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerShake.buttonDrawable = BitmapDrawable()
+        binding.rbEqualizerCountry.buttonDrawable = BitmapDrawable()
 
         val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
         val colors = intArrayOf(skinThemeColor, Color.WHITE)
         val state = arrayOf(intArrayOf(android.R.attr.state_checked), IntArray(0))
         val colorStateList = ColorStateList(state, colors)
-        mBinding.rbEqualizerClose.setTextColor(colorStateList)
-        mBinding.rbEqualizerCustom.setTextColor(colorStateList)
-        mBinding.rbEqualizerPop.setTextColor(colorStateList)
-        mBinding.rbEqualizerDance.setTextColor(colorStateList)
-        mBinding.rbEqualizerBlue.setTextColor(colorStateList)
-        mBinding.rbEqualizerClassic.setTextColor(colorStateList)
-        mBinding.rbEqualizerJazz.setTextColor(colorStateList)
-        mBinding.rbEqualizerSlow.setTextColor(colorStateList)
-        mBinding.rbEqualizerSlots.setTextColor(colorStateList)
-        mBinding.rbEqualizerShake.setTextColor(colorStateList)
-        mBinding.rbEqualizerCountry.setTextColor(colorStateList)
-        mBinding.evEqualizer.setDecibels(decibels)
-        mBinding.evEqualizer.freqs = equalizerFreq
-        mBinding.evEqualizer.setOnUpdateDecibelListener(this)
+        binding.rbEqualizerClose.setTextColor(colorStateList)
+        binding.rbEqualizerCustom.setTextColor(colorStateList)
+        binding.rbEqualizerPop.setTextColor(colorStateList)
+        binding.rbEqualizerDance.setTextColor(colorStateList)
+        binding.rbEqualizerBlue.setTextColor(colorStateList)
+        binding.rbEqualizerClassic.setTextColor(colorStateList)
+        binding.rbEqualizerJazz.setTextColor(colorStateList)
+        binding.rbEqualizerSlow.setTextColor(colorStateList)
+        binding.rbEqualizerSlots.setTextColor(colorStateList)
+        binding.rbEqualizerShake.setTextColor(colorStateList)
+        binding.rbEqualizerCountry.setTextColor(colorStateList)
+        binding.evEqualizer.setDecibels(decibels)
+        binding.evEqualizer.freqs = equalizerFreq
+        binding.evEqualizer.setOnUpdateDecibelListener(this)
 
         //默认选中第一个
-        mBinding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
+        binding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
         onUpdateDecibel(intArrayOf(0, 0, 0, 0, 0))
-        mBinding.evEqualizer.setTouchable(false)
-        mBinding.evEqualizer.resetState()
+        binding.evEqualizer.setTouchable(false)
+        binding.evEqualizer.resetState()
 
-        mBinding.rgEqualizer.setOnCheckedChangeListener { _, checkedId ->
+        binding.rgEqualizer.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rb_equalizer_close   //关闭
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(0, 0, 0, 0, 0))
                 }
                 R.id.rb_equalizer_custom  //自定义
@@ -103,72 +103,72 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
                         reverseResult[i] = -Integer.valueOf(splitDecibels[i])
                         result[i] = Integer.valueOf(splitDecibels[i])
                     }
-                    mBinding.evEqualizer.setDecibels(reverseResult)
-                    mBinding.evEqualizer.setTouchable(true)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(reverseResult)
+                    binding.evEqualizer.setTouchable(true)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(reverseResult)
                 }
                 R.id.rb_equalizer_pop //流行
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(6, -6, 6, -6, 6))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(6, -6, 6, -6, 6))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(6, -6, 6, -6, 6))
                 }
                 R.id.rb_equalizer_dance   //舞曲
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(4, -5, 0, 4, 5))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(4, -5, 0, 4, 5))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(4, -5, 0, 4, 5))
                 }
                 R.id.rb_equalizer_blue    //蓝调
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(-2, 2, 1, -2, -2))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(-2, 2, 1, -2, -2))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(-2, 2, 1, -2, -2))
                 }
                 R.id.rb_equalizer_classic //古典
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(7, 2, 0, -7, -8))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(7, 2, 0, -7, -8))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(7, 2, 0, -7, -8))
                 }
                 R.id.rb_equalizer_jazz    //爵士
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(-5, -3, 3, 1, 2))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(-5, -3, 3, 1, 2))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(-5, -3, 3, 1, 2))
                 }
                 R.id.rb_equalizer_slow    //慢摇
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(-7, -6, 2, 4, 0))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(-7, -6, 2, 4, 0))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(-7, -6, 2, 4, 0))
                 }
                 R.id.rb_equalizer_slots   //电子
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(8, 1, -5, 0, 3))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(8, 1, -5, 0, 3))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(8, 1, -5, 0, 3))
                 }
                 R.id.rb_equalizer_shake   //摇滚
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(7, 2, -4, 1, 4))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(7, 2, -4, 1, 4))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(7, 2, -4, 1, 4))
                 }
                 R.id.rb_equalizer_country //乡村
                 -> {
-                    mBinding.evEqualizer.setDecibels(intArrayOf(-7, -6, 3, 4, -5))
-                    mBinding.evEqualizer.setTouchable(false)
-                    mBinding.evEqualizer.resetState()
+                    binding.evEqualizer.setDecibels(intArrayOf(-7, -6, 3, 4, -5))
+                    binding.evEqualizer.setTouchable(false)
+                    binding.evEqualizer.resetState()
                     onUpdateDecibel(intArrayOf(-7, -6, 3, 4, -5))
                 }
             }

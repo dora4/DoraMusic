@@ -15,7 +15,7 @@ abstract class UIFactory(protected var drawer: ILyricDrawer,
      * 保证子类可以不用重写这个方法。
      */
     override fun getView(from: Int, obj: OrmTable?): View {
-        throw UnsupportedOperationException("不支持在此层级调用")
+        throw UnsupportedOperationException("请在子类实现它")
     }
 
     protected fun getStatusBarHeight() : Int {

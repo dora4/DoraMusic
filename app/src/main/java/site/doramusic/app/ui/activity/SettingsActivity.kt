@@ -86,7 +86,6 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                     MusicApp.instance!!.mediaManager!!.setBassBoost(1)
                 }
                 mBinding.tbSettingsFive.isChecked = isChecked
-                prefsManager.saveHelloDora(isChecked)
             }
         })
     }

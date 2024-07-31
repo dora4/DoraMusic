@@ -21,30 +21,30 @@ class RotateCoverView @JvmOverloads constructor(
     context!!, attrs, defStyleAttr
 ) {
     private var mShadowRadius = 0
-    var mPaint = Paint()
-    var mMiddleRect = RectF()
-    var mInnerRect = RectF()
-    var mAlbumPathRect = RectF()
-    var mAlbumTextPath = Path()
-    var mDensity = 0f
+    private var paint = Paint()
+    private var middleRect = RectF()
+    private var innerRect = RectF()
+    private var albumPathRect = RectF()
+    private var albumTextPath = Path()
+    private var density = 0f
 
     // Animation
-    private var mRotateAnimator: ObjectAnimator? = null
-    private var mLastAnimationValue: Long = 0
+    private var rotateAnimator: ObjectAnimator? = null
+    private var lastAnimationValue: Long = 0
 
     init {
         init()
     }
 
     private fun init() {
-        mDensity = context.resources.displayMetrics.density
-        val shadowXOffset = (mDensity * X_OFFSET).toInt()
-        val shadowYOffset = (mDensity * Y_OFFSET).toInt()
-        mShadowRadius = (mDensity * SHADOW_RADIUS).toInt()
+        density = context.resources.displayMetrics.density
+        val shadowXOffset = (density * X_OFFSET).toInt()
+        val shadowYOffset = (density * Y_OFFSET).toInt()
+        mShadowRadius = (density * SHADOW_RADIUS).toInt()
         val circle: ShapeDrawable
         if (elevationSupported()) {
             circle = ShapeDrawable(OvalShape())
-            ViewCompat.setElevation(this, SHADOW_ELEVATION * mDensity)
+            ViewCompat.setElevation(this, SHADOW_ELEVATION * density)
         } else {
             val oval: OvalShape = OvalShadow(mShadowRadius)
             circle = ShapeDrawable(oval)
@@ -62,16 +62,16 @@ class RotateCoverView @JvmOverloads constructor(
         circle.paint.isAntiAlias = true
         circle.paint.color = DEFAULT_ALBUM_COLOR
         background = circle
-        mPaint.isAntiAlias = true
-        mPaint.textAlign = Paint.Align.CENTER
-        mPaint.style = Paint.Style.FILL
-        mPaint.color = DEFAULT_ALBUM_COLOR
-        mPaint.textSize = ALBUM_CIRCLE_TEXT_SIZE * mDensity
-        mRotateAnimator = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f)
-        mRotateAnimator!!.setDuration(10000)
-        mRotateAnimator!!.setInterpolator(LinearInterpolator())
-        mRotateAnimator!!.setRepeatMode(ValueAnimator.RESTART)
-        mRotateAnimator!!.setRepeatCount(ValueAnimator.INFINITE)
+        paint.isAntiAlias = true
+        paint.textAlign = Paint.Align.CENTER
+        paint.style = Paint.Style.FILL
+        paint.color = DEFAULT_ALBUM_COLOR
+        paint.textSize = ALBUM_CIRCLE_TEXT_SIZE * density
+        rotateAnimator = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f)
+        rotateAnimator!!.setDuration(10000)
+        rotateAnimator!!.setInterpolator(LinearInterpolator())
+        rotateAnimator!!.setRepeatMode(ValueAnimator.RESTART)
+        rotateAnimator!!.setRepeatCount(ValueAnimator.INFINITE)
     }
 
     private fun elevationSupported(): Boolean {
@@ -90,59 +90,59 @@ class RotateCoverView @JvmOverloads constructor(
 
     public override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        mPaint.color = MIDDLE_RECT_COLOR
-        canvas.drawOval(mMiddleRect, mPaint)
-        mPaint.color = INNER_RECT_COLOR
-        canvas.drawOval(mInnerRect, mPaint)
-        mPaint.textSize = ALBUM_CIRCLE_TEXT_SIZE * mDensity
-        mPaint.color = ALBUM_CIRCLE_TEXT_COLOR
-        canvas.drawTextOnPath(ALBUM_TEXT, mAlbumTextPath, 2 * mDensity, 2 * mDensity, mPaint)
-        mPaint.textSize = ALBUM_CIRCLE_TEXT_SIZE_SMALL * mDensity
-        canvas.drawText(APP_NAME, (width / 2).toFloat(), (height / 2).toFloat(), mPaint)
-        canvas.drawText(APP_SLOGAN, (width / 2).toFloat(), height / 2 + 4 * mDensity, mPaint)
-        canvas.drawText(COPY_RIGHT, (width / 2).toFloat(), height / 2 + 12 * mDensity, mPaint)
+        paint.color = MIDDLE_RECT_COLOR
+        canvas.drawOval(middleRect, paint)
+        paint.color = INNER_RECT_COLOR
+        canvas.drawOval(innerRect, paint)
+        paint.textSize = ALBUM_CIRCLE_TEXT_SIZE * density
+        paint.color = ALBUM_CIRCLE_TEXT_COLOR
+        canvas.drawTextOnPath(ALBUM_TEXT, albumTextPath, 2 * density, 2 * density, paint)
+        paint.textSize = ALBUM_CIRCLE_TEXT_SIZE_SMALL * density
+        canvas.drawText(APP_NAME, (width / 2).toFloat(), (height / 2).toFloat(), paint)
+        canvas.drawText(APP_SLOGAN, (width / 2).toFloat(), height / 2 + 4 * density, paint)
+        canvas.drawText(COPY_RIGHT, (width / 2).toFloat(), height / 2 + 12 * density, paint)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        val middleRectSize = mDensity * MIDDLE_RECT_SIZE
-        val innerRectSize = mDensity * INNER_RECT_SIZE
-        val albumRectSize = mDensity * ALBUM_TEXT_PATH_RECT_SIZE
-        mMiddleRect[0f, 0f, middleRectSize] = middleRectSize
-        mInnerRect[0f, 0f, innerRectSize] = innerRectSize
-        mAlbumPathRect[0f, 0f, albumRectSize] = albumRectSize
-        mMiddleRect.offset(w / 2 - middleRectSize / 2, h / 2 - middleRectSize / 2)
-        mInnerRect.offset(w / 2 - innerRectSize / 2, h / 2 - innerRectSize / 2)
-        mAlbumPathRect.offset(w / 2 - albumRectSize / 2, h / 2 - albumRectSize / 2)
-        mAlbumTextPath.addOval(mAlbumPathRect, Path.Direction.CW)
+        val middleRectSize = density * MIDDLE_RECT_SIZE
+        val innerRectSize = density * INNER_RECT_SIZE
+        val albumRectSize = density * ALBUM_TEXT_PATH_RECT_SIZE
+        middleRect[0f, 0f, middleRectSize] = middleRectSize
+        innerRect[0f, 0f, innerRectSize] = innerRectSize
+        albumPathRect[0f, 0f, albumRectSize] = albumRectSize
+        middleRect.offset(w / 2 - middleRectSize / 2, h / 2 - middleRectSize / 2)
+        innerRect.offset(w / 2 - innerRectSize / 2, h / 2 - innerRectSize / 2)
+        albumPathRect.offset(w / 2 - albumRectSize / 2, h / 2 - albumRectSize / 2)
+        albumTextPath.addOval(albumPathRect, Path.Direction.CW)
     }
 
     // Animation
     fun startRotateAnimation() {
-        mRotateAnimator!!.cancel()
-        mRotateAnimator!!.start()
+        rotateAnimator!!.cancel()
+        rotateAnimator!!.start()
     }
 
     fun cancelRotateAnimation() {
-        mLastAnimationValue = 0
-        mRotateAnimator!!.cancel()
+        lastAnimationValue = 0
+        rotateAnimator!!.cancel()
     }
 
     fun pauseRotateAnimation() {
-        mLastAnimationValue = mRotateAnimator!!.currentPlayTime
-        mRotateAnimator!!.cancel()
+        lastAnimationValue = rotateAnimator!!.currentPlayTime
+        rotateAnimator!!.cancel()
     }
 
     fun resumeRotateAnimation() {
-        mRotateAnimator!!.start()
-        mRotateAnimator!!.currentPlayTime = mLastAnimationValue
+        rotateAnimator!!.start()
+        rotateAnimator!!.currentPlayTime = lastAnimationValue
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        if (mRotateAnimator != null) {
-            mRotateAnimator!!.cancel()
-            mRotateAnimator = null
+        if (rotateAnimator != null) {
+            rotateAnimator!!.cancel()
+            rotateAnimator = null
         }
     }
 
