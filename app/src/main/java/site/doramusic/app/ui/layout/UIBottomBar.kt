@@ -44,7 +44,7 @@ import site.doramusic.app.widget.MarqueeTextView
 class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
         View.OnClickListener, AppConfig {
 
-    private var handler: Handler
+    var handler: Handler
     private val mediaManager: MediaManager? = MusicApp.instance!!.mediaManager
     private val contentView: View = manager.view
     private var tv_home_bottom_music_name: MarqueeTextView? = null

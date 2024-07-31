@@ -18,6 +18,7 @@ import java.util.regex.Pattern
 abstract class LyricLoader(protected var lyricScroller: LyricScroller, protected var lyricListener: LyricListener) {
 
     companion object {
+        @JvmStatic
         protected val LRC_SAVE_FOLDER = AppConfig.FOLDER_LRC
         protected const val FLAC = ".flac"
         protected const val MP3 = ".mp3"

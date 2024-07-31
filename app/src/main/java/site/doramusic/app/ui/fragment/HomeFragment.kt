@@ -61,24 +61,24 @@ import java.util.*
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     MusicControl.OnConnectCompletionListener, ILyricDrawer {
 
-    private var uiManager: UIManager? = null
-    private var bottomBar: UIBottomBar? = null
-    private var musicPlay: UIMusicPlay? = null
-    private var mediaManager: MediaManager? = null
-    private var musicTimer: MusicTimer? = null
-    private var musicPlayReceiver: MusicPlayReceiver? = null
-    private var defaultArtwork: Bitmap? = null
-    private var musicDao: OrmDao<Music>? = null
-    private var artistDao: OrmDao<Artist>? = null
-    private var albumDao: OrmDao<Album>? = null
-    private var folderDao: OrmDao<Folder>? = null
+    private lateinit var uiManager: UIManager
+    private lateinit var bottomBar: UIBottomBar
+    private lateinit var musicPlay: UIMusicPlay
+    private lateinit var mediaManager: MediaManager
+    private lateinit var musicTimer: MusicTimer
+    private lateinit var musicPlayReceiver: MusicPlayReceiver
+    private lateinit var defaultArtwork: Bitmap
+    private lateinit var musicDao: OrmDao<Music>
+    private lateinit var artistDao: OrmDao<Artist>
+    private lateinit var albumDao: OrmDao<Album>
+    private lateinit var folderDao: OrmDao<Folder>
     private val adapter = HomeAdapter()
 
     val isHome: Boolean
-        get() = uiManager!!.isLocal && !musicPlay!!.isOpened
+        get() = uiManager.isLocal && !musicPlay.isOpened
 
     val isSlidingDrawerOpened: Boolean
-        get() = musicPlay!!.isOpened
+        get() = musicPlay.isOpened
 
     data class HomeItem @JvmOverloads constructor(
         @DrawableRes val iconRes: Int, val name: String,
@@ -96,40 +96,42 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         artistDao = DaoFactory.getDao(Artist::class.java)
         albumDao = DaoFactory.getDao(Album::class.java)
         folderDao = DaoFactory.getDao(Folder::class.java)
-        mediaManager = MusicApp.instance!!.mediaManager
-        mediaManager!!.connectService()
-        mediaManager!!.setOnCompletionListener(this)
+        mediaManager = MusicApp.instance!!.mediaManager!!
+        mediaManager.connectService()
+        mediaManager.setOnCompletionListener(this)
         defaultArtwork = BitmapFactory.decodeResource(
             resources,
             R.drawable.bottom_bar_cover_bg
         )
 
-        uiManager = context?.let { UIManager(this, binding.root) }
-        bottomBar = UIBottomBar(this, uiManager!!)
-        musicPlay = UIMusicPlay(this, uiManager!!)
-        musicTimer = MusicTimer(bottomBar!!.handler, musicPlay!!.handler)
-        musicPlay!!.setMusicTimer(musicTimer!!)
-        musicPlayReceiver = MusicPlayReceiver(mediaManager!!, musicTimer!!, musicPlay!!, bottomBar!!, defaultArtwork!!)
+        uiManager = UIManager(this, binding.root)
+        bottomBar = UIBottomBar(this, uiManager)
+        musicPlay = UIMusicPlay(this, uiManager)
+        musicTimer = MusicTimer(bottomBar.handler, musicPlay.handler)
+        musicPlay.setMusicTimer(musicTimer)
+        musicPlayReceiver = MusicPlayReceiver(mediaManager,
+            musicTimer, musicPlay, bottomBar, defaultArtwork
+        )
         val filter = IntentFilter(AppConfig.ACTION_PLAY)
         activity?.registerReceiver(musicPlayReceiver, filter, Context.RECEIVER_EXPORTED)
     }
 
     private fun getHomeItems(): List<HomeItem> {
-        val musicCount = musicDao!!.count()
-        val artistCount = artistDao!!.count()
-        val albumCount = albumDao!!.count()
-        val folderCount = folderDao!!.count()
+        val musicCount = musicDao.count()
+        val artistCount = artistDao.count()
+        val albumCount = albumDao.count()
+        val folderCount = folderDao.count()
         val favoriteBuild = QueryBuilder.create().where(
             WhereBuilder.create()
                 .addWhereEqualTo(Music.COLUMN_FAVORITE, 1)
         )
-        val favoriteCount = musicDao!!.count(favoriteBuild)
+        val favoriteCount = musicDao.count(favoriteBuild)
         val latestBuild = QueryBuilder.create().where(
             WhereBuilder.create()
                 .addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0)
         )
         val latestCount =
-            ViewUtils.clamp(musicDao!!.count(latestBuild).toFloat(), 100f, 0f).toLong()
+            ViewUtils.clamp(musicDao.count(latestBuild).toFloat(), 100f, 0f).toLong()
         val homeItems = ArrayList<HomeItem>()
         homeItems.add(HomeItem(R.drawable.ic_local_music, "我的歌曲", musicCount))
         homeItems.add(HomeItem(R.drawable.ic_local_artist, "歌手", artistCount))
@@ -148,9 +150,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     override fun onDestroy() {
         super.onDestroy()
-        if (musicPlayReceiver != null) {
-            requireActivity().unregisterReceiver(musicPlayReceiver)
-        }
+        requireActivity().unregisterReceiver(musicPlayReceiver)
     }
 
     class ImageAdapter(mDatas: List<String>) : BannerAdapter<String, ImageAdapter.BannerViewHolder>(mDatas) {
@@ -201,9 +201,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     }
                 }
                 val imageAdapter = ImageAdapter(result)
-                imageAdapter.setOnBannerListener { data, position ->
+                imageAdapter.setOnBannerListener { _, position ->
                     val intent = Intent(activity, BrowserActivity::class.java)
-                    intent.putExtra("title", "Dora Chat")
+                    intent.putExtra("title", "Dora Music")
                     intent.putExtra("url", banners?.get(position)?.detailUrl)
                     startActivity(intent)
                 }
@@ -232,29 +232,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         mBinding.rvHomeModule.setBackgroundResource(R.drawable.shape_home_module)
         mBinding.rvHomeModule.itemAnimator = DefaultItemAnimator()
         mBinding.rvHomeModule.layoutManager = GridLayoutManager(context, 3)
-        adapter.setOnItemClickListener { adapter, view, position ->
+        adapter.setOnItemClickListener { _, _, position ->
             var from = -1
             when (position) {
-                0// 我的音乐
+                0 // 我的音乐
                 -> from = AppConfig.ROUTE_START_FROM_LOCAL
-                1// 歌手
+                1 // 歌手
                 -> from = AppConfig.ROUTE_START_FROM_ARTIST
-                2// 专辑
+                2 // 专辑
                 -> from = AppConfig.ROUTE_START_FROM_ALBUM
-                3// 文件夹
+                3 // 文件夹
                 -> from = AppConfig.ROUTE_START_FROM_FOLDER
-                4// 我的最爱
+                4 // 我的最爱
                 -> from = AppConfig.ROUTE_START_FROM_FAVORITE
                 5 // 最近播放
                 -> from = AppConfig.ROUTE_START_FROM_LATEST
             }
-            uiManager!!.setContentType(from)
+            uiManager.setContentType(from)
         }
         adapter.setList(getHomeItems())
     }
 
     override fun onConnectCompletion(service: IMediaService) {
-        bottomBar!!.initData()
+        bottomBar.initData()
     }
 
     override fun getLayoutId(): Int {
@@ -266,8 +266,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     fun openSlidingDrawer() {
-        if (!musicPlay!!.isOpened) {
-            musicPlay!!.open()
+        if (!musicPlay.isOpened) {
+            musicPlay.open()
         }
     }
 
@@ -275,8 +275,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
      * 关闭侧边栏。
      */
     fun closeSlidingDrawer() {
-        if (musicPlay!!.isOpened) {
-            musicPlay!!.close()
+        if (musicPlay.isOpened) {
+            musicPlay.close()
         }
     }
 
