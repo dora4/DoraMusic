@@ -114,6 +114,75 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         )
         val filter = IntentFilter(AppConfig.ACTION_PLAY)
         activity?.registerReceiver(musicPlayReceiver, filter, Context.RECEIVER_EXPORTED)
+        net {
+            val bannerCheckResult = result {
+                RetrofitManager.getService(CommonService::class.java).checkHomeBanners("doramusic")
+            }
+            if (bannerCheckResult != null && bannerCheckResult.data == true) {
+                binding.banner.visibility = View.VISIBLE
+                val bannerResult = result {
+                    RetrofitManager.getService(CommonService::class.java).getHomeBanners()
+                }
+                val result = arrayListOf<String>()
+                val banners: MutableList<DoraHomeBanner>? = bannerResult!!.data
+                if (banners != null) {
+                    if (banners.size > 0) {
+                        for (banner in banners) {
+                            banner.imgUrl?.let { result.add(it) }
+                        }
+                    }
+                }
+                val imageAdapter = ImageAdapter(result)
+                imageAdapter.setOnBannerListener { _, position ->
+                    val intent = Intent(activity, BrowserActivity::class.java)
+                    intent.putExtra("title", "Dora Music")
+                    intent.putExtra("url", banners?.get(position)?.detailUrl)
+                    startActivity(intent)
+                }
+                binding.banner.setAdapter(imageAdapter)
+            }
+        }
+        binding.statusbarHome.layoutParams = RelativeLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            StatusBarUtils.getStatusBarHeight()
+        )
+        StatusBarUtils.setLightDarkStatusBar(activity, true, false)
+        val drawable = BitmapDrawable()
+        drawable.setBounds(
+            0, 0, ScreenUtils.getScreenWidth(context),
+            DensityUtils.DP26
+        )
+        binding.titlebarHome.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+            override fun onIconBackClick(icon: AppCompatImageView) {
+                (context as MainActivity).openDrawer()
+            }
+
+            override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+            }
+        })
+        binding.rvHomeModule.adapter = adapter
+        binding.rvHomeModule.setBackgroundResource(R.drawable.shape_home_module)
+        binding.rvHomeModule.itemAnimator = DefaultItemAnimator()
+        binding.rvHomeModule.layoutManager = GridLayoutManager(context, 3)
+        adapter.setOnItemClickListener { _, _, position ->
+            var from = -1
+            when (position) {
+                0 // 我的音乐
+                -> from = AppConfig.ROUTE_START_FROM_LOCAL
+                1 // 歌手
+                -> from = AppConfig.ROUTE_START_FROM_ARTIST
+                2 // 专辑
+                -> from = AppConfig.ROUTE_START_FROM_ALBUM
+                3 // 文件夹
+                -> from = AppConfig.ROUTE_START_FROM_FOLDER
+                4 // 我的最爱
+                -> from = AppConfig.ROUTE_START_FROM_FAVORITE
+                5 // 最近播放
+                -> from = AppConfig.ROUTE_START_FROM_LATEST
+            }
+            uiManager.setContentType(from)
+        }
+        adapter.setList(getHomeItems())
     }
 
     private fun getHomeItems(): List<HomeItem> {
@@ -153,7 +222,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         requireActivity().unregisterReceiver(musicPlayReceiver)
     }
 
-    class ImageAdapter(mDatas: List<String>) : BannerAdapter<String, ImageAdapter.BannerViewHolder>(mDatas) {
+    class ImageAdapter(banners: List<String>) : BannerAdapter<String, ImageAdapter.BannerViewHolder>(banners) {
         //创建ViewHolder，可以用viewType这个字段来区分不同的ViewHolder
         override fun onCreateHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
             val imageView = ImageView(parent.context)
@@ -178,79 +247,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         inner class BannerViewHolder(var imageView: ImageView) : RecyclerView.ViewHolder(
             imageView
         )
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        net {
-            val bannerCheckResult = result {
-                RetrofitManager.getService(CommonService::class.java).checkHomeBanners("doramusic")
-            }
-            if (bannerCheckResult != null && bannerCheckResult.data == true) {
-                mBinding!!.banner.visibility = View.VISIBLE
-                val bannerResult = result {
-                    RetrofitManager.getService(CommonService::class.java).getHomeBanners()
-                }
-                val result = arrayListOf<String>()
-                val banners: MutableList<DoraHomeBanner>? = bannerResult!!.data
-                if (banners != null) {
-                    if (banners.size > 0) {
-                        for (banner in banners) {
-                            banner.imgUrl?.let { result.add(it) }
-                        }
-                    }
-                }
-                val imageAdapter = ImageAdapter(result)
-                imageAdapter.setOnBannerListener { _, position ->
-                    val intent = Intent(activity, BrowserActivity::class.java)
-                    intent.putExtra("title", "Dora Music")
-                    intent.putExtra("url", banners?.get(position)?.detailUrl)
-                    startActivity(intent)
-                }
-                mBinding!!.banner.setAdapter(imageAdapter)
-            }
-        }
-        mBinding.statusbarHome.layoutParams = RelativeLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            StatusBarUtils.getStatusBarHeight()
-        )
-        StatusBarUtils.setLightDarkStatusBar(activity, true, false)
-        val drawable = BitmapDrawable()
-        drawable.setBounds(
-            0, 0, ScreenUtils.getScreenWidth(context),
-            DensityUtils.dp2px(context, 26f).toInt()
-        )
-        mBinding.titlebarHome.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
-            override fun onIconBackClick(icon: AppCompatImageView) {
-                (context as MainActivity).openDrawer()
-            }
-
-            override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
-            }
-        })
-        mBinding.rvHomeModule.adapter = adapter
-        mBinding.rvHomeModule.setBackgroundResource(R.drawable.shape_home_module)
-        mBinding.rvHomeModule.itemAnimator = DefaultItemAnimator()
-        mBinding.rvHomeModule.layoutManager = GridLayoutManager(context, 3)
-        adapter.setOnItemClickListener { _, _, position ->
-            var from = -1
-            when (position) {
-                0 // 我的音乐
-                -> from = AppConfig.ROUTE_START_FROM_LOCAL
-                1 // 歌手
-                -> from = AppConfig.ROUTE_START_FROM_ARTIST
-                2 // 专辑
-                -> from = AppConfig.ROUTE_START_FROM_ALBUM
-                3 // 文件夹
-                -> from = AppConfig.ROUTE_START_FROM_FOLDER
-                4 // 我的最爱
-                -> from = AppConfig.ROUTE_START_FROM_FAVORITE
-                5 // 最近播放
-                -> from = AppConfig.ROUTE_START_FROM_LATEST
-            }
-            uiManager.setContentType(from)
-        }
-        adapter.setList(getHomeItems())
     }
 
     override fun onConnectCompletion(service: IMediaService) {
