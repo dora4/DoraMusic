@@ -15,7 +15,7 @@ interface IMediaService {
     boolean prev();
     boolean next();
     void stop();
-	int duration();
+    int duration();
     int position();
     int pendingProgress();
     boolean seekTo(int progress);
