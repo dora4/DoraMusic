@@ -35,16 +35,19 @@ public class Album implements OrmTable, Parcelable, Sort {
     @Ignore
     private String sortLetter;
 
-    //专辑名称
+    // 专辑名称
     @Column(COLUMN_ALBUM_NAME)
     public String album_name;
-    //专辑在数据库中的id
+
+    // 专辑在数据库中的id
     @Column(COLUMN_ALBUM_ID)
     public int album_id = -1;
-    //专辑的歌曲数目
+
+    // 专辑的歌曲数目
     @Column(COLUMN_NUMBER_OF_SONGS)
     public int number_of_songs = 0;
-    //专辑封面图片路径
+
+    // 专辑封面图片路径
     @Column(COLUMN_ALBUM_COVER_PATH)
     public String album_cover_path;
 

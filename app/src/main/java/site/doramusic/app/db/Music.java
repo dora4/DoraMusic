@@ -36,21 +36,27 @@ public class Music implements OrmTable, Parcelable, Sort {
     public static final String COLUMN_LAST_PLAY_TIME = "last_play_time";
 
     /**
-     * 数据库中的_id
+     * 数据库中的_id。
      */
     @Column(COLUMN_ID)
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     public int id;
+
     @Column(COLUMN_SONG_ID)
     public int songId = -1;
+
     @Column(COLUMN_ALBUM_ID)
     public int albumId = -1;
+
     @Column(COLUMN_DURATION)
     public int duration;
+
     @Column(COLUMN_MUSIC_NAME)
     public String musicName;
+
     @Column(COLUMN_ARTIST)
     public String artist;
+
     @Column(COLUMN_DATA)
     public String data;
     @Column(COLUMN_FOLDER)
@@ -63,8 +69,10 @@ public class Music implements OrmTable, Parcelable, Sort {
     public int favorite;
     @Column(COLUMN_LAST_PLAY_TIME)
     public long lastPlayTime;
+
     @Ignore
     private String sortLetter;
+
     @Ignore
     private Type type;
 
@@ -136,25 +144,6 @@ public class Music implements OrmTable, Parcelable, Sort {
             return new Music[size];
         }
     };
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "DoraMusic{" +
-                "id=" + id +
-                ", songId=" + songId +
-                ", albumId=" + albumId +
-                ", duration=" + duration +
-                ", musicName='" + musicName + '\'' +
-                ", artist='" + artist + '\'' +
-                ", data='" + data + '\'' +
-                ", folder='" + folder + '\'' +
-                ", musicNameKey='" + musicNameKey + '\'' +
-                ", artistKey='" + artistKey + '\'' +
-                ", favorite=" + favorite +
-                ", lastPlayTime=" + lastPlayTime +
-                '}';
-    }
 
     @NonNull
     @Override

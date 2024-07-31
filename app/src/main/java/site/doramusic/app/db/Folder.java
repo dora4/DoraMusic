@@ -34,8 +34,10 @@ public class Folder implements OrmTable, Parcelable, Sort {
     @Column(COLUMN_ID)
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     public int id;
+
     @Column(COLUMN_FOLDER_NAME)
     public String name;
+
     @Unique
     @NotNull
     @Column(COLUMN_FOLDER_PATH)
