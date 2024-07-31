@@ -11,10 +11,10 @@ interface IMediaService {
     void playByPath(String path);
     void playByUrl(in Music music, String url);
     boolean replay();
-	boolean pause();
-	boolean prev();
-	boolean next();
-	void stop();
+    boolean pause();
+    boolean prev();
+    boolean next();
+    void stop();
 	int duration();
     int position();
     int pendingProgress();
