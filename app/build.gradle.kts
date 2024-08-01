@@ -115,7 +115,7 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.15.0")
 
-    //AgentWeb
+    // AgentWeb
     implementation("com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx") // (必选)
     implementation("com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx") // (可选)
     implementation("com.github.Justson:Downloader:v5.0.0-androidx") // (可选)
