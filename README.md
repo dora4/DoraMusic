@@ -3,7 +3,7 @@
 于其他用途。版权所有，侵权必究。由于本项目主要作为框架的使用教程示范，部分API可能未能兼容到最新版本Android，敬请谅解！
 
 ### app下载地址
-[https://dorachat.oss-cn-hongkong.aliyuncs.com/Dora_Music_1.0-alpha.apk](https://www.pgyer.com/doramusic)
+[Android版](https://www.pgyer.com/doramusic)
 
 ### 运行截图
 ![1031691281506_.pic.jpg](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/375d2e19ebbc4867ad5bd129b6e85e5e~tplv-k3u1fbpfcp-watermark.image?)
