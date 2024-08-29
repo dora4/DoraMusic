@@ -6,8 +6,9 @@
 [Android](https://www.pgyer.com/doramusic)
 
 ### 运行截图
-
-<img width="400" height="600" src="[https://github-readme-stats.vercel.app/api?username=dora4&show_icons=true](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/375d2e19ebbc4867ad5bd129b6e85e5e~tplv-k3u1fbpfcp-watermark.image?">
-<img width="400" height="600" src="[https://github-readme-stats.vercel.app/api?username=dora4&show_icons=true](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8807c91e66f4458bb20678f7bf5a30c5~tplv-k3u1fbpfcp-watermark.image?)">
-<img width="400" height="600" src="[https://github-readme-stats.vercel.app/api?username=dora4&show_icons=true](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5083669b824648bdbf8945e2a9b9ad5f~tplv-k3u1fbpfcp-watermark.image?)">
-<img width="400" height="600" src="[https://github-readme-stats.vercel.app/api?username=dora4&show_icons=true](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/90a29d9bd41948738f2e235430bc25cd~tplv-k3u1fbpfcp-watermark.image?)">
+<p>
+<img width="400" height="600" src="[https://github-readme-stats.vercel.app/api?username=dora4&show_icons=true](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/375d2e19ebbc4867ad5bd129b6e85e5e~tplv-k3u1fbpfcp-watermark.image">
+<img width="400" height="600" src="[https://github-readme-stats.vercel.app/api?username=dora4&show_icons=true](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8807c91e66f4458bb20678f7bf5a30c5~tplv-k3u1fbpfcp-watermark.image)">
+</p>
+<img width="400" height="600" src="[https://github-readme-stats.vercel.app/api?username=dora4&show_icons=true](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5083669b824648bdbf8945e2a9b9ad5f~tplv-k3u1fbpfcp-watermark.image)">
+<img width="400" height="600" src="[https://github-readme-stats.vercel.app/api?username=dora4&show_icons=true](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/90a29d9bd41948738f2e235430bc25cd~tplv-k3u1fbpfcp-watermark.image)">
