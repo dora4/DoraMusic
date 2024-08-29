@@ -2,8 +2,8 @@
 一款使用dora框架[https://github.com/dora4/dora] 的Android手机音乐播放器，本代码仅限学习交流用途的分享传播，未经授权禁止用
 于其他用途。版权所有，侵权必究。由于本项目主要作为框架的使用教程示范，部分API可能未能兼容到最新版本Android，敬请谅解！
 
-### app下载地址
-[Android版](https://www.pgyer.com/doramusic)
+### app下载
+[Android](https://www.pgyer.com/doramusic)
 
 ### 运行截图
 ![1031691281506_.pic.jpg](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/375d2e19ebbc4867ad5bd129b6e85e5e~tplv-k3u1fbpfcp-watermark.image?)
