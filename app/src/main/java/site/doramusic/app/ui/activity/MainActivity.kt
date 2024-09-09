@@ -1,10 +1,13 @@
 package site.doramusic.app.ui.activity
 
 import android.bluetooth.BluetoothHeadset
+import android.content.Context
 import android.content.IntentFilter
 import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -72,7 +75,11 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         val filter = IntentFilter()
         filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
         filter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED)
-        registerReceiver(earphoneReceiver, filter)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(earphoneReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(earphoneReceiver, filter)
+        }
     }
 
     /**

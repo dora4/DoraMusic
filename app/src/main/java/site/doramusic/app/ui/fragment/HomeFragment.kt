@@ -90,7 +90,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun initData(savedInstanceState: Bundle?, binding: FragmentHomeBinding) {
         musicDao = DaoFactory.getDao(Music::class.java)
         artistDao = DaoFactory.getDao(Artist::class.java)
@@ -113,7 +112,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             musicTimer, musicPlay, bottomBar, defaultArtwork
         )
         val filter = IntentFilter(AppConfig.ACTION_PLAY)
-        activity?.registerReceiver(musicPlayReceiver, filter, Context.RECEIVER_EXPORTED)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireActivity().registerReceiver(musicPlayReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            requireActivity().registerReceiver(musicPlayReceiver, filter)
+        }
         net {
             val bannerCheckResult = result {
                 RetrofitManager.getService(CommonService::class.java).checkHomeBanners("doramusic")

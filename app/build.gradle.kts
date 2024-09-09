@@ -15,8 +15,8 @@ android {
         applicationId = "site.doramusic.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
         buildFeatures {
             dataBinding = true
             aidl = true

@@ -99,6 +99,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
         controlBroadcast = ControlBroadcast()
@@ -107,7 +108,11 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         filter.addAction(ACTION_PREV)
         filter.addAction(ACTION_NEXT)
         filter.addAction(ACTION_CANCEL)
-        registerReceiver(controlBroadcast, filter)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(controlBroadcast, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(controlBroadcast, filter)
+        }
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         prefsManager = PreferencesManager(this)
         simplePlayer = SimpleAudioPlayer(this)
