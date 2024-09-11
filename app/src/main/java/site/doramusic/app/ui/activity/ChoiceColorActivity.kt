@@ -15,7 +15,7 @@ import dora.util.DensityUtils
 import dora.util.StatusBarUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
-import site.doramusic.app.annotation.TimeTrace
+//import site.doramusic.app.annotation.TimeTrace
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityChoiceColorBinding
 import site.doramusic.app.ui.adapter.ChoiceColorAdapter
@@ -102,7 +102,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
     /**
      * 测试AOP。
      */
-    @TimeTrace
+//    @TimeTrace
     private fun changeSkin() {
         when (choiceColorAdapter.selectedPosition) {
             0 -> {

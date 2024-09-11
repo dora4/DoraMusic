@@ -26,7 +26,7 @@ import dora.widget.DoraDialog
 import dora.widget.DoraDialogWindow
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-import site.doramusic.app.annotation.SingleClick
+//import site.doramusic.app.annotation.SingleClick
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Music
@@ -226,7 +226,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         }
     }
 
-    @SingleClick
+//    @SingleClick
     private fun showPlaylistDialog() {
         val dialogWindow = DoraDialogWindow(R.layout.view_popup_playlist,
                 ADialogWindow.DEFAULT_SHADOW_COLOR)   //0x60000000

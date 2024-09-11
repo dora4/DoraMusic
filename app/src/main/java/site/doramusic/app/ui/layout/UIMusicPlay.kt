@@ -22,7 +22,7 @@ import dora.util.DensityUtils
 import dora.util.ScreenUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-import site.doramusic.app.annotation.SingleClick
+//import site.doramusic.app.annotation.SingleClick
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Music
@@ -421,7 +421,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         refreshSeekProgress(curTime, tempTotalTime)
     }
 
-    @SingleClick
+//    @SingleClick
     override fun onClick(v: View) {
         when (v.id) {
             //上一首
