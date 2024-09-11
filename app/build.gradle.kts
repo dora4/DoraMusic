@@ -44,7 +44,7 @@ android {
         }
     }
     signingConfigs {
-        create("signed") {
+        create("release") {
             storeFile = File("../doramusic.jks")
             keyAlias = "key0"
             keyPassword = "123456"
@@ -55,7 +55,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("signed")
+            signingConfig = signingConfigs.create("release")
         }
     }
     compileOptions {
