@@ -3,7 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { setUrl("aop_plugin") }
+//        maven { setUrl("aop_plugin") }
     }
     resolutionStrategy {
         eachPlugin {
