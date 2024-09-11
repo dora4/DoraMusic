@@ -1,0 +1,31 @@
+name: Android Build
+
+on:
+  push:
+    branches:
+      - main  # 当推送到 `main` 分支时触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '19'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk
+          path: app/build/outputs/apk/release/*.apk
