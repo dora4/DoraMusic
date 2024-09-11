@@ -4,7 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
-    id("com.dorachat.aop")
+//    id("com.dorachat.aop")
 }
 
 android {
@@ -58,8 +58,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_19)
-        targetCompatibility(JavaVersion.VERSION_19)
+        sourceCompatibility(JavaVersion.VERSION_17)
+        targetCompatibility(JavaVersion.VERSION_17)
     }
     kotlinOptions {
         jvmTarget = "19"
@@ -75,7 +75,7 @@ kapt {
 }
 
 kotlin {
-    jvmToolchain(19)
+    jvmToolchain(17)
 }
 
 fun libFileTree() : ConfigurableFileTree {
@@ -121,7 +121,7 @@ dependencies {
     implementation("com.github.Justson:Downloader:v5.0.0-androidx") // (可选)
 
     // AspectJ
-    implementation("org.aspectj:aspectjrt:1.9.19")
+//    implementation("org.aspectj:aspectjrt:1.9.19")
 
     // leakcanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.10")
