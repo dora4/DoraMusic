@@ -45,10 +45,12 @@ android {
     }
     signingConfigs {
         create("release") {
-            storeFile = File("../doramusic.jks")
+            storeFile = File(rootDir, "doramusic.jks")
             keyAlias = "key0"
             keyPassword = "123456"
             storePassword = "123456"
+            enableV1Signing = true
+            enableV2Signing = true
         }
     }
     buildTypes {
