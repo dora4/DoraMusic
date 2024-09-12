@@ -9,7 +9,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="2dp">
 
-    <site.doramusic.app.widget.RoundCornerImageView
+    <dora.widget.DoraRoundRectImageView
         android:id="@+id/iv_choice_color_skin_bg"
         android:layout_width="56dp"
         android:layout_height="56dp" />

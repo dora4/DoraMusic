@@ -108,7 +108,7 @@ dependencies {
     implementation("com.github.dora4:dview-colors:1.0")
     implementation("com.github.dora4:dview-skins:1.7")
     implementation("com.github.dora4:dview-bottom-dialog:1.12")
-//    implementation 'com.github.dora4:dview-avatar:1.4'
+    implementation("com.github.dora4:dview-avatar:1.4")
     implementation("com.github.dora4:dview-titlebar:1.37")
 
     // ARouter
