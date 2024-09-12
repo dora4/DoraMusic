@@ -47,7 +47,8 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivitySplashBinding) {
         super.initData(savedInstanceState, binding)
-        XXPermissions.with(this).permission(Permission.MANAGE_EXTERNAL_STORAGE)
+        XXPermissions.with(this).permission(
+            Permission.READ_MEDIA_AUDIO)
             .request { _, allGranted ->
                 if (allGranted) {
                     init()

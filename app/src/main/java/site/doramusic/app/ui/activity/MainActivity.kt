@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.hjq.permissions.Permission
+import com.hjq.permissions.XXPermissions
 import com.lsxiao.apollo.core.Apollo
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
@@ -163,24 +165,30 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
      * 扫描歌曲。
      */
     private fun scanMusic() {
-        net {
-            val dialog = DoraLoadingDialog(this).show("正在扫描...") {
-                setCancelable(false)
-                setCanceledOnTouchOutside(false)
-            }
-            request {
-                Executors.newCachedThreadPool().submit {
-                    try {
-                        val playlist = MusicScanner.scan(this@MainActivity) as MutableList<Music>
-                        MusicApp.instance!!.mediaManager!!.refreshPlaylist(playlist)
-                    } finally {
-                        it.releaseLock(null)
+        XXPermissions.with(this).permission(
+            Permission.READ_MEDIA_AUDIO)
+            .request { _, allGranted ->
+                if (allGranted) {
+                    net {
+                        val dialog = DoraLoadingDialog(this).show("正在扫描...") {
+                            setCancelable(false)
+                            setCanceledOnTouchOutside(false)
+                        }
+                        request {
+                            Executors.newCachedThreadPool().submit {
+                                try {
+                                    val playlist = MusicScanner.scan(this@MainActivity) as MutableList<Music>
+                                    MusicApp.instance!!.mediaManager!!.refreshPlaylist(playlist)
+                                } finally {
+                                    it.releaseLock(null)
+                                }
+                            }
+                        }
+                        homeFragment.onRefreshLocalMusic()
+                        dialog.dismiss()
                     }
                 }
             }
-            homeFragment.onRefreshLocalMusic()
-            dialog.dismiss()
-        }
     }
 
     override fun onDestroy() {
