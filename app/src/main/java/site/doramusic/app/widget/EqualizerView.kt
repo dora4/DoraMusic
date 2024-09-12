@@ -1,5 +1,6 @@
 package site.doramusic.app.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -25,10 +26,10 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     private lateinit var nodePaint: Paint
     private lateinit var nodeConnectPaint: Paint
     private lateinit var freqPaint: TextPaint
-    private lateinit var points: Array<PointF>
+    private lateinit var points: Array<PointF?>
     private var state = STATE_NONE
     private var decibels: IntArray = intArrayOf()
-    lateinit var freqs: IntArray
+    private lateinit var freqs: IntArray
     private var radius = 0f
     private var step = 0f
     private var bandsNum = 0
@@ -45,7 +46,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
         }
         decibels = IntArray(bandsNum)
         freqs = IntArray(bandsNum)
-        points = arrayOf()
+        points = arrayOfNulls(bandsNum + 2)
         a.recycle()
     }
 
@@ -56,13 +57,14 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
         private const val STATE_TOUCH_UP = 3
     }
 
-    fun setDecibels(decibels: IntArray) {
-        this.decibels = decibels
+    fun setFreqs(freqs: IntArray) {
+        this.freqs = freqs
         invalidate()
     }
 
-    fun getDecibels() : IntArray {
-        return this.decibels
+    fun setDecibels(decibels: IntArray) {
+        this.decibels = decibels
+        invalidate()
     }
 
     fun resetState() {
@@ -128,21 +130,24 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
                 measureView(heightMeasureSpec, 200))
     }
 
+    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        step = measuredHeight / 26.toFloat() // -12到12共26份
-        val stepSize = measuredWidth / (bandsNum + 1)
-        points[0] = PointF((-50).toFloat(), step * 13)
-        points[bandsNum + 1] = PointF((measuredWidth + 50).toFloat(), step * 13)
-        if (state == STATE_NONE) {
-            for (i in 1..bandsNum) {
-                val cx = stepSize * i.toFloat()
-                val cy = step * (decibels[i - 1] + 13)
-                points[i] = PointF(cx, cy)
+        if (points.isNotEmpty()) {
+            step = measuredHeight / 26.toFloat() // -12到12共26份
+            val stepSize = measuredWidth / (bandsNum + 1)
+            points[0] = PointF((-50).toFloat(), step * 13)
+            points[bandsNum + 1] = PointF((measuredWidth + 50).toFloat(), step * 13)
+            if (state == STATE_NONE) {
+                for (i in 1..bandsNum) {
+                    val cx = stepSize * i.toFloat()
+                    val cy = step * (decibels[i - 1] + 13)
+                    points[i] = PointF(cx, cy)
+                }
+                refreshView(canvas, stepSize)
+            } else {
+                refreshView(canvas, stepSize)
             }
-            refreshView(canvas, stepSize)
-        } else {
-            refreshView(canvas, stepSize)
         }
     }
 
@@ -151,7 +156,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
         val fontMetrics = freqPaint.fontMetrics
         for (i in 1..bandsNum) {
             val cx = stepSize * i.toFloat()
-            val cy = points[i].y
+            val cy = points[i]!!.y
             radius = if (i == index && state != STATE_TOUCH_UP) {
                 50f
             } else {
@@ -199,14 +204,14 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
                     val deltaY = y - lastY.toFloat()
                     if (index != 0) {
                         state = STATE_TOUCH_MOVE
-                        points[index].y += deltaY
+                        points[index]!!.y += deltaY
                         if (y <= 40) {
-                            points[index].y = 40f
+                            points[index]!!.y = 40f
                         }
                         if (y >= measuredHeight - 40) {
-                            points[index].y = measuredHeight - 40.toFloat()
+                            points[index]!!.y = measuredHeight - 40.toFloat()
                         }
-                        decibels[index - 1] = getDecibel(points[index].y)
+                        decibels[index - 1] = getDecibel(points[index]!!.y)
                         invalidate()
                     }
                 }
@@ -214,9 +219,9 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
                     state = STATE_TOUCH_UP
                     if (decibels[index - 1] != 0 && decibels[index - 1] != -12 && decibels[index - 1] != 12) {
                         val lastY = step * (-decibels[index - 1] + 13)
-                        points[index].y = lastY
+                        points[index]!!.y = lastY
                     } else if (decibels[index - 1] == 0) {
-                        points[index].y = step * 13
+                        points[index]!!.y = step * 13
                     }
                     invalidate()
                     onUpdateDecibelListener?.onUpdateDecibel(decibels)
@@ -239,8 +244,8 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     private fun findNodeIndex(x: Float, y: Float): Int {
         var result = 0
         for (i in 1 until points.size) {
-            if (points[i].x - radius * 1.5 < x && points[i].x + radius * 1.5 > x
-                && points[i].y - radius * 1.5 < y && points[i].y + radius * 1.5 > y) {
+            if (points[i]!!.x - radius * 1.5 < x && points[i]!!.x + radius * 1.5 > x
+                && points[i]!!.y - radius * 1.5 < y && points[i]!!.y + radius * 1.5 > y) {
                 result = i
                 break
             }

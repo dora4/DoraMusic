@@ -47,12 +47,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
         binding.statusbarChoiceColor.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
         SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, "skin_theme_color")
-        val imageView = AppCompatImageView(this)
-        val dp24 = DensityUtils.dp2px(24f)
-        imageView.layoutParams = RelativeLayout.LayoutParams(dp24, dp24)
-        imageView.setImageResource(R.drawable.ic_save)
-        binding.titlebarChoiceColor.addMenuButton(imageView)
-
+        binding.titlebarChoiceColor.addMenuButton(R.drawable.ic_save)
         binding.titlebarChoiceColor.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
             }

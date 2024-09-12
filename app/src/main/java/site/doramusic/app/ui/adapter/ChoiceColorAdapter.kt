@@ -16,7 +16,7 @@ class ChoiceColorAdapter : BaseQuickAdapter<ChoiceColorActivity
     override fun convert(holder: BaseViewHolder, item: ChoiceColorActivity.ColorData) {
         val ivChoiceColorSkinBg = holder.getView(R.id.iv_choice_color_skin_bg) as ImageView
         val ivChoiceColorSkinSelect = holder.getView(R.id.iv_choice_color_skin_select) as ImageView
-        ivChoiceColorSkinBg.setBackgroundResource(item.backgroundResId)
+        ivChoiceColorSkinBg.setImageResource(item.backgroundResId)
         if (getItemPosition(item) == selectedPosition) {
             ivChoiceColorSkinSelect.visibility = View.VISIBLE
         } else {

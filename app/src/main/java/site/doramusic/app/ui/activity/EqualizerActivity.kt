@@ -73,7 +73,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         binding.rbEqualizerShake.setTextColor(colorStateList)
         binding.rbEqualizerCountry.setTextColor(colorStateList)
         binding.evEqualizer.setDecibels(decibels)
-        binding.evEqualizer.freqs = equalizerFreq
+        binding.evEqualizer.setFreqs(equalizerFreq)
         binding.evEqualizer.setOnUpdateDecibelListener(this)
 
         // 默认选中第一个
