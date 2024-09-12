@@ -2,6 +2,7 @@ package site.doramusic.app.media
 
 import android.app.*
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -13,6 +14,7 @@ import android.os.IBinder
 import android.os.RemoteException
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig.*
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_CANCEL
@@ -21,6 +23,7 @@ import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PREV
 import site.doramusic.app.db.Music
 import site.doramusic.app.shake.ShakeDetector
+import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.util.MusicUtils
 import site.doramusic.app.util.PreferencesManager
 
@@ -42,6 +45,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     private var controlBroadcast: ControlBroadcast? = null
     private var prefsManager: PreferencesManager? = null
     private var simplePlayer: SimpleAudioPlayer? = null
+    private var remoteViews: RemoteViews? = null
     private lateinit var detector: ShakeDetector
 
     override fun onBind(intent: Intent): IBinder? {
@@ -79,9 +83,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
                 ACTION_PREV -> mc.prev()
                 ACTION_CANCEL -> {
                     cancelNotification()
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
-                        killAllOtherProcess(context)
-                    }
+                    killAllOtherProcess(context)
                     android.os.Process.killProcess(android.os.Process.myPid())
                 }
             }
@@ -268,80 +270,77 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
     }
 
-    private fun updateNotification(bitmap: Bitmap, title: String, name: String) {
-//        // 通知通道1的id
-//        val channelId = "site.doramusic.app"
-//        // 通知通道1的name
-//        val channelName = "DoraMusic"
-//        val notificationChannel: NotificationChannel
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            notificationChannel = NotificationChannel(channelId,
-//                    channelName, NotificationManager.IMPORTANCE_HIGH)
-//            notificationChannel.enableLights(false)
-//            notificationChannel.setSound(null, null)
-//            notificationChannel.setShowBadge(false)
-//            notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-//            notificationManager!!.createNotificationChannel(notificationChannel)
-//        }
-//        val intent = Intent(this, MainActivity::class.java)
-//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//        val pi = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-//            PendingIntent.getActivity(this,
-//                0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-//        } else {
-//            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-//        }
-//        remoteViews = RemoteViews(packageName, R.layout.view_notification)
-//        val notification: Notification = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-//            NotificationCompat.Builder(this).build()
-//        } else {
-//            Notification.Builder(this).setChannelId(channelId).build()
-//        }
-//        notification.icon = R.mipmap.ic_launcher
-//        notification.tickerText = title
-//        notification.contentIntent = pi
-//        notification.contentView = remoteViews
-//        notification.flags = Notification.FLAG_NO_CLEAR
-//
-//        if (bitmap != null) {
-//            remoteViews!!.setImageViewBitmap(R.id.iv_nc_album, bitmap)
-//        } else {
-//            remoteViews!!.setImageViewResource(R.id.iv_nc_album, R.drawable.default_cover)
-//        }
-//        remoteViews!!.setTextViewText(R.id.tv_nc_title, title)
-//        remoteViews!!.setTextViewText(R.id.tv_nc_text, name)
-//        if (mc!!.isPlaying) {
-//            remoteViews!!.setImageViewResource(R.id.iv_nc_pause_resume, R.drawable.nc_pause)
-//        } else {
-//            remoteViews!!.setImageViewResource(R.id.iv_nc_pause_resume, R.drawable.nc_play)
-//        }
-//
-//        val pauseResumeIntent = Intent(ACTION_PAUSE_RESUME)
-//        // 以下代码不能加
-////        pauseResumeIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
-//        pauseResumeIntent.putExtra(NOTIFICATION_TITLE, title)
-//        pauseResumeIntent.putExtra(NOTIFICATION_NAME, name)
-//        val pauseResumePIntent = PendingIntent.getBroadcast(this, 1, pauseResumeIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-//        remoteViews!!.setOnClickPendingIntent(R.id.iv_nc_pause_resume, pauseResumePIntent)
-//
-//        val prevIntent = Intent(ACTION_PREV)
-////        prevIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
-//        val prevPIntent = PendingIntent.getBroadcast(this, 2, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-//        remoteViews!!.setOnClickPendingIntent(R.id.iv_nc_previous, prevPIntent)
-//
-//        val nextIntent = Intent(ACTION_NEXT)
-////        nextIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
-//        val nextPIntent = PendingIntent.getBroadcast(this, 3, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-//        remoteViews!!.setOnClickPendingIntent(R.id.iv_nc_next, nextPIntent)
-//
-//        val cancelIntent = Intent(ACTION_CANCEL)
-////        cancelIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
-//        val cancelPIntent = PendingIntent.getBroadcast(this, 4, cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-//        remoteViews!!.setOnClickPendingIntent(R.id.iv_nc_cancel, cancelPIntent)
-//
-//
-//        // 显示通知
-//        notificationManager!!.notify(NOTIFICATION_ID, notification)
+    private fun updateNotification(bitmap: Bitmap?, title: String, name: String) {
+        val channelId = "site.doramusic.app"
+        val channelName = "DoraMusic"
+        val notificationChannel: NotificationChannel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationChannel = NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_HIGH)
+            notificationChannel.enableLights(false)
+            notificationChannel.setSound(null, null)
+            notificationChannel.setShowBadge(false)
+            notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            notificationManager!!.createNotificationChannel(notificationChannel)
+        }
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        val pi = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getActivity(this,
+                0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        } else {
+            PendingIntent.getBroadcast(this, 0, intent,
+                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+        }
+        remoteViews = RemoteViews(packageName, R.layout.view_notification)
+        val notification: Notification = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            NotificationCompat.Builder(this).build()
+        } else {
+            Notification.Builder(this).setChannelId(channelId).build()
+        }
+        notification.icon = R.mipmap.ic_launcher
+        notification.tickerText = title
+        notification.contentIntent = pi
+        notification.contentView = remoteViews
+        notification.flags = Notification.FLAG_NO_CLEAR
+
+        if (bitmap != null) {
+            remoteViews?.setImageViewBitmap(R.id.iv_nc_album, bitmap)
+        } else {
+            remoteViews?.setImageViewResource(R.id.iv_nc_album, R.drawable.bottom_bar_cover_bg)
+        }
+        remoteViews?.setTextViewText(R.id.tv_nc_title, title)
+        remoteViews?.setTextViewText(R.id.tv_nc_text, name)
+        if (mc.isPlaying) {
+            remoteViews?.setImageViewResource(R.id.iv_nc_pause_resume, R.drawable.ic_notification_pause)
+        } else {
+            remoteViews?.setImageViewResource(R.id.iv_nc_pause_resume, R.drawable.ic_notification_play)
+        }
+
+        val pauseResumeIntent = Intent(ACTION_PAUSE_RESUME)
+        pauseResumeIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        pauseResumeIntent.putExtra(NOTIFICATION_TITLE, title)
+        pauseResumeIntent.putExtra(NOTIFICATION_NAME, name)
+        val pauseResumePIntent = PendingIntent.getBroadcast(this, 1, pauseResumeIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        remoteViews?.setOnClickPendingIntent(R.id.iv_nc_pause_resume, pauseResumePIntent)
+
+        val prevIntent = Intent(ACTION_PREV)
+        prevIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        val prevPIntent = PendingIntent.getBroadcast(this, 2, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        remoteViews?.setOnClickPendingIntent(R.id.iv_nc_previous, prevPIntent)
+
+        val nextIntent = Intent(ACTION_NEXT)
+        nextIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        val nextPIntent = PendingIntent.getBroadcast(this, 3, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        remoteViews?.setOnClickPendingIntent(R.id.iv_nc_next, nextPIntent)
+
+        val cancelIntent = Intent(ACTION_CANCEL)
+        cancelIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        val cancelPIntent = PendingIntent.getBroadcast(this, 4, cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        remoteViews?.setOnClickPendingIntent(R.id.iv_nc_cancel, cancelPIntent)
+
+        // 显示通知
+        notificationManager?.notify(NOTIFICATION_ID, notification)
     }
 
     private fun cancelNotification() {

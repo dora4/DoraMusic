@@ -12,7 +12,6 @@ import dora.db.migration.OrmMigration;
 import dora.db.table.Column;
 import dora.db.table.Ignore;
 import dora.db.table.OrmTable;
-import dora.db.table.PrimaryKeyEntry;
 import dora.db.table.Table;
 import site.doramusic.app.sort.Sort;
 
@@ -144,12 +143,6 @@ public class Music implements OrmTable, Parcelable, Sort {
             return new Music[size];
         }
     };
-
-    @NonNull
-    @Override
-    public PrimaryKeyEntry getPrimaryKey() {
-        return new PrimaryKeyEntry(COLUMN_ID, id);
-    }
 
     @Override
     public boolean isUpgradeRecreated() {

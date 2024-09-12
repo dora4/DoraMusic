@@ -95,8 +95,8 @@ dependencies {
     implementation("com.google.guava:guava:27.0.1-android")
 
     // Dora全家桶
-    implementation("com.github.dora4:dcache-android:2.3.13")
-    implementation("com.github.dora4:dora:1.2.16")
+    implementation("com.github.dora4:dcache-android:2.4.13")
+    implementation("com.github.dora4:dora:1.2.25")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-apollo-support:1.4")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
@@ -107,7 +107,7 @@ dependencies {
     implementation("com.github.dora4:dview-loading-dialog:1.5")
     implementation("com.github.dora4:dview-colors:1.0")
     implementation("com.github.dora4:dview-skins:1.7")
-    implementation("com.github.dora4:dview-bottom-dialog:1.12")
+    implementation("com.github.dora4:dview-bottom-dialog:1.13")
     implementation("com.github.dora4:dview-avatar:1.4")
     implementation("com.github.dora4:dview-titlebar:1.37")
 

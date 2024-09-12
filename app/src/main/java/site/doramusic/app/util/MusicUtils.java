@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
