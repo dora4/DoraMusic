@@ -8,11 +8,11 @@ import site.doramusic.app.lrc.DoraLyric
 
 interface MusicService : ApiService {
 
-    @GET("/searchLrc")
+    @GET("searchLrc")
     fun searchLrc(@Query("musicName") musicName: String,
                   @Query("musicArtist") musicArtist: String): Call<DoraResponse<DoraLyric>>
 
     @FormUrlEncoded
-    @POST("/lyric")
+    @POST("lyric")
     fun lyric(@Field("id") id: Long): Call<DoraResponse<DoraLyric>>
 }

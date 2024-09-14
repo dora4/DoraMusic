@@ -18,6 +18,7 @@ import com.lsxiao.apollo.core.Apollo
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
+import dora.db.table.OrmTable
 import dora.util.DensityUtils
 import dora.util.ScreenUtils
 import site.doramusic.app.MusicApp
@@ -320,7 +321,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     private fun saveFavorite(music: Music, favorite: Int) {
         music.favorite = favorite
-        musicDao.update(WhereBuilder.create().addWhereEqualTo("_id", music.id), music)
+        musicDao.update(WhereBuilder.create().addWhereEqualTo(OrmTable.INDEX_ID, music.id), music)
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int,
@@ -424,30 +425,30 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 //    @SingleClick
     override fun onClick(v: View) {
         when (v.id) {
-            //上一首
+            // 上一首
             R.id.btn_music_play_prev -> {
                 if (curMusic == null) {
                     return
                 }
                 mediaManager!!.prev()
             }
-            //播放
+            // 播放
             R.id.btn_music_play_play -> {
                 if (curMusic == null) {
                     return
                 }
                 mediaManager!!.replay()
             }
-            //下一首
+            // 下一首
             R.id.btn_music_play_next -> {
                 if (curMusic == null) {
                     return
                 }
                 mediaManager!!.next()
             }
-            //暂停
+            // 暂停
             R.id.btn_music_play_pause -> mediaManager!!.pause()
-            //音量
+            // 音量
             R.id.btn_music_play_volume -> if (llMusicPlayVolume!!.isShown) {
                 volumeHandler.removeCallbacks(r)
                 llMusicPlayVolume!!.visibility = View.INVISIBLE
@@ -457,17 +458,16 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                 llMusicPlayVolume!!.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_in))
                 volumeHandler.postDelayed(r, 3000)
             }
-            //播放模式
+            // 播放模式
             R.id.btn_music_play_mode -> playModeControl.changePlayMode(btnMusicPlayMode!!)
-            //喜爱
+            // 喜爱
             R.id.btn_music_play_favorite -> {
                 if (mediaManager!!.curMusic!!.favorite == 0) {
-//                    startAnimation(iv_sliding_favorite_flying!!)
                     refreshFavorite(1)
                 } else {
                     refreshFavorite(0)
                 }
-                //此处最好只刷新收藏数目
+                // 此处最好只刷新收藏数目
                 Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
             }
         }
@@ -491,13 +491,13 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
      * 设置转盘封面的边框。
      */
     private fun setBitmapBorder(canvas: Canvas) {
-        var rect = canvas.getClipBounds()
-        var paint = Paint()
-        //设置边框颜色
-        paint.setColor(Color.WHITE)
-        paint.setStyle(Paint.Style.STROKE)
-        //设置边框宽度
-        paint.setStrokeWidth(100F)
+        val rect = canvas.getClipBounds()
+        val paint = Paint()
+        // 设置边框颜色
+        paint.color = Color.WHITE
+        paint.style = Paint.Style.STROKE
+        // 设置边框宽度
+        paint.strokeWidth = 100F
         canvas.drawRect(rect, paint)
     }
 
@@ -505,19 +505,17 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
      * 创建默认的转盘封面。
      */
     fun createDefaultCover() : Bitmap {
-        var bmp = BitmapFactory.decodeResource(manager.view.context.resources, R.drawable.cover_rotating_bg)
-        var dp50 = DensityUtils.dp2px(manager.view.context, 50f).toFloat()
-        var dp100 = DensityUtils.dp2px(manager.view.context, 100f)
-        var width = bmp.width + dp100
-        var height = bmp.height + dp100
-        //创建一个空的Bitmap(内存区域),宽度等于第一张图片的宽度，高度等于两张图片高度总和
-        var bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        //将bitmap放置到绘制区域,并将要拼接的图片绘制到指定内存区域
-        var canvas = Canvas(bitmap)
-        var paint = Paint()
+        val bmp = BitmapFactory.decodeResource(manager.view.context.resources, R.drawable.cover_rotating_bg)
+        val width = bmp.width + DensityUtils.DP50
+        val height = bmp.height + DensityUtils.DP100
+        // 创建一个空的Bitmap(内存区域),宽度等于第一张图片的宽度，高度等于两张图片高度总和
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        // 将bitmap放置到绘制区域,并将要拼接的图片绘制到指定内存区域
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
         paint.color = Color.WHITE
         canvas.drawRect(Rect(0, 0, width, height), paint)
-        canvas.drawBitmap(bmp, dp50, dp50, null)
+        canvas.drawBitmap(bmp, DensityUtils.DP50.toFloat(), DensityUtils.DP50.toFloat(), null)
         //将canvas传递进去并设置其边框
         setBitmapBorder(canvas)
         return bitmap

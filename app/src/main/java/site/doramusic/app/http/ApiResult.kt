@@ -4,8 +4,8 @@ import dora.cache.data.adapter.Result
 
 class ApiResult<T> : Result<T> {
 
-    var errorCode: String? = null
-    var errorDetail: String? = null
+    var code: String? = null
+    var msg: String? = null
     var data: T? = null
         private set
     val timestamp = System.currentTimeMillis()

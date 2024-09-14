@@ -15,8 +15,8 @@ android {
         applicationId = "site.doramusic.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1.0"
+        versionCode = 3
+        versionName = "1.1.1"
         buildFeatures {
             dataBinding = true
             aidl = true
@@ -96,7 +96,7 @@ dependencies {
 
     // Dora全家桶
     implementation("com.github.dora4:dcache-android:2.4.13")
-    implementation("com.github.dora4:dora:1.2.25")
+    implementation("com.github.dora4:dora:1.2.26")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-apollo-support:1.4")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
