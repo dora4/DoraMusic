@@ -13,12 +13,11 @@ import site.doramusic.app.ui.layout.UIMusicPlay
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.MusicUtils
 
-class MusicPlayReceiver(val mediaManager: MediaManager,
-                        private val musicTimer: MusicTimer,
-                        private val musicPlay: UIMusicPlay,
-                        private val bottomBar: UIBottomBar,
-                        private val defaultArtwork: Bitmap
-) : BroadcastReceiver() {
+class MusicPlayReceiver(private var mediaManager: MediaManager
+        private var musicTimer: MusicTimer
+        private var musicPlay: UIMusicPlay
+        private var bottomBar: UIBottomBar
+        private var defaultArtwork: Bitmap) : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
@@ -29,7 +28,6 @@ class MusicPlayReceiver(val mediaManager: MediaManager,
             when (playState) {
                 AppConfig.MPS_INVALID -> {  // 考虑后面加上如果文件不可播放直接跳到下一首
                     musicTimer.stopTimer()
-
                     musicPlay.refreshUI(0, music!!.duration, music)
                     musicPlay.showPlay(true)
 
