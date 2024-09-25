@@ -204,6 +204,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * @return
      */
     public boolean prepare(int pos) {
+        if (pos >= mPlaylist.size()) {
+            return false;
+        }
         mCurPlayIndex = pos;
         mPendingProgress = 0;
         mMediaPlayer.reset();
@@ -212,12 +215,12 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         } else {
             setBassBoost(1);
         }
-        if (!mPrefsManager.getEqualizerDecibels().equals("")) {
+        if (!mPrefsManager.getEqualizerDecibels().isEmpty()) {
             int[] equalizerFreq = getEqualizerFreq();
             int[] decibels = new int[equalizerFreq.length];
             String[] values = mPrefsManager.getEqualizerDecibels().split(",");
             for (int i = 0; i < decibels.length; i++) {
-                decibels[i] = Integer.valueOf(values[i]);
+                decibels[i] = Integer.parseInt(values[i]);
             }
             setEqualizer(decibels);
         }
@@ -252,6 +255,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     public boolean playById(int id) {
         if (requestFocus()) {
             int position = seekPosById(mPlaylist, id);
+            if (position == -1) {
+                return false;
+            }
             mCurPlayIndex = position;
             if (mCurMusicId == id) {
                 if (!mMediaPlayer.isPlaying()) {

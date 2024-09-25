@@ -19,23 +19,23 @@ import java.util.*
 class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, OnBackListener {
 
     private lateinit var factory: UIFactory
-    private lateinit var masterViewPager: ViewPager
-    private lateinit var slaveViewPager: ViewPager
-    private var masterViews: ArrayList<View> = arrayListOf()
-    private var slaveViews: ArrayList<View> = arrayListOf()
+    private lateinit var mainViewPager: ViewPager
+    private lateinit var secondaryViewPager: ViewPager
+    private var mainViews: ArrayList<View> = arrayListOf()
+    private var secondaryViews: ArrayList<View> = arrayListOf()
     val inflater: LayoutInflater = LayoutInflater.from(view.context)
     val isLocal: Boolean
-        get() = masterViewPager.currentItem == 0
+        get() = mainViewPager.currentItem == 0
 
     init {
         init()
     }
 
     fun setCurrentItem() {
-        if (slaveViewPager.childCount > 0) {
-            slaveViewPager.setCurrentItem(0, true)
+        if (secondaryViewPager.childCount > 0) {
+            secondaryViewPager.setCurrentItem(0, true)
         } else {
-            masterViewPager.setCurrentItem(0, true)
+            mainViewPager.setCurrentItem(0, true)
             // 返回首页要刷新界面
             Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
         }
@@ -57,110 +57,110 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
             AppConfig.ROUTE_START_FROM_LOCAL -> {
                 factory = UIViewMusic(drawer, this)
                 val contentView = factory.getView(AppConfig.ROUTE_START_FROM_LOCAL)
-                masterViewPager.visibility = View.VISIBLE
-                masterViews.clear()
-                masterViewPager.removeAllViews()
-                masterViews.add(transView)
-                masterViews.add(contentView)
-                masterViewPager.adapter = ViewPagerAdapter(masterViews)
-                masterViewPager.setCurrentItem(1, true)
+                mainViewPager.visibility = View.VISIBLE
+                mainViews.clear()
+                mainViewPager.removeAllViews()
+                mainViews.add(transView)
+                mainViews.add(contentView)
+                mainViewPager.adapter = ViewPagerAdapter(mainViews)
+                mainViewPager.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_FAVORITE -> {
                 factory = UIViewMusic(drawer, this)
                 val contentView = factory.getView(AppConfig.ROUTE_START_FROM_FAVORITE)
-                masterViewPager.visibility = View.VISIBLE
-                masterViews.clear()
-                masterViewPager.removeAllViews()
-                masterViews.add(transView)
-                masterViews.add(contentView)
-                masterViewPager.adapter = ViewPagerAdapter(masterViews)
-                masterViewPager.setCurrentItem(1, true)
+                mainViewPager.visibility = View.VISIBLE
+                mainViews.clear()
+                mainViewPager.removeAllViews()
+                mainViews.add(transView)
+                mainViews.add(contentView)
+                mainViewPager.adapter = ViewPagerAdapter(mainViews)
+                mainViewPager.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_LATEST -> {
                 factory = UIViewMusic(drawer, this)
                 val contentView = factory.getView(AppConfig.ROUTE_START_FROM_LATEST)
-                masterViewPager.visibility = View.VISIBLE
-                masterViews.clear()
-                masterViewPager.removeAllViews()
-                masterViews.add(transView)
-                masterViews.add(contentView)
-                masterViewPager.adapter = ViewPagerAdapter(masterViews)
-                masterViewPager.setCurrentItem(1, true)
+                mainViewPager.visibility = View.VISIBLE
+                mainViews.clear()
+                mainViewPager.removeAllViews()
+                mainViews.add(transView)
+                mainViews.add(contentView)
+                mainViewPager.adapter = ViewPagerAdapter(mainViews)
+                mainViewPager.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_FOLDER -> {
                 factory = UIViewFolder(drawer, this)
                 val contentView = factory.getView()
-                masterViewPager.visibility = View.VISIBLE
-                masterViews.clear()
-                masterViewPager.removeAllViews()
-                masterViews.add(transView)
-                masterViews.add(contentView)
-                masterViewPager.adapter = ViewPagerAdapter(masterViews)
-                masterViewPager.setCurrentItem(1, true)
+                mainViewPager.visibility = View.VISIBLE
+                mainViews.clear()
+                mainViewPager.removeAllViews()
+                mainViews.add(transView)
+                mainViews.add(contentView)
+                mainViewPager.adapter = ViewPagerAdapter(mainViews)
+                mainViewPager.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_ARTIST -> {
                 factory = UIViewArtist(drawer, this)
                 val contentView = factory.getView()
-                masterViewPager.visibility = View.VISIBLE
-                masterViews.clear()
-                masterViewPager.removeAllViews()
-                masterViews.add(transView)
-                masterViews.add(contentView)
-                masterViewPager.adapter = ViewPagerAdapter(masterViews)
-                masterViewPager.setCurrentItem(1, true)
+                mainViewPager.visibility = View.VISIBLE
+                mainViews.clear()
+                mainViewPager.removeAllViews()
+                mainViews.add(transView)
+                mainViews.add(contentView)
+                mainViewPager.adapter = ViewPagerAdapter(mainViews)
+                mainViewPager.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_START_FROM_ALBUM -> {
                 factory = UIViewAlbum(drawer, this)
                 val contentView = factory.getView()
-                masterViewPager.visibility = View.VISIBLE
-                masterViews.clear()
-                masterViewPager.removeAllViews()
-                masterViews.add(transView)
-                masterViews.add(contentView)
-                masterViewPager.adapter = ViewPagerAdapter(masterViews)
-                masterViewPager.setCurrentItem(1, true)
+                mainViewPager.visibility = View.VISIBLE
+                mainViews.clear()
+                mainViewPager.removeAllViews()
+                mainViews.add(transView)
+                mainViews.add(contentView)
+                mainViewPager.adapter = ViewPagerAdapter(mainViews)
+                mainViewPager.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_FOLDER_TO_LOCAL -> {
                 factory = UIViewMusic(drawer, this)
                 val contentView = factory.getView(AppConfig.ROUTE_START_FROM_FOLDER, table)
-                slaveViewPager.visibility = View.VISIBLE
-                slaveViews.clear()
-                slaveViewPager.removeAllViews()
-                slaveViews.add(transView)
-                slaveViews.add(contentView)
-                slaveViewPager.adapter = ViewPagerAdapter(slaveViews)
-                slaveViewPager.setCurrentItem(1, true)
+                secondaryViewPager.visibility = View.VISIBLE
+                secondaryViews.clear()
+                secondaryViewPager.removeAllViews()
+                secondaryViews.add(transView)
+                secondaryViews.add(contentView)
+                secondaryViewPager.adapter = ViewPagerAdapter(secondaryViews)
+                secondaryViewPager.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_ARTIST_TO_LOCAL -> {
                 factory = UIViewMusic(drawer, this)
                 val contentView = factory.getView(AppConfig.ROUTE_START_FROM_ARTIST, table)
-                slaveViewPager.visibility = View.VISIBLE
-                slaveViews.clear()
-                slaveViewPager.removeAllViews()
-                slaveViews.add(transView)
-                slaveViews.add(contentView)
-                slaveViewPager.adapter = ViewPagerAdapter(slaveViews)
-                slaveViewPager.setCurrentItem(1, true)
+                secondaryViewPager.visibility = View.VISIBLE
+                secondaryViews.clear()
+                secondaryViewPager.removeAllViews()
+                secondaryViews.add(transView)
+                secondaryViews.add(contentView)
+                secondaryViewPager.adapter = ViewPagerAdapter(secondaryViews)
+                secondaryViewPager.setCurrentItem(1, true)
             }
             AppConfig.ROUTE_ALBUM_TO_LOCAL -> {
                 factory = UIViewMusic(drawer, this)
                 val contentView = factory.getView(AppConfig.ROUTE_START_FROM_ALBUM, table)
-                slaveViewPager.visibility = View.VISIBLE
-                slaveViews.clear()
-                slaveViewPager.removeAllViews()
-                slaveViews.add(transView)
-                slaveViews.add(contentView)
-                slaveViewPager.adapter = ViewPagerAdapter(slaveViews)
-                slaveViewPager.setCurrentItem(1, true)
+                secondaryViewPager.visibility = View.VISIBLE
+                secondaryViews.clear()
+                secondaryViewPager.removeAllViews()
+                secondaryViews.add(transView)
+                secondaryViews.add(contentView)
+                secondaryViewPager.adapter = ViewPagerAdapter(secondaryViews)
+                secondaryViewPager.setCurrentItem(1, true)
             }
         }
     }
 
     override fun onBack() {
-        if (slaveViewPager.isShown) {
-            slaveViewPager.setCurrentItem(0, true)
-        } else if (masterViewPager.isShown) {
-            masterViewPager.setCurrentItem(0, true)
+        if (secondaryViewPager.isShown) {
+            secondaryViewPager.setCurrentItem(0, true)
+        } else if (mainViewPager.isShown) {
+            mainViewPager.setCurrentItem(0, true)
         }
     }
 
@@ -184,12 +184,12 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
     }
 
     private fun init() {
-        masterViewPager = findViewById(R.id.vp_home_master) as ViewPager
-        slaveViewPager = findViewById(R.id.vp_home_slave) as ViewPager
-        masterViews = ArrayList()
-        slaveViews = ArrayList()
-        masterViewPager.addOnPageChangeListener(OnPageChangeListenerMaster())
-        slaveViewPager.addOnPageChangeListener(OnPageChangeListenerSlave())
+        mainViewPager = findViewById(R.id.vp_home_master) as ViewPager
+        secondaryViewPager = findViewById(R.id.vp_home_slave) as ViewPager
+        mainViews = ArrayList()
+        secondaryViews = ArrayList()
+        mainViewPager.addOnPageChangeListener(OnPageChangeListenerMaster())
+        secondaryViewPager.addOnPageChangeListener(OnPageChangeListenerSlave())
     }
 
     private inner class OnPageChangeListenerMaster : ViewPager.OnPageChangeListener {
@@ -198,8 +198,8 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
         override fun onPageScrollStateChanged(state: Int) {
             if (onPageScrolled == 0 && state == 0) {
                 (view.context as MainActivity).unregisterBackListener(this@UIManager)
-                masterViewPager.removeAllViews()
-                masterViewPager.visibility = View.INVISIBLE
+                mainViewPager.removeAllViews()
+                mainViewPager.visibility = View.INVISIBLE
             }
         }
 
@@ -218,8 +218,8 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
         // 当滑动状态改变时调用
         override fun onPageScrollStateChanged(state: Int) {
             if (onPageScrolled == 0 && state == 0) {
-                slaveViewPager.removeAllViews()
-                slaveViewPager.visibility = View.INVISIBLE
+                secondaryViewPager.removeAllViews()
+                secondaryViewPager.visibility = View.INVISIBLE
             }
         }
 

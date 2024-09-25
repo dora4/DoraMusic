@@ -65,7 +65,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         statusBarMusic = view.findViewById(R.id.statusbar_music)
         statusBarMusic.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarMusic!!, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(statusBarMusic, "skin_theme_color")
         lvMusic = view.findViewById(R.id.lv_music)
         tvMusicDialog = view.findViewById(R.id.tv_music_dialog)
         titleBar = view.findViewById(R.id.titlebar_music)
@@ -218,7 +218,12 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         adapter.setOnItemClickListener { adapter, view, position ->
             val playlist = adapter.data as MutableList<Music>
             mediaManager?.refreshPlaylist(playlist)
-            mediaManager?.playById(playlist[position].songId)
+            val music = playlist[position]
+            if (music.songId != -1) {
+                // !!! FAILED BINDER TRANSACTION !!!
+                // 如果数据量过大，可能引发这个异常，导致点击播放无反应
+                mediaManager?.playById(music.songId)
+            }
         }
     }
 

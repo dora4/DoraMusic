@@ -138,7 +138,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.MusicPlayReceiver"
+        <receiver android:name=".ui.fragment.HomeFragment$MusicPlayReceiver"
             android:exported="true"
             tools:ignore="Instantiatable">
             <intent-filter>
