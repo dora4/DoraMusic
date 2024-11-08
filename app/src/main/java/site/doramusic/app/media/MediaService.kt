@@ -285,12 +285,8 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        val pi = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getActivity(this,
-                0, intent, PendingIntent.FLAG_IMMUTABLE)
-        } else {
-            PendingIntent.getActivity(this, 0, intent, 0)
-        }
+        val pi = PendingIntent.getActivity(this,
+            0, intent, PendingIntent.FLAG_IMMUTABLE)
         remoteViews = RemoteViews(packageName, R.layout.view_notification)
         val notification: Notification = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             NotificationCompat.Builder(this).build()
