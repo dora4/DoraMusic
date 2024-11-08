@@ -287,10 +287,9 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         val pi = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.getActivity(this,
-                0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                0, intent, PendingIntent.FLAG_IMMUTABLE)
         } else {
-            PendingIntent.getBroadcast(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(this, 0, intent, 0)
         }
         remoteViews = RemoteViews(packageName, R.layout.view_notification)
         val notification: Notification = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -321,26 +320,44 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         pauseResumeIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
         pauseResumeIntent.putExtra(NOTIFICATION_TITLE, title)
         pauseResumeIntent.putExtra(NOTIFICATION_NAME, name)
-        val pauseResumePIntent = PendingIntent.getBroadcast(this, 1, pauseResumeIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val pauseResumePIntent = createPendingIntent(this, 1, pauseResumeIntent)
         remoteViews?.setOnClickPendingIntent(R.id.iv_nc_pause_resume, pauseResumePIntent)
 
         val prevIntent = Intent(ACTION_PREV)
         prevIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
-        val prevPIntent = PendingIntent.getBroadcast(this, 2, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val prevPIntent = createPendingIntent(this, 2, prevIntent)
         remoteViews?.setOnClickPendingIntent(R.id.iv_nc_previous, prevPIntent)
 
         val nextIntent = Intent(ACTION_NEXT)
         nextIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
-        val nextPIntent = PendingIntent.getBroadcast(this, 3, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val nextPIntent = createPendingIntent(this, 3, nextIntent)
         remoteViews?.setOnClickPendingIntent(R.id.iv_nc_next, nextPIntent)
 
         val cancelIntent = Intent(ACTION_CANCEL)
         cancelIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
-        val cancelPIntent = PendingIntent.getBroadcast(this, 4, cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val cancelPIntent = createPendingIntent(this, 4, cancelIntent)
         remoteViews?.setOnClickPendingIntent(R.id.iv_nc_cancel, cancelPIntent)
 
         // 显示通知
         notificationManager?.notify(NOTIFICATION_ID, notification)
+    }
+
+    /**
+     * 适配Android12的Caused by java.lang.IllegalArgumentException
+     * site.doramusic.app.alpha: Targeting S+ (version 31 and above) requires that one of
+     * FLAG_IMMUTABLE or FLAG_MUTABLE be specified when creating a PendingIntent. Strongly consider
+     * using FLAG_IMMUTABLE, only use FLAG_MUTABLE if some functionality depends on the PendingIntent
+     * being mutable, e.g. if it needs to be used with inline replies or bubbles.
+     */
+    private fun createPendingIntent(context: Context, requestCode: Int, intent: Intent) : PendingIntent {
+        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.FLAG_IMMUTABLE
+        } else {
+            0
+        }
+        val pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, flag)
+        return pendingIntent
     }
 
     private fun cancelNotification() {
