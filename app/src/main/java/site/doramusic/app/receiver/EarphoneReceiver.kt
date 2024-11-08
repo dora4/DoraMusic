@@ -52,9 +52,10 @@ class EarphoneReceiver : BroadcastReceiver() {
             val adapter = BluetoothAdapter.getDefaultAdapter()
                 ?: // 设备不支持蓝牙，退出
                 return
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-                ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(context as Activity, arrayOf(Manifest.permission.BLUETOOTH_CONNECT), 0)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && context is Activity &&
+                ActivityCompat.checkSelfPermission(context,
+                    Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(context, arrayOf(Manifest.permission.BLUETOOTH_CONNECT), 0)
                 return
             }
             if (BluetoothAdapter.STATE_DISCONNECTED == adapter.getProfileConnectionState(BluetoothProfile.A2DP) ||
