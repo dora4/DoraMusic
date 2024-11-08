@@ -175,21 +175,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                             )
                             if (music.albumId != -1) {
                                 if (bitmap != null) {
-                                    mediaManager.updateNotification(
-                                        bitmap, music.musicName,
-                                        music.artist
-                                    )
+//                                    mediaManager.updateNotification(
+//                                        bitmap, music.musicName,
+//                                        music.artist
+//                                    )
                                     musicPlay.loadRotateCover(bitmap)
                                 } else {
                                     musicPlay.loadRotateCover(musicPlay.createDefaultCover())
                                 }
                             } else {
                                 musicPlay.loadRotateCover(bitmap)
-                                mediaManager.updateNotification(
-                                    defaultArtwork,
-                                    music.musicName,
-                                    music.artist
-                                )
+//                                mediaManager.updateNotification(
+//                                    defaultArtwork,
+//                                    music.musicName,
+//                                    music.artist
+//                                )
                             }
                         } catch (e: UnsupportedOperationException) {
 //                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
