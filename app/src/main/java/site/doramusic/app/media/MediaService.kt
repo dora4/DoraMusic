@@ -273,67 +273,77 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     private fun updateNotification(bitmap: Bitmap?, title: String, name: String) {
         val channelId = "site.doramusic.app"
         val channelName = "DoraMusic"
-        val notificationChannel: NotificationChannel
+
+        // 创建通知频道
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationChannel = NotificationChannel(channelId,
-                    channelName, NotificationManager.IMPORTANCE_HIGH)
-            notificationChannel.enableLights(false)
-            notificationChannel.setSound(null, null)
-            notificationChannel.setShowBadge(false)
-            notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            notificationManager!!.createNotificationChannel(notificationChannel)
-        }
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        val pi = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) { PendingIntent.getActivity(this,
-            0, intent, PendingIntent.FLAG_IMMUTABLE)
-        } else PendingIntent.getActivity(this,
-            0, intent, 0)
-        remoteViews = RemoteViews(packageName, R.layout.view_notification)
-        val notification: Notification = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            NotificationCompat.Builder(this).build()
-        } else {
-            Notification.Builder(this).setChannelId(channelId).build()
-        }
-        notification.icon = R.mipmap.ic_launcher
-        notification.tickerText = title
-        notification.contentIntent = pi
-        notification.contentView = remoteViews
-        notification.flags = Notification.FLAG_NO_CLEAR
-
-        if (bitmap != null) {
-            remoteViews?.setImageViewBitmap(R.id.iv_nc_album, bitmap)
-        } else {
-            remoteViews?.setImageViewResource(R.id.iv_nc_album, R.drawable.bottom_bar_cover_bg)
-        }
-        remoteViews?.setTextViewText(R.id.tv_nc_title, title)
-        remoteViews?.setTextViewText(R.id.tv_nc_text, name)
-        if (mc.isPlaying) {
-            remoteViews?.setImageViewResource(R.id.iv_nc_pause_resume, R.drawable.ic_notification_pause)
-        } else {
-            remoteViews?.setImageViewResource(R.id.iv_nc_pause_resume, R.drawable.ic_notification_play)
+            val notificationChannel = NotificationChannel(
+                channelId, channelName, NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                enableLights(false)
+                setSound(null, null)
+                setShowBadge(false)
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            }
+            notificationManager?.createNotificationChannel(notificationChannel)
         }
 
-        val pauseResumeIntent = Intent(ACTION_PAUSE_RESUME)
-        pauseResumeIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
-        pauseResumeIntent.putExtra(NOTIFICATION_TITLE, title)
-        pauseResumeIntent.putExtra(NOTIFICATION_NAME, name)
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pi = PendingIntent.getActivity(
+            this, 0, intent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
+            else PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
+        // 创建 RemoteViews
+        remoteViews = RemoteViews(packageName, R.layout.view_notification).apply {
+            if (bitmap != null) {
+                setImageViewBitmap(R.id.iv_nc_album, bitmap)
+            } else {
+                setImageViewResource(R.id.iv_nc_album, R.drawable.bottom_bar_cover_bg)
+            }
+            setTextViewText(R.id.tv_nc_title, title)
+            setTextViewText(R.id.tv_nc_text, name)
+            setImageViewResource(
+                R.id.iv_nc_pause_resume,
+                if (mc.isPlaying) R.drawable.ic_notification_pause else R.drawable.ic_notification_play
+            )
+        }
+
+        // 创建 NotificationCompat.Builder
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setTicker(title)
+            .setContentIntent(pi)
+            .setCustomContentView(remoteViews)
+            .setAutoCancel(true)
+            .build()
+
+        // 设置 RemoteViews 点击事件
+        val pauseResumeIntent = Intent(ACTION_PAUSE_RESUME).apply {
+            component = ComponentName(packageName, ControlBroadcast::class.java.name)
+            putExtra(NOTIFICATION_TITLE, title)
+            putExtra(NOTIFICATION_NAME, name)
+        }
         val pauseResumePIntent = createPendingIntent(this, 1, pauseResumeIntent)
         remoteViews?.setOnClickPendingIntent(R.id.iv_nc_pause_resume, pauseResumePIntent)
 
-        val prevIntent = Intent(ACTION_PREV)
-        prevIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        val prevIntent = Intent(ACTION_PREV).apply {
+            component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        }
         val prevPIntent = createPendingIntent(this, 2, prevIntent)
         remoteViews?.setOnClickPendingIntent(R.id.iv_nc_previous, prevPIntent)
 
-        val nextIntent = Intent(ACTION_NEXT)
-        nextIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        val nextIntent = Intent(ACTION_NEXT).apply {
+            component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        }
         val nextPIntent = createPendingIntent(this, 3, nextIntent)
         remoteViews?.setOnClickPendingIntent(R.id.iv_nc_next, nextPIntent)
 
-        val cancelIntent = Intent(ACTION_CANCEL)
-        cancelIntent.component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        val cancelIntent = Intent(ACTION_CANCEL).apply {
+            component = ComponentName(packageName, ControlBroadcast::class.java.name)
+        }
         val cancelPIntent = createPendingIntent(this, 4, cancelIntent)
         remoteViews?.setOnClickPendingIntent(R.id.iv_nc_cancel, cancelPIntent)
 
