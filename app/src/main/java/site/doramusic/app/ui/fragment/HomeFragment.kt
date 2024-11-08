@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,6 +29,7 @@ import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
+import dora.firebase.SpmUtils.spmAdImpression
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager
@@ -44,8 +44,8 @@ import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
-import site.doramusic.app.http.DoraHomeBanner
-import site.doramusic.app.http.service.CommonService
+import site.doramusic.app.http.DoraBannerAd
+import site.doramusic.app.http.service.AdService
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MusicControl
@@ -253,34 +253,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         } else {
             requireActivity().registerReceiver(musicPlayReceiver, filter)
         }
-        net {
-            val bannerCheckResult = result {
-                RetrofitManager.getService(CommonService::class.java).checkHomeBanners("doramusic")
-            }
-            if (bannerCheckResult != null && bannerCheckResult.data == true) {
-                binding.banner.visibility = View.VISIBLE
-                val bannerResult = result {
-                    RetrofitManager.getService(CommonService::class.java).getHomeBanners()
-                }
-                val result = arrayListOf<String>()
-                val banners: MutableList<DoraHomeBanner>? = bannerResult!!.data
-                if (banners != null) {
-                    if (banners.size > 0) {
-                        for (banner in banners) {
-                            banner.imgUrl?.let { result.add(it) }
-                        }
-                    }
-                }
-                val imageAdapter = ImageAdapter(result)
-                imageAdapter.setOnBannerListener { _, position ->
-                    val intent = Intent(activity, BrowserActivity::class.java)
-                    intent.putExtra("title", "Dora Music")
-                    intent.putExtra("url", banners?.get(position)?.detailUrl)
-                    startActivity(intent)
-                }
-                binding.banner.setAdapter(imageAdapter)
-            }
-        }
+        loadAds(binding)
         binding.statusbarHome.layoutParams = RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
@@ -324,6 +297,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         adapter.setList(getHomeItems())
     }
 
+    private fun loadAds(binding: FragmentHomeBinding) {
+        net {
+            val adEnable = result {
+                RetrofitManager.getService(AdService::class.java).isShowBannerAds("doramusic")
+            }?.data
+            if (adEnable == true) {
+                // 广告印象
+                spmAdImpression("official")
+                binding.banner.visibility = View.VISIBLE
+                val bannerAds = result {
+                    RetrofitManager.getService(AdService::class.java).getBannerAds()
+                }?.data
+                val result = arrayListOf<String>()
+                val banners: MutableList<DoraBannerAd>? = bannerAds
+                if (banners != null) {
+                    if (banners.size > 0) {
+                        for (banner in banners) {
+                            banner.imgUrl?.let { result.add(it) }
+                        }
+                    }
+                }
+                val imageAdapter = ImageAdapter(result)
+                imageAdapter.setOnBannerListener { _, position ->
+                    val intent = Intent(activity, BrowserActivity::class.java)
+                    intent.putExtra("title", "Dora Music")
+                    intent.putExtra("url", banners?.get(position)?.detailUrl)
+                    startActivity(intent)
+                }
+                binding.banner.setAdapter(imageAdapter)
+            }
+        }
+    }
+
     private fun getHomeItems(): List<HomeItem> {
         val musicCount = musicDao.count()
         val artistCount = artistDao.count()
@@ -362,10 +368,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     class ImageAdapter(banners: List<String>) : BannerAdapter<String, ImageAdapter.BannerViewHolder>(banners) {
-        //创建ViewHolder，可以用viewType这个字段来区分不同的ViewHolder
+        // 创建ViewHolder，可以用viewType这个字段来区分不同的ViewHolder
         override fun onCreateHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
             val imageView = ImageView(parent.context)
-            //注意，必须设置为match_parent，这个是viewpager2强制要求的
+            // 注意，必须设置为match_parent，这个是viewpager2强制要求的
             imageView.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -375,8 +381,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
 
         override fun onBindView(holder: BannerViewHolder, data: String, position: Int, size: Int) {
-
-            //图片加载自己实现
+            // 图片加载自己实现
             Glide.with(holder.itemView)
                 .load(data)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))

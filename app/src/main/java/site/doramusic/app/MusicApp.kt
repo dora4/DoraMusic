@@ -3,14 +3,13 @@ package site.doramusic.app
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
-import dora.http.log.FormatLogInterceptor
 import dora.http.retrofit.RetrofitManager
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
-import site.doramusic.app.http.service.CommonService
+import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MediaManager
 
@@ -53,12 +52,13 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun initHttp() {
         RetrofitManager.initConfig {
             okhttp {
-                interceptors().add(FormatLogInterceptor())
+                // 高版本自动添加
+//                interceptors().add(FormatLogInterceptor())
                 build()
             }
             // 这里可以指定不同节点的API服务
             mappingBaseUrl(MusicService::class.java, AppConfig.URL_APP_SERVER)
-            mappingBaseUrl(CommonService::class.java, AppConfig.URL_CHAT_SERVER)
+            mappingBaseUrl(AdService::class.java, AppConfig.URL_AD_SERVER)
         }
     }
 

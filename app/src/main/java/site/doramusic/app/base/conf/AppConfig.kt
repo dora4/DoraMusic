@@ -3,12 +3,10 @@ package site.doramusic.app.base.conf
 import dora.util.IoUtils
 
 interface AppConfig {
+
     companion object {
-        /**
-         * 朵拉音乐应用服务器。
-         */
         const val URL_APP_SERVER = "http://doramusic.site:8080"
-        const val URL_CHAT_SERVER = "http://dorachat.com:9091"
+        const val URL_AD_SERVER = "http://dorachat.com:9091"
 
         /**
          * Intent & Action。

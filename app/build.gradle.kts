@@ -15,8 +15,8 @@ android {
         applicationId = "site.doramusic.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1.0"
+        versionCode = 3
+        versionName = "1.1.1"
         buildFeatures {
             dataBinding = true
             aidl = true
@@ -95,8 +95,8 @@ dependencies {
     implementation("com.google.guava:guava:27.0.1-android")
 
     // Dora全家桶
-    implementation("com.github.dora4:dcache-android:2.4.13")
-    implementation("com.github.dora4:dora:1.2.26")
+    implementation("com.github.dora4:dcache-android:2.5.6")
+    implementation("com.github.dora4:dora:1.2.29")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-apollo-support:1.4")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
@@ -105,7 +105,7 @@ dependencies {
     implementation("com.github.dora4:dview-toggle-button:1.3")
     implementation("com.github.dora4:dview-alert-dialog:1.18")
     implementation("com.github.dora4:dview-loading-dialog:1.5")
-    implementation("com.github.dora4:dview-colors:1.0")
+    implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.7")
     implementation("com.github.dora4:dview-bottom-dialog:1.13")
     implementation("com.github.dora4:dview-avatar:1.4")
