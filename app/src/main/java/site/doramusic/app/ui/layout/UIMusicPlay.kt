@@ -50,9 +50,13 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     var handler: Handler
     private val curVolume: Int
     private val maxVolume: Int
-    private val audioManager: AudioManager
-    private val mediaManager: MediaManager? = MusicApp.instance!!.mediaManager!!
-    private val contentView: View
+    private val audioManager: AudioManager by lazy {
+        manager.view.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    }
+    private val mediaManager: MediaManager by lazy {
+        MusicApp.instance!!.mediaManager!!
+    }
+    private val contentView: View = manager.view
     private var btnMusicPlayMode: ImageButton? = null
     private var llMusicPlayVolume: LinearLayout? = null
     private var sbMusicPlayPlayback: SeekBar? = null
@@ -76,16 +80,22 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private var rotateCoverView: RotateCoverView? = null
     private var lrcEmptyView: TextView? = null
     private var lrcListView: ListView? = null
-    private lateinit var lyricAdapter: LyricAdapter
+    private val lyricAdapter: LyricAdapter by lazy {
+        LyricAdapter(manager.view.context)
+    }
     private var musicTimer: MusicTimer? = null
     private var playAuto: Boolean = false
     private var seekBarProgress: Int = 0
     private var rvHomeModule: RecyclerView? = null
-    private val musicDao: OrmDao<Music>
-    private val lyricScroller: LyricScroller
-    private val volumeHandler: Handler
+    private val musicDao: OrmDao<Music> by lazy {
+        DaoFactory.getDao(Music::class.java)
+    }
+    private val lyricScroller: LyricScroller = LyricScroller()
+    private val volumeHandler: Handler = Handler()
     private val lyricLoader: LyricLoader
-    private val playModeControl: PlayModeControl
+    private val playModeControl: PlayModeControl by lazy {
+        PlayModeControl(manager.view.context)
+    }
 
     val isOpened: Boolean
         get() = slidingView!!.isOpened
@@ -112,20 +122,14 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     init {
-        this.contentView = manager.view
-        this.lyricAdapter = LyricAdapter(manager.view.context)
-        this.lyricScroller = LyricScroller()
-        this.musicDao = DaoFactory.getDao(Music::class.java)
-        this.playModeControl = PlayModeControl(manager.view.context)
-        volumeHandler = Handler()
-        audioManager = manager.view.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         initViews()
         handler = object : Handler() {
             override fun handleMessage(msg: Message) {
                 super.handleMessage(msg)
-                refreshSeekProgress(mediaManager!!.position(),
+                refreshSeekProgress(
+                    mediaManager.position(),
                         mediaManager.duration())
             }
         }
@@ -176,7 +180,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         coverContainer!!.addView(rotateCoverView, lp)
         coverLrcContainer!!.addView(lrcListView)
         coverLrcContainer!!.addView(lrcEmptyView)
-        var pageViews: MutableList<View>  = ArrayList()
+        val pageViews: MutableList<View>  = ArrayList()
         pageViews.add(coverContainer!!)
         pageViews.add(coverLrcContainer!!)
         viewPager!!.adapter = MusicPlayPagerAdapter(pageViews)
@@ -314,9 +318,11 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         } else {
             btnMusicPlayFavorite!!.setImageResource(R.drawable.ic_favorite_unchecked)
         }
-        curMusic!!.favorite = favorite
-        mediaManager!!.setCurMusic(curMusic!!)
-        saveFavorite(curMusic!!, favorite)
+        curMusic?.let {
+            it.favorite = favorite
+            mediaManager!!.setCurMusic(it)
+            saveFavorite(it, favorite)
+        }
     }
 
     private fun saveFavorite(music: Music, favorite: Int) {
@@ -339,14 +345,14 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         if (seekBar === sbMusicPlayPlayback) {
             playAuto = false
             musicTimer!!.stopTimer()
-            mediaManager!!.pause()
+            mediaManager.pause()
         }
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {
         if (seekBar === sbMusicPlayPlayback) {
             playAuto = true
-            mediaManager!!.seekTo(seekBarProgress)
+            mediaManager.seekTo(seekBarProgress)
             refreshSeekProgress(mediaManager.position(), mediaManager.duration())
             mediaManager.replay()
             musicTimer!!.startTimer()
