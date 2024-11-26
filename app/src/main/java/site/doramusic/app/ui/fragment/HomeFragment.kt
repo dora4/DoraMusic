@@ -30,8 +30,11 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.firebase.SpmUtils.spmAdImpression
+import dora.http.DoraHttp
+import dora.http.DoraHttp.get
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
+import dora.http.DoraHttp.rxResult
 import dora.http.retrofit.RetrofitManager
 import dora.util.*
 import dora.widget.DoraTitleBar
@@ -306,9 +309,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 // 广告印象
                 spmAdImpression("official")
                 binding.banner.visibility = View.VISIBLE
-                val bannerAds = result {
-                    RetrofitManager.getService(AdService::class.java).getBannerAds()
-                }?.data
+
+                // dcache-3.0.4新写法，支持api、result、rxApi和rxResult
+                val bannerAds = result(AdService::class) { getBannerAds() }?.data
+
+//                val bannerAds = result {
+//                    // dcache-3.0.1新写法
+//                    DoraHttp[AdService::class].getBannerAds()
+//                    // 旧写法
+////                    RetrofitManager.getService(AdService::class.java).getBannerAds()
+//                }?.data
                 val result = arrayListOf<String>()
                 val banners: MutableList<DoraBannerAd>? = bannerAds
                 if (banners != null) {
