@@ -87,25 +87,25 @@
             android:name=".ui.activity.MainActivity"
             android:label="主界面"
             android:launchMode="singleTask"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EqualizerActivity"
             android:label="均衡器"
             android:launchMode="singleTop"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.ChoiceColorActivity"
             android:label="选择颜色"
             android:launchMode="singleTop"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            android:exported="true"
+            android:exported="false"
             android:label="设置"/>
 
         <activity
@@ -113,14 +113,14 @@
             android:label="浏览器"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            android:exported="true"/>
+            android:exported="false"/>
 
         <activity
             android:name=".ui.activity.ProtocolActivity"
             android:label="用户协议和隐私政策"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            android:exported="true"/>
+            android:exported="false"/>
         <service
             android:name=".media.MediaService"
             android:process=":doramedia"
