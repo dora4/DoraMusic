@@ -30,7 +30,6 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.firebase.SpmUtils.spmAdImpression
-//import dora.http.DoraHttp.get
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager

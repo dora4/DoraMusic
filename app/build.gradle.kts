@@ -95,11 +95,10 @@ dependencies {
     implementation(libFileTree())
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
-    implementation("com.google.guava:guava:27.0.1-android")
 
     // Dora全家桶
     implementation("com.github.dora4:dcache-android:3.1.4")
-    implementation("com.github.dora4:dora:1.2.32")
+    implementation("com.github.dora4:dora:1.2.33")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-apollo-support:1.4")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
