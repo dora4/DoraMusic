@@ -15,7 +15,7 @@ import site.doramusic.app.base.conf.AppConfig
  */
 class PlayModeControl(internal val context: Context) : AppConfig {
 
-    private val mediaManager: MediaManager? = MusicApp.instance!!.mediaManager
+    private val mediaManager: MediaManager? = MusicApp.app!!.mediaManager
 
     /**
      * 刷新按钮的状态。

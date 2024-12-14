@@ -78,9 +78,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 binding.tbSettingsBassBoost.isChecked = isChecked
                 prefsManager.saveBassBoost(isChecked)
                 if (isChecked) {
-                    MusicApp.instance!!.mediaManager!!.setBassBoost(1000)
+                    MusicApp.app!!.mediaManager!!.setBassBoost(1000)
                 } else {
-                    MusicApp.instance!!.mediaManager!!.setBassBoost(1)
+                    MusicApp.app!!.mediaManager!!.setBassBoost(1)
                 }
                 binding.tbSettingsBassBoost.isChecked = isChecked
             }
@@ -104,9 +104,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 mBinding.tbSettingsBassBoost.isChecked = !isChecked
                 prefsManager.saveBassBoost(!isChecked)
                 if (isChecked) {
-                    MusicApp.instance!!.mediaManager!!.setBassBoost(1000)
+                    MusicApp.app!!.mediaManager!!.setBassBoost(1000)
                 } else {
-                    MusicApp.instance!!.mediaManager!!.setBassBoost(1)
+                    MusicApp.app!!.mediaManager!!.setBassBoost(1)
                 }
             }
             R.id.rl_settings_user_protocol -> {

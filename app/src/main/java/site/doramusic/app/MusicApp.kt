@@ -3,6 +3,7 @@ package site.doramusic.app
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
+import dora.db.table.TableManager
 import dora.http.retrofit.RetrofitManager
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
@@ -29,13 +30,13 @@ class MusicApp : BaseApplication(), AppConfig {
         /**
          * 全局Application单例。
          */
-        var instance: MusicApp? = null
+        var app: MusicApp? = null
             private set
     }
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        app = this
         init()
     }
 
@@ -66,8 +67,13 @@ class MusicApp : BaseApplication(), AppConfig {
         Orm.init(this, OrmConfig.Builder()
             .database(AppConfig.DB_NAME)
             .version(AppConfig.DB_VERSION)
-            .tables(Music::class.java, Artist::class.java,
-                Album::class.java, Folder::class.java)
+            // dcache 3.0开始出现了BUG，只能手动创建表，先注释掉
+//            .tables(Music::class.java, Artist::class.java,
+//                Album::class.java, Folder::class.java)
             .build())
+        TableManager.createTable(Music::class.java)
+        TableManager.createTable(Artist::class.java)
+        TableManager.createTable(Album::class.java)
+        TableManager.createTable(Folder::class.java)
     }
 }

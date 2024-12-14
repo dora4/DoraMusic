@@ -47,7 +47,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private lateinit var rvMusic: RecyclerView
     private lateinit var adapter: MusicItemAdapter
     private lateinit var lvMusic: LetterView
-    private val mediaManager: MediaManager? = MusicApp.instance!!.mediaManager
+    private val mediaManager: MediaManager? = MusicApp.app!!.mediaManager
     private lateinit var tvMusicDialog: TextView
     private val musicDao = DaoFactory.getDao(Music::class.java)
     private val loadingDialog: DoraLoadingDialog = DoraLoadingDialog(manager.view.context)

@@ -45,7 +45,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         View.OnClickListener, AppConfig {
 
     var handler: Handler
-    private val mediaManager: MediaManager? = MusicApp.instance!!.mediaManager
+    private val mediaManager: MediaManager? = MusicApp.app!!.mediaManager
     private val contentView: View = manager.view
     private var tv_home_bottom_music_name: MarqueeTextView? = null
     private var tv_home_bottom_artist: MarqueeTextView? = null

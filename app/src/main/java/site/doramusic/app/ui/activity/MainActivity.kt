@@ -177,7 +177,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                             Executors.newCachedThreadPool().submit {
                                 try {
                                     val playlist = MusicScanner.scan(this@MainActivity) as MutableList<Music>
-                                    MusicApp.instance!!.mediaManager!!.refreshPlaylist(playlist)
+                                    MusicApp.app!!.mediaManager!!.refreshPlaylist(playlist)
                                 } finally {
                                     it.releaseLock(null)
                                 }

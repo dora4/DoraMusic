@@ -79,7 +79,7 @@ class EarphoneReceiver : BroadcastReceiver() {
     }
 
     private fun pauseMusic() {
-        MusicApp.instance!!.mediaManager!!.pause()
+        MusicApp.app!!.mediaManager!!.pause()
     }
 
     /**
