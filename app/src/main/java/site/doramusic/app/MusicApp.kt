@@ -67,13 +67,8 @@ class MusicApp : BaseApplication(), AppConfig {
         Orm.init(this, OrmConfig.Builder()
             .database(AppConfig.DB_NAME)
             .version(AppConfig.DB_VERSION)
-            // dcache 3.0开始出现了BUG，只能手动创建表，先注释掉
-//            .tables(Music::class.java, Artist::class.java,
-//                Album::class.java, Folder::class.java)
+            .tables(Music::class.java, Artist::class.java,
+                Album::class.java, Folder::class.java)
             .build())
-        TableManager.createTable(Music::class.java)
-        TableManager.createTable(Artist::class.java)
-        TableManager.createTable(Album::class.java)
-        TableManager.createTable(Folder::class.java)
     }
 }
