@@ -49,9 +49,8 @@
                     android:id="@+id/btn_home_bottom_menu"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_margin="4dp"
                     android:padding="6dp"
                     app:tint="@color/light_gray"
                     android:background="@color/white"
@@ -59,11 +58,11 @@
 
                 <View
                     android:id="@+id/view_home_bottom_divider"
-                    android:layout_width="1.5dp"
+                    android:layout_width="1dp"
                     android:layout_height="64dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_toLeftOf="@id/btn_home_bottom_menu"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_toStartOf="@id/btn_home_bottom_menu"
                     android:background="#77ffffff" />
 
                 <ImageButton
@@ -71,8 +70,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/view_home_bottom_divider"
-                    android:padding="6dp"
+                    android:layout_toStartOf="@id/view_home_bottom_divider"
+                    android:padding="4dp"
                     app:tint="@color/light_gray"
                     android:background="@color/white"
                     android:src="@drawable/ic_bottom_bar_next" />
@@ -82,14 +81,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
-                    android:layout_toLeftOf="@id/btn_home_bottom_next">
+                    android:layout_marginEnd="4dp"
+                    android:layout_toStartOf="@id/btn_home_bottom_next">
 
                     <ImageButton
                         android:id="@+id/btn_home_bottom_pause"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:padding="6dp"
+                        android:padding="4dp"
                         app:tint="@color/light_gray"
                         android:background="@color/white"
                         android:src="@drawable/ic_bottom_bar_pause"
@@ -99,7 +98,7 @@
                         android:id="@+id/btn_home_bottom_play"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:padding="6dp"
+                        android:padding="4dp"
                         app:tint="@color/light_gray"
                         android:background="@color/white"
                         android:src="@drawable/ic_bottom_bar_play" />
@@ -110,8 +109,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/fl_home_bottom_play_pause"
-                    android:layout_toRightOf="@id/iv_home_bottom_album"
+                    android:layout_toStartOf="@id/fl_home_bottom_play_pause"
+                    android:layout_toEndOf="@id/iv_home_bottom_album"
                     android:orientation="vertical">
 
 

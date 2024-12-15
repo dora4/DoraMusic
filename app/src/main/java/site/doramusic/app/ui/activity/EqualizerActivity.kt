@@ -36,7 +36,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
             StatusBarUtils.getStatusBarHeight())
         SkinManager.getLoader().setBackgroundColor(binding.statusbarEqualizer, "skin_theme_color")
         prefsManager = PreferencesManager(this)
-        val equalizerFreq = MusicApp.app!!.mediaManager!!.equalizerFreq
+        val equalizerFreq = MusicApp.app.mediaManager.equalizerFreq
         val decibels = IntArray(equalizerFreq!!.size)
         if (prefsManager.getEqualizerDecibels() != "") {
             val values = prefsManager.getEqualizerDecibels().split(",".toRegex())
@@ -177,6 +177,6 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
 
     override fun onUpdateDecibel(decibels: IntArray) {
         prefsManager.saveEqualizerDecibels(decibels)
-        MusicApp.app!!.mediaManager!!.setEqualizer(decibels)
+        MusicApp.app.mediaManager.setEqualizer(decibels)
     }
 }

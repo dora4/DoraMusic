@@ -3,7 +3,6 @@ package site.doramusic.app
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
-import dora.db.table.TableManager
 import dora.http.retrofit.RetrofitManager
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
@@ -22,16 +21,14 @@ class MusicApp : BaseApplication(), AppConfig {
     /**
      * 全局的音乐播放控制管理器。
      */
-    var mediaManager: MediaManager? = null
-        private set
+    lateinit var mediaManager: MediaManager
 
     companion object {
 
         /**
          * 全局Application单例。
          */
-        var app: MusicApp? = null
-            private set
+        lateinit var app: MusicApp
     }
 
     override fun onCreate() {
@@ -53,7 +50,7 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun initHttp() {
         RetrofitManager.initConfig {
             okhttp {
-                // 高版本自动添加
+                // 高版本自动添加FormatLogInterceptor
 //                interceptors().add(FormatLogInterceptor())
                 build()
             }
