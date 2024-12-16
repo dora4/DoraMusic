@@ -118,7 +118,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                         adapter.sort()
                         installItemClick()
                         rvMusic.adapter = adapter
-                        loadingDialog.dismissWithAnimation()
+                        loadingDialog.dismiss()
                     }
                 }.start()
             }
@@ -137,7 +137,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                         adapter.sort()
                         installItemClick()
                         rvMusic.adapter = adapter
-                        loadingDialog.dismissWithAnimation()
+                        loadingDialog.dismiss()
                     }
                 }.start()
             }
@@ -157,7 +157,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                         adapter.sort()
                         installItemClick()
                         rvMusic.adapter = adapter
-                        loadingDialog.dismissWithAnimation()
+                        loadingDialog.dismiss()
                     }
                 }.start()
             }
@@ -174,7 +174,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                         adapter.sort()
                         installItemClick()
                         rvMusic.adapter = adapter
-                        loadingDialog.dismissWithAnimation()
+                        loadingDialog.dismiss()
                     }
                 }.start()
             }
@@ -215,8 +215,8 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     private fun installItemClick() {
-        adapter.setOnItemClickListener { adapter, view, position ->
-            val playlist = adapter.data as MutableList<Music>
+        adapter.setOnItemClickListener { ada, view, position ->
+            val playlist = ada.data as MutableList<Music>
             mediaManager?.refreshPlaylist(playlist)
             val music = playlist[position]
             if (music.songId != -1) {

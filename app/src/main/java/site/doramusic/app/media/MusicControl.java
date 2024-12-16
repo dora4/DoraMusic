@@ -21,11 +21,13 @@ import dora.db.builder.WhereBuilder;
 import dora.db.dao.DaoFactory;
 import dora.db.dao.OrmDao;
 import dora.util.LogUtils;
+import dora.util.RxBus;
 import dora.util.TextUtils;
 import dora.util.ToastUtils;
 import site.doramusic.app.base.conf.ApolloEvent;
 import site.doramusic.app.base.conf.AppConfig;
 import site.doramusic.app.db.Music;
+import site.doramusic.app.event.RefreshNumEvent;
 import site.doramusic.app.util.PreferencesManager;
 
 /**
@@ -724,7 +726,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         Intent intent = new Intent(ACTION_PLAY);
         intent.putExtra("play_state", mPlayState);
         mContext.sendBroadcast(intent);
-        Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS);
+        RxBus.getInstance().post(new RefreshNumEvent());
     }
 
     /**

@@ -37,7 +37,7 @@ class SlidingView : SlidingDrawer {
         return rect
     }
 
-    override fun onInterceptTouchEvent(event: MotionEvent): Boolean { // 触摸位置转换为屏幕坐标
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         val location = IntArray(2)
         var x = event.x.toInt()
         var y = event.y.toInt()
@@ -51,9 +51,7 @@ class SlidingView : SlidingDrawer {
                     val rect = getRectOnScreen(view)
                     if (rect.contains(x, y)) {
                         if (event.action == MotionEvent.ACTION_DOWN) {
-                            if (onSlidingViewClickListener != null) {
-                                onSlidingViewClickListener!!.onClick(view)
-                            }
+                            onSlidingViewClickListener?.onClick(view)
                         }
                         return true
                     }
@@ -65,11 +63,11 @@ class SlidingView : SlidingDrawer {
             val view = findViewById<View>(handleId)
             val rect = getRectOnScreen(view)
             return if (rect.contains(x, y)) { // 点击抽屉控件时交由系统处理
-                super.onInterceptTouchEvent(event)
+                super.dispatchTouchEvent(event)
             } else {
                 false
             }
         }
-        return super.onInterceptTouchEvent(event)
+        return super.dispatchTouchEvent(event)
     }
 }

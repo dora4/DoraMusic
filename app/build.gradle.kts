@@ -97,13 +97,12 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dcache-android:3.1.6")
+    implementation("com.github.dora4:dcache-android:3.1.7")
     implementation("com.github.dora4:dora:1.2.33")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-apollo-support:1.4")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
     implementation("com.github.dora4:dora-firebase-support:1.13")
-//    implementation 'com.github.dora4:dora-eventbus-support:1.1'
     implementation("com.github.dora4:dview-toggle-button:1.3")
     implementation("com.github.dora4:dview-alert-dialog:1.18")
     implementation("com.github.dora4:dview-loading-dialog:1.5")

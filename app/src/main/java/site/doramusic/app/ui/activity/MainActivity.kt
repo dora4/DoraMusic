@@ -13,7 +13,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
-import com.lsxiao.apollo.core.Apollo
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
@@ -21,17 +20,18 @@ import dora.db.dao.DaoFactory
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.request
 import dora.skin.SkinManager
-import dora.util.*
+import dora.util.RxBus
+import dora.util.StatusBarUtils
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.ARoutePath
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
+import site.doramusic.app.event.RefreshNumEvent
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.receiver.EarphoneReceiver
 import site.doramusic.app.ui.IBack
@@ -221,7 +221,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                 }
                 //这种方式返回首页也要刷新，另一种刷新是在UIManager#setCurrentItem()
                 if (homeFragment.isHome) {
-                    Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
+                    RxBus.getInstance().post(RefreshNumEvent())
                 }
             }
         }

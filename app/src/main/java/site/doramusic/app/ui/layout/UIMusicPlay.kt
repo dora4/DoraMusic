@@ -1,7 +1,13 @@
 package site.doramusic.app.ui.layout
 
+//import site.doramusic.app.annotation.SingleClick
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
 import android.media.AudioManager
 import android.os.Handler
 import android.os.Message
@@ -9,24 +15,35 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.*
-import android.widget.*
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
+import android.view.animation.TranslateAnimation
+import android.widget.AbsListView
+import android.widget.FrameLayout
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.SeekBar
+import android.widget.SlidingDrawer
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.lsxiao.apollo.core.Apollo
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.db.table.OrmTable
 import dora.util.DensityUtils
+import dora.util.RxBus
 import dora.util.ScreenUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-//import site.doramusic.app.annotation.SingleClick
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Music
+import site.doramusic.app.event.RefreshNumEvent
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.lrc.LyricScroller
 import site.doramusic.app.lrc.loader.DoraLyricLoader
@@ -186,7 +203,9 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         viewPager!!.adapter = MusicPlayPagerAdapter(pageViews)
         slidingView!!.setOnDrawerCloseListener(this)
         slidingView!!.setOnDrawerOpenListener(this)
-
+        slidingView!!.setOnTouchListener { v, event ->
+            event.action == MotionEvent.ACTION_DOWN
+        }
         btnMusicPlayPrev!!.setOnClickListener(this)
         btnMusicPlayNext!!.setOnClickListener(this)
         btnMusicPlayPlay!!.setOnClickListener(this)
@@ -436,24 +455,24 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                 if (curMusic == null) {
                     return
                 }
-                mediaManager!!.prev()
+                mediaManager.prev()
             }
             // 播放
             R.id.btn_music_play_play -> {
                 if (curMusic == null) {
                     return
                 }
-                mediaManager!!.replay()
+                mediaManager.replay()
             }
             // 下一首
             R.id.btn_music_play_next -> {
                 if (curMusic == null) {
                     return
                 }
-                mediaManager!!.next()
+                mediaManager.next()
             }
             // 暂停
-            R.id.btn_music_play_pause -> mediaManager!!.pause()
+            R.id.btn_music_play_pause -> mediaManager.pause()
             // 音量
             R.id.btn_music_play_volume -> if (llMusicPlayVolume!!.isShown) {
                 volumeHandler.removeCallbacks(r)
@@ -468,13 +487,18 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             R.id.btn_music_play_mode -> playModeControl.changePlayMode(btnMusicPlayMode!!)
             // 喜爱
             R.id.btn_music_play_favorite -> {
-                if (mediaManager!!.curMusic!!.favorite == 0) {
-                    refreshFavorite(1)
-                } else {
-                    refreshFavorite(0)
+                if (curMusic == null) {
+                    return
                 }
-                // 此处最好只刷新收藏数目
-                Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
+                curMusic?.let {
+                    if (it.favorite == 0) {
+                        refreshFavorite(1)
+                    } else {
+                        refreshFavorite(0)
+                    }
+                    // 此处最好只刷新收藏数目
+                    RxBus.getInstance().post(RefreshNumEvent())
+                }
             }
         }
     }

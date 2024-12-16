@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.lsxiao.apollo.core.Apollo
-import com.lsxiao.apollo.core.annotations.Receive
 import com.youth.banner.adapter.BannerAdapter
 import dora.BaseFragment
 import dora.db.builder.QueryBuilder
@@ -35,6 +34,7 @@ import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager
 import dora.util.*
 import dora.widget.DoraTitleBar
+import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ApolloEvent
@@ -44,6 +44,7 @@ import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
+import site.doramusic.app.event.RefreshNumEvent
 import site.doramusic.app.http.DoraBannerAd
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.media.IMediaService
@@ -53,8 +54,8 @@ import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.BrowserActivity
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
-import site.doramusic.app.ui.layout.UIBottomBar
 import site.doramusic.app.ui.layout.ILyricDrawer
+import site.doramusic.app.ui.layout.UIBottomBar
 import site.doramusic.app.ui.layout.UIMusicPlay
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.MusicUtils
@@ -97,7 +98,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
             if (action != null && action == AppConfig.ACTION_PLAY) {
-                val music = mediaManager.curMusic
+                mediaManager.curMusic ?: LogUtils.e("当前无歌曲")
+                val music = mediaManager.curMusic ?: return
                 val playState = mediaManager.playState
                 val pendingProgress = intent.getIntExtra("pending_progress", 0)
                 when (playState) {
@@ -233,7 +235,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         artistDao = DaoFactory.getDao(Artist::class.java)
         albumDao = DaoFactory.getDao(Album::class.java)
         folderDao = DaoFactory.getDao(Folder::class.java)
-        mediaManager = MusicApp.app!!.mediaManager!!
+        mediaManager = MusicApp.app.mediaManager
         mediaManager.connectService()
         mediaManager.setOnCompletionListener(this)
         defaultArtwork = BitmapFactory.decodeResource(
@@ -295,6 +297,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             uiManager.setContentType(from)
         }
         adapter.setList(getHomeItems())
+        addDisposable(RxBus.getInstance()
+            .toObservable()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { event ->
+                if (event is RefreshNumEvent) {
+                    onRefreshLocalMusic()
+                }
+            })
     }
 
     private fun loadAds(binding: FragmentHomeBinding) {
@@ -363,7 +373,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         return homeItems
     }
 
-    @Receive(ApolloEvent.REFRESH_LOCAL_NUMS)
     fun onRefreshLocalMusic() {
         val homeItems = getHomeItems()
         adapter.setList(homeItems)

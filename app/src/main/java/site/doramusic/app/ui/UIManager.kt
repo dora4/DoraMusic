@@ -6,15 +6,18 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.lsxiao.apollo.core.Apollo
 import dora.db.table.OrmTable
+import dora.util.RxBus
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.event.RefreshNumEvent
 import site.doramusic.app.ui.activity.MainActivity
-import site.doramusic.app.ui.layout.*
-import java.util.*
+import site.doramusic.app.ui.layout.ILyricDrawer
+import site.doramusic.app.ui.layout.UIViewAlbum
+import site.doramusic.app.ui.layout.UIViewArtist
+import site.doramusic.app.ui.layout.UIViewFolder
+import site.doramusic.app.ui.layout.UIViewMusic
 
 class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, OnBackListener {
 
@@ -37,7 +40,7 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
         } else {
             mainViewPager.setCurrentItem(0, true)
             // 返回首页要刷新界面
-            Apollo.emit(ApolloEvent.REFRESH_LOCAL_NUMS)
+            RxBus.getInstance().post(RefreshNumEvent())
         }
     }
 
