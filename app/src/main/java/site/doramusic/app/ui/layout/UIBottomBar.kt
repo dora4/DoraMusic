@@ -30,6 +30,7 @@ import site.doramusic.app.R
 //import site.doramusic.app.annotation.SingleClick
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.db.Music
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.PlayModeControl
@@ -87,32 +88,31 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     fun initData() {
-        val musics = DaoFactory.getDao(Music::class.java).selectAll()
         val music = DaoFactory.getDao(Music::class.java).selectOne(
             QueryBuilder.create()
                 .orderBy(Music.COLUMN_LAST_PLAY_TIME + " desc"))
         if (music != null) {
-            mediaManager.refreshPlaylist(musics as MutableList<Music>)
-            val isOk = mediaManager.loadCurMusic(music)
-            if (isOk) {
+//            val isOk = mediaManager.loadCurMusic(music)
+//            if (isOk) {
+                mediaManager.refreshPlaylist(arrayListOf(music))
                 tv_home_bottom_music_name!!.text = music.musicName
                 tv_home_bottom_artist!!.text = music.artist
                  try {
-                     val bitmap = MusicUtils.getCachedArtwork(manager.view.context, music.albumId.toLong(),
+                     val bitmap = MusicUtils.getCachedArtwork(contentView.context, music.albumId.toLong(),
                          defaultAlbumIcon)
-                     iv_home_bottom_album!!.setBackgroundDrawable(BitmapDrawable(manager.view.context
+                     iv_home_bottom_album!!.setBackgroundDrawable(BitmapDrawable(contentView.context
                          .resources, bitmap))
                  } catch (e: UnsupportedOperationException) {
                      LogUtils.e(e.toString())
 //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
                  }
                 refreshUI(0, music.duration, music)
-                val manager = PreferencesManager(manager.view.context)
-                val coldLaunchAutoPlay = manager.getColdLaunchAutoPlay()
+                val spManager = PreferencesManager(manager.view.context)
+                val coldLaunchAutoPlay = spManager.getColdLaunchAutoPlay()
                 if (coldLaunchAutoPlay) {
                     mediaManager.playById(music.songId)
                 }
-            }
+//            }
         }
     }
 
