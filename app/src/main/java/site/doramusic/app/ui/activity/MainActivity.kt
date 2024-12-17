@@ -123,6 +123,25 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
     private fun initMenu() {
         // 禁用手势滑动打开
         mBinding.dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        mBinding.dlMain.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: android.view.View, slideOffset: Float) {
+                // 滑动中
+            }
+
+            override fun onDrawerOpened(drawerView: android.view.View) {
+                // 打开状态
+                mBinding.dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            }
+
+            override fun onDrawerClosed(drawerView: android.view.View) {
+                // 关闭后，重新锁定不允许滑动打开
+                mBinding.dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+                // 状态变化
+            }
+        })
         val headerView = mBinding.nvMain.getHeaderView(0)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         versionNameView.text = "客户端版本:${getString(R.string.app_version)}"
@@ -177,7 +196,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                             Executors.newCachedThreadPool().submit {
                                 try {
                                     val playlist = MusicScanner.scan(this@MainActivity) as MutableList<Music>
-                                    MusicApp.app!!.mediaManager!!.refreshPlaylist(playlist)
+                                    MusicApp.app.mediaManager.refreshPlaylist(playlist)
                                 } finally {
                                     it.releaseLock(null)
                                 }

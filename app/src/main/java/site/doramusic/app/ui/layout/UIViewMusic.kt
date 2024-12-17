@@ -1,8 +1,6 @@
 package site.doramusic.app.ui.layout
 
 import android.app.Activity
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.view.MotionEvent
 import android.view.View
@@ -13,11 +11,15 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.reflect.TypeToken
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
+import dora.db.async.OrmTask
+import dora.db.async.OrmTaskListener
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
+import dora.db.exception.OrmTaskException
 import dora.db.table.OrmTable
 import dora.skin.SkinManager
 import dora.widget.DoraLoadingDialog
@@ -26,6 +28,12 @@ import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_ALBUM
+import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_ARTIST
+import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_FAVORITE
+import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_FOLDER
+import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_LATEST
+import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_LOCAL
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
@@ -33,24 +41,23 @@ import site.doramusic.app.db.Music
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
-import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.adapter.MusicItemAdapter
 import site.doramusic.app.widget.LetterView
 
-class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager), AppConfig {
+class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
+    AppConfig {
 
     private var from: Int = 0
     private var table: OrmTable? = null
     private lateinit var statusBarMusic: View
     private lateinit var titleBar: DoraTitleBar
-    private var defaultArtwork: Bitmap? = null
     private lateinit var rvMusic: RecyclerView
     private lateinit var adapter: MusicItemAdapter
     private lateinit var lvMusic: LetterView
-    private val mediaManager: MediaManager? = MusicApp.app!!.mediaManager
     private lateinit var tvMusicDialog: TextView
+    private val mediaManager: MediaManager = MusicApp.app.mediaManager
     private val musicDao = DaoFactory.getDao(Music::class.java)
-    private val loadingDialog: DoraLoadingDialog = DoraLoadingDialog(manager.view.context)
+    private val loadingDialog: DoraLoadingDialog by lazy { DoraLoadingDialog(manager.view.context) }
 
     init {
         Apollo.bind(this)
@@ -61,169 +68,124 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         adapter?.notifyDataSetChanged()
     }
 
+    private fun updateMusicListUI(musics: List<Music>, showSidebar: Boolean = true) {
+        adapter = MusicItemAdapter().apply {
+            setList(musics)
+            setOnItemClickListener { ada, _, position ->
+                val playlist = ada.data as MutableList<Music>
+                mediaManager.refreshPlaylist(playlist)
+                val music = playlist[position]
+                if (music.songId != -1) {
+                    mediaManager.playById(music.songId)
+                }
+            }
+        }
+        rvMusic.adapter = adapter
+        if (!showSidebar) lvMusic.visibility = View.GONE
+    }
+
+    private fun createMusicTaskListener(activity: Activity, updateUI: (List<Music>) -> Unit): OrmTaskListener<Music> {
+        return object : OrmTaskListener<Music> {
+            override fun onCompleted(task: OrmTask<Music>) {
+                activity.runOnUiThread {
+                    val musics = task.result(object : TypeToken<List<Music>>() {}.rawType) as List<Music>
+                    updateUI(musics)
+                    loadingDialog.dismiss()
+                }
+            }
+
+            override fun onFailed(task: OrmTask<Music>, e: OrmTaskException) {
+                activity.runOnUiThread {
+                    loadingDialog.dismiss()
+                }
+            }
+        }
+    }
+
     private fun initViews(view: View) {
-        statusBarMusic = view.findViewById(R.id.statusbar_music)
-        statusBarMusic.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarMusic, "skin_theme_color")
+        val activity = view.context as Activity
+        statusBarMusic = view.findViewById<View>(R.id.statusbar_music).apply {
+            layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight())
+            SkinManager.getLoader().setBackgroundColor(this, "skin_theme_color")
+        }
+
         lvMusic = view.findViewById(R.id.lv_music)
         tvMusicDialog = view.findViewById(R.id.tv_music_dialog)
         titleBar = view.findViewById(R.id.titlebar_music)
-        titleBar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+        rvMusic = view.findViewById(R.id.rv_music)
 
+        setupTitleBar()
+        setupRecyclerView(activity)
+        setupLetterView()
+
+        loadingDialog.show()
+        loadMusicData(activity)
+    }
+
+    private fun setupTitleBar() {
+        titleBar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
                 manager.setCurrentItem()
             }
 
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+                // 预留菜单点击逻辑
             }
         })
-        defaultArtwork = BitmapFactory.decodeResource(view.resources,
-                R.mipmap.ic_launcher)
+    }
 
-        rvMusic = view.findViewById(R.id.rv_music)
+    private fun setupRecyclerView(activity: Activity) {
+        rvMusic.layoutManager = LinearLayoutManager(activity)
+        rvMusic.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        activity.volumeControlStream = AudioManager.STREAM_MUSIC
+    }
 
-        (view.context as MainActivity).volumeControlStream = AudioManager.STREAM_MUSIC
-
-        rvMusic.layoutManager = LinearLayoutManager(view.context)
-        rvMusic.addItemDecoration(DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL))
-        adapter = MusicItemAdapter()
-        when (from) {
-            AppConfig.ROUTE_START_FROM_LOCAL -> {
-                loadingDialog.show()
-                Thread {
-                    val playlist = musicDao.selectAll()
-                    (view.context as Activity).runOnUiThread {
-                        adapter = MusicItemAdapter()
-                        adapter.setList(playlist)
-                        adapter.sort()
-                        installItemClick()
-                        rvMusic.adapter = adapter
-                        loadingDialog.dismiss()
-                    }
-                }.start()
-            }
-            AppConfig.ROUTE_START_FROM_ARTIST -> {
-                loadingDialog.show()
-                Thread {
-                    val artist = table as Artist?
-                    val artists = musicDao.select(
-                        QueryBuilder.create().where(
-                            WhereBuilder.create().addWhereEqualTo("artist", artist!!.name)
-                        )
-                    )
-                    (view.context as Activity).runOnUiThread {
-                        adapter = MusicItemAdapter()
-                        adapter.setList(artists)
-                        adapter.sort()
-                        installItemClick()
-                        rvMusic.adapter = adapter
-                        loadingDialog.dismiss()
-                    }
-                }.start()
-            }
-            AppConfig.ROUTE_START_FROM_ALBUM -> {
-                loadingDialog.show()
-                Thread {
-                    val album = table as Album?
-                    val albums = musicDao.select(
-                        QueryBuilder.create().where(
-                            WhereBuilder.create().addWhereEqualTo("album_id", album!!.album_id)
-                        )
-                    )
-                    (view.context as Activity).runOnUiThread {
-                        adapter = MusicItemAdapter()
-                        adapter.setList(albums)
-                        adapter.sort()
-                        installItemClick()
-                        rvMusic.adapter = adapter
-                        loadingDialog.dismiss()
-                    }
-                }.start()
-            }
-            AppConfig.ROUTE_START_FROM_FOLDER -> {
-                loadingDialog.show()
-                Thread {
-                    val folder = table as Folder?
-                    val music = musicDao.select(
-                        QueryBuilder.create().where(
-                            WhereBuilder.create()
-                                .addWhereEqualTo("folder", folder!!.path)
-                        )
-                    )
-                    (view.context as Activity).runOnUiThread {
-                        adapter = MusicItemAdapter()
-                        adapter.setList(music)
-                        adapter.sort()
-                        installItemClick()
-                        rvMusic.adapter = adapter
-                        loadingDialog.dismiss()
-                    }
-                }.start()
-            }
-            AppConfig.ROUTE_START_FROM_FAVORITE -> {
-                loadingDialog.show()
-                Thread {
-                    val favorite = musicDao.select(
-                        QueryBuilder.create()
-                            .where(WhereBuilder.create().addWhereEqualTo("favorite", 1))
-                    )
-                    (view.context as Activity).runOnUiThread {
-                        adapter = MusicItemAdapter()
-                        adapter.setList(favorite)
-                        adapter.sort()
-                        installItemClick()
-                        rvMusic.adapter = adapter
-                        loadingDialog.dismiss()
-                    }
-                }.start()
-            }
-            AppConfig.ROUTE_START_FROM_LATEST -> {
-                adapter.setList(musicDao.select(QueryBuilder.create()
-                        .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))
-                        .orderBy(Music.COLUMN_LAST_PLAY_TIME + " desc")))
-                lvMusic.visibility = View.GONE
-            }
-        }
-        installItemClick()
-        rvMusic.adapter = adapter
+    private fun setupLetterView() {
         lvMusic.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
                 tvMusicDialog.text = letter
-                val position: Int = when (letter) {
-                    "↑" -> {
-                        0
-                    }
-                    "#" -> {
-                        adapter.itemCount - 1
-                    }
-                    else -> {
-                        adapter.getPositionForSection(letter[0])
-                    }
+                val position = when (letter) {
+                    "↑" -> 0
+                    "#" -> adapter.itemCount - 1
+                    else -> adapter.getPositionForSection(letter[0])
                 }
-                val linearLayoutManager: LinearLayoutManager = rvMusic.layoutManager as LinearLayoutManager
-                linearLayoutManager.scrollToPositionWithOffset(position, 0)
+                (rvMusic.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, 0)
             }
         })
         lvMusic.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_UP -> tvMusicDialog!!.visibility = View.GONE
-                MotionEvent.ACTION_DOWN -> tvMusicDialog!!.visibility = View.VISIBLE
-            }
+            tvMusicDialog.visibility = if (event.action == MotionEvent.ACTION_UP) View.GONE else View.VISIBLE
             false
         }
     }
 
-    private fun installItemClick() {
-        adapter.setOnItemClickListener { ada, view, position ->
-            val playlist = ada.data as MutableList<Music>
-            mediaManager?.refreshPlaylist(playlist)
-            val music = playlist[position]
-            if (music.songId != -1) {
-                // !!! FAILED BINDER TRANSACTION !!!
-                // 如果数据量过大，可能引发这个异常，导致点击播放无反应
-                mediaManager?.playById(music.songId)
+    private fun loadMusicData(activity: Activity) {
+        val listener = createMusicTaskListener(activity) { musics ->
+            updateMusicListUI(musics)
+        }
+        when (from) {
+            ROUTE_START_FROM_LOCAL -> musicDao.selectAllAsync(listener)
+            ROUTE_START_FROM_ARTIST -> {
+                val artist = table as Artist
+                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo("artist", artist.name), listener)
             }
+            ROUTE_START_FROM_ALBUM -> {
+                val album = table as Album
+                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo("album_id", album.album_id), listener)
+            }
+            ROUTE_START_FROM_FOLDER -> {
+                val folder = table as Folder
+                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo("folder", folder.path), listener)
+            }
+            ROUTE_START_FROM_FAVORITE -> musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo("favorite", 1), listener)
+            ROUTE_START_FROM_LATEST -> musicDao.selectAsync(
+                QueryBuilder.create()
+                    .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))
+                    .orderBy("${Music.COLUMN_LAST_PLAY_TIME} desc"),
+                createMusicTaskListener(activity) { musics ->
+                    updateMusicListUI(musics, showSidebar = false)
+                }
+            )
+            else -> return
         }
     }
 
