@@ -250,7 +250,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
 
         @Throws(RemoteException::class)
-        override fun getCurMusic(): Music {
+        override fun getCurMusic(): Music? {
             return mc.curMusic
         }
 

@@ -157,7 +157,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                         musicTimer.startTimer()
 
                         musicPlay.refreshUI(
-                            mediaManager.position(), music!!.duration,
+                            mediaManager.position(), music.duration,
                             music
                         )
                         musicPlay.showPlay(false)

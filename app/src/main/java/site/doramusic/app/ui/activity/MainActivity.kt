@@ -156,6 +156,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                 // 设置
                 R.id.menu_settings -> open(ARoutePath.ACTIVITY_SETTINGS)
             }
+            // 不选中
+            mBinding.dlMain.closeDrawers()
             true
         }
     }

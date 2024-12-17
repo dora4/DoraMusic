@@ -26,7 +26,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:menu="@menu/menu"
+                app:itemBackground="@drawable/selector_menu_bg"
             app:itemTextColor="@color/gray"
+                app:itemTextAppearanceActiveBoldEnabled="false"
             app:headerLayout="@layout/view_drawer_header"/>
 
     </androidx.drawerlayout.widget.DrawerLayout>

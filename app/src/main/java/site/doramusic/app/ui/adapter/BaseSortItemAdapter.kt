@@ -24,10 +24,10 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
     }
 
     fun sort() {
-        Collections.sort(data)
+        data.sort()
     }
 
-    override fun setList(list: Collection<T>?) {
+    final override fun setList(list: Collection<T>?) {
         val letters = arrayListOf<T>()
         if (list != null) {
             letters.addAll(list)

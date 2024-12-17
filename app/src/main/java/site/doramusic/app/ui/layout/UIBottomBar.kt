@@ -170,12 +170,11 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     fun refreshUI(curTime: Int, totalTime: Int, music: Music?) {
         if (music == null) return
-        var totalTime = totalTime
-        val tempTotalTime = totalTime
+        var tempTotalTime = totalTime
 
-        totalTime /= 1000
-        val totalMinute = totalTime / 60
-        val totalSecond = totalTime % 60
+        tempTotalTime /= 1000
+        val totalMinute = tempTotalTime / 60
+        val totalSecond = tempTotalTime % 60
         val totalTimeString = String.format("%02d:%02d", totalMinute,
                 totalSecond)
 

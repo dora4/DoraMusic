@@ -65,14 +65,14 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     @Receive(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
     fun refreshPlaylistStatus() {
-        adapter?.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
     }
 
     private fun updateMusicListUI(musics: List<Music>, showSidebar: Boolean = true) {
         adapter = MusicItemAdapter().apply {
             setList(musics)
-            setOnItemClickListener { ada, _, position ->
-                val playlist = ada.data as MutableList<Music>
+            setOnItemClickListener { baseQuickAdapter, _, position ->
+                val playlist = baseQuickAdapter.data as MutableList<Music>
                 mediaManager.refreshPlaylist(playlist)
                 val music = playlist[position]
                 if (music.songId != -1) {
