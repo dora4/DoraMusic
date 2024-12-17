@@ -19,6 +19,7 @@ import dora.db.builder.QueryBuilder
 import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils
 import dora.skin.SkinManager
+import dora.util.LogUtils
 import dora.util.TextUtils
 import dora.util.ViewUtils
 import dora.widget.ADialogWindow
@@ -45,7 +46,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         View.OnClickListener, AppConfig {
 
     var handler: Handler
-    private val mediaManager: MediaManager? = MusicApp.app!!.mediaManager
+    private val mediaManager: MediaManager = MusicApp.app.mediaManager
     private val contentView: View = manager.view
     private var tv_home_bottom_music_name: MarqueeTextView? = null
     private var tv_home_bottom_artist: MarqueeTextView? = null
@@ -68,7 +69,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         handler = Handler { msg ->
             when (msg.what) {
                 0x100 -> refreshSeekProgress(
-                    mediaManager!!.position(),
+                    mediaManager.position(),
                     mediaManager.duration(), mediaManager.pendingProgress()
                 )
             }
@@ -78,7 +79,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     @Receive(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
     fun refreshPlaylistStatus() {
-        adapter.setList(mediaManager!!.playlist)
+        adapter.setList(mediaManager.playlist)
     }
 
     fun setSecondaryProgress(progress: Int) {
@@ -91,7 +92,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             QueryBuilder.create()
                 .orderBy(Music.COLUMN_LAST_PLAY_TIME + " desc"))
         if (music != null) {
-            mediaManager!!.refreshPlaylist(musics as MutableList<Music>)
+            mediaManager.refreshPlaylist(musics as MutableList<Music>)
             val isOk = mediaManager.loadCurMusic(music)
             if (isOk) {
                 tv_home_bottom_music_name!!.text = music.musicName
@@ -102,6 +103,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                      iv_home_bottom_album!!.setBackgroundDrawable(BitmapDrawable(manager.view.context
                          .resources, bitmap))
                  } catch (e: UnsupportedOperationException) {
+                     LogUtils.e(e.toString())
 //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
                  }
                 refreshUI(0, music.duration, music)
@@ -188,7 +190,6 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         }
         if (music.albumId != -1) {
             try {
-
                 val bitmap = MusicUtils.getCachedArtwork(manager.view.context, music.albumId.toLong(),
                     defaultAlbumIcon)
                 if (bitmap != null) {
@@ -196,12 +197,13 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                         .resources, bitmap))
                 }
             } catch (e:UnsupportedOperationException) {
+                LogUtils.e(e.toString())
 //                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }
         } else {
-            mediaManager!!.updateNotification(defaultAlbumIcon!!, music.musicName, music.artist)
+            mediaManager.updateNotification(defaultAlbumIcon!!, music.musicName, music.artist)
         }
-        refreshSeekProgress(curTime, tempTotalTime, mediaManager!!.pendingProgress())
+        refreshSeekProgress(curTime, tempTotalTime, mediaManager.pendingProgress())
     }
 
     fun showPlay(flag: Boolean) {
@@ -218,9 +220,9 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.btn_home_bottom_play -> mediaManager!!.replay()
-            R.id.btn_home_bottom_pause -> mediaManager!!.pause()
-            R.id.btn_home_bottom_next -> mediaManager!!.next()
+            R.id.btn_home_bottom_play -> mediaManager.replay()
+            R.id.btn_home_bottom_pause -> mediaManager.pause()
+            R.id.btn_home_bottom_next -> mediaManager.next()
             R.id.btn_home_bottom_menu -> showPlaylistDialog()
         }
     }

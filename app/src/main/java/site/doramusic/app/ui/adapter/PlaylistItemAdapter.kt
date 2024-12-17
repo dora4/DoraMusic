@@ -19,7 +19,7 @@ class PlaylistItemAdapter : BaseSortItemAdapter<Music>(R.layout.item_playlist) {
 
     override fun convert(holder: BaseViewHolder, music: Music) {
         val mediaManager = MediaManager(context)
-        if (music.songId == mediaManager.curMusicId
+        if (mediaManager.curMusicId != -1 && music.songId == mediaManager.curMusicId
             && mediaManager.playState == AppConfig.MPS_PLAYING) {
             holder.getView<LinearLayout>(R.id.ll_playlist).setBackgroundColor(Color.LTGRAY)
         } else {

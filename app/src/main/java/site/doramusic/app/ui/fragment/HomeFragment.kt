@@ -105,7 +105,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 when (playState) {
                     AppConfig.MPS_INVALID -> {  // 考虑后面加上如果文件不可播放直接跳到下一首
                         musicTimer.stopTimer()
-                        musicPlay.refreshUI(0, music!!.duration, music)
+                        musicPlay.refreshUI(0, music.duration, music)
                         musicPlay.showPlay(true)
 
                         bottomBar.refreshUI(0, music.duration, music)
@@ -117,7 +117,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                         musicTimer.stopTimer()
 
                         musicPlay.refreshUI(
-                            mediaManager.position(), music!!.duration,
+                            mediaManager.position(), music.duration,
                             music
                         )
                         musicPlay.showPlay(true)
@@ -194,6 +194,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 //                                )
                             }
                         } catch (e: UnsupportedOperationException) {
+                            LogUtils.e(e.toString())
 //                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
                         }
                     }

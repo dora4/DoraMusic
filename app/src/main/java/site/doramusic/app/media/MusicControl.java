@@ -206,7 +206,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * @return
      */
     public boolean prepare(int pos) {
-        if (pos >= mPlaylist.size()) {
+        if (pos == -1 || pos >= mPlaylist.size()) {
             return false;
         }
         mCurPlayIndex = pos;
@@ -656,10 +656,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     public void refreshPlaylist(List<Music> playlist) {
         mPlaylist.clear();
         mPlaylist.addAll(playlist);
-        if (mPlaylist.size() == 0) {
+        if (mPlaylist.isEmpty()) {
             mPlayState = MPS_NO_FILE;
             mCurPlayIndex = -1;
-            return;
         }
     }
 

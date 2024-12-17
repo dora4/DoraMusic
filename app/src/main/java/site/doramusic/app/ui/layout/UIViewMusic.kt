@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.reflect.TypeToken
-import com.lsxiao.apollo.core.Apollo
-import com.lsxiao.apollo.core.annotations.Receive
 import dora.db.async.OrmTask
 import dora.db.async.OrmTaskListener
 import dora.db.builder.QueryBuilder
@@ -26,7 +24,6 @@ import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_ALBUM
 import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_ARTIST
@@ -55,26 +52,16 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private lateinit var adapter: MusicItemAdapter
     private lateinit var lvMusic: LetterView
     private lateinit var tvMusicDialog: TextView
-    private val mediaManager: MediaManager = MusicApp.app.mediaManager
+    private val mediaManager: MediaManager by lazy { MusicApp.app.mediaManager }
     private val musicDao = DaoFactory.getDao(Music::class.java)
     private val loadingDialog: DoraLoadingDialog by lazy { DoraLoadingDialog(manager.view.context) }
 
-    init {
-        Apollo.bind(this)
-    }
-
-    @Receive(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-    fun refreshPlaylistStatus() {
-        adapter.notifyDataSetChanged()
-    }
-
-    private fun updateMusicListUI(musics: List<Music>, showSidebar: Boolean = true) {
+    private fun updateMusicListUI(musics: MutableList<Music>, showSidebar: Boolean = true) {
         adapter = MusicItemAdapter().apply {
             setList(musics)
-            setOnItemClickListener { baseQuickAdapter, _, position ->
-                val playlist = baseQuickAdapter.data as MutableList<Music>
-                mediaManager.refreshPlaylist(playlist)
-                val music = playlist[position]
+            mediaManager.refreshPlaylist(musics)
+            setOnItemClickListener { _, _, position ->
+                val music = musics[position]
                 if (music.songId != -1) {
                     mediaManager.playById(music.songId)
                 }
@@ -84,11 +71,11 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         if (!showSidebar) lvMusic.visibility = View.GONE
     }
 
-    private fun createMusicTaskListener(activity: Activity, updateUI: (List<Music>) -> Unit): OrmTaskListener<Music> {
+    private fun createMusicTaskListener(activity: Activity, updateUI: (MutableList<Music>) -> Unit): OrmTaskListener<Music> {
         return object : OrmTaskListener<Music> {
             override fun onCompleted(task: OrmTask<Music>) {
                 activity.runOnUiThread {
-                    val musics = task.result(object : TypeToken<List<Music>>() {}.rawType) as List<Music>
+                    val musics = task.result(object : TypeToken<MutableList<Music>>() {}.rawType) as MutableList<Music>
                     updateUI(musics)
                     loadingDialog.dismiss()
                 }

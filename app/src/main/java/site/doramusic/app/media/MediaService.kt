@@ -149,7 +149,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
 
         @Throws(RemoteException::class)
-        override fun playByUrl(music: Music, url: String) {
+        override fun playByUrl(music: Music?, url: String) {
             mc.playByUrl(music, url)
         }
 
@@ -184,7 +184,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
 
         @Throws(RemoteException::class)
-        override fun setCurMusic(music: Music) {
+        override fun setCurMusic(music: Music?) {
             return mc.setCurMusic(music)
         }
 
@@ -241,11 +241,14 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         @Throws(RemoteException::class)
         override fun getCurMusicId(): Int {
             // 获取的是歌曲的id，而非数据库主键id
+            if (mc.curMusic == null) {
+                return -1
+            }
             return mc.curMusic.songId
         }
 
         @Throws(RemoteException::class)
-        override fun loadCurMusic(music: Music): Boolean {
+        override fun loadCurMusic(music: Music?): Boolean {
             return mc.loadCurMusic(music)
         }
 
@@ -260,7 +263,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
 
         @Throws(RemoteException::class)
-        override fun updateNotification(bitmap: Bitmap, title: String, name: String) {
+        override fun updateNotification(bitmap: Bitmap?, title: String, name: String) {
             this@MediaService.updateNotification(bitmap, title, name)
         }
 

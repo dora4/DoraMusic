@@ -245,7 +245,7 @@ class MediaManager(internal val context: Context) : IMediaService.Stub(), AppCon
         return -1
     }
 
-    override fun loadCurMusic(music: Music): Boolean {
+    override fun loadCurMusic(music: Music?): Boolean {
         try {
             return mediaService?.loadCurMusic(music) ?: false
         } catch (e: Exception) {
