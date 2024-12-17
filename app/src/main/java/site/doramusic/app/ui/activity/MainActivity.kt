@@ -29,6 +29,7 @@ import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshNumEvent
@@ -198,7 +199,13 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                             Executors.newCachedThreadPool().submit {
                                 try {
                                     val playlist = MusicScanner.scan(this@MainActivity) as MutableList<Music>
-                                    MusicApp.app.mediaManager.refreshPlaylist(playlist)
+                                    // 为了防止这里数据量过大，Binder无法传输，限制只加载前1000首歌曲
+                                    val optPlaylist = if (playlist.size > MUSIC_LIST_MAX_LIST) {
+                                        playlist.take(MUSIC_LIST_MAX_LIST).toMutableList()
+                                    } else {
+                                        playlist
+                                    }
+                                    MusicApp.app.mediaManager.refreshPlaylist(optPlaylist)
                                 } finally {
                                     it.releaseLock(null)
                                 }
