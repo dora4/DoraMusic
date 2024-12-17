@@ -171,11 +171,14 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
             )
             paint.color = ContextCompat.getColor(ctx, dora.widget.colors.R.color.light_gray) // 上面的线的颜色
             canvas.drawLine(cx, cy - radius - 3, stepSize * i.toFloat(), 0f, paint)
-            val text = formatHz(freqs[i - 1])
-            val textWidth = freqPaint.measureText(text)
-            val x = (i - 1) * (measuredWidth / (bandsNum + 1)) + (measuredWidth / (bandsNum + 1) - textWidth) / 2 + measuredWidth / (bandsNum + 1) / 2
-            val baselineY = cy + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom
-            canvas.drawText(text, x, baselineY, freqPaint)
+            if (freqs.isNotEmpty()) {
+                val text = formatHz(freqs[i - 1])
+                val textWidth = freqPaint.measureText(text)
+                val x =
+                    (i - 1) * (measuredWidth / (bandsNum + 1)) + (measuredWidth / (bandsNum + 1) - textWidth) / 2 + measuredWidth / (bandsNum + 1) / 2
+                val baselineY = cy + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom
+                canvas.drawText(text, x, baselineY, freqPaint)
+            }
         }
     }
 
