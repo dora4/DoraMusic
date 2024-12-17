@@ -268,9 +268,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 if (!mMediaPlayer.isPlaying()) {
                     mMediaPlayer.start();
                     mPlayState = MPS_PLAYING;
-                    sendMusicPlayBroadcast();
                     mCurMusic = mPlaylist.get(mCurPlayIndex);
                     saveLatest(mCurMusic);
+                    sendMusicPlayBroadcast();
                 } else {
                     pause();
                 }
@@ -393,9 +393,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 if (!mMediaPlayer.isPlaying()) {
                     mMediaPlayer.start();
                     mPlayState = MPS_PLAYING;
-                    sendMusicPlayBroadcast();
                     mCurMusic = mPlaylist.get(mCurPlayIndex);
                     saveLatest(mCurMusic);
+                    sendMusicPlayBroadcast();
                 } else {
                     pause();
                 }
@@ -620,8 +620,6 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        // 刷新最近播放数量
-        RxBus.getInstance().post(new RefreshNumEvent());
         next();
     }
 
@@ -713,9 +711,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             }
             mMediaPlayer.start();
             mPlayState = MPS_PLAYING;
-            sendMusicPlayBroadcast();
             mCurMusic = mPlaylist.get(mCurPlayIndex);
             saveLatest(mCurMusic);
+            sendMusicPlayBroadcast();
             return true;
         } else {
             return false;

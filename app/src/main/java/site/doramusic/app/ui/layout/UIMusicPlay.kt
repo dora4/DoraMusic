@@ -71,7 +71,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         manager.view.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     }
     private val mediaManager: MediaManager by lazy {
-        MusicApp.app!!.mediaManager!!
+        MusicApp.app.mediaManager
     }
     private val contentView: View = manager.view
     private var btnMusicPlayMode: ImageButton? = null
