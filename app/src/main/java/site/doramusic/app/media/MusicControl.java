@@ -620,6 +620,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        // 刷新最近播放数量
+        RxBus.getInstance().post(new RefreshNumEvent());
         next();
     }
 
