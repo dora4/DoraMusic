@@ -201,7 +201,9 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 //                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }
         } else {
-            mediaManager.updateNotification(defaultAlbumIcon!!, music.musicName, music.artist)
+            defaultAlbumIcon?.let {
+                mediaManager.updateNotification(it, music.musicName, music.artist)
+            }
         }
         refreshSeekProgress(curTime, tempTotalTime, mediaManager.pendingProgress())
     }
@@ -237,17 +239,15 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
             @SuppressLint("SetTextI18n")
             override fun onInflateFinish(contentView: View) {
-                val tv_playlist_playmode = contentView.findViewById(R.id.tv_playlist_playmode) as TextView
-                val tv_playlist_count = contentView.findViewById(R.id.tv_playlist_count) as TextView
-                val iv_playlist_playmode = contentView.findViewById(R.id.iv_playlist_playmode) as ImageView
-                val recyclerView = contentView.findViewById(R.id.rv_playlist) as RecyclerView
-                tv_playlist_playmode.text = playModeControl.printPlayMode(mediaManager!!.playMode)
-                if (mediaManager.playlist != null) {
-                    tv_playlist_count.text = "(${mediaManager.playlist!!.size}首)"
-                }
+                val tv_playlist_playmode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
+                val tv_playlist_count: TextView = contentView.findViewById(R.id.tv_playlist_count)
+                val iv_playlist_playmode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
+                val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
+                tv_playlist_playmode.text = playModeControl.printPlayMode(mediaManager.playMode)
+                "(${mediaManager.playlist.size}首)".also { tv_playlist_count.text = it }
                 adapter.setList(mediaManager.playlist)
                 adapter.setOnItemClickListener { adapter, view, position ->
-                    mediaManager.playById(mediaManager.playlist!![position].songId)
+                    mediaManager.playById(mediaManager.playlist[position].songId)
                 }
                 ViewUtils.configRecyclerView(recyclerView)
                 recyclerView.adapter = adapter

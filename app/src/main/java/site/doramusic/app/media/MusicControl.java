@@ -218,13 +218,16 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             setBassBoost(1);
         }
         if (!mPrefsManager.getEqualizerDecibels().isEmpty()) {
-            int[] equalizerFreq = getEqualizerFreq();
-            int[] decibels = new int[equalizerFreq.length];
-            String[] values = mPrefsManager.getEqualizerDecibels().split(",");
-            for (int i = 0; i < decibels.length; i++) {
-                decibels[i] = Integer.parseInt(values[i]);
+            try {
+                String[] values = mPrefsManager.getEqualizerDecibels().split(",");
+                int[] equalizerFreq = getEqualizerFreq();
+                int[] decibels = new int[equalizerFreq.length];
+                for (int i = 0; i < decibels.length; i++) {
+                    decibels[i] = Integer.parseInt(values[i]);
+                }
+                setEqualizer(decibels);
+            } catch (Exception ignore) {
             }
-            setEqualizer(decibels);
         }
         String path = mPlaylist.get(pos).data;
         if (TextUtils.isNotEmpty(path)) {

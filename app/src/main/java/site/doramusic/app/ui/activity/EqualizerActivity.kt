@@ -41,8 +41,10 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         if (prefsManager.getEqualizerDecibels() != "") {
             val values = prefsManager.getEqualizerDecibels().split(",".toRegex())
                 .dropLastWhile { it.isEmpty() }.toTypedArray()
-            for (i in decibels.indices) {
-                decibels[i] = Integer.valueOf(values[i])
+            if (!values.contains("0")) {
+                for (i in decibels.indices) {
+                    decibels[i] = Integer.valueOf(values[i])
+                }
             }
         }
         binding.rbEqualizerClose.buttonDrawable = BitmapDrawable()

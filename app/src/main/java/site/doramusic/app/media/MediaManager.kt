@@ -263,13 +263,13 @@ class MediaManager(internal val context: Context) : IMediaService.Stub(), AppCon
         return null
     }
 
-    override fun getPlaylist(): MutableList<Music>? {
+    override fun getPlaylist(): MutableList<Music> {
         try {
-            return mediaService?.playlist
+            return mediaService?.playlist ?: arrayListOf()
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return null
+        return arrayListOf()
     }
 
     override fun updateNotification(bitmap: Bitmap, title: String, name: String) {
