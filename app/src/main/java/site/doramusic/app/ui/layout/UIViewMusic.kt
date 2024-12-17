@@ -22,9 +22,11 @@ import dora.db.table.OrmTable
 import dora.skin.SkinManager
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
+import retrofit2.http.OPTIONS
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_ALBUM
 import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_ARTIST
 import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_FAVORITE
@@ -58,10 +60,19 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     private fun updateMusicListUI(musics: MutableList<Music>, showSidebar: Boolean = true) {
         adapter = MusicItemAdapter().apply {
-            setList(musics)
-            mediaManager.refreshPlaylist(musics)
+            // 为了防止这里数据量过大，Binder无法传输，限制只加载前1000首歌曲
+            val optMusics = if (musics.size > MUSIC_LIST_MAX_LIST) {
+                musics.take(MUSIC_LIST_MAX_LIST).toMutableList()
+            } else {
+                musics
+            }
+            setList(optMusics)
+            mediaManager.refreshPlaylist(optMusics)
             setOnItemClickListener { _, _, position ->
-                val music = musics[position]
+                if (position >= MUSIC_LIST_MAX_LIST) {
+                    return@setOnItemClickListener
+                }
+                val music = optMusics[position]
                 if (music.songId != -1) {
                     mediaManager.playById(music.songId)
                 }

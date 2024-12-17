@@ -77,7 +77,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
                             R.drawable.bottom_bar_cover_bg)
                     val bitmap = MusicUtils.getCachedArtwork(this@MediaService, music.albumId.toLong(),
                             defaultArtwork)
-                    updateNotification(bitmap, title, name)
+//                    updateNotification(bitmap, title, name)
                 }
                 ACTION_NEXT -> mc.next()
                 ACTION_PREV -> mc.prev()

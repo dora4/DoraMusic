@@ -51,5 +51,7 @@ interface AppConfig {
         // 扫描器过滤器
         const val SCANNER_FILTER_SIZE = 1024 * 1024 // 1MB
         const val SCANNER_FILTER_DURATION = 60 * 1000 // 1分钟
+
+        const val MUSIC_LIST_MAX_LIST = 1000
     }
 }

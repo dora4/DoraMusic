@@ -273,11 +273,11 @@ class MediaManager(internal val context: Context) : IMediaService.Stub(), AppCon
     }
 
     override fun updateNotification(bitmap: Bitmap, title: String, name: String) {
-        try {
-            mediaService?.updateNotification(bitmap, title, name)
-        } catch (e: RemoteException) {
-            e.printStackTrace()
-        }
+//        try {
+//            mediaService?.updateNotification(bitmap, title, name)
+//        } catch (e: RemoteException) {
+//            e.printStackTrace()
+//        }
     }
 
     override fun cancelNotification() {
