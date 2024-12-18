@@ -198,14 +198,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                         request {
                             Executors.newCachedThreadPool().submit {
                                 try {
-                                    val playlist = MusicScanner.scan(this@MainActivity) as MutableList<Music>
-                                    // 为了防止这里数据量过大，Binder无法传输，限制只加载前1000首歌曲
-                                    val optPlaylist = if (playlist.size > MUSIC_LIST_MAX_LIST) {
-                                        playlist.take(MUSIC_LIST_MAX_LIST).toMutableList()
-                                    } else {
-                                        playlist
-                                    }
-                                    MusicApp.app.mediaManager.refreshPlaylist(optPlaylist)
+                                    MusicScanner.scan(this@MainActivity) as MutableList<Music>
                                 } finally {
                                     it.releaseLock(null)
                                 }

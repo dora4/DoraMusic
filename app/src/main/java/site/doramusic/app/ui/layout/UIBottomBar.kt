@@ -30,7 +30,6 @@ import site.doramusic.app.R
 //import site.doramusic.app.annotation.SingleClick
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.db.Music
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.PlayModeControl
@@ -47,20 +46,20 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         View.OnClickListener, AppConfig {
 
     var handler: Handler
-    private val mediaManager: MediaManager = MusicApp.app.mediaManager
+    private val mediaManager: MediaManager by lazy { MusicApp.app.mediaManager }
     private val contentView: View = manager.view
-    private var tv_home_bottom_music_name: MarqueeTextView? = null
-    private var tv_home_bottom_artist: MarqueeTextView? = null
-    private var tv_home_bottom_position: TextView? = null
-    private var tv_home_bottom_duration: TextView? = null
-    private var btn_home_bottom_play: ImageButton? = null
-    private var btn_home_bottom_pause: ImageButton? = null
-    private var btn_home_bottom_next: ImageButton? = null
-    private var btn_home_bottom_menu: ImageButton? = null
-    private var iv_home_bottom_album: ImageView? = null
-    private var playbackProgress: ProgressBar? = null
+    private lateinit var tvHomeBottomMusicName: MarqueeTextView
+    private lateinit var tvHomeBottomArtist: MarqueeTextView
+    private lateinit var tvHomeBottomPosition: TextView
+    private lateinit var tvHomeBottomDuration: TextView
+    private lateinit var btnHomeBottomPlay: ImageButton
+    private lateinit var btnHomeBottomPause: ImageButton
+    private lateinit var btnHomeBottomNext: ImageButton
+    private lateinit var btnHomeBottomMenu: ImageButton
+    private lateinit var ivHomeBottomAlbum: ImageView
+    private lateinit var playbackProgress: ProgressBar
     private var defaultAlbumIcon: Bitmap? = null
-    private val playModeControl: PlayModeControl = PlayModeControl(manager.view.context)
+    private val playModeControl: PlayModeControl by lazy { PlayModeControl(manager.view.context) }
     private lateinit var popupDialog: DoraDialog
     private val adapter = PlaylistItemAdapter()
 
@@ -84,7 +83,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     fun setSecondaryProgress(progress: Int) {
-        playbackProgress!!.secondaryProgress = progress
+        playbackProgress.secondaryProgress = progress
     }
 
     fun initData() {
@@ -97,12 +96,12 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 //            val isOk = mediaManager.loadCurMusic(music)
 //            if (isOk) {
             mediaManager.refreshPlaylist(arrayListOf(music))
-            tv_home_bottom_music_name!!.text = music.musicName
-            tv_home_bottom_artist!!.text = music.artist
+            tvHomeBottomMusicName.text = music.musicName
+            tvHomeBottomArtist.text = music.artist
             try {
                 val bitmap = MusicUtils.getCachedArtwork(contentView.context, music.albumId.toLong(),
                     defaultAlbumIcon)
-                iv_home_bottom_album!!.setBackgroundDrawable(BitmapDrawable(contentView.context
+                ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(contentView.context
                     .resources, bitmap))
             } catch (e: UnsupportedOperationException) {
                 LogUtils.e(e.toString())
@@ -119,31 +118,31 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     fun updateProgressColor() {
-        playbackProgress!!.progressTintList = SkinManager.getLoader().getColorStateList("skin_theme_color")
+        playbackProgress.progressTintList = SkinManager.getLoader().getColorStateList("skin_theme_color")
     }
 
     private fun initViews() {
-        tv_home_bottom_music_name = findViewById(R.id.tv_home_bottom_music_name) as MarqueeTextView
-        tv_home_bottom_artist = findViewById(R.id.tv_home_bottom_artist) as MarqueeTextView
-        tv_home_bottom_position = findViewById(R.id.tv_home_bottom_position) as TextView
-        tv_home_bottom_duration = findViewById(R.id.tv_home_bottom_duration) as TextView
-        btn_home_bottom_play = findViewById(R.id.btn_home_bottom_play) as ImageButton
-        btn_home_bottom_pause = findViewById(R.id.btn_home_bottom_pause) as ImageButton
-        btn_home_bottom_next = findViewById(R.id.btn_home_bottom_next) as ImageButton
-        btn_home_bottom_menu = findViewById(R.id.btn_home_bottom_menu) as ImageButton
+        tvHomeBottomMusicName = findViewById(R.id.tv_home_bottom_music_name) as MarqueeTextView
+        tvHomeBottomArtist = findViewById(R.id.tv_home_bottom_artist) as MarqueeTextView
+        tvHomeBottomPosition = findViewById(R.id.tv_home_bottom_position) as TextView
+        tvHomeBottomDuration = findViewById(R.id.tv_home_bottom_duration) as TextView
+        btnHomeBottomPlay = findViewById(R.id.btn_home_bottom_play) as ImageButton
+        btnHomeBottomPause = findViewById(R.id.btn_home_bottom_pause) as ImageButton
+        btnHomeBottomNext = findViewById(R.id.btn_home_bottom_next) as ImageButton
+        btnHomeBottomMenu = findViewById(R.id.btn_home_bottom_menu) as ImageButton
 
-        btn_home_bottom_play!!.setOnClickListener(this)
-        btn_home_bottom_pause!!.setOnClickListener(this)
-        btn_home_bottom_next!!.setOnClickListener(this)
-        btn_home_bottom_menu!!.setOnClickListener(this)
+        btnHomeBottomPlay.setOnClickListener(this)
+        btnHomeBottomPause.setOnClickListener(this)
+        btnHomeBottomNext.setOnClickListener(this)
+        btnHomeBottomMenu.setOnClickListener(this)
 
         playbackProgress = findViewById(R.id.sb_home_bottom_playback) as ProgressBar
         updateProgressColor()
         defaultAlbumIcon = BitmapFactory.decodeResource(
                 manager.view.context.resources, R.drawable.bottom_bar_cover_bg)
 
-        iv_home_bottom_album = findViewById(R.id.iv_home_bottom_album) as ImageView
-        iv_home_bottom_album!!.setOnClickListener {
+        ivHomeBottomAlbum = findViewById(R.id.iv_home_bottom_album) as ImageView
+        ivHomeBottomAlbum.setOnClickListener {
             drawer.showDrawer()
         }
     }
@@ -158,14 +157,14 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val curSecond = curTime % 60
 
         val curTimeString = String.format("%02d:%02d", curMinute, curSecond)
-        tv_home_bottom_position!!.text = curTimeString
+        tvHomeBottomPosition.text = curTimeString
 
         var rate = 0
         if (totalTime != 0) {
             rate = (curTime.toFloat() / totalTime * 100).toInt()
         }
-        playbackProgress!!.progress = rate
-        playbackProgress!!.secondaryProgress = pendingProgress
+        playbackProgress.progress = rate
+        playbackProgress.secondaryProgress = pendingProgress
     }
 
     fun refreshUI(curTime: Int, totalTime: Int, music: Music?) {
@@ -178,20 +177,20 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val totalTimeString = String.format("%02d:%02d", totalMinute,
                 totalSecond)
 
-        tv_home_bottom_duration!!.text = totalTimeString
-        if (TextUtils.isNotEqualTo(tv_home_bottom_music_name!!.text.toString(), music.musicName)) {
-            tv_home_bottom_music_name!!.text = music.musicName
+        tvHomeBottomDuration.text = totalTimeString
+        if (TextUtils.isNotEqualTo(tvHomeBottomMusicName.text.toString(), music.musicName)) {
+            tvHomeBottomMusicName.text = music.musicName
         }
 
-        if (TextUtils.isNotEqualTo(tv_home_bottom_artist!!.text.toString(), music.artist)) {
-            tv_home_bottom_artist!!.text = music.artist
+        if (TextUtils.isNotEqualTo(tvHomeBottomArtist.text.toString(), music.artist)) {
+            tvHomeBottomArtist.text = music.artist
         }
         if (music.albumId != -1) {
             try {
                 val bitmap = MusicUtils.getCachedArtwork(manager.view.context, music.albumId.toLong(),
                     defaultAlbumIcon)
                 if (bitmap != null) {
-                    iv_home_bottom_album!!.setBackgroundDrawable(BitmapDrawable(manager.view.context
+                    ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(manager.view.context
                         .resources, bitmap))
                 }
             } catch (e:UnsupportedOperationException) {
@@ -209,12 +208,12 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     fun showPlay(flag: Boolean) {
         if (flag) {
             SpmUtils.selectContent(manager.view.context, "暂停音乐")
-            btn_home_bottom_play!!.visibility = View.VISIBLE
-            btn_home_bottom_pause!!.visibility = View.GONE
+            btnHomeBottomPlay.visibility = View.VISIBLE
+            btnHomeBottomPause.visibility = View.GONE
         } else {
             SpmUtils.selectContent(manager.view.context, "播放音乐")
-            btn_home_bottom_play!!.visibility = View.GONE
-            btn_home_bottom_pause!!.visibility = View.VISIBLE
+            btnHomeBottomPlay.visibility = View.GONE
+            btnHomeBottomPause.visibility = View.VISIBLE
         }
     }
 
@@ -237,26 +236,26 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
             @SuppressLint("SetTextI18n")
             override fun onInflateFinish(contentView: View) {
-                val tv_playlist_playmode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
-                val tv_playlist_count: TextView = contentView.findViewById(R.id.tv_playlist_count)
-                val iv_playlist_playmode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
+                val tvPlaylistPlayMode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
+                val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
+                val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
                 val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
-                tv_playlist_playmode.text = playModeControl.printPlayMode(mediaManager.playMode)
-                "(${mediaManager.playlist.size}首)".also { tv_playlist_count.text = it }
+                tvPlaylistPlayMode.text = playModeControl.printPlayMode(mediaManager.playMode)
+                "(${mediaManager.playlist.size}首)".also { tvPlaylistCount.text = it }
                 adapter.setList(mediaManager.playlist)
                 adapter.setOnItemClickListener { adapter, view, position ->
                     mediaManager.playById(mediaManager.playlist[position].songId)
                 }
                 ViewUtils.configRecyclerView(recyclerView)
                 recyclerView.adapter = adapter
-                iv_playlist_playmode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
-                tv_playlist_playmode.setOnClickListener {
-                    playModeControl.changePlayMode(tv_playlist_playmode,
-                            iv_playlist_playmode)
+                ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
+                tvPlaylistPlayMode.setOnClickListener {
+                    playModeControl.changePlayMode(tvPlaylistPlayMode,
+                            ivPlaylistPlayMode)
                 }
-                iv_playlist_playmode.setOnClickListener {
-                    playModeControl.changePlayMode(tv_playlist_playmode,
-                            iv_playlist_playmode)
+                ivPlaylistPlayMode.setOnClickListener {
+                    playModeControl.changePlayMode(tvPlaylistPlayMode,
+                            ivPlaylistPlayMode)
                 }
             }
         })
