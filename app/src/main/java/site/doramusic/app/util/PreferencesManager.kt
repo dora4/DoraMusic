@@ -94,7 +94,7 @@ class PreferencesManager(val context: Context) {
         const val PREFS_HOT_FIX_ENABLE = "prefs_hot_fix_enable"
         const val PREFS_EQUALIZER_DECIBELS = "prefs_equalizer_decibels"
         const val PREFS_SKIN_COLOR = "prefs_skin_color"
-        const val PREFS_SKIN_TYPE = "prefs_skin_type" // 皮肤类型 1.红  2.橙 3.黑 4.绿 5.青 6.蓝 7.紫色  8.自选
+        const val PREFS_SKIN_TYPE = "prefs_skin_type" // 皮肤类型 1.红 2.橙 3.黑 4.绿 5.青 6.蓝 7.紫
         const val FIRST_LOADING = "first_loading"
     }
 }
