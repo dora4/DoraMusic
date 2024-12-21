@@ -10,9 +10,7 @@ interface AppConfig {
         const val URL_APP_SERVER = "http://doramusic.site:8080"
         const val URL_AD_SERVER = "http://dorachat.com:9091"
 
-        /**
-         * Intent & Action。
-         */
+        // Intent & Action
         const val MEDIA_SERVICE = "site.doramusic.app.service.MEDIA_SERVICE"
         const val ACTION_PLAY = "site.doramusic.app.intent.ACTION_PLAY"
         const val ACTION_PREV = "site.doramusic.app.intent.ACTION_PREV"
