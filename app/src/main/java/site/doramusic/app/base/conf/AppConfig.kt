@@ -21,6 +21,8 @@ interface AppConfig {
         // 文件夹相关
         val FOLDER_LOG = IoUtils.getSdRoot() + "/DoraMusic/log" //日志存放目录
         val FOLDER_LRC = IoUtils.getSdRoot() + "/DoraMusic/lrc" //歌词文件存放目录
+
+        // 数据库相关
         const val DB_NAME = "db_doramusic"
         const val DB_VERSION = 1
 
