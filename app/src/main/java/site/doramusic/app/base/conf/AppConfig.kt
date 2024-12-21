@@ -5,6 +5,8 @@ import dora.util.IoUtils
 interface AppConfig {
 
     companion object {
+
+        // 域名
         const val URL_APP_SERVER = "http://doramusic.site:8080"
         const val URL_AD_SERVER = "http://dorachat.com:9091"
 
