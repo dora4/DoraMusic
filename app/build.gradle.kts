@@ -103,7 +103,7 @@ dependencies {
     implementation("com.github.dora4:dora-apollo-support:1.4")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
     implementation("com.github.dora4:dora-firebase-support:1.13")
-    implementation("com.github.dora4:dview-toggle-button:1.3")
+    implementation("com.github.dora4:dview-toggle-button:1.5")
     implementation("com.github.dora4:dview-alert-dialog:1.18")
     implementation("com.github.dora4:dview-loading-dialog:1.5")
     implementation("com.github.dora4:dview-colors:1.1")

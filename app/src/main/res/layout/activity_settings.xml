@@ -63,6 +63,7 @@
                         android:layout_centerVertical="true"
                         android:scaleX="0.6"
                         android:scaleY="0.6"
+                            app:dview_checkedColor="@color/skin_theme_color"
                         app:dview_showIndicator="false" />
                 </RelativeLayout>
 
@@ -91,7 +92,8 @@
                         android:layout_centerVertical="true"
                         android:scaleX="0.6"
                         android:scaleY="0.6"
-                        app:dview_showIndicator="false" />
+                            app:dview_checkedColor="@color/skin_theme_color"
+                            app:dview_showIndicator="false" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -119,6 +121,7 @@
                         android:layout_centerVertical="true"
                         android:scaleX="0.6"
                         android:scaleY="0.6"
+                            app:dview_checkedColor="@color/skin_theme_color"
                         app:dview_showIndicator="false" />
                 </RelativeLayout>
 

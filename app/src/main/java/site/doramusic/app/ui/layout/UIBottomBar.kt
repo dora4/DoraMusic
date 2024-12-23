@@ -235,7 +235,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private fun showBottomSheetDialog(context: Context) {
         val bottomSheetDialog = BottomSheetDialog(context)
         val contentView = LayoutInflater.from(context).inflate(R.layout.view_popup_playlist, null)
-        val height = ScreenUtils.getContentHeight() / 2
+        val height = ScreenUtils.getContentHeight() * 2 / 5
         val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
         contentView.layoutParams = layoutParams
         val tvPlaylistPlayMode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)

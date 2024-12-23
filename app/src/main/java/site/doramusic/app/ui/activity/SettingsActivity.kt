@@ -42,6 +42,10 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.v = this
         updateDialog = DoraLoadingDialog(this)
         prefsManager = PreferencesManager(this)
+        val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
+        binding.tbSettingsAutoPlay.checkedColor = skinThemeColor
+        binding.tbSettingsShake.checkedColor = skinThemeColor
+        binding.tbSettingsBassBoost.checkedColor = skinThemeColor
         binding.tbSettingsAutoPlay.isChecked = prefsManager.getColdLaunchAutoPlay()
         binding.tbSettingsShake.isChecked = prefsManager.getShakeChangeMusic()
         binding.tbSettingsBassBoost.isChecked = prefsManager.getBassBoost()
