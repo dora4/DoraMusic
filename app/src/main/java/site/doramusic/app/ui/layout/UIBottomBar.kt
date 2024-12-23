@@ -1,17 +1,22 @@
 package site.doramusic.app.ui.layout
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Handler
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.lsxiao.apollo.core.Apollo
 import com.lsxiao.apollo.core.annotations.Receive
 import site.doramusic.app.util.MusicUtils
@@ -20,6 +25,7 @@ import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils
 import dora.skin.SkinManager
 import dora.util.LogUtils
+import dora.util.ScreenUtils
 import dora.util.TextUtils
 import dora.util.ViewUtils
 import dora.widget.ADialogWindow
@@ -222,8 +228,44 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             R.id.btn_home_bottom_play -> mediaManager.replay()
             R.id.btn_home_bottom_pause -> mediaManager.pause()
             R.id.btn_home_bottom_next -> mediaManager.next()
-            R.id.btn_home_bottom_menu -> showPlaylistDialog()
+            R.id.btn_home_bottom_menu -> showBottomSheetDialog(manager.view.context)
         }
+    }
+
+    private fun showBottomSheetDialog(context: Context) {
+        val bottomSheetDialog = BottomSheetDialog(context)
+        val contentView = LayoutInflater.from(context).inflate(R.layout.view_popup_playlist, null)
+        val height = ScreenUtils.getContentHeight() / 2
+        val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
+        contentView.layoutParams = layoutParams
+        val tvPlaylistPlayMode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
+        val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
+        val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
+        val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
+        tvPlaylistPlayMode.text = playModeControl.printPlayMode(mediaManager.playMode)
+        tvPlaylistCount.text = "(${mediaManager.playlist.size}首)"
+        adapter.setList(mediaManager.playlist)
+
+        adapter.setOnItemClickListener { _, _, position ->
+            mediaManager.playById(mediaManager.playlist[position].songId)
+            bottomSheetDialog.dismiss()
+        }
+
+        ViewUtils.configRecyclerView(recyclerView)
+        recyclerView.adapter = adapter
+
+        ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
+
+        tvPlaylistPlayMode.setOnClickListener {
+            playModeControl.changePlayMode(tvPlaylistPlayMode, ivPlaylistPlayMode)
+        }
+        ivPlaylistPlayMode.setOnClickListener {
+            playModeControl.changePlayMode(tvPlaylistPlayMode, ivPlaylistPlayMode)
+        }
+        bottomSheetDialog.behavior.peekHeight = height
+        // 设置内容视图并显示
+        bottomSheetDialog.setContentView(contentView)
+        bottomSheetDialog.show()
     }
 
 //    @SingleClick

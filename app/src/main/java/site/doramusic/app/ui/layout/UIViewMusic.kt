@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.reflect.TypeToken
-import com.lsxiao.apollo.core.Apollo
-import com.lsxiao.apollo.core.annotations.Receive
 import dora.db.async.OrmTask
 import dora.db.async.OrmTaskListener
 import dora.db.builder.QueryBuilder
@@ -26,7 +24,6 @@ import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_ALBUM

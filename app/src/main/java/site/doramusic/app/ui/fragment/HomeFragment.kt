@@ -299,13 +299,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
         adapter.setList(getHomeItems())
         addDisposable(RxBus.getInstance()
-            .toObservable()
+            .toObservable(RefreshNumEvent::class.java)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { event ->
-                if (event is RefreshNumEvent) {
-                    onRefreshLocalMusic()
-                }
+            .subscribe {
+                onRefreshLocalMusic()
             })
+    }
+
+    override fun isAutoDispose(): Boolean {
+        return true
     }
 
     private fun loadAds(binding: FragmentHomeBinding) {

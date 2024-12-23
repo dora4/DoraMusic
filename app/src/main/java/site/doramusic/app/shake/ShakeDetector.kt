@@ -14,9 +14,10 @@ import site.doramusic.app.util.PreferencesManager
  */
 class ShakeDetector(context: Context) : SensorEventListener {
 
-    private val sensorManager: SensorManager?
+    // 获取传感器管理服务
+    private val sensorManager: SensorManager by lazy { context.getSystemService(Context.SENSOR_SERVICE) as SensorManager }
     private var onShakeListener: OnShakeListener? = null
-    private val prefsManager: PreferencesManager
+    private val prefsManager: PreferencesManager by lazy { PreferencesManager(context) }
     private var lowX: Float = 0.toFloat()
     private var lowY: Float = 0.toFloat()
     private var lowZ: Float = 0.toFloat()
@@ -27,12 +28,6 @@ class ShakeDetector(context: Context) : SensorEventListener {
 
     companion object {
         private const val FILTERING_VALUE = 0.1f
-    }
-
-    init {
-        // 获取传感器管理服务
-        sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        prefsManager = PreferencesManager(context)
     }
 
     private val r: Runnable = Runnable {
@@ -69,16 +64,16 @@ class ShakeDetector(context: Context) : SensorEventListener {
      * 启动摇晃检测--注册监听器。
      */
     fun start() {
-        sensorManager?.registerListener(this,
-                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager.registerListener(this,
+            sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+            SensorManager.SENSOR_DELAY_NORMAL)
     }
 
     /**
      * 停止摇晃检测--取消监听器。
      */
     fun stop() {
-        sensorManager?.unregisterListener(this)
+        sensorManager.unregisterListener(this)
     }
 
     /**

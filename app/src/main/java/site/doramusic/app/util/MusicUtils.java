@@ -46,7 +46,7 @@ public class MusicUtils {
 
     public static Bitmap getCachedArtwork(Context context, long artIndex,
                                           Bitmap defaultArtwork) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         synchronized (sArtCache) {
             bitmap = sArtCache.get(artIndex);
         }
