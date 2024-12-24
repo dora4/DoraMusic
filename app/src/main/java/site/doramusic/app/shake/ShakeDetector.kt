@@ -6,8 +6,8 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Handler
-
 import site.doramusic.app.util.PreferencesManager
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * 摇一摇切歌。
@@ -18,26 +18,24 @@ class ShakeDetector(context: Context) : SensorEventListener {
     private val sensorManager: SensorManager by lazy { context.getSystemService(Context.SENSOR_SERVICE) as SensorManager }
     private var onShakeListener: OnShakeListener? = null
     private val prefsManager: PreferencesManager by lazy { PreferencesManager(context) }
-    private var lowX: Float = 0.toFloat()
-    private var lowY: Float = 0.toFloat()
-    private var lowZ: Float = 0.toFloat()
-    private var shaking: Boolean = false
-    private val shakeHandler: Handler by lazy {
-        Handler()
-    }
+    private var lowX: Float = 0f
+    private var lowY: Float = 0f
+    private var lowZ: Float = 0f
+    private val isShaking: AtomicBoolean = AtomicBoolean(false)
+    private val shakeHandler: Handler by lazy { Handler() }
 
     companion object {
         private const val FILTERING_VALUE = 0.1f
     }
 
-    private val r: Runnable = Runnable {
-        shaking = false
+    private val resetShakeRunnable = Runnable {
+        isShaking.set(false)
     }
 
     override fun onSensorChanged(event: SensorEvent) {
         if (prefsManager.getShakeChangeMusic() && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-            if (!shaking) {
-                shakeHandler.removeCallbacks(r)
+            if (!isShaking.get()) {
+                shakeHandler.removeCallbacks(resetShakeRunnable)
                 val x = event.values[SensorManager.DATA_X]
                 val y = event.values[SensorManager.DATA_Y]
                 val z = event.values[SensorManager.DATA_Z]
@@ -48,9 +46,10 @@ class ShakeDetector(context: Context) : SensorEventListener {
                 val highY = y - lowY
                 val highZ = z - lowZ
                 if (highX >= 10 || highY >= 10 || highZ >= 10) {
-                    shaking = true
-                    onShakeListener?.onShake()
-                    shakeHandler.postDelayed(r, 2000)
+                    if (isShaking.compareAndSet(false, true)) {
+                        onShakeListener?.onShake()
+                        shakeHandler.postDelayed(resetShakeRunnable, 2000)
+                    }
                 }
             }
         }
@@ -64,9 +63,11 @@ class ShakeDetector(context: Context) : SensorEventListener {
      * 启动摇晃检测--注册监听器。
      */
     fun start() {
-        sensorManager.registerListener(this,
+        sensorManager.registerListener(
+            this,
             sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-            SensorManager.SENSOR_DELAY_NORMAL)
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
     }
 
     /**
@@ -80,7 +81,6 @@ class ShakeDetector(context: Context) : SensorEventListener {
      * 当摇晃事件发生时，接收通知。
      */
     interface OnShakeListener {
-
         /**
          * 当手机晃动时被调用。
          */
