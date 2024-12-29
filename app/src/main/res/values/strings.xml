@@ -2,14 +2,46 @@
     <string name="app_name">Dora Music</string>
     <string name="app_version">V1.1.2</string>
 
-    <string name="unknown">未知</string>
+    <string name="unknown">Unknown</string>
 
-   
-    <string name="protocol_title">服务协议及隐私权政策</string>
-    <string name="protocol_content_part_one">感谢您使用朵拉音乐！为了让您更加放心的使用朵拉音乐产品及服务，请您务必仔细阅读，充分理解协议中的条款内容后再点击同意，以便您能够更好地行使个人权利及保护个人信息。</string>
-    <string name="protocol_content_part_two">【请您注意】如果您不同意以下协议或其中任何条款约定，您可以点击不同意，暂停使用朵拉的产品和服务。如果您点击同意即表示您已阅读并同意《朵拉音乐用户许可使用协议》、《隐私权政策》，并同意。 </string>
-    <string name="service_protocol">《朵拉音乐用户许可使用协议》</string>
-    <string name="privacy_policy">《隐私权政策》</string>
-    <string name="protocol_agree">同意</string>
-    <string name="protocol_disagree">不同意</string>
+    <string name="protocol_title">User Agreement and Privacy Policy</string>
+    <string name="protocol_content_part_one">Thank you for using Dora Music! To help you use Dora Music products and services with confidence, please carefully read and fully understand the terms in the agreement before clicking agree, so you can better exercise your personal rights and protect your personal information.</string>
+    <string name="protocol_content_part_two">[Please note] If you do not agree to the following agreement or any of its terms, you can click disagree and stop using Dora’s products and services. By clicking agree, you indicate that you have read and agreed to the "Dora Music User License Agreement" and the "Privacy Policy".</string>
+    <string name="service_protocol">"Dora Music User License Agreement"</string>
+    <string name="privacy_policy">"Privacy Policy"</string>
+    <string name="protocol_agree">Agree</string>
+    <string name="protocol_disagree">Disagree</string>
+    <string name="my_music">My Songs</string>
+    <string name="artist">Artist</string>
+    <string name="album">Album</string>
+    <string name="folder">Folder</string>
+    <string name="my_favorite">My Favorites</string>
+    <string name="latest_play">Recently Played</string>
+    <string name="items">%1$d songs</string>
+    <string name="scaning">Scanning…</string>
+    <string name="press_again_to_back">Press again to return to the desktop</string>
+    <string name="scan_prompt">You have favorite songs. Scanning will forcibly clear the favorites. Do you want to continue?</string>
+    <string name="user_agreement">User Agreement</string>
+    <string name="qr_code_scan_result">QR Code Scan Result</string>
+    <string name="choose_color">Choose Color</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="close">Close</string>
+    <string name="custom">Custom</string>
+    <string name="pop">Pop</string>
+    <string name="dance">Dance</string>
+    <string name="blue">Blues</string>
+    <string name="classic">Classical</string>
+    <string name="jazz">Jazz</string>
+    <string name="slow">Slow</string>
+    <string name="slots">Electronic</string>
+    <string name="shake">Rock</string>
+    <string name="country">Country</string>
+    <string name="setting">Settings</string>
+    <string name="auto_play_while_launch">Auto Play on Launch</string>
+    <string name="shake_to_play_next_music">Shake to Skip Track</string>
+    <string name="bass_boost">Bass Boost</string>
+    <string name="logout">Logout</string>
+    <string name="brand">Dora Music</string>
+    <string name="slogan">Listen Anytime</string>
+    <string name="music_list">Music List</string>
 </resources>

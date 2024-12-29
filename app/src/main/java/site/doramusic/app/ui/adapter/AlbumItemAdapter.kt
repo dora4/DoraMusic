@@ -13,6 +13,7 @@ class AlbumItemAdapter(list: MutableList<Album>) : BaseSortItemAdapter<Album>(R.
 
     override fun convert(holder: BaseViewHolder, album: Album) {
         holder.setText(R.id.tv_album_name, album.album_name)
-        holder.setText(R.id.tv_album_number_of_songs, "${album.number_of_songs}首")
+        holder.setText(R.id.tv_album_number_of_songs,
+            String.format(context.getString(R.string.items), album.number_of_songs))
     }
 }

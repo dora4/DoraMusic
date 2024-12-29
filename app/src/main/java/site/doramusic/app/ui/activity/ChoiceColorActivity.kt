@@ -17,6 +17,7 @@ import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 //import site.doramusic.app.annotation.TimeTrace
 import site.doramusic.app.base.conf.ARoutePath
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityChoiceColorBinding
 import site.doramusic.app.ui.adapter.ChoiceColorAdapter
 import site.doramusic.app.util.PreferencesManager
@@ -46,7 +47,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
     override fun initData(savedInstanceState: Bundle?, binding: ActivityChoiceColorBinding) {
         binding.statusbarChoiceColor.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, COLOR_THEME)
         binding.titlebarChoiceColor.addMenuButton(R.drawable.ic_save)
         binding.titlebarChoiceColor.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
@@ -129,7 +130,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
                 SkinManager.changeSkin("purple")
             }
         }
-        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, COLOR_THEME)
         finish()
     }
 }

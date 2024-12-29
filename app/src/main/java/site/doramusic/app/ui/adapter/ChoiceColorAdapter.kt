@@ -9,7 +9,7 @@ import site.doramusic.app.R
 import site.doramusic.app.ui.activity.ChoiceColorActivity
 
 class ChoiceColorAdapter : BaseQuickAdapter<ChoiceColorActivity
-    .ColorData, BaseViewHolder>(R.layout.item_choice_color) {
+    .ColorData, BaseViewHolder>(R.layout.item_choose_color) {
 
     var selectedPosition = -1 // 选中的位置
 

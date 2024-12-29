@@ -36,6 +36,7 @@ import site.doramusic.app.R
 //import site.doramusic.app.annotation.SingleClick
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Music
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.PlayModeControl
@@ -124,7 +125,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     fun updateProgressColor() {
-        playbackProgress.progressTintList = SkinManager.getLoader().getColorStateList("skin_theme_color")
+        playbackProgress.progressTintList = SkinManager.getLoader().getColorStateList(COLOR_THEME)
     }
 
     private fun initViews() {

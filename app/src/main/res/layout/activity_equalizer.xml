@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/skin_theme_color"
-            app:dview_title="均衡器"/>
+            app:dview_title="@string/equalizer"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="关闭"
+                        android:text="@string/close"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="自定义"
+                        android:text="@string/custom"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -77,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="流行"
+                        android:text="@string/pop"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="舞曲"
+                        android:text="@string/dance"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="蓝调"
+                        android:text="@string/blue"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="古典"
+                        android:text="@string/classic"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="爵士"
+                        android:text="@string/jazz"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -122,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="慢歌"
+                        android:text="@string/slow"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -131,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="电子"
+                        android:text="@string/slots"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="摇滚"
+                        android:text="@string/shake"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
-                        android:text="乡村"
+                        android:text="@string/country"
                         android:textColor="@color/equalizer_radio_button_text_color" />
                 </RadioGroup>
             </HorizontalScrollView>

@@ -12,6 +12,7 @@ import dora.util.StatusBarUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityEqualizerBinding
 import site.doramusic.app.util.PreferencesManager
 import site.doramusic.app.widget.EqualizerView
@@ -34,7 +35,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
     override fun initData(savedInstanceState: Bundle?, binding: ActivityEqualizerBinding) {
         binding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(binding.statusbarEqualizer, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(binding.statusbarEqualizer, COLOR_THEME)
         prefsManager = PreferencesManager(this)
         val equalizerFreq = MusicApp.app.mediaManager.equalizerFreq
         val decibels = IntArray(equalizerFreq!!.size)
@@ -59,7 +60,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         binding.rbEqualizerShake.buttonDrawable = BitmapDrawable()
         binding.rbEqualizerCountry.buttonDrawable = BitmapDrawable()
 
-        val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         val colors = intArrayOf(skinThemeColor, Color.WHITE)
         val state = arrayOf(intArrayOf(android.R.attr.state_checked), IntArray(0))
         val colorStateList = ColorStateList(state, colors)

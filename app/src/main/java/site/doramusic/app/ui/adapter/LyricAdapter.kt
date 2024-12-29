@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import dora.skin.SkinManager
 import site.doramusic.app.R
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.util.PreferencesManager
 import java.util.*
@@ -103,7 +104,7 @@ class LyricAdapter(internal var context: Context) : BaseAdapter() {
                 val skinColor = prefsManager.getSkinColor()
                 holder.lyricLine!!.setTextColor(context.resources.getColor(skinColor))
             } else {
-                val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
+                val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
                 holder.lyricLine!!.setTextColor(context.resources.getColor(skinThemeColor))
             }
             holder.lyricLine!!.textSize = currentSize

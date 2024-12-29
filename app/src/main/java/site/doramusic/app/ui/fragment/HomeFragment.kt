@@ -367,12 +367,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         val latestCount =
             ViewUtils.clamp(musicDao.count(latestBuild).toFloat(), 100f, 0f).toLong()
         val homeItems = ArrayList<HomeItem>()
-        homeItems.add(HomeItem(R.drawable.ic_local_music, "我的歌曲", musicCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_artist, "歌手", artistCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_album, "专辑", albumCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_folder, "文件夹", folderCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_favorite, "我的收藏", favoriteCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_latest, "最近播放", latestCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_music, getString(R.string.my_music), musicCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_artist, getString(R.string.artist), artistCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_album, getString(R.string.album), albumCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_folder, getString(R.string.folder), folderCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_favorite,
+            getString(R.string.my_favorite), favoriteCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_latest,
+            getString(R.string.latest_play), latestCount))
         return homeItems
     }
 

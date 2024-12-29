@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:text="朵拉音乐"
+                        android:text="@string/brand"
                         android:textColor="@color/gray" />
 
                     <site.doramusic.app.widget.MarqueeTextView
@@ -130,7 +130,7 @@
                         android:layout_below="@id/tv_home_bottom_music_name"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:text="想听就听"
+                        android:text="@string/slogan"
                         android:textColor="@color/gray"
                         android:textSize="12sp" />
 

@@ -13,6 +13,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import dora.skin.SkinManager
 import site.doramusic.app.R
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -90,7 +91,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     }
 
     private fun initPaints() {
-        val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         paint = Paint()
         paint.isAntiAlias = true
         nodePaint = Paint()
@@ -152,7 +153,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     }
 
     private fun refreshView(canvas: Canvas, stepSize: Int) {
-        val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         val fontMetrics = freqPaint.fontMetrics
         for (i in 1..bandsNum) {
             val cx = stepSize * i.toFloat()

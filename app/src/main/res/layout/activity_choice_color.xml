@@ -23,7 +23,7 @@
             android:id="@+id/titlebar_choice_color"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            app:dview_title="选择颜色"
+            app:dview_title="@string/choose_color"
             android:layout_below="@+id/statusbar_choice_color"
             android:background="@color/skin_theme_color" />
 

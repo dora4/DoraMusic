@@ -11,6 +11,7 @@ import dora.skin.SkinManager
 import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityProtocolBinding
 
 /**
@@ -40,7 +41,7 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
     override fun initData(savedInstanceState: Bundle?, binding: ActivityProtocolBinding) {
         binding.statusbarPrivacyPolicy.layoutParams = LinearLayout
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(binding.statusbarPrivacyPolicy, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(binding.statusbarPrivacyPolicy, COLOR_THEME)
         webView = WebView(applicationContext)
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -52,9 +53,9 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
         // 动态添加WebView，解决在xml引用WebView持有Activity的Context对象，导致内存泄露
         binding.webViewContainer.addView(webView)
         binding.titlebarPrivacyPolicy.title = title.toString()
-        if (title.equals("用户协议")) {
+        if (title.equals(getString(R.string.user_agreement))) {
             webView?.loadUrl("file:///android_asset/user_agreement.html")
-        } else if (title.equals("隐私政策")) {
+        } else if (title.equals(getString(R.string.privacy_policy))) {
             webView?.loadUrl("file:///android_asset/privacy_policy.html")
         }
     }

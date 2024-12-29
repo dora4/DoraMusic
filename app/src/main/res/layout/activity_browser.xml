@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimary"
-            app:dview_title="二维码扫码结果"/>
+            app:dview_title="@string/qr_code_scan_result"/>
         <RelativeLayout
             android:id="@+id/rl_browser_web_page"
             android:layout_width="match_parent"

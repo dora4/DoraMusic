@@ -339,7 +339,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         }
         curMusic?.let {
             it.favorite = favorite
-            mediaManager!!.setCurMusic(it)
+            mediaManager.setCurMusic(it)
             saveFavorite(it, favorite)
         }
     }

@@ -25,6 +25,7 @@ import dora.widget.DoraTitleBar
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_ALBUM
 import site.doramusic.app.base.conf.AppConfig.Companion.ROUTE_START_FROM_ARTIST
@@ -104,7 +105,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val activity = view.context as Activity
         statusBarMusic = view.findViewById<View>(R.id.statusbar_music).apply {
             layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight())
-            SkinManager.getLoader().setBackgroundColor(this, "skin_theme_color")
+            SkinManager.getLoader().setBackgroundColor(this, COLOR_THEME)
         }
 
         lvMusic = view.findViewById(R.id.lv_music)

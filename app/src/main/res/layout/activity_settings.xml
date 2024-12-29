@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/skin_theme_color"
-            app:dview_title="设置"/>
+            app:dview_title="@string/setting"/>
 
 
             <LinearLayout
@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:text="启动时自动播放"
+                        android:text="@string/auto_play_while_launch"
                         android:textColor="@color/gray" />
 
                     <dora.widget.DoraToggleButton
@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:text="摇一摇切歌"
+                        android:text="@string/shake_to_play_next_music"
                         android:textColor="@color/gray" />
 
                     <dora.widget.DoraToggleButton
@@ -110,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:text="重低音增强"
+                        android:text="@string/bass_boost"
                         android:textColor="@color/gray" />
 
                     <dora.widget.DoraToggleButton
@@ -142,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:text="用户协议"
+                        android:text="@string/user_agreement"
                         android:textColor="@color/gray" />
                 </RelativeLayout>
 
@@ -162,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:text="隐私政策"
+                        android:text="@string/privacy_policy"
                         android:textColor="@color/gray" />
 
                 </RelativeLayout>
@@ -183,7 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="注销登录"
+                        android:text="@string/logout"
                         android:textColor="@color/skin_theme_color"
                         android:textSize="15sp" />
                 </RelativeLayout>

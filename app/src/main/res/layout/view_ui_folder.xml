@@ -21,7 +21,7 @@
         app:dview_backIconSize="30dp"
         app:dview_backIcon="@drawable/ic_back"
         app:dview_isClickBackIconClose="false"
-        app:dview_title="文件夹"/>
+        app:dview_title="@string/folder"/>
 
     <FrameLayout
         android:layout_width="match_parent"

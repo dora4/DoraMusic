@@ -55,5 +55,7 @@ interface AppConfig {
         const val SCANNER_FILTER_DURATION = 60 * 1000 // 1分钟
 
         const val MUSIC_LIST_MAX_LIST = 1000
+
+        const val COLOR_THEME = "skin_theme_color"
     }
 }

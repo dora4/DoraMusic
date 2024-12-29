@@ -15,6 +15,7 @@ import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.util.PreferencesManager
 
@@ -38,11 +39,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
         )
-        SkinManager.getLoader().setBackgroundColor(binding.statusbarSettings, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(binding.statusbarSettings, COLOR_THEME)
         binding.v = this
         updateDialog = DoraLoadingDialog(this)
         prefsManager = PreferencesManager(this)
-        val skinThemeColor = SkinManager.getLoader().getColor("skin_theme_color")
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         binding.tbSettingsAutoPlay.checkedColor = skinThemeColor
         binding.tbSettingsShake.checkedColor = skinThemeColor
         binding.tbSettingsBassBoost.checkedColor = skinThemeColor
@@ -108,19 +109,19 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 mBinding.tbSettingsBassBoost.isChecked = !isChecked
                 prefsManager.saveBassBoost(!isChecked)
                 if (isChecked) {
-                    MusicApp.app!!.mediaManager!!.setBassBoost(1000)
+                    MusicApp.app.mediaManager.setBassBoost(1000)
                 } else {
-                    MusicApp.app!!.mediaManager!!.setBassBoost(1)
+                    MusicApp.app.mediaManager.setBassBoost(1)
                 }
             }
             R.id.rl_settings_user_protocol -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
-                    withString("title", "用户协议")
+                    withString("title", getString(R.string.user_agreement))
                 }
             }
             R.id.rl_settings_privacy_policy -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
-                    withString("title", "隐私政策")
+                    withString("title", getString(R.string.privacy_policy))
                 }
             }
         }

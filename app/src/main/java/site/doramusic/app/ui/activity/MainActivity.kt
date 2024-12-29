@@ -145,7 +145,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         })
         val headerView = mBinding.nvMain.getHeaderView(0)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
-        versionNameView.text = "客户端版本:${getString(R.string.app_version)}"
+        versionNameView.text = getString(R.string.app_version)
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 // 扫描歌曲
@@ -173,7 +173,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                 .addWhereEqualTo(Music.COLUMN_FAVORITE, 1))
         val favoriteCount = DaoFactory.getDao(Music::class.java).count(builder)
         if (favoriteCount > 0) { //有收藏的歌曲
-            DoraAlertDialog(this).show("您有收藏的歌曲，扫描将会强制清空收藏的歌曲，是否继续？") {
+            DoraAlertDialog(this).show(getString(R.string.scan_prompt)) {
                 themeColorResId(R.color.colorPrimary)
                 positiveListener { scanMusic() }
             }
@@ -191,7 +191,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
             .request { _, allGranted ->
                 if (allGranted) {
                     net {
-                        val dialog = DoraLoadingDialog(this).show("正在扫描...") {
+                        val dialog = DoraLoadingDialog(this).show(getString(R.string.scaning)) {
                             setCancelable(false)
                             setCanceledOnTouchOutside(false)
                         }
@@ -225,7 +225,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
             } else {
                 val currTime = System.currentTimeMillis()
                 if (currTime - lastTime > 2000) {
-                    showShortToast("再按一次返回到桌面")
+                    showShortToast(getString(R.string.press_again_to_back))
                     lastTime = currTime
                 } else {
                     moveTaskToBack(false)

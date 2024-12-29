@@ -15,6 +15,7 @@ import dora.skin.SkinManager
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Album
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
@@ -42,7 +43,7 @@ class UIViewAlbum(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         statusBarAlbum = view.findViewById(R.id.statusbar_album)
         statusBarAlbum!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarAlbum!!, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(statusBarAlbum!!, COLOR_THEME)
         titlebar = view.findViewById(R.id.titlebar_album)
         titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 

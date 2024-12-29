@@ -15,6 +15,7 @@ import dora.skin.SkinManager
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Folder
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
@@ -44,7 +45,7 @@ class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
         statusBarFolder = view.findViewById(R.id.statusbar_folder)
         statusBarFolder!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarFolder!!, "skin_theme_color")
+        SkinManager.getLoader().setBackgroundColor(statusBarFolder!!, COLOR_THEME)
         lvFolder = view.findViewById(R.id.lv_folder)
         tvFolderDialog = view.findViewById(R.id.tv_folder_dialog)
         titlebar = view.findViewById(R.id.titlebar_folder)
