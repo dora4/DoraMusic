@@ -115,6 +115,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }
             refreshUI(0, music.duration, music)
+            // 这次播放来不及应用均衡器参数，主打一个启动时以最快速度进行播放
             mediaManager.playById(music.songId)
 //            }
         }

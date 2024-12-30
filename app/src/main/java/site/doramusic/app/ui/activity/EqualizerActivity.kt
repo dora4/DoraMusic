@@ -63,7 +63,6 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
             // 默认选中第一个
             binding.rgEqualizer.check(R.id.rb_equalizer_close)
             binding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
-            onUpdateDecibel(intArrayOf(0, 0, 0, 0, 0))
             binding.evEqualizer.setTouchable(false)
             binding.evEqualizer.resetState()
         } else {
@@ -72,6 +71,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
             }
             // 选中自定义的tab
             binding.rgEqualizer.check(R.id.rb_equalizer_custom)
+            binding.evEqualizer.setDecibels(decibels)
             binding.evEqualizer.setTouchable(true)
             binding.evEqualizer.resetState()
         }

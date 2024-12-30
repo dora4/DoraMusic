@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.media.audiofx.Equalizer
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -59,6 +60,7 @@ import site.doramusic.app.ui.layout.UIBottomBar
 import site.doramusic.app.ui.layout.UIMusicPlay
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.MusicUtils
+import site.doramusic.app.util.PreferencesManager
 import java.util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
@@ -414,7 +416,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         )
     }
 
+    /**
+     * 获取均衡器支持的频率。
+     *
+     * @return
+     */
+    private fun getEqualizerFreq(): IntArray {
+        val equalizer = Equalizer(0, 0)
+        val bands = equalizer.numberOfBands
+        val freqs = IntArray(bands.toInt())
+        for (i in 0 until bands) {
+            val centerFreq = equalizer.getCenterFreq(i.toShort()) / 1000
+            freqs[i.toInt()] = centerFreq
+        }
+        return freqs
+    }
+
+    private fun applyEqualizer(mediaManager: MediaManager) {
+        val prefsManager = PreferencesManager(requireContext())
+        val equalizerFreq = getEqualizerFreq()
+        val size = equalizerFreq.size
+        val decibels = IntArray(size)
+        val equalizerDecibels = prefsManager.getEqualizerDecibels()
+        val values = equalizerDecibels.split(",".toRegex()).toTypedArray()
+        for (i in values.indices) {
+            decibels[i] = Integer.valueOf(values[i])
+        }
+        mediaManager.setEqualizer(decibels)
+    }
+
     override fun onConnectCompletion(service: IMediaService) {
+        applyEqualizer(mediaManager)
         bottomBar.initData()
     }
 
