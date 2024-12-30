@@ -211,7 +211,7 @@ class EqualizerView @JvmOverloads constructor(context: Context, attrs:
                         if (y >= measuredHeight - 40) {
                             points[index]!!.y = measuredHeight - 40.toFloat()
                         }
-                        decibels[index - 1] = -getDecibel(points[index]!!.y)
+                        decibels[index - 1] = getDecibel(points[index]!!.y)
                         invalidate()
                     }
                 }
@@ -220,6 +220,7 @@ class EqualizerView @JvmOverloads constructor(context: Context, attrs:
                     if (decibels[index - 1] != 0 && decibels[index - 1] != -12 && decibels[index - 1] != 12) {
                         val lastY = step * (decibels[index - 1] + 13)
                         points[index]!!.y = lastY
+                        decibels[index - 1] = decibels[index - 1]
                     } else if (decibels[index - 1] == 0) {
                         points[index]!!.y = step * 13
                     }
@@ -262,13 +263,13 @@ class EqualizerView @JvmOverloads constructor(context: Context, attrs:
     private fun getDecibel(y: Float): Int {
         return when (y) {
             height - 40.toFloat() -> {
-                -12
-            }
-            40f -> {
                 12
             }
+            40f -> {
+                -12
+            }
             else -> {
-                13 - (y / step).roundToInt()
+                ((y - 40) / step - 12).roundToInt()
             }
         }
     }

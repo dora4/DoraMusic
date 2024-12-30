@@ -120,78 +120,76 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
                     val equalizerDecibelsSP = prefsManager.getEqualizerDecibels()
                     val splitDecibels = equalizerDecibelsSP.split(",".toRegex()).toTypedArray()
                     val result = IntArray(splitDecibels.size)
-                    val reverseResult = IntArray(splitDecibels.size)
                     for (i in splitDecibels.indices) {
-                        reverseResult[i] = -Integer.valueOf(splitDecibels[i])
                         result[i] = Integer.valueOf(splitDecibels[i])
                     }
                     binding.evEqualizer.setDecibels(result)
                     binding.evEqualizer.setTouchable(true)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(reverseResult)
+                    onUpdateDecibel(result)
                 }
                 R.id.rb_equalizer_pop // 流行
                 -> {
-                    binding.evEqualizer.setDecibels(intArrayOf(6, -6, 6, -6, 6))
+                    binding.evEqualizer.setDecibels(intArrayOf(-6, 6, -6, 6, -6))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(intArrayOf(6, -6, 6, -6, 6))
+                    onUpdateDecibel(intArrayOf(-6, 6, -6, 6, -6))
                 }
                 R.id.rb_equalizer_dance   // 舞曲
                 -> {
-                    binding.evEqualizer.setDecibels(intArrayOf(4, -5, 0, 4, 5))
+                    binding.evEqualizer.setDecibels(intArrayOf(-4, 5, 0, -4, -5))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(intArrayOf(4, -5, 0, 4, 5))
+                    onUpdateDecibel(intArrayOf(-4, 5, 0, -4, -5))
                 }
                 R.id.rb_equalizer_blue    // 蓝调
                 -> {
-                    binding.evEqualizer.setDecibels(intArrayOf(-2, 2, 1, -2, -2))
+                    binding.evEqualizer.setDecibels(intArrayOf(2, -2, -1, 2, 2))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(intArrayOf(-2, 2, 1, -2, -2))
+                    onUpdateDecibel(intArrayOf(2, -2, -1, 2, 2))
                 }
                 R.id.rb_equalizer_classic // 古典
                 -> {
-                    binding.evEqualizer.setDecibels(intArrayOf(7, 2, 0, -7, -8))
+                    binding.evEqualizer.setDecibels(intArrayOf(-7, -2, 0, 7, 8))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(intArrayOf(7, 2, 0, -7, -8))
+                    onUpdateDecibel(intArrayOf(-7, -2, 0, 7, 8))
                 }
                 R.id.rb_equalizer_jazz    // 爵士
                 -> {
-                    binding.evEqualizer.setDecibels(intArrayOf(-5, -3, 3, 1, 2))
+                    binding.evEqualizer.setDecibels(intArrayOf(5, 3, -3, -1, -2))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(intArrayOf(-5, -3, 3, 1, 2))
+                    onUpdateDecibel(intArrayOf(5, 3, -3, -1, -2))
                 }
                 R.id.rb_equalizer_slow    // 慢摇
                 -> {
-                    binding.evEqualizer.setDecibels(intArrayOf(-7, -6, 2, 4, 0))
+                    binding.evEqualizer.setDecibels(intArrayOf(7, 6, -2, -4, 0))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(intArrayOf(-7, -6, 2, 4, 0))
+                    onUpdateDecibel(intArrayOf(7, 6, -2, -4, 0))
                 }
                 R.id.rb_equalizer_slots   // 电子
                 -> {
-                    binding.evEqualizer.setDecibels(intArrayOf(8, 1, -5, 0, 3))
+                    binding.evEqualizer.setDecibels(intArrayOf(-8, -1, 5, 0, -3))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(intArrayOf(8, 1, -5, 0, 3))
+                    onUpdateDecibel(intArrayOf(-8, -1, 5, 0, -3))
                 }
                 R.id.rb_equalizer_shake   // 摇滚
                 -> {
-                    binding.evEqualizer.setDecibels(intArrayOf(7, 2, -4, 1, 4))
+                    binding.evEqualizer.setDecibels(intArrayOf(-7, -2, 4, -1, -4))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(intArrayOf(7, 2, -4, 1, 4))
+                    onUpdateDecibel(intArrayOf(-7, -2, 4, -1, -4))
                 }
                 R.id.rb_equalizer_country // 乡村
                 -> {
-                    binding.evEqualizer.setDecibels(intArrayOf(-7, -6, 3, 4, -5))
+                    binding.evEqualizer.setDecibels(intArrayOf(7, 6, -3, -4, 5))
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
-                    onUpdateDecibel(intArrayOf(-7, -6, 3, 4, -5))
+                    onUpdateDecibel(intArrayOf(7, 6, -3, -4, 5))
                 }
             }
         }
