@@ -54,7 +54,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         this.mContext = context;
         this.mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         this.mPrefsManager = new PreferencesManager(context);
-        this.mPlayMode = MPM_LIST_LOOP_PLAY;    //默认列表循环
+        this.mPlayMode = MPM_PLAYLIST_LOOP;    //默认列表循环
         this.mPlayState = MPS_NO_FILE;  //默认没有音频文件播放
         this.mCurPlayIndex = -1;
         this.mCurMusicId = -1;
@@ -557,15 +557,15 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      */
     public boolean prev() {
         switch (mPlayMode) {
-            case AppConfig.MPM_LIST_LOOP_PLAY:    //列表循环
+            case AppConfig.MPM_PLAYLIST_LOOP:    //列表循环
                 return moveLeft();
-            case AppConfig.MPM_ORDER_PLAY:    //顺序播放
+            case AppConfig.MPM_SEQUENTIAL_PLAYBACK:    //顺序播放
                 if (mCurPlayIndex != 0) {
                     return moveLeft();
                 } else {
                     return prepare(mCurPlayIndex);
                 }
-            case AppConfig.MPM_RANDOM_PLAY:   //随机播放
+            case AppConfig.MPM_SHUFFLE_PLAYBACK:   //随机播放
                 int index = getRandomIndex();
                 if (index != -1) {
                     mCurPlayIndex = index;
@@ -576,7 +576,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     return replay();
                 }
                 return false;
-            case AppConfig.MPM_SINGLE_LOOP_PLAY:  //单曲循环
+            case AppConfig.MPM_SINGLE_TRACK_LOOP:  //单曲循环
                 prepare(mCurPlayIndex);
                 return replay();
                 default:
@@ -591,15 +591,15 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      */
     public boolean next() {
         switch (mPlayMode) {
-            case MPM_LIST_LOOP_PLAY:    //列表循环
+            case MPM_PLAYLIST_LOOP:    //列表循环
                 return moveRight();
-            case MPM_ORDER_PLAY:    //顺序播放
+            case MPM_SEQUENTIAL_PLAYBACK:    //顺序播放
                 if (mCurPlayIndex != mPlaylist.size() - 1) {
                     return moveRight();
                 } else {
                     return prepare(mCurPlayIndex);
                 }
-            case MPM_RANDOM_PLAY:   //随机播放
+            case MPM_SHUFFLE_PLAYBACK:   //随机播放
                 int index = getRandomIndex();
                 if (index != -1) {
                     mCurPlayIndex = index;
@@ -610,7 +610,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     return replay();
                 }
                 return false;
-            case MPM_SINGLE_LOOP_PLAY:  //单曲循环
+            case MPM_SINGLE_TRACK_LOOP:  //单曲循环
                 prepare(mCurPlayIndex);
                 return replay();
                 default:

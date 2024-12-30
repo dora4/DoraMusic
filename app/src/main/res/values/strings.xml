@@ -46,4 +46,8 @@
     <string name="music_list">Music List</string>
     <string name="scan_music">Scan Music</string>
     <string name="change_skin">Change Skin</string>
+    <string name="sequential_playback">"Sequential Playback"</string>
+    <string name="shuffle_playback">"Shuffle Playback"</string>
+    <string name="single_track_loop">"Single Track Loop"</string>
+    <string name="playlist_loop">"Playlist Loop"</string>
 </resources>

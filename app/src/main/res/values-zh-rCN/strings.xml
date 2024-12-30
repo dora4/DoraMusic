@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+    <string name="app_name">Dora Music</string>
+
+    <string name="unknown">未知</string>
+
+    <string name="protocol_title">服务协议及隐私权政策</string>
+    <string name="protocol_content_part_one">感谢您使用朵拉音乐！为了让您更加放心的使用朵拉音乐产品及服务，请您务必仔细阅读，充分理解协议中的条款内容后再点击同意，以便您能够更好地行使个人权利及保护个人信息。</string>
+    <string name="protocol_content_part_two">【请您注意】如果您不同意以下协议或其中任何条款约定，您可以点击不同意，暂停使用朵拉的产品和服务。如果您点击同意即表示您已阅读并同意《朵拉音乐用户许可使用协议》、《隐私权政策》，并同意。 </string>
+    <string name="user_agreement">《朵拉音乐用户许可使用协议》</string>
+    <string name="privacy_policy">《隐私权政策》</string>
+    <string name="user_agreement_title">用户协议</string>
+    <string name="privacy_policy_title">隐私政策</string>
+    <string name="protocol_agree">同意</string>
+    <string name="protocol_disagree">不同意</string>
+    <string name="my_music">我的歌曲</string>
+    <string name="artist">歌手</string>
+    <string name="album">专辑</string>
+    <string name="folder">文件夹</string>
+    <string name="my_favorite">我的收藏</string>
+    <string name="latest_play">最近播放</string>
+    <string name="items">%1$d首</string>
+    <string name="scaning">正在扫描…</string>
+    <string name="press_again_to_back">再按一次返回到桌面</string>
+    <string name="scan_prompt">您有收藏的歌曲，扫描将会强制清空收藏的歌曲，是否继续？</string>
+    <string name="qr_code_scan_result">二维码扫码结果</string>
+    <string name="choose_color">选择颜色</string>
+    <string name="equalizer">均衡器</string>
+    <string name="close">关闭</string>
+    <string name="custom">自定义</string>
+    <string name="pop">流行</string>
+    <string name="dance">舞曲</string>
+    <string name="blue">蓝调</string>
+    <string name="classic">古典</string>
+    <string name="jazz">爵士</string>
+    <string name="slow">慢歌</string>
+    <string name="slots">电子</string>
+    <string name="shake">摇滚</string>
+    <string name="country">乡村</string>
+    <string name="setting">设置</string>
+    <string name="auto_play_on_launch">启动时自动播放</string>
+    <string name="shake_to_play_next_music">摇一摇切歌</string>
+    <string name="bass_boost">重低音增强</string>
+    <string name="logout">注销登录</string>
+    <string name="brand">朵拉音乐</string>
+    <string name="slogan">想听就听</string>
+    <string name="music_list">歌曲列表</string>
     <string name="scan_music">扫描歌曲</string>
     <string name="change_skin">更换皮肤</string>
+    <string name="sequential_playback">顺序播放</string>
+    <string name="shuffle_playback">随机播放</string>
+    <string name="single_track_loop">单曲循环</string>
+    <string name="playlist_loop">列表循环</string>
 </resources>

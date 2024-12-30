@@ -45,10 +45,10 @@ interface AppConfig {
         const val MPS_PAUSE = 3 // 暂停
 
         // 播放模式
-        const val MPM_LIST_LOOP_PLAY = 0 // 列表循环
-        const val MPM_ORDER_PLAY = 1 // 顺序播放
-        const val MPM_RANDOM_PLAY = 2 // 随机播放
-        const val MPM_SINGLE_LOOP_PLAY = 3 // 单曲循环
+        const val MPM_PLAYLIST_LOOP = 0 // 列表循环
+        const val MPM_SEQUENTIAL_PLAYBACK = 1 // 顺序播放
+        const val MPM_SHUFFLE_PLAYBACK = 2 // 随机播放
+        const val MPM_SINGLE_TRACK_LOOP = 3 // 单曲循环
 
         // 扫描器过滤器
         const val SCANNER_FILTER_SIZE = 1024 * 1024 // 1MB

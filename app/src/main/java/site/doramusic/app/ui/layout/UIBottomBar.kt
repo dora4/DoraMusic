@@ -244,6 +244,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
         val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
         tvPlaylistPlayMode.text = playModeControl.printPlayMode(mediaManager.playMode)
+        ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
         tvPlaylistCount.text = "(${String.format(context.getString(R.string.items), mediaManager.playlist.size)})"
         adapter.setList(mediaManager.playlist)
 
@@ -255,7 +256,6 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         ViewUtils.configRecyclerView(recyclerView)
         recyclerView.adapter = adapter
 
-        ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
 
         tvPlaylistPlayMode.setOnClickListener {
             playModeControl.changePlayMode(tvPlaylistPlayMode, ivPlaylistPlayMode)
