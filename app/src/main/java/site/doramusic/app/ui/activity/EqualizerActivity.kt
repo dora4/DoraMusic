@@ -3,6 +3,7 @@ package site.doramusic.app.ui.activity
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
+import android.media.audiofx.Equalizer
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -32,25 +33,43 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 
+    /**
+     * 获取均衡器支持的频率。
+     *
+     * @return
+     */
+    private fun getEqualizerFreq(): IntArray {
+        val equalizer = Equalizer(0, 0)
+        val bands = equalizer.numberOfBands
+        val freqs = IntArray(bands.toInt())
+        for (i in 0 until bands) {
+            val centerFreq = equalizer.getCenterFreq(i.toShort()) / 1000
+            freqs[i.toInt()] = centerFreq
+        }
+        return freqs
+    }
+
     override fun initData(savedInstanceState: Bundle?, binding: ActivityEqualizerBinding) {
         binding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
         SkinManager.getLoader().setBackgroundColor(binding.statusbarEqualizer, COLOR_THEME)
         prefsManager = PreferencesManager(this)
-        val equalizerFreq = MusicApp.app.mediaManager.equalizerFreq
-        val decibels = IntArray(equalizerFreq!!.size)
+        val equalizerFreq = getEqualizerFreq()
+        val decibels = IntArray(equalizerFreq.size)
         if (prefsManager.getEqualizerDecibels() != "") {
-            val values = prefsManager.getEqualizerDecibels().split(",".toRegex())
-                .dropLastWhile { it.isEmpty() }.toTypedArray()
-            if (values.contains("0")) {
-                for (i in decibels.indices) {
-                    decibels[i] = 0
-                }
-            } else {
-                for (i in decibels.indices) {
-                    decibels[i] = Integer.valueOf(values[i])
-                }
+            val values = prefsManager.getEqualizerDecibels().split(",".toRegex()).toTypedArray()
+            for (i in values.indices) {
+                decibels[i] = Integer.valueOf(values[i])
             }
+            // 选中自定义的tab
+            binding.rgEqualizer.check(R.id.rb_equalizer_custom)
+        } else {
+            // 默认选中第一个
+            binding.rgEqualizer.check(R.id.rb_equalizer_close)
+            binding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
+            onUpdateDecibel(intArrayOf(0, 0, 0, 0, 0))
+            binding.evEqualizer.setTouchable(false)
+            binding.evEqualizer.resetState()
         }
         binding.rbEqualizerClose.buttonDrawable = BitmapDrawable()
         binding.rbEqualizerCustom.buttonDrawable = BitmapDrawable()
@@ -83,12 +102,6 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         binding.evEqualizer.setFreqs(equalizerFreq)
         binding.evEqualizer.setOnUpdateDecibelListener(this)
 
-        // 默认选中第一个
-        binding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
-        onUpdateDecibel(intArrayOf(0, 0, 0, 0, 0))
-        binding.evEqualizer.setTouchable(false)
-        binding.evEqualizer.resetState()
-
         binding.rgEqualizer.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rb_equalizer_close   // 关闭
@@ -107,7 +120,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
                     val result = IntArray(splitDecibels.size)
                     val reverseResult = IntArray(splitDecibels.size)
                     for (i in splitDecibels.indices) {
-                        reverseResult[i] = -Integer.valueOf(splitDecibels[i])
+                        reverseResult[i] = Integer.valueOf(splitDecibels[i])
                         result[i] = Integer.valueOf(splitDecibels[i])
                     }
                     binding.evEqualizer.setDecibels(reverseResult)

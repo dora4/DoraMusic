@@ -20,8 +20,8 @@ import kotlin.math.roundToInt
 /**
  * 均衡器控件。
  */
-class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
-    AttributeSet? = null, defStyleAttr: Int = 0) : View(ctx, attrs, defStyleAttr) {
+class EqualizerView @JvmOverloads constructor(context: Context, attrs:
+    AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
     private lateinit var paint: Paint
     private lateinit var nodePaint: Paint
@@ -106,8 +106,8 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
         nodeConnectPaint.color = skinThemeColor // 圆圈填充的颜色和连线的颜色
         freqPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
         freqPaint.isFakeBoldText = true
-        freqPaint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10f, ctx.resources.displayMetrics)
-        freqPaint.color = ContextCompat.getColor(ctx, dora.widget.colors.R.color.white_smoke)
+        freqPaint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10f, context.resources.displayMetrics)
+        freqPaint.color = ContextCompat.getColor(context, dora.widget.colors.R.color.white_smoke)
     }
 
     private fun measureView(measureSpec: Int, defaultSize: Int): Int {
@@ -134,21 +134,19 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (points.isNotEmpty()) {
-            step = measuredHeight / 26.toFloat() // -12到12共26份
-            val stepSize = measuredWidth / (bandsNum + 1)
-            points[0] = PointF((-50).toFloat(), step * 13)
-            points[bandsNum + 1] = PointF((measuredWidth + 50).toFloat(), step * 13)
-            if (state == STATE_NONE) {
-                for (i in 1..bandsNum) {
-                    val cx = stepSize * i.toFloat()
-                    val cy = step * (decibels[i - 1] + 13)
-                    points[i] = PointF(cx, cy)
-                }
-                refreshView(canvas, stepSize)
-            } else {
-                refreshView(canvas, stepSize)
+        step = measuredHeight / 26.toFloat() // -12到12共26份
+        val stepSize = measuredWidth / (bandsNum + 1)
+        points[0] = PointF((-50).toFloat(), step * 13)
+        points[bandsNum + 1] = PointF((measuredWidth + 50).toFloat(), step * 13)
+        if (state == STATE_NONE) {
+            for (i in 1..bandsNum) {
+                val cx = stepSize * i.toFloat()
+                val cy = step * (decibels[i - 1] + 13)
+                points[i] = PointF(cx, cy)
             }
+            refreshView(canvas, stepSize)
+        } else {
+            refreshView(canvas, stepSize)
         }
     }
 
@@ -170,16 +168,14 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
             canvas.drawLine(cx, cy + radius + 3, stepSize * i.toFloat(), measuredHeight.toFloat(),
                 paint
             )
-            paint.color = ContextCompat.getColor(ctx, dora.widget.colors.R.color.light_gray) // 上面的线的颜色
+            paint.color = ContextCompat.getColor(context, dora.widget.colors.R.color.light_gray) // 上面的线的颜色
             canvas.drawLine(cx, cy - radius - 3, stepSize * i.toFloat(), 0f, paint)
-            if (freqs.isNotEmpty()) {
-                val text = formatHz(freqs[i - 1])
-                val textWidth = freqPaint.measureText(text)
-                val x =
-                    (i - 1) * (measuredWidth / (bandsNum + 1)) + (measuredWidth / (bandsNum + 1) - textWidth) / 2 + measuredWidth / (bandsNum + 1) / 2
-                val baselineY = cy + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom
-                canvas.drawText(text, x, baselineY, freqPaint)
-            }
+            val text = if (freqs.isNotEmpty()) formatHz(freqs[i - 1]) else formatHz(0)
+            val textWidth = freqPaint.measureText(text)
+            val x =
+                (i - 1) * (measuredWidth / (bandsNum + 1)) + (measuredWidth / (bandsNum + 1) - textWidth) / 2 + measuredWidth / (bandsNum + 1) / 2
+            val baselineY = cy + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom
+            canvas.drawText(text, x, baselineY, freqPaint)
         }
     }
 
@@ -278,7 +274,7 @@ class EqualizerView @JvmOverloads constructor(private val ctx: Context, attrs:
     }
 
     init {
-        initAttrs(ctx, attrs)
+        initAttrs(context, attrs)
         initPaints()
     }
 }
