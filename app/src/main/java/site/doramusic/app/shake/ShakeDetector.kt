@@ -33,23 +33,22 @@ class ShakeDetector(context: Context) : SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        if (prefsManager.getShakeChangeMusic() && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-            if (!isShaking.get()) {
-                shakeHandler.removeCallbacks(resetShakeRunnable)
-                val x = event.values[SensorManager.DATA_X]
-                val y = event.values[SensorManager.DATA_Y]
-                val z = event.values[SensorManager.DATA_Z]
-                lowX = x * FILTERING_VALUE + lowX * (1.0f - FILTERING_VALUE)
-                lowY = y * FILTERING_VALUE + lowY * (1.0f - FILTERING_VALUE)
-                lowZ = z * FILTERING_VALUE + lowZ * (1.0f - FILTERING_VALUE)
-                val highX = x - lowX
-                val highY = y - lowY
-                val highZ = z - lowZ
-                if (highX >= 10 || highY >= 10 || highZ >= 10) {
-                    if (isShaking.compareAndSet(false, true)) {
-                        onShakeListener?.onShake()
-                        shakeHandler.postDelayed(resetShakeRunnable, 2000)
-                    }
+        if (!isShaking.get() && prefsManager.getShakeChangeMusic()
+            && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+            shakeHandler.removeCallbacks(resetShakeRunnable)
+            val x = event.values[SensorManager.DATA_X]
+            val y = event.values[SensorManager.DATA_Y]
+            val z = event.values[SensorManager.DATA_Z]
+            lowX = x * FILTERING_VALUE + lowX * (1.0f - FILTERING_VALUE)
+            lowY = y * FILTERING_VALUE + lowY * (1.0f - FILTERING_VALUE)
+            lowZ = z * FILTERING_VALUE + lowZ * (1.0f - FILTERING_VALUE)
+            val highX = x - lowX
+            val highY = y - lowY
+            val highZ = z - lowZ
+            if (highX >= 10 || highY >= 10 || highZ >= 10) {
+                if (isShaking.compareAndSet(false, true)) {
+                    onShakeListener?.onShake()
+                    shakeHandler.postDelayed(resetShakeRunnable, 2000)
                 }
             }
         }

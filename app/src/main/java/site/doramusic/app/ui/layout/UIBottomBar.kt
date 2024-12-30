@@ -244,12 +244,12 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
         val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
         tvPlaylistPlayMode.text = playModeControl.printPlayMode(mediaManager.playMode)
-        tvPlaylistCount.text = "(${mediaManager.playlist.size}首)"
+        tvPlaylistCount.text = "(${String.format(context.getString(R.string.items), mediaManager.playlist.size)})"
         adapter.setList(mediaManager.playlist)
 
         adapter.setOnItemClickListener { _, _, position ->
             mediaManager.playById(mediaManager.playlist[position].songId)
-            bottomSheetDialog.dismiss()
+//            bottomSheetDialog.dismiss()
         }
 
         ViewUtils.configRecyclerView(recyclerView)
