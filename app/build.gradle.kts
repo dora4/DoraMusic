@@ -25,22 +25,25 @@ android {
     }
     flavorDimensions("app")
     productFlavors {
-        // 线上/公测环境
+        // 线上/公测环境··
         create("beta") {
             dimension = "app"
             versionNameSuffix = "-beta"
+            buildConfigField("String", "app_version", "\"V$versionCode\"")
         }
         // 内测/预发环境
         create("alpha") {
             dimension = "app"
             applicationIdSuffix = ".alpha"
             versionNameSuffix = "-alpha"
+            buildConfigField("String", "app_version", "\"V$versionCode\"")
         }
         // 开发/调试环境
         create("dev") {
             dimension = "app"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
+            buildConfigField("String", "app_version", "\"V$versionCode\"")
         }
     }
     signingConfigs {

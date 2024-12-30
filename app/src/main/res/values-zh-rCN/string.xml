@@ -2,10 +2,8 @@
 
 <resources>
     <string name="app_name">Dora Music</string>
-    <string name="app_version">V1.1.2</string>
 
     <string name="unknown">未知</string>
-
 
     <string name="protocol_title">服务协议及隐私权政策</string>
     <string name="protocol_content_part_one">感谢您使用朵拉音乐！为了让您更加放心的使用朵拉音乐产品及服务，请您务必仔细阅读，充分理解协议中的条款内容后再点击同意，以便您能够更好地行使个人权利及保护个人信息。</string>

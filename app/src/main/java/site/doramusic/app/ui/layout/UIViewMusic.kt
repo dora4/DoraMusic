@@ -58,7 +58,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private val musicDao = DaoFactory.getDao(Music::class.java)
     private val loadingDialog: DoraLoadingDialog by lazy { DoraLoadingDialog(manager.view.context) }
 
-    private fun updateMusicListUI(musics: MutableList<Music>, showSidebar: Boolean = true) {
+    private fun updateMusicListUI(musics: MutableList<Music>, sort: Boolean = true) {
         adapter = MusicItemAdapter().apply {
             // 为了防止这里数据量过大，Binder无法传输，限制只加载前1000首歌曲
             val optMusics = if (musics.size > MUSIC_LIST_MAX_LIST) {
@@ -67,7 +67,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                 musics
             }
             setList(optMusics)
-            sort()
+            if (sort) sort()
             mediaManager.refreshPlaylist(data)
             setOnItemClickListener { _, _, position ->
                 if (position >= MUSIC_LIST_MAX_LIST) {
@@ -80,7 +80,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             }
         }
         rvMusic.adapter = adapter
-        if (!showSidebar) lvMusic.visibility = View.GONE
+        if (!sort) lvMusic.visibility = View.GONE
     }
 
     private fun createMusicTaskListener(activity: Activity, updateUI: (MutableList<Music>) -> Unit): OrmTaskListener<Music> {
@@ -181,7 +181,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                     .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))
                     .orderBy("${Music.COLUMN_LAST_PLAY_TIME} desc"),
                 createMusicTaskListener(activity) { musics ->
-                    updateMusicListUI(musics, showSidebar = false)
+                    updateMusicListUI(musics, sort = false)
                 }
             )
             else -> return
