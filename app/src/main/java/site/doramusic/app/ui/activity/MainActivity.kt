@@ -24,6 +24,7 @@ import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
+import site.doramusic.app.BuildConfig
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
@@ -145,7 +146,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         })
         val headerView = mBinding.nvMain.getHeaderView(0)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
-        versionNameView.text = getString(R.string.app_version)
+        versionNameView.text = BuildConfig.app_version
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 // 扫描歌曲

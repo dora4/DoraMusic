@@ -10,13 +10,14 @@ plugins {
 android {
     namespace = "site.doramusic.app"
     compileSdk = 34
-
+    val version = "1.1.3"
+    val code = 5
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 5
-        versionName = "1.1.3"
+        versionCode = code
+        versionName = version
         buildFeatures {
             dataBinding = true
             aidl = true
@@ -29,21 +30,21 @@ android {
         create("beta") {
             dimension = "app"
             versionNameSuffix = "-beta"
-            buildConfigField("String", "app_version", "\"V$versionCode\"")
+            buildConfigField("String", "app_version", "\"V$version\"")
         }
         // 内测/预发环境
         create("alpha") {
             dimension = "app"
             applicationIdSuffix = ".alpha"
             versionNameSuffix = "-alpha"
-            buildConfigField("String", "app_version", "\"V$versionCode\"")
+            buildConfigField("String", "app_version", "\"V$version\"")
         }
         // 开发/调试环境
         create("dev") {
             dimension = "app"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "app_version", "\"V$versionCode\"")
+            buildConfigField("String", "app_version", "\"V$version\"")
         }
     }
     signingConfigs {
