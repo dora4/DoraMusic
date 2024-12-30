@@ -55,20 +55,24 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         SkinManager.getLoader().setBackgroundColor(binding.statusbarEqualizer, COLOR_THEME)
         prefsManager = PreferencesManager(this)
         val equalizerFreq = getEqualizerFreq()
-        val decibels = IntArray(equalizerFreq.size)
-        if (prefsManager.getEqualizerDecibels() != "") {
-            val values = prefsManager.getEqualizerDecibels().split(",".toRegex()).toTypedArray()
-            for (i in values.indices) {
-                decibels[i] = Integer.valueOf(values[i])
-            }
-            // 选中自定义的tab
-            binding.rgEqualizer.check(R.id.rb_equalizer_custom)
-        } else {
+        val size = equalizerFreq.size
+        val decibels = IntArray(size)
+        val equalizerDecibels = prefsManager.getEqualizerDecibels()
+        val values = equalizerDecibels.split(",".toRegex()).toTypedArray()
+        if (equalizerDecibels == "" || (values.all { it == "0" } && values.size == size)) {
             // 默认选中第一个
             binding.rgEqualizer.check(R.id.rb_equalizer_close)
             binding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
             onUpdateDecibel(intArrayOf(0, 0, 0, 0, 0))
             binding.evEqualizer.setTouchable(false)
+            binding.evEqualizer.resetState()
+        } else {
+            for (i in values.indices) {
+                decibels[i] = Integer.valueOf(values[i])
+            }
+            // 选中自定义的tab
+            binding.rgEqualizer.check(R.id.rb_equalizer_custom)
+            binding.evEqualizer.setTouchable(true)
             binding.evEqualizer.resetState()
         }
         binding.rbEqualizerClose.buttonDrawable = BitmapDrawable()
