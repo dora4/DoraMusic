@@ -146,7 +146,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         })
         val headerView = mBinding.nvMain.getHeaderView(0)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
-        versionNameView.text = BuildConfig.app_version
+        versionNameView.text = BuildConfig.APP_VERSION
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 // 扫描歌曲
