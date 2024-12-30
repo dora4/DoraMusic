@@ -17,7 +17,7 @@
     <string name="album">Album</string>
     <string name="folder">Folder</string>
     <string name="my_favorite">My Favorites</string>
-    <string name="latest_play">Recently Played</string>
+    <string name="latest_play">Recently</string>
     <string name="items">%1$d songs</string>
     <string name="scaning">Scanning…</string>
     <string name="press_again_to_back">Press again to return to the desktop</string>
@@ -37,11 +37,13 @@
     <string name="shake">Rock</string>
     <string name="country">Country</string>
     <string name="setting">Settings</string>
-    <string name="auto_play_while_launch">Auto Play on Launch</string>
+    <string name="auto_play_on_launch">Auto Play on Launch</string>
     <string name="shake_to_play_next_music">Shake to Skip Track</string>
     <string name="bass_boost">Bass Boost</string>
     <string name="logout">Logout</string>
     <string name="brand">Dora Music</string>
     <string name="slogan">Listen Anytime</string>
     <string name="music_list">Music List</string>
+    <string name="scan_music">Scan Music</string>
+    <string name="change_skin">Change Skin</string>
 </resources>

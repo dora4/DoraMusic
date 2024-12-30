@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:text="@string/auto_play_while_launch"
+                        android:text="@string/auto_play_on_launch"
                         android:textColor="@color/gray" />
 
                     <dora.widget.DoraToggleButton

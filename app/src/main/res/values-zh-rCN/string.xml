@@ -39,7 +39,7 @@
     <string name="shake">摇滚</string>
     <string name="country">乡村</string>
     <string name="setting">设置</string>
-    <string name="auto_play_while_launch">启动时自动播放</string>
+    <string name="auto_play_on_launch">启动时自动播放</string>
     <string name="shake_to_play_next_music">摇一摇切歌</string>
     <string name="bass_boost">重低音增强</string>
     <string name="logout">注销登录</string>

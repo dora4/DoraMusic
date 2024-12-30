@@ -3,12 +3,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_scan_music"
-            android:title="扫描歌曲"/>
+            android:title="@string/scan_music"/>
         <item android:id="@+id/menu_change_skin"
-            android:title="更换皮肤"/>
+            android:title="@string/change_skin"/>
         <item android:id="@+id/menu_equalizer"
-            android:title="均衡器"/>
+            android:title="@string/equalizer"/>
         <item android:id="@+id/menu_settings"
-            android:title="设置"/>
+            android:title="@string/setting"/>
     </group>
 </menu>
