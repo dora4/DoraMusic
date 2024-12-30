@@ -211,14 +211,14 @@ class EqualizerView @JvmOverloads constructor(context: Context, attrs:
                         if (y >= measuredHeight - 40) {
                             points[index]!!.y = measuredHeight - 40.toFloat()
                         }
-                        decibels[index - 1] = getDecibel(points[index]!!.y)
+                        decibels[index - 1] = -getDecibel(points[index]!!.y)
                         invalidate()
                     }
                 }
                 MotionEvent.ACTION_UP -> if (index != 0) {
                     state = STATE_TOUCH_UP
                     if (decibels[index - 1] != 0 && decibels[index - 1] != -12 && decibels[index - 1] != 12) {
-                        val lastY = step * (-decibels[index - 1] + 13)
+                        val lastY = step * (decibels[index - 1] + 13)
                         points[index]!!.y = lastY
                     } else if (decibels[index - 1] == 0) {
                         points[index]!!.y = step * 13

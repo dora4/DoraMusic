@@ -10,6 +10,8 @@ import android.media.audiofx.Equalizer;
 import android.os.Build;
 import android.os.PowerManager;
 
+import androidx.annotation.NonNull;
+
 import com.lsxiao.apollo.core.Apollo;
 
 import java.io.IOException;
@@ -119,6 +121,18 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * @param bandLevels
      */
     public void setEqualizer(int[] bandLevels) {
+        Equalizer equalizer = getEqualizer(bandLevels);
+        equalizer.setEnabled(true);
+        equalizer.setParameterListener(new Equalizer.OnParameterChangeListener() {
+            @Override
+            public void onParameterChange(Equalizer effect, int status, int param1, int param2, int value) {
+                LogUtils.i("均衡器参数改变:" + status + "," + param1 + "," + param2 + "," + value);
+            }
+        });
+    }
+
+    @NonNull
+    private Equalizer getEqualizer(int[] bandLevels) {
         int audioSessionId = mMediaPlayer.getAudioSessionId();
         Equalizer equalizer = new Equalizer(1, audioSessionId);
         // 获取均衡控制器支持最小值和最大值
@@ -129,13 +143,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         for (short i = 0; i < bandLevels.length; i++) {
             equalizer.setBandLevel(i, (short) (singleEQLevel * bandLevels[i]));
         }
-        equalizer.setEnabled(true);
-        equalizer.setParameterListener(new Equalizer.OnParameterChangeListener() {
-            @Override
-            public void onParameterChange(Equalizer effect, int status, int param1, int param2, int value) {
-                LogUtils.i("均衡器参数改变:" + status + "," + param1 + "," + param2 + "," + value);
-            }
-        });
+        return equalizer;
     }
 
     /**

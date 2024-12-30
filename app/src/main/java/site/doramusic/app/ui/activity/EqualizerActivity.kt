@@ -117,17 +117,15 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
                 }
                 R.id.rb_equalizer_custom  // 自定义
                 -> {
-                    val equalizerDecibels = prefsManager.getEqualizerDecibels()
-                    val splitDecibels = equalizerDecibels.split(",".toRegex()).dropLastWhile {
-                        it.isEmpty()
-                    }.toTypedArray()
+                    val equalizerDecibelsSP = prefsManager.getEqualizerDecibels()
+                    val splitDecibels = equalizerDecibelsSP.split(",".toRegex()).toTypedArray()
                     val result = IntArray(splitDecibels.size)
                     val reverseResult = IntArray(splitDecibels.size)
                     for (i in splitDecibels.indices) {
-                        reverseResult[i] = Integer.valueOf(splitDecibels[i])
+                        reverseResult[i] = -Integer.valueOf(splitDecibels[i])
                         result[i] = Integer.valueOf(splitDecibels[i])
                     }
-                    binding.evEqualizer.setDecibels(reverseResult)
+                    binding.evEqualizer.setDecibels(result)
                     binding.evEqualizer.setTouchable(true)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(reverseResult)
