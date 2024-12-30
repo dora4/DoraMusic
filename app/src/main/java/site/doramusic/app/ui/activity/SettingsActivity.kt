@@ -116,12 +116,12 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             }
             R.id.rl_settings_user_protocol -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
-                    withString("title", getString(R.string.user_agreement))
+                    withString("title", getString(R.string.user_agreement_title))
                 }
             }
             R.id.rl_settings_privacy_policy -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
-                    withString("title", getString(R.string.privacy_policy))
+                    withString("title", getString(R.string.privacy_policy_title))
                 }
             }
         }

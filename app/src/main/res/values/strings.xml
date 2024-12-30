@@ -7,8 +7,10 @@
     <string name="protocol_title">User Agreement and Privacy Policy</string>
     <string name="protocol_content_part_one">Thank you for using Dora Music! To help you use Dora Music products and services with confidence, please carefully read and fully understand the terms in the agreement before clicking agree, so you can better exercise your personal rights and protect your personal information.</string>
     <string name="protocol_content_part_two">[Please note] If you do not agree to the following agreement or any of its terms, you can click disagree and stop using Dora’s products and services. By clicking agree, you indicate that you have read and agreed to the "Dora Music User License Agreement" and the "Privacy Policy".</string>
-    <string name="service_protocol">"Dora Music User License Agreement"</string>
-    <string name="privacy_policy">"Privacy Policy"</string>
+    <string name="user_agreement">Dora Music User License Agreement</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="user_agreement_title">User Agreement</string>
+    <string name="privacy_policy_title">Privacy Policy</string>
     <string name="protocol_agree">Agree</string>
     <string name="protocol_disagree">Disagree</string>
     <string name="my_music">My Songs</string>
@@ -21,7 +23,6 @@
     <string name="scaning">Scanning…</string>
     <string name="press_again_to_back">Press again to return to the desktop</string>
     <string name="scan_prompt">You have favorite songs. Scanning will forcibly clear the favorites. Do you want to continue?</string>
-    <string name="user_agreement">User Agreement</string>
     <string name="qr_code_scan_result">QR Code Scan Result</string>
     <string name="choose_color">Choose Color</string>
     <string name="equalizer">Equalizer</string>

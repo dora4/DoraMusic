@@ -53,9 +53,9 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
         // 动态添加WebView，解决在xml引用WebView持有Activity的Context对象，导致内存泄露
         binding.webViewContainer.addView(webView)
         binding.titlebarPrivacyPolicy.title = title.toString()
-        if (title.equals(getString(R.string.user_agreement))) {
+        if (title.equals(getString(R.string.user_agreement_title))) {
             webView?.loadUrl("file:///android_asset/user_agreement.html")
-        } else if (title.equals(getString(R.string.privacy_policy))) {
+        } else if (title.equals(getString(R.string.privacy_policy_title))) {
             webView?.loadUrl("file:///android_asset/privacy_policy.html")
         }
     }

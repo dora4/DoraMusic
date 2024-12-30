@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="17dip"
-                    android:text="@string/service_protocol"
+                    android:text="@string/user_agreement"
                     android:textColor="@color/blue"
                     android:textSize="14sp" />
 
