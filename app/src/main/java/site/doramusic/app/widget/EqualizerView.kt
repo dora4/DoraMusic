@@ -163,12 +163,12 @@ class EqualizerView @JvmOverloads constructor(context: Context, attrs:
             }
             canvas.drawCircle(cx, cy, radius, nodePaint) // 绘制大圆
             canvas.drawCircle(cx, cy, radius - 6, nodeConnectPaint) // 绘制小圆
-            paint.color = skinThemeColor //下面的线的颜色
+            paint.color = ContextCompat.getColor(context, dora.widget.colors.R.color.light_gray) //下面的线的颜色
             paint.strokeWidth = 6f
             canvas.drawLine(cx, cy + radius + 3, stepSize * i.toFloat(), measuredHeight.toFloat(),
                 paint
             )
-            paint.color = ContextCompat.getColor(context, dora.widget.colors.R.color.light_gray) // 上面的线的颜色
+            paint.color = skinThemeColor // 上面的线的颜色
             canvas.drawLine(cx, cy - radius - 3, stepSize * i.toFloat(), 0f, paint)
             val text = if (freqs.isNotEmpty()) formatHz(freqs[i - 1]) else formatHz(0)
             val textWidth = freqPaint.measureText(text)
