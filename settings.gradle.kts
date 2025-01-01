@@ -27,7 +27,7 @@ dependencyResolutionManagement {
         maven {  setUrl("https://jitpack.io") }
         // 蒲公英的仓库
         maven {
-            // GitHub CI/CD 环境对 Cookie 的管理可能会更加严格，当域名不合法时会直接拒绝使用。该仓库没有遵循
+            // GitHub CI/CD 环境对 Cookie 的管理会更加严格，当域名不合法时会直接拒绝使用。该仓库没有遵循
             // RFC 6265 标准，所以要允许不安全的协议
             isAllowInsecureProtocol = true
             setUrl("https://frontjs-static.pgyer.com/dist/sdk/pgyersdk")
