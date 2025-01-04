@@ -438,11 +438,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         val size = equalizerFreq.size
         val decibels = IntArray(size)
         val equalizerDecibels = prefsManager.getEqualizerDecibels()
-        val values = equalizerDecibels.split(",".toRegex()).toTypedArray()
-        for (i in values.indices) {
-            decibels[i] = Integer.valueOf(values[i])
+        if (equalizerDecibels.isNotEmpty()) {
+            val values = equalizerDecibels.split(",".toRegex()).toTypedArray()
+            for (i in values.indices) {
+                decibels[i] = Integer.valueOf(values[i])
+            }
+            mediaManager.setEqualizer(decibels)
         }
-        mediaManager.setEqualizer(decibels)
     }
 
     override fun onConnectCompletion(service: IMediaService) {
