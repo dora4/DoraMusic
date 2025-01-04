@@ -76,11 +76,20 @@ android {
     }
 }
 
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(listOf(
+        "--add-exports", "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED"
+    ))
+}
+
 kapt {
-    generateStubs = true
-    correctErrorTypes = true
+//    generateStubs = true
+//    correctErrorTypes = true
     arguments {
         arg("AROUTER_MODULE_NAME", project.name)
+    }
+    javacOptions {
+        option("-J--add-exports", "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
     }
 }
 

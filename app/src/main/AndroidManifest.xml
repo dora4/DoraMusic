@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="site.doramusic.app">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- 允许访问互联网 -->
     <uses-permission android:name="android.permission.INTERNET" />
