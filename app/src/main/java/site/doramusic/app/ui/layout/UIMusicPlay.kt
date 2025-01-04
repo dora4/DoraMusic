@@ -29,6 +29,7 @@ import android.widget.ListView
 import android.widget.SeekBar
 import android.widget.SlidingDrawer
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -74,36 +75,36 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         MusicApp.app.mediaManager
     }
     private val contentView: View = manager.view
-    private var btnMusicPlayMode: ImageButton? = null
-    private var llMusicPlayVolume: LinearLayout? = null
-    private var sbMusicPlayPlayback: SeekBar? = null
-    private var sbMusicPlayVolume: SeekBar? = null
-    private var tvSlidingMusicName: TextView? = null
-    private var tvSlidingArtist: TextView? = null
-    private var tvMusicPlayTotalTime: TextView? = null
-    private var tvMusicPlayCurTime: TextView? = null
-    private var btnMusicPlayPrev: ImageButton? = null
-    private var btnMusicPlayNext: ImageButton? = null
-    private var btnMusicPlayPlay: ImageButton? = null
-    private var btnMusicPlayPause: ImageButton? = null
-    private var btnMusicPlayVolume: ImageButton? = null
-    private var btnMusicPlayFavorite: ImageButton? = null
-    private var statusBarLyric: View? = null
-    private var slidingView: SlidingView? = null
+    private lateinit var btnMusicPlayMode: ImageButton
+    private lateinit var llMusicPlayVolume: LinearLayout
+    private lateinit var sbMusicPlayPlayback: SeekBar
+    private lateinit var sbMusicPlayVolume: SeekBar
+    private lateinit var tvSlidingMusicName: TextView
+    private lateinit var tvSlidingArtist: TextView
+    private lateinit var tvMusicPlayTotalTime: TextView
+    private lateinit var tvMusicPlayCurTime: TextView
+    private lateinit var btnMusicPlayPrev: ImageButton
+    private lateinit var btnMusicPlayNext: ImageButton
+    private lateinit var btnMusicPlayPlay: ImageButton
+    private lateinit var btnMusicPlayPause: ImageButton
+    private lateinit var btnMusicPlayVolume: ImageButton
+    private lateinit var btnMusicPlayFavorite: ImageButton
+    private lateinit var statusBarLyric: View
+    private lateinit var slidingView: SlidingView
     private var curMusic: Music? = null
-    private var viewPager: ViewPager? = null
-    private var coverLrcContainer: FrameLayout? = null
-    private var coverContainer: FrameLayout? = null
-    private var rotateCoverView: RotateCoverView? = null
-    private var lrcEmptyView: TextView? = null
-    private var lrcListView: ListView? = null
+    private lateinit var viewPager: ViewPager
+    private lateinit var coverLrcContainer: FrameLayout
+    private lateinit var coverContainer: FrameLayout
+    private lateinit var rotateCoverView: RotateCoverView
+    private lateinit var lrcEmptyView: TextView
+    private lateinit var lrcListView: ListView
     private val lyricAdapter: LyricAdapter by lazy {
         LyricAdapter(manager.view.context)
     }
     private var musicTimer: MusicTimer? = null
     private var playAuto: Boolean = false
     private var seekBarProgress: Int = 0
-    private var rvHomeModule: RecyclerView? = null
+    private lateinit var rvHomeModule: RecyclerView
     private val musicDao: OrmDao<Music> by lazy {
         DaoFactory.getDao(Music::class.java)
     }
@@ -115,11 +116,11 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     val isOpened: Boolean
-        get() = slidingView!!.isOpened
+        get() = slidingView.isOpened
 
     internal var r: Runnable = Runnable {
-        llMusicPlayVolume!!.visibility = View.INVISIBLE
-        llMusicPlayVolume!!.startAnimation(AnimationUtils.loadAnimation(this.manager.view.context, R.anim.anim_fade_out))
+        llMusicPlayVolume.visibility = View.INVISIBLE
+        llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(this.manager.view.context, R.anim.anim_fade_out))
     }
 
     private val lyricListener = object : LyricScroller.LyricListener {
@@ -133,8 +134,8 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         override fun onLyricSentenceChanged(indexOfCurSentence: Int) {
             lyricAdapter.setCurrentSentenceIndex(indexOfCurSentence)
             lyricAdapter.notifyDataSetChanged()
-            lrcListView!!.smoothScrollToPositionFromTop(indexOfCurSentence,
-                lrcListView!!.height / 2, 500)
+            lrcListView.smoothScrollToPositionFromTop(indexOfCurSentence,
+                lrcListView.height / 2, 500)
         }
     }
 
@@ -166,69 +167,69 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         btnMusicPlayVolume = findViewById(R.id.btn_music_play_volume) as ImageButton
         btnMusicPlayMode = findViewById(R.id.btn_music_play_mode) as ImageButton
         btnMusicPlayFavorite = findViewById(R.id.btn_music_play_favorite) as ImageButton
-        statusBarLyric!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        statusBarLyric.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             getStatusBarHeight())
         rotateCoverView = RotateCoverView(manager.view.context)
         viewPager = findViewById(R.id.vp_music_play_cover_lyric) as ViewPager
 
         lrcEmptyView = TextView(manager.view.context)
-        lrcEmptyView!!.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        lrcEmptyView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT)
-        lrcEmptyView!!.gravity = Gravity.CENTER
-        lrcEmptyView!!.text = "暂无歌词"
-        lrcEmptyView!!.setTextColor(Color.WHITE)
+        lrcEmptyView.gravity = Gravity.CENTER
+        lrcEmptyView.text = ContextCompat.getString(manager.view.context, R.string.no_lyrics)
+        lrcEmptyView.setTextColor(Color.WHITE)
         lrcListView = ListView(manager.view.context)
-        lrcListView!!.isVerticalScrollBarEnabled = false
-        lrcListView!!.adapter = lyricAdapter
-        lrcListView!!.emptyView = lrcEmptyView
-        lrcListView!!.overScrollMode = AbsListView.OVER_SCROLL_NEVER
-        lrcListView!!.startAnimation(AnimationUtils.loadAnimation(manager.view.context,
+        lrcListView.isVerticalScrollBarEnabled = false
+        lrcListView.adapter = lyricAdapter
+        lrcListView.emptyView = lrcEmptyView
+        lrcListView.overScrollMode = AbsListView.OVER_SCROLL_NEVER
+        lrcListView.startAnimation(AnimationUtils.loadAnimation(manager.view.context,
             android.R.anim.fade_in))
         coverLrcContainer = FrameLayout(manager.view.context)
-        coverLrcContainer!!.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        coverLrcContainer.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT)
         coverContainer = FrameLayout(manager.view.context)
-        coverContainer!!.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        coverContainer.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT)
         val dp40 = DensityUtils.dp2px(40f)
         val lp = FrameLayout.LayoutParams(ScreenUtils.getScreenWidth() - dp40,
             ScreenUtils.getScreenWidth() - dp40)
         lp.gravity = Gravity.CENTER
-        coverContainer!!.addView(rotateCoverView, lp)
-        coverLrcContainer!!.addView(lrcListView)
-        coverLrcContainer!!.addView(lrcEmptyView)
+        coverContainer.addView(rotateCoverView, lp)
+        coverLrcContainer.addView(lrcListView)
+        coverLrcContainer.addView(lrcEmptyView)
         val pageViews: MutableList<View>  = ArrayList()
-        pageViews.add(coverContainer!!)
-        pageViews.add(coverLrcContainer!!)
-        viewPager!!.adapter = MusicPlayPagerAdapter(pageViews)
-        slidingView!!.setOnDrawerCloseListener(this)
-        slidingView!!.setOnDrawerOpenListener(this)
-        slidingView!!.setOnTouchListener { v, event ->
+        pageViews.add(coverContainer)
+        pageViews.add(coverLrcContainer)
+        viewPager.adapter = MusicPlayPagerAdapter(pageViews)
+        slidingView.setOnDrawerCloseListener(this)
+        slidingView.setOnDrawerOpenListener(this)
+        slidingView.setOnTouchListener { v, event ->
             event.action == MotionEvent.ACTION_DOWN
         }
-        btnMusicPlayPrev!!.setOnClickListener(this)
-        btnMusicPlayNext!!.setOnClickListener(this)
-        btnMusicPlayPlay!!.setOnClickListener(this)
-        btnMusicPlayPause!!.setOnClickListener(this)
-        btnMusicPlayVolume!!.setOnClickListener(this)
-        btnMusicPlayMode!!.setOnClickListener(this)
-        btnMusicPlayFavorite!!.setOnClickListener(this)
+        btnMusicPlayPrev.setOnClickListener(this)
+        btnMusicPlayNext.setOnClickListener(this)
+        btnMusicPlayPlay.setOnClickListener(this)
+        btnMusicPlayPause.setOnClickListener(this)
+        btnMusicPlayVolume.setOnClickListener(this)
+        btnMusicPlayMode.setOnClickListener(this)
+        btnMusicPlayFavorite.setOnClickListener(this)
         sbMusicPlayPlayback = findViewById(R.id.sb_music_play_playback) as SeekBar
         sbMusicPlayVolume = findViewById(R.id.sb_music_play_volume) as SeekBar
-        sbMusicPlayVolume!!.max = maxVolume
-        sbMusicPlayVolume!!.progress = curVolume
-        sbMusicPlayPlayback!!.setOnSeekBarChangeListener(this)
-        sbMusicPlayVolume!!.setOnSeekBarChangeListener(this)
+        sbMusicPlayVolume.max = maxVolume
+        sbMusicPlayVolume.progress = curVolume
+        sbMusicPlayPlayback.setOnSeekBarChangeListener(this)
+        sbMusicPlayVolume.setOnSeekBarChangeListener(this)
         tvMusicPlayCurTime = findViewById(R.id.tv_music_play_cur_time) as TextView
         tvMusicPlayTotalTime = findViewById(R.id.tv_music_play_total_time) as TextView
 
         llMusicPlayVolume = findViewById(R.id.ll_music_play_volume) as LinearLayout
-        sbMusicPlayVolume!!.setOnTouchListener { _, motionEvent ->
+        sbMusicPlayVolume.setOnTouchListener { _, motionEvent ->
             when (motionEvent.action) {
                 MotionEvent.ACTION_DOWN -> volumeHandler.removeCallbacks(r)
                 MotionEvent.ACTION_UP -> {
-                    llMusicPlayVolume!!.visibility = View.INVISIBLE
-                    llMusicPlayVolume!!.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_out))
+                    llMusicPlayVolume.visibility = View.INVISIBLE
+                    llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_out))
                 }
             }
             false
@@ -264,23 +265,23 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     fun open() {
-        slidingView!!.visibility = View.VISIBLE
-        slidingView!!.animateOpen()
+        slidingView.visibility = View.VISIBLE
+        slidingView.animateOpen()
     }
 
     fun close() {
-        slidingView!!.animateClose()
+        slidingView.animateClose()
     }
 
     fun showPlay(flag: Boolean) {
         if (flag) {
-            btnMusicPlayPlay!!.visibility = View.VISIBLE
-            btnMusicPlayPause!!.visibility = View.GONE
-            rotateCoverView!!.pauseRotateAnimation()
+            btnMusicPlayPlay.visibility = View.VISIBLE
+            btnMusicPlayPause.visibility = View.GONE
+            rotateCoverView.pauseRotateAnimation()
         } else {
-            btnMusicPlayPlay!!.visibility = View.GONE
-            btnMusicPlayPause!!.visibility = View.VISIBLE
-            rotateCoverView!!.startRotateAnimation()
+            btnMusicPlayPlay.visibility = View.GONE
+            btnMusicPlayPause.visibility = View.VISIBLE
+            rotateCoverView.startRotateAnimation()
         }
     }
 
@@ -333,9 +334,9 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     private fun refreshFavorite(favorite: Int) {
         if (favorite == 1) {
-            btnMusicPlayFavorite!!.setImageResource(R.drawable.ic_favorite_checked)
+            btnMusicPlayFavorite.setImageResource(R.drawable.ic_favorite_checked)
         } else {
-            btnMusicPlayFavorite!!.setImageResource(R.drawable.ic_favorite_unchecked)
+            btnMusicPlayFavorite.setImageResource(R.drawable.ic_favorite_unchecked)
         }
         curMusic?.let {
             it.favorite = favorite
@@ -363,7 +364,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     override fun onStartTrackingTouch(seekBar: SeekBar) {
         if (seekBar === sbMusicPlayPlayback) {
             playAuto = false
-            musicTimer!!.stopTimer()
+            musicTimer?.stopTimer()
             mediaManager.pause()
         }
     }
@@ -374,29 +375,21 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             mediaManager.seekTo(seekBarProgress)
             refreshSeekProgress(mediaManager.position(), mediaManager.duration())
             mediaManager.replay()
-            musicTimer!!.startTimer()
+            musicTimer?.startTimer()
         }
     }
 
     override fun onDrawerOpened() {
-        if (lrcListView != null) {
-            lrcListView!!.visibility = View.INVISIBLE
-        }
-        if (rvHomeModule != null) {
-            rvHomeModule!!.visibility = View.INVISIBLE
-        }
+        lrcListView.visibility = View.INVISIBLE
+        rvHomeModule.visibility = View.INVISIBLE
         playModeControl.refreshButtonStatus(btnMusicPlayMode!!)
         lyricLoader.searchLrc(curMusic)
     }
 
     override fun onDrawerClosed() {
-        if (lrcListView != null) {
-            lrcListView!!.visibility = View.VISIBLE
-        }
-        if (rvHomeModule != null) {
-            rvHomeModule!!.visibility = View.VISIBLE
-        }
-        slidingView!!.visibility = View.GONE
+        lrcListView.visibility = View.VISIBLE
+        rvHomeModule.visibility = View.VISIBLE
+        slidingView.visibility = View.GONE
     }
 
     /**
@@ -412,13 +405,13 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val curSecond = curTime % 60
 
         val curTimeString = String.format("%02d:%02d", curMinute, curSecond)
-        tvMusicPlayCurTime!!.text = curTimeString
+        tvMusicPlayCurTime.text = curTimeString
 
         var rate = 0
         if (totalTime != 0) {
             rate = (curTime.toFloat() / totalTime * 100).toInt()
         }
-        sbMusicPlayPlayback!!.progress = rate
+        sbMusicPlayPlayback.progress = rate
 
         lyricScroller.notifyTime(tempCurTime.toLong())
     }
@@ -440,10 +433,10 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val totalTimeString = String.format("%02d:%02d", totalMinute,
                 totalSecond)
 
-        tvMusicPlayTotalTime!!.text = totalTimeString
+        tvMusicPlayTotalTime.text = totalTimeString
 
-        tvSlidingMusicName!!.text = music.musicName
-        tvSlidingArtist!!.text = music.artist
+        tvSlidingMusicName.text = music.musicName
+        tvSlidingArtist.text = music.artist
         refreshSeekProgress(curTime, tempTotalTime)
     }
 
@@ -474,13 +467,13 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             // 暂停
             R.id.btn_music_play_pause -> mediaManager.pause()
             // 音量
-            R.id.btn_music_play_volume -> if (llMusicPlayVolume!!.isShown) {
+            R.id.btn_music_play_volume -> if (llMusicPlayVolume.isShown) {
                 volumeHandler.removeCallbacks(r)
-                llMusicPlayVolume!!.visibility = View.INVISIBLE
-                llMusicPlayVolume!!.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_out))
+                llMusicPlayVolume.visibility = View.INVISIBLE
+                llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_out))
             } else {
-                llMusicPlayVolume!!.visibility = View.VISIBLE
-                llMusicPlayVolume!!.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_in))
+                llMusicPlayVolume.visibility = View.VISIBLE
+                llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_in))
                 volumeHandler.postDelayed(r, 3000)
             }
             // 播放模式
@@ -514,7 +507,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
      * 加载转盘封面。
      */
     fun loadRotateCover(bitmap: Bitmap) {
-        rotateCoverView!!.setImageBitmap(bitmap)
+        rotateCoverView.setImageBitmap(bitmap)
     }
 
     /**

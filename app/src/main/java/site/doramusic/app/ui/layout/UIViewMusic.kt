@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.layout
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.media.AudioManager
 import android.view.MotionEvent
@@ -139,6 +140,7 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         activity.volumeControlStream = AudioManager.STREAM_MUSIC
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupLetterView() {
         lvMusic.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
@@ -165,17 +167,17 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             ROUTE_START_FROM_LOCAL -> musicDao.selectAllAsync(listener)
             ROUTE_START_FROM_ARTIST -> {
                 val artist = table as Artist
-                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo("artist", artist.name), listener)
+                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ARTIST, artist.name), listener)
             }
             ROUTE_START_FROM_ALBUM -> {
                 val album = table as Album
-                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo("album_id", album.album_id), listener)
+                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ALBUM_ID, album.album_id), listener)
             }
             ROUTE_START_FROM_FOLDER -> {
                 val folder = table as Folder
-                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo("folder", folder.path), listener)
+                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FOLDER, folder.path), listener)
             }
-            ROUTE_START_FROM_FAVORITE -> musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo("favorite", 1), listener)
+            ROUTE_START_FROM_FAVORITE -> musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FAVORITE, 1), listener)
             ROUTE_START_FROM_LATEST -> musicDao.selectAsync(
                 QueryBuilder.create()
                     .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))

@@ -15,7 +15,7 @@ import site.doramusic.app.base.conf.AppConfig
  */
 class PlayModeControl(internal val context: Context) : AppConfig {
 
-    private val mediaManager: MediaManager? = MusicApp.app!!.mediaManager
+    private val mediaManager: MediaManager = MusicApp.app.mediaManager
 
     /**
      * 刷新按钮的状态。
@@ -23,7 +23,7 @@ class PlayModeControl(internal val context: Context) : AppConfig {
      * @param playModeBtn
      */
     fun refreshButtonStatus(playModeBtn: ImageButton) {
-        when (mediaManager!!.playMode) {
+        when (mediaManager.playMode) {
             AppConfig.MPM_PLAYLIST_LOOP -> {   //列表循环
                 playModeBtn.setImageResource(R.drawable.ic_playmode_list_loop)
             }

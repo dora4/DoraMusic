@@ -1,14 +1,10 @@
 package site.doramusic.app.ui.adapter
 
-import android.view.View
-import android.widget.ImageView
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 
 import site.doramusic.app.util.MusicUtils
 
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Music
 
 class MusicItemAdapter : BaseSortItemAdapter<Music>(R.layout.item_music) {
@@ -17,10 +13,10 @@ class MusicItemAdapter : BaseSortItemAdapter<Music>(R.layout.item_music) {
         return data.musicName
     }
 
-    override fun convert(holder: BaseViewHolder, music: Music) {
-        holder.setText(R.id.tv_music_name, music.musicName)
-        holder.setText(R.id.tv_music_artist, music.artist)
-        holder.setText(R.id.tv_music_duration, MusicUtils.formatTime(music.duration.toLong()))
+    override fun convert(holder: BaseViewHolder, item: Music) {
+        holder.setText(R.id.tv_music_name, item.musicName)
+        holder.setText(R.id.tv_music_artist, item.artist)
+        holder.setText(R.id.tv_music_duration, MusicUtils.formatTime(item.duration.toLong()))
 //        val ivMusicPlayState = holder.getView(R.id.iv_music_play_state) as ImageView
 //        val mediaManager = MusicApp.app.mediaManager
 //        if (mediaManager.curMusicId !== -1 && mediaManager.curMusicId === music.songId

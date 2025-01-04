@@ -52,4 +52,5 @@
     <string name="shuffle_playback">随机播放</string>
     <string name="single_track_loop">单曲循环</string>
     <string name="playlist_loop">列表循环</string>
+    <string name="no_lyrics">暂无歌词</string>
 </resources>

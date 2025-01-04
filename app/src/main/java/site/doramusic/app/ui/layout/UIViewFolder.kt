@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.layout
 
+import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -25,13 +26,13 @@ import java.util.*
 
 class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
-    private var statusBarFolder: View? = null
-    private var titlebar: DoraTitleBar? = null
-    private var adapter: FolderItemAdapter? = null
-    private var rvFolder: RecyclerView? = null
+    private lateinit var statusBarFolder: View
+    private lateinit var titlebar: DoraTitleBar
+    private lateinit var adapter: FolderItemAdapter
+    private lateinit var rvFolder: RecyclerView
 
-    private var lvFolder: LetterView? = null
-    private var tvFolderDialog: TextView? = null
+    private lateinit var lvFolder: LetterView
+    private lateinit var tvFolderDialog: TextView
     private val folderDao = DaoFactory.getDao(Folder::class.java)
 
     override fun getView(from: Int, obj: OrmTable?): View {
@@ -40,16 +41,17 @@ class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
         return view
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initViews(view: View) {
 
         statusBarFolder = view.findViewById(R.id.statusbar_folder)
-        statusBarFolder!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        statusBarFolder.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarFolder!!, COLOR_THEME)
+        SkinManager.getLoader().setBackgroundColor(statusBarFolder, COLOR_THEME)
         lvFolder = view.findViewById(R.id.lv_folder)
         tvFolderDialog = view.findViewById(R.id.tv_folder_dialog)
         titlebar = view.findViewById(R.id.titlebar_folder)
-        titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+        titlebar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
             override fun onIconBackClick(icon: AppCompatImageView) {
                 manager.setCurrentItem()
@@ -60,34 +62,34 @@ class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
         })
         val folders = folderDao.selectAll() as ArrayList<Folder>
         adapter = FolderItemAdapter(folders)
-        adapter!!.setOnItemClickListener { adapter, view, position ->
+        adapter.setOnItemClickListener { adapter, view, position ->
             manager.setContentType(AppConfig.ROUTE_FOLDER_TO_LOCAL,
                 adapter.getItem(position) as OrmTable?
             )
         }
         rvFolder = view.findViewById(R.id.rv_folder)
-        rvFolder!!.layoutManager = LinearLayoutManager(manager.view.context)
-        rvFolder!!.addItemDecoration(DividerItemDecoration(manager.view.context, RecyclerView.VERTICAL))
-        rvFolder!!.adapter = adapter
-        lvFolder!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        rvFolder.layoutManager = LinearLayoutManager(manager.view.context)
+        rvFolder.addItemDecoration(DividerItemDecoration(manager.view.context, RecyclerView.VERTICAL))
+        rvFolder.adapter = adapter
+        lvFolder.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
-                tvFolderDialog!!.text = letter
+                tvFolderDialog.text = letter
                 val position: Int
                 if (letter == "↑") {
                     position = 0
                 } else if (letter == "#") {
-                    position = adapter!!.itemCount - 1
+                    position = adapter.itemCount - 1
                 } else {
-                    position = adapter!!.getPositionForSection(letter[0])
+                    position = adapter.getPositionForSection(letter[0])
                 }
-                rvFolder!!.scrollToPosition(position)
+                rvFolder.scrollToPosition(position)
             }
 
         })
-        lvFolder!!.setOnTouchListener { _, event ->
+        lvFolder.setOnTouchListener { _, event ->
             when (event.action) {
-                MotionEvent.ACTION_UP -> tvFolderDialog!!.visibility = View.GONE
-                MotionEvent.ACTION_DOWN -> tvFolderDialog!!.visibility = View.VISIBLE
+                MotionEvent.ACTION_UP -> tvFolderDialog.visibility = View.GONE
+                MotionEvent.ACTION_DOWN -> tvFolderDialog.visibility = View.VISIBLE
             }
             false
         }

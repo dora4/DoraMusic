@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.layout
 
+import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -25,12 +26,12 @@ import java.util.*
 
 class UIViewAlbum(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
-    private var statusBarAlbum: View? = null
-    private var titlebar: DoraTitleBar? = null
-    private var rvAlbum: RecyclerView? = null
-    private var adapter: AlbumItemAdapter? = null
-    private var lvAlbum: LetterView? = null
-    private var tvAlbumDialog: TextView? = null
+    private lateinit var statusBarAlbum: View
+    private lateinit var titlebar: DoraTitleBar
+    private lateinit var rvAlbum: RecyclerView
+    private lateinit var adapter: AlbumItemAdapter
+    private lateinit var lvAlbum: LetterView
+    private lateinit var tvAlbumDialog: TextView
     private val albumDao = DaoFactory.getDao(Album::class.java)
 
     override fun getView(from: Int, obj: OrmTable?): View {
@@ -39,13 +40,14 @@ class UIViewAlbum(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         return view
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initViews(view: View) {
         statusBarAlbum = view.findViewById(R.id.statusbar_album)
-        statusBarAlbum!!.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        statusBarAlbum.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarAlbum!!, COLOR_THEME)
+        SkinManager.getLoader().setBackgroundColor(statusBarAlbum, COLOR_THEME)
         titlebar = view.findViewById(R.id.titlebar_album)
-        titlebar!!.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+        titlebar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
             override fun onIconBackClick(icon: AppCompatImageView) {
                 manager.setCurrentItem()
@@ -57,40 +59,40 @@ class UIViewAlbum(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         rvAlbum = view.findViewById(R.id.rv_album)
         lvAlbum = view.findViewById(R.id.lv_album)
         tvAlbumDialog = view.findViewById(R.id.tv_album_dialog)
-        rvAlbum!!.layoutManager = LinearLayoutManager(view.context)
-        rvAlbum!!.addItemDecoration(DividerItemDecoration(view.context, RecyclerView.VERTICAL))
+        rvAlbum.layoutManager = LinearLayoutManager(view.context)
+        rvAlbum.addItemDecoration(DividerItemDecoration(view.context, RecyclerView.VERTICAL))
         val albums = albumDao.selectAll() as ArrayList<Album>
         adapter = AlbumItemAdapter(albums)
-        adapter!!.setOnItemClickListener { adapter, view, position ->
+        adapter.setOnItemClickListener { adapter, view, position ->
             manager.setContentType(AppConfig.ROUTE_ALBUM_TO_LOCAL,
                 adapter.getItem(position) as OrmTable?
             )
         }
-        rvAlbum!!.adapter = adapter
-        lvAlbum!!.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        rvAlbum.adapter = adapter
+        lvAlbum.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
 
-                tvAlbumDialog!!.text = letter
+                tvAlbumDialog.text = letter
                 val position: Int
                 when (letter) {
                     "↑" -> {
                         position = 0
                     }
                     "#" -> {
-                        position = adapter!!.itemCount - 1
+                        position = adapter.itemCount - 1
                     }
                     else -> {
-                        position = adapter!!.getPositionForSection(letter[0])
+                        position = adapter.getPositionForSection(letter[0])
                     }
                 }
-                rvAlbum!!.scrollToPosition(position)
+                rvAlbum.scrollToPosition(position)
             }
 
         })
-        lvAlbum!!.setOnTouchListener { _, event ->
+        lvAlbum.setOnTouchListener { _, event ->
             when (event.action) {
-                MotionEvent.ACTION_UP -> tvAlbumDialog!!.visibility = View.GONE
-                MotionEvent.ACTION_DOWN -> tvAlbumDialog!!.visibility = View.VISIBLE
+                MotionEvent.ACTION_UP -> tvAlbumDialog.visibility = View.GONE
+                MotionEvent.ACTION_DOWN -> tvAlbumDialog.visibility = View.VISIBLE
             }
             false
         }

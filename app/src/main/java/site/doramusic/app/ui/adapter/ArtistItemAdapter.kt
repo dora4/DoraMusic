@@ -11,9 +11,9 @@ class ArtistItemAdapter(list: MutableList<Artist>) : BaseSortItemAdapter<Artist>
         return data.name
     }
 
-    override fun convert(holder: BaseViewHolder, artist: Artist) {
-        holder.setText(R.id.tv_artist_name, artist.name)
+    override fun convert(holder: BaseViewHolder, item: Artist) {
+        holder.setText(R.id.tv_artist_name, item.name)
         holder.setText(R.id.tv_artist_number_of_tracks,
-            String.format(context.getString(R.string.items), artist.number_of_tracks))
+            String.format(context.getString(R.string.items), item.number_of_tracks))
     }
 }

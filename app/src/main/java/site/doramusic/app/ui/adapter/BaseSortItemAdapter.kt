@@ -12,7 +12,7 @@ import java.util.*
 
 abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolder>, SectionIndexer {
 
-    protected var comparator: PinyinComparator
+    private var comparator: PinyinComparator
 
     constructor(@LayoutRes layoutResId: Int) : super(layoutResId) {
         this.comparator = PinyinComparator()
@@ -41,7 +41,7 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
     private fun generateLetters(list: MutableList<T>): MutableList<T> {
         for (bean in list) {
             val sortKey = getSortKey(bean)
-            val sortLetter = PinyinUtils.getPinyinFromSentence(sortKey).uppercase(Locale.ROOT)
+            val sortLetter = PinyinUtils.getPinyinFromSentence(sortKey).uppercase(Locale.ENGLISH)
             bean.sortLetter = sortLetter
         }
         return list
@@ -55,7 +55,7 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
         for (i in 0 until itemCount) {
             val sortLetter = data[i].sortLetter
             if (sortLetter != null) {
-                val first = sortLetter.uppercase(Locale.ROOT)[0]
+                val first = sortLetter.uppercase(Locale.ENGLISH)[0]
                 if (first.code == sectionIndex) {
                     return i
                 }
@@ -68,14 +68,14 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
         return if (getItem(pos).sortLetter == null)
             -1
         else
-            getItem(pos).sortLetter.uppercase(Locale.ROOT)[0].code
+            getItem(pos).sortLetter.uppercase(Locale.ENGLISH)[0].code
     }
 
     fun getPositionForSection(sectionIndex: Char): Int {
         for (i in 0 until itemCount) {
             val sortLetter = data[i].sortLetter
             if (TextUtils.isNotEmpty(sortLetter)) {
-                val first = sortLetter.uppercase(Locale.ROOT)[0]
+                val first = sortLetter.uppercase(Locale.ENGLISH)[0]
                 if (first == sectionIndex) {
                     return i
                 }

@@ -11,8 +11,8 @@ class FolderItemAdapter(list: MutableList<Folder>) : BaseSortItemAdapter<Folder>
         return data.name
     }
 
-    override fun convert(holder: BaseViewHolder, folder: Folder) {
-        holder.setText(R.id.tv_folder_name, folder.name)
-        holder.setText(R.id.tv_folder_path, folder.path)
+    override fun convert(holder: BaseViewHolder, item: Folder) {
+        holder.setText(R.id.tv_folder_name, item.name)
+        holder.setText(R.id.tv_folder_path, item.path)
     }
 }

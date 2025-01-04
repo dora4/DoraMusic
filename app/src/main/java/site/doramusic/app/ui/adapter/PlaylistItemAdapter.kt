@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -17,9 +18,10 @@ class PlaylistItemAdapter : BaseSortItemAdapter<Music>(R.layout.item_playlist) {
         return data.musicName
     }
 
-    override fun convert(holder: BaseViewHolder, music: Music) {
+    @SuppressLint("SetTextI18n")
+    override fun convert(holder: BaseViewHolder, item: Music) {
         val mediaManager = MediaManager(context)
-        if (mediaManager.curMusicId != -1 && music.songId == mediaManager.curMusicId
+        if (mediaManager.curMusicId != -1 && item.songId == mediaManager.curMusicId
             && mediaManager.playState == AppConfig.MPS_PLAYING) {
             holder.getView<LinearLayout>(R.id.ll_playlist).setBackgroundColor(Color.LTGRAY)
         } else {
@@ -27,7 +29,7 @@ class PlaylistItemAdapter : BaseSortItemAdapter<Music>(R.layout.item_playlist) {
                 .getDrawable(context, R.drawable.selector_item_common)
         }
         holder.getView<TextView>(R.id.tv_playlist_music_number).text = "${holder.layoutPosition + 1}"
-        holder.getView<TextView>(R.id.tv_playlist_music_name).text = music.musicName
-        holder.getView<TextView>(R.id.tv_playlist_music_artist).text = music.artist
+        holder.getView<TextView>(R.id.tv_playlist_music_name).text = item.musicName
+        holder.getView<TextView>(R.id.tv_playlist_music_artist).text = item.artist
     }
 }

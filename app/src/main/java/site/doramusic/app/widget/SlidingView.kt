@@ -7,14 +7,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.SlidingDrawer
 
-class SlidingView : SlidingDrawer {
+class SlidingView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
+                                            defStyleAttr: Int = 0) : SlidingDrawer(context, attrs, defStyleAttr) {
 
     private var handleId = 0
     private var touchableIds: IntArray? = null
     private var onSlidingViewClickListener: OnSlidingViewClickListener? = null
-
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     fun setOnSlidingViewClickListener(listener: OnSlidingViewClickListener) {
         onSlidingViewClickListener = listener

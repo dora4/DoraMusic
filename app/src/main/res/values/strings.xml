@@ -50,4 +50,5 @@
     <string name="shuffle_playback">"Shuffle Playback"</string>
     <string name="single_track_loop">"Single Track Loop"</string>
     <string name="playlist_loop">"Playlist Loop"</string>
+    <string name="no_lyrics">No lyrics</string>
 </resources>
