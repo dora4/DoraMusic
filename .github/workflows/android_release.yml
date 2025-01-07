@@ -28,7 +28,7 @@ jobs:
 
       - name: Build App
         run: |
-          ./gradlew app:assembleAlphaRelease
+          ./gradlew app:assembleAlpha
       - name: Create Github Release
         if: github.repository == 'dora4/DoraMusic'
         uses: taiki-e/create-gh-release-action@v1
