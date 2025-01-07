@@ -7,6 +7,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.SlidingDrawer
 
+/**
+ * 播放控制界面滑动容器。
+ */
 class SlidingView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
                                             defStyleAttr: Int = 0) : SlidingDrawer(context, attrs, defStyleAttr) {
 

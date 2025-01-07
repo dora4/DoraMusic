@@ -12,8 +12,6 @@ import android.os.PowerManager;
 
 import androidx.annotation.NonNull;
 
-import com.lsxiao.apollo.core.Apollo;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +24,10 @@ import dora.util.LogUtils;
 import dora.util.RxBus;
 import dora.util.TextUtils;
 import dora.util.ToastUtils;
-import site.doramusic.app.base.conf.ApolloEvent;
 import site.doramusic.app.base.conf.AppConfig;
 import site.doramusic.app.db.Music;
 import site.doramusic.app.event.RefreshNumEvent;
-import site.doramusic.app.util.PreferencesManager;
+import site.doramusic.app.util.PrefsManager;
 
 /**
  * 音乐播放流程控制。
@@ -50,12 +47,12 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     private boolean mPlaying;
     private final AudioManager mAudioManager;
     private final OrmDao<Music> mDao;
-    private final PreferencesManager mPrefsManager;
+    private final PrefsManager mPrefsManager;
 
     public MusicControl(Context context) {
         this.mContext = context;
         this.mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        this.mPrefsManager = new PreferencesManager(context);
+        this.mPrefsManager = new PrefsManager(context);
         this.mPlayMode = MPM_PLAYLIST_LOOP;    //默认列表循环
         this.mPlayState = MPS_NO_FILE;  //默认没有音频文件播放
         this.mCurPlayIndex = -1;

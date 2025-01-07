@@ -60,7 +60,7 @@ import site.doramusic.app.ui.layout.UIBottomBar
 import site.doramusic.app.ui.layout.UIMusicPlay
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.MusicUtils
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 import java.util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
@@ -433,7 +433,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     private fun applyEqualizer(mediaManager: MediaManager) {
-        val prefsManager = PreferencesManager(requireContext())
+        val prefsManager = PrefsManager(requireContext())
         val equalizerFreq = getEqualizerFreq()
         val size = equalizerFreq.size
         val decibels = IntArray(size)

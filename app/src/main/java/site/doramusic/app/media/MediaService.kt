@@ -25,7 +25,7 @@ import site.doramusic.app.db.Music
 import site.doramusic.app.shake.ShakeDetector
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.util.MusicUtils
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 
 /**
  * 这个服务单独开启一个进程，用来在Android系统后台播放音乐。
@@ -43,7 +43,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
      */
     private var notificationManager: NotificationManager? = null
     private var controlBroadcast: ControlBroadcast? = null
-    private var prefsManager: PreferencesManager? = null
+    private var prefsManager: PrefsManager? = null
     private var simplePlayer: SimpleAudioPlayer? = null
     private var remoteViews: RemoteViews? = null
     private lateinit var detector: ShakeDetector
@@ -116,7 +116,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
             registerReceiver(controlBroadcast, filter)
         }
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        prefsManager = PreferencesManager(this)
+        prefsManager = PrefsManager(this)
         simplePlayer = SimpleAudioPlayer(this)
         mc = MusicControl(this)
         detector = ShakeDetector(this)

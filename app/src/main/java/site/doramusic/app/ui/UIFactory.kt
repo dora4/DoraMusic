@@ -9,7 +9,7 @@ import site.doramusic.app.ui.layout.ILyricDrawer
 abstract class UIFactory(protected var drawer: ILyricDrawer,
                          protected var manager: UIManager) : ViewInflater {
 
-    protected var inflater: LayoutInflater = manager.inflater
+    protected val inflater: LayoutInflater = manager.inflater
 
     /**
      * 保证此类可以不用重写这个方法。

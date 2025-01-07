@@ -1,6 +1,7 @@
 package site.doramusic.app.ui.layout
 
 //import site.doramusic.app.annotation.SingleClick
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -10,6 +11,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.media.AudioManager
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.view.Gravity
 import android.view.MotionEvent
@@ -65,7 +67,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         View.OnClickListener, AppConfig, SeekBar.OnSeekBarChangeListener,
         SlidingDrawer.OnDrawerCloseListener, SlidingDrawer.OnDrawerOpenListener {
 
-    var handler: Handler
+    val handler: Handler
     private val curVolume: Int
     private val maxVolume: Int
     private val audioManager: AudioManager by lazy {
@@ -143,7 +145,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         initViews()
-        handler = object : Handler() {
+        handler = object : Handler(Looper.getMainLooper()) {
             override fun handleMessage(msg: Message) {
                 super.handleMessage(msg)
                 refreshSeekProgress(
@@ -419,22 +421,18 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     /**
      * 刷新歌曲播放界面。
      */
+    @SuppressLint("DefaultLocale")
     fun refreshUI(curTime: Int, totalTime: Int, music: Music) {
-
-        var totalTime = totalTime
-
+        var time = totalTime
         curMusic = music
         refreshFavorite(music.favorite)
-        val tempTotalTime = totalTime
-
-        totalTime /= 1000
-        val totalMinute = totalTime / 60
-        val totalSecond = totalTime % 60
+        val tempTotalTime = time
+        time /= 1000
+        val totalMinute = time / 60
+        val totalSecond = time % 60
         val totalTimeString = String.format("%02d:%02d", totalMinute,
                 totalSecond)
-
         tvMusicPlayTotalTime.text = totalTimeString
-
         tvSlidingMusicName.text = music.musicName
         tvSlidingArtist.text = music.artist
         refreshSeekProgress(curTime, tempTotalTime)

@@ -16,9 +16,8 @@ import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.util.MusicUtils
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 import java.io.File
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -85,7 +84,7 @@ object MusicScanner : AppConfig {
     @JvmStatic
     fun queryMusic(context: Context,
                    selections: String?, selection: String?, from: Int): List<Music> {
-        val sp = PreferencesManager(context)
+        val sp = PrefsManager(context)
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val cr = context.contentResolver
         val select = StringBuffer(DEFENSE_SQL_INJECTION_HEADER)
@@ -221,7 +220,7 @@ object MusicScanner : AppConfig {
      */
     @JvmStatic
     fun queryFolder(context: Context): List<Folder> {
-        val sp = PreferencesManager(context)
+        val sp = PrefsManager(context)
         val uri = MediaStore.Files.getContentUri("external")
         val cr = context.contentResolver
         val selection = StringBuilder(MediaStore.Files.FileColumns.MEDIA_TYPE
@@ -274,7 +273,7 @@ object MusicScanner : AppConfig {
      */
     @JvmStatic
     fun queryAlbum(context: Context): List<Album> {
-        val sp = PreferencesManager(context)
+        val sp = PrefsManager(context)
         val uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
         val cr = context.contentResolver
         val where = StringBuilder(MediaStore.Audio.Albums._ID

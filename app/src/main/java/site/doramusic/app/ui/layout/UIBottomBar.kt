@@ -43,7 +43,7 @@ import site.doramusic.app.media.PlayModeControl
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.PlaylistItemAdapter
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.MarqueeTextView
 
 /**
@@ -97,7 +97,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val music = DaoFactory.getDao(Music::class.java).selectOne(
             QueryBuilder.create()
                 .orderBy(Music.COLUMN_LAST_PLAY_TIME + " desc"))
-        val spManager = PreferencesManager(manager.view.context)
+        val spManager = PrefsManager(manager.view.context)
         val coldLaunchAutoPlay = spManager.getColdLaunchAutoPlay()
         if (music != null && coldLaunchAutoPlay) {
 //            val isOk = mediaManager.loadCurMusic(music)

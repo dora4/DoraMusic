@@ -15,6 +15,9 @@ import android.view.View
 import site.doramusic.app.R
 import java.util.Locale
 
+/**
+ * 字母导航控件。
+ */
 class LetterView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

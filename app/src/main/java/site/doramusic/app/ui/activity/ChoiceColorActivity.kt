@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.skin.SkinManager
-import dora.util.DensityUtils
 import dora.util.StatusBarUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
@@ -20,7 +19,7 @@ import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityChoiceColorBinding
 import site.doramusic.app.ui.adapter.ChoiceColorAdapter
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 
 /**
  * 换肤界面，选择颜色。
@@ -31,7 +30,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
     private lateinit var colorDrawable: ColorDrawable
     private lateinit var choiceColorAdapter: ChoiceColorAdapter
     private var colors: MutableList<ColorData> = arrayListOf()
-    private lateinit var prefsManager: PreferencesManager
+    private lateinit var prefsManager: PrefsManager
 
     data class ColorData(val backgroundResId: Int, val backgroundColor: Int)
 
@@ -60,7 +59,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
                 }
             }
         })
-        prefsManager = PreferencesManager(this)
+        prefsManager = PrefsManager(this)
         colors = mutableListOf(
             ColorData(R.drawable.cyan_bg,
                 ContextCompat.getColor(this, R.color.skin_theme_color_cyan)),

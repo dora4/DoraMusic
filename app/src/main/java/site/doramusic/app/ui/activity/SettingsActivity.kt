@@ -17,12 +17,12 @@ import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivitySettingsBinding
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 
 @Route(path = ARoutePath.ACTIVITY_SETTINGS)
 class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
 
-    internal lateinit var prefsManager: PreferencesManager
+    internal lateinit var prefsManager: PrefsManager
     private var updateDialog: DoraLoadingDialog? = null
 
     override fun getLayoutId(): Int {
@@ -42,7 +42,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         SkinManager.getLoader().setBackgroundColor(binding.statusbarSettings, COLOR_THEME)
         binding.v = this
         updateDialog = DoraLoadingDialog(this)
-        prefsManager = PreferencesManager(this)
+        prefsManager = PrefsManager(this)
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         binding.tbSettingsAutoPlay.checkedColor = skinThemeColor
         binding.tbSettingsShake.checkedColor = skinThemeColor

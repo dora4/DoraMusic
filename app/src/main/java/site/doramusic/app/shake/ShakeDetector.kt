@@ -6,7 +6,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Handler
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -17,7 +17,7 @@ class ShakeDetector(context: Context) : SensorEventListener {
     // 获取传感器管理服务
     private val sensorManager: SensorManager by lazy { context.getSystemService(Context.SENSOR_SERVICE) as SensorManager }
     private var onShakeListener: OnShakeListener? = null
-    private val prefsManager: PreferencesManager by lazy { PreferencesManager(context) }
+    private val prefsManager: PrefsManager by lazy { PrefsManager(context) }
     private var lowX: Float = 0f
     private var lowY: Float = 0f
     private var lowZ: Float = 0f

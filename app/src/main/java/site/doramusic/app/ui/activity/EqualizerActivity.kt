@@ -15,14 +15,14 @@ import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityEqualizerBinding
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.EqualizerView
 
 @Route(path = ARoutePath.ACTIVITY_EQUALIZER)
 class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         EqualizerView.OnUpdateDecibelListener {
 
-    private lateinit var prefsManager: PreferencesManager
+    private lateinit var prefsManager: PrefsManager
 
     override fun getLayoutId(): Int {
         return R.layout.activity_equalizer
@@ -53,7 +53,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         binding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
         SkinManager.getLoader().setBackgroundColor(binding.statusbarEqualizer, COLOR_THEME)
-        prefsManager = PreferencesManager(this)
+        prefsManager = PrefsManager(this)
         val equalizerFreq = getEqualizerFreq()
         val size = equalizerFreq.size
         val decibels = IntArray(size)

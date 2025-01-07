@@ -6,6 +6,9 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import kotlin.jvm.JvmOverloads
 
+/**
+ * 跑马灯文字。
+ */
 class MarqueeTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

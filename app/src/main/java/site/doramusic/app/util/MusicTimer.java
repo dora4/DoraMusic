@@ -10,11 +10,11 @@ public class MusicTimer {
 
     public final static int REFRESH_PROGRESS_EVENT = 0x100;
     private static final int INTERVAL_TIME = 500;
-    private Handler[] mHandler;
-    private Timer mTimer;
+    private final Handler[] mHandler;
+    private final Timer mTimer;
     private TimerTask mTimerTask;
 
-    private int what;
+    private final int what;
     private boolean mTimerStart = false;
 
     public MusicTimer(Handler... handler) {

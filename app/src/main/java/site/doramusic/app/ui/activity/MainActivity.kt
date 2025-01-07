@@ -7,9 +7,11 @@ import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
@@ -25,12 +27,10 @@ import dora.util.StatusBarUtils
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
 import site.doramusic.app.BuildConfig
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshNumEvent
@@ -38,7 +38,7 @@ import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.receiver.EarphoneReceiver
 import site.doramusic.app.ui.IBack
 import site.doramusic.app.ui.fragment.HomeFragment
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 import java.util.concurrent.Executors
 
 @Route(path = ARoutePath.ACTIVITY_MAIN)
@@ -48,7 +48,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
     private lateinit var homeFragment: HomeFragment
     private val backListeners: MutableList<OnBackListener> = ArrayList()
     private var earphoneReceiver: EarphoneReceiver? = null
-    private var prefsManager: PreferencesManager? = null
+    private var prefsManager: PrefsManager? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
@@ -89,7 +89,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
      * 应用皮肤。
      */
     private fun applySkin() {
-        val manager = PreferencesManager(this)
+        val manager = PrefsManager(this)
         when (manager.getSkinType()) {
             0 -> {
             }
@@ -219,47 +219,48 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
         }
     }
 
-    override fun onBackPressed() {
-        if (homeFragment.isHome) {
-            if (mBinding.dlMain.isDrawerOpen(GravityCompat.START)) {
-                mBinding.dlMain.closeDrawer(GravityCompat.START)
-            } else {
-                val currTime = System.currentTimeMillis()
-                if (currTime - lastTime > 2000) {
-                    showShortToast(getString(R.string.press_again_to_back))
-                    lastTime = currTime
-                } else {
-                    moveTaskToBack(false)
-                }
-            }
-        } else {
-            if (homeFragment.isSlidingDrawerOpened) {
-                homeFragment.closeSlidingDrawer()
-            } else {
-                if (backListeners.size > 0) {
-                    for (listener in backListeners) {
-                        listener.onBack()
-                    }
-                }
-                //这种方式返回首页也要刷新，另一种刷新是在UIManager#setCurrentItem()
-                if (homeFragment.isHome) {
-                    RxBus.getInstance().post(RefreshNumEvent())
-                }
-            }
-        }
-    }
-
     override fun initData(savedInstanceState: Bundle?, binding: ActivityMainBinding) {
         StatusBarUtils.setStatusBarWithDrawerLayout(this, binding.dlMain,
             ContextCompat.getColor(this, R.color.colorPrimary), 255)
         homeFragment = HomeFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fl_main, homeFragment).commit()
-        prefsManager = PreferencesManager(this)
+        prefsManager = PrefsManager(this)
         initMenu()
         // 应用皮肤
         applySkin()
         // 注册耳机监听器
         registerEarCupReceiver()
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (homeFragment.isHome) {
+                    if (mBinding.dlMain.isDrawerOpen(GravityCompat.START)) {
+                        mBinding.dlMain.closeDrawer(GravityCompat.START)
+                    } else {
+                        val currTime = System.currentTimeMillis()
+                        if (currTime - lastTime > 2000) {
+                            showShortToast(getString(R.string.press_again_to_back))
+                            lastTime = currTime
+                        } else {
+                            moveTaskToBack(false)
+                        }
+                    }
+                } else {
+                    if (homeFragment.isSlidingDrawerOpened) {
+                        homeFragment.closeSlidingDrawer()
+                    } else {
+                        if (backListeners.size > 0) {
+                            for (listener in backListeners) {
+                                listener.onBack()
+                            }
+                        }
+                        // 这种方式返回首页也要刷新，另一种刷新是在UIManager#setCurrentItem()
+                        if (homeFragment.isHome) {
+                            RxBus.getInstance().post(RefreshNumEvent())
+                        }
+                    }
+                }
+            }
+        })
     }
 
     override fun registerBackListener(listener: OnBackListener) {

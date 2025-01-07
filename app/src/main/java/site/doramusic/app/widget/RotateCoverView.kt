@@ -13,6 +13,9 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
 
+/**
+ * 唱片旋转控件。
+ */
 class RotateCoverView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -29,7 +32,7 @@ class RotateCoverView @JvmOverloads constructor(
     private var density = 0f
 
     // Animation
-    private var rotateAnimator: ObjectAnimator? = null
+    private lateinit var rotateAnimator: ObjectAnimator
     private var lastAnimationValue: Long = 0
 
     init {
@@ -68,10 +71,10 @@ class RotateCoverView @JvmOverloads constructor(
         paint.color = DEFAULT_ALBUM_COLOR
         paint.textSize = ALBUM_CIRCLE_TEXT_SIZE * density
         rotateAnimator = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f)
-        rotateAnimator?.duration = 10000
-        rotateAnimator?.interpolator = LinearInterpolator()
-        rotateAnimator?.repeatMode = ValueAnimator.RESTART
-        rotateAnimator?.repeatCount = ValueAnimator.INFINITE
+        rotateAnimator.duration = 10000
+        rotateAnimator.interpolator = LinearInterpolator()
+        rotateAnimator.repeatMode = ValueAnimator.RESTART
+        rotateAnimator.repeatCount = ValueAnimator.INFINITE
     }
 
     private fun elevationSupported(): Boolean {
@@ -119,31 +122,28 @@ class RotateCoverView @JvmOverloads constructor(
 
     // Animation
     fun startRotateAnimation() {
-        rotateAnimator!!.cancel()
-        rotateAnimator!!.start()
+        rotateAnimator.cancel()
+        rotateAnimator.start()
     }
 
     fun cancelRotateAnimation() {
         lastAnimationValue = 0
-        rotateAnimator!!.cancel()
+        rotateAnimator.cancel()
     }
 
     fun pauseRotateAnimation() {
-        lastAnimationValue = rotateAnimator!!.currentPlayTime
-        rotateAnimator!!.cancel()
+        lastAnimationValue = rotateAnimator.currentPlayTime
+        rotateAnimator.cancel()
     }
 
     fun resumeRotateAnimation() {
-        rotateAnimator!!.start()
-        rotateAnimator!!.currentPlayTime = lastAnimationValue
+        rotateAnimator.start()
+        rotateAnimator.currentPlayTime = lastAnimationValue
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        if (rotateAnimator != null) {
-            rotateAnimator!!.cancel()
-            rotateAnimator = null
-        }
+        rotateAnimator.cancel()
     }
 
     /**
@@ -192,7 +192,6 @@ class RotateCoverView @JvmOverloads constructor(
     }
 
     companion object {
-        // private static final String TAG = "AlbumImageView";
         private const val KEY_SHADOW_COLOR = 0x1E000000
         private const val FILL_SHADOW_COLOR = 0x3D000000
         private const val X_OFFSET = 0f

@@ -64,7 +64,7 @@ class UIViewArtist(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
         })
         val artists = artistDao.selectAll() as ArrayList<Artist>
         adapter = ArtistItemAdapter(artists)
-        adapter.setOnItemClickListener { adapter, view, position ->
+        adapter.setOnItemClickListener { adapter, _, position ->
             manager.setContentType(AppConfig.ROUTE_ARTIST_TO_LOCAL,
                 adapter.getItem(position) as OrmTable?
             )
@@ -73,13 +73,16 @@ class UIViewArtist(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
         lvArtist.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
                 tvArtistDialog.text = letter
-                val position: Int
-                if (letter == "↑") {
-                    position = 0
-                } else if (letter == "#") {
-                    position = adapter.itemCount - 1
-                } else {
-                    position = adapter.getPositionForSection(letter[0])
+                val position: Int = when (letter) {
+                    "↑" -> {
+                        0
+                    }
+                    "#" -> {
+                        adapter.itemCount - 1
+                    }
+                    else -> {
+                        adapter.getPositionForSection(letter[0])
+                    }
                 }
                 rvArtist.scrollToPosition(position)
             }

@@ -3,7 +3,7 @@ package site.doramusic.app.util
 import android.content.Context
 import dora.util.SPUtils
 
-class PreferencesManager(val context: Context) {
+class PrefsManager(val context: Context) {
 
     fun getColdLaunchAutoPlay(): Boolean {
         return SPUtils.readBoolean(

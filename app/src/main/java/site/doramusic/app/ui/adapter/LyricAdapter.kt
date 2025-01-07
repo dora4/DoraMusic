@@ -10,7 +10,7 @@ import dora.skin.SkinManager
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.lrc.LyricLine
-import site.doramusic.app.util.PreferencesManager
+import site.doramusic.app.util.PrefsManager
 import java.util.*
 
 class LyricAdapter(internal var context: Context) : BaseAdapter() {
@@ -97,7 +97,7 @@ class LyricAdapter(internal var context: Context) : BaseAdapter() {
                 .contentText
         }
         if (indexOfCurrentSentence == position) {
-            val prefsManager = PreferencesManager(context)
+            val prefsManager = PrefsManager(context)
             val skinType = prefsManager.getSkinType()
             // 当前播放到的句子设置为白色，字体大小更大
             if (skinType == 0) {
