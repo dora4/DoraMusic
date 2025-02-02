@@ -167,18 +167,18 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
         }
     }
 
-    private inner class ViewPagerAdapter(private val pageViews: List<View>?) : PagerAdapter() {
+    private inner class ViewPagerAdapter(private val pageViews: List<View>) : PagerAdapter() {
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            container.removeView(pageViews!![position])
+            container.removeView(pageViews[position])
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            container.addView(pageViews!![position])
+            container.addView(pageViews[position])
             return pageViews[position]
         }
 
         override fun getCount(): Int {
-            return pageViews!!.size
+            return pageViews.size
         }
 
         override fun isViewFromObject(view: View, obj: Any): Boolean {
@@ -191,11 +191,11 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
         secondaryViewPager = findViewById(R.id.vp_home_slave) as ViewPager
         mainViews = ArrayList()
         secondaryViews = ArrayList()
-        mainViewPager.addOnPageChangeListener(OnPageChangeListenerMaster())
-        secondaryViewPager.addOnPageChangeListener(OnPageChangeListenerSlave())
+        mainViewPager.addOnPageChangeListener(OnPageChangeListenerMain())
+        secondaryViewPager.addOnPageChangeListener(OnPageChangeListenerSecondary())
     }
 
-    private inner class OnPageChangeListenerMaster : ViewPager.OnPageChangeListener {
+    private inner class OnPageChangeListenerMain : ViewPager.OnPageChangeListener {
         var onPageScrolled = -1
         // 当滑动状态改变时调用
         override fun onPageScrollStateChanged(state: Int) {
@@ -216,7 +216,7 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
         }
     }
 
-    private inner class OnPageChangeListenerSlave : ViewPager.OnPageChangeListener {
+    private inner class OnPageChangeListenerSecondary : ViewPager.OnPageChangeListener {
         var onPageScrolled = -1
         // 当滑动状态改变时调用
         override fun onPageScrollStateChanged(state: Int) {

@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import dora.db.constraint.AssignType;
 import dora.db.constraint.PrimaryKey;
@@ -115,6 +116,12 @@ public class Music implements OrmTable, Parcelable, Sort {
         bundle.putInt(COLUMN_FAVORITE, favorite);
         bundle.putLong(COLUMN_LAST_PLAY_TIME, lastPlayTime);
         dest.writeBundle(bundle);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        assert obj != null;
+        return id == ((Music)obj).id;
     }
 
     public static final Creator<Music> CREATOR = new Creator<Music>() {

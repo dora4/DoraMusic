@@ -92,11 +92,11 @@ class PlayModeControl(internal val context: Context) : AppConfig {
             AppConfig.MPM_SHUFFLE_PLAYBACK -> return context.getString(R.string.shuffle_playback)
             AppConfig.MPM_SINGLE_TRACK_LOOP -> context.getString(R.string.single_track_loop)
         }
-        throw IllegalArgumentException("无效的播放模式")
+        return ""
     }
 
     fun changePlayMode(textView: TextView, imageView: ImageView) {
-        when (mediaManager!!.playMode) {
+        when (mediaManager.playMode) {
             AppConfig.MPM_PLAYLIST_LOOP -> {   // 列表循环 -> 顺序播放
                 textView.text = context.getString(R.string.sequential_playback)
                 mediaManager.playMode = AppConfig.MPM_SEQUENTIAL_PLAYBACK

@@ -69,10 +69,12 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             }
             setList(optMusics)
             if (sort) sort()
-            mediaManager.refreshPlaylist(data)
             setOnItemClickListener { _, _, position ->
                 if (position >= MUSIC_LIST_MAX_LIST) {
                     return@setOnItemClickListener
+                }
+                if (mediaManager.playlist != data) {
+                    mediaManager.refreshPlaylist(data)
                 }
                 val music = data[position]
                 if (music.songId != -1) {

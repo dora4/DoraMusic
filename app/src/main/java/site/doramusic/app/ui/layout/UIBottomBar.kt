@@ -244,9 +244,20 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
         val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
         val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
-        tvPlaylistPlayMode.text = playModeControl.printPlayMode(mediaManager.playMode)
-        ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
-        tvPlaylistCount.text = "(${String.format(context.getString(R.string.items), mediaManager.playlist.size)})"
+        val playModeText = playModeControl.printPlayMode(mediaManager.playMode)
+        if (playModeText != "") {
+            tvPlaylistPlayMode.visibility = View.VISIBLE
+            ivPlaylistPlayMode.visibility = View.VISIBLE
+            tvPlaylistCount.visibility = View.VISIBLE
+            tvPlaylistPlayMode.text = playModeText
+            ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
+            tvPlaylistCount.text =
+                "(${String.format(context.getString(R.string.items), mediaManager.playlist.size)})"
+        } else {
+            tvPlaylistPlayMode.visibility = View.INVISIBLE
+            ivPlaylistPlayMode.visibility = View.INVISIBLE
+            tvPlaylistCount.visibility = View.INVISIBLE
+        }
         adapter.setList(mediaManager.playlist)
 
         adapter.setOnItemClickListener { _, _, position ->
