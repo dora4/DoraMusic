@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.os.RemoteException
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
@@ -47,17 +48,23 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     private var simplePlayer: SimpleAudioPlayer? = null
     private var remoteViews: RemoteViews? = null
     private lateinit var detector: ShakeDetector
+    private var handler: Handler = Handler(Looper.getMainLooper())
 
     override fun onBind(intent: Intent): IBinder? {
         binder = MediaServiceImpl()
         return binder
     }
 
+    private val shakingRunnable: Runnable = Runnable {
+        // 再切到下一首播放
+        mc.next()
+    }
+
     override fun onShake() {
-        //先播放摇一摇切歌的音效
+        handler.removeCallbacks(shakingRunnable)
+        // 先播放摇一摇切歌的音效
         simplePlayer?.playByRawId(R.raw.shaking)
-        //再切到下一首播放
-        Handler().postDelayed({ mc.next() }, 2000)
+        handler.postDelayed(shakingRunnable, 2000)
     }
 
     inner class ControlBroadcast : BroadcastReceiver() {

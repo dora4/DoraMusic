@@ -26,7 +26,7 @@ android {
     }
     flavorDimensions("app")
     productFlavors {
-        // 线上/公测环境··
+        // 线上/公测环境
         create("beta") {
             dimension = "app"
             versionNameSuffix = "-beta"
@@ -110,12 +110,13 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dcache-android:3.1.8")
-    implementation("com.github.dora4:dora:1.2.36")
+    implementation("com.github.dora4:dcache-android:3.1.14")
+    implementation("com.github.dora4:dora:1.2.51")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-apollo-support:1.4")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
     implementation("com.github.dora4:dora-firebase-support:1.13")
+    implementation("com.github.dora4:dora-brvah-support:1.3")
     implementation("com.github.dora4:dview-toggle-button:1.5")
     implementation("com.github.dora4:dview-alert-dialog:1.18")
     implementation("com.github.dora4:dview-loading-dialog:1.5")
@@ -145,9 +146,6 @@ dependencies {
 
     // XXPermissions
     implementation("com.github.getActivity:XXPermissions:18.2")
-
-    // BaseRecyclerViewAdapterHelper
-    implementation("io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.6")
 
     // banner
     implementation("io.github.youth5201314:banner:2.2.2")

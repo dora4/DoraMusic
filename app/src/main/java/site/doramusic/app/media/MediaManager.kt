@@ -27,14 +27,14 @@ class MediaManager(internal val context: Context) : IMediaService.Stub(), AppCon
             override fun onServiceConnected(name: ComponentName, service: IBinder) {
                 mediaService = asInterface(service)
                 if (mediaService != null) {
-                    //音频服务启动的标志
+                    // 音频服务启动的标志
                     LogUtils.i("MediaManager:connected")
-                    onCompletionListener!!.onConnectCompletion(mediaService)
+                    onCompletionListener?.onConnectCompletion(mediaService)
                 }
             }
 
             override fun onServiceDisconnected(name: ComponentName) {
-                //音频服务断开的标志
+                // 音频服务断开的标志
                 LogUtils.i("MediaManager:disconnected")
             }
         }
