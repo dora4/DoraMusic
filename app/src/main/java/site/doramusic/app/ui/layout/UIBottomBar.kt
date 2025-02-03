@@ -67,6 +67,8 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private var defaultAlbumIcon: Bitmap? = null
     private val playModeControl: PlayModeControl by lazy { PlayModeControl(manager.view.context) }
     private val adapter = PlaylistItemAdapter()
+    @Volatile
+    private var bottomSheetDialog: BottomSheetDialog? = null
 
     init {
         Apollo.bind(this)
@@ -233,49 +235,62 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     private fun showBottomSheetDialog(context: Context) {
-        val bottomSheetDialog = BottomSheetDialog(context)
-        val contentView = LayoutInflater.from(context).inflate(R.layout.view_popup_playlist, null)
-        val height = ScreenUtils.getContentHeight() * 2 / 5
-        val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
-        contentView.layoutParams = layoutParams
-        val tvPlaylistPlayMode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
-        val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
-        val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
-        val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
-        val playModeText = playModeControl.printPlayMode(MediaManager.playMode)
-        if (playModeText != "") {
-            tvPlaylistPlayMode.visibility = View.VISIBLE
-            ivPlaylistPlayMode.visibility = View.VISIBLE
-            tvPlaylistCount.visibility = View.VISIBLE
-            tvPlaylistPlayMode.text = playModeText
-            ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(MediaManager.playMode))
-            tvPlaylistCount.text =
-                "(${String.format(context.getString(R.string.items), MediaManager.playlist.size)})"
-        } else {
-            tvPlaylistPlayMode.visibility = View.INVISIBLE
-            ivPlaylistPlayMode.visibility = View.INVISIBLE
-            tvPlaylistCount.visibility = View.INVISIBLE
-        }
-        adapter.setList(MediaManager.playlist)
+        // 如果弹窗已经显示，则不再重复打开
+        synchronized(this) {
+            // 确保方法在多线程环境下是线程安全的
+            if (bottomSheetDialog?.isShowing == true) {
+                return
+            }
+            bottomSheetDialog = BottomSheetDialog(context)
+            val contentView = LayoutInflater.from(context).inflate(R.layout.view_popup_playlist, null)
+            val height = ScreenUtils.getContentHeight() * 2 / 5
+            val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
+            contentView.layoutParams = layoutParams
+            val tvPlaylistPlayMode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
+            val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
+            val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
+            val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
+            val playModeText = playModeControl.printPlayMode(MediaManager.playMode)
+            if (playModeText.isNotEmpty()) {
+                tvPlaylistPlayMode.visibility = View.VISIBLE
+                ivPlaylistPlayMode.visibility = View.VISIBLE
+                tvPlaylistCount.visibility = View.VISIBLE
+                tvPlaylistPlayMode.text = playModeText
+                ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(MediaManager.playMode))
+                tvPlaylistCount.text =
+                    "(${String.format(context.getString(R.string.items), MediaManager.playlist.size)})"
+            } else {
+                tvPlaylistPlayMode.visibility = View.INVISIBLE
+                ivPlaylistPlayMode.visibility = View.INVISIBLE
+                tvPlaylistCount.visibility = View.INVISIBLE
+            }
 
-        adapter.setOnItemClickListener { _, _, position ->
-            MediaManager.playById(MediaManager.playlist[position].songId)
-//            bottomSheetDialog.dismiss()
-        }
+            adapter.setList(MediaManager.playlist)
+            adapter.setOnItemClickListener { _, _, position ->
+                MediaManager.playById(MediaManager.playlist[position].songId)
+            }
 
-        ViewUtils.configRecyclerView(recyclerView)
-        recyclerView.adapter = adapter
+            ViewUtils.configRecyclerView(recyclerView)
+            recyclerView.adapter = adapter
 
+            tvPlaylistPlayMode.setOnClickListener {
+                playModeControl.changePlayMode(tvPlaylistPlayMode, ivPlaylistPlayMode)
+            }
+            ivPlaylistPlayMode.setOnClickListener {
+                playModeControl.changePlayMode(tvPlaylistPlayMode, ivPlaylistPlayMode)
+            }
 
-        tvPlaylistPlayMode.setOnClickListener {
-            playModeControl.changePlayMode(tvPlaylistPlayMode, ivPlaylistPlayMode)
+            bottomSheetDialog?.behavior?.peekHeight = height
+            bottomSheetDialog?.setContentView(contentView)
+
+            // 监听弹窗关闭，避免变量引用错误
+            bottomSheetDialog?.setOnDismissListener {
+                synchronized(this) {
+                    bottomSheetDialog = null
+                }
+            }
+
+            bottomSheetDialog?.show()
         }
-        ivPlaylistPlayMode.setOnClickListener {
-            playModeControl.changePlayMode(tvPlaylistPlayMode, ivPlaylistPlayMode)
-        }
-        bottomSheetDialog.behavior.peekHeight = height
-        // 设置内容视图并显示
-        bottomSheetDialog.setContentView(contentView)
-        bottomSheetDialog.show()
     }
 }
