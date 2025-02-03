@@ -255,7 +255,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                     }
                 } else {
                     if (homeFragment.isSlidingDrawerOpened) {
-                        homeFragment.closeSlidingDrawer()
+                        homeFragment.closeDrawer()
                     } else {
                         if (backListeners.size > 0) {
                             for (listener in backListeners) {
