@@ -12,15 +12,13 @@ interface AppConfig {
 
         // Intent & Action
         const val MEDIA_SERVICE = "site.doramusic.app.service.MEDIA_SERVICE"
-        const val ACTION_PLAY = "site.doramusic.app.intent.ACTION_PLAY"
         const val ACTION_PREV = "site.doramusic.app.intent.ACTION_PREV"
         const val ACTION_NEXT = "site.doramusic.app.intent.ACTION_NEXT"
         const val ACTION_PAUSE_RESUME = "site.doramusic.app.intent.ACTION_PAUSE_RESUME"
-        const val ACTION_CANCEL = "site.doramusic.app.intent.ACTION_CANCEL"
 
         // 文件夹相关
-        val FOLDER_LOG = IoUtils.getSdRoot() + "/DoraMusic/log" //日志存放目录
-        val FOLDER_LRC = IoUtils.getSdRoot() + "/DoraMusic/lrc" //歌词文件存放目录
+        val FOLDER_LOG = IoUtils.getSdRoot() + "/DoraMusic/log" // 日志存放目录
+        val FOLDER_LRC = IoUtils.getSdRoot() + "/DoraMusic/lrc" // 歌词文件存放目录
 
         // 数据库相关
         const val DB_NAME = "db_doramusic"

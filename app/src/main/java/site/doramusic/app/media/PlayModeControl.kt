@@ -6,7 +6,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import dora.util.ToastUtils
 
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 

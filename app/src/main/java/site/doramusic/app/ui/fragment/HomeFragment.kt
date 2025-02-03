@@ -242,7 +242,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     private fun onPlayMusic(playState: Int, pendingProgress: Int) {
-
         MediaManager.curMusic ?: LogUtils.d("当前无歌曲")
         val music = MediaManager.curMusic ?: return
         when (playState) {
@@ -278,7 +277,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     )
                 }
             }
-            AppConfig.MPS_PAUSE -> {    //  刷新播放列表当前播放的条目
+            AppConfig.MPS_PAUSE -> {    // 刷新播放列表当前播放的条目
                 Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
                 musicTimer.stopTimer()
 
@@ -318,7 +317,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     )
                 }
             }
-            AppConfig.MPS_PLAYING -> {  //刷新播放列表当前播放的条目
+            AppConfig.MPS_PLAYING -> {  // 刷新播放列表当前播放的条目
                 Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
                 musicTimer.startTimer()
 
@@ -441,7 +440,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         val freqs = IntArray(bands.toInt())
         for (i in 0 until bands) {
             val centerFreq = equalizer.getCenterFreq(i.toShort()) / 1000
-            freqs[i.toInt()] = centerFreq
+            freqs[i] = centerFreq
         }
         return freqs
     }
@@ -470,11 +469,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         return R.layout.fragment_home
     }
 
+    /**
+     * 打开侧边栏。
+     */
     override fun showDrawer() {
-        openSlidingDrawer()
-    }
-
-    fun openSlidingDrawer() {
         if (!musicPlay.isOpened) {
             musicPlay.open()
         }
@@ -483,13 +481,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     /**
      * 关闭侧边栏。
      */
-    fun closeSlidingDrawer() {
+    override fun closeDrawer() {
         if (musicPlay.isOpened) {
             musicPlay.close()
         }
-    }
-
-    override fun closeDrawer() {
-        closeSlidingDrawer()
     }
 }

@@ -11,7 +11,6 @@ import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.MusicService
-import site.doramusic.app.media.MediaManager
 
 /**
  * 朵拉音乐APP。
@@ -35,10 +34,6 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun init() {
         initHttp()   // 初始化网络框架
         initDb()    // 初始化SQLite数据库的表
-        initMedia() // 初始化媒体管理器
-    }
-
-    private fun initMedia() {
     }
 
     private fun initHttp() {

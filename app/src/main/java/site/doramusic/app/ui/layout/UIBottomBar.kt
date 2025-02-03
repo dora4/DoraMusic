@@ -66,7 +66,6 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private lateinit var playbackProgress: ProgressBar
     private var defaultAlbumIcon: Bitmap? = null
     private val playModeControl: PlayModeControl by lazy { PlayModeControl(manager.view.context) }
-    private lateinit var popupDialog: DoraDialog
     private val adapter = PlaylistItemAdapter()
 
     init {
@@ -84,7 +83,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     }
 
     @Receive(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-    fun refreshPlaylistStatus() {
+    fun refreshPlaylist() {
         adapter.setList(MediaManager.playlist)
     }
 
@@ -124,7 +123,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         return contentView.findViewById(id)
     }
 
-    fun updateProgressColor() {
+    private fun updateProgressColor() {
         playbackProgress.progressTintList = SkinManager.getLoader().getColorStateList(COLOR_THEME)
     }
 
@@ -278,43 +277,5 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         // 设置内容视图并显示
         bottomSheetDialog.setContentView(contentView)
         bottomSheetDialog.show()
-    }
-
-//    @SingleClick
-    private fun showPlaylistDialog() {
-        val dialogWindow = DoraDialogWindow(R.layout.view_popup_playlist,
-                ADialogWindow.DEFAULT_SHADOW_COLOR)   //0x60000000
-        dialogWindow.setCanTouchOutside(false)    //仅当设置了阴影背景有效，默认false，阴影处控件不可点
-        dialogWindow.gravity = Gravity.BOTTOM
-        dialogWindow.setOnInflateListener(object : DoraDialogWindow.OnInflateListener {
-
-            @SuppressLint("SetTextI18n")
-            override fun onInflateFinish(contentView: View) {
-                val tvPlaylistPlayMode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
-                val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
-                val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
-                val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
-                tvPlaylistPlayMode.text = playModeControl.printPlayMode(MediaManager.playMode)
-                "(${MediaManager.playlist.size}首)".also { tvPlaylistCount.text = it }
-                adapter.setList(MediaManager.playlist)
-                adapter.setOnItemClickListener { adapter, view, position ->
-                    MediaManager.playById(MediaManager.playlist[position].songId)
-                }
-                ViewUtils.configRecyclerView(recyclerView)
-                recyclerView.adapter = adapter
-                ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(MediaManager.playMode))
-                tvPlaylistPlayMode.setOnClickListener {
-                    playModeControl.changePlayMode(tvPlaylistPlayMode,
-                            ivPlaylistPlayMode)
-                }
-                ivPlaylistPlayMode.setOnClickListener {
-                    playModeControl.changePlayMode(tvPlaylistPlayMode,
-                            ivPlaylistPlayMode)
-                }
-            }
-        })
-        popupDialog = DoraDialog.Builder(manager.view.context)
-            .create(dialogWindow)
-        popupDialog.show()
     }
 }

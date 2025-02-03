@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.skin.SkinManager
 import dora.util.StatusBarUtils
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME

@@ -42,7 +42,6 @@ import dora.db.table.OrmTable
 import dora.util.DensityUtils
 import dora.util.RxBus
 import dora.util.ScreenUtils
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Music
@@ -117,7 +116,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     val isOpened: Boolean
         get() = slidingView.isOpened
 
-    internal var r: Runnable = Runnable {
+    private var r: Runnable = Runnable {
         llMusicPlayVolume.visibility = View.INVISIBLE
         llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(this.manager.view.context, R.anim.anim_fade_out))
     }

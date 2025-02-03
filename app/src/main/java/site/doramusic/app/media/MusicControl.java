@@ -1,7 +1,6 @@
 package site.doramusic.app.media;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;

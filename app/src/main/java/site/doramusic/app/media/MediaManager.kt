@@ -40,10 +40,6 @@ object MediaManager : IMediaService.Stub(), AppConfig {
         }
     }
 
-    fun getService(): IMediaService? {
-        return mediaService
-    }
-
     fun setOnCompletionListener(l: MusicControl.OnConnectCompletionListener) {
         onCompletionListener = l
     }

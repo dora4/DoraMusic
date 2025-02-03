@@ -75,14 +75,6 @@ class PrefsManager(val context: Context) {
         SPUtils.writeInteger(context, PREFS_SKIN_TYPE, skinType)
     }
 
-    fun saveSkinColor(skinColor: Int) {
-        SPUtils.writeInteger(context, PREFS_SKIN_COLOR, skinColor)
-    }
-
-    fun saveFirstLoading(isFirst: Boolean) {
-        SPUtils.writeBoolean(context, FIRST_LOADING, isFirst)
-    }
-
     companion object {
 
         const val PREFS_FILTER_SIZE = "prefs_filter_size"
@@ -91,10 +83,8 @@ class PrefsManager(val context: Context) {
         const val PREFS_COLD_LAUNCH_AUTO_PLAY = "prefs_auto_play"
         const val PREFS_SHAKE_CHANGE_MUSIC = "prefs_shake"
         const val PREFS_BASS_BOOST_ENABLE = "prefs_bass_boost_enable"
-        const val PREFS_HOT_FIX_ENABLE = "prefs_hot_fix_enable"
         const val PREFS_EQUALIZER_DECIBELS = "prefs_equalizer_decibels"
         const val PREFS_SKIN_COLOR = "prefs_skin_color"
         const val PREFS_SKIN_TYPE = "prefs_skin_type" // 皮肤类型 1.红 2.橙 3.黑 4.绿 5.青 6.蓝 7.紫
-        const val FIRST_LOADING = "first_loading"
     }
 }
