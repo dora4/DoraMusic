@@ -1,5 +1,6 @@
 package site.doramusic.app.media
 
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.BroadcastReceiver
 import android.content.ComponentName
@@ -38,17 +39,18 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
      */
     private lateinit var mc: MusicControl
     private var binder: IBinder? = null
-
     /**
      * 更新通知栏。
      */
     private var notificationManager: NotificationManager? = null
+
     private var controlBroadcast: ControlBroadcast? = null
     private var prefsManager: PrefsManager? = null
     private var simplePlayer: SimpleAudioPlayer? = null
     private var remoteViews: RemoteViews? = null
     private lateinit var detector: ShakeDetector
     private var handler: Handler = Handler(Looper.getMainLooper())
+
 
     override fun onBind(intent: Intent): IBinder? {
         binder = MediaServiceImpl()
@@ -84,15 +86,15 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
                             R.drawable.bottom_bar_cover_bg)
                     val bitmap = MusicUtils.getCachedArtwork(this@MediaService, music.albumId.toLong(),
                             defaultArtwork)
-//                    updateNotification(bitmap, title, name)
+                    updateNotification(bitmap, title, name)
                 }
                 ACTION_NEXT -> mc.next()
                 ACTION_PREV -> mc.prev()
-                ACTION_CANCEL -> {
-                    cancelNotification()
-                    killAllOtherProcess(context)
-                    android.os.Process.killProcess(android.os.Process.myPid())
-                }
+//                ACTION_CANCEL -> {
+//                    cancelNotification()
+//                    killAllOtherProcess(context)
+//                    android.os.Process.killProcess(android.os.Process.myPid())
+//                }
             }
         }
     }
@@ -116,7 +118,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         filter.addAction(ACTION_PAUSE_RESUME)
         filter.addAction(ACTION_PREV)
         filter.addAction(ACTION_NEXT)
-        filter.addAction(ACTION_CANCEL)
+//        filter.addAction(ACTION_CANCEL)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             registerReceiver(controlBroadcast, filter, Context.RECEIVER_NOT_EXPORTED)
         } else {
@@ -280,7 +282,27 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
     }
 
-    private fun updateNotification(bitmap: Bitmap?, title: String, name: String) {
+//    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+//        handleIntent(intent);
+//        return START_STICKY
+//    }
+//
+//    private fun handleIntent(intent: Intent?) {
+//        if (intent != null) {
+//            val action = intent.action
+//            if (action != null) {
+//                when (action) {
+//                    ACTION_PLAY -> MediaManager.replay()
+//                    ACTION_PAUSE_RESUME -> MediaManager.pause()
+//                    ACTION_NEXT -> MediaManager.next()
+//                    ACTION_PREV -> MediaManager.prev()
+//                }
+//            }
+//        }
+//    }
+
+    @SuppressLint("ForegroundServiceType", "RemoteViewLayout")
+    private fun updateNotification(bitmap: Bitmap? = null, title: String, name: String) {
         val channelId = "site.doramusic.app"
         val channelName = "DoraMusic"
 
@@ -297,15 +319,6 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
             notificationManager?.createNotificationChannel(notificationChannel)
         }
 
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
-        val pi = PendingIntent.getActivity(
-            this, 0, intent,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
-            else PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
         // 创建 RemoteViews
         remoteViews = RemoteViews(packageName, R.layout.view_notification).apply {
             if (bitmap != null) {
@@ -321,16 +334,15 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
             )
         }
 
-        // 创建 NotificationCompat.Builder
-        val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setTicker(title)
-            .setContentIntent(pi)
-            .setCustomContentView(remoteViews)
-            .setAutoCancel(true)
-            .build()
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pi = PendingIntent.getActivity(
+            this, 0, intent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
+            else PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
-        // 设置 RemoteViews 点击事件
         val pauseResumeIntent = Intent(ACTION_PAUSE_RESUME).apply {
             component = ComponentName(packageName, ControlBroadcast::class.java.name)
             putExtra(NOTIFICATION_TITLE, title)
@@ -351,11 +363,15 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         val nextPIntent = createPendingIntent(this, 3, nextIntent)
         remoteViews?.setOnClickPendingIntent(R.id.iv_nc_next, nextPIntent)
 
-        val cancelIntent = Intent(ACTION_CANCEL).apply {
-            component = ComponentName(packageName, ControlBroadcast::class.java.name)
-        }
-        val cancelPIntent = createPendingIntent(this, 4, cancelIntent)
-        remoteViews?.setOnClickPendingIntent(R.id.iv_nc_cancel, cancelPIntent)
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentIntent(pi)
+            .setTicker(title)
+            .setCustomContentView(remoteViews)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setOngoing(true)
+            .build()
+//        startForeground(NOTIFICATION_ID, notification)
 
         // 显示通知
         notificationManager?.notify(NOTIFICATION_ID, notification)
@@ -372,7 +388,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.FLAG_IMMUTABLE
         } else {
-            0
+            PendingIntent.FLAG_UPDATE_CURRENT
         }
         val pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, flag)
         return pendingIntent

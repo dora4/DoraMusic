@@ -53,7 +53,6 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         View.OnClickListener, AppConfig {
 
     var handler: Handler
-    private val mediaManager: MediaManager by lazy { MusicApp.app.mediaManager }
     private val contentView: View = manager.view
     private lateinit var tvHomeBottomMusicName: MarqueeTextView
     private lateinit var tvHomeBottomArtist: MarqueeTextView
@@ -76,8 +75,8 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         handler = Handler { msg ->
             when (msg.what) {
                 0x100 -> refreshSeekProgress(
-                    mediaManager.position(),
-                    mediaManager.duration(), mediaManager.pendingProgress()
+                    MediaManager.position(),
+                    MediaManager.duration(), MediaManager.pendingProgress()
                 )
             }
             false
@@ -86,7 +85,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     @Receive(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
     fun refreshPlaylistStatus() {
-        adapter.setList(mediaManager.playlist)
+        adapter.setList(MediaManager.playlist)
     }
 
     fun setSecondaryProgress(progress: Int) {
@@ -102,7 +101,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         if (music != null && coldLaunchAutoPlay) {
 //            val isOk = mediaManager.loadCurMusic(music)
 //            if (isOk) {
-            mediaManager.refreshPlaylist(arrayListOf(music))
+            MediaManager.refreshPlaylist(arrayListOf(music))
             tvHomeBottomMusicName.text = music.musicName
             tvHomeBottomArtist.text = music.artist
             try {
@@ -116,7 +115,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             }
             refreshUI(0, music.duration, music)
             // 这次播放来不及应用均衡器参数，主打一个启动时以最快速度进行播放
-            mediaManager.playById(music.songId)
+            MediaManager.playById(music.songId)
 //            }
         }
     }
@@ -207,10 +206,10 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             }
         } else {
             defaultAlbumIcon?.let {
-                mediaManager.updateNotification(it, music.musicName, music.artist)
+                MediaManager.updateNotification(it, music.musicName, music.artist)
             }
         }
-        refreshSeekProgress(curTime, tempTotalTime, mediaManager.pendingProgress())
+        refreshSeekProgress(curTime, tempTotalTime, MediaManager.pendingProgress())
     }
 
     fun showPlay(flag: Boolean) {
@@ -227,9 +226,9 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.btn_home_bottom_play -> mediaManager.replay()
-            R.id.btn_home_bottom_pause -> mediaManager.pause()
-            R.id.btn_home_bottom_next -> mediaManager.next()
+            R.id.btn_home_bottom_play -> MediaManager.replay()
+            R.id.btn_home_bottom_pause -> MediaManager.pause()
+            R.id.btn_home_bottom_next -> MediaManager.next()
             R.id.btn_home_bottom_menu -> showBottomSheetDialog(manager.view.context)
         }
     }
@@ -244,24 +243,24 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
         val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
         val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
-        val playModeText = playModeControl.printPlayMode(mediaManager.playMode)
+        val playModeText = playModeControl.printPlayMode(MediaManager.playMode)
         if (playModeText != "") {
             tvPlaylistPlayMode.visibility = View.VISIBLE
             ivPlaylistPlayMode.visibility = View.VISIBLE
             tvPlaylistCount.visibility = View.VISIBLE
             tvPlaylistPlayMode.text = playModeText
-            ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
+            ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(MediaManager.playMode))
             tvPlaylistCount.text =
-                "(${String.format(context.getString(R.string.items), mediaManager.playlist.size)})"
+                "(${String.format(context.getString(R.string.items), MediaManager.playlist.size)})"
         } else {
             tvPlaylistPlayMode.visibility = View.INVISIBLE
             ivPlaylistPlayMode.visibility = View.INVISIBLE
             tvPlaylistCount.visibility = View.INVISIBLE
         }
-        adapter.setList(mediaManager.playlist)
+        adapter.setList(MediaManager.playlist)
 
         adapter.setOnItemClickListener { _, _, position ->
-            mediaManager.playById(mediaManager.playlist[position].songId)
+            MediaManager.playById(MediaManager.playlist[position].songId)
 //            bottomSheetDialog.dismiss()
         }
 
@@ -295,15 +294,15 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                 val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
                 val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
                 val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
-                tvPlaylistPlayMode.text = playModeControl.printPlayMode(mediaManager.playMode)
-                "(${mediaManager.playlist.size}首)".also { tvPlaylistCount.text = it }
-                adapter.setList(mediaManager.playlist)
+                tvPlaylistPlayMode.text = playModeControl.printPlayMode(MediaManager.playMode)
+                "(${MediaManager.playlist.size}首)".also { tvPlaylistCount.text = it }
+                adapter.setList(MediaManager.playlist)
                 adapter.setOnItemClickListener { adapter, view, position ->
-                    mediaManager.playById(mediaManager.playlist[position].songId)
+                    MediaManager.playById(MediaManager.playlist[position].songId)
                 }
                 ViewUtils.configRecyclerView(recyclerView)
                 recyclerView.adapter = adapter
-                ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(mediaManager.playMode))
+                ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(MediaManager.playMode))
                 tvPlaylistPlayMode.setOnClickListener {
                     playModeControl.changePlayMode(tvPlaylistPlayMode,
                             ivPlaylistPlayMode)

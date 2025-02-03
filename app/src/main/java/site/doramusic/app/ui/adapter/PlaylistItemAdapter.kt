@@ -20,9 +20,8 @@ class PlaylistItemAdapter : BaseSortItemAdapter<Music>(R.layout.item_playlist) {
 
     @SuppressLint("SetTextI18n")
     override fun convert(holder: BaseViewHolder, item: Music) {
-        val mediaManager = MediaManager(context)
-        if (mediaManager.curMusicId != -1 && item.songId == mediaManager.curMusicId
-            && mediaManager.playState == AppConfig.MPS_PLAYING) {
+        if (MediaManager.curMusicId != -1 && item.songId == MediaManager.curMusicId
+            && MediaManager.playState == AppConfig.MPS_PLAYING) {
             holder.getView<LinearLayout>(R.id.ll_playlist).setBackgroundColor(Color.LTGRAY)
         } else {
             holder.getView<LinearLayout>(R.id.ll_playlist).background = ContextCompat

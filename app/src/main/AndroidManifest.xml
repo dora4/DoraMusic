@@ -44,6 +44,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <!-- Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:name=".MusicApp"
@@ -122,9 +124,9 @@
             android:exported="false"/>
         <service
             android:name=".media.MediaService"
-            android:process=":doramedia"
             android:exported="true"
-            android:label="DoraMusic Media">
+            android:label="DoraMusic Media"
+                android:foregroundServiceType="mediaPlayback">
             <intent-filter>
                 <action android:name="site.doramusic.app.service.ACTION_MEDIA_SERVICE" />
             </intent-filter>
@@ -134,14 +136,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".ui.fragment.HomeFragment$MusicPlayReceiver"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-            <intent-filter>
-                <action android:name="site.doramusic.app.intent.ACTION_PLAY" />
             </intent-filter>
         </receiver>
 

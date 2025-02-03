@@ -73,9 +73,6 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private val audioManager: AudioManager by lazy {
         manager.view.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     }
-    private val mediaManager: MediaManager by lazy {
-        MusicApp.app.mediaManager
-    }
     private val contentView: View = manager.view
     private lateinit var btnMusicPlayMode: ImageButton
     private lateinit var llMusicPlayVolume: LinearLayout
@@ -149,8 +146,8 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             override fun handleMessage(msg: Message) {
                 super.handleMessage(msg)
                 refreshSeekProgress(
-                    mediaManager.position(),
-                        mediaManager.duration())
+                    MediaManager.position(),
+                    MediaManager.duration())
             }
         }
         lyricLoader = DoraLyricLoader(lyricScroller, lyricListener)
@@ -342,7 +339,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         }
         curMusic?.let {
             it.favorite = favorite
-            mediaManager.setCurMusic(it)
+            MediaManager.setCurMusic(it)
             saveFavorite(it, favorite)
         }
     }
@@ -367,16 +364,16 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         if (seekBar === sbMusicPlayPlayback) {
             playAuto = false
             musicTimer?.stopTimer()
-            mediaManager.pause()
+            MediaManager.pause()
         }
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {
         if (seekBar === sbMusicPlayPlayback) {
             playAuto = true
-            mediaManager.seekTo(seekBarProgress)
-            refreshSeekProgress(mediaManager.position(), mediaManager.duration())
-            mediaManager.replay()
+            MediaManager.seekTo(seekBarProgress)
+            refreshSeekProgress(MediaManager.position(), MediaManager.duration())
+            MediaManager.replay()
             musicTimer?.startTimer()
         }
     }
@@ -446,24 +443,24 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                 if (curMusic == null) {
                     return
                 }
-                mediaManager.prev()
+                MediaManager.prev()
             }
             // 播放
             R.id.btn_music_play_play -> {
                 if (curMusic == null) {
                     return
                 }
-                mediaManager.replay()
+                MediaManager.replay()
             }
             // 下一首
             R.id.btn_music_play_next -> {
                 if (curMusic == null) {
                     return
                 }
-                mediaManager.next()
+                MediaManager.next()
             }
             // 暂停
-            R.id.btn_music_play_pause -> mediaManager.pause()
+            R.id.btn_music_play_pause -> MediaManager.pause()
             // 音量
             R.id.btn_music_play_volume -> if (llMusicPlayVolume.isShown) {
                 volumeHandler.removeCallbacks(r)

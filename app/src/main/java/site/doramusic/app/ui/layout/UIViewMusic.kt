@@ -23,7 +23,6 @@ import dora.db.table.OrmTable
 import dora.skin.SkinManager
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
@@ -55,7 +54,6 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private lateinit var adapter: MusicItemAdapter
     private lateinit var lvMusic: LetterView
     private lateinit var tvMusicDialog: TextView
-    private val mediaManager: MediaManager by lazy { MusicApp.app.mediaManager }
     private val musicDao = DaoFactory.getDao(Music::class.java)
     private val loadingDialog: DoraLoadingDialog by lazy { DoraLoadingDialog(manager.view.context) }
 
@@ -73,12 +71,12 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                 if (position >= MUSIC_LIST_MAX_LIST) {
                     return@setOnItemClickListener
                 }
-                if (mediaManager.playlist != data) {
-                    mediaManager.refreshPlaylist(data)
+                if (MediaManager.playlist != data) {
+                    MediaManager.refreshPlaylist(data)
                 }
                 val music = data[position]
                 if (music.songId != -1) {
-                    mediaManager.playById(music.songId)
+                    MediaManager.playById(music.songId)
                 }
             }
         }

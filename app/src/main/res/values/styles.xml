@@ -16,12 +16,12 @@
 
     <style name="AppTheme.Text" parent="TextAppearance.AppCompat" />
     <style name="AppTheme.Text.NotificationText">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
     <style name="AppTheme.Text.NotificationTitle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 </resources>

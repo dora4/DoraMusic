@@ -28,7 +28,7 @@
             style="@style/AppTheme.Text.NotificationTitle"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:ellipsize="marquee"
+            android:ellipsize="end"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:fadingEdge="horizontal"
@@ -45,33 +45,33 @@
             android:layout_marginTop="5dp"
             android:fadingEdge="horizontal"
             android:fadingEdgeLength="8dp"
-            android:ellipsize="none"
+            android:ellipsize="end"
             android:singleLine="true"
             android:text="" />
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/iv_nc_cancel"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_notification_clear" />
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_nc_cancel"-->
+<!--        android:layout_width="16dp"-->
+<!--        android:layout_height="16dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginEnd="5dp"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:src="@drawable/ic_notification_clear" />-->
     <LinearLayout
         android:id="@+id/ll_nc_control"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="15dp"
-        android:layout_toRightOf="@id/rl_nc_label"
-        android:layout_toLeftOf="@id/iv_nc_cancel"
+            android:gravity="center_vertical"
+            android:layout_toEndOf="@id/rl_nc_label"
+            android:layout_alignParentEnd="true"
         android:layout_centerVertical="true" >
 
         <ImageView
             android:id="@+id/iv_nc_previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="5dp"
             android:src="@drawable/ic_notification_prev" />
         <FrameLayout
@@ -81,17 +81,17 @@
             android:layout_marginEnd="20dp">
             <ImageView
                 android:id="@+id/iv_nc_pause_resume"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/ic_notification_pause"/>
         </FrameLayout>
 
         <ImageView
             android:id="@+id/iv_nc_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/ic_notification_next" />
 
     </LinearLayout>

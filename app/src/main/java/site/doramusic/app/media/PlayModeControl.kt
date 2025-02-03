@@ -15,15 +15,13 @@ import site.doramusic.app.base.conf.AppConfig
  */
 class PlayModeControl(internal val context: Context) : AppConfig {
 
-    private val mediaManager: MediaManager = MusicApp.app.mediaManager
-
     /**
      * 刷新按钮的状态。
      *
      * @param playModeBtn
      */
     fun refreshButtonStatus(playModeBtn: ImageButton) {
-        when (mediaManager.playMode) {
+        when (MediaManager.playMode) {
             AppConfig.MPM_PLAYLIST_LOOP -> {   //列表循环
                 playModeBtn.setImageResource(R.drawable.ic_playmode_list_loop)
             }
@@ -45,25 +43,25 @@ class PlayModeControl(internal val context: Context) : AppConfig {
      * @param playModeBtn
      */
     fun changePlayMode(playModeBtn: ImageButton) {
-        when (mediaManager!!.playMode) {
+        when (MediaManager.playMode) {
             AppConfig.MPM_PLAYLIST_LOOP -> {
                 playModeBtn.setImageResource(R.drawable.ic_playmode_single_loop)
-                mediaManager.playMode = AppConfig.MPM_SINGLE_TRACK_LOOP
+                MediaManager.playMode = AppConfig.MPM_SINGLE_TRACK_LOOP
                 ToastUtils.showShort(context.getString(R.string.single_track_loop))
             }
             AppConfig.MPM_SINGLE_TRACK_LOOP -> {
                 playModeBtn.setImageResource(R.drawable.ic_playmode_random)
-                mediaManager.playMode = AppConfig.MPM_SHUFFLE_PLAYBACK
+                MediaManager.playMode = AppConfig.MPM_SHUFFLE_PLAYBACK
                 ToastUtils.showShort(context.getString(R.string.shuffle_playback))
             }
             AppConfig.MPM_SHUFFLE_PLAYBACK -> {
                 playModeBtn.setImageResource(R.drawable.ic_playmode_order)
-                mediaManager.playMode = AppConfig.MPM_SEQUENTIAL_PLAYBACK
+                MediaManager.playMode = AppConfig.MPM_SEQUENTIAL_PLAYBACK
                 ToastUtils.showShort(context.getString(R.string.sequential_playback))
             }
             AppConfig.MPM_SEQUENTIAL_PLAYBACK -> {
                 playModeBtn.setImageResource(R.drawable.ic_playmode_list_loop)
-                mediaManager.playMode = AppConfig.MPM_PLAYLIST_LOOP
+                MediaManager.playMode = AppConfig.MPM_PLAYLIST_LOOP
                 ToastUtils.showShort(context.getString(R.string.playlist_loop))
             }
         }
@@ -96,26 +94,26 @@ class PlayModeControl(internal val context: Context) : AppConfig {
     }
 
     fun changePlayMode(textView: TextView, imageView: ImageView) {
-        when (mediaManager.playMode) {
+        when (MediaManager.playMode) {
             AppConfig.MPM_PLAYLIST_LOOP -> {   // 列表循环 -> 顺序播放
                 textView.text = context.getString(R.string.sequential_playback)
-                mediaManager.playMode = AppConfig.MPM_SEQUENTIAL_PLAYBACK
+                MediaManager.playMode = AppConfig.MPM_SEQUENTIAL_PLAYBACK
                 imageView.setImageResource(R.drawable.ic_playmode_order)
             }
             AppConfig.MPM_SEQUENTIAL_PLAYBACK -> {    // 顺序播放 -> 随机播放
                 textView.text = context.getString(R.string.shuffle_playback)
                 imageView.setImageResource(R.drawable.ic_playmode_random)
-                mediaManager.playMode = AppConfig.MPM_SHUFFLE_PLAYBACK
+                MediaManager.playMode = AppConfig.MPM_SHUFFLE_PLAYBACK
             }
             AppConfig.MPM_SHUFFLE_PLAYBACK -> {   // 随机播放 -> 单曲循环
                 textView.text = context.getString(R.string.single_track_loop)
                 imageView.setImageResource(R.drawable.ic_playmode_single_loop)
-                mediaManager.playMode = AppConfig.MPM_SINGLE_TRACK_LOOP
+                MediaManager.playMode = AppConfig.MPM_SINGLE_TRACK_LOOP
             }
             AppConfig.MPM_SINGLE_TRACK_LOOP -> {  // 单曲循环 -> 列表循环
                 textView.text = context.getString(R.string.playlist_loop)
                 imageView.setImageResource(R.drawable.ic_playmode_list_loop)
-                mediaManager.playMode = AppConfig.MPM_PLAYLIST_LOOP
+                MediaManager.playMode = AppConfig.MPM_PLAYLIST_LOOP
             }
         }
     }

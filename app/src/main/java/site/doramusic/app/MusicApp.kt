@@ -18,11 +18,6 @@ import site.doramusic.app.media.MediaManager
  */
 class MusicApp : BaseApplication(), AppConfig {
 
-    /**
-     * 全局的音乐播放控制管理器。
-     */
-    lateinit var mediaManager: MediaManager
-
     companion object {
 
         /**
@@ -44,7 +39,6 @@ class MusicApp : BaseApplication(), AppConfig {
     }
 
     private fun initMedia() {
-        mediaManager = MediaManager(this)
     }
 
     private fun initHttp() {

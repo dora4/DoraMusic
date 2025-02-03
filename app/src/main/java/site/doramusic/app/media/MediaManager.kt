@@ -15,7 +15,7 @@ import site.doramusic.app.db.Music
 /**
  * 通过它调用AIDL远程服务接口。
  */
-class MediaManager(internal val context: Context) : IMediaService.Stub(), AppConfig {
+object MediaManager : IMediaService.Stub(), AppConfig {
 
     private var mediaService: IMediaService? = null
     private val serviceConnection: ServiceConnection
@@ -40,17 +40,21 @@ class MediaManager(internal val context: Context) : IMediaService.Stub(), AppCon
         }
     }
 
+    fun getService(): IMediaService? {
+        return mediaService
+    }
+
     fun setOnCompletionListener(l: MusicControl.OnConnectCompletionListener) {
         onCompletionListener = l
     }
 
-    fun connectService() {
+    fun connectService(context: Context) {
         val intent = Intent(AppConfig.MEDIA_SERVICE)
         intent.setClass(context, MediaService::class.java)
         context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
     }
 
-    fun disconnectService() {
+    fun disconnectService(context: Context) {
         context.unbindService(serviceConnection)
         context.stopService(Intent(AppConfig.MEDIA_SERVICE))
     }
@@ -273,11 +277,11 @@ class MediaManager(internal val context: Context) : IMediaService.Stub(), AppCon
     }
 
     override fun updateNotification(bitmap: Bitmap, title: String, name: String) {
-//        try {
-//            mediaService?.updateNotification(bitmap, title, name)
-//        } catch (e: RemoteException) {
-//            e.printStackTrace()
-//        }
+        try {
+            mediaService?.updateNotification(bitmap, title, name)
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        }
     }
 
     override fun cancelNotification() {

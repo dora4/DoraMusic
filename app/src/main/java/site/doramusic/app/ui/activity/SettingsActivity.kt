@@ -17,6 +17,7 @@ import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivitySettingsBinding
+import site.doramusic.app.media.MediaManager
 import site.doramusic.app.util.PrefsManager
 
 @Route(path = ARoutePath.ACTIVITY_SETTINGS)
@@ -83,9 +84,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 binding.tbSettingsBassBoost.isChecked = isChecked
                 prefsManager.saveBassBoost(isChecked)
                 if (isChecked) {
-                    MusicApp.app!!.mediaManager!!.setBassBoost(1000)
+                    MediaManager.setBassBoost(1000)
                 } else {
-                    MusicApp.app!!.mediaManager!!.setBassBoost(1)
+                    MediaManager.setBassBoost(1)
                 }
                 binding.tbSettingsBassBoost.isChecked = isChecked
             }
@@ -109,9 +110,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 mBinding.tbSettingsBassBoost.isChecked = !isChecked
                 prefsManager.saveBassBoost(!isChecked)
                 if (isChecked) {
-                    MusicApp.app.mediaManager.setBassBoost(1000)
+                    MediaManager.setBassBoost(1000)
                 } else {
-                    MusicApp.app.mediaManager.setBassBoost(1)
+                    MediaManager.setBassBoost(1)
                 }
             }
             R.id.rl_settings_user_protocol -> {

@@ -3,6 +3,7 @@ package site.doramusic.app.ui.activity
 import android.bluetooth.BluetoothHeadset
 import android.content.Context
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
@@ -52,6 +53,15 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 100)
+            }
+        }
     }
 
     /**

@@ -15,6 +15,7 @@ import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityEqualizerBinding
+import site.doramusic.app.media.MediaManager
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.EqualizerView
 
@@ -199,6 +200,6 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
 
     override fun onUpdateDecibel(decibels: IntArray) {
         prefsManager.saveEqualizerDecibels(decibels)
-        MusicApp.app.mediaManager.setEqualizer(decibels)
+        MediaManager.setEqualizer(decibels)
     }
 }
