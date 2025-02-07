@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
 import dora.skin.SkinManager
+import dora.util.PinyinUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
@@ -62,6 +63,7 @@ class UIViewAlbum(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         rvAlbum.layoutManager = LinearLayoutManager(view.context)
         rvAlbum.addItemDecoration(DividerItemDecoration(view.context, RecyclerView.VERTICAL))
         val albums = albumDao.selectAll() as ArrayList<Album>
+        albums.sortBy { PinyinUtils.getPinyinFromSentence(it.album_name) }
         adapter = AlbumItemAdapter(albums)
         adapter.setOnItemClickListener { adapter, view, position ->
             manager.setContentType(AppConfig.ROUTE_ALBUM_TO_LOCAL,

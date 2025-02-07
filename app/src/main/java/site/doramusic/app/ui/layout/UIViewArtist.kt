@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
 import dora.skin.SkinManager
+import dora.util.PinyinUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
@@ -63,6 +64,7 @@ class UIViewArtist(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
             }
         })
         val artists = artistDao.selectAll() as ArrayList<Artist>
+        artists.sortBy { PinyinUtils.getPinyinFromSentence(it.name) }
         adapter = ArtistItemAdapter(artists)
         adapter.setOnItemClickListener { adapter, _, position ->
             manager.setContentType(AppConfig.ROUTE_ARTIST_TO_LOCAL,

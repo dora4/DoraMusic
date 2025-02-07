@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
 import dora.skin.SkinManager
+import dora.util.PinyinUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
@@ -61,6 +62,7 @@ class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
             }
         })
         val folders = folderDao.selectAll() as ArrayList<Folder>
+        folders.sortBy { PinyinUtils.getPinyinFromSentence(it.name) }
         adapter = FolderItemAdapter(folders)
         adapter.setOnItemClickListener { adapter, view, position ->
             manager.setContentType(AppConfig.ROUTE_FOLDER_TO_LOCAL,

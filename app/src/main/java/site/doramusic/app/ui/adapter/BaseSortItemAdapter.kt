@@ -24,7 +24,7 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
     }
 
     fun sort() {
-        data.sort()
+        data.sortBy { it.sortLetter }
     }
 
     final override fun setList(list: Collection<T>?) {
