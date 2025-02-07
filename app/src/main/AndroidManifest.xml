@@ -139,6 +139,24 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".receiver.EarphoneReceiver"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+                <action android:name="android.intent.action.HEADSET_PLUG" />
+                <action android:name="android.bluetooth.headset.profile.action.CONNECTION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.MusicPlayReceiver"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="site.doramusic.app.intent.ACTION_PREV" />
+                <action android:name="site.doramusic.app.intent.ACTION_NEXT" />
+                <action android:name="site.doramusic.app.intent.ACTION_PAUSE_RESUME" />
+            </intent-filter>
+        </receiver>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.file-provider"

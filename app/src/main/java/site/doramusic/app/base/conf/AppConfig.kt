@@ -15,6 +15,7 @@ interface AppConfig {
         const val ACTION_PREV = "site.doramusic.app.intent.ACTION_PREV"
         const val ACTION_NEXT = "site.doramusic.app.intent.ACTION_NEXT"
         const val ACTION_PAUSE_RESUME = "site.doramusic.app.intent.ACTION_PAUSE_RESUME"
+        const val EXTRA_IS_PLAYING = "isPlaying"
 
         // 文件夹相关
         val FOLDER_LOG = IoUtils.getSdRoot() + "/DoraMusic/log" // 日志存放目录
