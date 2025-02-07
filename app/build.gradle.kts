@@ -10,8 +10,8 @@ plugins {
 android {
     namespace = "site.doramusic.app"
     compileSdk = 34
-    val version = "1.2.0"
-    val code = 10
+    val version = "1.2.1"
+    val code = 11
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 21
@@ -110,15 +110,16 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dcache-android:3.2.0")
+    implementation("com.github.dora4:dcache-android:3.2.2")
     implementation("com.github.dora4:dora:1.2.51")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-apollo-support:1.4")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
     implementation("com.github.dora4:dora-firebase-support:1.13")
     implementation("com.github.dora4:dora-brvah-support:1.3")
+    implementation("com.github.dora4:dora-glide-support:1.4")
     implementation("com.github.dora4:dview-toggle-button:1.5")
-    implementation("com.github.dora4:dview-alert-dialog:1.18")
+    implementation("com.github.dora4:dview-alert-dialog:1.20")
     implementation("com.github.dora4:dview-loading-dialog:1.5")
     implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.7")
@@ -130,13 +131,10 @@ dependencies {
     implementation("com.alibaba:arouter-api:1.5.2")
     kapt("com.alibaba:arouter-compiler:1.5.2")
 
-    // Glide
-    implementation("com.github.bumptech.glide:glide:4.15.0")
-
     // AgentWeb
     implementation("com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx") // (必选)
-    implementation("com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx") // (可选)
-    implementation("com.github.Justson:Downloader:v5.0.0-androidx") // (可选)
+//    implementation("com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx") // (可选)
+//    implementation("com.github.Justson:Downloader:v5.0.0-androidx") // (可选)
 
     // AspectJ
 //    implementation("org.aspectj:aspectjrt:1.9.19")
@@ -148,5 +146,5 @@ dependencies {
     implementation("com.github.getActivity:XXPermissions:18.2")
 
     // banner
-    implementation("io.github.youth5201314:banner:2.2.2")
+    implementation("io.github.youth5201314:banner:2.2.3")
 }
