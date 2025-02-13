@@ -6,6 +6,12 @@ interface AppConfig {
 
     companion object {
 
+        const val APP_NAME = "Dora Music"
+        const val APP_PACKAGE_NAME = "site.doramusic.app"
+        const val ALBUM_TEXT = "仅用于学习交流，禁止用于包括但不仅限于商业用途，本产品由https://dorachat.com赞助"
+        const val APP_SLOGAN = "版权所有，侵权必究"
+        const val COPY_RIGHT = "doramusic ©2023"
+
         // 域名
         const val URL_APP_SERVER = "http://doramusic.site:8080"
         const val URL_AD_SERVER = "http://dorachat.com:9091"
@@ -16,10 +22,15 @@ interface AppConfig {
         const val ACTION_NEXT = "site.doramusic.app.intent.ACTION_NEXT"
         const val ACTION_PAUSE_RESUME = "site.doramusic.app.intent.ACTION_PAUSE_RESUME"
         const val EXTRA_IS_PLAYING = "isPlaying"
+        const val EXTRA_TITLE = "title"
+        const val EXTRA_URL = "url"
 
         // 文件夹相关
         val FOLDER_LOG = IoUtils.getSdRoot() + "/DoraMusic/log" // 日志存放目录
         val FOLDER_LRC = IoUtils.getSdRoot() + "/DoraMusic/lrc" // 歌词文件存放目录
+
+        const val MAX_RECENT_MUSIC_NUM = 100
+        const val MUSIC_MENU_GRID_COLUMN_NUM = 3
 
         // 数据库相关
         const val DB_NAME = "db_doramusic"

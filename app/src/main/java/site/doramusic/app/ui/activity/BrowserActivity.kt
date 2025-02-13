@@ -12,6 +12,8 @@ import dora.BaseActivity
 import dora.util.IntentUtils
 import dora.util.StatusBarUtils
 import site.doramusic.app.R
+import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
+import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.databinding.ActivityBrowserBinding
 
 class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
@@ -24,8 +26,8 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
     }
 
     override fun onGetExtras(action: String?, bundle: Bundle?, intent: Intent) {
-        title = IntentUtils.getStringExtra(intent, "title")
-        url = IntentUtils.getStringExtra(intent, "url")
+        title = IntentUtils.getStringExtra(intent, EXTRA_TITLE)
+        url = IntentUtils.getStringExtra(intent, EXTRA_URL)
     }
 
     override fun onSetStatusBar() {

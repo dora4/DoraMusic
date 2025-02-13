@@ -19,7 +19,9 @@ import site.doramusic.app.ui.layout.UIViewArtist
 import site.doramusic.app.ui.layout.UIViewFolder
 import site.doramusic.app.ui.layout.UIViewMusic
 
-class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, OnBackListener {
+class UIManager(private var drawer: ILyricDrawer,
+                // 外部要用，不能private
+                val view: View) : AppConfig, OnBackListener {
 
     private lateinit var factory: UIFactory
     private lateinit var mainViewPager: ViewPager
@@ -32,6 +34,11 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
 
     init {
         init()
+    }
+
+    companion object {
+        const val PAGE_MAIN = 0
+        const val PAGE_SECONDARY = 1
     }
 
     fun setCurrentItem() {
@@ -66,7 +73,7 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
                 mainViews.add(transView)
                 mainViews.add(contentView)
                 mainViewPager.adapter = ViewPagerAdapter(mainViews)
-                mainViewPager.setCurrentItem(1, true)
+                mainViewPager.setCurrentItem(PAGE_SECONDARY, true)
             }
             AppConfig.ROUTE_START_FROM_FAVORITE -> {
                 factory = UIViewMusic(drawer, this)
@@ -77,7 +84,7 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
                 mainViews.add(transView)
                 mainViews.add(contentView)
                 mainViewPager.adapter = ViewPagerAdapter(mainViews)
-                mainViewPager.setCurrentItem(1, true)
+                mainViewPager.setCurrentItem(PAGE_SECONDARY, true)
             }
             AppConfig.ROUTE_START_FROM_LATEST -> {
                 factory = UIViewMusic(drawer, this)
@@ -88,40 +95,40 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
                 mainViews.add(transView)
                 mainViews.add(contentView)
                 mainViewPager.adapter = ViewPagerAdapter(mainViews)
-                mainViewPager.setCurrentItem(1, true)
+                mainViewPager.setCurrentItem(PAGE_SECONDARY, true)
             }
             AppConfig.ROUTE_START_FROM_FOLDER -> {
                 factory = UIViewFolder(drawer, this)
-                val contentView = factory.getView()
+                val contentView = factory.getView(AppConfig.ROUTE_START_FROM_FOLDER)
                 mainViewPager.visibility = View.VISIBLE
                 mainViews.clear()
                 mainViewPager.removeAllViews()
                 mainViews.add(transView)
                 mainViews.add(contentView)
                 mainViewPager.adapter = ViewPagerAdapter(mainViews)
-                mainViewPager.setCurrentItem(1, true)
+                mainViewPager.setCurrentItem(PAGE_SECONDARY, true)
             }
             AppConfig.ROUTE_START_FROM_ARTIST -> {
                 factory = UIViewArtist(drawer, this)
-                val contentView = factory.getView()
+                val contentView = factory.getView(AppConfig.ROUTE_START_FROM_ARTIST)
                 mainViewPager.visibility = View.VISIBLE
                 mainViews.clear()
                 mainViewPager.removeAllViews()
                 mainViews.add(transView)
                 mainViews.add(contentView)
                 mainViewPager.adapter = ViewPagerAdapter(mainViews)
-                mainViewPager.setCurrentItem(1, true)
+                mainViewPager.setCurrentItem(PAGE_SECONDARY, true)
             }
             AppConfig.ROUTE_START_FROM_ALBUM -> {
                 factory = UIViewAlbum(drawer, this)
-                val contentView = factory.getView()
+                val contentView = factory.getView(AppConfig.ROUTE_START_FROM_ALBUM)
                 mainViewPager.visibility = View.VISIBLE
                 mainViews.clear()
                 mainViewPager.removeAllViews()
                 mainViews.add(transView)
                 mainViews.add(contentView)
                 mainViewPager.adapter = ViewPagerAdapter(mainViews)
-                mainViewPager.setCurrentItem(1, true)
+                mainViewPager.setCurrentItem(PAGE_SECONDARY, true)
             }
             AppConfig.ROUTE_FOLDER_TO_LOCAL -> {
                 factory = UIViewMusic(drawer, this)
@@ -132,7 +139,7 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
                 secondaryViews.add(transView)
                 secondaryViews.add(contentView)
                 secondaryViewPager.adapter = ViewPagerAdapter(secondaryViews)
-                secondaryViewPager.setCurrentItem(1, true)
+                secondaryViewPager.setCurrentItem(PAGE_SECONDARY, true)
             }
             AppConfig.ROUTE_ARTIST_TO_LOCAL -> {
                 factory = UIViewMusic(drawer, this)
@@ -143,7 +150,7 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
                 secondaryViews.add(transView)
                 secondaryViews.add(contentView)
                 secondaryViewPager.adapter = ViewPagerAdapter(secondaryViews)
-                secondaryViewPager.setCurrentItem(1, true)
+                secondaryViewPager.setCurrentItem(PAGE_SECONDARY, true)
             }
             AppConfig.ROUTE_ALBUM_TO_LOCAL -> {
                 factory = UIViewMusic(drawer, this)
@@ -154,16 +161,16 @@ class UIManager(private var drawer: ILyricDrawer, val view: View) : AppConfig, O
                 secondaryViews.add(transView)
                 secondaryViews.add(contentView)
                 secondaryViewPager.adapter = ViewPagerAdapter(secondaryViews)
-                secondaryViewPager.setCurrentItem(1, true)
+                secondaryViewPager.setCurrentItem(PAGE_SECONDARY, true)
             }
         }
     }
 
     override fun onBack() {
         if (secondaryViewPager.isShown) {
-            secondaryViewPager.setCurrentItem(0, true)
+            secondaryViewPager.setCurrentItem(PAGE_MAIN, true)
         } else if (mainViewPager.isShown) {
-            mainViewPager.setCurrentItem(0, true)
+            mainViewPager.setCurrentItem(PAGE_MAIN, true)
         }
     }
 

@@ -34,6 +34,7 @@ public class Music implements OrmTable, Parcelable, Sort {
     public static final String COLUMN_ARTIST_KEY = "artist_key";
     public static final String COLUMN_FAVORITE = "favorite";
     public static final String COLUMN_LAST_PLAY_TIME = "last_play_time";
+    public static final int IS_FAVORITE = 1;
 
     /**
      * 数据库中的_id。

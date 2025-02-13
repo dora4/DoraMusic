@@ -162,26 +162,28 @@ object MusicScanner : AppConfig {
     @JvmStatic
     fun queryMusic(selection: String?, type: Int): List<Music> {
         val db = Orm.getDB()
-        var sql = ""
-        when (type) {
+
+        val sql = when (type) {
             AppConfig.ROUTE_START_FROM_ARTIST -> {
-                sql = "select * from music where ${Music.COLUMN_ARTIST} = ?"
+                "select * from music where ${Music.COLUMN_ARTIST} = ?"
             }
             AppConfig.ROUTE_START_FROM_ALBUM -> {
-                sql = "select * from music where ${Music.COLUMN_ALBUM_ID} = ?"
+                "select * from music where ${Music.COLUMN_ALBUM_ID} = ?"
             }
             AppConfig.ROUTE_START_FROM_FOLDER -> {
-                sql = "select * from music where ${Music.COLUMN_FOLDER} = ?"
+                "select * from music where ${Music.COLUMN_FOLDER} = ?"
             }
             AppConfig.ROUTE_START_FROM_FAVORITE -> {
-                sql = "select * from music where ${Music.COLUMN_FAVORITE} = ?"
+                "select * from music where ${Music.COLUMN_FAVORITE} = ?"
                 //        } else if (type == ROUTE_START_FROM_DOWNLOAD) {
 //            sql = "select * from music where download = ?";
             }
             AppConfig.ROUTE_START_FROM_LATEST -> {
-                sql = "select * from music where ${Music.COLUMN_LAST_PLAY_TIME} > ? order by " +
+                "select * from music where ${Music.COLUMN_LAST_PLAY_TIME} > ? order by " +
                         "${Music.COLUMN_LAST_PLAY_TIME} desc limit 100"
             }
+            // 没有这种情况
+            else -> { "select * from music" }
         }
         return parseCursor(db.rawQuery(sql, arrayOf(selection)))
     }

@@ -13,5 +13,5 @@ interface ILyricDrawer {
     /**
      * 关闭底部抽屉界面。
      */
-    fun closeDrawer()
+    fun hideDrawer()
 }

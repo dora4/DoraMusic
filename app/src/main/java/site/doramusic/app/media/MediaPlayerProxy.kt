@@ -201,9 +201,7 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
                 // 如果是因为切换音乐跳出循环的，当前音乐播放进度，小于 seek bar最大值的1/4，就把当前音乐缓存在本地的数据清除了
                 if (currProxyId != latestProxyId && currPlayDegree < 25) {
                     bufferingMusicUrlList.remove(remoteUrl)
-                    if (file != null) {
-                        IoUtils.delete(file)
-                    }
+                    IoUtils.delete(file)
                 }
             } catch (e: Exception) {
                 if (file != null) {
@@ -264,7 +262,7 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
                 val remoteSocket = sendRemoteRequest()
                 // 处理真实请求信息
                 processTrueRequestInfo(remoteSocket, localSocket)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             } finally { // 最后释放本地代理server socket
                 if (localServerSocket != null) {
                     try {

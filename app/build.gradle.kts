@@ -10,8 +10,8 @@ plugins {
 android {
     namespace = "site.doramusic.app"
     compileSdk = 34
-    val version = "1.2.1"
-    val code = 11
+    val version = "1.2.2"
+    val code = 12
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 21
@@ -110,7 +110,7 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dcache-android:3.2.2")
+    implementation("com.github.dora4:dcache-android:3.2.9")
     implementation("com.github.dora4:dora:1.2.51")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-apollo-support:1.4")

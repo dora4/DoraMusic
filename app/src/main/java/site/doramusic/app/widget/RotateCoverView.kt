@@ -12,6 +12,10 @@ import android.os.Build
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
+import site.doramusic.app.base.conf.AppConfig.Companion.ALBUM_TEXT
+import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
+import site.doramusic.app.base.conf.AppConfig.Companion.APP_SLOGAN
+import site.doramusic.app.base.conf.AppConfig.Companion.COPY_RIGHT
 
 /**
  * 唱片旋转控件。
@@ -207,9 +211,5 @@ class RotateCoverView @JvmOverloads constructor(
         private const val MIDDLE_RECT_SIZE = 80
         private const val INNER_RECT_SIZE = 64
         private const val ALBUM_TEXT_PATH_RECT_SIZE = 56
-        private const val ALBUM_TEXT = "仅用于学习交流，禁止用于包括但不仅限于商业用途，本产品由https://dorachat.com赞助"
-        private const val APP_NAME = "Dora Music"
-        private const val APP_SLOGAN = "版权所有，侵权必究"
-        private const val COPY_RIGHT = "doramusic ©2023"
     }
 }

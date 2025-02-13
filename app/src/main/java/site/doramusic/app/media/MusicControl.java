@@ -252,7 +252,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             ToastUtils.showShort(mContext, "歌曲路径为空");
         }
         mCurMusic = mPlaylist.get(mCurPlayIndex);
-        sendMusicPlayBroadcast();
+        sendPlayMusicEvent();
         return true;
     }
 
@@ -275,7 +275,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     mPlayState = MPS_PLAYING;
                     mCurMusic = mPlaylist.get(mCurPlayIndex);
                     saveLatest(mCurMusic);
-                    sendMusicPlayBroadcast();
+                    sendPlayMusicEvent();
                 } else {
                     pause();
                 }
@@ -315,7 +315,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 mMediaPlayer.prepareAsync();
                 mMediaPlayer.start();
                 mPlayState = MPS_PLAYING;
-                sendMusicPlayBroadcast();
+                sendPlayMusicEvent();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -338,7 +338,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     @Override
                     public void onPrepared(MediaPlayer mp) {
                         mMediaPlayer.start();
-                        sendMusicPlayBroadcast();
+                        sendPlayMusicEvent();
                     }
                 });
             } catch (IOException e) {
@@ -400,7 +400,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     mPlayState = MPS_PLAYING;
                     mCurMusic = mPlaylist.get(mCurPlayIndex);
                     saveLatest(mCurMusic);
-                    sendMusicPlayBroadcast();
+                    sendPlayMusicEvent();
                 } else {
                     pause();
                 }
@@ -551,7 +551,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         mMediaPlayer.pause();
         mPlayState = MPS_PAUSE;
         mCurMusic = mPlaylist.get(mCurPlayIndex);
-        sendMusicPlayBroadcast();
+        sendPlayMusicEvent();
         return true;
     }
 
@@ -718,7 +718,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             mPlayState = MPS_PLAYING;
             mCurMusic = mPlaylist.get(mCurPlayIndex);
             saveLatest(mCurMusic);
-            sendMusicPlayBroadcast();
+            sendPlayMusicEvent();
             return true;
         } else {
             return false;
@@ -728,11 +728,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     /**
      * 发送音乐播放/暂停的广播。
      */
-    private void sendMusicPlayBroadcast() {
+    private void sendPlayMusicEvent() {
         setPlaying(mPlayState);
-//        Intent intent = new Intent(ACTION_PLAY);
-//        intent.putExtra("play_state", mPlayState);
-//        mContext.sendBroadcast(intent);
         RxBus.getInstance().post(new PlayMusicEvent(mPlayState, mPendingProgress));
         RxBus.getInstance().post(new RefreshNumEvent());
     }

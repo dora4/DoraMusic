@@ -11,9 +11,6 @@ abstract class UIFactory(protected var drawer: ILyricDrawer,
 
     protected val inflater: LayoutInflater = manager.inflater
 
-    /**
-     * 保证此类可以不用重写这个方法。
-     */
     override fun getView(from: Int, obj: OrmTable?): View {
         throw UnsupportedOperationException("请在子类实现它")
     }

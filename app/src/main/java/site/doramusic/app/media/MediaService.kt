@@ -11,7 +11,6 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.RemoteException
-import android.util.Log
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -20,6 +19,8 @@ import site.doramusic.app.base.conf.AppConfig.*
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PREV
+import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
+import site.doramusic.app.base.conf.AppConfig.Companion.APP_PACKAGE_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_IS_PLAYING
 import site.doramusic.app.db.Music
 import site.doramusic.app.receiver.MusicPlayReceiver
@@ -230,8 +231,8 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
     @SuppressLint("ForegroundServiceType", "RemoteViewLayout")
     private fun updateNotification(bitmap: Bitmap? = null, title: String, name: String) {
-        val channelId = "site.doramusic.app"
-        val channelName = "DoraMusic"
+        val channelId = APP_PACKAGE_NAME
+        val channelName = APP_NAME
 
         // 创建通知频道
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -319,7 +320,6 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         } else {
             PendingIntent.FLAG_UPDATE_CURRENT
         }
-        Log.d("MediaService", "创建 PendingIntent: ${intent.action}")
         return PendingIntent.getBroadcast(context, requestCode, intent, flag)
     }
 

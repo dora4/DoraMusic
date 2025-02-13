@@ -177,17 +177,29 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                 val folder = table as Folder
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FOLDER, folder.path), listener)
             }
-            ROUTE_START_FROM_FAVORITE -> musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FAVORITE, 1), listener)
+            ROUTE_START_FROM_FAVORITE -> musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FAVORITE, Music.IS_FAVORITE), listener)
             ROUTE_START_FROM_LATEST -> musicDao.selectAsync(
                 QueryBuilder.create()
                     .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))
-                    .orderBy("${Music.COLUMN_LAST_PLAY_TIME} desc"),
+                    // 按最后播放时间降序
+                    .orderBy(parseOrderBy("-${Music.COLUMN_LAST_PLAY_TIME}")),
                 createMusicTaskListener(activity) { musics ->
                     updateMusicListUI(musics, sort = false)
                 }
             )
             else -> return
         }
+    }
+
+    private fun parseOrderBy(order: String): String {
+        if (order.isEmpty()) throw IllegalArgumentException("Order string cannot be empty")
+        val column = order.substring(1) // 去掉前缀
+        val direction = when {
+            order.startsWith("+") -> "ASC"
+            order.startsWith("-") -> "DESC"
+            else -> throw IllegalArgumentException("Invalid order prefix: $order")
+        }
+        return "$column $direction"
     }
 
     override fun getView(from: Int, obj: OrmTable?): View {

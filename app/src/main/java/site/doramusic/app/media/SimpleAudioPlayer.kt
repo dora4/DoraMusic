@@ -3,6 +3,7 @@ package site.doramusic.app.media
 import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
+import dora.util.LogUtils
 import dora.util.ToastUtils
 
 import java.io.IOException
@@ -10,7 +11,7 @@ import java.io.IOException
 /**
  * 集成了AudioFocus的简单音频播放器，用于临时播放音频，不会加入播放列表。
  */
-class SimpleAudioPlayer(internal var context: Context) {
+class SimpleAudioPlayer(private var context: Context) {
 
     private var mediaPlayer: MediaPlayer? = null
     private val audioManager: AudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -55,10 +56,10 @@ class SimpleAudioPlayer(internal var context: Context) {
                 }
             } catch (e: IllegalArgumentException) {
                 mediaPlayer?.release()
-                ToastUtils.showShort(context, "歌曲播放失败:$url,${e.message}")
+                LogUtils.e("歌曲播放失败:$url,${e.message}")
             } catch (e: IOException) {
                 mediaPlayer?.release()
-                ToastUtils.showShort(context, "歌曲播放失败:$url,${e.message}")
+                LogUtils.e("歌曲播放失败:$url,${e.message}")
             }
         }
     }

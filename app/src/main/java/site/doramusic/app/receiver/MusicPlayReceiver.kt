@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import dora.util.LogUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
@@ -32,11 +33,17 @@ class MusicPlayReceiver : BroadcastReceiver() {
                         context.resources,
                         R.drawable.bottom_bar_cover_bg
                     )
-                    val bitmap = MusicUtils.getCachedArtwork(
-                        context, music.albumId.toLong(),
-                        defaultArtwork
-                    )
-                    MediaManager.updateNotification(bitmap, title, name)
+                    try {
+                        val bitmap = MusicUtils.getCachedArtwork(
+                            context, music.albumId.toLong(),
+                            defaultArtwork
+                        )
+                        MediaManager.updateNotification(bitmap, title, name)
+                    } catch (e: UnsupportedOperationException) {
+                        MediaManager.updateNotification(defaultArtwork, title, name)
+                        LogUtils.e(e.toString())
+                        //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
+                    }
                 }
             }
 

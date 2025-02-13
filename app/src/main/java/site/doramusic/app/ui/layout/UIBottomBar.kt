@@ -1,12 +1,10 @@
 package site.doramusic.app.ui.layout
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Handler
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +43,7 @@ import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.PlaylistItemAdapter
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.MarqueeTextView
+import java.util.Locale
 
 /**
  * 底部控制条。
@@ -64,7 +63,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private lateinit var btnHomeBottomMenu: ImageButton
     private lateinit var ivHomeBottomAlbum: ImageView
     private lateinit var playbackProgress: ProgressBar
-    private var defaultAlbumIcon: Bitmap? = null
+    private lateinit var defaultAlbumIcon: Bitmap
     private val playModeControl: PlayModeControl by lazy { PlayModeControl(manager.view.context) }
     private val adapter = PlaylistItemAdapter()
     @Volatile
@@ -111,6 +110,9 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                 ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(contentView.context
                     .resources, bitmap))
             } catch (e: UnsupportedOperationException) {
+
+                ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(contentView.context
+                    .resources, defaultAlbumIcon))
                 LogUtils.e(e.toString())
 //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }
@@ -182,7 +184,8 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         tempTotalTime /= 1000
         val totalMinute = tempTotalTime / 60
         val totalSecond = tempTotalTime % 60
-        val totalTimeString = String.format("%02d:%02d", totalMinute,
+        val totalTimeString = String.format(
+            Locale.getDefault(), "%02d:%02d", totalMinute,
                 totalSecond)
 
         tvHomeBottomDuration.text = totalTimeString
@@ -201,7 +204,9 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                     ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(manager.view.context
                         .resources, bitmap))
                 }
+                MediaManager.updateNotification(bitmap, music.musicName, music.artist)
             } catch (e:UnsupportedOperationException) {
+                MediaManager.updateNotification(defaultAlbumIcon, music.musicName, music.artist)
                 LogUtils.e(e.toString())
 //                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }

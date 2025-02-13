@@ -12,7 +12,7 @@ import site.doramusic.app.base.conf.AppConfig
 /**
  * 音乐播放模式的控制类。
  */
-class PlayModeControl(internal val context: Context) : AppConfig {
+class PlayModeControl(private val context: Context) : AppConfig {
 
     /**
      * 刷新按钮的状态。

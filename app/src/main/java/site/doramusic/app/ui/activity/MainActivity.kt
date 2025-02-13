@@ -38,11 +38,12 @@ import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.receiver.EarphoneReceiver
 import site.doramusic.app.ui.IBack
 import site.doramusic.app.ui.fragment.HomeFragment
+import site.doramusic.app.ui.layout.IMenuDrawer
 import site.doramusic.app.util.PrefsManager
 import java.util.concurrent.Executors
 
 @Route(path = ARoutePath.ACTIVITY_MAIN)
-class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
+class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack, AppConfig {
 
     private var lastTime: Long = 0
     private lateinit var homeFragment: HomeFragment
@@ -66,14 +67,14 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
     /**
      * 打开侧边栏。
      */
-    fun openDrawer() {
+    override fun openDrawer() {
         mBinding.dlMain.openDrawer(GravityCompat.START)
     }
 
     /**
      * 关闭侧边栏。
      */
-    fun closeDrawer() {
+    override fun closeDrawer() {
         if (mBinding.dlMain.isDrawerOpen(GravityCompat.START)) {
             mBinding.dlMain.closeDrawer(GravityCompat.START)
         }
@@ -243,7 +244,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
             override fun handleOnBackPressed() {
                 if (homeFragment.isHome) {
                     if (mBinding.dlMain.isDrawerOpen(GravityCompat.START)) {
-                        mBinding.dlMain.closeDrawer(GravityCompat.START)
+                        closeDrawer()
                     } else {
                         val currTime = System.currentTimeMillis()
                         if (currTime - lastTime > 2000) {
@@ -255,7 +256,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IBack, AppConfig {
                     }
                 } else {
                     if (homeFragment.isSlidingDrawerOpened) {
-                        homeFragment.closeDrawer()
+                        homeFragment.hideDrawer()
                     } else {
                         if (backListeners.size > 0) {
                             for (listener in backListeners) {

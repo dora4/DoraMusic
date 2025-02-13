@@ -35,6 +35,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
+import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
+import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_URL
+import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_MENU_GRID_COLUMN_NUM
+import site.doramusic.app.base.conf.AppConfig.Companion.MAX_RECENT_MUSIC_NUM
 import site.doramusic.app.databinding.FragmentHomeBinding
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
@@ -49,9 +54,9 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MusicControl
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.BrowserActivity
-import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
 import site.doramusic.app.ui.layout.ILyricDrawer
+import site.doramusic.app.ui.layout.IMenuDrawer
 import site.doramusic.app.ui.layout.UIBottomBar
 import site.doramusic.app.ui.layout.UIMusicPlay
 import site.doramusic.app.util.MusicTimer
@@ -120,7 +125,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         )
         binding.titlebarHome.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
-                (context as MainActivity).openDrawer()
+                (context as IMenuDrawer).openDrawer()
             }
 
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
@@ -129,22 +134,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         binding.rvHomeModule.adapter = adapter
         binding.rvHomeModule.setBackgroundResource(R.drawable.shape_home_module)
         binding.rvHomeModule.itemAnimator = DefaultItemAnimator()
-        binding.rvHomeModule.layoutManager = GridLayoutManager(context, 3)
+        binding.rvHomeModule.layoutManager = GridLayoutManager(context, MUSIC_MENU_GRID_COLUMN_NUM)
         adapter.setOnItemClickListener { _, _, position ->
             var from = -1
             when (position) {
                 0 // 我的音乐
-                -> from = AppConfig.ROUTE_START_FROM_LOCAL
+                    -> from = AppConfig.ROUTE_START_FROM_LOCAL
+
                 1 // 歌手
-                -> from = AppConfig.ROUTE_START_FROM_ARTIST
+                    -> from = AppConfig.ROUTE_START_FROM_ARTIST
+
                 2 // 专辑
-                -> from = AppConfig.ROUTE_START_FROM_ALBUM
+                    -> from = AppConfig.ROUTE_START_FROM_ALBUM
+
                 3 // 文件夹
-                -> from = AppConfig.ROUTE_START_FROM_FOLDER
+                    -> from = AppConfig.ROUTE_START_FROM_FOLDER
+
                 4 // 我的最爱
-                -> from = AppConfig.ROUTE_START_FROM_FAVORITE
+                    -> from = AppConfig.ROUTE_START_FROM_FAVORITE
+
                 5 // 最近播放
-                -> from = AppConfig.ROUTE_START_FROM_LATEST
+                    -> from = AppConfig.ROUTE_START_FROM_LATEST
             }
             uiManager.setContentType(from)
         }
@@ -198,8 +208,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 val imageAdapter = ImageAdapter(result)
                 imageAdapter.setOnBannerListener { _, position ->
                     val intent = Intent(activity, BrowserActivity::class.java)
-                    intent.putExtra("title", "Dora Music")
-                    intent.putExtra("url", banners?.get(position)?.detailUrl)
+                    intent.putExtra(EXTRA_TITLE, APP_NAME)
+                    intent.putExtra(EXTRA_URL, banners?.get(position)?.detailUrl)
                     startActivity(intent)
                 }
                 binding.banner.setAdapter(imageAdapter)
@@ -214,7 +224,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         val folderCount = folderDao.count()
         val favoriteBuild = QueryBuilder.create().where(
             WhereBuilder.create()
-                .addWhereEqualTo(Music.COLUMN_FAVORITE, 1)
+                .addWhereEqualTo(Music.COLUMN_FAVORITE, Music.IS_FAVORITE)
         )
         val favoriteCount = musicDao.count(favoriteBuild)
         val latestBuild = QueryBuilder.create().where(
@@ -222,19 +232,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 .addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0)
         )
         val latestCount =
-            ViewUtils.clamp(musicDao.count(latestBuild).toFloat(), 100f, 0f).toLong()
+            ViewUtils.clamp(
+                musicDao.count(latestBuild).toFloat(),
+                MAX_RECENT_MUSIC_NUM.toFloat(),
+                0f
+            ).toLong()
         val homeItems = ArrayList<HomeItem>()
         homeItems.add(HomeItem(R.drawable.ic_local_music, getString(R.string.my_music), musicCount))
         homeItems.add(HomeItem(R.drawable.ic_local_artist, getString(R.string.artist), artistCount))
         homeItems.add(HomeItem(R.drawable.ic_local_album, getString(R.string.album), albumCount))
         homeItems.add(HomeItem(R.drawable.ic_local_folder, getString(R.string.folder), folderCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_favorite,
-            getString(R.string.my_favorite), favoriteCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_latest,
-            getString(R.string.latest_play), latestCount))
+        homeItems.add(
+            HomeItem(
+                R.drawable.ic_local_favorite,
+                getString(R.string.my_favorite), favoriteCount
+            )
+        )
+        homeItems.add(
+            HomeItem(
+                R.drawable.ic_local_latest,
+                getString(R.string.latest_play), latestCount
+            )
+        )
         return homeItems
     }
-
 
     fun onRefreshLocalMusic() {
         val homeItems = getHomeItems()
@@ -242,168 +263,93 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     private fun onPlayMusic(playState: Int, pendingProgress: Int) {
-        MediaManager.curMusic ?: LogUtils.d("当前无歌曲")
-        val music = MediaManager.curMusic ?: return
+        val music = MediaManager.curMusic ?: run {
+            LogUtils.d("当前无歌曲")
+            return
+        }
+
         when (playState) {
-            AppConfig.MPS_INVALID -> {  // 考虑后面加上如果文件不可播放直接跳到下一首
+            AppConfig.MPS_INVALID, AppConfig.MPS_NO_FILE -> {
                 musicTimer.stopTimer()
-                musicPlay.refreshUI(0, music.duration, music)
-                musicPlay.showPlay(true)
-
-                bottomBar.refreshUI(0, music.duration, music)
-                bottomBar.setSecondaryProgress(pendingProgress)
-                bottomBar.showPlay(true)
-
-                if (music.albumId != -1) {
-                    try {
-                        val bitmap = MusicUtils.getCachedArtwork(
-                            context,
-                            music.albumId.toLong(), defaultArtwork
-                        )
-                        if (bitmap != null) {
-                            MediaManager.updateNotification(
-                                bitmap, music.musicName,
-                                music.artist
-                            )
-                        }
-                    } catch (e: UnsupportedOperationException) {
-//                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
-                    }
-                } else {
-                    MediaManager.updateNotification(
-                        defaultArtwork,
-                        music.musicName,
-                        music.artist
-                    )
-                }
-            }
-            AppConfig.MPS_PAUSE -> {    // 刷新播放列表当前播放的条目
                 Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-                musicTimer.stopTimer()
 
-                musicPlay.refreshUI(
-                    MediaManager.position(), music.duration,
-                    music
-                )
-                musicPlay.showPlay(true)
-
-                bottomBar.refreshUI(
-                    MediaManager.position(), music.duration,
-                    music
-                )
-                bottomBar.setSecondaryProgress(pendingProgress)
-                bottomBar.showPlay(true)
-
-                if (music.albumId != -1) {
-                    try {
-                        val bitmap = MusicUtils.getCachedArtwork(
-                            context,
-                            music.albumId.toLong(), defaultArtwork
-                        )
-                        if (bitmap != null) {
-                            MediaManager.updateNotification(
-                                bitmap, music.musicName,
-                                music.artist
-                            )
-                        }
-                    } catch (e: UnsupportedOperationException) {
-//                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
-                    }
-                } else {
-                    MediaManager.updateNotification(
-                        defaultArtwork,
-                        music.musicName,
-                        music.artist
-                    )
-                }
+                refreshUI(0, music, true, pendingProgress)
+                updateNotification(music)
             }
-            AppConfig.MPS_PLAYING -> {  // 刷新播放列表当前播放的条目
-                Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-                musicTimer.startTimer()
 
-                musicPlay.refreshUI(
-                    MediaManager.position(), music.duration,
-                    music
-                )
-                musicPlay.showPlay(false)
-                // 读取歌词
-                musicPlay.loadLyric(music)
-
-                bottomBar.refreshUI(
-                    MediaManager.position(), music.duration,
-                    music
-                )
-                bottomBar.setSecondaryProgress(pendingProgress)
-                bottomBar.showPlay(false)
-                try {
-                    val bitmap = MusicUtils.getCachedArtwork(
-                        context,
-                        music.albumId.toLong(), defaultArtwork
-                    )
-                    if (music.albumId != -1) {
-                        if (bitmap != null) {
-                            MediaManager.updateNotification(
-                                bitmap, music.musicName,
-                                music.artist
-                            )
-                            musicPlay.loadRotateCover(bitmap)
-                        } else {
-                            musicPlay.loadRotateCover(musicPlay.createDefaultCover())
-                        }
-                    } else {
-                        musicPlay.loadRotateCover(bitmap)
-                        MediaManager.updateNotification(
-                            defaultArtwork,
-                            music.musicName,
-                            music.artist
-                        )
-                    }
-                } catch (e: UnsupportedOperationException) {
-                    LogUtils.e(e.toString())
-//                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
-                }
-            }
             AppConfig.MPS_PREPARE -> {
                 musicTimer.stopTimer()
+                Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
 
-                musicPlay.refreshUI(0, music.duration, music)
-                musicPlay.showPlay(true)
+                refreshUI(0, music, true, pendingProgress)
+                updateNotification(music)
 
-                bottomBar.setSecondaryProgress(pendingProgress)
-                bottomBar.refreshUI(0, music.duration, music)
-                bottomBar.showPlay(true)
-                try {
-                    val bitmap = MusicUtils.getCachedArtwork(
-                        context,
-                        music.albumId.toLong(), defaultArtwork
-                    )
-                    if (music.albumId != -1) {
-                        if (bitmap != null) {
-                            MediaManager.updateNotification(
-                                bitmap, music.musicName,
-                                music.artist
-                            )
-                            musicPlay.loadRotateCover(bitmap)
-                        } else {
-                            musicPlay.loadRotateCover(musicPlay.createDefaultCover())
-                        }
-                    } else {
-                        musicPlay.loadRotateCover(bitmap)
-                        MediaManager.updateNotification(
-                            defaultArtwork,
-                            music.musicName,
-                            music.artist
-                        )
-                    }
-                } catch (e: UnsupportedOperationException) {
-                    LogUtils.e(e.toString())
-//                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
-                }
+                loadArtwork(music)
+            }
+
+            AppConfig.MPS_PAUSE -> {
+                musicTimer.startTimer()
+                Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
+
+                refreshUI(MediaManager.position(), music, true, pendingProgress)
+                musicPlay.loadLyric(music)
+
+                updateNotification(music)
+                loadArtwork(music)
+            }
+
+            AppConfig.MPS_PLAYING -> {
+                musicTimer.startTimer()
+                Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
+
+                refreshUI(MediaManager.position(), music, false, pendingProgress)
+                musicPlay.loadLyric(music)
+
+                updateNotification(music)
+                loadArtwork(music)
             }
         }
     }
 
-    class ImageAdapter(banners: List<String>) : BannerAdapter<String, ImageAdapter.BannerViewHolder>(banners) {
+    private fun refreshUI(progress: Int, music: Music, showPlay: Boolean, pendingProgress: Int) {
+        musicPlay.refreshUI(progress, music.duration, music)
+        musicPlay.showPlay(showPlay)
+
+        bottomBar.refreshUI(progress, music.duration, music)
+        bottomBar.setSecondaryProgress(pendingProgress)
+        bottomBar.showPlay(showPlay)
+    }
+
+    private fun updateNotification(music: Music) {
+        try {
+            val bitmap =
+                MusicUtils.getCachedArtwork(context, music.albumId.toLong(), defaultArtwork)
+            MediaManager.updateNotification(bitmap, music.musicName, music.artist)
+        } catch (e: UnsupportedOperationException) {
+            MediaManager.updateNotification(defaultArtwork, music.musicName, music.artist)
+            LogUtils.e(e.toString())
+            //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
+        }
+    }
+
+    private fun loadArtwork(music: Music) {
+        try {
+            val bitmap =
+                MusicUtils.getCachedArtwork(context, music.albumId.toLong(), defaultArtwork)
+            if (music.albumId != -1) {
+                musicPlay.loadRotateCover(bitmap ?: musicPlay.createDefaultCover())
+            } else {
+                musicPlay.loadRotateCover(defaultArtwork)
+            }
+        } catch (e: UnsupportedOperationException) {
+            musicPlay.loadRotateCover(defaultArtwork)
+            LogUtils.e(e.toString())
+            //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
+        }
+    }
+
+    class ImageAdapter(banners: List<String>) :
+        BannerAdapter<String, ImageAdapter.BannerViewHolder>(banners) {
         // 创建ViewHolder，可以用viewType这个字段来区分不同的ViewHolder
         override fun onCreateHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
             val imageView = ImageView(parent.context)
@@ -469,19 +415,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         return R.layout.fragment_home
     }
 
-    /**
-     * 打开侧边栏。
-     */
     override fun showDrawer() {
         if (!musicPlay.isOpened) {
             musicPlay.open()
         }
     }
 
-    /**
-     * 关闭侧边栏。
-     */
-    override fun closeDrawer() {
+    override fun hideDrawer() {
         if (musicPlay.isOpened) {
             musicPlay.close()
         }
