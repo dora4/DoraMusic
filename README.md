@@ -2,7 +2,7 @@
 一款使用[https://github.com/dora4/dora] 开源库的Android手机音乐播放器。本代码仅限学习交流用途的分享传播，未经授权禁止用于其他用途。版权所有，侵权必究！
 
 ### app下载
-[Android](https://www.pgyer.com/doramusic)
+[Android下载](https://www.pgyer.com/doramusic)
 或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
 
 ### 运行截图
