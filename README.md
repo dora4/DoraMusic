@@ -1,8 +1,9 @@
 # DoraMusic
-一款使用dora框架[https://github.com/dora4/dora] 的Android手机音乐播放器，本代码仅限学习交流用途的分享传播，未经授权禁止用于其他用途。版权所有，侵权必究。由于本项目主要作为框架的使用教程示范，部分API可能未能适配到最新版本Android，敬请谅解！
+一款使用[https://github.com/dora4/dora] 开源库的Android手机音乐播放器。本代码仅限学习交流用途的分享传播，未经授权禁止用于其他用途。版权所有，侵权必究！
 
 ### app下载
 [Android](https://www.pgyer.com/doramusic)
+或在release中下载最新版本。
 
 ### 运行截图
 <p>
