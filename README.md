@@ -22,16 +22,16 @@
 ### 运行截图
 
 快捷播放列表
-<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/blob/main/screenshoot/Screenshot_1.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_1.jpg"></p>
 主界面
-<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/blob/main/screenshoot/Screenshot_2.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_2.jpg"></p>
 侧边栏
-<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/blob/main/screenshoot/Screenshot_3.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_3.jpg"></p>
 通知
-<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/blob/main/screenshoot/Screenshot_4.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_4.jpg"></p>
 均衡器
-<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/blob/main/screenshoot/Screenshot_5.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_5.jpg"></p>
 播放控制
-<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/blob/main/screenshoot/Screenshot_6.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_6.jpg"></p>
 歌词
-<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/blob/main/screenshoot/Screenshot_7.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_7.jpg"></p>
