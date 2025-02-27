@@ -1,21 +1,30 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.kts.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# 保留所有注解
+-keep @interface * { *; }
+# 确保注解的元数据不会被移除
+-keepattributes *Annotation*
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-dontwarn com.alipay.sdk.app.H5PayCallback
+-dontwarn com.alipay.sdk.app.PayTask
+-dontwarn com.download.library.DownloadImpl
+-dontwarn com.download.library.DownloadListenerAdapter
+-dontwarn com.download.library.DownloadTask
+-dontwarn com.download.library.ResourceRequest
+-dontwarn javax.lang.model.element.Element
+-dontwarn javax.lang.model.element.Modifier
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# ARouter
+-keep class com.alibaba.android.arouter.** { *; }
+-keep class * implements com.alibaba.android.arouter.facade.template.ISyringe { *; }
+-keep class * implements com.alibaba.android.arouter.facade.template.IRouteGroup { *; }
+-keep class * implements com.alibaba.android.arouter.facade.template.IProvider { *; }
+-keepclasseswithmembernames class * {
+    @Autowired <fields>;
+}
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# 保留 GlobalConfig 接口的所有实现类
+-keep class * implements dora.lifecycle.config.GlobalConfig { *; }
+# 保留泛型参数，确保 getActualTypeArguments() 能正确解析
+-keepattributes Signature
+
+-keep class * implements dora.db.table.OrmTable { *; }
+-keep class * implements dora.db.converter.PropertyConverter { *; }
