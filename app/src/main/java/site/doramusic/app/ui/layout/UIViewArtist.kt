@@ -19,6 +19,7 @@ import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Artist
+import site.doramusic.app.sort.PinyinComparator
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.ArtistItemAdapter
@@ -64,7 +65,6 @@ class UIViewArtist(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
             }
         })
         val artists = artistDao.selectAll() as ArrayList<Artist>
-        artists.sortBy { PinyinUtils.getPinyinFromSentence(it.name) }
         adapter = ArtistItemAdapter(artists)
         adapter.setOnItemClickListener { adapter, _, position ->
             manager.setContentType(AppConfig.ROUTE_ARTIST_TO_LOCAL,

@@ -19,6 +19,7 @@ import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Folder
+import site.doramusic.app.sort.PinyinComparator
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.FolderItemAdapter
@@ -62,7 +63,6 @@ class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
             }
         })
         val folders = folderDao.selectAll() as ArrayList<Folder>
-        folders.sortBy { PinyinUtils.getPinyinFromSentence(it.name) }
         adapter = FolderItemAdapter(folders)
         adapter.setOnItemClickListener { adapter, view, position ->
             manager.setContentType(AppConfig.ROUTE_FOLDER_TO_LOCAL,

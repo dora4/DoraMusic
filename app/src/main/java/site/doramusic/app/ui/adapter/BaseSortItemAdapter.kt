@@ -33,6 +33,7 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
             letters.addAll(list)
         }
         super.setList(generateLetters(letters))
+        sort()
     }
 
 

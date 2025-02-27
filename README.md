@@ -21,11 +21,17 @@
 
 ### 运行截图
 
-<p>
-<img width="400" height="880" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/375d2e19ebbc4867ad5bd129b6e85e5e~tplv-k3u1fbpfcp-watermark.image">
-<img width="400" height="880" src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8807c91e66f4458bb20678f7bf5a30c5~tplv-k3u1fbpfcp-watermark.image">
-</p>
-<p>
-<img width="400" height="880" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5083669b824648bdbf8945e2a9b9ad5f~tplv-k3u1fbpfcp-watermark.image">
-<img width="400" height="880" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/90a29d9bd41948738f2e235430bc25cd~tplv-k3u1fbpfcp-watermark.image">
-</p>
+快捷播放列表
+<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/tree/main/screenshoot/Screenshot_1.jpg"></p>
+主界面
+<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/tree/main/screenshoot/Screenshot_2.jpg"></p>
+侧边栏
+<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/tree/main/screenshoot/Screenshot_3.jpg"></p>
+通知
+<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/tree/main/screenshoot/Screenshot_4.jpg"></p>
+均衡器
+<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/tree/main/screenshoot/Screenshot_5.jpg"></p>
+播放控制
+<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/tree/main/screenshoot/Screenshot_6.jpg"></p>
+歌词
+<p><img width="542" height="1206" src="https://github.com/dora4/DoraMusic/tree/main/screenshoot/Screenshot_7.jpg"></p>
