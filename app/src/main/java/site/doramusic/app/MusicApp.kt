@@ -4,6 +4,9 @@ import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
 import dora.http.retrofit.RetrofitManager
+import dora.trade.DoraTrade
+import com.walletconnect.web3.modal.client.Modal
+import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
@@ -34,6 +37,15 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun init() {
         initHttp()   // 初始化网络框架
         initDb()    // 初始化SQLite数据库的表
+        initPay()   // 初始化支付SDK
+    }
+
+    private fun initPay() {
+        val chains: Array<Modal.Model.Chain> = arrayOf(
+            Web3ModalChainsPresets.ethChains["137"]!!
+        )
+        DoraTrade.init(this, "Dora Music",
+            getString(R.string.app_desc), "http://doramusic.site", chains)
     }
 
     private fun initHttp() {

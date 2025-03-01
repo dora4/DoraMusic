@@ -51,4 +51,11 @@
     <string name="single_track_loop">"Single Track Loop"</string>
     <string name="playlist_loop">"Playlist Loop"</string>
     <string name="no_lyrics">No lyrics</string>
+    <string name="support_project">Support Project</string>
+    <string name="donation_desc_1">Do my humble part.</string>
+    <string name="donation_desc_2">Thank you very much.</string>
+    <string name="donation_desc_3">I want to sponsor.</string>
+    <string name="i_want_to_donate">I want to donate.</string>
+    <string name="donation_speech">To express my gratitude to the project team, I voluntarily donate tokens.</string>
+    <string name="app_desc">An open-source Android mobile music player.</string>
 </resources>

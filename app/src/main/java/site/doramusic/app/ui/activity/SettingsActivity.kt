@@ -5,11 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.walletconnect.web3.modal.client.Web3Modal
 import dora.arouter.open
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.skin.SkinManager
+import dora.trade.DoraTrade
 import dora.util.StatusBarUtils
+import dora.widget.DoraBottomMenuDialog
 import dora.widget.DoraLoadingDialog
+import dora.widget.DoraSingleButtonDialog
 import dora.widget.DoraToggleButton
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
@@ -113,6 +117,41 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 } else {
                     MediaManager.setBassBoost(1)
                 }
+            }
+            R.id.rl_settings_donate -> {
+                if (Web3Modal.getAccount() == null) {
+                    DoraTrade.connectWallet(this)
+                    return
+                }
+                val menus = arrayOf(getString(R.string.donation_desc_1),
+                    getString(R.string.donation_desc_2), getString(R.string.donation_desc_3))
+                val dialog = DoraBottomMenuDialog().show(this, menus)
+                dialog.setOnMenuClickListener(object : DoraBottomMenuDialog.OnMenuClickListener {
+                    override fun onMenuClick(position: Int, menu: String) {
+                        dialog.dismiss()
+                        val amount = when (position) {
+                            0 -> {
+                                0.1
+                            }
+                            1 -> {
+                                1.0
+                            }
+                            else -> {
+                                10.0
+                            }
+                        }
+                        DoraTrade.pay(this@SettingsActivity,
+                            "vs42INhGWDnq",
+                            "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw",
+                            getString(R.string.i_want_to_donate),
+                            getString(R.string.donation_speech),
+                            "0xcBa852Ef29a43a7542B88F60C999eD9cB66f6000",
+                            amount, object : DoraTrade.OrderListener {
+                                override fun onPrintOrder(orderId: String) {
+                                }
+                            })
+                    }
+                })
             }
             R.id.rl_settings_user_protocol -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {

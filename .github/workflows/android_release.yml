@@ -28,7 +28,7 @@ jobs:
 
       - name: Build App
         run: |
-          ./gradlew app:assembleAlphaRelease
+          ./gradlew app:assembleBetaRelease
       - name: Debug GitHub Context
         run: echo "${{ toJson(github) }}"
       - name: Create Release
@@ -37,4 +37,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_DORAMUSIC }}
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: 'app/build/outputs/apk/alpha/release/*.apk'
+          files: 'app/build/outputs/apk/beta/release/*.apk'

@@ -2,9 +2,38 @@
   "project_info": {
     "project_number": "612178873735",
     "project_id": "doramusic-8c392",
-    "storage_bucket": "doramusic-8c392.appspot.com"
+    "storage_bucket": "doramusic-8c392.firebasestorage.app"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612178873735:android:260ec31655d1d8b83e9722",
+        "android_client_info": {
+          "package_name": "site.doramusic.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612178873735-ftsai2dk5ltnasif1cv1gkhi31ebj7m4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARtW2_ME6kZd2E_PqQOxkDJ7TReyMWl6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612178873735-ftsai2dk5ltnasif1cv1gkhi31ebj7m4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:612178873735:android:7930d346c15d1bdf3e9722",

@@ -53,4 +53,11 @@
     <string name="single_track_loop">单曲循环</string>
     <string name="playlist_loop">列表循环</string>
     <string name="no_lyrics">暂无歌词</string>
+    <string name="support_project">支持项目</string>
+    <string name="donation_desc_1">尽点微薄之力</string>
+    <string name="donation_desc_2">非常感谢</string>
+    <string name="donation_desc_3">我要赞助</string>
+    <string name="i_want_to_donate">我要捐赠</string>
+    <string name="donation_speech">为了感谢项目方，我自愿捐赠代币。</string>
+    <string name="app_desc">一款开源的Android手机音乐播放器。</string>
 </resources>
