@@ -140,16 +140,13 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                                 10.0
                             }
                         }
-                        DoraTrade.pay(this@SettingsActivity,
+                        DoraTrade.donate(this@SettingsActivity,
                             "vs42INhGWDnq",
                             "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw",
                             getString(R.string.i_want_to_donate),
                             getString(R.string.donation_speech),
                             "0xcBa852Ef29a43a7542B88F60C999eD9cB66f6000",
-                            amount, object : DoraTrade.OrderListener {
-                                override fun onPrintOrder(orderId: String) {
-                                }
-                            })
+                            amount)
                     }
                 })
             }
