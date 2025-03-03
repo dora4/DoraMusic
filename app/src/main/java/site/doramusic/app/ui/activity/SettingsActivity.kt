@@ -133,9 +133,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                     override fun onMenuClick(position: Int, menu: String) {
                         dialog.dismiss()
                         if (position == 3) {
-                            if (Web3Modal.getAccount() != null) {
-                                Web3Modal.disconnect {}
-                            }
+                            DoraTrade.disconnectWallet()
                             return
                         }
                         val amount = when (position) {
