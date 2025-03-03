@@ -60,4 +60,5 @@
     <string name="i_want_to_donate">我要捐赠</string>
     <string name="donation_speech">为了感谢项目方，我自愿捐赠代币。</string>
     <string name="app_desc">一款开源的Android手机音乐播放器。</string>
+    <string name="disconnect_wallet">断开钱包连接</string>
 </resources>

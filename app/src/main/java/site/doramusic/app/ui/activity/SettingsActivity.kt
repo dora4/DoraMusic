@@ -13,7 +13,6 @@ import dora.trade.DoraTrade
 import dora.util.StatusBarUtils
 import dora.widget.DoraBottomMenuDialog
 import dora.widget.DoraLoadingDialog
-import dora.widget.DoraSingleButtonDialog
 import dora.widget.DoraToggleButton
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
@@ -123,12 +122,22 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                     DoraTrade.connectWallet(this)
                     return
                 }
-                val menus = arrayOf(getString(R.string.donation_desc_1),
-                    getString(R.string.donation_desc_2), getString(R.string.donation_desc_3))
+                val menus = arrayOf(
+                    getString(R.string.donation_desc_1),
+                    getString(R.string.donation_desc_2),
+                    getString(R.string.donation_desc_3),
+                    getString(R.string.disconnect_wallet)
+                )
                 val dialog = DoraBottomMenuDialog().show(this, menus)
                 dialog.setOnMenuClickListener(object : DoraBottomMenuDialog.OnMenuClickListener {
                     override fun onMenuClick(position: Int, menu: String) {
                         dialog.dismiss()
+                        if (position == 3) {
+                            if (Web3Modal.getAccount() != null) {
+                                Web3Modal.disconnect {}
+                            }
+                            return
+                        }
                         val amount = when (position) {
                             0 -> {
                                 0.1
@@ -136,8 +145,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                             1 -> {
                                 1.0
                             }
-                            else -> {
+                            2 -> {
                                 10.0
+                            }
+                            else -> {
+                                0.0
                             }
                         }
                         DoraTrade.donate(this@SettingsActivity,
