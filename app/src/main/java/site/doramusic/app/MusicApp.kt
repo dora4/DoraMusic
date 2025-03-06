@@ -14,6 +14,7 @@ import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.MusicService
+import site.doramusic.app.media.MediaManager
 
 /**
  * 朵拉音乐APP。
@@ -26,6 +27,11 @@ class MusicApp : BaseApplication(), AppConfig {
          * 全局Application单例。
          */
         lateinit var app: MusicApp
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        MediaManager.cancelNotification()
     }
 
     override fun onCreate() {

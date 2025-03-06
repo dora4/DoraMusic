@@ -221,7 +221,7 @@ object MediaManager : IMediaService.Stub(), AppConfig {
 
     override fun getPlayMode(): Int {
         try {
-            return mediaService?.playMode ?: 0
+            return mediaService?.playMode ?: -1
         } catch (e: RemoteException) {
             e.printStackTrace()
         }
