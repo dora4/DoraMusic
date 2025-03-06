@@ -29,8 +29,6 @@ jobs:
       - name: Build App
         run: |
           ./gradlew app:assembleBetaRelease
-      - name: Debug GitHub Context
-        run: echo "${{ toJson(github) }}"
       - name: Create Release
         uses: softprops/action-gh-release@v2
         env:
