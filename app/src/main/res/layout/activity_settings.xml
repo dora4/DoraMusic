@@ -126,10 +126,30 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                        android:id="@+id/rl_settings_donate"
+                        android:id="@+id/rl_settings_share"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
+                        android:background="@drawable/selector_item_common"
+                        android:onClick="@{v}"
+                        android:paddingLeft="7dp"
+                        android:paddingTop="14dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="14dp">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/share_with_friends"
+                            android:textColor="@color/gray" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/rl_settings_donate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/selector_item_common"
                         android:onClick="@{v}"
                         android:paddingLeft="7dp"

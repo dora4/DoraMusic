@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.util.PrefsManager
+
 
 @Route(path = ARoutePath.ACTIVITY_SETTINGS)
 class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
@@ -116,6 +118,14 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 } else {
                     MediaManager.setBassBoost(1)
                 }
+            }
+            R.id.rl_settings_share -> {
+                var shareIntent = Intent(Intent.ACTION_SEND)
+                shareIntent.setType("text/plain")
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_content))
+                shareIntent = Intent.createChooser(shareIntent,
+                    getString(R.string.select_sharing_method))
+                startActivity(shareIntent)
             }
             R.id.rl_settings_donate -> {
                 if (Web3Modal.getAccount() == null) {
