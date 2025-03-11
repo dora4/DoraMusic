@@ -87,7 +87,7 @@ class PlayModeControl(private val context: Context) : AppConfig {
             AppConfig.MPM_PLAYLIST_LOOP -> return context.getString(R.string.playlist_loop)
             AppConfig.MPM_SEQUENTIAL_PLAYBACK -> return context.getString(R.string.sequential_playback)
             AppConfig.MPM_SHUFFLE_PLAYBACK -> return context.getString(R.string.shuffle_playback)
-            AppConfig.MPM_SINGLE_TRACK_LOOP -> context.getString(R.string.single_track_loop)
+            AppConfig.MPM_SINGLE_TRACK_LOOP -> return context.getString(R.string.single_track_loop)
         }
         return ""
     }
