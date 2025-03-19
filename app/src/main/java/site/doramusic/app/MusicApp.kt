@@ -29,8 +29,8 @@ class MusicApp : BaseApplication(), AppConfig {
         lateinit var app: MusicApp
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
         MediaManager.cancelNotification()
     }
 
