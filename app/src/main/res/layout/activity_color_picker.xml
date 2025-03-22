@@ -14,21 +14,21 @@
         android:background="@color/white_smoke">
 
         <View
-            android:id="@+id/statusbar_choice_color"
+            android:id="@+id/statusbar_color_picker"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/skin_theme_color" />
 
         <dora.widget.DoraTitleBar
-            android:id="@+id/titlebar_choice_color"
+            android:id="@+id/titlebar_color_picker"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             app:dview_title="@string/choose_color"
-            android:layout_below="@+id/statusbar_choice_color"
+            android:layout_below="@+id/statusbar_color_picker"
             android:background="@color/skin_theme_color" />
 
         <LinearLayout
-            android:id="@+id/ll_choice_color_bottom"
+            android:id="@+id/ll_color_picker_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -41,19 +41,19 @@
                 android:background="@color/light_gray" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_choice_color"
+                android:id="@+id/rv_color_picker"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:scrollbars="none" />
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/iv_choice_color_preview"
+            android:id="@+id/iv_color_picker_preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/ll_choice_color_bottom"
-            android:layout_below="@+id/titlebar_choice_color"
+            android:layout_above="@+id/ll_color_picker_bottom"
+            android:layout_below="@+id/titlebar_color_picker"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"

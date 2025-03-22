@@ -46,7 +46,7 @@ import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.PlayMusicEvent
-import site.doramusic.app.event.RefreshNumEvent
+import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.http.DoraBannerAd
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.media.IMediaService
@@ -160,7 +160,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
         adapter.setList(getHomeItems())
         addDisposable(RxBus.getInstance()
-            .toObservable(RefreshNumEvent::class.java)
+            .toObservable(RefreshHomeItemEvent::class.java)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 onRefreshLocalMusic()
@@ -238,19 +238,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 0f
             ).toLong()
         val homeItems = ArrayList<HomeItem>()
-        homeItems.add(HomeItem(R.drawable.ic_local_music, getString(R.string.my_music), musicCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_artist, getString(R.string.artist), artistCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_album, getString(R.string.album), albumCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_folder, getString(R.string.folder), folderCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_music_transparent, getString(R.string.my_music), musicCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_artist_transparent, getString(R.string.artist), artistCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_album_transparent, getString(R.string.album), albumCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_folder_transparent, getString(R.string.folder), folderCount))
         homeItems.add(
             HomeItem(
-                R.drawable.ic_local_favorite,
+                R.drawable.ic_local_favorite_transparent,
                 getString(R.string.my_favorite), favoriteCount
             )
         )
         homeItems.add(
             HomeItem(
-                R.drawable.ic_local_latest,
+                R.drawable.ic_local_latest_transparent,
                 getString(R.string.latest_play), latestCount
             )
         )

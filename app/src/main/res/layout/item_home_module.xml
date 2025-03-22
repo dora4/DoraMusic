@@ -18,11 +18,11 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_home_module_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/tv_home_module_name"

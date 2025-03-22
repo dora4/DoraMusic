@@ -45,7 +45,7 @@ import dora.util.ScreenUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Music
-import site.doramusic.app.event.RefreshNumEvent
+import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.lrc.LyricScroller
 import site.doramusic.app.lrc.loader.DoraLyricLoader
@@ -484,7 +484,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                         refreshFavorite(0)
                     }
                     // 此处最好只刷新收藏数目
-                    RxBus.getInstance().post(RefreshNumEvent())
+                    RxBus.getInstance().post(RefreshHomeItemEvent())
                 }
             }
         }

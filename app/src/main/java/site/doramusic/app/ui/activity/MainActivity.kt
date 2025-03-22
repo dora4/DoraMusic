@@ -33,7 +33,7 @@ import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
-import site.doramusic.app.event.RefreshNumEvent
+import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.receiver.EarphoneReceiver
 import site.doramusic.app.ui.IBack
@@ -162,7 +162,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 // 扫描歌曲
                 R.id.menu_scan_music -> performScanMusic()
                 // 更换换肤
-                R.id.menu_change_skin -> open(ARoutePath.ACTIVITY_CHOICE_COLOR)
+                R.id.menu_change_skin -> open(ARoutePath.ACTIVITY_COLOR_PICKER)
                 // 均衡器
                 R.id.menu_equalizer -> open(ARoutePath.ACTIVITY_EQUALIZER)
                 // 设置
@@ -265,7 +265,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                         }
                         // 这种方式返回首页也要刷新，另一种刷新是在UIManager#setCurrentItem()
                         if (homeFragment.isHome) {
-                            RxBus.getInstance().post(RefreshNumEvent())
+                            RxBus.getInstance().post(RefreshHomeItemEvent())
                         }
                     }
                 }

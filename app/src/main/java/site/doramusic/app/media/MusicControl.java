@@ -26,7 +26,7 @@ import dora.util.ToastUtils;
 import site.doramusic.app.base.conf.AppConfig;
 import site.doramusic.app.db.Music;
 import site.doramusic.app.event.PlayMusicEvent;
-import site.doramusic.app.event.RefreshNumEvent;
+import site.doramusic.app.event.RefreshHomeItemEvent;
 import site.doramusic.app.util.PrefsManager;
 
 /**
@@ -731,7 +731,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     private void sendPlayMusicEvent() {
         setPlaying(mPlayState);
         RxBus.getInstance().post(new PlayMusicEvent(mPlayState, mPendingProgress));
-        RxBus.getInstance().post(new RefreshNumEvent());
+        RxBus.getInstance().post(new RefreshHomeItemEvent());
     }
 
     /**

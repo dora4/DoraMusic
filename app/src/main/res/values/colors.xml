@@ -8,18 +8,39 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
 
-    <!-- 青色 -->
-    <color name="cyan">#04d5d5</color>
+    <!-- 初恋青 -->
+    <color name="first_love_cyan">#04D5D5</color>
+    <!-- 天蓝 -->
+    <color name="sky_blue">#389CFF</color>
+    <!-- 叶绿 -->
+    <color name="leaf_green">#009944</color>
+    <!-- 鸽血红 -->
+    <color name="pigeon_blood_red">#DB0000</color>
+    <!-- 活力橙 -->
+    <color name="vibrant_orange">#FF6600</color>
+    <!-- 金黄 -->
+    <color name="gold_yellow">#FFD700</color>
+    <!-- 少女粉 -->
+    <color name="girl_pink">#FFC0CB</color>
+    <!-- 魅惑紫 -->
+    <color name="enchanting_purple">#BB86FC</color>
+    <!-- 暗金 -->
+    <color name="dark_gold">#C8B245</color>
+    <!-- 曜石黑 -->
+    <color name="obsidian_black">#292421</color>
 
     <!-- 需要换肤的颜色 -->
-    <color name="skin_theme_color">@color/cyan</color>
-    <color name="skin_theme_color_red">#d23c3e</color>
-    <color name="skin_theme_color_orange">#ff8400</color>
-    <color name="skin_theme_color_black">#161616</color>
-    <color name="skin_theme_color_green">#009944</color>
-    <color name="skin_theme_color_blue">#0284e9</color>
-    <color name="skin_theme_color_cyan">@color/cyan</color>
-    <color name="skin_theme_color_purple">#8c00d6</color>
+    <color name="skin_theme_color">@color/first_love_cyan</color>
+    <color name="skin_theme_color_red">@color/pigeon_blood_red</color>
+    <color name="skin_theme_color_orange">@color/vibrant_orange</color>
+    <color name="skin_theme_color_black">@color/obsidian_black</color>
+    <color name="skin_theme_color_green">@color/leaf_green</color>
+    <color name="skin_theme_color_blue">@color/sky_blue</color>
+    <color name="skin_theme_color_cyan">@color/first_love_cyan</color>
+    <color name="skin_theme_color_purple">@color/enchanting_purple</color>
+    <color name="skin_theme_color_yellow">@color/gold_yellow</color>
+    <color name="skin_theme_color_pink">@color/girl_pink</color>
+    <color name="skin_theme_color_gold">@color/dark_gold</color>
 
     <color name="colorPanelBg">#F5F5F9</color>
     <color name="colorPrimary">@color/skin_theme_color</color>

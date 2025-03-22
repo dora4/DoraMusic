@@ -85,6 +85,6 @@ class PrefsManager(val context: Context) {
         const val PREFS_BASS_BOOST_ENABLE = "prefs_bass_boost_enable"
         const val PREFS_EQUALIZER_DECIBELS = "prefs_equalizer_decibels"
         const val PREFS_SKIN_COLOR = "prefs_skin_color"
-        const val PREFS_SKIN_TYPE = "prefs_skin_type" // 皮肤类型 1.红 2.橙 3.黑 4.绿 5.青 6.蓝 7.紫
+        const val PREFS_SKIN_TYPE = "prefs_skin_type" // 皮肤类型 1.红 2.橙 3.黑 4.绿 5.青 6.蓝 7.紫 8.黄 9.粉 10.金
     }
 }

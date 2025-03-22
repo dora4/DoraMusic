@@ -11,7 +11,7 @@ import dora.util.RxBus
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.event.RefreshNumEvent
+import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.layout.ILyricDrawer
 import site.doramusic.app.ui.layout.UIViewAlbum
@@ -47,7 +47,7 @@ class UIManager(private var drawer: ILyricDrawer,
         } else {
             mainViewPager.setCurrentItem(0, true)
             // 返回首页要刷新界面
-            RxBus.getInstance().post(RefreshNumEvent())
+            RxBus.getInstance().post(RefreshHomeItemEvent())
         }
     }
 

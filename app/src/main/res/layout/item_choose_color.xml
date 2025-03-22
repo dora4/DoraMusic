@@ -10,16 +10,16 @@
     android:layout_margin="2dp">
 
     <dora.widget.DoraRoundRectImageView
-        android:id="@+id/iv_choice_color_skin_bg"
+        android:id="@+id/iv_color_picker_skin_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:id="@+id/iv_choice_color_skin_select"
+        android:id="@+id/iv_color_picker_skin_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
+        android:layout_gravity="end|bottom"
         android:layout_marginBottom="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         android:src="@drawable/ic_skin_selected" />
 </FrameLayout>

@@ -97,7 +97,7 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.ChoiceColorActivity"
+            android:name=".ui.activity.ColorPickerActivity"
             android:label="选择颜色"
             android:launchMode="singleTop"
             android:exported="false"

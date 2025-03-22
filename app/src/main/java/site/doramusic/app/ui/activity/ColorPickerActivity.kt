@@ -11,31 +11,33 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.skin.SkinManager
+import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 //import site.doramusic.app.annotation.TimeTrace
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
-import site.doramusic.app.databinding.ActivityChoiceColorBinding
-import site.doramusic.app.ui.adapter.ChoiceColorAdapter
+import site.doramusic.app.databinding.ActivityColorPickerBinding
+import site.doramusic.app.event.RefreshHomeItemEvent
+import site.doramusic.app.ui.adapter.ColorAdapter
 import site.doramusic.app.util.PrefsManager
 
 /**
  * 换肤界面，选择颜色。
  */
-@Route(path = ARoutePath.ACTIVITY_CHOICE_COLOR)
-class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
+@Route(path = ARoutePath.ACTIVITY_COLOR_PICKER)
+class ColorPickerActivity : BaseSkinActivity<ActivityColorPickerBinding>() {
 
     private lateinit var colorDrawable: ColorDrawable
-    private lateinit var choiceColorAdapter: ChoiceColorAdapter
+    private lateinit var colorAdapter: ColorAdapter
     private var colors: MutableList<ColorData> = arrayListOf()
     private lateinit var prefsManager: PrefsManager
 
     data class ColorData(val backgroundResId: Int, val backgroundColor: Int)
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_choice_color
+        return R.layout.activity_color_picker
     }
 
     override fun onSetStatusBar() {
@@ -43,12 +45,12 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 
-    override fun initData(savedInstanceState: Bundle?, binding: ActivityChoiceColorBinding) {
-        binding.statusbarChoiceColor.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+    override fun initData(savedInstanceState: Bundle?, binding: ActivityColorPickerBinding) {
+        binding.statusbarColorPicker.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, COLOR_THEME)
-        binding.titlebarChoiceColor.addMenuButton(R.drawable.ic_save)
-        binding.titlebarChoiceColor.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarColorPicker, COLOR_THEME)
+        binding.titlebarColorPicker.addMenuButton(R.drawable.ic_save)
+        binding.titlebarColorPicker.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
             }
 
@@ -61,36 +63,43 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
         })
         prefsManager = PrefsManager(this)
         colors = mutableListOf(
-            ColorData(R.drawable.cyan_bg,
+            ColorData(R.drawable.shape_color_cyan,
                 ContextCompat.getColor(this, R.color.skin_theme_color_cyan)),
-            ColorData(R.drawable.orange_bg,
+            ColorData(R.drawable.shape_color_orange,
                 ContextCompat.getColor(this, R.color.skin_theme_color_orange)),
-            ColorData(R.drawable.black_bg,
+            ColorData(R.drawable.shape_color_black,
                 ContextCompat.getColor(this, R.color.skin_theme_color_black)),
-            ColorData(R.drawable.green_bg,
+            ColorData(R.drawable.shape_color_green,
                 ContextCompat.getColor(this, R.color.skin_theme_color_green)),
-            ColorData(R.drawable.red_bg,
+            ColorData(R.drawable.shape_color_red,
                 ContextCompat.getColor(this, R.color.skin_theme_color_red)),
-            ColorData(R.drawable.blue_bg,
+            ColorData(R.drawable.shape_color_blue,
                 ContextCompat.getColor(this, R.color.skin_theme_color_blue)),
-            ColorData(R.drawable.purple_bg,
-                ContextCompat.getColor(this, R.color.skin_theme_color_purple)))
+            ColorData(R.drawable.shape_color_purple,
+                ContextCompat.getColor(this, R.color.skin_theme_color_purple)),
+            ColorData(R.drawable.shape_color_yellow,
+                ContextCompat.getColor(this, R.color.skin_theme_color_yellow)),
+            ColorData(R.drawable.shape_color_pink,
+                ContextCompat.getColor(this, R.color.skin_theme_color_pink)),
+            ColorData(R.drawable.shape_color_gold,
+                ContextCompat.getColor(this, R.color.skin_theme_color_gold))
+            )
 
-        choiceColorAdapter = ChoiceColorAdapter()
-        choiceColorAdapter.setList(colors)
-        binding.rvChoiceColor.layoutManager = LinearLayoutManager(this,
+        colorAdapter = ColorAdapter()
+        colorAdapter.setList(colors)
+        binding.rvColorPicker.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.HORIZONTAL, false)
-        binding.rvChoiceColor.itemAnimator = DefaultItemAnimator()
-        binding.rvChoiceColor.adapter = choiceColorAdapter
-        choiceColorAdapter.selectedPosition = if (prefsManager.getSkinType() == 0) 0 else prefsManager.getSkinType() - 1
-
-        colorDrawable = ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary))
-        binding.ivChoiceColorPreview.background = colorDrawable
-        choiceColorAdapter.setOnItemClickListener { _, _, position ->
+        binding.rvColorPicker.itemAnimator = DefaultItemAnimator()
+        binding.rvColorPicker.adapter = colorAdapter
+        colorAdapter.selectedPosition = if (prefsManager.getSkinType() == 0) 0 else prefsManager.getSkinType() - 1
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        colorDrawable = ColorDrawable(skinThemeColor)
+        binding.ivColorPickerPreview.background = colorDrawable
+        colorAdapter.setOnItemClickListener { _, _, position ->
             val color = colors[position].backgroundColor
             colorDrawable.color = color
-            choiceColorAdapter.selectedPosition = position
-            choiceColorAdapter.notifyDataSetChanged()
+            colorAdapter.selectedPosition = position
+            colorAdapter.notifyDataSetChanged()
         }
     }
 
@@ -99,7 +108,7 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
      */
 //    @TimeTrace
     private fun changeSkin() {
-        when (choiceColorAdapter.selectedPosition) {
+        when (colorAdapter.selectedPosition) {
             0 -> {
                 prefsManager.saveSkinType(1)
                 SkinManager.changeSkin("cyan")
@@ -128,8 +137,22 @@ class ChoiceColorActivity : BaseSkinActivity<ActivityChoiceColorBinding>() {
                 prefsManager.saveSkinType(7)
                 SkinManager.changeSkin("purple")
             }
+            7 -> {
+                prefsManager.saveSkinType(8)
+                SkinManager.changeSkin("yellow")
+            }
+            8 -> {
+                prefsManager.saveSkinType(9)
+                SkinManager.changeSkin("pink")
+            }
+            9 -> {
+                prefsManager.saveSkinType(10)
+                SkinManager.changeSkin("gold")
+            }
         }
-        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarChoiceColor, COLOR_THEME)
+        RxBus.getInstance().post(RefreshHomeItemEvent())
+
+        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarColorPicker, COLOR_THEME)
         finish()
     }
 }
