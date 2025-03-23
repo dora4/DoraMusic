@@ -72,6 +72,9 @@ class UIViewArtist(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
             )
         }
         rvArtist.adapter = adapter
+
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        lvArtist.hoverTextColor = skinThemeColor
         lvArtist.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
                 tvArtistDialog.text = letter

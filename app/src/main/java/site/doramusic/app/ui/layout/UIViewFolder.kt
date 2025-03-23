@@ -73,6 +73,9 @@ class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
         rvFolder.layoutManager = LinearLayoutManager(manager.view.context)
         rvFolder.addItemDecoration(DividerItemDecoration(manager.view.context, RecyclerView.VERTICAL))
         rvFolder.adapter = adapter
+
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        lvFolder.hoverTextColor = skinThemeColor
         lvFolder.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
                 tvFolderDialog.text = letter

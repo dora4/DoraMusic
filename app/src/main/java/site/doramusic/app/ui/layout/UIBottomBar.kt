@@ -88,6 +88,11 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         adapter.setList(MediaManager.playlist)
     }
 
+    @Receive(ApolloEvent.REFRESH_PROGRESS_BAR)
+    fun refreshProgressBar() {
+        updateProgressColor()
+    }
+
     fun setSecondaryProgress(progress: Int) {
         playbackProgress.secondaryProgress = progress
     }

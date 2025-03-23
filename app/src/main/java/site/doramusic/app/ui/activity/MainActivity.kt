@@ -31,6 +31,7 @@ import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshHomeItemEvent
@@ -184,8 +185,9 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 .addWhereEqualTo(Music.COLUMN_FAVORITE, 1))
         val favoriteCount = DaoFactory.getDao(Music::class.java).count(builder)
         if (favoriteCount > 0) { //有收藏的歌曲
+            val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
             DoraAlertDialog(this).show(getString(R.string.scan_prompt)) {
-                themeColorResId(R.color.colorPrimary)
+                themeColor(skinThemeColor)
                 positiveListener { scanMusic() }
             }
         } else {

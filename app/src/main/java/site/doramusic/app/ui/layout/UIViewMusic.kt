@@ -142,6 +142,8 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupLetterView() {
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        lvMusic.hoverTextColor = skinThemeColor
         lvMusic.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
                 tvMusicDialog.text = letter

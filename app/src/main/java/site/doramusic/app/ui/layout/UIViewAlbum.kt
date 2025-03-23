@@ -70,6 +70,8 @@ class UIViewAlbum(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             )
         }
         rvAlbum.adapter = adapter
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        lvAlbum.hoverTextColor = skinThemeColor
         lvAlbum.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
 

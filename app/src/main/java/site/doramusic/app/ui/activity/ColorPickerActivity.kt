@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.lsxiao.apollo.core.Apollo
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.skin.SkinManager
 import dora.util.RxBus
@@ -17,6 +18,7 @@ import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 //import site.doramusic.app.annotation.TimeTrace
 import site.doramusic.app.base.conf.ARoutePath
+import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityColorPickerBinding
 import site.doramusic.app.event.RefreshHomeItemEvent
@@ -151,7 +153,7 @@ class ColorPickerActivity : BaseSkinActivity<ActivityColorPickerBinding>() {
             }
         }
         RxBus.getInstance().post(RefreshHomeItemEvent())
-
+        Apollo.emit(ApolloEvent.REFRESH_PROGRESS_BAR)
         SkinManager.getLoader().setBackgroundColor(mBinding.statusbarColorPicker, COLOR_THEME)
         finish()
     }
