@@ -15,8 +15,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.lsxiao.apollo.core.Apollo
-import com.lsxiao.apollo.core.annotations.Receive
 import site.doramusic.app.util.MusicUtils
 import dora.db.builder.QueryBuilder
 import dora.db.dao.DaoFactory
@@ -26,13 +24,8 @@ import dora.util.LogUtils
 import dora.util.ScreenUtils
 import dora.util.TextUtils
 import dora.util.ViewUtils
-import dora.widget.ADialogWindow
-import dora.widget.DoraDialog
-import dora.widget.DoraDialogWindow
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 //import site.doramusic.app.annotation.SingleClick
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Music
@@ -70,7 +63,6 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     private var bottomSheetDialog: BottomSheetDialog? = null
 
     init {
-        Apollo.bind(this)
         initViews()
         handler = Handler { msg ->
             when (msg.what) {
@@ -81,16 +73,6 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             }
             false
         }
-    }
-
-    @Receive(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-    fun refreshPlaylist() {
-        adapter.setList(MediaManager.playlist)
-    }
-
-    @Receive(ApolloEvent.REFRESH_PROGRESS_BAR)
-    fun refreshProgressBar() {
-        updateProgressColor()
     }
 
     fun setSecondaryProgress(progress: Int) {
@@ -132,7 +114,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         return contentView.findViewById(id)
     }
 
-    private fun updateProgressColor() {
+    fun updateProgressColor() {
         playbackProgress.progressTintList = SkinManager.getLoader().getColorStateList(COLOR_THEME)
     }
 

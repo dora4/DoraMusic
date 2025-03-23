@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.lsxiao.apollo.core.Apollo
 import com.youth.banner.adapter.BannerAdapter
 import dora.BaseFragment
 import dora.db.builder.QueryBuilder
@@ -33,7 +32,6 @@ import dora.util.*
 import dora.widget.DoraTitleBar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.ApolloEvent
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
@@ -45,6 +43,7 @@ import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
+import site.doramusic.app.event.ChangeSkinEvent
 import site.doramusic.app.event.PlayMusicEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.http.DoraBannerAd
@@ -166,6 +165,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 onRefreshLocalMusic()
             })
         addDisposable(RxBus.getInstance()
+            .toObservable(ChangeSkinEvent::class.java)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                bottomBar.updateProgressColor()
+            })
+        addDisposable(RxBus.getInstance()
             .toObservable(PlayMusicEvent::class.java)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
@@ -271,16 +276,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         when (playState) {
             AppConfig.MPS_INVALID, AppConfig.MPS_NO_FILE -> {
                 musicTimer.stopTimer()
-                Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-
                 refreshUI(0, music, true, pendingProgress)
                 updateNotification(music)
             }
 
             AppConfig.MPS_PREPARE -> {
                 musicTimer.stopTimer()
-                Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-
                 refreshUI(0, music, true, pendingProgress)
                 updateNotification(music)
 
@@ -289,8 +290,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
             AppConfig.MPS_PAUSE -> {
                 musicTimer.startTimer()
-                Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-
                 refreshUI(MediaManager.position(), music, true, pendingProgress)
                 musicPlay.loadLyric(music)
 
@@ -300,8 +299,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
             AppConfig.MPS_PLAYING -> {
                 musicTimer.startTimer()
-                Apollo.emit(ApolloEvent.REFRESH_MUSIC_PLAY_LIST)
-
                 refreshUI(MediaManager.position(), music, false, pendingProgress)
                 musicPlay.loadLyric(music)
 
