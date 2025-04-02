@@ -60,7 +60,7 @@ import site.doramusic.app.widget.RotateCoverView
 import site.doramusic.app.widget.SlidingView
 
 /**
- * 音乐播放、歌词滚动界面。
+ * 音乐播放控制、歌词滚动界面。
  */
 class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
         View.OnClickListener, AppConfig, SeekBar.OnSeekBarChangeListener,
@@ -152,6 +152,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         lyricLoader = DoraLyricLoader(lyricScroller, lyricListener)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initViews() {
         rvHomeModule = findViewById(R.id.rv_home_module) as RecyclerView
         slidingView = findViewById(R.id.sv_home_drawer) as SlidingView
@@ -304,15 +305,16 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val scaleAnim2 = ScaleAnimation(1f, 0f, 1f, 0f,
                 Animation.RELATIVE_TO_PARENT.toFloat(), Animation.RELATIVE_TO_PARENT.toFloat())
 
-        transAnim.duration = 600
-
         scaleAnim1.duration = 600
         alphaAnim1.duration = 600
 
         scaleAnim2.duration = 800
-        alphaAnim2.duration = 800
         scaleAnim2.startOffset = 600
+
+        alphaAnim2.duration = 800
         alphaAnim2.startOffset = 600
+
+        transAnim.duration = 600
         transAnim.startOffset = 600
 
         animSet.addAnimation(scaleAnim1)
@@ -377,6 +379,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onDrawerOpened() {
         lrcListView.visibility = View.INVISIBLE
         rvHomeModule.visibility = View.INVISIBLE
@@ -384,6 +387,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         lyricLoader.searchLrc(curMusic)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onDrawerClosed() {
         lrcListView.visibility = View.VISIBLE
         rvHomeModule.visibility = View.VISIBLE
@@ -393,25 +397,25 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
     /**
      * 刷新播放进度。
      */
+    @SuppressLint("DefaultLocale")
     fun refreshSeekProgress(curTime: Int, totalTime: Int) {
-        var curTime = curTime
-        var totalTime = totalTime
-        val tempCurTime = curTime
-        curTime /= 1000
-        totalTime /= 1000
-        val curMinute = curTime / 60
-        val curSecond = curTime % 60
+        var localCurTime = curTime
+        var localTotalTime = totalTime
+        localCurTime /= 1000
+        localTotalTime /= 1000
+        val curMinute = localCurTime / 60
+        val curSecond = localCurTime % 60
 
         val curTimeString = String.format("%02d:%02d", curMinute, curSecond)
         tvMusicPlayCurTime.text = curTimeString
 
         var rate = 0
-        if (totalTime != 0) {
-            rate = (curTime.toFloat() / totalTime * 100).toInt()
+        if (localTotalTime != 0) {
+            rate = (localCurTime.toFloat() / localTotalTime * 100).toInt()
         }
         sbMusicPlayPlayback.progress = rate
 
-        lyricScroller.notifyTime(tempCurTime.toLong())
+        lyricScroller.notifyTime(curTime.toLong())
     }
 
     /**
@@ -533,7 +537,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         paint.color = Color.WHITE
         canvas.drawRect(Rect(0, 0, width, height), paint)
         canvas.drawBitmap(bmp, DensityUtils.DP50.toFloat(), DensityUtils.DP50.toFloat(), null)
-        //将canvas传递进去并设置其边框
+        // 将canvas传递进去并设置其边框
         setBitmapBorder(canvas)
         return bitmap
     }

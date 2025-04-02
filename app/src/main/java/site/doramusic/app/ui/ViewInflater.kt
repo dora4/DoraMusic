@@ -5,8 +5,12 @@ import dora.db.table.OrmTable
 import site.doramusic.app.base.conf.AppConfig
 
 /**
- * 视图加载器，用来返回各种视图。
+ * 视图加载器。
  */
 interface ViewInflater {
+
+    /**
+     * 区分来源，获取播放列表的视图。
+     */
     fun getView(from: Int = AppConfig.ROUTE_START_FROM_LOCAL, obj: OrmTable? = null): View
 }

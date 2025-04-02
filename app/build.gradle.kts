@@ -68,19 +68,10 @@ android {
         sourceCompatibility(JavaVersion.VERSION_17)
         targetCompatibility(JavaVersion.VERSION_17)
     }
-//    lint {
-//        baseline = file("lint-baseline.xml")
-//    }
     kotlinOptions {
         jvmTarget = "17"
     }
 }
-
-//tasks.withType<JavaCompile> {
-//    options.compilerArgs.addAll(listOf(
-//        "--add-exports", "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED"
-//    ))
-//}
 
 kapt {
     generateStubs = true
@@ -88,9 +79,6 @@ kapt {
     arguments {
         arg("AROUTER_MODULE_NAME", project.name)
     }
-//    javacOptions {
-//        option("-J--add-exports", "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
-//    }
 }
 
 kotlin {
@@ -110,14 +98,14 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dcache-android:3.2.9")
     implementation("com.github.dora4:dora:1.2.51")
+    implementation("com.github.dora4:dcache-android:3.2.9")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
     implementation("com.github.dora4:dora-firebase-support:1.13")
     implementation("com.github.dora4:dora-brvah-support:1.3")
     implementation("com.github.dora4:dora-glide-support:1.4")
-    implementation("com.github.dora4:dora-walletconnect-support:1.66")
+    implementation("com.github.dora4:dora-walletconnect-support:1.69")
     implementation("com.github.dora4:dview-titlebar:1.37")
     implementation("com.github.dora4:dview-toggle-button:1.5")
     implementation("com.github.dora4:dview-alert-dialog:1.20")

@@ -77,12 +77,16 @@ class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer,
         lvFolder.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
                 tvFolderDialog.text = letter
-                val position: Int = if (letter == "↑") {
-                    0
-                } else if (letter == "#") {
-                    adapter.itemCount - 1
-                } else {
-                    adapter.getPositionForSection(letter[0])
+                val position: Int = when (letter) {
+                    "↑" -> {
+                        0
+                    }
+                    "#" -> {
+                        adapter.itemCount - 1
+                    }
+                    else -> {
+                        adapter.getPositionForSection(letter[0])
+                    }
                 }
                 rvFolder.scrollToPosition(position)
             }

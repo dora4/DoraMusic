@@ -11,7 +11,7 @@ import java.util.*
 import java.util.regex.Pattern
 
 /**
- * 本地播放器代理，用于边下边播。
+ * 本地播放器代理，用于边下边播，仅供参考，没有使用到。
  */
 class MediaPlayerProxy private constructor(private var audioCachePath: String, // 是否缓存播放文件
                                            private var needCacheAudio: Boolean = true) : MediaPlayer() {

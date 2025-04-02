@@ -49,7 +49,7 @@ class MusicApp : BaseApplication(), AppConfig {
 
     private fun initPay() {
         val chains: Array<Modal.Model.Chain> = arrayOf(
-            Web3ModalChainsPresets.ethChains["137"]!!
+            Web3ModalChainsPresets.ethChains["137"]!!   // Polygon
         )
         DoraTrade.init(this, "Dora Music",
             getString(R.string.app_desc), "http://doramusic.site", chains, object : DoraTrade.PayListener {
@@ -60,7 +60,7 @@ class MusicApp : BaseApplication(), AppConfig {
                     orderId: String,
                     transactionHash: String
                 ) {
-                    ToastUtils.showShort(getString(R.string.donate_successfully, transactionHash))
+                    ToastUtils.showLong(getString(R.string.donate_successfully, transactionHash))
                 }
             })
     }

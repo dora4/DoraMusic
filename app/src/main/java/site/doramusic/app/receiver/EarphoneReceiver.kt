@@ -21,7 +21,7 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.SimpleAudioPlayer
 
 /**
- * 耳机拨出监听。
+ * 线控耳机和蓝牙耳机监听。
  */
 class EarphoneReceiver : BroadcastReceiver() {
 

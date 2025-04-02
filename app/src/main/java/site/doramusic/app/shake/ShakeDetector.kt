@@ -10,7 +10,7 @@ import site.doramusic.app.util.PrefsManager
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * 摇一摇切歌。
+ * 摇一摇切歌的传感器探测器。
  */
 class ShakeDetector(context: Context) : SensorEventListener {
 

@@ -62,14 +62,10 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         this.mMediaPlayer = new MediaPlayerProxy();
         this.mMediaPlayer.setNeedCacheAudio(true);
         this.mMediaPlayer.setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK); //播放音频的时候加锁，防止CPU休眠
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes attrs = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build();
-            this.mMediaPlayer.setAudioAttributes(attrs);
-        } else {
-            this.mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        }
+        AudioAttributes attrs = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build();
+        this.mMediaPlayer.setAudioAttributes(attrs);
         this.mMediaPlayer.setOnCompletionListener(this);
         this.mRandom = new Random();
         this.mRandom.setSeed(System.currentTimeMillis());

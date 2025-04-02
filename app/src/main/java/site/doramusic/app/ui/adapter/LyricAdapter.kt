@@ -13,7 +13,7 @@ import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.util.PrefsManager
 import java.util.*
 
-class LyricAdapter(internal var context: Context) : BaseAdapter() {
+class LyricAdapter(private var context: Context) : BaseAdapter() {
 
     /**
      * 歌词句子集合。

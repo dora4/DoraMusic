@@ -86,8 +86,6 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         val spManager = PrefsManager(manager.view.context)
         val coldLaunchAutoPlay = spManager.getColdLaunchAutoPlay()
         if (music != null && coldLaunchAutoPlay) {
-//            val isOk = mediaManager.loadCurMusic(music)
-//            if (isOk) {
             MediaManager.refreshPlaylist(arrayListOf(music))
             tvHomeBottomMusicName.text = music.musicName
             tvHomeBottomArtist.text = music.artist
@@ -97,7 +95,6 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
                 ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(contentView.context
                     .resources, bitmap))
             } catch (e: UnsupportedOperationException) {
-
                 ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(contentView.context
                     .resources, defaultAlbumIcon))
                 LogUtils.e(e.toString())
@@ -106,7 +103,6 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             refreshUI(0, music.duration, music)
             // 这次播放来不及应用均衡器参数，主打一个启动时以最快速度进行播放
             MediaManager.playById(music.songId)
-//            }
         }
     }
 

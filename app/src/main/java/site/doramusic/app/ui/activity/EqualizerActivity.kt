@@ -18,6 +18,9 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.EqualizerView
 
+/**
+ * 均衡器界面。
+ */
 @Route(path = ARoutePath.ACTIVITY_EQUALIZER)
 class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         EqualizerView.OnUpdateDecibelListener {

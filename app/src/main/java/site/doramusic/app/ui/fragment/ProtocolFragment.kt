@@ -5,7 +5,6 @@ import android.app.FragmentManager
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +23,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
     private var tvProtocolDisagree: TextView? = null
     private var tvProtocolAgree: TextView? = null
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +36,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
         return inflater.inflate(R.layout.fragment_protocol, container, false)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
@@ -45,7 +46,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
             view.findViewById<View>(R.id.tv_protocol_agree) as TextView
         tvProtocolDisagree =
             view.findViewById<View>(R.id.tv_protocol_disagree) as TextView
-        tvProtocolPrivacyPolicy = view.findViewById(R.id.tv_protocol_privacy_policy) as TextView
+        tvProtocolPrivacyPolicy = view.findViewById<TextView>(R.id.tv_protocol_privacy_policy)!!
         tvProtocolServiceProtocol = view.findViewById(R.id.tv_protocol_service_protocol)
         tvProtocolPrivacyPolicy!!.setOnClickListener(this)
         tvProtocolServiceProtocol!!.setOnClickListener(this)
@@ -53,20 +54,19 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
         tvProtocolDisagree!!.setOnClickListener(this)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onStart() {
         super.onStart()
         isCancelable = false
         val window = dialog!!.window
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window?.setLayout(
-                (getLcdWidth(
-                    context
-                ) * 0.9).toInt(),
-                (getLcdHeight(
-                    context
-                ) * 0.75).toInt()
-            )
-        }
+        window?.setLayout(
+            (getLcdWidth(
+                context
+            ) * 0.9).toInt(),
+            (getLcdHeight(
+                context
+            ) * 0.75).toInt()
+        )
     }
 
     override fun onClick(v: View) {
@@ -89,6 +89,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
      * 出现的Can not perform this action after onSaveInstanceState
      * 这个异常(不应该用commit ,而是用commitAllowingStateLoss)
      */
+    @Deprecated("Deprecated in Java")
     override fun show(
         manager: FragmentManager,
         tag: String?
@@ -103,7 +104,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
      * 注意,不要用super.dismiss(), bug同上show()
      * super.onDismiss就没问题
      */
-    fun dismissDialog() {
+    private fun dismissDialog() {
         if (activity != null && !activity!!.isFinishing) {
             super.dismissAllowingStateLoss()
         }
@@ -133,12 +134,16 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
             return ProtocolFragment()
         }
 
-        fun getLcdWidth(context: Context?): Int {
-            return context?.resources?.displayMetrics?.widthPixels ?: 0
+        fun getLcdWidth(context: Context): Int {
+            return context.resources
+                ?.displayMetrics
+                ?.widthPixels ?: 0
         }
 
-        fun getLcdHeight(context: Context?): Int {
-            return context?.resources?.displayMetrics?.heightPixels ?: 0
+        fun getLcdHeight(context: Context): Int {
+            return context.resources
+                ?.displayMetrics
+                ?.heightPixels ?: 0
         }
     }
 }

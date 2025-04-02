@@ -15,6 +15,9 @@ import site.doramusic.app.media.MediaService.Companion.NOTIFICATION_NAME
 import site.doramusic.app.media.MediaService.Companion.NOTIFICATION_TITLE
 import site.doramusic.app.util.MusicUtils
 
+/**
+ * 通知栏控制广播。
+ */
 class MusicPlayReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {

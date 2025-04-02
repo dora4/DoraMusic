@@ -165,7 +165,7 @@ class LetterView @JvmOverloads constructor(
             }
         }
 
-    fun setOnLetterChangeListener(l: OnLetterChangeListener?) {
+    fun setOnLetterChangeListener(l: OnLetterChangeListener) {
         onLetterChangeListener = l
     }
 

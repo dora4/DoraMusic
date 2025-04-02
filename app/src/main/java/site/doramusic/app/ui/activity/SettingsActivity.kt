@@ -23,7 +23,9 @@ import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.util.PrefsManager
 
-
+/**
+ * 设置界面。
+ */
 @Route(path = ARoutePath.ACTIVITY_SETTINGS)
 class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
 

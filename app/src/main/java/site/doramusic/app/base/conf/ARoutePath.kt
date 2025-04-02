@@ -1,7 +1,9 @@
 package site.doramusic.app.base.conf
 
 interface ARoutePath {
+
     companion object {
+
         private const val GROUP_APP = "/app/ui/activity"
         const val ACTIVITY_MAIN = "$GROUP_APP/MainActivity"
         const val ACTIVITY_EQUALIZER = "$GROUP_APP/EqualizerActivity"

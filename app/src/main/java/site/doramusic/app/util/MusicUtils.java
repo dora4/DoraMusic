@@ -9,7 +9,6 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -35,13 +34,11 @@ public class MusicUtils {
     }
 
     public static String formatTime(long milliSecs) {
-        StringBuffer sb = new StringBuffer();
         long m = milliSecs / (60 * 1000);
-        sb.append(m < 10 ? "0" + m : m);
-        sb.append(":");
         long s = (milliSecs % (60 * 1000)) / 1000;
-        sb.append(s < 10 ? "0" + s : s);
-        return sb.toString();
+        return (m < 10 ? "0" + m : m) +
+                ":" +
+                (s < 10 ? "0" + s : s);
     }
 
     public static Bitmap getCachedArtwork(Context context, long artIndex,
@@ -103,49 +100,40 @@ public class MusicUtils {
         w -= 1;
         ContentResolver res = context.getContentResolver();
         Uri uri = ContentUris.withAppendedId(sArtworkUri, album_id);
-        if (uri != null) {
-            ParcelFileDescriptor fd = null;
-            try {
-                fd = res.openFileDescriptor(uri, "r");
-                int sampleSize = 1;
-                // Compute the closest power-of-two scale factor
-                // and pass that to sBitmapOptionsCache.inSampleSize, which will
-                // result in faster decoding and better quality
-                sBitmapOptionsCache.inJustDecodeBounds = true;
-                BitmapFactory.decodeFileDescriptor(fd.getFileDescriptor(),
-                        null, sBitmapOptionsCache);
-                int nextWidth = sBitmapOptionsCache.outWidth >> 1;
-                int nextHeight = sBitmapOptionsCache.outHeight >> 1;
-                while (nextWidth > w && nextHeight > h) {
-                    sampleSize <<= 1;
-                    nextWidth >>= 1;
-                    nextHeight >>= 1;
-                }
-                sBitmapOptionsCache.inSampleSize = sampleSize;
-                sBitmapOptionsCache.inJustDecodeBounds = false;
-                Bitmap b = BitmapFactory.decodeFileDescriptor(
-                        fd.getFileDescriptor(), null, sBitmapOptionsCache);
-                if (b != null) {
-                    // finally rescale to exactly the size we need
-                    if (sBitmapOptionsCache.outWidth != w
-                            || sBitmapOptionsCache.outHeight != h) {
-                        Bitmap tmp = Bitmap.createScaledBitmap(b, w, h, true);
-                        // Bitmap.createScaledBitmap() can return the same
-                        // bitmap
-                        if (tmp != b)
-                            b.recycle();
-                        b = tmp;
-                    }
-                }
-                return b;
-            } catch (FileNotFoundException e) {
-            } finally {
-                try {
-                    if (fd != null)
-                        fd.close();
-                } catch (IOException e) {
+        try (ParcelFileDescriptor fd = res.openFileDescriptor(uri, "r")) {
+            int sampleSize = 1;
+            // Compute the closest power-of-two scale factor
+            // and pass that to sBitmapOptionsCache.inSampleSize, which will
+            // result in faster decoding and better quality
+            sBitmapOptionsCache.inJustDecodeBounds = true;
+            assert fd != null;
+            BitmapFactory.decodeFileDescriptor(fd.getFileDescriptor(),
+                    null, sBitmapOptionsCache);
+            int nextWidth = sBitmapOptionsCache.outWidth >> 1;
+            int nextHeight = sBitmapOptionsCache.outHeight >> 1;
+            while (nextWidth > w && nextHeight > h) {
+                sampleSize <<= 1;
+                nextWidth >>= 1;
+                nextHeight >>= 1;
+            }
+            sBitmapOptionsCache.inSampleSize = sampleSize;
+            sBitmapOptionsCache.inJustDecodeBounds = false;
+            Bitmap b = BitmapFactory.decodeFileDescriptor(
+                    fd.getFileDescriptor(), null, sBitmapOptionsCache);
+            if (b != null) {
+                // finally rescale to exactly the size we need
+                if (sBitmapOptionsCache.outWidth != w
+                        || sBitmapOptionsCache.outHeight != h) {
+                    Bitmap tmp = Bitmap.createScaledBitmap(b, w, h, true);
+                    // Bitmap.createScaledBitmap() can return the same
+                    // bitmap
+                    if (tmp != b)
+                        b.recycle();
+                    b = tmp;
                 }
             }
+            return b;
+        } catch (IOException ignore) {
         }
         return null;
     }
@@ -240,6 +228,6 @@ public class MusicUtils {
     public static int getDuration(String filePath) {
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         mmr.setDataSource(filePath);
-        return Integer.valueOf(mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION));
+        return Integer.parseInt(mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION));
     }
 }

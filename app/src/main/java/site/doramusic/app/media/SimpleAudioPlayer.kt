@@ -4,12 +4,11 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
 import dora.util.LogUtils
-import dora.util.ToastUtils
 
 import java.io.IOException
 
 /**
- * 集成了AudioFocus的简单音频播放器，用于临时播放音频，不会加入播放列表。
+ * 考虑了AudioFocus的简单音频播放器，用于临时播放音频，不会加入播放列表。
  */
 class SimpleAudioPlayer(private var context: Context) {
 

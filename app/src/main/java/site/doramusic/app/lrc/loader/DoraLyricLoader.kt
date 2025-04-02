@@ -13,7 +13,7 @@ import site.doramusic.app.lrc.LyricScroller.LyricListener
 import java.io.File
 
 /**
- * 朵拉音乐官方歌词加载器。
+ * 朵拉音乐官方歌词加载器，仅供参考，没有使用到。
  */
 class DoraLyricLoader(scroller: LyricScroller, listener: LyricListener) : LyricLoader(scroller, listener) {
 

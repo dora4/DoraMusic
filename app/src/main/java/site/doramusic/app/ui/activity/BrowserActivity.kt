@@ -16,6 +16,9 @@ import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.databinding.ActivityBrowserBinding
 
+/**
+ * 浏览器页面，主要用于加载用户协议和隐私权政策。
+ */
 class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
 
     private var title: String? = null

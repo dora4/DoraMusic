@@ -44,6 +44,9 @@ import site.doramusic.app.ui.layout.IMenuDrawer
 import site.doramusic.app.util.PrefsManager
 import java.util.concurrent.Executors
 
+/**
+ * 主界面。
+ */
 @Route(path = ARoutePath.ACTIVITY_MAIN)
 class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack, AppConfig {
 

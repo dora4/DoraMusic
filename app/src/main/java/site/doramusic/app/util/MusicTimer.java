@@ -8,7 +8,13 @@ import java.util.TimerTask;
 
 public class MusicTimer {
 
+    /**
+     * 刷新进度条的事件类型。
+     */
     public final static int REFRESH_PROGRESS_EVENT = 0x100;
+    /**
+     * 每隔0.5秒刷新一次歌曲播放进度。
+     */
     private static final int INTERVAL_TIME = 500;
     private final Handler[] mHandler;
     private final Timer mTimer;
@@ -23,6 +29,9 @@ public class MusicTimer {
         mTimer = new Timer();
     }
 
+    /**
+     * 启动定时器。
+     */
     public void startTimer() {
         if (mHandler == null || mTimerStart) {
             return;
@@ -32,6 +41,9 @@ public class MusicTimer {
         mTimerStart = true;
     }
 
+    /**
+     * 停止定时器。
+     */
     public void stopTimer() {
         if (!mTimerStart) {
             return;
