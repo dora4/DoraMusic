@@ -126,6 +126,15 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             7 -> {
                 SkinManager.changeSkin("purple")
             }
+            8 -> {
+                SkinManager.changeSkin("yellow")
+            }
+            9 -> {
+                SkinManager.changeSkin("pink")
+            }
+            10 -> {
+                SkinManager.changeSkin("gold")
+            }
         }
     }
 

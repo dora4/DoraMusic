@@ -7,6 +7,7 @@ import dora.http.retrofit.RetrofitManager
 import dora.trade.DoraTrade
 import com.walletconnect.web3.modal.client.Modal
 import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
+import dora.util.ToastUtils
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
@@ -51,7 +52,17 @@ class MusicApp : BaseApplication(), AppConfig {
             Web3ModalChainsPresets.ethChains["137"]!!
         )
         DoraTrade.init(this, "Dora Music",
-            getString(R.string.app_desc), "http://doramusic.site", chains)
+            getString(R.string.app_desc), "http://doramusic.site", chains, object : DoraTrade.PayListener {
+                override fun onPayFailure(orderId: String, transactionHash: String) {
+                }
+
+                override fun onSendTransactionToBlockchain(
+                    orderId: String,
+                    transactionHash: String
+                ) {
+                    ToastUtils.showShort(getString(R.string.donate_successfully, transactionHash))
+                }
+            })
     }
 
     private fun initHttp() {
