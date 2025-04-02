@@ -62,4 +62,6 @@
     <string name="share_with_friends">Share With Friends</string>
     <string name="share_content">"I found a great mobile music player: https://www.pgyer.com/doramusic"</string>
     <string name="select_sharing_method">Select sharing method</string>
+    <string name="music_scan_successfully">Detected %1$d songs</string>
+    <string name="no_songs_scanned">No songs scanned</string>
 </resources>

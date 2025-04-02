@@ -24,6 +24,7 @@ import dora.http.DoraHttp.request
 import dora.skin.SkinManager
 import dora.util.RxBus
 import dora.util.StatusBarUtils
+import dora.util.ToastUtils
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
 import site.doramusic.app.BuildConfig
@@ -211,7 +212,13 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                         request {
                             Executors.newCachedThreadPool().submit {
                                 try {
-                                    MusicScanner.scan(this@MainActivity) as MutableList<Music>
+                                    val list = MusicScanner.scan(this@MainActivity) as MutableList<Music>
+                                    if (list.size > 0) {
+                                        ToastUtils.showShort(String.format(getString(R.string.music_scan_successfully),
+                                            list.size))
+                                    } else {
+                                        ToastUtils.showShort(getString(R.string.no_songs_scanned))
+                                    }
                                 } finally {
                                     it.releaseLock(null)
                                 }
