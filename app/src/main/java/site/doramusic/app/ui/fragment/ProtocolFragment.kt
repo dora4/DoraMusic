@@ -23,7 +23,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
     private var tvProtocolDisagree: TextView? = null
     private var tvProtocolAgree: TextView? = null
 
-    @Deprecated("Deprecated in Java")
+    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,7 +36,6 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
         return inflater.inflate(R.layout.fragment_protocol, container, false)
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
@@ -54,7 +53,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
         tvProtocolDisagree!!.setOnClickListener(this)
     }
 
-    @Deprecated("Deprecated in Java")
+    
     override fun onStart() {
         super.onStart()
         isCancelable = false
@@ -89,7 +88,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
      * 出现的Can not perform this action after onSaveInstanceState
      * 这个异常(不应该用commit ,而是用commitAllowingStateLoss)
      */
-    @Deprecated("Deprecated in Java")
+    
     override fun show(
         manager: FragmentManager,
         tag: String?

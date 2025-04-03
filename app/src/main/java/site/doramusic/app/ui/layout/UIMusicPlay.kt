@@ -379,7 +379,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         }
     }
 
-    @Deprecated("Deprecated in Java")
+    
     override fun onDrawerOpened() {
         lrcListView.visibility = View.INVISIBLE
         rvHomeModule.visibility = View.INVISIBLE
@@ -387,7 +387,7 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         lyricLoader.searchLrc(curMusic)
     }
 
-    @Deprecated("Deprecated in Java")
+    
     override fun onDrawerClosed() {
         lrcListView.visibility = View.VISIBLE
         rvHomeModule.visibility = View.VISIBLE
