@@ -24,6 +24,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
     private var tvProtocolAgree: TextView? = null
 
     
+    @Deprecated("Deprecated in Java")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +37,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
         return inflater.inflate(R.layout.fragment_protocol, container, false)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
@@ -54,6 +56,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
     }
 
     
+    @Deprecated("Deprecated in Java")
     override fun onStart() {
         super.onStart()
         isCancelable = false
@@ -89,6 +92,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
      * 这个异常(不应该用commit ,而是用commitAllowingStateLoss)
      */
     
+    @Deprecated("Deprecated in Java")
     override fun show(
         manager: FragmentManager,
         tag: String?
