@@ -10,8 +10,8 @@ plugins {
 android {
     namespace = "site.doramusic.app"
     compileSdk = 34
-    val version = "1.3.8"
-    val code = 22
+    val version = "1.3.9"
+    val code = 23
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 23
@@ -105,7 +105,7 @@ dependencies {
     implementation("com.github.dora4:dora-firebase-support:1.13")
     implementation("com.github.dora4:dora-brvah-support:1.3")
     implementation("com.github.dora4:dora-glide-support:1.4")
-    implementation("com.github.dora4:dora-walletconnect-support:1.69")
+    implementation("com.github.dora4:dora-walletconnect-support:1.70")
     implementation("com.github.dora4:dview-titlebar:1.37")
     implementation("com.github.dora4:dview-toggle-button:1.5")
     implementation("com.github.dora4:dview-alert-dialog:1.20")
