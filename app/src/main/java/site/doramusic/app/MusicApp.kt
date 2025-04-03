@@ -32,7 +32,11 @@ class MusicApp : BaseApplication(), AppConfig {
 
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
-        MediaManager.cancelNotification()
+        // 根据不同的内存级别，决定是否取消通知
+        if (level == TRIM_MEMORY_UI_HIDDEN || level == TRIM_MEMORY_RUNNING_CRITICAL) {
+            // 内存较低，清除通知
+            MediaManager.cancelNotification()
+        }
     }
 
     override fun onCreate() {
