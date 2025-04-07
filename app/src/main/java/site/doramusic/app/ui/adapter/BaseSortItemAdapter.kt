@@ -13,6 +13,7 @@ import java.util.*
 abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolder>, SectionIndexer {
 
     private var comparator: PinyinComparator
+    private var needSort = true
 
     constructor(@LayoutRes layoutResId: Int) : super(layoutResId) {
         this.comparator = PinyinComparator()
@@ -21,6 +22,10 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
     constructor(@LayoutRes layoutResId: Int, list: MutableList<T>) : super(layoutResId, list) {
         this.comparator = PinyinComparator()
         setList(list)
+    }
+
+    fun setNeedSort(needSort: Boolean) {
+        this.needSort = needSort
     }
 
     fun sort() {
@@ -32,8 +37,12 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
         if (list != null) {
             letters.addAll(list)
         }
-        super.setList(generateLetters(letters))
-        sort()
+        if (needSort) {
+            super.setList(generateLetters(letters))
+            sort()
+        } else {
+            super.setList(list)
+        }
     }
 
 

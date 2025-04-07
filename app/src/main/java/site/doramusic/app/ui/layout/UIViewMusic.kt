@@ -65,8 +65,8 @@ class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
             } else {
                 musics
             }
+            setNeedSort(sort)
             setList(optMusics)
-            if (sort) sort()
             setOnItemClickListener { _, _, position ->
                 if (position >= MUSIC_LIST_MAX_LIST) {
                     return@setOnItemClickListener

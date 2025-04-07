@@ -10,8 +10,8 @@ plugins {
 android {
     namespace = "site.doramusic.app"
     compileSdk = 34
-    val version = "1.3.9"
-    val code = 23
+    val version = "1.3.10"
+    val code = 24
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 23
