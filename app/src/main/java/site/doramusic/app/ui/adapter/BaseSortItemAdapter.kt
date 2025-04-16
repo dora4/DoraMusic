@@ -28,7 +28,7 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
         this.needSort = needSort
     }
 
-    fun sort() {
+    private fun sort() {
         data.sortBy { it.sortLetter }
     }
 
@@ -44,7 +44,6 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
             super.setList(list)
         }
     }
-
 
     protected abstract fun getSortKey(data: T): String
 

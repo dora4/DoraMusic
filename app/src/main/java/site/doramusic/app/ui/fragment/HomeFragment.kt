@@ -28,12 +28,15 @@ import dora.firebase.SpmUtils.spmAdImpression
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager
+import dora.skin.SkinManager
+import dora.trade.DoraTrade
 import dora.util.*
 import dora.widget.DoraTitleBar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_MENU_GRID_COLUMN_NUM
@@ -169,6 +172,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 bottomBar.updateProgressColor()
+                val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+                DoraTrade.setThemeColor(skinThemeColor)
             })
         addDisposable(RxBus.getInstance()
             .toObservable(PlayMusicEvent::class.java)

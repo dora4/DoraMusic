@@ -7,8 +7,10 @@ import dora.http.retrofit.RetrofitManager
 import dora.trade.DoraTrade
 import com.walletconnect.web3.modal.client.Modal
 import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
+import dora.skin.SkinManager
 import dora.util.ToastUtils
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
@@ -55,9 +57,11 @@ class MusicApp : BaseApplication(), AppConfig {
         val chains: Array<Modal.Model.Chain> = arrayOf(
             Web3ModalChainsPresets.ethChains["137"]!!   // Polygon
         )
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         DoraTrade.init(this, "Dora Music",
-            getString(R.string.app_desc), "http://doramusic.site", chains, object : DoraTrade.PayListener {
-                override fun onPayFailure(orderId: String, transactionHash: String) {
+            getString(R.string.app_desc), "http://doramusic.site", chains, skinThemeColor,
+            object : DoraTrade.PayListener {
+                override fun onPayFailure(orderId: String, errorMsg: String) {
                 }
 
                 override fun onSendTransactionToBlockchain(
