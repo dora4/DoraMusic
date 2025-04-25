@@ -1,7 +1,7 @@
 # DoraMusic
 
 ### 产品介绍
-<p><img width="256" height="256" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
+<p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
 一款使用[https://github.com/dora4/dora] 开源库的Android手机音乐播放器。本代码仅限学习交流用途的分享传播，未经授权禁止用于其他用途。版权所有，侵权必究！
 
 ### 产品特性
