@@ -15,6 +15,8 @@
 - 耳机监听与自动暂停
 - 一键换肤
 
+<img width="614" alt="截屏2025-04-26 03 02 57" src="https://github.com/user-attachments/assets/d8153158-2524-4778-aeab-ee478c0e9d64" />
+
 ### App下载
 
 [Android下载](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
