@@ -21,7 +21,7 @@
 
 [Android下载](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
 
-### 运行截图
+### 软件截图
 
 1. 快捷播放列表
 <p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_1.jpg"></p>
