@@ -295,6 +295,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentIntent(pi)
+            .setOngoing(true)
             .setTicker(title)
             .setCustomContentView(remoteViews)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

@@ -10,8 +10,8 @@ plugins {
 android {
     namespace = "site.doramusic.app"
     compileSdk = 34
-    val version = "1.3.11"
-    val code = 25
+    val version = "1.3.12"
+    val code = 26
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 23
@@ -23,6 +23,17 @@ android {
             aidl = true
             buildConfig = true
         }
+    }
+    sourceSets {
+        getByName("main") {
+            jniLibs.setSrcDirs(arrayListOf("src/main/jniLibs"))
+        }
+    }
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+        pickFirst("**/libovpnexec.so")
     }
     flavorDimensions("app")
     productFlavors {
@@ -105,16 +116,18 @@ dependencies {
     implementation("com.github.dora4:dora-firebase-support:1.13")
     implementation("com.github.dora4:dora-brvah-support:1.3")
     implementation("com.github.dora4:dora-glide-support:1.4")
-    implementation("com.github.dora4:dora-walletconnect-support:1.80")
+    implementation("com.github.dora4:dora-walletconnect-support:1.160") {
+        exclude(group = "com.madgag.spongycastle", module = "core")
+    }
+
     implementation("com.github.dora4:dview-titlebar:1.37")
     implementation("com.github.dora4:dview-toggle-button:1.5")
-    implementation("com.github.dora4:dview-alert-dialog:1.20")
+    implementation("com.github.dora4:dview-alert-dialog:1.24")
     implementation("com.github.dora4:dview-loading-dialog:1.5")
     implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.7")
     implementation("com.github.dora4:dview-bottom-dialog:1.13")
     implementation("com.github.dora4:dview-avatar:1.4")
-    implementation("com.github.dora4:dview-titlebar:1.37")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")

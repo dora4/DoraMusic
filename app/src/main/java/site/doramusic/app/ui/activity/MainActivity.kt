@@ -1,14 +1,18 @@
 package site.doramusic.app.ui.activity
 
+import android.app.Activity
 import android.bluetooth.BluetoothHeadset
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.media.AudioManager
+import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -22,6 +26,7 @@ import dora.db.dao.DaoFactory
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.request
 import dora.skin.SkinManager
+import dora.trade.DoraTrade
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.util.ToastUtils
@@ -60,11 +65,43 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         return R.layout.activity_main
     }
 
+    companion object {
+        const val REQUEST_VPN_PERMISSION = 1
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_VPN_PERMISSION) {
+                DoraTrade.connectVPN(this, "vs42INhGWDnq",
+                    "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw")
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 100)
+            }
+        }
+
+        XXPermissions.with(this).permission(Permission.MANAGE_EXTERNAL_STORAGE).request { _, allGranted ->
+            if (allGranted) {
+                val intent = VpnService.prepare(this@MainActivity)
+                if (intent != null) {
+                    startActivityForResult(intent, REQUEST_VPN_PERMISSION)
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        this@MainActivity.onActivityResult(
+                            REQUEST_VPN_PERMISSION,
+                            Activity.RESULT_OK,
+                            null
+                        )
+                    }
+                }
             }
         }
     }

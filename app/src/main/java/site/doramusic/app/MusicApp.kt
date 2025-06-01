@@ -1,13 +1,14 @@
 package site.doramusic.app
 
+import android.os.Build
+import com.walletconnect.web3.modal.client.Modal
+import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
 import dora.http.retrofit.RetrofitManager
-import dora.trade.DoraTrade
-import com.walletconnect.web3.modal.client.Modal
-import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
 import dora.skin.SkinManager
+import dora.trade.DoraTrade
 import dora.util.ToastUtils
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
@@ -26,9 +27,6 @@ class MusicApp : BaseApplication(), AppConfig {
 
     companion object {
 
-        /**
-         * 全局Application单例。
-         */
         lateinit var app: MusicApp
     }
 
@@ -61,7 +59,7 @@ class MusicApp : BaseApplication(), AppConfig {
         DoraTrade.init(this, "Dora Music",
             getString(R.string.app_desc), "http://doramusic.site", chains, skinThemeColor,
             object : DoraTrade.PayListener {
-                override fun onPayFailure(orderId: String, errorMsg: String) {
+                override fun onPayFailure(orderId: String, msg: String) {
                 }
 
                 override fun onSendTransactionToBlockchain(
@@ -71,6 +69,9 @@ class MusicApp : BaseApplication(), AppConfig {
                     ToastUtils.showLong(getString(R.string.donate_successfully, transactionHash))
                 }
             })
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            DoraTrade.createNotificationChannels(this)
+        }
     }
 
     private fun initHttp() {
