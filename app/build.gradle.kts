@@ -105,12 +105,12 @@ fun libFileTree() : ConfigurableFileTree {
 
 dependencies {
     implementation(libFileTree())
-    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dora:1.2.51")
-    implementation("com.github.dora4:dcache-android:3.2.9")
+    implementation("com.github.dora4:dora:1.3.14")
+    implementation("com.github.dora4:dcache-android:3.3.12")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
     implementation("com.github.dora4:dora-firebase-support:1.13")
