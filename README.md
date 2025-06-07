@@ -17,6 +17,21 @@
 
 <img width="614" alt="截屏2025-04-26 03 02 57" src="https://github.com/user-attachments/assets/d8153158-2524-4778-aeab-ee478c0e9d64" />
 
+### 推荐DJ
+
+- 是你 https://www.youtube.com/watch?v=aM0EBp9OaAM
+- 爱错 https://www.youtube.com/watch?v=AQLuz0wamT8
+- 谁 https://www.youtube.com/watch?v=8z-C8dikNjA
+- 离别开出花 https://www.youtube.com/watch?v=ZYt5Cg4Qqbs
+- 阿衣莫 https://www.youtube.com/watch?v=WhQ-YeGhBa0
+- 精卫 https://www.youtube.com/watch?v=YtFQZkGZtLc
+- 不谓侠 https://www.youtube.com/watch?v=DgC942kpOsM
+- 春庭雪 https://www.youtube.com/watch?v=newAggUqhts
+- 卜卦 https://www.youtube.com/watch?v=EWGdVNUVYbE
+- 海市蜃楼 https://www.youtube.com/watch?v=yB8HmL3WSK8
+
+不嗨来找我。
+
 ### App下载
 
 [Android下载](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
