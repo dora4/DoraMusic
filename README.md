@@ -40,6 +40,7 @@
 - 过火 https://www.youtube.com/watch?v=Hj8P88ZtrwM
 - 吻得太逼真 https://www.youtube.com/watch?v=xY37BazFzYE
 - 画心 https://www.youtube.com/watch?v=aVfiitJsLqs
+- 记事本 https://www.youtube.com/watch?v=9eGwqB68Ngk
 
 不嗨来找我。
 
