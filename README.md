@@ -33,6 +33,9 @@
 - 难却 https://www.youtube.com/watch?v=KonvHhu3LZU
 - 莫问归期 https://www.youtube.com/watch?v=-Y8Y7dLtkcc
 - 无情画 https://www.youtube.com/watch?v=LXFKhiAkmso
+- 辞九门回忆 https://www.youtube.com/watch?v=W_XH-oGPMjc
+- 删了吧 https://www.youtube.com/watch?v=esyGFHEPYy0
+- 飞鸟和蝉 https://www.youtube.com/watch?v=SmMybJc5bxI
 
 不嗨来找我。
 
