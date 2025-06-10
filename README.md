@@ -46,6 +46,7 @@
 - 你的万水千山 https://www.youtube.com/watch?v=BZQkb7KpOf0
 - 天真的橡皮 https://www.youtube.com/watch?v=11mgS6uMhHw
 - 典狱司 https://www.youtube.com/watch?v=3H7YHwep2hk
+- 红昭愿 https://www.youtube.com/watch?v=rn7Gy7x9ZQE
   
 不嗨来找我。
 
