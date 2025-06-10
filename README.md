@@ -31,7 +31,7 @@
 - 海市蜃楼 https://www.youtube.com/watch?v=yB8HmL3WSK8
 - 探故知 https://www.youtube.com/watch?v=5ELID57kRPg
 - 难却 https://www.youtube.com/watch?v=KonvHhu3LZU
-- 莫问归期 https://www.youtube.com/watch?v=-Y8Y7dLtkcc
+- 莫问归期 https://www.youtube.com/watch?v=j1WifUe_fjQ
 - 无情画 https://www.youtube.com/watch?v=LXFKhiAkmso
 - 辞九门回忆 https://www.youtube.com/watch?v=W_XH-oGPMjc
 - 删了吧 https://www.youtube.com/watch?v=esyGFHEPYy0
