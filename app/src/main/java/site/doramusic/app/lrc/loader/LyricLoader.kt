@@ -97,7 +97,7 @@ abstract class LyricLoader(protected var lyricScroller: LyricScroller, protected
         if (str == null) {
             return null
         }
-        val regEx = "[\\/:*?\"<>|]"
+        val regEx = "[/:*?\"<>|]"
         val p = Pattern.compile(regEx)
         val m = p.matcher(str)
         return m.replaceAll("")

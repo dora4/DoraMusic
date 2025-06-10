@@ -41,6 +41,7 @@ import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_MENU_GRID_COLUMN_NUM
 import site.doramusic.app.base.conf.AppConfig.Companion.MAX_RECENT_MUSIC_NUM
+import site.doramusic.app.base.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.FragmentHomeBinding
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
@@ -190,7 +191,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private fun loadAds(binding: FragmentHomeBinding) {
         net {
             val adEnable = result {
-                RetrofitManager.getService(AdService::class.java).isShowBannerAds("doramusic")
+                RetrofitManager.getService(AdService::class.java).isShowBannerAds(PRODUCT_NAME)
             }?.data
             if (adEnable == true) {
                 // 广告印象
