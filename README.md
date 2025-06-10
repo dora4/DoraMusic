@@ -36,6 +36,7 @@
 - 辞九门回忆 https://www.youtube.com/watch?v=W_XH-oGPMjc
 - 删了吧 https://www.youtube.com/watch?v=esyGFHEPYy0
 - 飞鸟和蝉 https://www.youtube.com/watch?v=SmMybJc5bxI
+- 如愿 https://www.youtube.com/watch?v=IOb_IX3u2ag
 
 不嗨来找我。
 
