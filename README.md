@@ -23,7 +23,7 @@
 - 爱错 https://www.youtube.com/watch?v=AQLuz0wamT8
 - 谁 https://www.youtube.com/watch?v=8z-C8dikNjA
 - 离别开出花 https://www.youtube.com/watch?v=ZYt5Cg4Qqbs
-- 阿衣莫 https://www.youtube.com/watch?v=WhQ-YeGhBa0
+- 阿衣莫 https://www.youtube.com/watch?v=O1kXtPGjOzw
 - 精卫 https://www.youtube.com/watch?v=YtFQZkGZtLc
 - 不谓侠 https://www.youtube.com/watch?v=DgC942kpOsM
 - 春庭雪 https://www.youtube.com/watch?v=newAggUqhts
