@@ -34,7 +34,7 @@
 - 莫问归期 https://www.youtube.com/watch?v=j1WifUe_fjQ
 - 无情画 https://www.youtube.com/watch?v=LXFKhiAkmso
 - 辞九门回忆 https://www.youtube.com/watch?v=bQ-SVxu-_DI
-- 飞鸟和蝉 https://www.youtube.com/watch?v=SmMybJc5bxI
+- 飞鸟和蝉 https://www.youtube.com/watch?v=-VjwtAYHzBk
 - 如愿 https://www.youtube.com/watch?v=IOb_IX3u2ag
 - 过火 https://www.youtube.com/watch?v=Hj8P88ZtrwM
 - 吻得太逼真 https://www.youtube.com/watch?v=xY37BazFzYE
