@@ -41,6 +41,7 @@
 - 吻得太逼真 https://www.youtube.com/watch?v=xY37BazFzYE
 - 画心 https://www.youtube.com/watch?v=aVfiitJsLqs
 - 记事本 https://www.youtube.com/watch?v=9eGwqB68Ngk
+- 下一个天亮 https://www.youtube.com/watch?v=tun3WrH2b3Q
 
 不嗨来找我。
 
