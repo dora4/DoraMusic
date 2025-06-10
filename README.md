@@ -41,7 +41,6 @@
 - 记事本 https://www.youtube.com/watch?v=9eGwqB68Ngk
 - 下一个天亮 https://www.youtube.com/watch?v=tun3WrH2b3Q
 - 春不晚 https://www.youtube.com/watch?v=Ry-3GdpPmto
-- 童话镇 https://www.youtube.com/watch?v=drpkRFShCB8
 - 半点心 https://www.youtube.com/watch?v=sIucMXINXaI
 - 大天蓬 https://www.youtube.com/watch?v=7-_4NcjDlBs
 - 你的万水千山 https://www.youtube.com/watch?v=BZQkb7KpOf0
