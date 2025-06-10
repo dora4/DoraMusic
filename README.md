@@ -42,6 +42,7 @@
 - 画心 https://www.youtube.com/watch?v=aVfiitJsLqs
 - 记事本 https://www.youtube.com/watch?v=9eGwqB68Ngk
 - 下一个天亮 https://www.youtube.com/watch?v=tun3WrH2b3Q
+- 春不晚 https://www.youtube.com/watch?v=Ry-3GdpPmto
 
 不嗨来找我。
 
