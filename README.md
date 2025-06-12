@@ -47,8 +47,8 @@
 - 天真的橡皮 https://www.youtube.com/watch?v=11mgS6uMhHw
 - 典狱司 https://www.youtube.com/watch?v=3H7YHwep2hk
 - 红昭愿 https://www.youtube.com/watch?v=rn7Gy7x9ZQE
-- 野孩子https://www.youtube.com/watch?v=KYZW55KJrK0
-- 平凡之路 https://www.youtube.com/watch?v=KW7yGTxtQaY
+- 野孩子 https://www.youtube.com/watch?v=KYZW55KJrK0
+- 赤伶 https://www.youtube.com/watch?v=HOBOBgmzuGo
   
 不嗨来找我。
 
