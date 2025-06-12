@@ -44,7 +44,7 @@
 - 半点心 https://www.youtube.com/watch?v=sIucMXINXaI
 - 大天蓬 https://www.youtube.com/watch?v=7-_4NcjDlBs
 - 你的万水千山 https://www.youtube.com/watch?v=BZQkb7KpOf0
-- 天真的橡皮 https://www.youtube.com/watch?v=11mgS6uMhHw
+- 相思遥 https://www.youtube.com/watch?v=ToyWa0Of1ns
 - 典狱司 https://www.youtube.com/watch?v=3H7YHwep2hk
 - 鸳鸯戏 https://www.youtube.com/watch?v=D038bYY7h-U
 - 野孩子 https://www.youtube.com/watch?v=KYZW55KJrK0
