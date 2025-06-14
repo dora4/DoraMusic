@@ -23,13 +23,36 @@
 - 爱错 https://www.youtube.com/watch?v=AQLuz0wamT8
 - 谁 https://www.youtube.com/watch?v=8z-C8dikNjA
 - 离别开出花 https://www.youtube.com/watch?v=ZYt5Cg4Qqbs
-- 阿衣莫 https://www.youtube.com/watch?v=WhQ-YeGhBa0
+- 阿衣莫 https://www.youtube.com/watch?v=O1kXtPGjOzw
 - 精卫 https://www.youtube.com/watch?v=YtFQZkGZtLc
 - 不谓侠 https://www.youtube.com/watch?v=DgC942kpOsM
 - 春庭雪 https://www.youtube.com/watch?v=newAggUqhts
 - 卜卦 https://www.youtube.com/watch?v=EWGdVNUVYbE
 - 海市蜃楼 https://www.youtube.com/watch?v=yB8HmL3WSK8
 - 探故知 https://www.youtube.com/watch?v=5ELID57kRPg
+- 难却 https://www.youtube.com/watch?v=KonvHhu3LZU
+- 莫问归期 https://www.youtube.com/watch?v=j1WifUe_fjQ
+- 无情画 https://www.youtube.com/watch?v=LXFKhiAkmso
+- 辞九门回忆 https://www.youtube.com/watch?v=bQ-SVxu-_DI
+- 飞鸟和蝉 https://www.youtube.com/watch?v=-VjwtAYHzBk
+- 如愿 https://www.youtube.com/watch?v=IOb_IX3u2ag
+- 过火 https://www.youtube.com/watch?v=Hj8P88ZtrwM
+- 吻得太逼真 https://www.youtube.com/watch?v=xY37BazFzYE
+- 记事本 https://www.youtube.com/watch?v=9eGwqB68Ngk
+- 下一个天亮 https://www.youtube.com/watch?v=tun3WrH2b3Q
+- 春不晚 https://www.youtube.com/watch?v=uYGN77Cww-w
+- 半点心 https://www.youtube.com/watch?v=sIucMXINXaI
+- 大天蓬 https://www.youtube.com/watch?v=7-_4NcjDlBs
+- 你的万水千山 https://www.youtube.com/watch?v=BZQkb7KpOf0
+- 相思遥 https://www.youtube.com/watch?v=ToyWa0Of1ns
+- 典狱司 https://www.youtube.com/watch?v=3H7YHwep2hk
+- 鸳鸯戏 https://www.youtube.com/watch?v=D038bYY7h-U
+- 野孩子 https://www.youtube.com/watch?v=KYZW55KJrK0
+- 赤伶 https://www.youtube.com/watch?v=HOBOBgmzuGo
+- 只为你着迷 https://music.youtube.com/watch?v=chk9qD70MtU
+- 火红的萨日朗 https://www.youtube.com/watch?v=qiYwASqE960
+- 女孩 https://www.youtube.com/watch?v=NszjMg8vVhA
+- 从前说 https://www.youtube.com/watch?v=qjAKle8bz2E
 
 不嗨来找我。
 
