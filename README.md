@@ -49,7 +49,8 @@
 - 鸳鸯戏 https://www.youtube.com/watch?v=D038bYY7h-U
 - 野孩子 https://www.youtube.com/watch?v=KYZW55KJrK0
 - 赤伶 https://www.youtube.com/watch?v=HOBOBgmzuGo
-- 只为你着迷 https://music.youtube.com/watch?v=chk9qD70MtU&list=LM
+- 只为你着迷 https://music.youtube.com/watch?v=chk9qD70MtU
+- 火红的萨日朗 https://www.youtube.com/watch?v=qiYwASqE960
   
 不嗨来找我。
 
