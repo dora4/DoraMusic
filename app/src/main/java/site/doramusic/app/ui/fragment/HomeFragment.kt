@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -31,9 +32,11 @@ import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.trade.DoraTrade
 import dora.util.*
+import dora.widget.DoraFlipperView
 import dora.widget.DoraTitleBar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.R
+import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
@@ -80,6 +83,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private lateinit var albumDao: OrmDao<Album>
     private lateinit var folderDao: OrmDao<Folder>
     private val adapter = HomeAdapter()
+
+    private val songMap = mapOf(
+        "是你"         to "https://www.youtube.com/watch?v=aM0EBp9OaAM",
+        "爱错"         to "https://www.youtube.com/watch?v=AQLuz0wamT8",
+        "谁"           to "https://www.youtube.com/watch?v=8z-C8dikNjA",
+        "离别开出花"   to "https://www.youtube.com/watch?v=ZYt5Cg4Qqbs",
+        "阿衣莫"       to "https://www.youtube.com/watch?v=O1kXtPGjOzw",
+        "精卫"         to "https://www.youtube.com/watch?v=YtFQZkGZtLc",
+        "不谓侠"       to "https://www.youtube.com/watch?v=DgC942kpOsM",
+        "春庭雪"       to "https://www.youtube.com/watch?v=newAggUqhts",
+        "卜卦"         to "https://www.youtube.com/watch?v=EWGdVNUVYbE",
+        "海市蜃楼"     to "https://www.youtube.com/watch?v=yB8HmL3WSK8",
+        "探故知"       to "https://www.youtube.com/watch?v=5ELID57kRPg",
+        "难却"         to "https://www.youtube.com/watch?v=KonvHhu3LZU",
+        "莫问归期"     to "https://www.youtube.com/watch?v=j1WifUe_fjQ",
+        "无情画"       to "https://www.youtube.com/watch?v=LXFKhiAkmso",
+        "辞九门回忆"   to "https://www.youtube.com/watch?v=bQ-SVxu-_DI",
+        "飞鸟和蝉"     to "https://www.youtube.com/watch?v=-VjwtAYHzBk",
+        "如愿"         to "https://www.youtube.com/watch?v=IOb_IX3u2ag",
+        "过火"         to "https://www.youtube.com/watch?v=Hj8P88ZtrwM",
+        "吻得太逼真"   to "https://www.youtube.com/watch?v=xY37BazFzYE",
+        "记事本"       to "https://www.youtube.com/watch?v=9eGwqB68Ngk",
+        "下一个天亮"   to "https://www.youtube.com/watch?v=tun3WrH2b3Q",
+        "春不晚"       to "https://www.youtube.com/watch?v=uYGN77Cww-w",
+        "半点心"       to "https://www.youtube.com/watch?v=sIucMXINXaI",
+        "大天蓬"       to "https://www.youtube.com/watch?v=7-_4NcjDlBs",
+        "你的万水千山" to "https://www.youtube.com/watch?v=BZQkb7KpOf0",
+        "相思遥"       to "https://www.youtube.com/watch?v=ToyWa0Of1ns",
+        "典狱司"       to "https://www.youtube.com/watch?v=3H7YHwep2hk",
+        "鸳鸯戏"       to "https://www.youtube.com/watch?v=D038bYY7h-U",
+        "野孩子"       to "https://www.youtube.com/watch?v=KYZW55KJrK0",
+        "赤伶"         to "https://www.youtube.com/watch?v=HOBOBgmzuGo"
+    )
 
     val isHome: Boolean
         get() = uiManager.isLocal && !musicPlay.isOpened
@@ -132,6 +168,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             }
 
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+            }
+        })
+
+        val titles = songMap.keys.toList()
+        // 随机抽取10条，保证不重复
+        titles.shuffled()
+            .take(10)
+            .forEach { title ->
+                binding.fpHomeRecommendMusics.addText(getString(R.string.recommend_music, title))
+            }
+        binding.fpHomeRecommendMusics.setFlipperListener(object : DoraFlipperView.FlipperListener {
+
+            override fun onFlipFinish() {
+                // 加载完隐藏
+                binding.fpHomeRecommendMusics.visibility = View.GONE
+            }
+
+            override fun onFlipStart() {
+            }
+
+            override fun onItemClick(text: String) {
+                val url = songMap[text]
+                ARouter.getInstance()
+                    .build(ARoutePath.ACTIVITY_BROWSER)
+                    .withString(EXTRA_TITLE, text)
+                    .withString(EXTRA_URL, url)
+                    .navigation()
             }
         })
         binding.rvHomeModule.adapter = adapter

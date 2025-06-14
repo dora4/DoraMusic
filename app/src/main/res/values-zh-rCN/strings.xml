@@ -67,4 +67,5 @@
     <string name="music_scan_successfully">已识别%1$d首歌曲</string>
     <string name="no_songs_scanned">未扫描到歌曲</string>
     <string name="donate_successfully">我们已收到您的捐赠，感谢您的支持!交易哈希：%1$s</string>
+    <string name="recommend_music">推荐歌曲：%1$s</string>
 </resources>

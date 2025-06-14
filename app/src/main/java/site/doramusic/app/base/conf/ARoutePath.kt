@@ -11,5 +11,6 @@ interface ARoutePath {
         const val ACTIVITY_SPLASH = "$GROUP_APP/SplashActivity"
         const val ACTIVITY_COLOR_PICKER = "$GROUP_APP/ColorPickerActivity"
         const val ACTIVITY_PROTOCOL = "$GROUP_APP/ProtocolActivity"
+        const val ACTIVITY_BROWSER = "$GROUP_APP/BrowserActivity"
     }
 }

@@ -212,6 +212,14 @@
                     app:banner_indicator_radius="5dp"
                     app:banner_indicator_selected_width="5dp" />
 
+                <dora.widget.DoraFlipperView
+                        android:id="@+id/fp_home_recommend_musics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dview_fv_textColor="@color/white"
+                        app:dview_fv_textSize="15sp"
+                        android:background="#AA000000"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_home_module"
                     android:layout_width="match_parent"

@@ -6,19 +6,22 @@ import android.view.KeyEvent
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebIndicator
 import dora.BaseActivity
 import dora.util.IntentUtils
 import dora.util.StatusBarUtils
 import site.doramusic.app.R
+import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.databinding.ActivityBrowserBinding
 
 /**
- * 浏览器页面，主要用于加载用户协议和隐私权政策。
+ * 浏览器页面，主要用于加载用户协议和隐私权政策等。
  */
+@Route(path = ARoutePath.ACTIVITY_BROWSER)
 class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
 
     private var title: String? = null

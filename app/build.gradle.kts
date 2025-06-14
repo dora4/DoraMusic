@@ -10,8 +10,9 @@ plugins {
 android {
     namespace = "site.doramusic.app"
     compileSdk = 34
-    val version = "1.3.12"
-    val code = 26
+
+    val code = 27
+    val version = "1.3.13"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 23
@@ -128,6 +129,7 @@ dependencies {
     implementation("com.github.dora4:dview-skins:1.7")
     implementation("com.github.dora4:dview-bottom-dialog:1.13")
     implementation("com.github.dora4:dview-avatar:1.4")
+    implementation("com.github.dora4:dview-flipper-view:1.2")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")
