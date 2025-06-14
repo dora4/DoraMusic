@@ -52,7 +52,8 @@
 - 只为你着迷 https://music.youtube.com/watch?v=chk9qD70MtU
 - 火红的萨日朗 https://www.youtube.com/watch?v=qiYwASqE960
 - 女孩 https://www.youtube.com/watch?v=NszjMg8vVhA
-  
+- 从前说 https://www.youtube.com/watch?v=qjAKle8bz2E
+- 
 不嗨来找我。
 
 ### App下载
