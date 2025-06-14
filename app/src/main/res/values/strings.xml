@@ -65,5 +65,4 @@
     <string name="music_scan_successfully">Detected %1$d songs</string>
     <string name="no_songs_scanned">No songs scanned</string>
     <string name="donate_successfully">We have received your donation. Thank you for your support! Transaction hash: %1$s</string>
-    <string name="recommend_music">Recommend Music : %1$s</string>
 </resources>

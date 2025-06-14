@@ -176,7 +176,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         titles.shuffled()
             .take(10)
             .forEach { title ->
-                binding.fpHomeRecommendMusics.addText(getString(R.string.recommend_music, title))
+                binding.fpHomeRecommendMusics.addText(title)
             }
         binding.fpHomeRecommendMusics.setFlipperListener(object : DoraFlipperView.FlipperListener {
 
