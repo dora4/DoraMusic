@@ -53,7 +53,10 @@
 - 火红的萨日朗 https://www.youtube.com/watch?v=qiYwASqE960
 - 女孩 https://www.youtube.com/watch?v=NszjMg8vVhA
 - 从前说 https://www.youtube.com/watch?v=qjAKle8bz2E
-
+- 风催雨 https://www.youtube.com/watch?v=h0tojPD-65g
+- 美人画卷 https://www.youtube.com/watch?v=Ai8dlJlWeuE
+- 选择失忆 https://www.youtube.com/watch?v=Sfd8qBKvdMg
+  
 不嗨来找我。
 
 ### App下载
