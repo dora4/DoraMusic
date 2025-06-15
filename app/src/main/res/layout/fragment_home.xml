@@ -121,7 +121,8 @@
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
                         android:text="@string/brand"
-                        android:textColor="@color/gray" />
+                            android:textSize="15sp"
+                        android:textColor="@color/colorTextSecondary" />
 
                     <site.doramusic.app.widget.MarqueeTextView
                         android:id="@+id/tv_home_bottom_artist"
@@ -130,14 +131,16 @@
                         android:layout_below="@id/tv_home_bottom_music_name"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:text="@string/slogan"
-                        android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                            android:layout_marginTop="1dp"
+                            android:text="@string/slogan"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="13sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_home_bottom_artist"
+                            android:layout_marginTop="2dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -148,13 +151,15 @@
                             android:focusableInTouchMode="false"
                             android:gravity="center_horizontal"
                             android:text="00:00"
-                            android:textColor="@color/gray" />
+                                android:textSize="14sp"
+                            android:textColor="@color/colorTextSecondary" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" - "
-                            android:textColor="@color/gray" />
+                            android:text="-"
+                                android:textSize="14sp"
+                            android:textColor="@color/colorTextSecondary" />
 
                         <TextView
                             android:id="@+id/tv_home_bottom_duration"
@@ -162,7 +167,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:text="00:00"
-                            android:textColor="@color/gray" />
+                                android:textSize="14sp"
+                            android:textColor="@color/colorTextSecondary" />
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
@@ -190,7 +196,7 @@
                 app:dview_title="@string/app_name"
                 app:dview_titleTextSize="18sp"
                 app:dview_isTitleTextBold="false"
-                app:dview_titleTextColor="@color/gray"
+                app:dview_titleTextColor="@color/colorTextPrimary"
                 app:dview_isClickBackIconClose="false"
                 app:dview_backIcon="@drawable/ic_titlebar_menu"
                 app:dview_backIconSize="24dp"/>

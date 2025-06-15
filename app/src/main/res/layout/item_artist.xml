@@ -16,7 +16,7 @@
         android:id="@+id/tv_artist_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/gray"
+        android:textColor="@color/colorTextPrimary"
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="15sp" />
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="@color/light_gray"
+        android:textColor="@color/colorTextSecondary"
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="12sp" />

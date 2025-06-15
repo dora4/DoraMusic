@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textColor="@color/gray"
+            android:textColor="@color/colorTextPrimary"
             android:textSize="15sp" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/colorTextSecondary"
             android:layout_marginTop="4dp"
             android:textSize="12sp" />
 

@@ -115,7 +115,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/protocol_disagree"
-            android:textColor="@color/dialog_text_color"
+            android:textColor="@color/colorTextPrimary"
             android:textSize="15sp" />
 
         <View
@@ -132,7 +132,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/protocol_agree"
-            android:textColor="@color/dialog_text_color"
+            android:textColor="@color/colorTextPrimary"
             android:textSize="15sp" />
     </LinearLayout>
 

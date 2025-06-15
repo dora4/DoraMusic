@@ -28,7 +28,8 @@
             android:id="@+id/tv_home_module_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
+            android:textColor="@color/colorTextSecondary"
+                android:textStyle="bold"
             android:layout_marginTop="5dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/iv_home_module_icon" />
@@ -37,7 +38,7 @@
             android:id="@+id/tv_home_module_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/colorTextSecondary"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:layout_below="@id/tv_home_module_name" />

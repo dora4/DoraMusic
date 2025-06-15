@@ -27,7 +27,7 @@
             android:layout_gravity="start"
             app:menu="@menu/menu"
                 app:itemBackground="@drawable/selector_menu_bg"
-            app:itemTextColor="@color/gray"
+            app:itemTextColor="@color/colorTextSecondary"
                 app:itemTextAppearanceActiveBoldEnabled="false"
             app:headerLayout="@layout/view_drawer_header"/>
 

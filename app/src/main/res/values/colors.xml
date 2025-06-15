@@ -46,9 +46,10 @@
     <color name="colorPrimary">@color/skin_theme_color</color>
     <color name="colorPrimaryDark">@color/skin_theme_color</color>
     <color name="colorAccent">@color/skin_theme_color</color>
+    <color name="colorTextPrimary">#1A2025</color>
+    <color name="colorTextSecondary">#8A8A8A</color>
     <color name="half_transparent">#3f000000</color>
     <color name="divider_color">#6fffffff</color>
     <color name="transparent">#00000000</color>
     <color name="trans_white">#afffffff</color>
-    <color name="dialog_text_color">#2B313D</color>
 </resources>
