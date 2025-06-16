@@ -57,6 +57,7 @@
 - 美人画卷 https://www.youtube.com/watch?v=Ai8dlJlWeuE
 - 选择失忆 https://www.youtube.com/watch?v=Sfd8qBKvdMg
 - 秒针 https://www.youtube.com/watch?v=tN6-VYvstGM
+- 爱情有时很残忍 https://www.youtube.com/watch?v=H6TUN01DoQQ
   
 不嗨来找我。
 
