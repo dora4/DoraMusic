@@ -58,6 +58,7 @@
 - 选择失忆 https://www.youtube.com/watch?v=Sfd8qBKvdMg
 - 秒针 https://www.youtube.com/watch?v=tN6-VYvstGM
 - 爱情有时很残忍 https://www.youtube.com/watch?v=H6TUN01DoQQ
+- 孤城 https://www.youtube.com/watch?v=ChRYTbz67IE
   
 不嗨来找我。
 
