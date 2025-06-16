@@ -56,6 +56,7 @@
 - 风催雨 https://www.youtube.com/watch?v=h0tojPD-65g
 - 美人画卷 https://www.youtube.com/watch?v=Ai8dlJlWeuE
 - 选择失忆 https://www.youtube.com/watch?v=Sfd8qBKvdMg
+- 只为你着迷 https://www.youtube.com/watch?v=chk9qD70MtU
   
 不嗨来找我。
 
