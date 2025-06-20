@@ -69,7 +69,7 @@
 
 ### App下载
 
-[Android下载](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
+[稳定版下载](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
 
 ### 软件截图
 
