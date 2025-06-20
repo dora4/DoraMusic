@@ -64,6 +64,7 @@
 - 起风了 https://www.youtube.com/watch?v=s5nFn4RgelA
 - 游京 https://www.youtube.com/watch?v=OjQ0KqCJOjk
 - Everytime We Touch https://www.youtube.com/watch?v=TQ_oIxIDKTA
+- 须尽欢 https://www.youtube.com/watch?v=LXDi5qNu4xA
 
 不嗨来找我。
 
