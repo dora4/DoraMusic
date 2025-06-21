@@ -56,12 +56,21 @@
 - 风催雨 https://www.youtube.com/watch?v=h0tojPD-65g
 - 美人画卷 https://www.youtube.com/watch?v=Ai8dlJlWeuE
 - 选择失忆 https://www.youtube.com/watch?v=Sfd8qBKvdMg
-  
+- 秒针 https://www.youtube.com/watch?v=tN6-VYvstGM
+- 爱情有时很残忍 https://www.youtube.com/watch?v=H6TUN01DoQQ
+- 孤城 https://www.youtube.com/watch?v=ChRYTbz67IE
+- 虞兮叹 https://www.youtube.com/watch?v=ACmrAE4ov94
+- 科目三 https://www.youtube.com/watch?v=b3rFbkFjRrA
+- 起风了 https://www.youtube.com/watch?v=s5nFn4RgelA
+- 游京 https://www.youtube.com/watch?v=OjQ0KqCJOjk
+- Everytime We Touch https://www.youtube.com/watch?v=TQ_oIxIDKTA
+- 须尽欢 https://www.youtube.com/watch?v=LXDi5qNu4xA
+
 不嗨来找我。
 
 ### App下载
 
-[Android下载](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
+[稳定版下载](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
 
 ### 软件截图
 
