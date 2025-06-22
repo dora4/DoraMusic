@@ -186,33 +186,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
             }
         })
+        if (NetUtils.checkNetworkAvailable(requireContext())) {
+            // 有网才加载推荐歌曲
+            binding.fpHomeRecommendMusics.visibility = View.VISIBLE
+            val titles = songMap.keys.toList()
+            // 随机抽取10条，保证不重复
+            titles.shuffled()
+                .take(10)
+                .forEach { title ->
+                    binding.fpHomeRecommendMusics.addText(title)
+                }
+            binding.fpHomeRecommendMusics.setFlipperListener(object : DoraFlipperView.FlipperListener {
 
-        val titles = songMap.keys.toList()
-        // 随机抽取10条，保证不重复
-        titles.shuffled()
-            .take(10)
-            .forEach { title ->
-                binding.fpHomeRecommendMusics.addText(title)
-            }
-        binding.fpHomeRecommendMusics.setFlipperListener(object : DoraFlipperView.FlipperListener {
+                override fun onFlipFinish() {
+                    // 加载完隐藏
+                    binding.fpHomeRecommendMusics.visibility = View.GONE
+                }
 
-            override fun onFlipFinish() {
-                // 加载完隐藏
-                binding.fpHomeRecommendMusics.visibility = View.GONE
-            }
+                override fun onFlipStart() {
+                }
 
-            override fun onFlipStart() {
-            }
-
-            override fun onItemClick(text: String) {
-                val url = songMap[text]
-                ARouter.getInstance()
-                    .build(ARoutePath.ACTIVITY_BROWSER)
-                    .withString(EXTRA_TITLE, text)
-                    .withString(EXTRA_URL, url)
-                    .navigation()
-            }
-        })
+                override fun onItemClick(text: String) {
+                    val url = songMap[text]
+                    ARouter.getInstance()
+                        .build(ARoutePath.ACTIVITY_BROWSER)
+                        .withString(EXTRA_TITLE, getString(R.string.app_name))
+                        .withString(EXTRA_URL, url)
+                        .navigation()
+                }
+            })
+        }
         binding.rvHomeModule.adapter = adapter
         binding.rvHomeModule.setBackgroundResource(R.drawable.shape_home_module)
         binding.rvHomeModule.itemAnimator = DefaultItemAnimator()
