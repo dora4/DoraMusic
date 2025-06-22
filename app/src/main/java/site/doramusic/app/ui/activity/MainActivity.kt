@@ -27,6 +27,7 @@ import dora.http.DoraHttp.net
 import dora.http.DoraHttp.request
 import dora.skin.SkinManager
 import dora.trade.DoraTrade
+import dora.util.NetUtils
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.util.ToastUtils
@@ -59,7 +60,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     private lateinit var homeFragment: HomeFragment
     private val backListeners: MutableList<OnBackListener> = ArrayList()
     private var earphoneReceiver: EarphoneReceiver? = null
-    private var prefsManager: PrefsManager? = null
+    private lateinit var prefsManager: PrefsManager
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
@@ -87,22 +88,24 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 100)
             }
         }
-
-        XXPermissions.with(this).permission(Permission.MANAGE_EXTERNAL_STORAGE).request { _, allGranted ->
-            if (allGranted) {
-                val intent = VpnService.prepare(this@MainActivity)
-                if (intent != null) {
-                    startActivityForResult(intent, REQUEST_VPN_PERMISSION)
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        this@MainActivity.onActivityResult(
-                            REQUEST_VPN_PERMISSION,
-                            Activity.RESULT_OK,
-                            null
-                        )
+        if (prefsManager.getColdLaunchAutoConnectVPN() && NetUtils.checkNetworkAvailable(this)) {
+            XXPermissions.with(this).permission(Permission.MANAGE_EXTERNAL_STORAGE)
+                .request { _, allGranted ->
+                    if (allGranted) {
+                        val intent = VpnService.prepare(this@MainActivity)
+                        if (intent != null) {
+                            startActivityForResult(intent, REQUEST_VPN_PERMISSION)
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                this@MainActivity.onActivityResult(
+                                    REQUEST_VPN_PERMISSION,
+                                    Activity.RESULT_OK,
+                                    null
+                                )
+                            }
+                        }
                     }
                 }
-            }
         }
     }
 

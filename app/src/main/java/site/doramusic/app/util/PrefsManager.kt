@@ -12,6 +12,13 @@ class PrefsManager(val context: Context) {
         )
     }
 
+    fun getColdLaunchAutoConnectVPN(): Boolean {
+        return SPUtils.readBoolean(
+            context, PREFS_COLD_LAUNCH_AUTO_CONNECT_VPN,
+            false
+        )
+    }
+
     fun getShakeChangeMusic(): Boolean {
         return SPUtils.readBoolean(context, PREFS_SHAKE_CHANGE_MUSIC, true)
     }
@@ -42,6 +49,10 @@ class PrefsManager(val context: Context) {
 
     fun saveColdLaunchAutoPlay(flag: Boolean) {
         SPUtils.writeBoolean(context, PREFS_COLD_LAUNCH_AUTO_PLAY, flag)
+    }
+
+    fun saveColdLaunchAutoConnectVPN(flag: Boolean) {
+        SPUtils.writeBoolean(context, PREFS_COLD_LAUNCH_AUTO_CONNECT_VPN, flag)
     }
 
     fun saveShakeChangeMusic(flag: Boolean) {
@@ -91,6 +102,11 @@ class PrefsManager(val context: Context) {
          * 启用冷启动自动播放歌曲。
          */
         const val PREFS_COLD_LAUNCH_AUTO_PLAY = "prefs_auto_play"
+
+        /**
+         * 启用冷启动自动连接VPN。
+         */
+        const val PREFS_COLD_LAUNCH_AUTO_CONNECT_VPN = "prefs_auto_vpn"
 
         /**
          * 启用摇一摇切换歌曲。

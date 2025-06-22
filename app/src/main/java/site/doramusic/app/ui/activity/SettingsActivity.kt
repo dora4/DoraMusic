@@ -106,6 +106,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 mBinding.tbSettingsAutoPlay.isChecked = !isChecked
                 prefsManager.saveColdLaunchAutoPlay(!isChecked)
             }
+            R.id.rl_settings_auto_connect_vpn -> {
+                val isChecked = mBinding.tbSettingsAutoConnectVpn.isChecked
+                mBinding.tbSettingsAutoConnectVpn.isChecked = !isChecked
+                prefsManager.saveColdLaunchAutoPlay(!isChecked)
+            }
             R.id.rl_settings_shake -> {
                 val isChecked = mBinding.tbSettingsShake.isChecked
                 mBinding.tbSettingsShake.isChecked = !isChecked
