@@ -1,10 +1,14 @@
 package site.doramusic.app.ui.activity
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
@@ -12,6 +16,8 @@ import com.just.agentweb.WebIndicator
 import dora.BaseActivity
 import dora.util.IntentUtils
 import dora.util.StatusBarUtils
+import dora.util.ViewUtils
+import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
@@ -27,6 +33,7 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
     private var title: String? = null
     private var url: String? = null
     private var agentWeb: AgentWeb? = null
+
     override fun getLayoutId(): Int {
         return R.layout.activity_browser
     }
@@ -38,6 +45,11 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
 
     override fun onSetStatusBar() {
         StatusBarUtils.setStatusBarColorRes(this, R.color.colorPrimaryDark)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        ViewUtils.showSystemBar(window)
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityBrowserBinding) {
@@ -56,6 +68,28 @@ class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
             .createAgentWeb()
             .ready()
             .go(url)
+        binding.titlebar.addMenuButton(R.drawable.ic_min)
+        binding.titlebar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+            override fun onIconBackClick(icon: AppCompatImageView) {
+            }
+
+            override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+                // 画中画模式
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    enterPictureInPictureMode()
+                }
+            }
+        })
+    }
+
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        if (isInPictureInPictureMode) {
+            // 隐藏 UI 元素，例如标题栏
+            mBinding.titlebar.visibility = View.GONE
+        } else {
+            mBinding.titlebar.visibility = View.VISIBLE
+        }
     }
 
     override fun onPointerCaptureChanged(hasCapture: Boolean) {}
