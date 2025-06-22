@@ -31,11 +31,11 @@
             android:background="@color/skin_theme_color"
             app:dview_title="@string/setting"/>
 
-        <dora.widget.DoraFlexibleScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:fillViewport="true">
+<!--        <dora.widget.DoraFlexibleScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="vertical"-->
+<!--                android:fillViewport="true">-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -263,6 +263,6 @@
                         android:textSize="15sp" />
                 </RelativeLayout>
             </LinearLayout>
-        </dora.widget.DoraFlexibleScrollView>
+<!--        </dora.widget.DoraFlexibleScrollView>-->
     </LinearLayout>
 </layout>

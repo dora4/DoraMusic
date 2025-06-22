@@ -8,7 +8,7 @@ class PrefsManager(val context: Context) {
     fun getColdLaunchAutoPlay(): Boolean {
         return SPUtils.readBoolean(
             context, PREFS_COLD_LAUNCH_AUTO_PLAY,
-            false
+            true
         )
     }
 
