@@ -71,7 +71,6 @@
                         android:id="@+id/rl_settings_auto_connect_vpn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
                         android:background="@drawable/selector_item_common"
                         android:onClick="@{v}"
                         android:clickable="true"

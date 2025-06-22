@@ -52,6 +52,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         prefsManager = PrefsManager(this)
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         binding.tbSettingsAutoPlay.checkedColor = skinThemeColor
+        binding.tbSettingsAutoConnectVpn.checkedColor = skinThemeColor
         binding.tbSettingsShake.checkedColor = skinThemeColor
         binding.tbSettingsBassBoost.checkedColor = skinThemeColor
         binding.tbSettingsAutoPlay.isChecked = prefsManager.getColdLaunchAutoPlay()
@@ -67,6 +68,17 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 }
                 binding.tbSettingsAutoPlay.isChecked = isChecked
                 prefsManager.saveColdLaunchAutoPlay(isChecked)
+            }
+        })
+        binding.tbSettingsAutoConnectVpn.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
+                if (isChecked) {
+                    spmSelectContent("打开自动连接VPN开关")
+                } else {
+                    spmSelectContent("关闭自动连接VPN开关")
+                }
+                binding.tbSettingsAutoConnectVpn.isChecked = isChecked
+                prefsManager.saveColdLaunchAutoConnectVPN(isChecked)
             }
         })
         binding.tbSettingsShake.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
