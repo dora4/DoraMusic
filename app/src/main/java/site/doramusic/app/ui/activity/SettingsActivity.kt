@@ -56,6 +56,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsShake.checkedColor = skinThemeColor
         binding.tbSettingsBassBoost.checkedColor = skinThemeColor
         binding.tbSettingsAutoPlay.isChecked = prefsManager.getColdLaunchAutoPlay()
+        binding.tbSettingsAutoConnectVpn.isChecked = prefsManager.getColdLaunchAutoConnectVPN()
         binding.tbSettingsShake.isChecked = prefsManager.getShakeChangeMusic()
         binding.tbSettingsBassBoost.isChecked = prefsManager.getBassBoost()
 
@@ -121,7 +122,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             R.id.rl_settings_auto_connect_vpn -> {
                 val isChecked = mBinding.tbSettingsAutoConnectVpn.isChecked
                 mBinding.tbSettingsAutoConnectVpn.isChecked = !isChecked
-                prefsManager.saveColdLaunchAutoPlay(!isChecked)
+                prefsManager.saveColdLaunchAutoConnectVPN(!isChecked)
             }
             R.id.rl_settings_shake -> {
                 val isChecked = mBinding.tbSettingsShake.isChecked
