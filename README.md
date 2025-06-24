@@ -68,6 +68,7 @@
 - 夜色 https://www.youtube.com/watch?v=aatVmb9ZCws
 - 快乐阿拉蕾 https://www.youtube.com/watch?v=4haZeezqMio
 - 别让爱凋落 https://www.youtube.com/watch?v=93U7ifus358
+- 跳楼机 https://www.youtube.com/watch?v=Hkd45-teUzg
 
 不嗨来找我。
 
