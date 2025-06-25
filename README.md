@@ -77,6 +77,8 @@
 - 想某人 https://www.youtube.com/watch?v=xWegMGxyetY
 - 折风渡夜 https://www.youtube.com/watch?v=vNRFV0SITFs
 - 姑娘在远方 https://www.youtube.com/watch?v=dSOz373wvrk
+- 罗曼蒂克的爱情 https://www.youtube.com/watch?v=0tPahfiueJ0
+- 陪我过个冬 https://www.youtube.com/watch?v=o7pyoXc1-CM
 
 不嗨来找我。
 
