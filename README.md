@@ -76,6 +76,7 @@
 - 忘川彼岸 https://www.youtube.com/watch?v=dhF0ANt9erI
 - 想某人 https://www.youtube.com/watch?v=xWegMGxyetY
 - 折风渡夜 https://www.youtube.com/watch?v=vNRFV0SITFs
+- 姑娘在远方 https://www.youtube.com/watch?v=dSOz373wvrk
 
 不嗨来找我。
 
