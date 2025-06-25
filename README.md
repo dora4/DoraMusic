@@ -70,6 +70,10 @@
 - 别让爱凋落 https://www.youtube.com/watch?v=93U7ifus358
 - 跳楼机 https://www.youtube.com/watch?v=Hkd45-teUzg
 - 列车开往春天 https://www.youtube.com/watch?v=ZQg0ezB-q8g
+- 身骑白马 https://www.youtube.com/watch?v=aeN05li9_i0
+- 赐我 https://www.youtube.com/watch?v=UwQjBW5pm1A
+- 执迷不悟 https://www.youtube.com/watch?v=8H_NZ1_FR8o
+- 忘川彼岸 https://www.youtube.com/watch?v=dhF0ANt9erI
 
 不嗨来找我。
 
