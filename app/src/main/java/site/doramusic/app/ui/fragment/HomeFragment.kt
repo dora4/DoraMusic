@@ -130,7 +130,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         "起风了" to "https://www.youtube.com/watch?v=s5nFn4RgelA",
         "游京" to "https://www.youtube.com/watch?v=OjQ0KqCJOjk",
         "Everytime We Touch" to "https://www.youtube.com/watch?v=TQ_oIxIDKTA",
-        "须尽欢" to "https://www.youtube.com/watch?v=LXDi5qNu4xA"
+        "须尽欢" to "https://www.youtube.com/watch?v=LXDi5qNu4xA",
+        "夜色" to "https://www.youtube.com/watch?v=aatVmb9ZCws",
+        "快乐阿拉蕾" to "https://www.youtube.com/watch?v=4haZeezqMio",
+        "别让爱凋落" to "https://www.youtube.com/watch?v=93U7ifus358",
+        "跳楼机" to "https://www.youtube.com/watch?v=Hkd45-teUzg",
+        "列车开往春天" to "https://www.youtube.com/watch?v=ZQg0ezB-q8g",
+        "身骑白马" to "https://www.youtube.com/watch?v=aeN05li9_i0",
+        "赐我" to "https://www.youtube.com/watch?v=UwQjBW5pm1A",
+        "执迷不悟" to "https://www.youtube.com/watch?v=8H_NZ1_FR8o",
+        "忘川彼岸" to "https://www.youtube.com/watch?v=dhF0ANt9erI",
+        "想某人" to "https://www.youtube.com/watch?v=xWegMGxyetY",
+        "折风渡夜" to "https://www.youtube.com/watch?v=vNRFV0SITFs",
+        "姑娘在远方" to "https://www.youtube.com/watch?v=dSOz373wvrk",
+        "罗曼蒂克的爱情" to "https://www.youtube.com/watch?v=0tPahfiueJ0",
+        "陪我过个冬" to "https://www.youtube.com/watch?v=o7pyoXc1-CM"
     )
 
     val isHome: Boolean
