@@ -74,6 +74,8 @@
 - 赐我 https://www.youtube.com/watch?v=UwQjBW5pm1A
 - 执迷不悟 https://www.youtube.com/watch?v=8H_NZ1_FR8o
 - 忘川彼岸 https://www.youtube.com/watch?v=dhF0ANt9erI
+- 想某人 https://www.youtube.com/watch?v=xWegMGxyetY
+- 折风渡夜 https://www.youtube.com/watch?v=vNRFV0SITFs
 
 不嗨来找我。
 
