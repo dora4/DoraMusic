@@ -379,18 +379,14 @@ class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
         }
     }
 
-    
     override fun onDrawerOpened() {
         lrcListView.visibility = View.INVISIBLE
-        rvHomeModule.visibility = View.INVISIBLE
-        playModeControl.refreshButtonStatus(btnMusicPlayMode!!)
+        playModeControl.refreshButtonStatus(btnMusicPlayMode)
         lyricLoader.searchLrc(curMusic)
     }
-
     
     override fun onDrawerClosed() {
         lrcListView.visibility = View.VISIBLE
-        rvHomeModule.visibility = View.VISIBLE
         slidingView.visibility = View.GONE
     }
 

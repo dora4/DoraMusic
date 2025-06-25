@@ -194,7 +194,7 @@ class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, 
 //                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }
         } else {
-            defaultAlbumIcon?.let {
+            defaultAlbumIcon.let {
                 MediaManager.updateNotification(it, music.musicName, music.artist)
             }
         }
