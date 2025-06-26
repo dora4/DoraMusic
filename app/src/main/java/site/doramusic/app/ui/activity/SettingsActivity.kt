@@ -1,6 +1,8 @@
 package site.doramusic.app.ui.activity
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.walletconnect.web3.modal.client.Web3Modal
 import dora.arouter.open
 import dora.firebase.SpmUtils.spmSelectContent
+import dora.pgyer.PgyVersionUpdate
 import dora.skin.SkinManager
 import dora.trade.DoraTrade
 import dora.util.StatusBarUtils
@@ -189,6 +192,33 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                             amount)
                     }
                 })
+            }
+            R.id.rl_settings_check_update -> {
+                PgyVersionUpdate.checkVersion(this, "b32485d39298de8a302c67883e192107",
+                    "ee2ab0aa8ba49f78e2ac1cf4f1d54c66", object : PgyVersionUpdate.UpdateListener {
+                        override fun onError(msg: String) {
+                        }
+
+                        override fun onLatestVersion() {
+                            showShortToast(getString(R.string.already_latest_version))
+                        }
+
+                        override fun onUpdate(
+                            versionCode: Int,
+                            versionName: String,
+                            isForceUpdate: Boolean,
+                            updateLog: String,
+                            downloadUrl: String
+                        ) {
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.data = Uri.parse(downloadUrl)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            try {
+                                startActivity(intent)
+                            } catch (ignore: ActivityNotFoundException) {
+                            }
+                        }
+                    })
             }
             R.id.rl_settings_user_protocol -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {

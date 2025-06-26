@@ -66,4 +66,6 @@
     <string name="no_songs_scanned">No songs scanned</string>
     <string name="donate_successfully">We have received your donation. Thank you for your support! Transaction hash: %1$s</string>
     <string name="auto_connect_vpn_on_launch">Auto VPN Connect on Launch</string>
+    <string name="check_update">Check Update</string>
+    <string name="already_latest_version">Already the latest version.</string>
 </resources>

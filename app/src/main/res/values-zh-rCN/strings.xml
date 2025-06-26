@@ -68,4 +68,6 @@
     <string name="no_songs_scanned">未扫描到歌曲</string>
     <string name="donate_successfully">我们已收到您的捐赠，感谢您的支持!交易哈希：%1$s</string>
     <string name="auto_connect_vpn_on_launch">启动时自动连接VPN</string>
+    <string name="check_update">检测更新</string>
+    <string name="already_latest_version">已是最新版本</string>
 </resources>
