@@ -81,7 +81,6 @@
 - 陪我过个冬 https://www.youtube.com/watch?v=o7pyoXc1-CM
 - 末班车 https://www.youtube.com/watch?v=7j16GT6DTEM
 - 最近 https://www.youtube.com/watch?v=nn2Z7EgdRpA
-- 执迷不悟 https://www.youtube.com/watch?v=8H_NZ1_FR8o
 
 不嗨来找我。
 
