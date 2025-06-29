@@ -80,6 +80,7 @@
 - 末班车 https://www.youtube.com/watch?v=7j16GT6DTEM
 - 最近 https://www.youtube.com/watch?v=nn2Z7EgdRpA
 - 如果爱忘了 https://www.youtube.com/watch?v=cKN20gqTTwk
+- 忘了 https://www.youtube.com/watch?v=paNgLF8tLjs
 
 不嗨来找我。
 
