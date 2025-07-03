@@ -83,7 +83,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private lateinit var albumDao: OrmDao<Album>
     private lateinit var folderDao: OrmDao<Folder>
     private val adapter = HomeAdapter()
-
     private val songMap = mapOf(
         "是你" to "https://www.youtube.com/watch?v=aM0EBp9OaAM",
         "爱错" to "https://www.youtube.com/watch?v=AQLuz0wamT8",
@@ -104,8 +103,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         "如愿" to "https://www.youtube.com/watch?v=IOb_IX3u2ag",
         "过火" to "https://www.youtube.com/watch?v=Hj8P88ZtrwM",
         "吻得太逼真" to "https://www.youtube.com/watch?v=xY37BazFzYE",
-        "记事本" to "https://www.youtube.com/watch?v=9eGwqB68Ngk",
-        "下一个天亮" to "https://www.youtube.com/watch?v=tun3WrH2b3Q",
         "春不晚" to "https://www.youtube.com/watch?v=uYGN77Cww-w",
         "半点心" to "https://www.youtube.com/watch?v=sIucMXINXaI",
         "大天蓬" to "https://www.youtube.com/watch?v=7-_4NcjDlBs",
@@ -144,7 +141,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         "折风渡夜" to "https://www.youtube.com/watch?v=vNRFV0SITFs",
         "姑娘在远方" to "https://www.youtube.com/watch?v=dSOz373wvrk",
         "罗曼蒂克的爱情" to "https://www.youtube.com/watch?v=0tPahfiueJ0",
-        "陪我过个冬" to "https://www.youtube.com/watch?v=o7pyoXc1-CM"
+        "陪我过个冬" to "https://www.youtube.com/watch?v=o7pyoXc1-CM",
+        "末班车" to "https://www.youtube.com/watch?v=7j16GT6DTEM",
+        "最近" to "https://www.youtube.com/watch?v=nn2Z7EgdRpA",
+        "如果爱忘了" to "https://www.youtube.com/watch?v=cKN20gqTTwk",
+        "忘了" to "https://www.youtube.com/watch?v=paNgLF8tLjs",
+        "把回忆拼好给你" to "https://www.youtube.com/watch?v=rFWcBkBRTkU",
+        "满天星辰不及你" to "https://www.youtube.com/watch?v=bmnRFkpIunI",
+        "爱不得忘不舍" to "https://www.youtube.com/watch?v=h1pzMFgNpcQ",
+        "嘉宾" to "https://www.youtube.com/watch?v=j1wDEcxC2wg",
+        "三拜红尘凉" to "https://www.youtube.com/watch?v=Pzx1tctmFB4",
+        "悬溺" to "https://www.youtube.com/watch?v=U9Z9X_YXaNY",
+        "青衣" to "https://www.youtube.com/watch?v=HSoXfMPhz_w",
+        "谪仙" to "https://www.youtube.com/watch?v=9wJ9uhxoEc4"
     )
 
     val isHome: Boolean

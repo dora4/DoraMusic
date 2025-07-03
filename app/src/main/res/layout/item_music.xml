@@ -31,7 +31,6 @@
                 android:id="@+id/iv_music_play_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_play_indicator"
                 app:tint="@color/colorPrimary"
                 android:visibility="gone" />
 
