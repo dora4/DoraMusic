@@ -153,7 +153,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         "三拜红尘凉" to "https://www.youtube.com/watch?v=Pzx1tctmFB4",
         "悬溺" to "https://www.youtube.com/watch?v=U9Z9X_YXaNY",
         "青衣" to "https://www.youtube.com/watch?v=HSoXfMPhz_w",
-        "谪仙" to "https://www.youtube.com/watch?v=9wJ9uhxoEc4"
+        "谪仙" to "https://www.youtube.com/watch?v=9wJ9uhxoEc4",
+        "好心分手" to "https://www.youtube.com/watch?v=xsmdIPPOIZw",
+        "我知道你不爱我" to "https://www.youtube.com/watch?v=JFRTSDkiSsk",
+        "我又想你了" to "https://www.youtube.com/watch?v=jMX0hJCumbE",
+        "鬼迷心窍" to "https://www.youtube.com/watch?v=QwvEXuIm69A",
+        "三月里的小雨" to "https://www.youtube.com/watch?v=H-lOpI74KlU",
+        "暗里着迷" to "https://www.youtube.com/watch?v=59kWrSoGa9Y",
+        "流着泪说分手" to "https://www.youtube.com/watch?v=p6HLYyJjcqo",
+        "鲸落" to "https://www.youtube.com/watch?v=T2GLA6yUhvk",
+        "我曾用心爱着你" to "https://www.youtube.com/watch?v=ip9nkfDQSFU",
+        "落差" to "https://www.youtube.com/watch?v=FkK7SLdZpbM"
     )
 
     val isHome: Boolean
