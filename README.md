@@ -99,6 +99,8 @@
 - 鲸落 https://www.youtube.com/watch?v=T2GLA6yUhvk
 - 我曾用心爱着你 https://www.youtube.com/watch?v=ip9nkfDQSFU
 - 落差 https://www.youtube.com/watch?v=FkK7SLdZpbM
+- 偷心 https://www.youtube.com/watch?v=RmvYEvsUvb4
+- 未必 https://www.youtube.com/watch?v=dIWNReIyUL4
   
 不嗨来找我。
 
