@@ -106,6 +106,7 @@
 - 孤单心事 https://www.youtube.com/watch?v=ZDnwJNAS2kk
 - 浪子闲话 https://www.youtube.com/watch?v=3Fq7XwrMv3o
 - 求佛 https://www.youtube.com/watch?v=PrE5YuraYNg
+- 笑纳 https://www.youtube.com/watch?v=UF8UHdjwmoA
 
 不嗨来找我。
 
