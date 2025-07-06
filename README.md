@@ -99,7 +99,7 @@
 - 鲸落 https://www.youtube.com/watch?v=T2GLA6yUhvk
 - 我曾用心爱着你 https://www.youtube.com/watch?v=ip9nkfDQSFU
 - 落差 https://www.youtube.com/watch?v=FkK7SLdZpbM
-- 偷心 https://www.youtube.com/watch?v=axuktB2-LgE
+- 偷心 https://www.youtube.com/watch?v=CWm9oJJ0V7g
 - 未必 https://www.youtube.com/watch?v=dIWNReIyUL4
 - 先说谎的人 https://www.youtube.com/watch?v=N1ap5mNMuLY
 - 去远方 https://www.youtube.com/watch?v=uj5dXtTy56M
