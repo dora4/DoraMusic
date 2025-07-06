@@ -104,6 +104,7 @@
 - 先说谎的人 https://www.youtube.com/watch?v=N1ap5mNMuLY
 - 去远方 https://www.youtube.com/watch?v=uj5dXtTy56M
 - 孤单心事 https://www.youtube.com/watch?v=ZDnwJNAS2kk
+- 浪子闲话 https://www.youtube.com/watch?v=3Fq7XwrMv3o
 
 不嗨来找我。
 
