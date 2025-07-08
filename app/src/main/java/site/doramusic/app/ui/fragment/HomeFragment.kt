@@ -163,7 +163,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         "流着泪说分手" to "https://www.youtube.com/watch?v=p6HLYyJjcqo",
         "鲸落" to "https://www.youtube.com/watch?v=T2GLA6yUhvk",
         "我曾用心爱着你" to "https://www.youtube.com/watch?v=ip9nkfDQSFU",
-        "落差" to "https://www.youtube.com/watch?v=FkK7SLdZpbM"
+        "落差" to "https://www.youtube.com/watch?v=FkK7SLdZpbM",
+        "偷心" to "https://www.youtube.com/watch?v=CWm9oJJ0V7g",
+        "未必" to "https://www.youtube.com/watch?v=dIWNReIyUL4",
+        "先说谎的人" to "https://www.youtube.com/watch?v=N1ap5mNMuLY",
+        "去远方" to "https://www.youtube.com/watch?v=uj5dXtTy56M",
+        "孤单心事" to "https://www.youtube.com/watch?v=ZDnwJNAS2kk",
+        "浪子闲话" to "https://www.youtube.com/watch?v=3Fq7XwrMv3o",
+        "求佛" to "https://www.youtube.com/watch?v=PrE5YuraYNg",
+        "笑纳" to "https://www.youtube.com/watch?v=UF8UHdjwmoA",
+        "叹云兮" to "https://www.youtube.com/watch?v=ozfGodF0Wss",
+        "最后一页" to "https://www.youtube.com/watch?v=9t-UhvTIlSQ",
+        "若月亮没来" to "https://www.youtube.com/watch?v=eKcqZUc66ac",
+        "若把你" to "https://www.youtube.com/watch?v=37WCTcVEOPs",
+        "感谢你曾来过" to "https://www.youtube.com/watch?v=xrvBuhNz7OM",
+        "下一个天亮" to "https://www.youtube.com/watch?v=pjcE7ytGXJQ",
+        "Zombie" to "https://www.youtube.com/watch?v=2Gw71CYEMHs",
+        "囧架架" to "https://www.youtube.com/watch?v=-P0zrrwFGgQ",
+        "像鱼" to "https://www.youtube.com/watch?v=RDzNIvxrLWk",
+        "黄昏" to "https://www.youtube.com/watch?v=o7sk2Kt_2hw",
+        "New Boy" to "https://www.youtube.com/watch?v=mwYCjjK8g0w",
+        "追梦人" to "https://www.youtube.com/watch?v=kqJMPfoa2NU"
     )
 
     val isHome: Boolean
