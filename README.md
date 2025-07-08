@@ -117,6 +117,8 @@
 - 囧架架 https://www.youtube.com/watch?v=-P0zrrwFGgQ
 - 像鱼 https://www.youtube.com/watch?v=RDzNIvxrLWk
 - 黄昏 https://www.youtube.com/watch?v=o7sk2Kt_2hw
+- New Boy https://www.youtube.com/watch?v=mwYCjjK8g0w
+- 追梦人 https://www.youtube.com/watch?v=kqJMPfoa2NU
   
 不嗨来找我。
 
