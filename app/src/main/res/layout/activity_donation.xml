@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".ui.activity.DonationActivity">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:ignore="MissingDefaultResource">
+
+        <View
+                android:id="@+id/statusbar_donation"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/skin_theme_color" />
+
+        <dora.widget.DoraTitleBar
+                android:id="@+id/titlebar_donation"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                app:dview_title="@string/donation_certificate"
+                android:background="@color/skin_theme_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:ignore="MissingDefaultResource">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/honor_bg"/>
+            <TextView
+                    android:id="@+id/tv_appreciation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center_vertical|start"
+                    android:textColor="@color/colorTextPrimary"
+                    android:text="@string/appreciation_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

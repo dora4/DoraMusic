@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 34
 
-    val code = 44
-    val version = "1.4.8"
+    val code = 45
+    val version = "1.5.0"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 23
@@ -111,7 +111,7 @@ dependencies {
 
     // Dora全家桶
     implementation("com.github.dora4:dora:1.3.14")
-    implementation("com.github.dora4:dcache-android:3.3.12")
+    implementation("com.github.dora4:dcache-android:3.4.4")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
     implementation("com.github.dora4:dora-firebase-support:1.13")
@@ -126,7 +126,7 @@ dependencies {
     implementation("com.github.dora4:dview-alert-dialog:1.24")
     implementation("com.github.dora4:dview-loading-dialog:1.5")
     implementation("com.github.dora4:dview-colors:1.1")
-    implementation("com.github.dora4:dview-skins:1.7")
+    implementation("com.github.dora4:dview-skins:1.10")
     implementation("com.github.dora4:dview-bottom-dialog:1.13")
     implementation("com.github.dora4:dview-avatar:1.4")
     implementation("com.github.dora4:dview-flipper-view:1.2")

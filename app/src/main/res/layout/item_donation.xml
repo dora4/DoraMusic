@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+            android:id="@+id/tv_donation_hash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="15sp" />
+
+    <TextView
+            android:id="@+id/tv_donation_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/colorTextSecondary"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="15sp" />
+
+    <TextView
+            android:id="@+id/tv_donation_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/colorTextSecondary"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="15sp" />
+
+</LinearLayout>

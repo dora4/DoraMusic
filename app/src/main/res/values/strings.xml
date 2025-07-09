@@ -68,4 +68,16 @@
     <string name="auto_connect_vpn_on_launch">Auto VPN Connect on Launch</string>
     <string name="check_update">Check Update</string>
     <string name="already_latest_version">Already the latest version.</string>
+    <string name="donation_certificate">Donation Certificate</string>
+    <string name="appreciation_content">Thank You for Your Support
+
+Dear Donor,
+
+Thank you for your support and donation to our software project. Your support is crucial for the continuous development and maintenance of the project. We will continue to optimize our features, improve the user experience, and give back to the community.
+
+We sincerely appreciate your generosity and trust!
+
+Best regards,
+
+The [Dora Music] Team</string>
 </resources>

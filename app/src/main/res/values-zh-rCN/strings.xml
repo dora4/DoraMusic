@@ -70,4 +70,6 @@
     <string name="auto_connect_vpn_on_launch">启动时自动连接VPN</string>
     <string name="check_update">检测更新</string>
     <string name="already_latest_version">已是最新版本</string>
+    <string name="donation_certificate">赞助者的感谢信</string>
+    <string name="appreciation_content">感谢您的支持 尊敬的捐赠者： 感谢您对本软件项目的支持与捐赠。您的支持对于项目的持续开发和维护至关重要，我们将继续努力，优化功能，提升体验，回馈社区。 衷心感谢您的慷慨与信任！ 祝好！ 朵拉音乐 团队</string>
 </resources>

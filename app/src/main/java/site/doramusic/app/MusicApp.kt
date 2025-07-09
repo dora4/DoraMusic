@@ -6,6 +6,8 @@ import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
+import dora.db.builder.WhereBuilder
+import dora.db.dao.DaoFactory
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.trade.DoraTrade
@@ -18,6 +20,7 @@ import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.MusicService
+import site.doramusic.app.model.Donation
 
 /**
  * 朵拉音乐APP。
@@ -65,7 +68,16 @@ class MusicApp : BaseApplication(), AppConfig {
                     orderId: String,
                     transactionHash: String
                 ) {
-                    ToastUtils.showLong(getString(R.string.donate_successfully, transactionHash))
+                    val donation = DaoFactory.getDao(Donation::class.java).selectOne(
+                        WhereBuilder.create().addWhereEqualTo("order_id", orderId)
+                    )
+                    if (donation != null) {
+                        donation.pending = true
+                        donation.transactionHash = transactionHash
+                        DaoFactory.getDao(Donation::class.java).update(donation)
+                        // 相信粉丝不会取消
+                        ToastUtils.showLong(getString(R.string.donate_successfully, transactionHash))
+                    }
                 }
             })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -91,7 +103,7 @@ class MusicApp : BaseApplication(), AppConfig {
             .database(AppConfig.DB_NAME)
             .version(AppConfig.DB_VERSION)
             .tables(Music::class.java, Artist::class.java,
-                Album::class.java, Folder::class.java)
+                Album::class.java, Folder::class.java, Donation::class.java)
             .build())
     }
 }

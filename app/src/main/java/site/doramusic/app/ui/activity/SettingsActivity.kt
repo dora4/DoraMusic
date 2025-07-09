@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.walletconnect.web3.modal.client.Modal
 import com.walletconnect.web3.modal.client.Web3Modal
 import dora.arouter.open
+import dora.db.builder.WhereBuilder
+import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.pgyer.PgyVersionUpdate
 import dora.skin.SkinManager
@@ -24,6 +27,7 @@ import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.media.MediaManager
+import site.doramusic.app.model.Donation
 import site.doramusic.app.util.PrefsManager
 
 /**
@@ -62,7 +66,10 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsAutoConnectVpn.isChecked = prefsManager.getColdLaunchAutoConnectVPN()
         binding.tbSettingsShake.isChecked = prefsManager.getShakeChangeMusic()
         binding.tbSettingsBassBoost.isChecked = prefsManager.getBassBoost()
-
+        if (DaoFactory.getDao(Donation::class.java).count(WhereBuilder.create().addWhereEqualTo("pending", true)) > 0) {
+            // 有捐赠记录才显示此栏
+            binding.rlSettingsDonation.visibility = View.VISIBLE
+        }
         binding.tbSettingsAutoPlay.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
@@ -183,15 +190,34 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                                 0.0
                             }
                         }
-                        DoraTrade.donate(this@SettingsActivity,
+                        DoraTrade.pay(this@SettingsActivity,
                             "vs42INhGWDnq",
                             "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw",
                             getString(R.string.i_want_to_donate),
                             getString(R.string.donation_speech),
                             "0xcBa852Ef29a43a7542B88F60C999eD9cB66f6000",
-                            amount)
+                            amount,
+                            object : DoraTrade.OrderListener {
+                                override fun onPrintOrder(
+                                    orderId: String,
+                                    chain: Modal.Model.Chain,
+                                    value: Double
+                                ) {
+                                    // 保存捐赠信息
+                                    val donation = Donation(
+                                        orderId = orderId,
+                                        tokenAmount = value,
+                                        tokenSymbol = "POL",
+                                        timestamp = System.currentTimeMillis(),
+                                    )
+                                    DaoFactory.getDao(Donation::class.java).insert(donation)
+                                }
+                            })
                     }
                 })
+            }
+            R.id.rl_settings_donation -> {
+                open(ARoutePath.ACTIVITY_DONATION)
             }
             R.id.rl_settings_check_update -> {
                 PgyVersionUpdate.checkVersion(this, "b32485d39298de8a302c67883e192107",

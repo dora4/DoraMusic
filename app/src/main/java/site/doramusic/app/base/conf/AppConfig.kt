@@ -34,7 +34,7 @@ interface AppConfig {
 
         // 数据库相关
         const val DB_NAME = "db_doramusic"
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
 
         // 页面路由
         const val ROUTE_START_FROM_LOCAL = 1
