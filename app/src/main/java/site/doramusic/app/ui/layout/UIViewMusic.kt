@@ -43,7 +43,7 @@ import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.MusicItemAdapter
 import site.doramusic.app.widget.LetterView
 
-class UIViewMusic(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
+class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
     AppConfig {
 
     private var from: Int = 0

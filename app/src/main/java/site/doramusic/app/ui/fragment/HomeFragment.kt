@@ -61,7 +61,7 @@ import site.doramusic.app.media.MusicControl
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.BrowserActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
-import site.doramusic.app.ui.layout.ILyricDrawer
+import site.doramusic.app.ui.layout.IPlayerLyricDrawer
 import site.doramusic.app.ui.layout.IMenuDrawer
 import site.doramusic.app.ui.layout.UIBottomBar
 import site.doramusic.app.ui.layout.UIMusicPlay
@@ -71,7 +71,7 @@ import site.doramusic.app.util.PrefsManager
 import java.util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
-    MusicControl.OnConnectCompletionListener, ILyricDrawer {
+    MusicControl.OnConnectCompletionListener, IPlayerLyricDrawer {
 
     private lateinit var uiManager: UIManager
     private lateinit var bottomBar: UIBottomBar

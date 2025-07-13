@@ -24,7 +24,7 @@ import site.doramusic.app.ui.adapter.FolderItemAdapter
 import site.doramusic.app.widget.LetterView
 import java.util.*
 
-class UIViewFolder(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
+class UIViewFolder(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private lateinit var statusBarFolder: View
     private lateinit var titlebar: DoraTitleBar

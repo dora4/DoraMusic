@@ -24,7 +24,7 @@ import site.doramusic.app.ui.adapter.AlbumItemAdapter
 import site.doramusic.app.widget.LetterView
 import java.util.*
 
-class UIViewAlbum(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
+class UIViewAlbum(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private lateinit var statusBarAlbum: View
     private lateinit var titlebar: DoraTitleBar

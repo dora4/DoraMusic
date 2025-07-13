@@ -13,13 +13,13 @@ import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.ui.activity.MainActivity
-import site.doramusic.app.ui.layout.ILyricDrawer
+import site.doramusic.app.ui.layout.IPlayerLyricDrawer
 import site.doramusic.app.ui.layout.UIViewAlbum
 import site.doramusic.app.ui.layout.UIViewArtist
 import site.doramusic.app.ui.layout.UIViewFolder
 import site.doramusic.app.ui.layout.UIViewMusic
 
-class UIManager(private var drawer: ILyricDrawer,
+class UIManager(private var drawer: IPlayerLyricDrawer,
                 // 外部要用，不能private
                 val view: View) : AppConfig, OnBackListener {
 
@@ -194,8 +194,8 @@ class UIManager(private var drawer: ILyricDrawer,
     }
 
     private fun init() {
-        mainViewPager = findViewById(R.id.vp_home_master) as ViewPager
-        secondaryViewPager = findViewById(R.id.vp_home_slave) as ViewPager
+        mainViewPager = findViewById(R.id.vp_home_main) as ViewPager
+        secondaryViewPager = findViewById(R.id.vp_home_secondary) as ViewPager
         mainViews = ArrayList()
         secondaryViews = ArrayList()
         mainViewPager.addOnPageChangeListener(OnPageChangeListenerMain())

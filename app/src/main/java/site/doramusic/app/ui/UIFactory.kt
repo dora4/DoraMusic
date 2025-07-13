@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import dora.db.table.OrmTable
 import dora.util.StatusBarUtils
-import site.doramusic.app.ui.layout.ILyricDrawer
+import site.doramusic.app.ui.layout.IPlayerLyricDrawer
 
-abstract class UIFactory(protected var drawer: ILyricDrawer,
+abstract class UIFactory(protected var drawer: IPlayerLyricDrawer,
                          protected var manager: UIManager) : ViewInflater {
 
     protected val inflater: LayoutInflater = manager.inflater

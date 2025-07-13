@@ -41,7 +41,7 @@ import java.util.Locale
 /**
  * 底部控制条。
  */
-class UIBottomBar(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
+class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
         View.OnClickListener, AppConfig {
 
     var handler: Handler

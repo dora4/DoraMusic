@@ -62,7 +62,7 @@ import site.doramusic.app.widget.SlidingView
 /**
  * 音乐播放控制、歌词滚动界面。
  */
-class UIMusicPlay(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
+class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
         View.OnClickListener, AppConfig, SeekBar.OnSeekBarChangeListener,
         SlidingDrawer.OnDrawerCloseListener, SlidingDrawer.OnDrawerOpenListener {
 

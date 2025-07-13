@@ -24,7 +24,7 @@ import site.doramusic.app.ui.adapter.ArtistItemAdapter
 import site.doramusic.app.widget.LetterView
 import java.util.*
 
-class UIViewArtist(drawer: ILyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
+class UIViewArtist(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private lateinit var rvArtist: RecyclerView
     private lateinit var titlebar: DoraTitleBar

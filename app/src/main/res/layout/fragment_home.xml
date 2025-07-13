@@ -242,14 +242,14 @@
         </RelativeLayout>
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_home_master"
+            android:id="@+id/vp_home_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/ll_home_bottom_layout"
             android:visibility="invisible" />
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_home_slave"
+            android:id="@+id/vp_home_secondary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/ll_home_bottom_layout"
