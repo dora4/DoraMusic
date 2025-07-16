@@ -70,7 +70,7 @@
 - 列车开往春天 https://www.youtube.com/watch?v=ZQg0ezB-q8g
 - 北京欢迎你 https://www.youtube.com/watch?v=_Pm80NKWuks
 - 赐我 https://www.youtube.com/watch?v=UwQjBW5pm1A
-- 执迷不悟 https://www.youtube.com/watch?v=8H_NZ1_FR8o
+- 樱花树下的约定 https://www.youtube.com/watch?v=8plzbfMYkCU
 - 忘川彼岸 https://www.youtube.com/watch?v=dhF0ANt9erI
 - 想某人 https://www.youtube.com/watch?v=xWegMGxyetY
 - 折风渡夜 https://www.youtube.com/watch?v=vNRFV0SITFs
