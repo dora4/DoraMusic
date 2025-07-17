@@ -96,7 +96,7 @@
 - 三月里的小雨 https://www.youtube.com/watch?v=H-lOpI74KlU
 - 暗里着迷 https://www.youtube.com/watch?v=59kWrSoGa9Y
 - 流着泪说分手 https://www.youtube.com/watch?v=p6HLYyJjcqo
-- 鲸落 https://www.youtube.com/watch?v=T2GLA6yUhvk
+- 纸短情长 https://www.youtube.com/watch?v=WQ2v_7IVCUA
 - 我曾用心爱着你 https://www.youtube.com/watch?v=ip9nkfDQSFU
 - 落差 https://www.youtube.com/watch?v=FkK7SLdZpbM
 - 偷心 https://www.youtube.com/watch?v=CWm9oJJ0V7g
