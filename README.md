@@ -37,7 +37,7 @@
 - 飞鸟和蝉 https://www.youtube.com/watch?v=-VjwtAYHzBk
 - 如愿 https://www.youtube.com/watch?v=IOb_IX3u2ag
 - 过火 https://www.youtube.com/watch?v=Hj8P88ZtrwM
-- 吻得太逼真 https://www.youtube.com/watch?v=xY37BazFzYE
+- 敢爱敢做 https://www.youtube.com/watch?v=HGmTVMZR0hE
 - 春不晚 https://www.youtube.com/watch?v=uYGN77Cww-w
 - 半点心 https://www.youtube.com/watch?v=sIucMXINXaI
 - 大天蓬 https://www.youtube.com/watch?v=7-_4NcjDlBs
@@ -70,7 +70,7 @@
 - 列车开往春天 https://www.youtube.com/watch?v=ZQg0ezB-q8g
 - 北京欢迎你 https://www.youtube.com/watch?v=_Pm80NKWuks
 - 赐我 https://www.youtube.com/watch?v=UwQjBW5pm1A
-- 执迷不悟 https://www.youtube.com/watch?v=8H_NZ1_FR8o
+- 樱花树下的约定 https://www.youtube.com/watch?v=8plzbfMYkCU
 - 忘川彼岸 https://www.youtube.com/watch?v=dhF0ANt9erI
 - 想某人 https://www.youtube.com/watch?v=xWegMGxyetY
 - 折风渡夜 https://www.youtube.com/watch?v=vNRFV0SITFs
@@ -92,11 +92,11 @@
 - 好心分手 https://www.youtube.com/watch?v=xsmdIPPOIZw
 - 我知道你不爱我 https://www.youtube.com/watch?v=JFRTSDkiSsk
 - 我又想你了 https://www.youtube.com/watch?v=jMX0hJCumbE
-- 鬼迷心窍 https://www.youtube.com/watch?v=QwvEXuIm69A
+- It's My Life https://www.youtube.com/watch?v=vx2u5uUu3DE
 - 三月里的小雨 https://www.youtube.com/watch?v=H-lOpI74KlU
 - 暗里着迷 https://www.youtube.com/watch?v=59kWrSoGa9Y
 - 流着泪说分手 https://www.youtube.com/watch?v=p6HLYyJjcqo
-- 鲸落 https://www.youtube.com/watch?v=T2GLA6yUhvk
+- 纸短情长 https://www.youtube.com/watch?v=WQ2v_7IVCUA
 - 我曾用心爱着你 https://www.youtube.com/watch?v=ip9nkfDQSFU
 - 落差 https://www.youtube.com/watch?v=FkK7SLdZpbM
 - 偷心 https://www.youtube.com/watch?v=CWm9oJJ0V7g
