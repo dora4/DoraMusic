@@ -13,12 +13,14 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
+import com.walletconnect.web3.modal.client.Web3Modal
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
@@ -61,6 +63,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     private val backListeners: MutableList<OnBackListener> = ArrayList()
     private var earphoneReceiver: EarphoneReceiver? = null
     private lateinit var prefsManager: PrefsManager
+    private var addressView: TextView? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
@@ -68,6 +71,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
 
     companion object {
         const val REQUEST_VPN_PERMISSION = 1
+        const val REQUEST_WALLET_AUTHORIZATION = 2
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -77,6 +81,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             if (requestCode == REQUEST_VPN_PERMISSION) {
                 DoraTrade.connectVPN(this, "vs42INhGWDnq",
                     "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw")
+            } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
+                addressView?.text = Web3Modal.getAccount()?.address
             }
         }
     }
@@ -209,8 +215,29 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             }
         })
         val headerView = mBinding.nvMain.getHeaderView(0)
+        val avatarView = headerView.findViewById<AppCompatImageView>(R.id.iv_drawer_header_avatar)
+        addressView = headerView.findViewById<TextView>(R.id.tv_drawer_header_nickname)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         versionNameView.text = BuildConfig.APP_VERSION
+        if (Web3Modal.getAccount() != null) {
+            addressView!!.text = Web3Modal.getAccount()!!.address
+        }
+        avatarView.setOnClickListener {
+            // 钱包授权登录
+            if (Web3Modal.getAccount() == null) {
+                closeDrawer()
+                DoraTrade.connectWallet(this, REQUEST_WALLET_AUTHORIZATION)
+            } else {
+                val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+                DoraAlertDialog(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
+                    themeColor(skinThemeColor)
+                    positiveListener {
+                        DoraTrade.disconnectWallet()
+                        addressView?.text = ""
+                    }
+                }
+            }
+        }
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 // 扫描歌曲

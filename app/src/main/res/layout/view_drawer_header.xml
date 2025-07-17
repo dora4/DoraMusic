@@ -8,7 +8,7 @@
     android:layout_height="240dp"
     android:background="@color/skin_theme_color">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_drawer_header_avatar"
         android:layout_width="65dp"
         android:layout_height="65dp"
@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:textStyle="bold"
+            android:layout_marginHorizontal="10dp"
+            android:textColor="@color/colorTextPrimary"
         android:layout_below="@id/iv_drawer_header_avatar"/>
     <LinearLayout
         android:id="@+id/ll_drawer_header"
