@@ -37,7 +37,7 @@
 - 飞鸟和蝉 https://www.youtube.com/watch?v=-VjwtAYHzBk
 - 如愿 https://www.youtube.com/watch?v=IOb_IX3u2ag
 - 过火 https://www.youtube.com/watch?v=Hj8P88ZtrwM
-- 吻得太逼真 https://www.youtube.com/watch?v=xY37BazFzYE
+- 敢爱敢做 https://www.youtube.com/watch?v=HGmTVMZR0hE
 - 春不晚 https://www.youtube.com/watch?v=uYGN77Cww-w
 - 半点心 https://www.youtube.com/watch?v=sIucMXINXaI
 - 大天蓬 https://www.youtube.com/watch?v=7-_4NcjDlBs
