@@ -183,7 +183,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         "像鱼" to "https://www.youtube.com/watch?v=RDzNIvxrLWk",
         "黄昏" to "https://www.youtube.com/watch?v=o7sk2Kt_2hw",
         "New Boy" to "https://www.youtube.com/watch?v=mwYCjjK8g0w",
-        "追梦人" to "https://www.youtube.com/watch?v=kqJMPfoa2NU"
+        "追梦人" to "https://www.youtube.com/watch?v=kqJMPfoa2NU",
+        "无情画 刘雅松热播版-王唯旖.mp3" to "https://bafybeiab7wfhmb5gsc7ofdvjsjsg4x3ydcfc2kwzna2hccfyrd4kz5ewu4.ipfs.w3s.link",
+        "风催雨 弹唱版-费戚戚.mp3" to "https://bafybeiaewxe7tgenyml5tw2k6kww72k7akbfaq5i6elhszcq2afbkc5u3a.ipfs.w3s.link",
+        "你在终点等我-王菲.mp3" to "https://bafybeiegprqa422jnnkhxiumvon5ikozlse7zmn24xsiczz3hxq2i7qejm.ipfs.w3s.link",
+        "探故知-浅影阿, 汐音社.mp3" to "https://bafybeiekhdiz4dzk4rpu5yzicbzbscdn654wmt4zeboyhwlikvb5pgz2ae.ipfs.w3s.link",
+        "飞鸟和蝉-任然.mp3" to "https://bafybeiewz7atqt32kmnpbwvczzc7vc3vozy6dsw2ggnjmk36rpvs7kyz7u.ipfs.w3s.link",
+        "典狱司-抿抿甜.mp3" to "https://bafybeif4vy3wq5uu5dqfuj3mxw7f42n25ii2dsoddqhu23zdkbel2hyxni.ipfs.w3s.link",
+        "最近-李圣杰.mp3" to "https://bafybeifzinnzcyfyymopkxvhmtn43m2y4r6hb23nm2ixs6x62x7u42fc7y.ipfs.w3s.link",
+        "精卫（热播DJ版）-相非相.flac" to "https://bafybeigkmtnggj2jhygcwg7xcazybgfehltuhk3j4qnb42ewaf3mgmaqay.ipfs.w3s.link",
+        "难却 DJ细霖版_待上浓妆好戏开场-平生不晚.mp3" to "https://bafybeigqawugf6hol2dsl75q7qltranksusdqdrwdcjto42bewrcxkmfgq.ipfs.w3s.link",
+        "爱错-王力宏.flac" to "https://bafybeihp6bcrhdfzjjylijuaet5rmoy4amjhozyubqzoeeddhbvwvmrzge.ipfs.w3s.link"
     )
 
     val isHome: Boolean
