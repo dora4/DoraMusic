@@ -152,4 +152,6 @@ dependencies {
 
     // banner
     implementation("io.github.youth5201314:banner:2.2.3")
+
+    implementation("com.nimbusds:nimbus-jose-jwt:9.31")
 }
