@@ -13,6 +13,9 @@ import java.io.IOException
 
 object IPFSUtils {
 
+    /**
+     * 上传到IPFS去中心化存储，并返回cid。
+     */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun uploadToWeb3Storage(file: File, onSuccess: (String) -> Unit, onError: (String) -> Unit) {
         val client = OkHttpClient()

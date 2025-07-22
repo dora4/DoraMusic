@@ -19,7 +19,8 @@ object UCANUtils {
     }
 
     /**
-     * 生成可用于 Web3.Storage 的 UCAN JWT
+     * 生成可用于 Web3.Storage 的 UCAN JWT。
+     *
      * @param privateKeyBytes Ed25519 私钥 32字节
      * @param issuerDID 例如 "did:key:z6MkmibVdapVvfV41EK7VVtCnYnQ1xmxFh5ihnhLGK55Ak8o"
      * @param audienceDID "did:web:web3.storage"
@@ -58,14 +59,14 @@ object UCANUtils {
     }
 
     /**
-     * Base64URL encode without padding
+     * Base64URL encode without padding。
      */
     private fun base64UrlEncode(data: ByteArray): String {
         return Base64.encodeToString(data, Base64.URL_SAFE or Base64.NO_PADDING or Base64.NO_WRAP)
     }
 
     /**
-     * 使用 Ed25519 签名（使用 BouncyCastle）
+     * 使用 Ed25519 签名（使用 BouncyCastle）。
      */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun signEd25519(privateKeyBytes: ByteArray, message: ByteArray): ByteArray {
@@ -82,7 +83,7 @@ object UCANUtils {
 
     /**
      * 将 32字节 raw Ed25519 私钥封装成 PKCS#8
-     * 如果你的私钥来源已是 PKCS#8，可跳过此转换
+     * 如果你的私钥来源已是 PKCS#8，可跳过此转换。
      */
     private fun convertRawEd25519PrivateKeyToPKCS8(rawKey: ByteArray): ByteArray {
         return Base64.decode("MC4CAQAwBQYDK2VwBCIEI" + Base64.encodeToString(rawKey, Base64.NO_WRAP), Base64.DEFAULT)
