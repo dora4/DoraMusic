@@ -21,6 +21,7 @@ import site.doramusic.app.db.Music
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.model.Donation
+import site.doramusic.app.model.DownloadTask
 
 /**
  * 朵拉音乐APP。
@@ -103,7 +104,9 @@ class MusicApp : BaseApplication(), AppConfig {
             .database(AppConfig.DB_NAME)
             .version(AppConfig.DB_VERSION)
             .tables(Music::class.java, Artist::class.java,
-                Album::class.java, Folder::class.java, Donation::class.java)
+                Album::class.java, Folder::class.java,
+                Donation::class.java, DownloadTask::class.java
+            )
             .build())
     }
 }

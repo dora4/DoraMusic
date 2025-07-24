@@ -132,6 +132,7 @@
             </intent-filter>
         </service>
 
+        <service android:name=".service.DownloadService" />
         <receiver
                 android:name=".receiver.BatteryReceiver"
                 android:exported="true">
