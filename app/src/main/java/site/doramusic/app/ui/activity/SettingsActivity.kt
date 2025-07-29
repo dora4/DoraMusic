@@ -219,6 +219,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             R.id.rl_settings_donation -> {
                 open(ARoutePath.ACTIVITY_DONATION)
             }
+            R.id.rl_settings_discord -> {
+                openDiscordInvite()
+            }
             R.id.rl_settings_check_update -> {
                 PgyVersionUpdate.checkVersion(this, "b32485d39298de8a302c67883e192107",
                     "ee2ab0aa8ba49f78e2ac1cf4f1d54c66", object : PgyVersionUpdate.UpdateListener {
@@ -256,6 +259,24 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                     withString("title", getString(R.string.privacy_policy_title))
                 }
             }
+        }
+    }
+
+    private fun openDiscordInvite() {
+        val inviteCode = "wXpPPAEk"
+        val discordUri = Uri.parse("discord://invite/$inviteCode")
+        val webUri = Uri.parse("https://discord.com/invite/$inviteCode")
+
+        // 尝试用 Discord App 打开
+        val appIntent = Intent(Intent.ACTION_VIEW, discordUri).apply {
+            `package` = "com.discord"
+        }
+        if (appIntent.resolveActivity(packageManager) != null) {
+            startActivity(appIntent)
+        } else {
+            // 回退到浏览器打开
+            val browserIntent = Intent(Intent.ACTION_VIEW, webUri)
+            startActivity(browserIntent)
         }
     }
 }
