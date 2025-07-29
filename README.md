@@ -15,6 +15,12 @@
 - 检测耳机与人性化的自动暂停
 - 一键换肤（主题色）
 
+### Discord社群
+
+欢迎加入社群一起讨论最近流行的歌曲。
+
+https://discord.gg/wXpPPAEk
+
 <img width="614" alt="截屏2025-04-26 03 02 57" src="https://github.com/user-attachments/assets/d8153158-2524-4778-aeab-ee478c0e9d64" />
 
 ### 推荐DJ
@@ -102,8 +108,8 @@
 - 偷心 https://www.youtube.com/watch?v=CWm9oJJ0V7g
 - 未必 https://www.youtube.com/watch?v=dIWNReIyUL4
 - 先说谎的人 https://www.youtube.com/watch?v=N1ap5mNMuLY
-- 去远方 https://www.youtube.com/watch?v=uj5dXtTy56M
-- 孤单心事 https://www.youtube.com/watch?v=ZDnwJNAS2kk
+- 西楼爱情故事 https://www.youtube.com/watch?v=cMy0Vf18tT0
+- 酒干倘卖无 https://www.youtube.com/watch?v=D1ra90M2N6o
 - 浪子闲话 https://www.youtube.com/watch?v=3Fq7XwrMv3o
 - 求佛 https://www.youtube.com/watch?v=PrE5YuraYNg
 - 笑纳 https://www.youtube.com/watch?v=UF8UHdjwmoA
