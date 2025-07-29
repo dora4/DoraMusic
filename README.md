@@ -108,7 +108,7 @@ https://discord.gg/wXpPPAEk
 - 偷心 https://www.youtube.com/watch?v=CWm9oJJ0V7g
 - 未必 https://www.youtube.com/watch?v=dIWNReIyUL4
 - 先说谎的人 https://www.youtube.com/watch?v=N1ap5mNMuLY
-- 去远方 https://www.youtube.com/watch?v=uj5dXtTy56M
+- 西楼爱情故事 https://youtu.be/cMy0Vf18tT0?si=0HTs-4KM-wNB13ox
 - 酒干倘卖无 https://www.youtube.com/watch?v=D1ra90M2N6o
 - 浪子闲话 https://www.youtube.com/watch?v=3Fq7XwrMv3o
 - 求佛 https://www.youtube.com/watch?v=PrE5YuraYNg
