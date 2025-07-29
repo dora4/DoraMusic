@@ -15,6 +15,12 @@
 - 检测耳机与人性化的自动暂停
 - 一键换肤（主题色）
 
+### Discord社群
+
+欢迎加入社群一起讨论最近流行的歌曲。
+
+https://discord.gg/wXpPPAEk
+
 <img width="614" alt="截屏2025-04-26 03 02 57" src="https://github.com/user-attachments/assets/d8153158-2524-4778-aeab-ee478c0e9d64" />
 
 ### 推荐DJ
