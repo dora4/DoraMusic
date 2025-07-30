@@ -125,8 +125,6 @@ https://discord.gg/wXpPPAEk
 - 黄昏 https://www.youtube.com/watch?v=o7sk2Kt_2hw
 - New Boy https://www.youtube.com/watch?v=mwYCjjK8g0w
 - 追梦人 https://www.youtube.com/watch?v=kqJMPfoa2NU
-  
-不嗨来找我。
 
 ### App下载
 
