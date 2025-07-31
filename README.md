@@ -128,7 +128,7 @@ https://discord.gg/wXpPPAEk
 
 ### App下载
 
-[稳定版下载](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
+[稳定版](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
 
 ### 软件截图
 
