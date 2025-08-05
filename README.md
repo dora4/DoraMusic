@@ -21,7 +21,7 @@
 
 欢迎加入社群一起讨论最近流行的歌曲。
 
-https://discord.gg/wXpPPAEk
+https://discord.gg/HUx8dDSZaP
 
 ### 推荐DJ
 
