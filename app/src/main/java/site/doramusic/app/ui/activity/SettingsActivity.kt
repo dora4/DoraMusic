@@ -263,7 +263,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
     }
 
     private fun openDiscordInvite() {
-        val inviteCode = "wXpPPAEk"
+        val inviteCode = "HUx8dDSZaP"
         val discordUri = Uri.parse("discord://invite/$inviteCode")
         val webUri = Uri.parse("https://discord.com/invite/$inviteCode")
 
