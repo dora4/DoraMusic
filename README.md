@@ -116,7 +116,7 @@ https://discord.gg/HUx8dDSZaP
 - 叹云兮 https://www.youtube.com/watch?v=ozfGodF0Wss
 - 最后一页 https://www.youtube.com/watch?v=9t-UhvTIlSQ
 - 若月亮没来 https://www.youtube.com/watch?v=eKcqZUc66ac
-- 若把你 https://www.youtube.com/watch?v=37WCTcVEOPs
+- 欢喜就好 https://www.youtube.com/watch?v=fHIMK2XpyHU
 - 感谢你曾来过 https://www.youtube.com/watch?v=xrvBuhNz7OM
 - 下一个天亮 https://www.youtube.com/watch?v=pjcE7ytGXJQ
 - Zombie https://www.youtube.com/watch?v=2Gw71CYEMHs
