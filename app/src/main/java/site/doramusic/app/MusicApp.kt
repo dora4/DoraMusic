@@ -1,6 +1,8 @@
 package site.doramusic.app
 
 import android.os.Build
+import android.os.Looper
+import android.os.MessageQueue.IdleHandler
 import com.walletconnect.web3.modal.client.Modal
 import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
 import dora.BaseApplication
@@ -11,6 +13,7 @@ import dora.db.dao.DaoFactory
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.trade.DoraTrade
+import dora.util.ThreadUtils
 import dora.util.ToastUtils
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
@@ -45,7 +48,10 @@ class MusicApp : BaseApplication(), AppConfig {
     override fun onCreate() {
         super.onCreate()
         app = this
-        init()
+        ThreadUtils.runOnUIThread {
+            init()
+            true
+        }
     }
 
     private fun init() {
