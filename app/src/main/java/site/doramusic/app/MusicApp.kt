@@ -1,8 +1,6 @@
 package site.doramusic.app
 
 import android.os.Build
-import android.os.Looper
-import android.os.MessageQueue.IdleHandler
 import com.walletconnect.web3.modal.client.Modal
 import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
 import dora.BaseApplication
@@ -13,6 +11,7 @@ import dora.db.dao.DaoFactory
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.trade.DoraTrade
+import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
 import site.doramusic.app.base.conf.AppConfig
@@ -55,9 +54,13 @@ class MusicApp : BaseApplication(), AppConfig {
     }
 
     private fun init() {
+        val startTime = System.currentTimeMillis()
+        LogUtils.d("init start time:$startTime")
         initHttp()   // 初始化网络框架
         initDb()    // 初始化SQLite数据库的表
         initPay()   // 初始化支付SDK
+        val endTime = System.currentTimeMillis()
+        LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
     }
 
     private fun initPay() {
