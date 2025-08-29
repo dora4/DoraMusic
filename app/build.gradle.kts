@@ -111,22 +111,22 @@ dependencies {
 
     // Dora全家桶
     implementation("com.github.dora4:dora:1.3.14")
-    implementation("com.github.dora4:dcache-android:3.4.4")
+    implementation("com.github.dora4:dcache-android:3.5.4")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-pgyer-support:1.8")
-    implementation("com.github.dora4:dora-firebase-support:1.13")
-    implementation("com.github.dora4:dora-brvah-support:1.3")
+    implementation("com.github.dora4:dora-firebase-support:1.14")
+    implementation("com.github.dora4:dora-brvah-support:1.5")
     implementation("com.github.dora4:dora-glide-support:1.4")
-    implementation("com.github.dora4:dora-walletconnect-support:1.160") {
+    implementation("com.github.dora4:dora-walletconnect-support:2.0.8") {
         exclude(group = "com.madgag.spongycastle", module = "core")
     }
 
     implementation("com.github.dora4:dview-titlebar:1.37")
     implementation("com.github.dora4:dview-toggle-button:1.5")
-    implementation("com.github.dora4:dview-alert-dialog:1.24")
+    implementation("com.github.dora4:dview-alert-dialog:1.25")
     implementation("com.github.dora4:dview-loading-dialog:1.5")
     implementation("com.github.dora4:dview-colors:1.1")
-    implementation("com.github.dora4:dview-skins:1.10")
+    implementation("com.github.dora4:dview-skins:1.11")
     implementation("com.github.dora4:dview-bottom-dialog:1.13")
     implementation("com.github.dora4:dview-avatar:1.4")
     implementation("com.github.dora4:dview-flipper-view:1.2")

@@ -28,7 +28,7 @@ import dora.db.dao.DaoFactory
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.request
 import dora.skin.SkinManager
-import dora.trade.DoraTrade
+import dora.pay.DoraFund
 import dora.util.NetUtils
 import dora.util.RxBus
 import dora.util.StatusBarUtils
@@ -79,7 +79,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_VPN_PERMISSION) {
-                DoraTrade.connectVPN(this, "vs42INhGWDnq",
+                DoraFund.connectVPN(this, "vs42INhGWDnq",
                     "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw")
             } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
                 addressView?.text = Web3Modal.getAccount()?.address
@@ -219,20 +219,20 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         addressView = headerView.findViewById<TextView>(R.id.tv_drawer_header_nickname)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         versionNameView.text = BuildConfig.APP_VERSION
-        if (Web3Modal.getAccount() != null) {
+        if (DoraFund.isWalletConnected()) {
             addressView!!.text = Web3Modal.getAccount()!!.address
         }
         avatarView.setOnClickListener {
             // 钱包授权登录
-            if (Web3Modal.getAccount() == null) {
+            if (!DoraFund.isWalletConnected()) {
                 closeDrawer()
-                DoraTrade.connectWallet(this, REQUEST_WALLET_AUTHORIZATION)
+                DoraFund.connectWallet(this, REQUEST_WALLET_AUTHORIZATION)
             } else {
                 val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
                 DoraAlertDialog(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
                     themeColor(skinThemeColor)
                     positiveListener {
-                        DoraTrade.disconnectWallet()
+                        DoraFund.disconnectWallet()
                         addressView?.text = ""
                     }
                 }

@@ -30,7 +30,7 @@ import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
-import dora.trade.DoraTrade
+import dora.pay.DoraFund
 import dora.util.*
 import dora.widget.DoraFlipperView
 import dora.widget.DoraTitleBar
@@ -323,7 +323,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             .subscribe {
                 bottomBar.updateProgressColor()
                 val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-                DoraTrade.setThemeColor(skinThemeColor)
+                DoraFund.setThemeColor(skinThemeColor)
             })
         addDisposable(RxBus.getInstance()
             .toObservable(PlayMusicEvent::class.java)

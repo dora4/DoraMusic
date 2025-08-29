@@ -16,7 +16,7 @@ import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.pgyer.PgyVersionUpdate
 import dora.skin.SkinManager
-import dora.trade.DoraTrade
+import dora.pay.DoraFund
 import dora.util.StatusBarUtils
 import dora.widget.DoraBottomMenuDialog
 import dora.widget.DoraLoadingDialog
@@ -159,7 +159,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             }
             R.id.rl_settings_donate -> {
                 if (Web3Modal.getAccount() == null) {
-                    DoraTrade.connectWallet(this)
+                    DoraFund.connectWallet(this)
                     return
                 }
                 val menus = arrayOf(
@@ -173,7 +173,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                     override fun onMenuClick(position: Int, menu: String) {
                         dialog.dismiss()
                         if (position == 3) {
-                            DoraTrade.disconnectWallet()
+                            DoraFund.disconnectWallet()
                             return
                         }
                         val amount = when (position) {
@@ -190,14 +190,14 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                                 0.0
                             }
                         }
-                        DoraTrade.pay(this@SettingsActivity,
+                        DoraFund.pay(this@SettingsActivity,
                             "vs42INhGWDnq",
                             "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw",
                             getString(R.string.i_want_to_donate),
                             getString(R.string.donation_speech),
                             "0xcBa852Ef29a43a7542B88F60C999eD9cB66f6000",
                             amount,
-                            object : DoraTrade.OrderListener {
+                            object : DoraFund.OrderListener {
                                 override fun onPrintOrder(
                                     orderId: String,
                                     chain: Modal.Model.Chain,

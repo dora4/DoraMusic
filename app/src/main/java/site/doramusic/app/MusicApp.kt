@@ -10,7 +10,7 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
-import dora.trade.DoraTrade
+import dora.pay.DoraFund
 import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
@@ -68,9 +68,9 @@ class MusicApp : BaseApplication(), AppConfig {
             Web3ModalChainsPresets.ethChains["137"]!!   // Polygon
         )
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-        DoraTrade.init(this, "Dora Music",
+        DoraFund.init(this, "Dora Music",
             getString(R.string.app_desc), "http://doramusic.site", chains, skinThemeColor,
-            object : DoraTrade.PayListener {
+            object : DoraFund.PayListener {
                 override fun onPayFailure(orderId: String, msg: String) {
                 }
 
@@ -91,7 +91,7 @@ class MusicApp : BaseApplication(), AppConfig {
                 }
             })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            DoraTrade.createNotificationChannels(this)
+            DoraFund.createNotificationChannels(this)
         }
     }
 
