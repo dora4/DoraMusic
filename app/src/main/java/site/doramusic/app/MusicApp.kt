@@ -36,6 +36,7 @@ class MusicApp : BaseApplication(), AppConfig {
     companion object {
 
         lateinit var app: MusicApp
+        var isLoaded: Boolean = false
     }
 
 //    override fun onTrimMemory(level: Int) {
@@ -51,7 +52,10 @@ class MusicApp : BaseApplication(), AppConfig {
         super.onCreate()
         app = this
         ThreadUtils.lazyLoad {
-            init()
+            if (!isLoaded) {
+                init()
+                isLoaded = true
+            }
             true
         }
     }
@@ -59,9 +63,9 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun init() {
         val startTime = System.currentTimeMillis()
         LogUtils.d("init start time:$startTime")
-        initHttp()   // 初始化网络框架
         initDb()    // 初始化SQLite数据库的表
         initPay()   // 初始化支付SDK
+        initHttp()   // 初始化网络框架
         val endTime = System.currentTimeMillis()
         LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
     }
