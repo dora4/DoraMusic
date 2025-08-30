@@ -35,6 +35,11 @@ interface AppConfig {
         // 数据库相关
         const val DB_NAME = "db_doramusic"
         const val DB_VERSION = 3
+        const val COLUMN_ORDER_ID = "order_id"
+        const val COLUMN_TOKEN_AMOUNT = "token_amount"
+        const val COLUMN_TOKEN_SYMBOL = "token_symbol"
+        const val COLUMN_TIMESTAMP = "timestamp"
+        const val COLUMN_TRANSACTION_HASH = "transaction_hash"
 
         // 页面路由
         const val ROUTE_START_FROM_LOCAL = 1

@@ -16,6 +16,9 @@ import dora.util.ThreadUtils
 import dora.util.ToastUtils
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_ORDER_ID
+import site.doramusic.app.base.conf.AppConfig.Companion.DB_NAME
+import site.doramusic.app.base.conf.AppConfig.Companion.DB_VERSION
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
@@ -79,10 +82,9 @@ class MusicApp : BaseApplication(), AppConfig {
                     transactionHash: String
                 ) {
                     val donation = DaoFactory.getDao(Donation::class.java).selectOne(
-                        WhereBuilder.create().addWhereEqualTo("order_id", orderId)
+                        WhereBuilder.create().addWhereEqualTo(COLUMN_ORDER_ID, orderId)
                     )
                     if (donation != null) {
-                        donation.pending = true
                         donation.transactionHash = transactionHash
                         DaoFactory.getDao(Donation::class.java).update(donation)
                         // 相信粉丝不会取消
@@ -110,8 +112,8 @@ class MusicApp : BaseApplication(), AppConfig {
 
     private fun initDb() {
         Orm.init(this, OrmConfig.Builder()
-            .database(AppConfig.DB_NAME)
-            .version(AppConfig.DB_VERSION)
+            .database(DB_NAME)
+            .version(DB_VERSION)
             .tables(Music::class.java, Artist::class.java,
                 Album::class.java, Folder::class.java,
                 Donation::class.java, DownloadTask::class.java

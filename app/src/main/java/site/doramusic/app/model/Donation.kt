@@ -6,23 +6,26 @@ import dora.db.migration.OrmMigration
 import dora.db.table.Column
 import dora.db.table.OrmTable
 import dora.db.table.Since
+import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_ORDER_ID
+import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TIMESTAMP
+import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TOKEN_AMOUNT
+import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TOKEN_SYMBOL
+import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TRANSACTION_HASH
 
 @Since(version = 2)
 data class Donation(
     @Id
     val id: Long = 0,
     @Unique
-    @Column("order_id")
+    @Column(COLUMN_ORDER_ID)
     val orderId: String,
-    @Column("pending")
-    var pending: Boolean = false,
-    @Column("token_amount")
+    @Column(COLUMN_TOKEN_AMOUNT)
     val tokenAmount: Double,
-    @Column("token_symbol")
+    @Column(COLUMN_TOKEN_SYMBOL)
     val tokenSymbol: String,
-    @Column("timestamp")
+    @Column(COLUMN_TIMESTAMP)
     val timestamp: Long,
-    @Column("transaction_hash")
+    @Column(COLUMN_TRANSACTION_HASH)
     var transactionHash: String = "",
     override val isUpgradeRecreated: Boolean = false,
     override val migrations: Array<OrmMigration>? = arrayOf()
