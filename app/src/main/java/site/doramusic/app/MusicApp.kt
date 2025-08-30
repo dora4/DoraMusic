@@ -47,7 +47,7 @@ class MusicApp : BaseApplication(), AppConfig {
     override fun onCreate() {
         super.onCreate()
         app = this
-        ThreadUtils.runOnUIThread {
+        ThreadUtils.lazyLoad {
             init()
             true
         }

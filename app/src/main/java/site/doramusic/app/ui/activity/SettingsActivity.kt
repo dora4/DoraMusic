@@ -17,6 +17,7 @@ import dora.firebase.SpmUtils.spmSelectContent
 import dora.pgyer.PgyVersionUpdate
 import dora.skin.SkinManager
 import dora.pay.DoraFund
+import dora.util.DeepLinkUtils
 import dora.util.StatusBarUtils
 import dora.widget.DoraBottomMenuDialog
 import dora.widget.DoraLoadingDialog
@@ -220,7 +221,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 open(ARoutePath.ACTIVITY_DONATION)
             }
             R.id.rl_settings_discord -> {
-                openDiscordInvite()
+                DeepLinkUtils.openDiscordGroup(this@SettingsActivity, "HUx8dDSZaP")
             }
             R.id.rl_settings_check_update -> {
                 PgyVersionUpdate.checkVersion(this, "b32485d39298de8a302c67883e192107",
@@ -259,24 +260,6 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                     withString("title", getString(R.string.privacy_policy_title))
                 }
             }
-        }
-    }
-
-    private fun openDiscordInvite() {
-        val inviteCode = "HUx8dDSZaP"
-        val discordUri = Uri.parse("discord://invite/$inviteCode")
-        val webUri = Uri.parse("https://discord.com/invite/$inviteCode")
-
-        // 尝试用 Discord App 打开
-        val appIntent = Intent(Intent.ACTION_VIEW, discordUri).apply {
-            `package` = "com.discord"
-        }
-        if (appIntent.resolveActivity(packageManager) != null) {
-            startActivity(appIntent)
-        } else {
-            // 回退到浏览器打开
-            val browserIntent = Intent(Intent.ACTION_VIEW, webUri)
-            startActivity(browserIntent)
         }
     }
 }

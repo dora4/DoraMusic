@@ -68,7 +68,8 @@
                 android:value="GlobalConfig" />
         <meta-data
                 android:name="dora.lifecycle.config.PgyerGlobalConfig"
-                android:value="GlobalConfig" /> <!-- <meta-data -->
+                android:value="GlobalConfig" />
+        <!-- <meta-data -->
         <!-- android:name="dora.lifecycle.config.EventBusGlobalConfig" -->
         <!-- android:value="GlobalConfig" /> -->
         <activity
@@ -170,7 +171,8 @@
             <meta-data
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/file_paths" />
-        </provider> <!-- 蒲公英的SDK配置 -->
+        </provider>
+        <!-- 蒲公英的SDK配置 -->
         <meta-data
                 android:name="PGYER_API_KEY"
                 android:value="b32485d39298de8a302c67883e192107" />
