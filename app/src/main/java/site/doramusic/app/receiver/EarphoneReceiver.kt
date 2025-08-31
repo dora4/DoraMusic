@@ -15,7 +15,6 @@ import android.os.Handler
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.SimpleAudioPlayer
