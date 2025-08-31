@@ -60,7 +60,7 @@ class UIManager(private var drawer: IPlayerLyricDrawer,
     }
 
     fun setContentType(type: Int, table: OrmTable?) {
-        (view.context as IBack).registerBackListener(this)
+        (view.context as IBackNavigator).registerBackListener(this)
         val transView = inflater.inflate(
                 R.layout.view_vp_trans, null) as LinearLayout
         when (type) {

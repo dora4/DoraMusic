@@ -5,7 +5,7 @@ import site.doramusic.app.base.callback.OnBackListener
 /**
  * 界面返回接口。
  */
-interface IBack {
+interface IBackNavigator {
 
     /**
      * 注册界面返回的监听器。

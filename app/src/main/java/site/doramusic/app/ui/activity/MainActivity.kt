@@ -1,12 +1,8 @@
 package site.doramusic.app.ui.activity
 
 import android.app.Activity
-import android.bluetooth.BluetoothHeadset
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.media.AudioManager
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
@@ -45,8 +41,7 @@ import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.media.MusicScanner
-import site.doramusic.app.receiver.EarphoneReceiver
-import site.doramusic.app.ui.IBack
+import site.doramusic.app.ui.IBackNavigator
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.ui.layout.IMenuDrawer
 import site.doramusic.app.util.PrefsManager
@@ -56,7 +51,7 @@ import java.util.concurrent.Executors
  * 主界面。
  */
 @Route(path = ARoutePath.ACTIVITY_MAIN)
-class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack, AppConfig {
+class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBackNavigator, AppConfig {
 
     private var lastTime: Long = 0
     private lateinit var homeFragment: HomeFragment
