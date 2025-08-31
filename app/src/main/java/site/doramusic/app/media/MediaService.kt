@@ -42,8 +42,6 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
      * 更新通知栏。
      */
     private var notificationManager: NotificationManager? = null
-
-    private var musicPlayReceiver: MusicPlayReceiver? = null
     private var prefsManager: PrefsManager? = null
     private var simplePlayer: SimpleAudioPlayer? = null
     private var remoteViews: RemoteViews? = null
@@ -82,7 +80,6 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(musicPlayReceiver)
         mc.exit()
         simplePlayer?.exit()
     }
