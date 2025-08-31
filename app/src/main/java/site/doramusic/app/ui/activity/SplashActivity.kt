@@ -12,6 +12,7 @@ import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.LOG_PATH
 import site.doramusic.app.databinding.ActivitySplashBinding
 import site.doramusic.app.util.MusicUtils
 
@@ -32,7 +33,7 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
     private fun initAppFolder() {
         if (IoUtils.checkMediaMounted()) {
-            IoUtils.createFolder(arrayOf(AppConfig.FOLDER_LOG))
+            IoUtils.createFolder(arrayOf(AppConfig.FOLDER_LOG, AppConfig.FOLDER_LRC))
         }
     }
 
@@ -40,7 +41,7 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
         initAppFolder()
         DoraCrash.initCrash(
             this@SplashActivity,
-            "DoraMusic/log"
+            LOG_PATH
         )
         splashLoading()
     }

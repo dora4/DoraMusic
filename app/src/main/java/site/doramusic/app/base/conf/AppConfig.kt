@@ -29,7 +29,8 @@ interface AppConfig {
         const val EXTRA_URL = "url"
 
         // 文件夹相关
-        val FOLDER_LOG = IoUtils.getSdRoot() + "/DoraMusic/log" // 日志存放目录
+        const val LOG_PATH = "DoraMusic/log"
+        val FOLDER_LOG = IoUtils.getSdRoot() + "/$LOG_PATH" // 日志存放目录
         val FOLDER_LRC = IoUtils.getSdRoot() + "/DoraMusic/lrc" // 歌词文件存放目录
 
         // 数据库相关
