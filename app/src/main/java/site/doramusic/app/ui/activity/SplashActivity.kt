@@ -2,6 +2,7 @@ package site.doramusic.app.ui.activity
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
@@ -58,7 +59,7 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
     }
 
     private fun splashLoading() {
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             openWithFinish(ARoutePath.ACTIVITY_MAIN)
         }, SPLASH_TIME)
     }
