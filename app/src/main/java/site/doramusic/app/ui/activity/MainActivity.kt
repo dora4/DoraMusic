@@ -61,7 +61,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     private var lastTime: Long = 0
     private lateinit var homeFragment: HomeFragment
     private val backListeners: MutableList<OnBackListener> = ArrayList()
-    private var earphoneReceiver: EarphoneReceiver? = null
     private lateinit var prefsManager: PrefsManager
     private var addressView: TextView? = null
 
@@ -128,21 +127,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     override fun closeDrawer() {
         if (mBinding.dlMain.isDrawerOpen(GravityCompat.START)) {
             mBinding.dlMain.closeDrawer(GravityCompat.START)
-        }
-    }
-
-    /**
-     * 注册耳机插拔监听。
-     */
-    private fun registerEarCupReceiver() {
-        earphoneReceiver = EarphoneReceiver()
-        val filter = IntentFilter()
-        filter.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
-        filter.addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(earphoneReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
-        } else {
-            registerReceiver(earphoneReceiver, filter)
         }
     }
 
@@ -310,13 +294,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (earphoneReceiver != null) {
-            unregisterReceiver(earphoneReceiver)
-        }
-    }
-
     override fun initData(savedInstanceState: Bundle?, binding: ActivityMainBinding) {
         StatusBarUtils.setStatusBarWithDrawerLayout(this, binding.dlMain,
             ContextCompat.getColor(this, R.color.colorPrimary), 255)
@@ -326,8 +303,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         initMenu()
         // 应用皮肤
         applySkin()
-        // 注册耳机监听器
-        registerEarCupReceiver()
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (homeFragment.isHome) {

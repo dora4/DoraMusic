@@ -153,6 +153,7 @@
                 <action android:name="android.bluetooth.headset.profile.action.CONNECTION_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+
         <receiver
                 android:name=".receiver.MusicPlayReceiver"
                 android:exported="true">
