@@ -2,8 +2,10 @@ package site.doramusic.app.ui.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import dora.skin.SkinManager
 import dora.widget.DoraCouponView
 import site.doramusic.app.R
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.model.Donation
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -29,5 +31,7 @@ class DonationAdapter : BaseQuickAdapter<Donation, BaseViewHolder>(R.layout.item
                 formattedTime,
                 item.transactionHash
             ))
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        cvDonation.setCouponBgColor(skinThemeColor)
     }
 }

@@ -14,8 +14,8 @@
             app:dview_cv_couponBgColor="#FF7043"
             app:dview_cv_couponTitleColor="@color/white"
             app:dview_cv_couponContentColor="@color/white"
-            app:dview_cv_holeType="vertical"
-            app:dview_cv_textOrientation="horizontal"
+            app:dview_cv_holeType="horizontal"
+            app:dview_cv_textOrientation="vertical"
             app:dview_cv_holeRadius="16dp"
             app:dview_cv_dividerGap="12dp" />
 </RelativeLayout>
