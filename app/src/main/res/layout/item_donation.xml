@@ -1,45 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<dora.widget.DoraCouponView
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/cv_donation"
-        android:layout_margin="8dp"
-        app:dview_cv_couponBgColor="#FF7043"
-        app:dview_cv_couponTitleColor="@color/white"
-        app:dview_cv_couponContentColor="@color/white"
-        app:dview_cv_holeType="vertical"
-        app:dview_cv_textOrientation="horizontal"
-        app:dview_cv_holeRadius="16dp"
-        app:dview_cv_dividerGap="12dp">
+        android:layout_height="wrap_content">
 
-    <TextView
-            android:id="@+id/tv_donation_hash"
+    <dora.widget.DoraCouponView
+            android:id="@+id/cv_donation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="15sp" />
-
-    <TextView
-            android:id="@+id/tv_donation_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/colorTextSecondary"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="15sp" />
-
-    <TextView
-            android:id="@+id/tv_donation_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/colorTextSecondary"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="15sp" />
-
-</dora.widget.DoraCouponView>
+            android:layout_height="120dp"
+            android:layout_margin="8dp"
+            app:dview_cv_couponBgColor="#FF7043"
+            app:dview_cv_couponTitleColor="@color/white"
+            app:dview_cv_couponContentColor="@color/white"
+            app:dview_cv_holeType="vertical"
+            app:dview_cv_textOrientation="horizontal"
+            app:dview_cv_holeRadius="16dp"
+            app:dview_cv_dividerGap="12dp" />
+</RelativeLayout>
