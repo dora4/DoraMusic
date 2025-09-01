@@ -12,7 +12,7 @@ import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.os.Build
 import android.os.Handler
-import androidx.annotation.RequiresApi
+import android.os.Looper
 import androidx.core.app.ActivityCompat
 
 import site.doramusic.app.R
@@ -26,7 +26,6 @@ class EarphoneReceiver : BroadcastReceiver() {
 
     private lateinit var player: SimpleAudioPlayer
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         if (action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
@@ -64,7 +63,7 @@ class EarphoneReceiver : BroadcastReceiver() {
                     BluetoothAdapter.STATE_DISCONNECTED == adapter.getProfileConnectionState(BluetoothProfile.GATT)) {
                 changeSpeakerphoneOn(context, true)
                 // 蓝牙耳机失去连接
-                Handler().postDelayed({
+                Handler(Looper.getMainLooper()).postDelayed({
                     player = SimpleAudioPlayer(context)
                     player.playByRawId(R.raw.bluetooth)
                 }, 1000)
