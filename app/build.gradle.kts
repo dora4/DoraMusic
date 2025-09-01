@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 34
 
-    val code = 54
-    val version = "1.5.9"
+    val code = 55
+    val version = "1.5.10"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 23
@@ -117,7 +117,7 @@ dependencies {
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.5")
     implementation("com.github.dora4:dora-glide-support:1.4")
-    implementation("com.github.dora4:dora-walletconnect-support:2.0.8") {
+    implementation("com.github.dora4:dora-walletconnect-support:2.0.9") {
         exclude(group = "com.madgag.spongycastle", module = "core")
     }
 
