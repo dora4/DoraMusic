@@ -13,19 +13,19 @@ import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TOKEN_AMOUNT
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TOKEN_SYMBOL
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TRANSACTION_HASH
 
-@Since(version = 2)
+@Since(version = 3)
 data class Donation(
     @Id
     val id: Long = 0,
     @Unique
     @Column(COLUMN_ORDER_ID)
-    val orderId: String,
+    val orderId: String = "",
     @Column(COLUMN_TOKEN_AMOUNT)
-    val tokenAmount: Double,
+    val tokenAmount: Double = 0.0,
     @Column(COLUMN_TOKEN_SYMBOL)
-    val tokenSymbol: String,
+    val tokenSymbol: String = "POL",
     @Column(COLUMN_TIMESTAMP)
-    val timestamp: Long,
+    val timestamp: Long = 0,
     @Column(COLUMN_PENDING)
     var pending: Boolean = false,
     @Column(COLUMN_TRANSACTION_HASH)
