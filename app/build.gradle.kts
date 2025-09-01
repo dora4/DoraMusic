@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 34
 
-    val code = 52
-    val version = "1.5.7"
+    val code = 53
+    val version = "1.5.8"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 23
@@ -131,6 +131,7 @@ dependencies {
     implementation("com.github.dora4:dview-avatar:1.4")
     implementation("com.github.dora4:dview-flipper-view:1.2")
     implementation("com.github.dora4:dview-flexible-scrollview:1.0")
+    implementation("com.github.dora4:dview-coupon-view:1.15")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")

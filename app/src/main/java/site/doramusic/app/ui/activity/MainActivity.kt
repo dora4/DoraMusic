@@ -37,6 +37,8 @@ import site.doramusic.app.base.callback.OnBackListener
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
+import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshHomeItemEvent
@@ -73,8 +75,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_VPN_PERMISSION) {
-                DoraFund.connectVPN(this, "vs42INhGWDnq",
-                    "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw")
+                DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
+                    DORA_FUND_SECRET_KEY)
             } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
                 addressView?.text = Web3Modal.getAccount()?.address
             }

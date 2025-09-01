@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+<dora.widget.DoraCouponView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv_donation"
+        android:layout_margin="8dp"
+        app:dview_cv_couponBgColor="#FF7043"
+        app:dview_cv_couponTitleColor="@color/white"
+        app:dview_cv_couponContentColor="@color/white"
+        app:dview_cv_holeType="vertical"
+        app:dview_cv_textOrientation="horizontal"
+        app:dview_cv_holeRadius="16dp"
+        app:dview_cv_dividerGap="12dp">
 
     <TextView
             android:id="@+id/tv_donation_hash"
@@ -37,4 +42,4 @@
             android:ellipsize="end"
             android:textSize="15sp" />
 
-</LinearLayout>
+</dora.widget.DoraCouponView>

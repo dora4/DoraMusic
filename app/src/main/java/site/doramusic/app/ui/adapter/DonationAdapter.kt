@@ -2,6 +2,7 @@ package site.doramusic.app.ui.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import dora.widget.DoraCouponView
 import site.doramusic.app.R
 import site.doramusic.app.model.Donation
 import java.text.DecimalFormat
@@ -20,8 +21,8 @@ class DonationAdapter : BaseQuickAdapter<Donation, BaseViewHolder>(R.layout.item
     override fun convert(holder: BaseViewHolder, item: Donation) {
         val formattedTime = dateFormat.format(Date(item.timestamp))
         val formattedAmount = decimalFormat.format(item.tokenAmount)
-        holder.setText(R.id.tv_donation_time, formattedTime)
-        holder.setText(R.id.tv_donation_value, "$formattedAmount ${item.tokenSymbol}")
-        holder.setText(R.id.tv_donation_hash, item.transactionHash)
+        val cvDonation = holder.getView<DoraCouponView>(R.id.cv_donation)
+        cvDonation.setCouponTitle(formattedAmount)
+        cvDonation.setCouponContent("捐赠时间：$formattedTime\n哈希：$item.transactionHash")
     }
 }
