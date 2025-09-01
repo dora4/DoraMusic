@@ -111,7 +111,7 @@ dependencies {
 
     // Dora全家桶
     implementation("com.github.dora4:dora:1.3.16")
-    implementation("com.github.dora4:dcache-android:3.5.5")
+    implementation("com.github.dora4:dcache-android:3.5.6")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-pgyer-support:1.9")
     implementation("com.github.dora4:dora-firebase-support:1.14")

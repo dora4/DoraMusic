@@ -17,6 +17,7 @@ import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_PENDING
 import site.doramusic.app.databinding.ActivityDonationBinding
 import site.doramusic.app.model.Donation
 import site.doramusic.app.ui.adapter.DonationAdapter
@@ -46,7 +47,7 @@ class DonationActivity : BaseActivity<ActivityDonationBinding>() {
         SkinManager.getLoader().setBackgroundColor(binding.statusbarDonation, COLOR_THEME)
         adapter.setList(DaoFactory.getDao(Donation::class.java).select(
             QueryBuilder.create().where(
-                WhereBuilder.create().addWhereEqualTo("pending", true)
+                WhereBuilder.create().addWhereEqualTo(COLUMN_PENDING, true)
             ).orderBy("timestamp DESC"))
         )
         binding.recyclerView.layoutManager = LinearLayoutManager(this,
