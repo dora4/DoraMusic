@@ -26,6 +26,13 @@ import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_PENDING
+import site.doramusic.app.base.conf.AppConfig.Companion.DISCORD_GROUP_INVITE_CODE
+import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
+import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
+import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
+import site.doramusic.app.base.conf.AppConfig.Companion.PGYER_API_KEY
+import site.doramusic.app.base.conf.AppConfig.Companion.PGYER_APP_KEY
 import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.model.Donation
@@ -67,7 +74,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsAutoConnectVpn.isChecked = prefsManager.getColdLaunchAutoConnectVPN()
         binding.tbSettingsShake.isChecked = prefsManager.getShakeChangeMusic()
         binding.tbSettingsBassBoost.isChecked = prefsManager.getBassBoost()
-        if (DaoFactory.getDao(Donation::class.java).count(WhereBuilder.create().addWhereEqualTo("pending", true)) > 0) {
+        if (DaoFactory.getDao(Donation::class.java).count(
+                WhereBuilder.create().addWhereEqualTo(COLUMN_PENDING, true)
+        ) > 0) {
             // 有捐赠记录才显示此栏
             binding.rlSettingsDonation.visibility = View.VISIBLE
         }
@@ -192,8 +201,8 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                             }
                         }
                         DoraFund.pay(this@SettingsActivity,
-                            "vs42INhGWDnq",
-                            "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw",
+                            DORA_FUND_ACCESS_KEY,
+                            DORA_FUND_SECRET_KEY,
                             getString(R.string.i_want_to_donate),
                             getString(R.string.donation_speech),
                             "0xcBa852Ef29a43a7542B88F60C999eD9cB66f6000",
@@ -221,11 +230,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 open(ARoutePath.ACTIVITY_DONATION)
             }
             R.id.rl_settings_discord -> {
-                DeepLinkUtils.openDiscordGroup(this@SettingsActivity, "HUx8dDSZaP")
+                DeepLinkUtils.openDiscordGroup(this@SettingsActivity, DISCORD_GROUP_INVITE_CODE)
             }
             R.id.rl_settings_check_update -> {
-                PgyVersionUpdate.checkVersion(this, "b32485d39298de8a302c67883e192107",
-                    "ee2ab0aa8ba49f78e2ac1cf4f1d54c66", object : PgyVersionUpdate.UpdateListener {
+                PgyVersionUpdate.checkVersion(this, PGYER_API_KEY,
+                    PGYER_APP_KEY, object : PgyVersionUpdate.UpdateListener {
                         override fun onError(msg: String) {
                         }
 
@@ -252,12 +261,12 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             }
             R.id.rl_settings_user_protocol -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
-                    withString("title", getString(R.string.user_agreement_title))
+                    withString(EXTRA_TITLE, getString(R.string.user_agreement_title))
                 }
             }
             R.id.rl_settings_privacy_policy -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
-                    withString("title", getString(R.string.privacy_policy_title))
+                    withString(EXTRA_TITLE, getString(R.string.privacy_policy_title))
                 }
             }
         }

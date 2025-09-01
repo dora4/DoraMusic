@@ -7,6 +7,7 @@ import dora.db.table.Column
 import dora.db.table.OrmTable
 import dora.db.table.Since
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_ORDER_ID
+import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_PENDING
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TIMESTAMP
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TOKEN_AMOUNT
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TOKEN_SYMBOL
@@ -25,6 +26,8 @@ data class Donation(
     val tokenSymbol: String,
     @Column(COLUMN_TIMESTAMP)
     val timestamp: Long,
+    @Column(COLUMN_PENDING)
+    var pending: Boolean = false,
     @Column(COLUMN_TRANSACTION_HASH)
     var transactionHash: String = "",
     override val isUpgradeRecreated: Boolean = false,

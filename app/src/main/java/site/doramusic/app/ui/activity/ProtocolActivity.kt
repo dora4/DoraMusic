@@ -12,6 +12,7 @@ import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.databinding.ActivityProtocolBinding
 
 /**
@@ -24,7 +25,7 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
     private var title: String? = null
 
     override fun onGetExtras(action: String?, bundle: Bundle?, intent: Intent) {
-        title = intent.getStringExtra("title")
+        title = intent.getStringExtra(EXTRA_TITLE)
     }
 
     override fun onDestroy() {

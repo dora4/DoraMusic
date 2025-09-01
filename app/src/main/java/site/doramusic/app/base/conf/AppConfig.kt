@@ -19,6 +19,14 @@ interface AppConfig {
         const val URL_APP_SERVER = "http://doramusic.site:8080"
         const val URL_AD_SERVER = "http://dorachat.com:9091"
 
+        // key
+        const val DORA_FUND_ACCESS_KEY = "vs42INhGWDnq"
+        const val DORA_FUND_SECRET_KEY = "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw"
+        const val PGYER_API_KEY = "b32485d39298de8a302c67883e192107"
+        const val PGYER_APP_KEY = "ee2ab0aa8ba49f78e2ac1cf4f1d54c66"
+        const val DISCORD_GROUP_INVITE_CODE = "HUx8dDSZaP"
+
+
         // Intent & Action
         const val MEDIA_SERVICE = "site.doramusic.app.service.MEDIA_SERVICE"
         const val ACTION_PREV = "site.doramusic.app.intent.ACTION_PREV"
@@ -35,11 +43,12 @@ interface AppConfig {
 
         // 数据库相关
         const val DB_NAME = "db_doramusic"
-        const val DB_VERSION = 3
+        const val DB_VERSION = 4
         const val COLUMN_ORDER_ID = "order_id"
         const val COLUMN_TOKEN_AMOUNT = "token_amount"
         const val COLUMN_TOKEN_SYMBOL = "token_symbol"
         const val COLUMN_TIMESTAMP = "timestamp"
+        const val COLUMN_PENDING = "pending"
         const val COLUMN_TRANSACTION_HASH = "transaction_hash"
 
         // 页面路由

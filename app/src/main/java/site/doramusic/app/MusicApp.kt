@@ -15,6 +15,7 @@ import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
 import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_ORDER_ID
 import site.doramusic.app.base.conf.AppConfig.Companion.DB_NAME
@@ -75,7 +76,7 @@ class MusicApp : BaseApplication(), AppConfig {
             Web3ModalChainsPresets.ethChains["137"]!!   // Polygon
         )
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-        DoraFund.init(this, "Dora Music",
+        DoraFund.init(this, APP_NAME,
             getString(R.string.app_desc), "http://doramusic.site", chains, skinThemeColor,
             object : DoraFund.PayListener {
                 override fun onPayFailure(orderId: String, msg: String) {
@@ -90,6 +91,7 @@ class MusicApp : BaseApplication(), AppConfig {
                     )
                     if (donation != null) {
                         donation.transactionHash = transactionHash
+                        donation.pending = true
                         DaoFactory.getDao(Donation::class.java).update(donation)
                         // 相信粉丝不会取消
                         ToastUtils.showLong(getString(R.string.donate_successfully, transactionHash))
