@@ -20,9 +20,9 @@ class DonationAdapter : BaseQuickAdapter<Donation, BaseViewHolder>(R.layout.item
 
     override fun convert(holder: BaseViewHolder, item: Donation) {
         val formattedTime = dateFormat.format(Date(item.timestamp))
-        val formattedAmount = decimalFormat.format("${item.tokenAmount} POL")
+        val formattedAmount = decimalFormat.format(item.tokenAmount)
         val cvDonation = holder.getView<DoraCouponView>(R.id.cv_donation)
-        cvDonation.setCouponTitle(formattedAmount)
+        cvDonation.setCouponTitle("$formattedAmount POL")
         cvDonation.setCouponContent("捐赠时间：$formattedTime\n哈希：$item.transactionHash")
     }
 }
