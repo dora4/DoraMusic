@@ -23,6 +23,11 @@ class DonationAdapter : BaseQuickAdapter<Donation, BaseViewHolder>(R.layout.item
         val formattedAmount = decimalFormat.format(item.tokenAmount)
         val cvDonation = holder.getView<DoraCouponView>(R.id.cv_donation)
         cvDonation.setCouponTitle("$formattedAmount POL")
-        cvDonation.setCouponContent("捐赠时间：$formattedTime\n哈希：$item.transactionHash")
+        cvDonation.setCouponContent(
+            context.getString(
+                R.string.donation_detail,
+                formattedTime,
+                item.transactionHash
+            ))
     }
 }

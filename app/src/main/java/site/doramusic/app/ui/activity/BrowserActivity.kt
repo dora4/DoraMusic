@@ -28,7 +28,7 @@ import site.doramusic.app.databinding.ActivityBrowserBinding
  * 浏览器页面，主要用于加载用户协议和隐私权政策等。
  */
 @Route(path = ARoutePath.ACTIVITY_BROWSER)
-class BrowserActivity : BaseActivity<ActivityBrowserBinding>() {
+class BrowserActivity : BaseSkinActivity<ActivityBrowserBinding>() {
 
     private var title: String? = null
     private var url: String? = null

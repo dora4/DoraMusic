@@ -74,4 +74,5 @@
     <string name="appreciation_content">感谢您的支持 尊敬的捐赠者： 感谢您对本软件项目的支持与捐赠。您的支持对于项目的持续开发和维护至关重要，我们将继续努力，优化功能，提升体验，回馈社区。 衷心感谢您的慷慨与信任！ 祝好！ 朵拉音乐 团队</string>
     <string name="are_you_sure_disconnect_wallet">确认要断开钱包连接吗？</string>
     <string name="discord">Discord</string>
+    <string name="donation_detail">捐赠时间：%1$s\n交易哈希：%2$s</string>
 </resources>
