@@ -24,8 +24,6 @@ import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
-import dora.http.DoraHttp.net
-import dora.http.DoraHttp.request
 import dora.skin.SkinManager
 import dora.pay.DoraFund
 import dora.util.NetUtils
@@ -34,9 +32,6 @@ import dora.util.StatusBarUtils
 import dora.util.ToastUtils
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import site.doramusic.app.BuildConfig
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
@@ -55,7 +50,6 @@ import site.doramusic.app.ui.layout.IMenuDrawer
 import site.doramusic.app.util.IPFSUtils
 import site.doramusic.app.util.PrefsManager
 import java.io.File
-import java.util.concurrent.Executors
 
 /**
  * 主界面。
