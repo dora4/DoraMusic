@@ -61,7 +61,10 @@ object MusicScanner : AppConfig {
     @JvmStatic
     fun scan(context: Context): Observable<List<Music>> {
         return Observable.fromCallable {
-            recreateTables()
+            try {
+                recreateTables()
+            } catch (ignored: Exception) {
+            }
             var musics: List<Music> = arrayListOf()
             Transaction.execute(Music::class.java) {
                 musics = queryMusic(context, AppConfig.ROUTE_START_FROM_LOCAL)
