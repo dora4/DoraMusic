@@ -173,8 +173,6 @@ object MusicScanner : AppConfig {
 
     @JvmStatic
     fun queryMusic(selection: String?, type: Int): List<Music> {
-        val db = Orm.getDB()
-
         val sql = when (type) {
             AppConfig.ROUTE_START_FROM_ARTIST -> {
                 "select * from music where ${Music.COLUMN_ARTIST} = ?"
@@ -197,7 +195,7 @@ object MusicScanner : AppConfig {
             // 没有这种情况
             else -> { "select * from music" }
         }
-        return parseCursor(db.rawQuery(sql, arrayOf(selection)))
+        return parseCursor(Orm.getDB().rawQuery(sql, arrayOf(selection)))
     }
 
     private fun parseCursor(cursor: Cursor): List<Music> {
