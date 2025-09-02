@@ -10,6 +10,9 @@ import dora.db.dao.DaoFactory
 import dora.db.table.TableManager
 import dora.util.PinyinUtils
 import dora.util.TextUtils
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
@@ -54,26 +57,30 @@ object MusicScanner : AppConfig {
     }
 
     @JvmStatic
-    fun scan(context: Context): List<Music> {
-        recreateTables()
-        var musics = arrayListOf<Music>()
-        Transaction.execute(Music::class.java) {
-            musics = queryMusic(context, AppConfig.ROUTE_START_FROM_LOCAL) as ArrayList<Music>
-            it.insert(musics)
-        }
-        if (musics.size > 0) {
-            // 歌曲都没有就没有必要查询歌曲信息了
-            Transaction.execute {
-                // 事务操作
-                val artists = queryArtist(context)
-                artistDao.insert(artists)
-                val albums = queryAlbum(context)
-                albumDao.insert(albums)
-                val folders = queryFolder(context)
-                folderDao.insert(folders)
+    fun scan(context: Context): Observable<List<Music>> {
+        return Observable.fromCallable {
+            recreateTables()
+            var musics: List<Music> = arrayListOf()
+            Transaction.execute(Music::class.java) {
+                musics = queryMusic(context, AppConfig.ROUTE_START_FROM_LOCAL)
+                it.insert(musics)
             }
+            if (musics.isNotEmpty()) {
+                Transaction.execute {
+                    val artists = queryArtist(context)
+                    artistDao.insert(artists)
+
+                    val albums = queryAlbum(context)
+                    albumDao.insert(albums)
+
+                    val folders = queryFolder(context)
+                    folderDao.insert(folders)
+                }
+            }
+            musics
         }
-        return musics
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     @JvmStatic

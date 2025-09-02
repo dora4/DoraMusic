@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -33,6 +34,9 @@ import dora.util.StatusBarUtils
 import dora.util.ToastUtils
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import site.doramusic.app.BuildConfig
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
@@ -310,34 +314,37 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     /**
      * 扫描歌曲。
      */
+    @SuppressLint("CheckResult")
     private fun scanMusic() {
         XXPermissions.with(this).permission(
             Permission.READ_MEDIA_AUDIO)
             .request { _, allGranted ->
                 if (allGranted) {
-                    net {
-                        val dialog = DoraLoadingDialog(this).show(getString(R.string.scaning)) {
-                            setCancelable(false)
-                            setCanceledOnTouchOutside(false)
-                        }
-                        request {
-                            Executors.newCachedThreadPool().submit {
-                                try {
-                                    val list = MusicScanner.scan(this@MainActivity) as MutableList<Music>
-                                    if (list.size > 0) {
-                                        ToastUtils.showShort(String.format(getString(R.string.music_scan_successfully),
-                                            list.size))
-                                    } else {
-                                        ToastUtils.showShort(getString(R.string.no_songs_scanned))
-                                    }
-                                } finally {
-                                    it.releaseLock(null)
-                                }
-                            }
-                        }
-                        homeFragment.onRefreshLocalMusic()
-                        dialog.dismiss()
+                    val dialog = DoraLoadingDialog(this).show(getString(R.string.scaning)) {
+                        setCancelable(false)
+                        setCanceledOnTouchOutside(false)
                     }
+                        // 扫描音乐，返回列表
+                        MusicScanner
+                            .scan(this@MainActivity)
+                            .doFinally {
+                                dialog.dismiss()
+                            }
+                            .subscribe({ list ->
+                                if (list.isNotEmpty()) {
+                                    ToastUtils.showShort(
+                                        String.format(
+                                            getString(R.string.music_scan_successfully),
+                                            list.size
+                                        )
+                                    )
+                                } else {
+                                    ToastUtils.showShort(getString(R.string.no_songs_scanned))
+                                }
+                                homeFragment.onRefreshLocalMusic()
+                            }, { error ->
+                                showShortToast(error.toString())
+                            })
                 }
             }
     }
