@@ -258,8 +258,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         }
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                // 上传歌曲
-                R.id.menu_upload_music -> selectMusicFile()
+//                // 上传歌曲
+//                R.id.menu_upload_music -> selectMusicFile()
                 // 扫描歌曲
                 R.id.menu_scan_music -> performScanMusic()
                 // 更换换肤
