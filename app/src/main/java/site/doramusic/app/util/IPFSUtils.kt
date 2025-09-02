@@ -1,7 +1,5 @@
 package site.doramusic.app.util
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
