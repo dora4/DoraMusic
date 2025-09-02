@@ -50,10 +50,12 @@ object MusicScanner : AppConfig {
     private const val DEFENSE_SQL_INJECTION_HEADER = " 1=1 "
 
     private fun recreateTables() {
-        TableManager.recreateTable(Music::class.java)
-        TableManager.recreateTable(Artist::class.java)
-        TableManager.recreateTable(Album::class.java)
-        TableManager.recreateTable(Folder::class.java)
+        Transaction.execute {
+            TableManager.recreateTable(Music::class.java)
+            TableManager.recreateTable(Artist::class.java)
+            TableManager.recreateTable(Album::class.java)
+            TableManager.recreateTable(Folder::class.java)
+        }
     }
 
     @JvmStatic
