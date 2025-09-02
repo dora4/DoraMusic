@@ -2,7 +2,6 @@ package site.doramusic.app.util
 
 import android.os.Build
 import android.util.Base64
-import androidx.annotation.RequiresApi
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.json.JSONArray
 import org.json.JSONObject
@@ -25,7 +24,6 @@ object UCANUtils {
      * @param issuerDID 例如 "did:key:z6MkmibVdapVvfV41EK7VVtCnYnQ1xmxFh5ihnhLGK55Ak8o"
      * @param audienceDID "did:web:web3.storage"
      */
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun generateUCAN(privateKeyBytes: ByteArray, issuerDID: String, audienceDID: String): String {
         val headerJson = JSONObject()
             .put("alg", "EdDSA")
@@ -68,17 +66,33 @@ object UCANUtils {
     /**
      * 使用 Ed25519 签名（使用 BouncyCastle）。
      */
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun signEd25519(privateKeyBytes: ByteArray, message: ByteArray): ByteArray {
-        val kf = KeyFactory.getInstance("Ed25519", "BC")
-        val privateKeySpec = NamedParameterSpec("Ed25519")
-        val keySpec = java.security.spec.PKCS8EncodedKeySpec(convertRawEd25519PrivateKeyToPKCS8(privateKeyBytes))
-        val privateKey = kf.generatePrivate(keySpec)
+        return try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                // ✅ API 33+ (有 NamedParameterSpec)
+                val spec = NamedParameterSpec("Ed25519")
+                val keySpec = java.security.spec.EdECPrivateKeySpec(spec, privateKeyBytes)
+                val privateKey = KeyFactory.getInstance("Ed25519").generatePrivate(keySpec)
 
-        val signature = Signature.getInstance("Ed25519", "BC")
-        signature.initSign(privateKey)
-        signature.update(message)
-        return signature.sign()
+                val signature = Signature.getInstance("Ed25519")
+                signature.initSign(privateKey)
+                signature.update(message)
+                signature.sign()
+            } else {
+                // ✅ API 23 ~ 32 走 BouncyCastle
+                val kf = KeyFactory.getInstance("Ed25519", "BC")
+                val pkcs8 = convertRawEd25519PrivateKeyToPKCS8(privateKeyBytes)
+                val keySpec = java.security.spec.PKCS8EncodedKeySpec(pkcs8)
+                val privateKey = kf.generatePrivate(keySpec)
+
+                val signature = Signature.getInstance("Ed25519", "BC")
+                signature.initSign(privateKey)
+                signature.update(message)
+                signature.sign()
+            }
+        } catch (e: Exception) {
+            throw RuntimeException("Ed25519 signing failed", e)
+        }
     }
 
     /**

@@ -44,6 +44,7 @@
     <string name="brand">Dora Music</string>
     <string name="slogan">Listen Anytime</string>
     <string name="music_list">Music List</string>
+    <string name="upload_music">Upload Music</string>
     <string name="scan_music">Scan Music</string>
     <string name="change_skin">Change Skin</string>
     <string name="sequential_playback">"Sequential Playback"</string>

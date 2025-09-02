@@ -37,16 +37,16 @@ class MusicApp : BaseApplication(), AppConfig {
     companion object {
 
         lateinit var app: MusicApp
-        var isLoaded: Boolean = false
+        var isAppInitialized: Boolean = false
     }
 
     override fun onCreate() {
         super.onCreate()
         app = this
         ThreadUtils.lazyLoad {
-            if (!isLoaded) {
+            if (!isAppInitialized) {
                 init()
-                isLoaded = true
+                isAppInitialized = true
             }
             true
         }

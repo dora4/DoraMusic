@@ -46,6 +46,7 @@
     <string name="brand">朵拉音乐</string>
     <string name="slogan">想听就听</string>
     <string name="music_list">歌曲列表</string>
+    <string name="upload_music">上传歌曲</string>
     <string name="scan_music">扫描歌曲</string>
     <string name="change_skin">更换皮肤</string>
     <string name="sequential_playback">顺序播放</string>

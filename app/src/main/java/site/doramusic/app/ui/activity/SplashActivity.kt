@@ -10,6 +10,7 @@ import dora.arouter.openWithFinish
 import dora.crash.DoraCrash
 import dora.util.IoUtils
 import dora.util.StatusBarUtils
+import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
@@ -22,10 +23,6 @@ import site.doramusic.app.util.MusicUtils
  */
 @Route(path = ARoutePath.ACTIVITY_SPLASH)
 class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
-
-    companion object {
-        private const val SPLASH_TIME = 300L
-    }
 
     override fun onSetStatusBar() {
         super.onSetStatusBar()
@@ -59,9 +56,18 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
     }
 
     private fun splashLoading() {
-        Handler(Looper.getMainLooper()).postDelayed({
-            openWithFinish(ARoutePath.ACTIVITY_MAIN)
-        }, SPLASH_TIME)
+        val handler = Handler(Looper.getMainLooper())
+        handler.post(object : Runnable {
+            override fun run() {
+                if (MusicApp.isAppInitialized) {
+                    // 初始化完成，进入主界面
+                    openWithFinish(ARoutePath.ACTIVITY_MAIN)
+                } else {
+                    // 未完成，继续轮询
+                    handler.postDelayed(this, 50) // 每50ms检查一次
+                }
+            }
+        })
     }
 
     override fun onDestroy() {

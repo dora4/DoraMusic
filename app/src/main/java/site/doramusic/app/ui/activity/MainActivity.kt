@@ -3,11 +3,13 @@ package site.doramusic.app.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
@@ -46,7 +48,9 @@ import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.ui.IBackNavigator
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.ui.layout.IMenuDrawer
+import site.doramusic.app.util.IPFSUtils
 import site.doramusic.app.util.PrefsManager
+import java.io.File
 import java.util.concurrent.Executors
 
 /**
@@ -60,6 +64,39 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     private val backListeners: MutableList<OnBackListener> = ArrayList()
     private lateinit var prefsManager: PrefsManager
     private var addressView: TextView? = null
+
+    private val selectMusicLauncher =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+            uri?.let {
+                // 复制文件到缓存目录
+                val file = copyUriToFile(uri, "selected_music")
+                uploadMusic(file)
+            }
+        }
+
+    /**
+     * 将 content:// Uri 转为 File
+     */
+    private fun copyUriToFile(uri: Uri, fileName: String): File {
+        val inputStream = contentResolver.openInputStream(uri)!!
+        val outFile = File(cacheDir, fileName)
+        inputStream.use { input ->
+            outFile.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+        return outFile
+    }
+
+    /**
+     * 触发选择文件
+     */
+    private fun selectMusicFile() {
+        selectMusicLauncher.launch(arrayOf(
+            "audio/mpeg",   // mp3
+            "audio/flac"    // flac
+        ))
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
@@ -221,6 +258,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         }
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
+                // 上传歌曲
+                R.id.menu_upload_music -> selectMusicFile()
                 // 扫描歌曲
                 R.id.menu_scan_music -> performScanMusic()
                 // 更换换肤
@@ -234,6 +273,18 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             mBinding.dlMain.closeDrawers()
             true
         }
+    }
+
+    /**
+     * 上传歌曲。
+     */
+    private fun uploadMusic(file: File) {
+        // 上传歌曲到去中心化存储
+        IPFSUtils.uploadToWeb3Storage(file, {
+            showShortToast(it)
+        }, {
+            showShortToast(it)
+        })
     }
 
     /**
