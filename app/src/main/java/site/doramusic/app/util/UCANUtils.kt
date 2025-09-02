@@ -68,17 +68,17 @@ object UCANUtils {
      */
     private fun signEd25519(privateKeyBytes: ByteArray, message: ByteArray): ByteArray {
         return try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                // ✅ API 33+ (有 NamedParameterSpec)
-                val spec = NamedParameterSpec("Ed25519")
-                val keySpec = java.security.spec.EdECPrivateKeySpec(spec, privateKeyBytes)
-                val privateKey = KeyFactory.getInstance("Ed25519").generatePrivate(keySpec)
-
-                val signature = Signature.getInstance("Ed25519")
-                signature.initSign(privateKey)
-                signature.update(message)
-                signature.sign()
-            } else {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//                // ✅ API 33+ (有 NamedParameterSpec)
+//                val spec = NamedParameterSpec("Ed25519")
+//                val keySpec = java.security.spec.EdECPrivateKeySpec(spec, privateKeyBytes)
+//                val privateKey = KeyFactory.getInstance("Ed25519").generatePrivate(keySpec)
+//
+//                val signature = Signature.getInstance("Ed25519")
+//                signature.initSign(privateKey)
+//                signature.update(message)
+//                signature.sign()
+//            } else {
                 // ✅ API 23 ~ 32 走 BouncyCastle
                 val kf = KeyFactory.getInstance("Ed25519", "BC")
                 val pkcs8 = convertRawEd25519PrivateKeyToPKCS8(privateKeyBytes)
@@ -89,7 +89,7 @@ object UCANUtils {
                 signature.initSign(privateKey)
                 signature.update(message)
                 signature.sign()
-            }
+//            }
         } catch (e: Exception) {
             throw RuntimeException("Ed25519 signing failed", e)
         }
