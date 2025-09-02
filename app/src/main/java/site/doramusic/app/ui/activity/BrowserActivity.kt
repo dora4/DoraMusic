@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebIndicator
-import dora.BaseActivity
 import dora.util.IntentUtils
 import dora.util.StatusBarUtils
 import dora.util.ViewUtils
@@ -85,7 +84,6 @@ class BrowserActivity : BaseSkinActivity<ActivityBrowserBinding>() {
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
         if (isInPictureInPictureMode) {
-            // 隐藏 UI 元素，例如标题栏
             mBinding.titlebar.visibility = View.GONE
         } else {
             mBinding.titlebar.visibility = View.VISIBLE

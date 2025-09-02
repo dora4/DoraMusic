@@ -15,12 +15,12 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.launcher.ARouter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.youth.banner.adapter.BannerAdapter
 import dora.BaseFragment
+import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
@@ -275,11 +275,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
                 override fun onItemClick(text: String) {
                     val url = songMap[text]
-                    ARouter.getInstance()
-                        .build(ARoutePath.ACTIVITY_BROWSER)
-                        .withString(EXTRA_TITLE, getString(R.string.app_name))
-                        .withString(EXTRA_URL, url)
-                        .navigation()
+                    open(ARoutePath.ACTIVITY_BROWSER) {
+                        withString(EXTRA_TITLE, getString(R.string.app_name))
+                        withString(EXTRA_URL, url)
+                    }
                 }
             })
         }
