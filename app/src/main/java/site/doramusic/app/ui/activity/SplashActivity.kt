@@ -19,7 +19,7 @@ import site.doramusic.app.databinding.ActivitySplashBinding
 import site.doramusic.app.util.MusicUtils
 
 /**
- * 启动页，无法使用AppCompatActivity主题，所有直接继承Activity。
+ * 启动页。
  */
 @Route(path = ARoutePath.ACTIVITY_SPLASH)
 class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {

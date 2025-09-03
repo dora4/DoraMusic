@@ -76,4 +76,6 @@
     <string name="are_you_sure_disconnect_wallet">确认要断开钱包连接吗？</string>
     <string name="discord">Discord</string>
     <string name="donation_detail">捐赠时间：%1$s\n交易哈希：%2$s</string>
+    <string name="evm_login_first">请先使用EVM钱包登录</string>
+    <string name="uploaded_successfully">上传成功</string>
 </resources>

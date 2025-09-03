@@ -84,4 +84,6 @@ The [Dora Music] Team</string>
     <string name="are_you_sure_disconnect_wallet">Are you sure you want to disconnect your wallet?</string>
     <string name="discord">Discord</string>
     <string name="donation_detail">Donation Time:%1$s\nTransaction Hash:%2$s</string>
+    <string name="evm_login_first">Please log in with your EVM wallet first.</string>
+    <string name="uploaded_successfully">Upload successful</string>
 </resources>

@@ -15,4 +15,9 @@ interface MusicService : ApiService {
     @FormUrlEncoded
     @POST("lyric")
     fun lyric(@Field("id") id: Long): Call<DoraResponse<DoraLyric>>
+
+    @FormUrlEncoded
+    @POST("saveMusicInfo")
+    fun saveMusicInfo(@Field("erc20Address") uploader: String, @Field("cid") cid: String) :
+            Call<DoraResponse<Boolean>>
 }

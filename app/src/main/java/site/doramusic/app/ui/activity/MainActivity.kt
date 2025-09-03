@@ -24,6 +24,9 @@ import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
+import dora.http.DoraHttp.net
+import dora.http.DoraHttp.result
+import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
 import dora.util.NetUtils
@@ -43,6 +46,7 @@ import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshHomeItemEvent
+import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.ui.IBackNavigator
 import site.doramusic.app.ui.fragment.HomeFragment
@@ -277,9 +281,21 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
      * 上传歌曲。
      */
     private fun uploadMusic(file: File) {
+        if (!DoraFund.isWalletConnected()) {
+            showShortToast(getString(R.string.evm_login_first))
+            return
+        }
+        val erc20Address = Web3Modal.getAccount()?.address!!
         // 上传歌曲到去中心化存储
         IPFSUtils.uploadToWeb3Storage(file, {
-            showShortToast(it)
+            net {
+                val ok = result {
+                    RetrofitManager.getService(MusicService::class.java).saveMusicInfo(erc20Address, it)
+                }?.result as Boolean
+                if (ok) {
+                    showShortToast(getString(R.string.uploaded_successfully))
+                }
+            }
         }, {
             showShortToast(it)
         })
