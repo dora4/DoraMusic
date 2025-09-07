@@ -100,7 +100,7 @@ https://discord.gg/HUx8dDSZaP
 - 我又想你了 https://www.youtube.com/watch?v=jMX0hJCumbE
 - It's My Life https://www.youtube.com/watch?v=vx2u5uUu3DE
 - 三月里的小雨 https://www.youtube.com/watch?v=H-lOpI74KlU
-- 暗里着迷 https://www.youtube.com/watch?v=59kWrSoGa9Y
+- 画离弦 https://www.youtube.com/watch?v=0VOmsnmEMOo
 - 流着泪说分手 https://www.youtube.com/watch?v=p6HLYyJjcqo
 - 纸短情长 https://www.youtube.com/watch?v=WQ2v_7IVCUA
 - 我曾用心爱着你 https://www.youtube.com/watch?v=ip9nkfDQSFU
