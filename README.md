@@ -118,7 +118,7 @@ https://discord.gg/HUx8dDSZaP
 - 若月亮没来 https://www.youtube.com/watch?v=eKcqZUc66ac
 - 欢喜就好 https://www.youtube.com/watch?v=fHIMK2XpyHU
 - 感谢你曾来过 https://www.youtube.com/watch?v=xrvBuhNz7OM
-- 下一个天亮 https://www.youtube.com/watch?v=pjcE7ytGXJQ
+- 月亮照山川 https://www.youtube.com/watch?v=2MnVDj1anfQ
 - Zombie https://www.youtube.com/watch?v=2Gw71CYEMHs
 - 囧架架 https://www.youtube.com/watch?v=-P0zrrwFGgQ
 - 像鱼 https://www.youtube.com/watch?v=RDzNIvxrLWk
