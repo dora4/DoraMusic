@@ -66,10 +66,14 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         initViews()
         handler = Handler { msg ->
             when (msg.what) {
-                0x100 -> refreshSeekProgress(
-                    MediaManager.position(),
-                    MediaManager.duration(), MediaManager.pendingProgress()
-                )
+                0x100 -> {
+                    try {
+                        refreshSeekProgress(
+                            MediaManager.position(),
+                            MediaManager.duration(), MediaManager.pendingProgress())
+                    } catch (ignore: IllegalStateException) {
+                    }
+                }
             }
             false
         }
