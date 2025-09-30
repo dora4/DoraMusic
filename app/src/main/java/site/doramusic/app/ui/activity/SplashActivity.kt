@@ -2,6 +2,7 @@ package site.doramusic.app.ui.activity
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -38,15 +39,6 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
         }
     }
 
-    private fun init() {
-        initAppFolder()
-        DoraCrash.initCrash(
-            this@SplashActivity,
-            LOG_PATH
-        )
-        splashLoading()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         helper = PermissionHelper.with(this).prepare(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE)
@@ -55,9 +47,24 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
     override fun initData(savedInstanceState: Bundle?, binding: ActivitySplashBinding) {
         super.initData(savedInstanceState, binding)
         if (!PermissionHelper.hasStoragePermission(this)) {
-            helper.permissions(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE).request()
+            helper.permissions(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE).request {
+                if (it) {
+                    initAppFolder()
+                    DoraCrash.initCrash(
+                        this@SplashActivity,
+                        LOG_PATH
+                    )
+                }
+            }
+        } else {
+            // 以后打开权限开关了才初始化这部分
+            initAppFolder()
+            DoraCrash.initCrash(
+                this@SplashActivity,
+                LOG_PATH
+            )
         }
-        init()
+        splashLoading()
     }
 
     private fun splashLoading() {
