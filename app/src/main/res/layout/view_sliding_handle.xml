@@ -10,7 +10,7 @@
     android:gravity="center_horizontal"
     android:layout_margin="10dp"
     android:id="@+id/sliding_handle"
-    android:background="@android:color/black">
+    android:background="@color/white">
     <View
         android:id="@+id/statusbar_lyric"
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="@dimen/dp_10"
             android:text="@string/brand"
-        android:textColor="@color/white"
+        android:textColor="#42484A"
         android:textSize="20sp" />
 
     <TextView
@@ -32,7 +32,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="@dimen/dp_10"
             android:text="@string/slogan"
-        android:textColor="@color/white"
+        android:textColor="#6C7172"
         android:textSize="15sp" />
 
 </LinearLayout>

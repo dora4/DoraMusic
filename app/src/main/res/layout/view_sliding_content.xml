@@ -4,17 +4,20 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sliding_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="@color/white">
     <ImageButton
         android:id="@+id/btn_music_play_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_volume_voice"
-        android:background="@drawable/selector_volume"/>
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            app:tint="@color/gray"
+            android:src="@drawable/shape_volume_voice"
+        android:background="@drawable/shape_volume_bg"/>
 
     <LinearLayout
         android:id="@+id/ll_music_play_bottom"
@@ -37,7 +40,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="00:00"
-                android:textColor="@android:color/white"
+                android:textColor="@color/colorTextSecondary"
                 android:textStyle="bold"/>
 
             <SeekBar
@@ -62,7 +65,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="00:00"
-                android:textColor="@android:color/white"
+                    android:textColor="@color/colorTextSecondary"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -158,7 +161,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_volume_mute" />
+                app:tint="@color/gray"
+            android:src="@drawable/ic_volume_mute" />
 
         <SeekBar
             android:id="@+id/sb_music_play_volume"
@@ -170,15 +174,16 @@
             android:maxHeight="3dp"
             android:minHeight="3dp"
             android:progressDrawable="@drawable/volume_seekbar_layer"
-            android:thumb="@drawable/selector_volume_seekbar_thumb_indicator"
-            android:thumbOffset="10dp" />
+            android:thumb="@drawable/selector_player_seekbar_thumb"
+            android:thumbOffset="5dp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/ic_volume_sound" />
+                app:tint="@color/gray"
+            android:src="@drawable/ic_volume_sound" />
     </LinearLayout>
 
 </RelativeLayout>
