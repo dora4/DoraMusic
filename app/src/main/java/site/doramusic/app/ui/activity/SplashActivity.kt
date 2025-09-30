@@ -1,14 +1,15 @@
 package site.doramusic.app.ui.activity
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hjq.permissions.Permission
-import com.hjq.permissions.XXPermissions
 import dora.arouter.openWithFinish
 import dora.crash.DoraCrash
+import dora.util.IntentUtils
 import dora.util.IoUtils
+import dora.util.PermissionHelper
 import dora.util.StatusBarUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
@@ -23,6 +24,8 @@ import site.doramusic.app.util.MusicUtils
  */
 @Route(path = ARoutePath.ACTIVITY_SPLASH)
 class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
+
+    private lateinit var helper: PermissionHelper
 
     override fun onSetStatusBar() {
         super.onSetStatusBar()
@@ -44,15 +47,17 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
         splashLoading()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        helper = PermissionHelper.with(this).prepare(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE)
+    }
+
     override fun initData(savedInstanceState: Bundle?, binding: ActivitySplashBinding) {
         super.initData(savedInstanceState, binding)
-        XXPermissions.with(this).permission(
-            Permission.READ_MEDIA_AUDIO)
-            .request { _, allGranted ->
-                if (allGranted) {
-                    init()
-                }
-            }
+        if (!PermissionHelper.hasStoragePermission(this)) {
+            helper.permissions(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE).request()
+        }
+        init()
     }
 
     private fun splashLoading() {

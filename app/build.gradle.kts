@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 34
 
-    val code = 65
-    val version = "1.6.0"
+    val code = 66
+    val version = "1.6.1"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 23
@@ -110,7 +110,7 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dora:1.3.16")
+    implementation("com.github.dora4:dora:1.3.32")
     implementation("com.github.dora4:dcache-android:3.5.6")
     implementation("com.github.dora4:dora-arouter-support:1.6")
     implementation("com.github.dora4:dora-pgyer-support:1.9")
@@ -147,9 +147,6 @@ dependencies {
 
     // leakcanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.10")
-
-    // XXPermissions
-    implementation("com.github.getActivity:XXPermissions:18.2")
 
     // banner
     implementation("io.github.youth5201314:banner:2.2.3")

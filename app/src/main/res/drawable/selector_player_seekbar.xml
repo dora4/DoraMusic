@@ -26,7 +26,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="@color/colorPrimary"/>
+                <solid android:color="#61B15A"/>
                 <stroke android:width="0dp" android:color="@color/white" android:dashWidth="0dp"
                         android:dashGap="0dp"/>
                 <corners android:topLeftRadius="1dp" android:topRightRadius="1dp"

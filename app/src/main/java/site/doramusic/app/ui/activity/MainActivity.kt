@@ -3,7 +3,6 @@ package site.doramusic.app.ui.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.net.VpnService
 import android.os.Build
@@ -17,8 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.hjq.permissions.Permission
-import com.hjq.permissions.XXPermissions
 import com.walletconnect.web3.modal.client.Web3Modal
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
@@ -29,7 +26,9 @@ import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
+import dora.util.IntentUtils
 import dora.util.NetUtils
+import dora.util.PermissionHelper
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.util.ToastUtils
@@ -66,6 +65,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     private val backListeners: MutableList<OnBackListener> = ArrayList()
     private lateinit var prefsManager: PrefsManager
     private var addressView: TextView? = null
+    private lateinit var helper: PermissionHelper
 
     private val selectMusicLauncher =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
@@ -124,29 +124,42 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        helper = PermissionHelper.with(this).prepare(
+            PermissionHelper.Permission.READ_MEDIA_AUDIO,
+            PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE,
+            PermissionHelper.Permission.POST_NOTIFICATIONS)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 100)
+            if (!helper.hasPermission(this, PermissionHelper.Permission.POST_NOTIFICATIONS)) {
+                helper.permissions(PermissionHelper.Permission.POST_NOTIFICATIONS).request(null)
             }
         }
         if (prefsManager.getColdLaunchAutoConnectVPN() && NetUtils.checkNetworkAvailable(this)) {
-            XXPermissions.with(this).permission(Permission.MANAGE_EXTERNAL_STORAGE)
-                .request { _, allGranted ->
-                    if (allGranted) {
-                        val intent = VpnService.prepare(this@MainActivity)
-                        if (intent != null) {
-                            startActivityForResult(intent, REQUEST_VPN_PERMISSION)
-                        } else {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                this@MainActivity.onActivityResult(
-                                    REQUEST_VPN_PERMISSION,
-                                    Activity.RESULT_OK,
-                                    null
-                                )
-                            }
-                        }
+            if (!PermissionHelper.hasStoragePermission(this)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    startActivity(IntentUtils.getRequestStoragePermissionIntent(packageName))
+                } else {
+                    helper.permissions(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE).request {
+                        requestVPNPermission()
                     }
                 }
+            } else {
+                requestVPNPermission()
+            }
+        }
+    }
+
+    private fun requestVPNPermission() {
+        val intent = VpnService.prepare(this@MainActivity)
+        if (intent != null) {
+            startActivityForResult(intent, REQUEST_VPN_PERMISSION)
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                this@MainActivity.onActivityResult(
+                    REQUEST_VPN_PERMISSION,
+                    Activity.RESULT_OK,
+                    null
+                )
+            }
         }
     }
 
@@ -326,37 +339,35 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
      */
     @SuppressLint("CheckResult")
     private fun scanMusic() {
-        XXPermissions.with(this).permission(
-            Permission.READ_MEDIA_AUDIO)
-            .request { _, allGranted ->
-                if (allGranted) {
-                    val dialog = DoraLoadingDialog(this).show(getString(R.string.scaning)) {
-                        setCancelable(false)
-                        setCanceledOnTouchOutside(false)
-                    }
-                        // 扫描音乐，返回列表
-                        MusicScanner
-                            .scan(this@MainActivity)
-                            .doFinally {
-                                dialog.dismiss()
-                            }
-                            .subscribe({ list ->
-                                if (list.isNotEmpty()) {
-                                    ToastUtils.showShort(
-                                        String.format(
-                                            getString(R.string.music_scan_successfully),
-                                            list.size
-                                        )
-                                    )
-                                } else {
-                                    ToastUtils.showShort(getString(R.string.no_songs_scanned))
-                                }
-                                homeFragment.onRefreshLocalMusic()
-                            }, { error ->
-                                showShortToast(error.toString())
-                            })
+        helper.permissions(PermissionHelper.Permission.READ_MEDIA_AUDIO).request {
+            if (it) {
+                val dialog = DoraLoadingDialog(this).show(getString(R.string.scaning)) {
+                    setCancelable(false)
+                    setCanceledOnTouchOutside(false)
                 }
+                // 扫描音乐，返回列表
+                MusicScanner
+                    .scan(this@MainActivity)
+                    .doFinally {
+                        dialog.dismiss()
+                    }
+                    .subscribe({ list ->
+                        if (list.isNotEmpty()) {
+                            ToastUtils.showShort(
+                                String.format(
+                                    getString(R.string.music_scan_successfully),
+                                    list.size
+                                )
+                            )
+                        } else {
+                            ToastUtils.showShort(getString(R.string.no_songs_scanned))
+                        }
+                        homeFragment.onRefreshLocalMusic()
+                    }, { error ->
+                        showShortToast(error.toString())
+                    })
             }
+        }
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityMainBinding) {

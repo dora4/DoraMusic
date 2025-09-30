@@ -176,7 +176,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             ViewGroup.LayoutParams.MATCH_PARENT)
         lrcEmptyView.gravity = Gravity.CENTER
         lrcEmptyView.text = ContextCompat.getString(manager.view.context, R.string.no_lyrics)
-        lrcEmptyView.setTextColor(Color.WHITE)
+        lrcEmptyView.setTextColor(ContextCompat.getColor(manager.view.context, R.color.colorTextSecondary))
         lrcListView = ListView(manager.view.context)
         lrcListView.isVerticalScrollBarEnabled = false
         lrcListView.adapter = lyricAdapter
