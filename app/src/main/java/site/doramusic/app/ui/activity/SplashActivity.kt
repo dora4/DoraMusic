@@ -40,12 +40,11 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         helper = PermissionHelper.with(this).prepare(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE)
+        super.onCreate(savedInstanceState)
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivitySplashBinding) {
-        super.initData(savedInstanceState, binding)
         if (!PermissionHelper.hasStoragePermission(this)) {
             helper.permissions(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE).request {
                 if (it) {
