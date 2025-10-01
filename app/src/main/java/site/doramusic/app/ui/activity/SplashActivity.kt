@@ -1,14 +1,11 @@
 package site.doramusic.app.ui.activity
 
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.arouter.openWithFinish
 import dora.crash.DoraCrash
-import dora.util.IntentUtils
 import dora.util.IoUtils
 import dora.util.PermissionHelper
 import dora.util.StatusBarUtils
