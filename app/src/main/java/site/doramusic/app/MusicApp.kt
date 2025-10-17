@@ -1,8 +1,6 @@
 package site.doramusic.app
 
 import android.os.Build
-import com.walletconnect.web3.modal.client.Modal
-import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
@@ -11,6 +9,7 @@ import dora.db.dao.DaoFactory
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
+import dora.pay.EVMChains
 import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
@@ -63,12 +62,10 @@ class MusicApp : BaseApplication(), AppConfig {
     }
 
     private fun initPay() {
-        val chains: Array<Modal.Model.Chain> = arrayOf(
-            Web3ModalChainsPresets.ethChains["137"]!!   // Polygon
-        )
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         DoraFund.init(this, APP_NAME,
-            getString(R.string.app_desc), "http://doramusic.site", chains, skinThemeColor,
+            getString(R.string.app_desc), "http://doramusic.site",
+            arrayOf(EVMChains.POLYGON), skinThemeColor,
             object : DoraFund.PayListener {
                 override fun onPayFailure(orderId: String, msg: String) {
                 }

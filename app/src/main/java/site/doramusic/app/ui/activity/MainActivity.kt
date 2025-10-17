@@ -117,7 +117,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
                     DORA_FUND_SECRET_KEY)
             } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
-                addressView?.text = Web3Modal.getAccount()?.address
+                addressView?.text = DoraFund.getCurrentAddress()
             }
         }
     }
@@ -253,7 +253,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         versionNameView.text = BuildConfig.APP_VERSION
         if (DoraFund.isWalletConnected()) {
-            addressView!!.text = Web3Modal.getAccount()!!.address
+            addressView!!.text = DoraFund.getCurrentAddress()
         }
         avatarView.setOnClickListener {
             // 钱包授权登录
@@ -339,7 +339,11 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
      */
     @SuppressLint("CheckResult")
     private fun scanMusic() {
-        helper.permissions(PermissionHelper.Permission.READ_MEDIA_AUDIO).request {
+        // Android 13 细分文件存储权限
+        helper.permissions(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            PermissionHelper.Permission.READ_MEDIA_AUDIO
+        else
+            PermissionHelper.Permission.READ_EXTERNAL_STORAGE).request {
             if (it) {
                 val dialog = DoraLoadingDialog(this).show(getString(R.string.scaning)) {
                     setCancelable(false)
