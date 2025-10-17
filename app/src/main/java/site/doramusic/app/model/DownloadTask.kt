@@ -4,13 +4,16 @@ import dora.db.constraint.AssignType
 import dora.db.constraint.PrimaryKey
 import dora.db.migration.OrmMigration
 import dora.db.table.Column
+import dora.db.table.Ignore
 import dora.db.table.OrmTable
 import dora.db.table.Table
 import kotlin.concurrent.Volatile
 
 @Table("download_task")
 class DownloadTask(
+    @Ignore
     override val isUpgradeRecreated: Boolean = false,
+    @Ignore
     override val migrations: Array<OrmMigration>? = arrayOf()
 ) : OrmTable {
 

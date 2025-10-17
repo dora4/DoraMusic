@@ -4,8 +4,10 @@ import dora.db.constraint.Id
 import dora.db.constraint.Unique
 import dora.db.migration.OrmMigration
 import dora.db.table.Column
+import dora.db.table.Ignore
 import dora.db.table.OrmTable
 import dora.db.table.Since
+import dora.db.table.Table
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_ORDER_ID
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_PENDING
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TIMESTAMP
@@ -14,6 +16,7 @@ import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TOKEN_SYMBOL
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TRANSACTION_HASH
 
 @Since(version = 3)
+@Table("donation")
 data class Donation(
     @Id
     val id: Long = 0,
@@ -30,6 +33,8 @@ data class Donation(
     var pending: Boolean = false,
     @Column(COLUMN_TRANSACTION_HASH)
     var transactionHash: String = "",
+    @Ignore
     override val isUpgradeRecreated: Boolean = false,
+    @Ignore
     override val migrations: Array<OrmMigration>? = arrayOf()
 ) : OrmTable

@@ -76,19 +76,35 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      *
      * @param strength
      */
+    private BassBoost bassBoost;
+
     public void setBassBoost(int strength) {
-        int audioSessionId = mMediaPlayer.getAudioSessionId();
-        BassBoost bassBoost = new BassBoost(0, audioSessionId);
-        BassBoost.Settings settings = new BassBoost.Settings();
-        settings.strength = (short) strength;
-        bassBoost.setProperties(settings);
-        bassBoost.setEnabled(true);
-        bassBoost.setParameterListener(new BassBoost.OnParameterChangeListener() {
-            @Override
-            public void onParameterChange(BassBoost effect, int status, int param, short value) {
-                LogUtils.i("重低音参数改变");
+        try {
+            if (mMediaPlayer == null) return;
+            int audioSessionId = mMediaPlayer.getAudioSessionId();
+            if (audioSessionId == AudioManager.AUDIO_SESSION_ID_GENERATE || audioSessionId <= 0) {
+                LogUtils.e("BassBoost 初始化失败：无效的 audioSessionId");
+                return;
             }
-        });
+            // 避免重复创建
+            if (bassBoost != null) {
+                bassBoost.release();
+                bassBoost = null;
+            }
+            bassBoost = new BassBoost(0, audioSessionId);
+            if (bassBoost.getStrengthSupported()) {
+                BassBoost.Settings settings = new BassBoost.Settings();
+                settings.strength = (short) Math.max(0, Math.min(1000, strength)); // 限制范围
+                bassBoost.setProperties(settings);
+            }
+            bassBoost.setEnabled(true);
+            bassBoost.setParameterListener((effect, status, param, value) -> {
+                LogUtils.i("重低音参数改变");
+            });
+            LogUtils.i("BassBoost 初始化成功，强度=" + strength);
+        } catch (Exception e) {
+            LogUtils.e("BassBoost 初始化异常：" + e.getMessage());
+        }
     }
 
     /**

@@ -11,7 +11,6 @@ import dora.skin.SkinManager
 import dora.pay.DoraFund
 import dora.pay.EVMChains
 import dora.util.LogUtils
-import dora.util.ThreadUtils
 import dora.util.ToastUtils
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
@@ -36,19 +35,18 @@ class MusicApp : BaseApplication(), AppConfig {
     companion object {
 
         lateinit var app: MusicApp
-        var isAppInitialized: Boolean = false
     }
 
     override fun onCreate() {
         super.onCreate()
         app = this
-        ThreadUtils.lazyLoad {
-            if (!isAppInitialized) {
+//        ThreadUtils.lazyLoad {
+//            if (!isAppInitialized) {
                 init()
-                isAppInitialized = true
-            }
-            true
-        }
+//                isAppInitialized = true
+//            }
+//            true
+//        }
     }
 
     private fun init() {

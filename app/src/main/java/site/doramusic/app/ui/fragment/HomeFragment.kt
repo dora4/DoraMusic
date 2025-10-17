@@ -203,10 +203,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-    }
-
     override fun initData(savedInstanceState: Bundle?, binding: FragmentHomeBinding) {
         musicDao = DaoFactory.getDao(Music::class.java)
         artistDao = DaoFactory.getDao(Artist::class.java)

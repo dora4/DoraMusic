@@ -207,6 +207,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                             getString(R.string.donation_speech),
                             "0xcBa852Ef29a43a7542B88F60C999eD9cB66f6000",
                             amount,
+                            null,
                             object : DoraFund.OrderListener {
                                 override fun onPrintOrder(
                                     orderId: String,

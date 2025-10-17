@@ -122,6 +122,10 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         helper = PermissionHelper.with(this).prepare(
