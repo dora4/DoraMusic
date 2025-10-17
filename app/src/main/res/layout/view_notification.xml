@@ -50,14 +50,6 @@
             android:text="" />
     </RelativeLayout>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/iv_nc_cancel"-->
-<!--        android:layout_width="16dp"-->
-<!--        android:layout_height="16dp"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:layout_marginEnd="5dp"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:src="@drawable/ic_notification_clear" />-->
     <LinearLayout
         android:id="@+id/ll_nc_control"
         android:layout_width="match_parent"

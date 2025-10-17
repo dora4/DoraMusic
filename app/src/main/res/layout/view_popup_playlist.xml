@@ -32,6 +32,7 @@
                 android:id="@+id/iv_playlist_playmode"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                    app:tint = "@color/white"
                 android:layout_marginLeft="5dp" />
 
             <TextView
