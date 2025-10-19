@@ -112,7 +112,7 @@ https://discord.gg/HUx8dDSZaP
 - Let Me Know https://www.youtube.com/watch?v=aJSvAK6OCgk
 - 爱的专属权 https://www.youtube.com/watch?v=G6TqYDXzKnc
 - 浪子闲话 https://www.youtube.com/watch?v=3Fq7XwrMv3o
-- 求佛 https://www.youtube.com/watch?v=PrE5YuraYNg
+- 孤身 https://www.youtube.com/watch?v=T199X0GGg0g
 - 笑纳 https://www.youtube.com/watch?v=UF8UHdjwmoA
 - 叹云兮 https://www.youtube.com/watch?v=ozfGodF0Wss
 - 最后一页 https://www.youtube.com/watch?v=9t-UhvTIlSQ
