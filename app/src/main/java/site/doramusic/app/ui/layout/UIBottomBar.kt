@@ -86,7 +86,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     fun initData() {
         val music = DaoFactory.getDao(Music::class.java).selectOne(
             QueryBuilder.create()
-                .orderBy(Music.COLUMN_LAST_PLAY_TIME + " desc"))
+                .orderByNew("-${Music.COLUMN_LAST_PLAY_TIME}"))
         val spManager = PrefsManager(manager.view.context)
         val coldLaunchAutoPlay = spManager.isColdLaunchAutoPlay()
         if (music != null && coldLaunchAutoPlay) {

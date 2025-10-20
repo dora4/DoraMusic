@@ -52,7 +52,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:padding="6dp"
-                    app:tint="@color/light_gray"
+                    app:tint="@color/colorTextSecondary"
                     android:background="@color/white"
                     android:src="@drawable/ic_bottom_bar_playlist" />
 
@@ -72,7 +72,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@id/view_home_bottom_divider"
                     android:padding="4dp"
-                    app:tint="@color/light_gray"
+                    app:tint="@color/colorTextSecondary"
                     android:background="@color/white"
                     android:src="@drawable/ic_bottom_bar_next" />
 
@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:padding="4dp"
-                        app:tint="@color/light_gray"
+                        app:tint="@color/colorTextSecondary"
                         android:background="@color/white"
                         android:src="@drawable/ic_bottom_bar_pause"
                         android:visibility="gone" />
@@ -99,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:padding="4dp"
-                        app:tint="@color/light_gray"
+                        app:tint="@color/colorTextSecondary"
                         android:background="@color/white"
                         android:src="@drawable/ic_bottom_bar_play" />
                 </FrameLayout>
