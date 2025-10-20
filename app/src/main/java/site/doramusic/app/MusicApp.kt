@@ -72,7 +72,7 @@ class MusicApp : BaseApplication(), AppConfig {
                     transactionHash: String
                 ) {
                     // 交易完成签名并广播给区块链即认为已捐赠，实际还要等区块确认，此时如果手动和被动取消都
-                    // 不会收到代币。手动取消，发送一笔0数量的转账给自己地址。被动取消，设置极低gas永远都不
+                    // 不会转出代币。手动取消，发送一笔0数量的转账给自己地址。被动取消，设置极低gas永远都不
                     // 可能被确认，然后卸载钱包软件。
                     val donation = DaoFactory.getDao(Donation::class.java).selectOne(
                         WhereBuilder.create().addWhereEqualTo(COLUMN_ORDER_ID, orderId)
