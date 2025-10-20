@@ -7,7 +7,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import dora.arouter.openWithFinish
 import dora.util.PermissionHelper
 import dora.util.StatusBarUtils
-import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivitySplashBinding

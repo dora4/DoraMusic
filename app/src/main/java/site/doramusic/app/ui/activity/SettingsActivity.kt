@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.walletconnect.web3.modal.client.Modal
-import com.walletconnect.web3.modal.client.Web3Modal
 import dora.arouter.open
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
@@ -17,6 +16,7 @@ import dora.firebase.SpmUtils.spmSelectContent
 import dora.pgyer.PgyVersionUpdate
 import dora.skin.SkinManager
 import dora.pay.DoraFund
+import dora.pay.DoraFund.ERC20_ADDRESS
 import dora.util.DeepLinkUtils
 import dora.util.StatusBarUtils
 import dora.widget.DoraBottomMenuDialog
@@ -168,7 +168,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 startActivity(shareIntent)
             }
             R.id.rl_settings_donate -> {
-                if (Web3Modal.getAccount() == null) {
+                if (!DoraFund.isWalletConnected()) {
                     DoraFund.connectWallet(this)
                     return
                 }
@@ -205,7 +205,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                             DORA_FUND_SECRET_KEY,
                             getString(R.string.i_want_to_donate),
                             getString(R.string.donation_speech),
-                            "0xcBa852Ef29a43a7542B88F60C999eD9cB66f6000",
+                            ERC20_ADDRESS,
                             amount,
                             null,
                             object : DoraFund.OrderListener {
