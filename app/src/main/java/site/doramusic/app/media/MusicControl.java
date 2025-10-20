@@ -80,7 +80,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         try {
             if (mMediaPlayer == null) return;
             int audioSessionId = mMediaPlayer.getAudioSessionId();
-            if (audioSessionId == AudioManager.AUDIO_SESSION_ID_GENERATE || audioSessionId <= 0) {
+            if (audioSessionId == AudioManager.AUDIO_SESSION_ID_GENERATE || audioSessionId < 0) {
                 LogUtils.e("BassBoost 初始化失败：无效的 audioSessionId");
                 return;
             }
@@ -142,7 +142,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
 
     private Equalizer getEqualizer(int[] bandLevels) {
         int audioSessionId = mMediaPlayer.getAudioSessionId();
-        if (audioSessionId == AudioManager.AUDIO_SESSION_ID_GENERATE || audioSessionId <= 0) {
+        if (audioSessionId == AudioManager.AUDIO_SESSION_ID_GENERATE || audioSessionId < 0) {
             LogUtils.e("Equalizer 初始化失败：无效的 audioSessionId");
             return null;
         }
