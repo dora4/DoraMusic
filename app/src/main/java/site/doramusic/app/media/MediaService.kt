@@ -14,6 +14,7 @@ import android.os.RemoteException
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import dora.util.LogUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig.*
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
@@ -77,6 +78,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        LogUtils.e("媒体服务被销毁")
         mc.exit()
         simplePlayer?.exit()
     }
