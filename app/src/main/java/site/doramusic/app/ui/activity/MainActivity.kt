@@ -130,6 +130,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         super.onCreate(savedInstanceState)
         helper = PermissionHelper.with(this).prepare(
             PermissionHelper.Permission.READ_MEDIA_AUDIO,
+            PermissionHelper.Permission.READ_EXTERNAL_STORAGE,
             PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE,
             PermissionHelper.Permission.POST_NOTIFICATIONS)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -302,7 +303,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             showShortToast(getString(R.string.evm_login_first))
             return
         }
-        val erc20Address = Web3Modal.getAccount()?.address!!
+        val erc20Address = DoraFund.getCurrentAddress()
         // 上传歌曲到去中心化存储
         IPFSUtils.uploadToWeb3Storage(file, {
             net {
