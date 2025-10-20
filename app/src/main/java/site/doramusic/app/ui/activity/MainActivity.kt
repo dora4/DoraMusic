@@ -344,45 +344,55 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     @SuppressLint("CheckResult")
     private fun scanMusic() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            // 通过设置打开
-            startActivity(IntentUtils.getRequestStoragePermissionIntent(packageName))
+            if (PermissionHelper.hasStoragePermission(this)) {
+                // Android 11～12
+                scanning()
+            } else {
+                // 通过设置打开
+                startActivity(IntentUtils.getRequestStoragePermissionIntent(packageName))
+            }
         } else {
-            // Android 13 细分文件存储权限
             helper.permissions(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                    // Android 13 细分文件存储权限
                     PermissionHelper.Permission.READ_MEDIA_AUDIO
                 else
+                    // 旧读取文件权限申请
                     PermissionHelper.Permission.READ_EXTERNAL_STORAGE
             ).request {
                 if (it) {
-                    val dialog = DoraLoadingDialog(this).show(getString(R.string.scaning)) {
-                        setCancelable(false)
-                        setCanceledOnTouchOutside(false)
-                    }
-                    // 扫描音乐，返回列表
-                    MusicScanner
-                        .scan(this@MainActivity)
-                        .doFinally {
-                            dialog.dismiss()
-                        }
-                        .subscribe({ list ->
-                            if (list.isNotEmpty()) {
-                                ToastUtils.showShort(
-                                    String.format(
-                                        getString(R.string.music_scan_successfully),
-                                        list.size
-                                    )
-                                )
-                            } else {
-                                ToastUtils.showShort(getString(R.string.no_songs_scanned))
-                            }
-                            homeFragment.onRefreshLocalMusic()
-                        }, { error ->
-                            showShortToast(error.toString())
-                        })
+                    scanning()
                 }
             }
         }
+    }
+
+    private fun scanning() {
+        val dialog = DoraLoadingDialog(this).show(getString(R.string.scaning)) {
+            setCancelable(false)
+            setCanceledOnTouchOutside(false)
+        }
+        // 扫描音乐，返回列表
+        MusicScanner
+            .scan(this@MainActivity)
+            .doFinally {
+                dialog.dismiss()
+            }
+            .subscribe({ list ->
+                if (list.isNotEmpty()) {
+                    ToastUtils.showShort(
+                        String.format(
+                            getString(R.string.music_scan_successfully),
+                            list.size
+                        )
+                    )
+                } else {
+                    ToastUtils.showShort(getString(R.string.no_songs_scanned))
+                }
+                homeFragment.onRefreshLocalMusic()
+            }, { error ->
+                showShortToast(error.toString())
+            })
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityMainBinding) {
