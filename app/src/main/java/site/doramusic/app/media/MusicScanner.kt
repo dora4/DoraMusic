@@ -173,6 +173,7 @@ object MusicScanner : AppConfig {
 
     @JvmStatic
     fun queryMusic(selection: String?, type: Int): List<Music> {
+        // 此处仅为演示原始SQL写法，建议使用WhereBuilder
         val sql = when (type) {
             AppConfig.ROUTE_START_FROM_ARTIST -> {
                 "select * from music where ${Music.COLUMN_ARTIST} = ?"
@@ -185,8 +186,6 @@ object MusicScanner : AppConfig {
             }
             AppConfig.ROUTE_START_FROM_FAVORITE -> {
                 "select * from music where ${Music.COLUMN_FAVORITE} = ?"
-                //        } else if (type == ROUTE_START_FROM_DOWNLOAD) {
-//            sql = "select * from music where download = ?";
             }
             AppConfig.ROUTE_START_FROM_LATEST -> {
                 "select * from music where ${Music.COLUMN_LAST_PLAY_TIME} > ? order by " +
