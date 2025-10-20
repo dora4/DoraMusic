@@ -105,14 +105,14 @@ https://discord.gg/HUx8dDSZaP
 - 纸短情长 https://www.youtube.com/watch?v=WQ2v_7IVCUA
 - 我曾用心爱着你 https://www.youtube.com/watch?v=ip9nkfDQSFU
 - 落差 https://www.youtube.com/watch?v=FkK7SLdZpbM
-- 偷心 https://www.youtube.com/watch?v=CWm9oJJ0V7g
+- 没出息 https://www.youtube.com/watch?v=hJ7R7brvRHo
 - 未必 https://www.youtube.com/watch?v=dIWNReIyUL4
 - 先说谎的人 https://www.youtube.com/watch?v=N1ap5mNMuLY
 - 西楼爱情故事 https://www.youtube.com/watch?v=nU2nOCa8qCY
 - Let Me Know https://www.youtube.com/watch?v=aJSvAK6OCgk
 - 爱的专属权 https://www.youtube.com/watch?v=G6TqYDXzKnc
 - 浪子闲话 https://www.youtube.com/watch?v=3Fq7XwrMv3o
-- 求佛 https://www.youtube.com/watch?v=PrE5YuraYNg
+- 孤身 https://www.youtube.com/watch?v=90h0IFof1Do
 - 笑纳 https://www.youtube.com/watch?v=UF8UHdjwmoA
 - 叹云兮 https://www.youtube.com/watch?v=ozfGodF0Wss
 - 最后一页 https://www.youtube.com/watch?v=9t-UhvTIlSQ
