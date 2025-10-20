@@ -6,7 +6,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.audiofx.BassBoost;
 import android.media.audiofx.Equalizer;
-import android.os.Build;
 import android.os.PowerManager;
 
 import androidx.annotation.NonNull;

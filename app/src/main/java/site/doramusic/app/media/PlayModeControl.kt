@@ -21,16 +21,16 @@ class PlayModeControl(private val context: Context) : AppConfig {
      */
     fun refreshButtonStatus(playModeBtn: ImageButton) {
         when (MediaManager.playMode) {
-            AppConfig.MPM_PLAYLIST_LOOP -> {   //列表循环
+            AppConfig.MPM_PLAYLIST_LOOP -> {   // 列表循环
                 playModeBtn.setImageResource(R.drawable.ic_playmode_list_loop)
             }
-            AppConfig.MPM_SINGLE_TRACK_LOOP -> {  //单曲循环
+            AppConfig.MPM_SINGLE_TRACK_LOOP -> {  // 单曲循环
                 playModeBtn.setImageResource(R.drawable.ic_playmode_single_loop)
             }
-            AppConfig.MPM_SHUFFLE_PLAYBACK -> {   //随机播放
+            AppConfig.MPM_SHUFFLE_PLAYBACK -> {   // 随机播放
                 playModeBtn.setImageResource(R.drawable.ic_playmode_random)
             }
-            AppConfig.MPM_SEQUENTIAL_PLAYBACK -> {    //顺序播放
+            AppConfig.MPM_SEQUENTIAL_PLAYBACK -> {    // 顺序播放
                 playModeBtn.setImageResource(R.drawable.ic_playmode_order)
             }
         }

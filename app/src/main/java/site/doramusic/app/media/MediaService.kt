@@ -28,9 +28,6 @@ import site.doramusic.app.shake.ShakeDetector
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.util.PrefsManager
 
-/**
- * 这个服务单独开启一个进程，用来在Android系统后台播放音乐。
- */
 class MediaService : Service(), ShakeDetector.OnShakeListener {
 
     /**

@@ -2,7 +2,6 @@ package site.doramusic.app.ui.adapter
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import androidx.core.content.ContextCompat
 import androidx.appcompat.widget.AppCompatImageView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
