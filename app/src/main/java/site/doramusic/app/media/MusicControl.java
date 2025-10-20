@@ -19,6 +19,7 @@ import java.util.Random;
 import dora.db.builder.WhereBuilder;
 import dora.db.dao.DaoFactory;
 import dora.db.dao.OrmDao;
+import dora.db.table.OrmTable;
 import dora.util.LogUtils;
 import dora.util.RxBus;
 import dora.util.TextUtils;
@@ -162,7 +163,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      */
     private void saveFavorite(Music music) {
         music.favorite = 1;
-        mDao.update(WhereBuilder.Companion.create().addWhereEqualTo("_id", music.id), music);
+        mDao.update(WhereBuilder.Companion.create().addWhereEqualTo(OrmTable.INDEX_ID, music.id), music);
     }
 
     /**
@@ -173,7 +174,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     private void saveLatest(Music music) {
         //更新本地缓存歌曲
         music.lastPlayTime = System.currentTimeMillis();
-        mDao.update(WhereBuilder.Companion.create().addWhereEqualTo("_id", music.id), music);
+        mDao.update(WhereBuilder.Companion.create().addWhereEqualTo(OrmTable.INDEX_ID, music.id), music);
     }
 
     /**
@@ -346,12 +347,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 mMediaPlayer.reset();
                 mMediaPlayer.setDataSource(path);
                 mMediaPlayer.prepare();
-                mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        mMediaPlayer.start();
-                        sendPlayMusicEvent();
-                    }
+                mMediaPlayer.setOnPreparedListener(mp -> {
+                    mMediaPlayer.start();
+                    sendPlayMusicEvent();
                 });
             } catch (IOException e) {
                 e.printStackTrace();

@@ -80,7 +80,7 @@ class MusicApp : BaseApplication(), AppConfig {
                     if (donation != null) {
                         donation.transactionHash = transactionHash
                         donation.pending = true
-                        DaoFactory.getDao(Donation::class.java).update(donation)
+                        DaoFactory.getDao(Donation::class.java).updateAsync(donation)
                         ToastUtils.showLong(getString(R.string.donate_successfully, transactionHash))
                     }
                 }

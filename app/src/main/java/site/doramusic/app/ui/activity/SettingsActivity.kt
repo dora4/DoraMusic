@@ -221,7 +221,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                                         tokenSymbol = "POL",
                                         timestamp = System.currentTimeMillis(),
                                     )
-                                    DaoFactory.getDao(Donation::class.java).insert(donation)
+                                    DaoFactory.getDao(Donation::class.java).insertAsync(donation)
                                 }
                             })
                     }
