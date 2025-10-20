@@ -8,8 +8,6 @@ import android.media.audiofx.BassBoost;
 import android.media.audiofx.Equalizer;
 import android.os.PowerManager;
 
-import androidx.annotation.NonNull;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
