@@ -130,8 +130,7 @@ object MusicScanner : AppConfig {
             }
             AppConfig.ROUTE_START_FROM_ALBUM -> {
                 if (musicDao.count() > 0) {
-                    return queryMusic(selection,
-                            AppConfig.ROUTE_START_FROM_ALBUM)
+                    return queryMusic(selection, AppConfig.ROUTE_START_FROM_ALBUM)
                 }
                 if (musicDao.count() > 0) {
                     return queryMusic(selection, AppConfig.ROUTE_START_FROM_FOLDER)
