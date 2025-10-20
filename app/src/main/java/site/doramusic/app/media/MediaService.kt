@@ -15,6 +15,7 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import dora.util.LogUtils
+import dora.util.ProcessUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig.*
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
@@ -81,6 +82,8 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         LogUtils.e("媒体服务被销毁")
         mc.exit()
         simplePlayer?.exit()
+        // 服务被回收，直接退出所有进程
+        ProcessUtils.killAllProcesses()
     }
 
     private inner class MediaServiceImpl : IMediaService.Stub() {
