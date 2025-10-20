@@ -71,6 +71,9 @@ class MusicApp : BaseApplication(), AppConfig {
                     orderId: String,
                     transactionHash: String
                 ) {
+                    // 交易完成签名并广播给区块链即认为已捐赠，实际还要等区块确认，此时如果手动和被动取消都
+                    // 不会收到代币。手动取消，发送一笔0数量的转账给自己地址。被动取消，设置极低gas永远都不
+                    // 可能被确认，然后卸载钱包软件。
                     val donation = DaoFactory.getDao(Donation::class.java).selectOne(
                         WhereBuilder.create().addWhereEqualTo(COLUMN_ORDER_ID, orderId)
                     )
@@ -78,7 +81,6 @@ class MusicApp : BaseApplication(), AppConfig {
                         donation.transactionHash = transactionHash
                         donation.pending = true
                         DaoFactory.getDao(Donation::class.java).update(donation)
-                        // 相信粉丝不会取消
                         ToastUtils.showLong(getString(R.string.donate_successfully, transactionHash))
                     }
                 }
@@ -101,8 +103,9 @@ class MusicApp : BaseApplication(), AppConfig {
 
     private fun initDb() {
         Orm.init(this, OrmConfig.Builder()
-            .database(DB_NAME)
-            .version(DB_VERSION)
+            .database(DB_NAME)      // 自定义数据库名称
+            .version(DB_VERSION)    // 从1开始递增
+            // 所有管理的表
             .tables(Music::class.java, Artist::class.java,
                 Album::class.java, Folder::class.java,
                 Donation::class.java, DownloadTask::class.java
