@@ -131,21 +131,26 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      */
     public void setEqualizer(int[] bandLevels) {
         Equalizer equalizer = getEqualizer(bandLevels);
-        equalizer.setEnabled(true);
-        equalizer.setParameterListener(new Equalizer.OnParameterChangeListener() {
-            @Override
-            public void onParameterChange(Equalizer effect, int status, int param1, int param2, int value) {
-                LogUtils.i("均衡器参数改变:" + status + "," + param1 + "," + param2 + "," + value);
-            }
-        });
+        if (equalizer != null) {
+            equalizer.setEnabled(true);
+            equalizer.setParameterListener(new Equalizer.OnParameterChangeListener() {
+                @Override
+                public void onParameterChange(Equalizer effect, int status, int param1, int param2, int value) {
+                    LogUtils.i("均衡器参数改变:" + status + "," + param1 + "," + param2 + "," + value);
+                }
+            });
+        }
     }
 
-    @NonNull
     private Equalizer getEqualizer(int[] bandLevels) {
         int audioSessionId = mMediaPlayer.getAudioSessionId();
+        if (audioSessionId == AudioManager.AUDIO_SESSION_ID_GENERATE || audioSessionId <= 0) {
+            LogUtils.e("BassBoost 初始化失败：无效的 audioSessionId");
+            return null;
+        }
         Equalizer equalizer = new Equalizer(1, audioSessionId);
         // 获取均衡控制器支持最小值和最大值
-        short minEQLevel = equalizer.getBandLevelRange()[0];//第一个下标为最低的限度范围
+        short minEQLevel = equalizer.getBandLevelRange()[0];  // 第一个下标为最低的限度范围
         short maxEQLevel = equalizer.getBandLevelRange()[1];  // 第二个下标为最高的限度范围
         int distanceEQLevel = maxEQLevel - minEQLevel;
         int singleEQLevel = distanceEQLevel / 25;
