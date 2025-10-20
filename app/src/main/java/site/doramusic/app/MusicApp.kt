@@ -84,9 +84,7 @@ class MusicApp : BaseApplication(), AppConfig {
                     }
                 }
             })
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            DoraFund.createNotificationChannels(this)
-        }
+        DoraFund.createNotificationChannels(this)
     }
 
     private fun initHttp() {
