@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.walletconnect.web3.modal.client.Web3Modal
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
@@ -138,7 +137,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 helper.permissions(PermissionHelper.Permission.POST_NOTIFICATIONS).request(null)
             }
         }
-        if (prefsManager.getColdLaunchAutoConnectVPN() && NetUtils.checkNetworkAvailable(this)) {
+        if (prefsManager.isColdLaunchAutoConnectVPN() && NetUtils.checkNetworkAvailable(this)) {
             if (!PermissionHelper.hasStoragePermission(this)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     startActivity(IntentUtils.getRequestStoragePermissionIntent(packageName))

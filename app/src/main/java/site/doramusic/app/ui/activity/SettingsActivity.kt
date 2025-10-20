@@ -70,8 +70,8 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsAutoConnectVpn.checkedColor = skinThemeColor
         binding.tbSettingsShake.checkedColor = skinThemeColor
         binding.tbSettingsBassBoost.checkedColor = skinThemeColor
-        binding.tbSettingsAutoPlay.isChecked = prefsManager.getColdLaunchAutoPlay()
-        binding.tbSettingsAutoConnectVpn.isChecked = prefsManager.getColdLaunchAutoConnectVPN()
+        binding.tbSettingsAutoPlay.isChecked = prefsManager.isColdLaunchAutoPlay()
+        binding.tbSettingsAutoConnectVpn.isChecked = prefsManager.isColdLaunchAutoConnectVPN()
         binding.tbSettingsShake.isChecked = prefsManager.getShakeChangeMusic()
         binding.tbSettingsBassBoost.isChecked = prefsManager.getBassBoost()
         if (DaoFactory.getDao(Donation::class.java).count(

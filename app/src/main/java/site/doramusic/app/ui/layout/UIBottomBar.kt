@@ -88,7 +88,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             QueryBuilder.create()
                 .orderBy(Music.COLUMN_LAST_PLAY_TIME + " desc"))
         val spManager = PrefsManager(manager.view.context)
-        val coldLaunchAutoPlay = spManager.getColdLaunchAutoPlay()
+        val coldLaunchAutoPlay = spManager.isColdLaunchAutoPlay()
         if (music != null && coldLaunchAutoPlay) {
             MediaManager.refreshPlaylist(arrayListOf(music))
             tvHomeBottomMusicName.text = music.musicName

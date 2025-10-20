@@ -5,14 +5,14 @@ import dora.util.SPUtils
 
 class PrefsManager(val context: Context) {
 
-    fun getColdLaunchAutoPlay(): Boolean {
+    fun isColdLaunchAutoPlay(): Boolean {
         return SPUtils.readBoolean(
             context, PREFS_COLD_LAUNCH_AUTO_PLAY,
             true
         )
     }
 
-    fun getColdLaunchAutoConnectVPN(): Boolean {
+    fun isColdLaunchAutoConnectVPN(): Boolean {
         return SPUtils.readBoolean(
             context, PREFS_COLD_LAUNCH_AUTO_CONNECT_VPN,
             false
