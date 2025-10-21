@@ -124,7 +124,7 @@ class PrefsManager(val context: Context) {
         const val PREFS_EQUALIZER_DECIBELS = "prefs_equalizer_decibels"
 
         /**
-         * 皮肤类型为0时的自定义颜色。
+         * 皮肤类型为0时的自定义颜色（暂时没有用上）。
          */
         const val PREFS_SKIN_COLOR = "prefs_skin_color"
 
