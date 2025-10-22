@@ -15,6 +15,10 @@
 - 检测耳机与人性化的自动暂停
 - 一键换肤（主题色）
 
+### App下载
+
+[稳定版](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
+
 <img width="614" alt="截屏2025-04-26 03 02 57" src="https://github.com/user-attachments/assets/d8153158-2524-4778-aeab-ee478c0e9d64" />
 
 ### Discord社群
@@ -126,10 +130,6 @@ https://discord.gg/HUx8dDSZaP
 - 黄昏 https://www.youtube.com/watch?v=o7sk2Kt_2hw
 - New Boy https://www.youtube.com/watch?v=mwYCjjK8g0w
 - 追梦人 https://www.youtube.com/watch?v=kqJMPfoa2NU
-
-### App下载
-
-[稳定版](https://www.pgyer.com/doramusic)或在[Release](https://github.com/dora4/DoraMusic/releases)中下载最新版本。
 
 ### 软件截图
 
