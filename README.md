@@ -28,7 +28,7 @@
 https://discord.gg/HUx8dDSZaP
 
 ### 推荐DJ
-![0_1](https://github.com/user-attachments/assets/2a060934-2ea4-4711-b238-35173faaf32e)
+<p><img width="614" src="[https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36](https://github.com/user-attachments/assets/2a060934-2ea4-4711-b238-35173faaf32e)"></p>
 
 - 是你 https://www.youtube.com/watch?v=aM0EBp9OaAM
 - 爱错 https://www.youtube.com/watch?v=AQLuz0wamT8
