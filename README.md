@@ -23,7 +23,7 @@
 
 ### Discord社群
 
-欢迎加入社群一起讨论最近流行的歌曲。
+欢迎加入社群一起交流最近流行的歌曲。
 
 https://discord.gg/HUx8dDSZaP
 
