@@ -30,7 +30,6 @@
 https://discord.gg/HUx8dDSZaP
 
 ### 推荐DJ
-<p><img width="614" src="https://github.com/user-attachments/assets/2a060934-2ea4-4711-b238-35173faaf32e"></p>
 
 - 是你 https://www.youtube.com/watch?v=aM0EBp9OaAM
 - 爱错 https://www.youtube.com/watch?v=AQLuz0wamT8
