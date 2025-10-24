@@ -15,7 +15,7 @@
 - 检测耳机与人性化的自动暂停
 - 一键换肤（主题色）
   
-![3](https://github.com/user-attachments/assets/37d10a11-77f8-4a1f-8745-ed730afc31b7)
+![初音未来动图](https://github.com/user-attachments/assets/37d10a11-77f8-4a1f-8745-ed730afc31b7)
 
 ### App下载
 
