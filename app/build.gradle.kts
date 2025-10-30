@@ -9,14 +9,13 @@ plugins {
 
 android {
     namespace = "site.doramusic.app"
-    compileSdk = 34
+    compileSdk = 36
 
     val code = 72
     val version = "1.6.7"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
-        targetSdk = 34
         versionCode = code
         versionName = version
         buildFeatures {
@@ -110,10 +109,10 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dora:1.3.39")
+    implementation("com.github.dora4:dora:1.3.40")
     implementation("com.github.dora4:dcache-android:3.5.7")
     implementation("com.github.dora4:dora-arouter-support:1.6")
-    implementation("com.github.dora4:dora-pgyer-support:1.9")
+    implementation("com.github.dora4:dora-pgyer-support:1.10")
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.5")
     implementation("com.github.dora4:dora-glide-support:1.4")
