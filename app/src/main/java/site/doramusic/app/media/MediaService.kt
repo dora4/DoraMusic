@@ -234,6 +234,11 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
     }
 
+    private fun createNotificationChannel(context: Context, channelId: String, channelName: String,
+                                          title: String, name: String) {
+
+    }
+
     @SuppressLint("ForegroundServiceType", "RemoteViewLayout")
     private fun updateNotification(bitmap: Bitmap? = null, title: String, name: String) {
         val channelId = APP_PACKAGE_NAME
