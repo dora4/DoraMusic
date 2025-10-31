@@ -34,8 +34,8 @@ import site.doramusic.app.util.PrefsManager
  * Android 8.0+ (O)	必须注册 NotificationChannel	✅
  * Android 9+ (P)	前台服务必须立即调用 startForeground()	✅
  * Android 12+ (S)	PendingIntent 必须声明 FLAG_IMMUTABLE 或 FLAG_MUTABLE	✅
- * Android 13+ (T)	建议设置 setForegroundServiceBehavior()	✅
- * Android 14+ (U)	无新要求，但 IMPORTANCE_LOW 更适合持续型前台通知	✅
+ * Android 13+ (T)	建议设置 setForegroundServiceBehavior()
+ * Android 14+ (U)	无新要求，但 IMPORTANCE_LOW 更适合持续型前台通知
  */
 class MediaService : Service(), ShakeDetector.OnShakeListener {
 
