@@ -54,11 +54,7 @@
             android:networkSecurityConfig="@xml/network_config"
             android:requestLegacyExternalStorage="true"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:targetApi="n">
-        <activity
-                android:name=".ui.activity.DonationActivity"
-                android:exported="false" />
+            android:theme="@style/AppTheme">
         <!-- 此meta-data告诉系统我已经适配了Android 13的细分权限 -->
         <meta-data
                 android:name="ScopedStorage"
@@ -124,6 +120,13 @@
                 android:label="用户协议和隐私政策"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.DonationActivity"
+            android:exported="false"
+            android:label="捐赠列表"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <service
                 android:name=".media.MediaService"
