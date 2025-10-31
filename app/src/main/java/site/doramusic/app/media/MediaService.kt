@@ -17,7 +17,6 @@ import androidx.core.app.NotificationCompat
 import dora.util.LogUtils
 import dora.util.ProcessUtils
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig.*
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PREV
@@ -30,6 +29,14 @@ import site.doramusic.app.shake.ShakeDetector
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.util.PrefsManager
 
+/**
+ * 通知兼容要点：
+ * Android 8.0+ (O)	必须注册 NotificationChannel	✅
+ * Android 9+ (P)	前台服务必须立即调用 startForeground()	✅
+ * Android 12+ (S)	PendingIntent 必须声明 FLAG_IMMUTABLE 或 FLAG_MUTABLE	✅
+ * Android 13+ (T)	建议设置 setForegroundServiceBehavior()	✅
+ * Android 14+ (U)	无新要求，但 IMPORTANCE_LOW 更适合持续型前台通知	✅
+ */
 class MediaService : Service(), ShakeDetector.OnShakeListener {
 
     /**
@@ -47,20 +54,19 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     private lateinit var detector: ShakeDetector
     private var handler: Handler = Handler(Looper.getMainLooper())
 
-
     override fun onBind(intent: Intent): IBinder? {
         binder = MediaServiceImpl()
         return binder
     }
 
     private val shakingRunnable: Runnable = Runnable {
-        // 再切到下一首播放
+        // 2.再切到下一首播放
         mc.next()
     }
 
     override fun onShake() {
         handler.removeCallbacks(shakingRunnable)
-        // 先播放摇一摇切歌的音效
+        // 1.先播放摇一摇切歌的音效
         simplePlayer?.playByRawId(R.raw.shaking)
         handler.postDelayed(shakingRunnable, 2000)
     }
@@ -232,18 +238,21 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     private fun updateNotification(bitmap: Bitmap? = null, title: String, name: String) {
         val channelId = APP_PACKAGE_NAME
         val channelName = APP_NAME
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // 创建通知频道
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                channelId, channelName, NotificationManager.IMPORTANCE_HIGH
+            // 创建通知频道
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_MIN
             ).apply {
                 enableLights(false)
                 setSound(null, null)
                 setShowBadge(false)
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             }
-            notificationManager?.createNotificationChannel(notificationChannel)
+            notificationManager.createNotificationChannel(channel)
         }
 
         // 创建 RemoteViews
@@ -300,10 +309,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
 
-//        startForeground(NOTIFICATION_ID, notification)
-
-        // 显示通知
-        notificationManager?.notify(NOTIFICATION_ID, notification)
+        startForeground(NOTIFICATION_ID, notification)
     }
 
     /**

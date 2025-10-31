@@ -2,11 +2,14 @@ package site.doramusic.app.ui.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -354,7 +357,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         } else {
             helper.permissions(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                    // Android 13 细分文件存储权限
+                    // Android 13 细分文件读取权限
                     PermissionHelper.Permission.READ_MEDIA_AUDIO
                 else
                     // 旧读取文件权限申请
@@ -397,13 +400,17 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityMainBinding) {
         StatusBarUtils.setStatusBarWithDrawerLayout(this, binding.dlMain,
-            ContextCompat.getColor(this, R.color.colorPrimary), 255)
+            ContextCompat.getColor(this, R.color.colorPrimary), StatusBarUtils.ALPHA_FULL)
         homeFragment = HomeFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fl_main, homeFragment).commit()
         prefsManager = PrefsManager(this)
+        // 初始化侧边栏菜单
         initMenu()
-        // 应用皮肤
+        // 应用正确皮肤
         applySkin()
+        // 关闭电池优化
+        IntentUtils.ensureIgnoreBatteryOptimization(this)
+        // 返回键处理
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (homeFragment.isHome) {
