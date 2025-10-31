@@ -10,6 +10,7 @@ import dora.skin.SkinManager
 import dora.pay.DoraFund
 import dora.pay.EVMChains
 import dora.util.LogUtils
+import dora.util.ThreadUtils
 import dora.util.ToastUtils
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
@@ -34,25 +35,27 @@ class MusicApp : BaseApplication(), AppConfig {
     companion object {
 
         lateinit var app: MusicApp
+        var isAppInitialized = false
     }
 
     override fun onCreate() {
         super.onCreate()
         app = this
-//        ThreadUtils.lazyLoad {
-//            if (!isAppInitialized) {
-                init()
-//                isAppInitialized = true
-//            }
-//            true
-//        }
+        init()
+        // 懒加载
+        ThreadUtils.lazyLoad {
+            if (!isAppInitialized) {
+                initPay()
+                isAppInitialized = true
+            }
+            true
+        }
     }
 
     private fun init() {
         val startTime = System.currentTimeMillis()
         LogUtils.d("init start time:$startTime")
         initDb()    // 初始化SQLite数据库的表
-        initPay()   // 初始化支付SDK
         initHttp()   // 初始化网络框架
         val endTime = System.currentTimeMillis()
         LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")

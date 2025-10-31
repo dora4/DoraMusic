@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import dora.arouter.openWithFinish
 import dora.util.PermissionHelper
 import dora.util.StatusBarUtils
+import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.databinding.ActivitySplashBinding
@@ -36,9 +37,18 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
     private fun splashLoading() {
         val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({ // 初始化完成，进入主界面
-            openWithFinish(ARoutePath.ACTIVITY_MAIN)
-        }, 300)
+        val runnable = object : Runnable {
+            override fun run() {
+                if (MusicApp.isAppInitialized) {
+                    openWithFinish(ARoutePath.ACTIVITY_MAIN)
+                } else {
+                    // 还没初始化完成，100ms 后再次检查
+                    handler.postDelayed(this, 100)
+                }
+            }
+        }
+        // 立即开始轮询
+        handler.post(runnable)
     }
 
     override fun onDestroy() {
