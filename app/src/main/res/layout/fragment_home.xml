@@ -207,20 +207,21 @@
                 android:layout_below="@+id/titlebar_home">
 
                 <dora.widget.DoraFlipperView
-                        android:id="@+id/fp_home_recommend_musics"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:dview_fv_flipInterval="5000"
-                        app:dview_fv_textColor="@color/white"
-                        app:dview_fv_textSize="15sp"
-                        android:visibility="gone"
-                        android:background="#AA000000"/>
+                    android:id="@+id/fp_home_recommend_musics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dview_fv_flipInterval="5000"
+                    app:dview_fv_textColor="@color/white"
+                    app:dview_fv_textSize="15sp"
+                    android:visibility="gone"
+                    android:background="#AA000000"/>
 
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="256dp"
                     android:background="@color/colorPanelBg"
+                    android:layout_marginTop="24dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:visibility="gone"

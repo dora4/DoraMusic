@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.youth.banner.adapter.BannerAdapter
@@ -221,7 +222,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         musicPlay = UIMusicPlay(this, uiManager)
         musicTimer = MusicTimer(bottomBar.handler, musicPlay.handler)
         musicPlay.setMusicTimer(musicTimer)
-
         loadAds(binding)
         binding.statusbarHome.layoutParams = RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -492,10 +492,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
 
         override fun onBindView(holder: BannerViewHolder, data: String, position: Int, size: Int) {
-            // 图片加载自己实现
             Glide.with(holder.itemView)
                 .load(data)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.imageView)
         }
 
