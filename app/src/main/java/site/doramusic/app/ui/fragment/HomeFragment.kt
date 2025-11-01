@@ -53,7 +53,6 @@ import site.doramusic.app.db.Music
 import site.doramusic.app.event.ChangeSkinEvent
 import site.doramusic.app.event.PlayMusicEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
-import site.doramusic.app.http.DoraBannerAd
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
@@ -83,6 +82,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private lateinit var albumDao: OrmDao<Album>
     private lateinit var folderDao: OrmDao<Folder>
     private val adapter = HomeAdapter()
+
+    // 100首
     private val songMap = mapOf(
         "是你" to "https://www.youtube.com/watch?v=aM0EBp9OaAM",
         "爱错" to "https://www.youtube.com/watch?v=AQLuz0wamT8",
@@ -332,20 +333,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 // 广告印象
                 spmAdImpression("official")
                 binding.banner.visibility = View.VISIBLE
-
-                // dcache-3.0.4新写法，支持api、result、rxApi和rxResult
-//                val bannerAds = result(AdService::class) { getBannerAds() }?.data
-
-                val bannerAds = result {
-                    // dcache-3.0.1新写法
-//                    DoraHttp[AdService::class].getBannerAds()
-                    // 旧写法
-                    RetrofitManager.getService(AdService::class.java).getBannerAds()
-                }?.data
+                val banners = result(AdService::class) { getBannerAds(PRODUCT_NAME) }?.data
                 val result = arrayListOf<String>()
-                val banners: MutableList<DoraBannerAd>? = bannerAds
                 if (banners != null) {
-                    if (banners.size > 0) {
+                    if (banners.isNotEmpty()) {
                         for (banner in banners) {
                             banner.imgUrl?.let { result.add(it) }
                         }
