@@ -2,14 +2,11 @@ package site.doramusic.app.ui.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
-import android.os.PowerManager
-import android.provider.Settings
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -114,7 +111,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_VPN_PERMISSION) {
                 DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
                     DORA_FUND_SECRET_KEY)
@@ -269,7 +266,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 DoraFund.connectWallet(this, REQUEST_WALLET_AUTHORIZATION)
             } else {
                 val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-                DoraAlertDialog(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
+                DoraAlertDialog.create(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
                     themeColor(skinThemeColor)
                     positiveListener {
                         DoraFund.disconnectWallet()
@@ -332,7 +329,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         val favoriteCount = DaoFactory.getDao(Music::class.java).count(builder)
         if (favoriteCount > 0) { //有收藏的歌曲
             val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-            DoraAlertDialog(this).show(getString(R.string.scan_prompt)) {
+            DoraAlertDialog.create(this).show(getString(R.string.scan_prompt)) {
                 themeColor(skinThemeColor)
                 positiveListener { scanMusic() }
             }
