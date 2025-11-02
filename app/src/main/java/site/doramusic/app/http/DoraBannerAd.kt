@@ -9,13 +9,13 @@ import dora.db.table.Table
 @Table("dora_banner_ad")
 class DoraBannerAd : OrmTable {
 
+    @Id
+    private val id: Long = 0
     @Column("img_url")
     val imgUrl: String? = null
     @Column("detail_url")
     val detailUrl: String? = null
 
-    @Id
-    private val id: Long = 0
     override val isUpgradeRecreated: Boolean
         get() = false
     override val migrations: Array<OrmMigration>

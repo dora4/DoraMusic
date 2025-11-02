@@ -45,7 +45,11 @@ class MusicApp : BaseApplication(), AppConfig {
         // 懒加载
         ThreadUtils.lazyLoad {
             if (!isAppInitialized) {
+                val startTime = System.currentTimeMillis()
+                LogUtils.d("initPay start time:$startTime")
                 initPay()
+                val endTime = System.currentTimeMillis()
+                LogUtils.d("initPay end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
                 isAppInitialized = true
             }
             true
@@ -94,7 +98,7 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun initHttp() {
         RetrofitManager.initConfig {
             okhttp {
-                // 高版本自动添加FormatLogInterceptor
+                // dcache高版本自动添加FormatLogInterceptor
 //                interceptors().add(FormatLogInterceptor())
                 build()
             }
