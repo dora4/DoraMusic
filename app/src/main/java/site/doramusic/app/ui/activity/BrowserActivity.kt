@@ -13,12 +13,14 @@ import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebIndicator
+import dora.skin.SkinManager
 import dora.util.IntentUtils
 import dora.util.StatusBarUtils
 import dora.util.ViewUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
+import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.databinding.ActivityBrowserBinding
@@ -43,7 +45,8 @@ class BrowserActivity : BaseSkinActivity<ActivityBrowserBinding>() {
     }
 
     override fun onSetStatusBar() {
-        StatusBarUtils.setStatusBarColorRes(this, R.color.colorPrimaryDark)
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        StatusBarUtils.setStatusBarColor(this, skinThemeColor)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -52,6 +55,8 @@ class BrowserActivity : BaseSkinActivity<ActivityBrowserBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityBrowserBinding) {
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        binding.titlebar.setBackgroundColor(skinThemeColor)
         title?.let { binding.titlebar.title = it }
         val webIndicator = WebIndicator(this)
         webIndicator.setColor(ContextCompat.getColor(this, R.color.colorPrimary))

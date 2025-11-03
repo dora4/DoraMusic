@@ -53,6 +53,7 @@ import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.ChangeSkinEvent
 import site.doramusic.app.event.PlayMusicEvent
+import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.media.IMediaService
@@ -300,6 +301,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         adapter.setList(getHomeItems())
         addDisposable(RxBus.getInstance()
             .toObservable(RefreshHomeItemEvent::class.java)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                onRefreshLocalMusic()
+            })
+        addDisposable(RxBus.getInstance()
+            .toObservable(RefreshFavoriteEvent::class.java)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 onRefreshLocalMusic()

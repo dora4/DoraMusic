@@ -42,10 +42,13 @@ import dora.db.table.OrmTable
 import dora.util.DensityUtils
 import dora.util.RxBus
 import dora.util.ScreenUtils
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.db.Music
-import site.doramusic.app.event.RefreshHomeItemEvent
+import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.lrc.LyricScroller
 import site.doramusic.app.lrc.loader.DoraLyricLoader
@@ -121,6 +124,21 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(this.manager.view.context, R.anim.anim_fade_out))
     }
 
+    private var disposable: CompositeDisposable? = null
+
+    private fun addDisposable(d: Disposable) {
+        if (disposable == null) {
+            disposable = CompositeDisposable()
+        }
+        disposable!!.add(d)
+    }
+
+    private fun dispose() {
+        if (disposable != null) {
+            disposable!!.dispose()
+        }
+    }
+
     private val lyricListener = object : LyricScroller.LyricListener {
 
         override fun onLyricLoaded(lyricLines: MutableList<LyricLine>, index: Int) {
@@ -150,6 +168,12 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             }
         }
         lyricLoader = DoraLyricLoader(lyricScroller, lyricListener)
+        addDisposable(RxBus.getInstance()
+            .toObservable(RefreshFavoriteEvent::class.java)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                refreshFavorite(curMusic?.favorite ?: 0)
+            })
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -343,6 +367,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             MediaManager.setCurMusic(it)
             saveFavorite(it, favorite)
         }
+        MediaManager.updateFavorite(favorite)
     }
 
     private fun saveFavorite(music: Music, favorite: Int) {
@@ -483,8 +508,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     } else {
                         refreshFavorite(0)
                     }
-                    // 此处最好只刷新收藏数目
-                    RxBus.getInstance().post(RefreshHomeItemEvent())
+                    RxBus.getInstance().post(RefreshFavoriteEvent())
                 }
             }
         }

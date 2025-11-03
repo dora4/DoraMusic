@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat
 import dora.util.LogUtils
 import dora.util.ProcessUtils
 import site.doramusic.app.R
+import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_FAVORITE
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PREV
@@ -229,9 +230,31 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
 
         @Throws(RemoteException::class)
+        override fun updateFavorite(favorite: Int) {
+            this@MediaService.updateFavorite(favorite)
+        }
+
+        @Throws(RemoteException::class)
         override fun cancelNotification() {
             this@MediaService.cancelNotification()
         }
+    }
+
+    private fun updateFavorite(favorite: Int) {
+        remoteViews?.apply {
+            setImageViewResource(
+                R.id.iv_nc_favorite,
+                if (favorite == 1) R.drawable.ic_favorite_checked else R.drawable.ic_favorite_unchecked
+            )
+        }
+        // 🔄 重新刷新通知
+        val notification = NotificationCompat.Builder(this, APP_PACKAGE_NAME)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setOngoing(true)
+            .setCustomContentView(remoteViews)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+        notificationManager?.notify(NOTIFICATION_ID, notification)
     }
 
     @SuppressLint("ForegroundServiceType", "RemoteViewLayout")
@@ -268,6 +291,10 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
                 R.id.iv_nc_pause_resume,
                 if (mc.isPlaying) R.drawable.ic_notification_pause else R.drawable.ic_notification_play
             )
+            setImageViewResource(
+                R.id.iv_nc_favorite,
+                if (mc.curMusic?.favorite == 1) R.drawable.ic_favorite_checked else R.drawable.ic_favorite_unchecked
+            )
         }
 
         val intent = Intent(this, MainActivity::class.java).apply {
@@ -286,19 +313,25 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
             putExtra(EXTRA_IS_PLAYING, mc.isPlaying)
         }
         val pauseResumePIntent = createPendingIntent(this, 1, pauseResumeIntent)
-        remoteViews?.setOnClickPendingIntent(R.id.iv_nc_pause_resume, pauseResumePIntent)
+        remoteViews?.setOnClickPendingIntent(R.id.fl_nc_pause_resume, pauseResumePIntent)
 
         val prevIntent = Intent(ACTION_PREV).apply {
             component = ComponentName(packageName, MusicPlayReceiver::class.java.name)
         }
         val prevPIntent = createPendingIntent(this, 2, prevIntent)
-        remoteViews?.setOnClickPendingIntent(R.id.iv_nc_previous, prevPIntent)
+        remoteViews?.setOnClickPendingIntent(R.id.fl_nc_previous, prevPIntent)
 
         val nextIntent = Intent(ACTION_NEXT).apply {
             component = ComponentName(packageName, MusicPlayReceiver::class.java.name)
         }
         val nextPIntent = createPendingIntent(this, 3, nextIntent)
-        remoteViews?.setOnClickPendingIntent(R.id.iv_nc_next, nextPIntent)
+        remoteViews?.setOnClickPendingIntent(R.id.fl_nc_next, nextPIntent)
+
+        val favoriteIntent = Intent(ACTION_FAVORITE).apply {
+            component = ComponentName(packageName, MusicPlayReceiver::class.java.name)
+        }
+        val favoritePIntent = createPendingIntent(this, 4, favoriteIntent)
+        remoteViews?.setOnClickPendingIntent(R.id.fl_nc_favorite, favoritePIntent)
 
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)

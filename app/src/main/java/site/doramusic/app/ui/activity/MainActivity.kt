@@ -33,6 +33,7 @@ import dora.util.StatusBarUtils
 import dora.util.ToastUtils
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
+import dora.widget.DoraSingleButtonDialog
 import site.doramusic.app.BuildConfig
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
@@ -106,6 +107,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     companion object {
         const val REQUEST_VPN_PERMISSION = 1
         const val REQUEST_WALLET_AUTHORIZATION = 2
+
+        const val EVENT_TYPE_SCAN_PROMPT = "scan_prompt"
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -352,16 +355,34 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 startActivity(IntentUtils.getRequestStoragePermissionIntent(packageName))
             }
         } else {
-            helper.permissions(
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                    // Android 13 细分文件读取权限
-                    PermissionHelper.Permission.READ_MEDIA_AUDIO
-                else
-                    // 旧读取文件权限申请
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                // Android 13 细分文件读取权限
+                DoraSingleButtonDialog(
+                    this,
+                    listener = object : DoraSingleButtonDialog.DialogListener {
+                        override fun onButtonClick(eventType: String) {
+                            if (eventType == EVENT_TYPE_SCAN_PROMPT) {
+                                helper.permissions(
+                                    PermissionHelper.Permission.READ_MEDIA_AUDIO
+                                ).request {
+                                    if (it) {
+                                        scanning()
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .show(
+                        EVENT_TYPE_SCAN_PROMPT, "受Android13以上系统限制，读取音频文件权限仅能访问" +
+                                "Music、Download等特定目录的音频文件。如需访问所有目录的音频文件，请在【设置】->【应用程序】->【权限】中手动开启全部文件读取权限。"
+                    )
+            } else {
+                helper.permissions(
                     PermissionHelper.Permission.READ_EXTERNAL_STORAGE
-            ).request {
-                if (it) {
-                    scanning()
+                ).request {
+                    if (it) {
+                        scanning()
+                    }
                 }
             }
         }

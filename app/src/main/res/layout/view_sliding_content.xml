@@ -83,8 +83,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleX="0.9"
-                android:scaleY="0.9"
                 android:src="@drawable/ic_playmode_list_loop"
                     app:tint="@color/white"
                 android:background="@drawable/selector_music_btn" />
@@ -94,8 +92,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleX="0.9"
-                android:scaleY="0.9"
                 android:background="@drawable/selector_music_btn"
                     app:tint="@color/white"
                 android:src="@drawable/ic_player_prev" />
@@ -128,8 +124,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleX="0.9"
-                android:scaleY="0.9"
                 android:background="@drawable/selector_music_btn"
                     app:tint="@color/white"
                 android:src="@drawable/ic_player_next" />

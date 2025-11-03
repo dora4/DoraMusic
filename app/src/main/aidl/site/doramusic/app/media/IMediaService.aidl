@@ -34,5 +34,6 @@ interface IMediaService {
     Music getCurMusic();
     List<Music> getPlaylist();
     void updateNotification(in Bitmap bitmap, String title, String name);
+    void updateFavorite(int favorite);
     void cancelNotification();
 }

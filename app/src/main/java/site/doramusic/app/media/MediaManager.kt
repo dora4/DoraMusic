@@ -280,6 +280,14 @@ object MediaManager : IMediaService.Stub(), AppConfig {
         }
     }
 
+    override fun updateFavorite(favorite: Int) {
+        try {
+            mediaService?.updateFavorite(favorite)
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        }
+    }
+
     override fun cancelNotification() {
         try {
             mediaService?.cancelNotification()

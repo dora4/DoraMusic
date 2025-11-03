@@ -1,6 +1,8 @@
 package site.doramusic.app.base.conf
 
 import dora.util.IoUtils
+import dora.util.RxBus
+import site.doramusic.app.event.RefreshHomeItemEvent
 import java.util.Calendar
 
 interface AppConfig {
@@ -31,6 +33,7 @@ interface AppConfig {
         const val MEDIA_SERVICE = "site.doramusic.app.service.MEDIA_SERVICE"
         const val ACTION_PREV = "site.doramusic.app.intent.ACTION_PREV"
         const val ACTION_NEXT = "site.doramusic.app.intent.ACTION_NEXT"
+        const val ACTION_FAVORITE = "site.doramusic.app.intent.ACTION_FAVORITE"
         const val ACTION_PAUSE_RESUME = "site.doramusic.app.intent.ACTION_PAUSE_RESUME"
         const val EXTRA_IS_PLAYING = "isPlaying"
         const val EXTRA_TITLE = "title"

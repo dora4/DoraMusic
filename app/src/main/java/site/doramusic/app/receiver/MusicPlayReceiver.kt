@@ -4,12 +4,20 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import dora.db.builder.WhereBuilder
+import dora.db.dao.DaoFactory
+import dora.db.table.OrmTable
 import dora.util.LogUtils
+import dora.util.RxBus
 import site.doramusic.app.R
+import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_FAVORITE
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PREV
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_IS_PLAYING
+import site.doramusic.app.db.Music
+import site.doramusic.app.event.RefreshFavoriteEvent
+import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MediaService.Companion.NOTIFICATION_NAME
 import site.doramusic.app.media.MediaService.Companion.NOTIFICATION_TITLE
@@ -52,11 +60,32 @@ class MusicPlayReceiver : BroadcastReceiver() {
 
             ACTION_NEXT -> MediaManager.next()
             ACTION_PREV -> MediaManager.prev()
+            ACTION_FAVORITE -> {
+                val curMusic = MediaManager.curMusic
+                if (curMusic == null) {
+                    return
+                }
+                curMusic.let {
+                    if (it.favorite == 1) {
+                        it.favorite = 0
+                    } else {
+                        it.favorite = 1
+                    }
+                    MediaManager.updateFavorite(it.favorite)
+                    saveFavorite(it, it.favorite)
+                    RxBus.getInstance().post(RefreshFavoriteEvent())
+                }
+            }
 //                ACTION_CANCEL -> {
 //                    cancelNotification()
 //                    killAllOtherProcess(context)
 //                    android.os.Process.killProcess(android.os.Process.myPid())
 //                }
         }
+    }
+
+    private fun saveFavorite(music: Music, favorite: Int) {
+        music.favorite = favorite
+        DaoFactory.getDao(Music::class.java).update(WhereBuilder.create().addWhereEqualTo(OrmTable.INDEX_ID, music.id), music)
     }
 }

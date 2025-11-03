@@ -4,6 +4,8 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,80 +13,111 @@
         android:id="@+id/iv_nc_album"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_margin="8dp"
         android:scaleType="centerInside" />
 
     <RelativeLayout
         android:id="@+id/rl_nc_label"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/iv_nc_album" >
+        android:layout_toEndOf="@+id/iv_nc_album">
 
         <TextView
             android:id="@+id/tv_nc_title"
             style="@style/AppTheme.Text.NotificationTitle"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:fadingEdge="horizontal"
             android:fadingEdgeLength="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:singleLine="true"
-            android:text="" />
+            android:layout_marginEnd="5dp"
+            android:text=""
+            tools:text="歌曲名" />
 
         <TextView
             android:id="@+id/tv_nc_text"
             style="@style/AppTheme.Text.NotificationText"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_nc_title"
             android:layout_marginTop="5dp"
+            android:ellipsize="end"
             android:fadingEdge="horizontal"
             android:fadingEdgeLength="8dp"
-            android:ellipsize="end"
             android:singleLine="true"
-            android:text="" />
-    </RelativeLayout>
+            android:layout_marginEnd="5dp"
+            android:text=""
+            tools:text="歌手名" />
 
-    <LinearLayout
-        android:id="@+id/ll_nc_control"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_toEndOf="@id/rl_nc_label"
-            android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true" >
-
-        <ImageView
-            android:id="@+id/iv_nc_previous"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/ic_notification_prev" />
-        <FrameLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_nc_control"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
-            <ImageView
-                android:id="@+id/iv_nc_pause_resume"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_notification_pause"/>
-        </FrameLayout>
+            android:layout_below="@+id/tv_nc_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
 
-        <ImageView
-            android:id="@+id/iv_nc_next"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_notification_next" />
+            <FrameLayout
+                android:id="@+id/fl_nc_previous"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_nc_previous"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_notification_prev" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_nc_pause_resume"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_nc_pause_resume"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_notification_pause" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_nc_next"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_nc_next"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_notification_next" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_nc_favorite"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_nc_favorite"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_favorite_unchecked" />
+            </FrameLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
