@@ -28,13 +28,13 @@ class EarphoneReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
+        if (!::player.isInitialized) {
+            player = SimpleAudioPlayer(context)
+        }
         if (action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
             changeSpeakerphoneOn(context, true)
             // 只监听拔出耳机使用这个意图
             // 耳机拔出时，暂停音乐播放
-            if (!::player.isInitialized) {
-                player = SimpleAudioPlayer(context)
-            }
             player.playByRawId(R.raw.earphone)
             pauseMusic()
         } else if (Intent.ACTION_HEADSET_PLUG == action) {
@@ -64,7 +64,6 @@ class EarphoneReceiver : BroadcastReceiver() {
                 changeSpeakerphoneOn(context, true)
                 // 蓝牙耳机失去连接
                 Handler(Looper.getMainLooper()).postDelayed({
-                    player = SimpleAudioPlayer(context)
                     player.playByRawId(R.raw.bluetooth)
                 }, 1000)
                 pauseMusic()

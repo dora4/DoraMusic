@@ -130,7 +130,6 @@ dependencies {
     implementation("com.github.dora4:dview-bottom-dialog:1.13")
     implementation("com.github.dora4:dview-avatar:1.4")
     implementation("com.github.dora4:dview-flipper-view:1.2")
-    implementation("com.github.dora4:dview-flexible-scrollview:1.0")
     implementation("com.github.dora4:dview-coupon-view:1.16")
 
     // ARouter

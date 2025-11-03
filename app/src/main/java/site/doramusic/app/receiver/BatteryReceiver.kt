@@ -12,15 +12,17 @@ import site.doramusic.app.media.SimpleAudioPlayer
  */
 class BatteryReceiver : BroadcastReceiver() {
 
-    private lateinit var player: SimpleAudioPlayer
+    private var player: SimpleAudioPlayer? = null
 
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         // 手机电量低
         if (action == "android.intent.action.BATTERY_LOW") {
-            player = SimpleAudioPlayer(context)
+            if (player == null) {
+                player = SimpleAudioPlayer(context)
+            }
             // 播放电量低的音效
-            player.playByRawId(R.raw.battery)
+            player!!.playByRawId(R.raw.battery)
         }
     }
 }
