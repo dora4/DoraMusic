@@ -247,9 +247,18 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
                 if (favorite == 1) R.drawable.ic_favorite_checked else R.drawable.ic_favorite_unchecked
             )
         }
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pi = PendingIntent.getActivity(
+            this, 0, intent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
+            else PendingIntent.FLAG_UPDATE_CURRENT
+        )
         // 🔄 重新刷新通知
         val notification = NotificationCompat.Builder(this, APP_PACKAGE_NAME)
             .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentIntent(pi)
             .setOngoing(true)
             .setCustomContentView(remoteViews)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
