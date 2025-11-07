@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
+import dora.firebase.SpmUtils
 import dora.util.LogUtils
 import dora.util.RxBus
 import site.doramusic.app.R
@@ -17,7 +18,6 @@ import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PREV
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_IS_PLAYING
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshFavoriteEvent
-import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MediaService.Companion.NOTIFICATION_NAME
 import site.doramusic.app.media.MediaService.Companion.NOTIFICATION_TITLE
@@ -67,8 +67,10 @@ class MusicPlayReceiver : BroadcastReceiver() {
                 }
                 curMusic.let {
                     if (it.favorite == 1) {
+                        SpmUtils.selectContent(context, "通知栏取消收藏歌曲")
                         it.favorite = 0
                     } else {
+                        SpmUtils.selectContent(context, "通知栏收藏歌曲")
                         it.favorite = 1
                     }
                     MediaManager.updateFavorite(it.favorite)

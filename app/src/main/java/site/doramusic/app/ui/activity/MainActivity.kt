@@ -20,6 +20,7 @@ import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
+import dora.firebase.SpmUtils.spmSelectContent
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager
@@ -265,9 +266,11 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         avatarView.setOnClickListener {
             // 钱包授权登录
             if (!DoraFund.isWalletConnected()) {
+                spmSelectContent("钱包授权登录")
                 closeDrawer()
                 DoraFund.connectWallet(this, REQUEST_WALLET_AUTHORIZATION)
             } else {
+                spmSelectContent("取消钱包授权")
                 val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
                 DoraAlertDialog.create(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
                     themeColor(skinThemeColor)
@@ -330,7 +333,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             WhereBuilder.create()
                 .addWhereEqualTo(Music.COLUMN_FAVORITE, 1))
         val favoriteCount = DaoFactory.getDao(Music::class.java).count(builder)
-        if (favoriteCount > 0) { //有收藏的歌曲
+        if (favoriteCount > 0) { // 有收藏的歌曲
             val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
             DoraAlertDialog.create(this).show(getString(R.string.scan_prompt)) {
                 themeColor(skinThemeColor)
@@ -400,6 +403,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 dialog.dismiss()
             }
             .subscribe({ list ->
+                spmSelectContent("扫描歌曲")
                 if (list.isNotEmpty()) {
                     ToastUtils.showShort(
                         String.format(
@@ -426,7 +430,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         initMenu()
         // 应用正确皮肤
         applySkin()
-        // 关闭电池优化
+        // 关闭电池优化，保活
         IntentUtils.ensureIgnoreBatteryOptimization(this)
         // 返回键处理
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -447,7 +451,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                     if (homeFragment.isSlidingDrawerOpened) {
                         homeFragment.hideDrawer()
                     } else {
-                        if (backListeners.size > 0) {
+                        if (backListeners.isNotEmpty()) {
                             for (listener in backListeners) {
                                 listener.onBack()
                             }

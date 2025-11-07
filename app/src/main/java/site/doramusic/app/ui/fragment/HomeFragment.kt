@@ -27,6 +27,7 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.firebase.SpmUtils.spmAdImpression
+import dora.firebase.SpmUtils.spmSelectContent
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager
@@ -264,6 +265,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
                 override fun onItemClick(text: String) {
                     val url = songMap[text]
+                    spmSelectContent("查看推荐歌曲队列的内容")
                     open(ARoutePath.ACTIVITY_BROWSER) {
                         withString(EXTRA_TITLE, getString(R.string.app_name))
                         withString(EXTRA_URL, url)
@@ -553,12 +555,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     override fun showDrawer() {
         if (!musicPlay.isOpened) {
+            spmSelectContent("打开播放控制器界面")
             musicPlay.open()
         }
     }
 
     override fun hideDrawer() {
         if (musicPlay.isOpened) {
+            spmSelectContent("关闭播放控制器界面")
             musicPlay.close()
         }
     }

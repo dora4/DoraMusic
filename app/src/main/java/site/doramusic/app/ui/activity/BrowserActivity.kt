@@ -59,7 +59,7 @@ class BrowserActivity : BaseSkinActivity<ActivityBrowserBinding>() {
         binding.titlebar.setBackgroundColor(skinThemeColor)
         title?.let { binding.titlebar.title = it }
         val webIndicator = WebIndicator(this)
-        webIndicator.setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        webIndicator.setColor(skinThemeColor)
         agentWeb = AgentWeb.with(this)
             .setAgentWebParent(
                 binding.rlBrowserWebPage,

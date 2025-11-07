@@ -20,6 +20,7 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.exception.OrmTaskException
 import dora.db.table.OrmTable
+import dora.firebase.SpmUtils
 import dora.skin.SkinManager
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
@@ -166,29 +167,41 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             updateMusicListUI(musics)
         }
         when (from) {
-            ROUTE_START_FROM_LOCAL -> musicDao.selectAllAsync(listener)
+            ROUTE_START_FROM_LOCAL -> {
+                SpmUtils.selectContent(activity, "从【我的歌曲】进入歌曲列表")
+                musicDao.selectAllAsync(listener)
+            }
             ROUTE_START_FROM_ARTIST -> {
+                SpmUtils.selectContent(activity, "从【歌手】进入歌曲列表")
                 val artist = table as Artist
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ARTIST, artist.name), listener)
             }
             ROUTE_START_FROM_ALBUM -> {
+                SpmUtils.selectContent(activity, "从【专辑】进入歌曲列表")
                 val album = table as Album
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ALBUM_ID, album.album_id), listener)
             }
             ROUTE_START_FROM_FOLDER -> {
+                SpmUtils.selectContent(activity, "从【文件夹】进入歌曲列表")
                 val folder = table as Folder
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FOLDER, folder.path), listener)
             }
-            ROUTE_START_FROM_FAVORITE -> musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FAVORITE, Music.IS_FAVORITE), listener)
-            ROUTE_START_FROM_LATEST -> musicDao.selectAsync(
-                QueryBuilder.create()
-                    .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))
-                    // 按最后播放时间降序
-                    .orderByNew("-${Music.COLUMN_LAST_PLAY_TIME}"),
-                createMusicTaskListener(activity) { musics ->
-                    updateMusicListUI(musics, sort = false)
-                }
-            )
+            ROUTE_START_FROM_FAVORITE -> {
+                SpmUtils.selectContent(activity, "从【我的收藏】进入歌曲列表")
+                musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FAVORITE, Music.IS_FAVORITE), listener)
+            }
+            ROUTE_START_FROM_LATEST -> {
+                SpmUtils.selectContent(activity, "从【最近播放】进入歌曲列表")
+                musicDao.selectAsync(
+                    QueryBuilder.create()
+                        .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))
+                        // 按最后播放时间降序
+                        .orderByNew("-${Music.COLUMN_LAST_PLAY_TIME}"),
+                    createMusicTaskListener(activity) { musics ->
+                        updateMusicListUI(musics, sort = false)
+                    }
+                )
+            }
             else -> return
         }
     }
