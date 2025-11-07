@@ -207,11 +207,13 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
 
     fun showPlay(flag: Boolean) {
         if (flag) {
-            SpmUtils.selectContent(manager.view.context, "暂停音乐")
+            // 核心功能不再纳入统计
+//            SpmUtils.selectContent(manager.view.context, "暂停音乐")
             btnHomeBottomPlay.visibility = View.VISIBLE
             btnHomeBottomPause.visibility = View.GONE
         } else {
-            SpmUtils.selectContent(manager.view.context, "播放音乐")
+            // 核心功能不再纳入统计
+//            SpmUtils.selectContent(manager.view.context, "播放音乐")
             btnHomeBottomPlay.visibility = View.GONE
             btnHomeBottomPause.visibility = View.VISIBLE
         }
