@@ -157,10 +157,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         }
     }
 
-    companion object {
-        private const val REQUEST_VPN_PERMISSION = 1001
-    }
-
     // 新的 Activity Result 启动器
     private val vpnPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
