@@ -8,6 +8,7 @@ import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -156,19 +157,44 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         }
     }
 
-    private fun requestVPNPermission() {
-        val intent = VpnService.prepare(this@MainActivity)
-        if (intent != null) {
-            startActivityForResult(intent, REQUEST_VPN_PERMISSION)
+    companion object {
+        private const val REQUEST_VPN_PERMISSION = 1001
+    }
+
+    // 新的 Activity Result 启动器
+    private val vpnPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            onVPNPermissionGranted()
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                this@MainActivity.onActivityResult(
-                    REQUEST_VPN_PERMISSION,
-                    Activity.RESULT_OK,
-                    null
-                )
-            }
+            onVPNPermissionDenied()
         }
+    }
+
+    private fun requestVPNPermission() {
+        val intent = VpnService.prepare(this)
+        if (intent != null) {
+            // Android 5+ 都支持
+            vpnPermissionLauncher.launch(intent)
+        } else {
+            // 已授权，无需弹窗
+            onVPNPermissionGranted()
+        }
+    }
+
+    private fun onVPNPermissionGranted() {
+        Toast.makeText(this, "VPN 权限已授予", Toast.LENGTH_SHORT).show()
+        startVPNService()
+    }
+
+    private fun onVPNPermissionDenied() {
+        Toast.makeText(this, "VPN 权限被拒绝", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun startVPNService() {
+        val intent = VpnService.prepare(this@MainActivity)
+        ContextCompat.startForegroundService(this, intent)
     }
 
     /**

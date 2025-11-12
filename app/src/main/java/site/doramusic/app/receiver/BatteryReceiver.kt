@@ -15,9 +15,8 @@ class BatteryReceiver : BroadcastReceiver() {
     private var player: SimpleAudioPlayer? = null
 
     override fun onReceive(context: Context, intent: Intent) {
-        val action = intent.action
         // 手机电量低
-        if (action == "android.intent.action.BATTERY_LOW") {
+        if (intent.action == "android.intent.action.BATTERY_LOW") {
             if (player == null) {
                 player = SimpleAudioPlayer(context)
             }
