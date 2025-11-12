@@ -13,7 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import site.doramusic.app.event.DeleteResponseEvent
 import site.doramusic.app.event.DeleteTaskEvent
-import site.doramusic.app.event.DownloadMessage
+import site.doramusic.app.event.DownloadEvent
 import site.doramusic.app.model.DownloadTask
 import java.util.Collections
 import java.util.concurrent.ExecutorService
@@ -184,7 +184,7 @@ class DownloadService : Service() {
     }
 
     private fun postMessage(msg: String) {
-        RxBus.getInstance().post(DownloadMessage(msg))
+        RxBus.getInstance().post(DownloadEvent(msg))
     }
 
     private fun post(task: DownloadTask) {

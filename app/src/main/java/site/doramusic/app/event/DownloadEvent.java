@@ -1,10 +1,10 @@
 package site.doramusic.app.event;
 
-public class DownloadMessage {
+public class DownloadEvent {
 
     public String message;
 
-    public DownloadMessage(String message){
+    public DownloadEvent(String message){
         this.message = message;
     }
 }

@@ -10,7 +10,7 @@ import dora.db.table.Table
 class DoraBannerAd : OrmTable {
 
     @Id
-    private val id: Long = 0
+    private val id: Long = OrmTable.ID_UNASSIGNED
     @Column("img_url")
     val imgUrl: String? = null
     @Column("detail_url")
