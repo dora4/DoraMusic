@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
 import dora.skin.SkinManager
+import dora.widget.DoraLetterView
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
@@ -21,7 +22,6 @@ import site.doramusic.app.db.Folder
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.FolderItemAdapter
-import site.doramusic.app.widget.LetterView
 import java.util.*
 
 class UIViewFolder(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
@@ -31,7 +31,7 @@ class UIViewFolder(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
     private lateinit var adapter: FolderItemAdapter
     private lateinit var rvFolder: RecyclerView
 
-    private lateinit var lvFolder: LetterView
+    private lateinit var lvFolder: DoraLetterView
     private lateinit var tvFolderDialog: TextView
     private val folderDao = DaoFactory.getDao(Folder::class.java)
 
@@ -74,7 +74,7 @@ class UIViewFolder(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
 
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         lvFolder.hoverTextColor = skinThemeColor
-        lvFolder.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        lvFolder.setOnLetterChangeListener(object : DoraLetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
                 tvFolderDialog.text = letter
                 val position: Int = when (letter) {

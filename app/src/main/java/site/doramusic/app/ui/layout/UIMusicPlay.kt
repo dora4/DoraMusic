@@ -42,6 +42,7 @@ import dora.db.table.OrmTable
 import dora.util.DensityUtils
 import dora.util.RxBus
 import dora.util.ScreenUtils
+import dora.widget.DoraRotateView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -59,7 +60,6 @@ import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.LyricAdapter
 import site.doramusic.app.util.MusicTimer
-import site.doramusic.app.widget.RotateCoverView
 import site.doramusic.app.widget.SlidingView
 
 /**
@@ -96,7 +96,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private lateinit var viewPager: ViewPager
     private lateinit var coverLrcContainer: FrameLayout
     private lateinit var coverContainer: FrameLayout
-    private lateinit var rotateCoverView: RotateCoverView
+    private lateinit var rotateCoverView: DoraRotateView
     private lateinit var lrcEmptyView: TextView
     private lateinit var lrcListView: ListView
     private val lyricAdapter: LyricAdapter by lazy {
@@ -192,7 +192,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         btnMusicPlayFavorite = findViewById(R.id.btn_music_play_favorite) as ImageButton
         statusBarLyric.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             getStatusBarHeight())
-        rotateCoverView = RotateCoverView(manager.view.context)
+        rotateCoverView = DoraRotateView(manager.view.context)
         viewPager = findViewById(R.id.vp_music_play_cover_lyric) as ViewPager
 
         lrcEmptyView = TextView(manager.view.context)
@@ -218,6 +218,10 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         val lp = FrameLayout.LayoutParams(ScreenUtils.getScreenWidth() - dp40,
             ScreenUtils.getScreenWidth() - dp40)
         lp.gravity = Gravity.CENTER
+        rotateCoverView.setAppName(AppConfig.APP_NAME)
+        rotateCoverView.setAlbumText(AppConfig.ALBUM_TEXT)
+        rotateCoverView.setAppSlogan(AppConfig.APP_SLOGAN)
+        rotateCoverView.setCopyRight(AppConfig.COPY_RIGHT)
         coverContainer.addView(rotateCoverView, lp)
         coverLrcContainer.addView(lrcListView)
         coverLrcContainer.addView(lrcEmptyView)

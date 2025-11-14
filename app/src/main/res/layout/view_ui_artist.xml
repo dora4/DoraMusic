@@ -29,17 +29,17 @@
             android:id="@+id/rv_artist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <site.doramusic.app.widget.LetterView
+        <dora.widget.DoraLetterView
             android:id="@+id/lv_artist"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:background="@drawable/shape_letterview_normal_bg"
-            app:letterview_hoverBackgroundDrawable="@drawable/shape_letterview_hover_bg"
-            app:letterview_hoverTextColor="@color/skin_theme_color"
-            app:letterview_textColor="@color/white"
-            app:letterview_letters="↑ABCDEFGHIJKLMNOPQRSTUVWXYZ#"
-            app:letterview_textAllCaps="true" />
+            app:dview_lv_hoverBackgroundDrawable="@drawable/shape_letterview_hover_bg"
+            app:dview_lv_hoverTextColor="@color/skin_theme_color"
+            app:dview_lv_textColor="@color/white"
+            app:dview_lv_letters="↑ABCDEFGHIJKLMNOPQRSTUVWXYZ#"
+            app:dview_lv_textAllCaps="true" />
         <TextView
             android:id="@+id/tv_artist_dialog"
             android:layout_width="80dp"

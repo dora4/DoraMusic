@@ -22,6 +22,7 @@ import dora.db.exception.OrmTaskException
 import dora.db.table.OrmTable
 import dora.firebase.SpmUtils
 import dora.skin.SkinManager
+import dora.widget.DoraLetterView
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
@@ -42,7 +43,6 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.MusicItemAdapter
-import site.doramusic.app.widget.LetterView
 
 class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
     AppConfig {
@@ -53,7 +53,7 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private lateinit var titleBar: DoraTitleBar
     private lateinit var rvMusic: RecyclerView
     private lateinit var adapter: MusicItemAdapter
-    private lateinit var lvMusic: LetterView
+    private lateinit var lvMusic: DoraLetterView
     private lateinit var tvMusicDialog: TextView
     private val musicDao = DaoFactory.getDao(Music::class.java)
     private val loadingDialog: DoraLoadingDialog by lazy { DoraLoadingDialog(manager.view.context) }
@@ -145,7 +145,7 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private fun setupLetterView() {
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         lvMusic.hoverTextColor = skinThemeColor
-        lvMusic.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        lvMusic.setOnLetterChangeListener(object : DoraLetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
                 tvMusicDialog.text = letter
                 val position = when (letter) {

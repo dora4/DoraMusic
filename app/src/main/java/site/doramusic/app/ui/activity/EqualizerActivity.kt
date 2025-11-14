@@ -10,20 +10,20 @@ import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.skin.SkinManager
 import dora.util.StatusBarUtils
+import dora.widget.DoraEqualizerView
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityEqualizerBinding
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.util.PrefsManager
-import site.doramusic.app.widget.EqualizerView
 
 /**
  * 均衡器界面。
  */
 @Route(path = ARoutePath.ACTIVITY_EQUALIZER)
 class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
-        EqualizerView.OnUpdateDecibelListener {
+        DoraEqualizerView.OnUpdateDecibelListener {
 
     private lateinit var prefsManager: PrefsManager
 

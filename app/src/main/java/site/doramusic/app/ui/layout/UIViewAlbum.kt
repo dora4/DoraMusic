@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
 import dora.skin.SkinManager
+import dora.widget.DoraLetterView
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
@@ -21,7 +22,6 @@ import site.doramusic.app.db.Album
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.AlbumItemAdapter
-import site.doramusic.app.widget.LetterView
 import java.util.*
 
 class UIViewAlbum(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
@@ -30,7 +30,7 @@ class UIViewAlbum(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private lateinit var titlebar: DoraTitleBar
     private lateinit var rvAlbum: RecyclerView
     private lateinit var adapter: AlbumItemAdapter
-    private lateinit var lvAlbum: LetterView
+    private lateinit var lvAlbum: DoraLetterView
     private lateinit var tvAlbumDialog: TextView
     private val albumDao = DaoFactory.getDao(Album::class.java)
 
@@ -71,7 +71,7 @@ class UIViewAlbum(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         rvAlbum.adapter = adapter
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         lvAlbum.hoverTextColor = skinThemeColor
-        lvAlbum.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        lvAlbum.setOnLetterChangeListener(object : DoraLetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
 
                 tvAlbumDialog.text = letter

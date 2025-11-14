@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
 import dora.skin.SkinManager
+import dora.widget.DoraLetterView
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
@@ -21,7 +22,6 @@ import site.doramusic.app.db.Artist
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.ArtistItemAdapter
-import site.doramusic.app.widget.LetterView
 import java.util.*
 
 class UIViewArtist(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
@@ -30,7 +30,7 @@ class UIViewArtist(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
     private lateinit var titlebar: DoraTitleBar
     private lateinit var adapter: ArtistItemAdapter
     private lateinit var statusBarArtist: View
-    private lateinit var lvArtist: LetterView
+    private lateinit var lvArtist: DoraLetterView
     private lateinit var tvArtistDialog: TextView
     private val artistDao = DaoFactory.getDao(Artist::class.java)
 
@@ -73,7 +73,7 @@ class UIViewArtist(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
 
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         lvArtist.hoverTextColor = skinThemeColor
-        lvArtist.setOnLetterChangeListener(object : LetterView.OnLetterChangeListener {
+        lvArtist.setOnLetterChangeListener(object : DoraLetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {
                 tvArtistDialog.text = letter
                 val position: Int = when (letter) {

@@ -131,6 +131,9 @@ dependencies {
     implementation("com.github.dora4:dview-avatar:1.4")
     implementation("com.github.dora4:dview-flipper-view:1.2")
     implementation("com.github.dora4:dview-coupon-view:1.16")
+    implementation("com.github.dora4:dview-sidebar:1.4")
+    implementation("com.github.dora4:dview-rotate-view:1.2")
+    implementation("com.github.dora4:dview-equalizer-view:1.0")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")

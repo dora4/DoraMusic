@@ -1,7 +1,6 @@
 package site.doramusic.app.ui.activity
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.net.VpnService
@@ -68,6 +67,16 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     private lateinit var prefsManager: PrefsManager
     private var addressView: TextView? = null
     private lateinit var helper: PermissionHelper
+
+    private val vpnPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            onVPNPermissionGranted()
+        } else {
+            onVPNPermissionDenied()
+        }
+    }
 
     private val selectMusicLauncher =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
@@ -154,17 +163,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             } else {
                 requestVPNPermission()
             }
-        }
-    }
-
-    // 新的 Activity Result 启动器
-    private val vpnPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            onVPNPermissionGranted()
-        } else {
-            onVPNPermissionDenied()
         }
     }
 
