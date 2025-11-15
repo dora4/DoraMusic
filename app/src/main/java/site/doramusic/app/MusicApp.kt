@@ -23,6 +23,7 @@ import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.http.service.AdService
+import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.model.Donation
 import site.doramusic.app.model.DownloadTask
@@ -104,6 +105,7 @@ class MusicApp : BaseApplication(), AppConfig {
             }
             // 这里可以指定不同节点的API服务
             mappingBaseUrl(MusicService::class.java, AppConfig.URL_APP_SERVER)
+            mappingBaseUrl(FileService::class.java, AppConfig.URL_FILE_SERVER)
             mappingBaseUrl(AdService::class.java, AppConfig.URL_AD_SERVER)
         }
     }

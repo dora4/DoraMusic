@@ -19,6 +19,7 @@ interface AppConfig {
 
         // 域名
         const val URL_APP_SERVER = "http://doramusic.site:8080"
+        const val URL_FILE_SERVER = "http://dorachat.com:9999"
         const val URL_AD_SERVER = "http://dorachat.com:9091"
 
         // key

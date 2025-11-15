@@ -21,6 +21,8 @@ import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils.spmSelectContent
+import dora.http.DoraHttp
+import dora.http.DoraHttp.api
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager
@@ -46,6 +48,7 @@ import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshHomeItemEvent
+import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.ui.IBackNavigator
@@ -83,7 +86,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             uri?.let {
                 // 复制文件到缓存目录
                 val file = copyUriToFile(uri, "selected_music")
-                uploadMusic(file)
+                uploadMusicEmu(file)
             }
         }
 
@@ -317,6 +320,34 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             // 不选中
             mBinding.dlMain.closeDrawers()
             true
+        }
+    }
+
+    /**
+     * 上传歌曲模拟。
+     */
+    private fun uploadMusicEmu(file: File) {
+        if (!DoraFund.isWalletConnected()) {
+            showShortToast(getString(R.string.evm_login_first))
+            return
+        }
+        val erc20Address = DoraFund.getCurrentAddress()
+        net {
+            val part = DoraHttp.createFilePart(file, "file", "audio/*")
+            // 模拟上传歌曲到去中心化存储
+            val cid = result(FileService::class) { ipfsEmu(part) }?.data
+            if (cid != null) {
+                try {
+                    val ok = api(MusicService::class) {
+                        saveMusicInfo(erc20Address, cid)
+                    }?.result as Boolean
+                    if (ok) {
+                        showShortToast(getString(R.string.uploaded_successfully))
+                    }
+                } catch (e: Exception) {
+                    showShortToast(e.toString())
+                }
+            }
         }
     }
 
