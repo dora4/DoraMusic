@@ -42,8 +42,8 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
                 if (MusicApp.isAppInitialized) {
                     openWithFinish(ARoutePath.ACTIVITY_MAIN)
                 } else {
-                    // 还没初始化完成，100ms 后再次检查
-                    handler.postDelayed(this, 100)
+                    // 还没初始化完成，50ms 后再次检查
+                    handler.postDelayed(this, 50)
                 }
             }
         }
