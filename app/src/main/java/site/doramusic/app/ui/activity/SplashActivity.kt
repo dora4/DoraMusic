@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.arouter.openWithFinish
-import dora.util.PermissionHelper
 import dora.util.StatusBarUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
@@ -19,16 +18,9 @@ import site.doramusic.app.util.MusicUtils
 @Route(path = ARoutePath.ACTIVITY_SPLASH)
 class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
-    private lateinit var helper: PermissionHelper
-
     override fun onSetStatusBar() {
         super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        helper = PermissionHelper.with(this).prepare(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE)
-        super.onCreate(savedInstanceState)
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivitySplashBinding) {
