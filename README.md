@@ -28,11 +28,10 @@ Android7.0+
 ![初音未来动图](https://github.com/user-attachments/assets/37d10a11-77f8-4a1f-8745-ed730afc31b7)
 
 ### App下载
-
-<p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
-
 - 用户版：[查看详情](https://www.pgyer.com/doramusic)
 - 开发版：[点此下载](https://github.com/dora4/DoraMusic/releases)
+<p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
+
 
 ### Discord社群
 
