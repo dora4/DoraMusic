@@ -1,6 +1,6 @@
 # DoraMusic
 
-<p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
+<img width="614" alt="截屏2025-04-26 03 02 57" src="https://github.com/user-attachments/assets/d8153158-2524-4778-aeab-ee478c0e9d64" />
 
 ### 产品名称
 朵拉音乐（英文名：Dora Music）
@@ -29,10 +29,10 @@ Android7.0+
 
 ### App下载
 
+<p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
+
 - 用户版：[查看详情](https://www.pgyer.com/doramusic)
 - 开发版：[点此下载](https://github.com/dora4/DoraMusic/releases)
-
-<img width="614" alt="截屏2025-04-26 03 02 57" src="https://github.com/user-attachments/assets/d8153158-2524-4778-aeab-ee478c0e9d64" />
 
 ### Discord社群
 
