@@ -64,5 +64,5 @@ https://github.com/dora4/DoraMusic/blob/main/Recommend_DJ.md
 7. 歌词
 <p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_7.jpg"></p>
 
-本代码仅限学习交流用途的分享传播，未经授权禁止用于其他用途。版权所有，侵权必究！
+本开源项目仅限学习交流用途的分享传播，未经授权禁止用于其他用途。版权所有，侵权必究！
 
