@@ -35,7 +35,6 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
     }
 
     override fun onSetStatusBar() {
-        super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 

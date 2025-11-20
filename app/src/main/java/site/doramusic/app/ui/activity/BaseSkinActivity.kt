@@ -93,7 +93,7 @@ abstract class BaseSkinActivity<T : ViewDataBinding> : BaseActivity<T>(),
                 constructor = clazz.getConstructor(*constructorSignature)
                 constructorMap[name] = constructor
             }
-            constructor!!.isAccessible = true
+            constructor.isAccessible = true
             constructor.newInstance(*constructorArgs)
         } catch (e: Exception) {
             // We do not want to catch these, lets return null and let the actual LayoutInflater

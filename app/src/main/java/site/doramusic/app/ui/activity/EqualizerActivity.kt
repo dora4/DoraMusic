@@ -32,7 +32,6 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
     }
 
     override fun onSetStatusBar() {
-        super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 

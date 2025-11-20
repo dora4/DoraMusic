@@ -5,7 +5,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import site.doramusic.app.R
 import site.doramusic.app.db.Artist
 
-class ArtistItemAdapter(list: MutableList<Artist>) : BaseSortItemAdapter<Artist>(R.layout.item_artist, list) {
+class ArtistItemAdapter(list: MutableList<Artist>) : BaseSortItemAdapter<Artist>(
+    R.layout.item_artist, list) {
 
     override fun getSortKey(data: Artist): String {
         return data.name

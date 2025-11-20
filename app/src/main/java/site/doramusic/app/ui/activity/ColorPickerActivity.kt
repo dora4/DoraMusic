@@ -42,7 +42,6 @@ class ColorPickerActivity : BaseSkinActivity<ActivityColorPickerBinding>() {
     }
 
     override fun onSetStatusBar() {
-        super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 

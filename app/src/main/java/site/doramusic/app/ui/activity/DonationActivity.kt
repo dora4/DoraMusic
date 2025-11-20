@@ -35,7 +35,6 @@ class DonationActivity : BaseSkinActivity<ActivityDonationBinding>() {
     }
 
     override fun onSetStatusBar() {
-        super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 

@@ -19,7 +19,6 @@ import site.doramusic.app.util.MusicUtils
 class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
     override fun onSetStatusBar() {
-        super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 

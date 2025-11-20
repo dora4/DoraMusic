@@ -124,7 +124,7 @@ class LyricAdapter(private var context: Context) : BaseAdapter() {
         indexOfCurrentSentence = index
     }
 
-    internal class ViewHolder {
+    inner class ViewHolder {
         var lyricLine: TextView? = null
     }
 }

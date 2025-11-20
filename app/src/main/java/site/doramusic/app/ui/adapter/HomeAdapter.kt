@@ -12,7 +12,8 @@ import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.ui.fragment.HomeFragment
 
-class HomeAdapter : BaseQuickAdapter<HomeFragment.HomeItem, BaseViewHolder>(R.layout.item_home_module) {
+class HomeAdapter : BaseQuickAdapter<HomeFragment.HomeItem, BaseViewHolder>(
+    R.layout.item_home_module) {
 
     override fun convert(holder: BaseViewHolder, item: HomeFragment.HomeItem) {
         holder.getView<AppCompatImageView>(R.id.iv_home_module_icon).apply {

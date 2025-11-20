@@ -197,7 +197,7 @@ class DownloadService : Service() {
         return super.onUnbind(intent)
     }
 
-    internal inner class TaskBuilder : Binder(), IDownloadManager {
+    inner class TaskBuilder : Binder(), IDownloadManager {
         override val downloadTaskList: List<Any>
             get() = Collections.unmodifiableList(this@DownloadService.downloadTaskList)
 

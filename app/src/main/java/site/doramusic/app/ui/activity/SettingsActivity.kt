@@ -44,7 +44,7 @@ import site.doramusic.app.util.PrefsManager
 @Route(path = ARoutePath.ACTIVITY_SETTINGS)
 class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
 
-    internal lateinit var prefsManager: PrefsManager
+    private lateinit var prefsManager: PrefsManager
     private var updateDialog: DoraLoadingDialog? = null
 
     override fun getLayoutId(): Int {
@@ -52,7 +52,6 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
     }
 
     override fun onSetStatusBar() {
-        super.onSetStatusBar()
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 
