@@ -35,6 +35,7 @@ Android7.0+
 ### App下载
 
 <p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
+
 - 用户版：[查看详情](https://www.pgyer.com/doramusic)
 - 开发版：[点此下载](https://github.com/dora4/DoraMusic/releases)
 
