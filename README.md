@@ -27,7 +27,7 @@
 
 ### App下载
 
-- 稳定版：[查看详情](https://www.pgyer.com/doramusic)
+- 用户版：[查看详情](https://www.pgyer.com/doramusic)
 - 开发版：[点此下载](https://github.com/dora4/DoraMusic/releases)
 
 <img width="614" alt="截屏2025-04-26 03 02 57" src="https://github.com/user-attachments/assets/d8153158-2524-4778-aeab-ee478c0e9d64" />
