@@ -1,10 +1,11 @@
 # DoraMusic
 
+<p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
+
 ### 产品名称
 朵拉音乐（英文名：Dora Music）
 
 ### 产品介绍
-<p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
 一款使用[https://github.com/dora4/dora] 开源库的Android手机音乐播放器。
 
 ### 产品特性
