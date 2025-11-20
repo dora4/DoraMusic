@@ -6,7 +6,7 @@
 朵拉音乐（英文名：Dora Music）
 
 ### 产品介绍
-一款使用[https://github.com/dora4/dora] 开源库的Android手机音乐播放器。
+一个实用的Android手机音乐播放器。
 
 ### 产品特性
 
