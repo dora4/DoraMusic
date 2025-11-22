@@ -40,7 +40,6 @@ class UIViewArtist(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
         return view
     }
 
-
     @SuppressLint("ClickableViewAccessibility")
     private fun initViews(view: View) {
         statusBarArtist = view.findViewById(R.id.statusbar_artist)

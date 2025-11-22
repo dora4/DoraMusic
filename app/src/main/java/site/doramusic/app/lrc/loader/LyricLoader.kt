@@ -104,7 +104,9 @@ abstract class LyricLoader(protected var lyricScroller: LyricScroller, protected
     }
 
     abstract fun searchLrc(music: Music?)
+
     abstract fun searchLrcBySongId(id: Long, lrcSaveFileName: String)
+
     protected fun saveLrc(lyric: String, lrcFileName: String) {
         val lyricFile = File("$LRC_SAVE_FOLDER/$lrcFileName")
         if (!lyricFile.parentFile?.exists()!!) {

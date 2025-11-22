@@ -43,7 +43,6 @@ class UIViewFolder(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initViews(view: View) {
-
         statusBarFolder = view.findViewById(R.id.statusbar_folder)
         statusBarFolder.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())

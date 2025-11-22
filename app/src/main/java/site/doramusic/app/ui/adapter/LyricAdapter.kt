@@ -18,7 +18,7 @@ class LyricAdapter(private var context: Context) : BaseAdapter() {
     /**
      * 歌词句子集合。
      */
-    private var lyricLines: MutableList<LyricLine>? = null
+    private var lyricLines: MutableList<LyricLine> = ArrayList()
 
     /**
      * 当前的句子索引号。
@@ -36,27 +36,24 @@ class LyricAdapter(private var context: Context) : BaseAdapter() {
     private var notCurrentSize = 17f
 
     init {
-        lyricLines = ArrayList()
         indexOfCurrentSentence = 0
     }
 
     override fun isEmpty(): Boolean {
-        return if (lyricLines == null) {
-            true
-        } else lyricLines!!.size === 0
+        return lyricLines.size == 0
     }
 
     override fun getCount(): Int {
-        return lyricLines!!.size
+        return lyricLines.size
     }
 
     /**
      * 设置歌词，由外部调用，
      */
     fun setLyric(lyric: MutableList<LyricLine>?) {
-        lyricLines!!.clear()
+        lyricLines.clear()
         if (lyric != null) {
-            lyricLines!!.addAll(lyric)
+            lyricLines.addAll(lyric)
         }
         indexOfCurrentSentence = 0
     }
@@ -67,12 +64,12 @@ class LyricAdapter(private var context: Context) : BaseAdapter() {
     }
 
     fun clear() {
-        lyricLines!!.clear()
+        lyricLines.clear()
         notifyDataSetChanged()
     }
 
     override fun getItem(position: Int): Any {
-        return lyricLines!![position].contentText
+        return lyricLines[position].contentText
     }
 
     override fun getItemId(position: Int): Long {
@@ -92,8 +89,8 @@ class LyricAdapter(private var context: Context) : BaseAdapter() {
         } else {
             holder = convertView.tag as ViewHolder
         }
-        if (position >= 0 && position < lyricLines!!.size) {
-            holder.lyricLine!!.text = lyricLines!![position]
+        if (position >= 0 && position < lyricLines.size) {
+            holder.lyricLine!!.text = lyricLines[position]
                 .contentText
         }
         if (indexOfCurrentSentence == position) {

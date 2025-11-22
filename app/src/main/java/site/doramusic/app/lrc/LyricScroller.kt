@@ -142,7 +142,7 @@ class LyricScroller {
      * @param millisecond 已播放的毫秒数
      */
     fun notifyTime(millisecond: Long) {
-        if (hasLocalLyric && (lines.size != 0)) {
+        if (hasLocalLyric && (lines.isNotEmpty())) {
             val newLyricIndex = seekSentenceIndex(millisecond)
             if (newLyricIndex != -1 && newLyricIndex != indexOfCurrentSentence) { // 如果找到的歌词和现在的不是一句。
                 // 告诉一声，歌词已经变成另外一句啦！

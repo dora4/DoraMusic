@@ -133,10 +133,6 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
 
     companion object {
 
-        fun newInstance(): ProtocolFragment {
-            return ProtocolFragment()
-        }
-
         fun getLcdWidth(context: Context): Int {
             return context.resources
                 ?.displayMetrics

@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,9 @@ import java.util.Locale
 class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
         View.OnClickListener, AppConfig {
 
+    /**
+     * 外部要用，不能private。
+     */
     var handler: Handler
     private val contentView: View = manager.view
     private lateinit var tvHomeBottomMusicName: MarqueeTextView
@@ -64,7 +68,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
 
     init {
         initViews()
-        handler = Handler { msg ->
+        handler = Handler(Looper.getMainLooper()) { msg ->
             when (msg.what) {
                 0x100 -> {
                     try {

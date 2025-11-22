@@ -11,6 +11,9 @@ import site.doramusic.app.ui.activity.ColorPickerActivity
 class ColorAdapter : BaseQuickAdapter<ColorPickerActivity
     .ColorData, BaseViewHolder>(R.layout.item_choose_color) {
 
+    /**
+     * 外部要用，不能private。
+     */
     var selectedPosition = -1 // 选中的位置
 
     override fun convert(holder: BaseViewHolder, item: ColorPickerActivity.ColorData) {

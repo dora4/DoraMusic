@@ -69,6 +69,9 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         View.OnClickListener, AppConfig, SeekBar.OnSeekBarChangeListener,
         SlidingDrawer.OnDrawerCloseListener, SlidingDrawer.OnDrawerOpenListener {
 
+    /**
+     * 外部要用，不能private。
+     */
     val handler: Handler
     private val curVolume: Int
     private val maxVolume: Int
