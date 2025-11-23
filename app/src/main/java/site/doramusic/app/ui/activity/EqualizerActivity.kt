@@ -92,6 +92,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         binding.rbEqualizerCountry.buttonDrawable = BitmapDrawable()
 
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        binding.evEqualizer.setThemeColor(skinThemeColor)
         val colors = intArrayOf(skinThemeColor, Color.WHITE)
         val state = arrayOf(intArrayOf(android.R.attr.state_checked), IntArray(0))
         val colorStateList = ColorStateList(state, colors)
