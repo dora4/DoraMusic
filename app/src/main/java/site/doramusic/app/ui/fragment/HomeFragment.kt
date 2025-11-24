@@ -75,6 +75,7 @@ import java.util.*
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     MusicControl.OnConnectCompletionListener, IPlayerLyricDrawer {
 
+    private lateinit var prefsManager: PrefsManager
     private lateinit var uiManager: UIManager
     private lateinit var bottomBar: UIBottomBar
     private lateinit var musicPlay: UIMusicPlay
@@ -218,13 +219,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             resources,
             R.drawable.bottom_bar_cover_bg
         )
-
+        prefsManager = PrefsManager(requireContext())
         uiManager = UIManager(this, binding.root)
         bottomBar = UIBottomBar(this, uiManager)
         musicPlay = UIMusicPlay(this, uiManager)
         musicTimer = MusicTimer(bottomBar.handler, musicPlay.handler)
         musicPlay.setMusicTimer(musicTimer)
-        loadAds(binding)
+        if (!prefsManager.isBannerClosed()) {
+            loadAds(binding)
+        }
         binding.statusbarHome.layoutParams = RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()

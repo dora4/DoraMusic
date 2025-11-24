@@ -42,6 +42,7 @@
     <string name="auto_play_on_launch">启动时自动播放歌曲</string>
     <string name="shake_to_play_next_music">摇一摇播放下一首</string>
     <string name="bass_boost">重低音</string>
+    <string name="close_banner">关闭横幅</string>
     <string name="logout">注销登录</string>
     <string name="brand">朵拉音乐</string>
     <string name="slogan">想听就听</string>

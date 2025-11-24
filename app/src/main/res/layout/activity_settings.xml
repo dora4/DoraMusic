@@ -160,6 +160,35 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_settings_close_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_item_common"
+                    android:onClick="@{v}"
+                    android:clickable="true"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/close_banner"
+                        android:textColor="@color/colorTextPrimary" />
+
+                    <dora.widget.DoraToggleButton
+                        android:id="@+id/tb_settings_close_banner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:scaleX="0.6"
+                        android:scaleY="0.6"
+                        app:dview_checkedColor="@color/skin_theme_color"
+                        app:dview_showIndicator="false" />
+                </RelativeLayout>
+
+                <RelativeLayout
                         android:id="@+id/rl_settings_share"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

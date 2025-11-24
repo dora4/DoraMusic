@@ -40,6 +40,7 @@
     <string name="auto_play_on_launch">Auto Play on Launch</string>
     <string name="shake_to_play_next_music">Shake to Skip Track</string>
     <string name="bass_boost">Bass Boost</string>
+    <string name="close_banner">Close banner</string>
     <string name="logout">Logout</string>
     <string name="brand">Dora Music</string>
     <string name="slogan">Listen Anytime</string>

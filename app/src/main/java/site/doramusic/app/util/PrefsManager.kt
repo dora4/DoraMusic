@@ -39,6 +39,10 @@ class PrefsManager(val context: Context) {
         return SPUtils.readString(context, PREFS_EQUALIZER_DECIBELS, "")
     }
 
+    fun isBannerClosed(): Boolean {
+        return SPUtils.readBoolean(context, PREFS_CLOSE_BANNER, false)
+    }
+
     fun getSkinType(): Int {
         return SPUtils.readInteger(context, PREFS_SKIN_TYPE, 1)
     }
@@ -82,6 +86,10 @@ class PrefsManager(val context: Context) {
         SPUtils.writeString(context, PREFS_EQUALIZER_DECIBELS, sb.toString())
     }
 
+    fun saveBannerClose(closed: Boolean) {
+        SPUtils.writeBoolean(context, PREFS_CLOSE_BANNER, closed)
+    }
+
     fun saveSkinType(skinType: Int) {
         SPUtils.writeInteger(context, PREFS_SKIN_TYPE, skinType)
     }
@@ -122,6 +130,11 @@ class PrefsManager(val context: Context) {
          * 重低音参数。
          */
         const val PREFS_EQUALIZER_DECIBELS = "prefs_equalizer_decibels"
+
+        /**
+         * 横幅开关。
+         */
+        const val PREFS_CLOSE_BANNER = "prefs_close_banner"
 
         /**
          * 皮肤类型为0时的自定义颜色（暂时没有用上）。

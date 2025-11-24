@@ -69,10 +69,12 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsAutoConnectVpn.checkedColor = skinThemeColor
         binding.tbSettingsShake.checkedColor = skinThemeColor
         binding.tbSettingsBassBoost.checkedColor = skinThemeColor
+        binding.tbSettingsCloseBanner.checkedColor = skinThemeColor
         binding.tbSettingsAutoPlay.isChecked = prefsManager.isColdLaunchAutoPlay()
         binding.tbSettingsAutoConnectVpn.isChecked = prefsManager.isColdLaunchAutoConnectVPN()
         binding.tbSettingsShake.isChecked = prefsManager.getShakeChangeMusic()
         binding.tbSettingsBassBoost.isChecked = prefsManager.getBassBoost()
+        binding.tbSettingsCloseBanner.isChecked = prefsManager.isBannerClosed()
         if (DaoFactory.getDao(Donation::class.java).count(
                 WhereBuilder.create().addWhereEqualTo(COLUMN_PENDING, true)
         ) > 0) {
@@ -129,6 +131,17 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 binding.tbSettingsBassBoost.isChecked = isChecked
             }
         })
+        binding.tbSettingsCloseBanner.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
+                if (isChecked) {
+                    spmSelectContent("关闭横幅")
+                } else {
+                    spmSelectContent("开启横幅")
+                }
+                binding.tbSettingsCloseBanner.isChecked = isChecked
+                prefsManager.saveBannerClose(isChecked)
+            }
+        })
     }
 
     override fun onClick(view: View) {
@@ -157,6 +170,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 } else {
                     MediaManager.setBassBoost(1)
                 }
+            }
+            R.id.rl_settings_close_banner -> {
+                val isChecked = mBinding.tbSettingsCloseBanner.isChecked
+                mBinding.tbSettingsCloseBanner.isChecked = !isChecked
+                prefsManager.saveBannerClose(!isChecked)
             }
             R.id.rl_settings_share -> {
                 var shareIntent = Intent(Intent.ACTION_SEND)
