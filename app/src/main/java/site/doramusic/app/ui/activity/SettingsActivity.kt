@@ -2,7 +2,6 @@ package site.doramusic.app.ui.activity
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +36,7 @@ import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.model.Donation
 import site.doramusic.app.util.PrefsManager
+import androidx.core.net.toUri
 
 /**
  * 设置界面。
@@ -268,7 +268,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                             downloadUrl: String
                         ) {
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.data = Uri.parse(downloadUrl)
+                            intent.data = downloadUrl.toUri()
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             try {
                                 startActivity(intent)

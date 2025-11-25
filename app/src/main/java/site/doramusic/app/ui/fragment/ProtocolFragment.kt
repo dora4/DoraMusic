@@ -4,7 +4,6 @@ import android.app.DialogFragment
 import android.app.FragmentManager
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import android.view.Window
 import android.widget.TextView
 
 import site.doramusic.app.R
+import androidx.core.graphics.drawable.toDrawable
 
 class ProtocolFragment : DialogFragment(), View.OnClickListener {
 
@@ -22,7 +22,6 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
     private var tvProtocolServiceProtocol: TextView? = null
     private var tvProtocolDisagree: TextView? = null
     private var tvProtocolAgree: TextView? = null
-
     
     @Deprecated("Deprecated in Java")
     override fun onCreateView(
@@ -32,7 +31,7 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
     ): View? {
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         if (dialog!!.window != null) {
-            dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog!!.window!!.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         }
         return inflater.inflate(R.layout.fragment_protocol, container, false)
     }

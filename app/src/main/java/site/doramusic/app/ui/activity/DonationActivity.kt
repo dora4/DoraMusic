@@ -23,7 +23,7 @@ import site.doramusic.app.model.Donation
 import site.doramusic.app.ui.adapter.DonationAdapter
 
 /**
- * 感谢信和捐赠记录。就算清除了数据，捐赠记录也会永久在区块链上存证，请放心。
+ * 感谢信和捐赠记录。就算清除了数据，捐赠记录也会永久在区块链上存证。
  */
 @Route(path = ARoutePath.ACTIVITY_DONATION)
 class DonationActivity : BaseSkinActivity<ActivityDonationBinding>() {

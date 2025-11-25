@@ -64,11 +64,14 @@ import java.io.File
 @Route(path = ARoutePath.ACTIVITY_MAIN)
 class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBackNavigator, AppConfig {
 
+    /**
+     * 记录上次点击的时间，用于连续点击返回键的处理。
+     */
     private var lastTime: Long = 0
     private lateinit var homeFragment: HomeFragment
     private val backListeners: MutableList<OnBackListener> = ArrayList()
     private lateinit var prefsManager: PrefsManager
-    private var addressView: TextView? = null
+    private var erc20AddrView: TextView? = null
     private lateinit var helper: PermissionHelper
 
     private val vpnPermissionLauncher = registerForActivityResult(
@@ -91,7 +94,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         }
 
     /**
-     * 将 content:// Uri 转为 File
+     * 将 content:// Uri 转为 File。
      */
     private fun copyUriToFile(uri: Uri, fileName: String): File {
         val inputStream = contentResolver.openInputStream(uri)!!
@@ -105,7 +108,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     }
 
     /**
-     * 触发选择文件
+     * 触发选择文件。
      */
     private fun selectMusicFile() {
         selectMusicLauncher.launch(arrayOf(
@@ -133,7 +136,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
                     DORA_FUND_SECRET_KEY)
             } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
-                addressView?.text = DoraFund.getCurrentAddress()
+                erc20AddrView?.text = DoraFund.getCurrentAddress()
             }
         }
     }
@@ -280,11 +283,11 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         })
         val headerView = mBinding.nvMain.getHeaderView(0)
         val avatarView = headerView.findViewById<AppCompatImageView>(R.id.iv_drawer_header_avatar)
-        addressView = headerView.findViewById<TextView>(R.id.tv_drawer_header_nickname)
+        erc20AddrView = headerView.findViewById<TextView>(R.id.tv_drawer_header_nickname)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         versionNameView.text = BuildConfig.APP_VERSION
         if (DoraFund.isWalletConnected()) {
-            addressView!!.text = DoraFund.getCurrentAddress()
+            erc20AddrView!!.text = DoraFund.getCurrentAddress()
         }
         avatarView.setOnClickListener {
             // 钱包授权登录
@@ -299,7 +302,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                     themeColor(skinThemeColor)
                     positiveListener {
                         DoraFund.disconnectWallet()
-                        addressView?.text = ""
+                        erc20AddrView?.text = ""
                     }
                 }
             }
