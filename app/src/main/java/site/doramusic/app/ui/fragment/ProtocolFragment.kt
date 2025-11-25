@@ -54,7 +54,6 @@ class ProtocolFragment : DialogFragment(), View.OnClickListener {
         tvProtocolDisagree!!.setOnClickListener(this)
     }
 
-    
     @Deprecated("Deprecated in Java")
     override fun onStart() {
         super.onStart()
