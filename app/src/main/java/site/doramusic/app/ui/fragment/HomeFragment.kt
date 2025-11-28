@@ -234,9 +234,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     private fun loadAds(binding: FragmentHomeBinding) {
         net {
-            val adEnable = result {
-                RetrofitManager.getService(AdService::class.java).isShowBannerAds(PRODUCT_NAME)
-            }?.data
+            val adEnable = result(AdService::class) { isShowBannerAds(PRODUCT_NAME) }?.data
             if (adEnable == true) {
                 // 广告印象
                 spmAdImpression("official")
