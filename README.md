@@ -55,7 +55,7 @@ https://github.com/dora4/DoraMusic/blob/main/Recommend_DJ.md
 
 ### 软件截图
 
-1. 快捷播放列表
+1. 快捷播放列表（便于单手操作）
 <p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_1.jpg"></p>
 
 2. 主界面
