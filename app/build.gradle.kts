@@ -119,7 +119,7 @@ dependencies {
         exclude(group = "com.madgag.spongycastle", module = "core")
     }
 
-    implementation("com.github.dora4:dcache-android:3.5.7")
+    implementation("com.github.dora4:dcache-android:3.6.0")
 
     implementation("com.github.dora4:dview-titlebar:1.37")
     implementation("com.github.dora4:dview-toggle-button:1.5")

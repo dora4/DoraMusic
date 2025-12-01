@@ -47,7 +47,7 @@ class DonationActivity : BaseSkinActivity<ActivityDonationBinding>() {
         adapter.setList(DaoFactory.getDao(Donation::class.java).select(
             QueryBuilder.create().where(
                 WhereBuilder.create().addWhereEqualTo(COLUMN_PENDING, true)
-            ).orderByNew("-$COLUMN_TIMESTAMP"))
+            ).orderBy("-$COLUMN_TIMESTAMP"))
         )
         binding.recyclerView.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL, false)

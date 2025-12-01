@@ -196,7 +196,7 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     QueryBuilder.create()
                         .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))
                         // 按最后播放时间降序
-                        .orderByNew("-${Music.COLUMN_LAST_PLAY_TIME}"),
+                        .orderBy("-${Music.COLUMN_LAST_PLAY_TIME}"),
                     createMusicTaskListener(activity) { musics ->
                         updateMusicListUI(musics, sort = false)
                     }
