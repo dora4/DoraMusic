@@ -35,7 +35,7 @@ class UIViewFolder(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
     private lateinit var tvFolderDialog: TextView
     private val folderDao = DaoFactory.getDao(Folder::class.java)
 
-    override fun getView(from: Int, obj: OrmTable?): View {
+    override fun getView(from: Int, table: OrmTable?): View {
         val view = inflater.inflate(R.layout.view_ui_folder, null)
         initViews(view)
         return view

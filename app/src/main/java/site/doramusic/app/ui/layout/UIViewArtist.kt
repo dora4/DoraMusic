@@ -34,7 +34,7 @@ class UIViewArtist(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
     private lateinit var tvArtistDialog: TextView
     private val artistDao = DaoFactory.getDao(Artist::class.java)
 
-    override fun getView(from: Int, obj: OrmTable?): View {
+    override fun getView(from: Int, table: OrmTable?): View {
         val view = inflater.inflate(R.layout.view_ui_artist, null)
         initViews(view)
         return view

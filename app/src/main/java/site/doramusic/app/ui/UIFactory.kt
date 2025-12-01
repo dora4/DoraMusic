@@ -11,7 +11,7 @@ abstract class UIFactory(protected var drawer: IPlayerLyricDrawer,
 
     protected val inflater: LayoutInflater = manager.inflater
 
-    override fun getView(from: Int, obj: OrmTable?): View {
+    override fun getView(from: Int, table: OrmTable?): View {
         throw UnsupportedOperationException("请在子类实现它")
     }
 

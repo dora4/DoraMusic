@@ -34,7 +34,7 @@ class UIViewAlbum(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private lateinit var tvAlbumDialog: TextView
     private val albumDao = DaoFactory.getDao(Album::class.java)
 
-    override fun getView(from: Int, obj: OrmTable?): View {
+    override fun getView(from: Int, table: OrmTable?): View {
         val view = inflater.inflate(R.layout.view_ui_album, null)
         initViews(view)
         return view

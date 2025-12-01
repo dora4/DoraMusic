@@ -206,10 +206,10 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         }
     }
 
-    override fun getView(from: Int, obj: OrmTable?): View {
+    override fun getView(from: Int, table: OrmTable?): View {
         val contentView = inflater.inflate(R.layout.view_ui_music, null)
         this.from = from
-        table = obj
+        this.table = table
         initViews(contentView)
         return contentView
     }
