@@ -20,10 +20,15 @@
 - 摇一摇切换歌曲
 - 检测耳机与人性化的自动暂停
 - 一键换肤（主题色）
+- 单手操作
 
 ### 适用系统
 
 Android7.0+
+
+### 适用年龄
+
+3+
  
 ### 支持语言
 
@@ -51,7 +56,7 @@ https://github.com/dora4/DoraMusic/blob/main/Recommend_DJ.md
 
 ### 软件截图
 
-1. 快捷播放列表
+1. 快捷播放列表（便于单手操作）
 <p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_1.jpg"></p>
 
 2. 主界面
