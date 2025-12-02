@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import site.doramusic.app.util.MusicUtils
@@ -38,6 +39,7 @@ import site.doramusic.app.ui.adapter.PlaylistItemAdapter
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.MarqueeTextView
 import java.util.Locale
+import androidx.core.graphics.drawable.toDrawable
 
 /**
  * 底部控制条。
@@ -100,11 +102,15 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             try {
                 val bitmap = MusicUtils.getCachedArtwork(contentView.context, music.albumId.toLong(),
                     defaultAlbumIcon)
-                ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(contentView.context
-                    .resources, bitmap))
+                ivHomeBottomAlbum.background = bitmap.toDrawable(
+                    contentView.context
+                        .resources
+                )
             } catch (e: UnsupportedOperationException) {
-                ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(contentView.context
-                    .resources, defaultAlbumIcon))
+                ivHomeBottomAlbum.background = defaultAlbumIcon.toDrawable(
+                    contentView.context
+                        .resources
+                )
                 LogUtils.e(e.toString())
 //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }
@@ -257,7 +263,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 tvPlaylistPlayMode.text = playModeText
                 ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(MediaManager.playMode))
                 tvPlaylistCount.text =
-                    "(${String.format(context.getString(R.string.items), MediaManager.playlist.size)})"
+                    "(${String.format(ContextCompat.getString(context, R.string.items), MediaManager.playlist.size)})"
             } else {
                 tvPlaylistPlayMode.visibility = View.INVISIBLE
                 ivPlaylistPlayMode.visibility = View.INVISIBLE
