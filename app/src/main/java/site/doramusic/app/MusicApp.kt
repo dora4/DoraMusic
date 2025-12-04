@@ -114,7 +114,7 @@ class MusicApp : BaseApplication(), AppConfig {
         Orm.init(this, OrmConfig.Builder()
             .database(DB_NAME)      // 自定义数据库名称
             .version(DB_VERSION)    // 从1开始递增
-            // 所有管理的表
+            // 所管理的表
             .tables(Music::class.java, Artist::class.java,
                 Album::class.java, Folder::class.java,
                 Donation::class.java, DownloadTask::class.java

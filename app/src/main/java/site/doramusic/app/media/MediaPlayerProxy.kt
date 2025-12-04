@@ -44,7 +44,7 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
     }
 
     /**
-     * 把网络URL转为本地URL，127.0.0.1替换网络域名,且设置远程的socket连接地址。
+     * 把网络URL转为本地URL，127.0.0.1替换网络域名，且设置远程的socket连接地址。
      *
      * @param url 网络URL
      * @return 本地URL
@@ -130,12 +130,12 @@ class MediaPlayerProxy private constructor(private var audioCachePath: String, /
     }
 
     /**
-     * 处理真实请求信息, 把网络服务器的反馈发到MediaPlayer，网络服务器->代理服务器->MediaPlayer。
+     * 处理真实请求信息，把网络服务器的反馈发到MediaPlayer，网络服务器->代理服务器->MediaPlayer。
      *
      * @param remoteSocket
      * @param localSocket
      */
-    private fun processTrueRequestInfo(remoteSocket: Socket, localSocket: Socket) { //如果要写入本地文件的实例声明
+    private fun processTrueRequestInfo(remoteSocket: Socket, localSocket: Socket) { // 如果要写入本地文件的实例声明
         var fileOutputStream: FileOutputStream? = null
         var file: File? = null
         try { // 获取音乐网络数据

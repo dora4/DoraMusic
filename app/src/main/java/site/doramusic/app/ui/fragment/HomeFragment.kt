@@ -30,7 +30,6 @@ import dora.firebase.SpmUtils.spmAdImpression
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
-import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
 import dora.util.*

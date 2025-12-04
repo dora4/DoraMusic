@@ -22,7 +22,7 @@ class SlidingView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     interface OnSlidingViewClickListener {
-        fun onClick(view: View?)
+        fun onClick(view: View)
     }
 
     private fun getRectOnScreen(view: View): Rect {

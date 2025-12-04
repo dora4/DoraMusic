@@ -104,7 +104,7 @@ class ColorPickerActivity : BaseSkinActivity<ActivityColorPickerBinding>() {
     }
 
     /**
-     * 测试AOP。
+     * 更换皮肤。
      */
 //    @TimeTrace
     private fun changeSkin() {

@@ -100,7 +100,7 @@ object MusicScanner : AppConfig {
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val cr = context.contentResolver
         val select = StringBuffer(DEFENSE_SQL_INJECTION_HEADER)
-        // 查询语句：检索出.mp3为后缀名，时长大于1分钟，文件大小大于1MB的媒体文件
+        // 查询语句：检索出时长大于1分钟，文件大小大于1MB的媒体文件
         if (sp.getFilterSize()) {
             select.append(" and ${MediaStore.Audio.Media.SIZE} > " +
                     "${AppConfig.SCANNER_FILTER_SIZE}")
@@ -334,8 +334,7 @@ object MusicScanner : AppConfig {
             music.artist = cursor.getString(cursor
                     .getColumnIndex(MediaStore.Audio.Media.ARTIST))
             music.data = filePath
-            val folderPath = filePath.substring(0,
-                    filePath.lastIndexOf(File.separator))
+            val folderPath = filePath.take(filePath.lastIndexOf(File.separator))
             music.folder = folderPath
             music.musicNameKey = PinyinUtils.getPinyinFromSentence(music.musicName)
             music.artistKey = PinyinUtils.getPinyinFromSentence(music.artist)
@@ -391,8 +390,7 @@ object MusicScanner : AppConfig {
             val folder = Folder()
             val filePath = cursor.getString(
                 cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA))
-            folder.path = filePath.substring(0,
-                    filePath.lastIndexOf(File.separator))
+            folder.path = filePath.take(filePath.lastIndexOf(File.separator))
             folder.name = folder.path.substring(folder.path
                     .lastIndexOf(File.separator) + 1)
             list.add(folder)

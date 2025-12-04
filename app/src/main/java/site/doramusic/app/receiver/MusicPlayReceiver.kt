@@ -53,7 +53,7 @@ class MusicPlayReceiver : BroadcastReceiver() {
                     } catch (e: UnsupportedOperationException) {
                         MediaManager.updateNotification(defaultArtwork, title, name)
                         LogUtils.e(e.toString())
-                        //                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
+                        // java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
                     }
                 }
             }
