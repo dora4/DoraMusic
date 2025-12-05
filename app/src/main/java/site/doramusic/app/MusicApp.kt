@@ -45,15 +45,12 @@ class MusicApp : BaseApplication(), AppConfig {
         init()
         // 懒加载
         ThreadUtils.lazyLoad {
-            if (!isAppInitialized) {
-                val startTime = System.currentTimeMillis()
-                LogUtils.d("initPay start time:$startTime")
-                initPay()
-                val endTime = System.currentTimeMillis()
-                LogUtils.d("initPay end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
-                isAppInitialized = true
-            }
-            true
+            val startTime = System.currentTimeMillis()
+            LogUtils.d("initPay start time:$startTime")
+            initPay()
+            val endTime = System.currentTimeMillis()
+            LogUtils.d("initPay end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
+            isAppInitialized = true
         }
     }
 
