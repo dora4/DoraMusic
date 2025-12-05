@@ -6,6 +6,8 @@ import android.database.Cursor
 import android.provider.MediaStore
 import dora.db.Orm
 import dora.db.Transaction
+import dora.db.builder.QueryBuilder
+import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.table.TableManager
 import dora.util.PinyinUtils
@@ -171,7 +173,7 @@ object MusicScanner : AppConfig {
     }
 
     @JvmStatic
-    fun queryMusic(selection: String?, type: Int): List<Music> {
+    fun rawQueryMusic(selection: String?, type: Int): List<Music> {
         // 此处仅为演示原始SQL写法，建议使用WhereBuilder
         val sql = when (type) {
             AppConfig.ROUTE_START_FROM_ARTIST -> {
@@ -190,7 +192,6 @@ object MusicScanner : AppConfig {
                 "SELECT * FROM music WHERE ${Music.COLUMN_LAST_PLAY_TIME} > ? ORDER BY " +
                         "${Music.COLUMN_LAST_PLAY_TIME} DESC LIMIT 100"
             }
-            // 没有这种情况
             else -> { "SELECT * FROM music" }
         }
         return parseCursor(Orm.getDB().rawQuery(sql, arrayOf(selection)))
@@ -220,6 +221,49 @@ object MusicScanner : AppConfig {
         }
         cursor.close()
         return list
+    }
+
+    @JvmStatic
+    fun queryMusic(value: String?, type: Int): List<Music> {
+        val queryBuilder = createQueryBuilder(value, type)
+        return musicDao.select(queryBuilder)
+    }
+
+    private fun createQueryBuilder(value: String?, type: Int): QueryBuilder {
+        val whereBuilder = WhereBuilder.create()
+        if (value != null) {
+            when (type) {
+                AppConfig.ROUTE_START_FROM_ARTIST -> {
+                    whereBuilder.addWhereEqualTo(Music.COLUMN_ARTIST, value)
+                }
+
+                AppConfig.ROUTE_START_FROM_ALBUM -> {
+                    whereBuilder.addWhereEqualTo(Music.COLUMN_ALBUM_ID, value)
+                }
+
+                AppConfig.ROUTE_START_FROM_FOLDER -> {
+                    whereBuilder.addWhereEqualTo(Music.COLUMN_FOLDER, value)
+                }
+
+                AppConfig.ROUTE_START_FROM_FAVORITE -> {
+                    whereBuilder.addWhereEqualTo(Music.COLUMN_FAVORITE, value)
+                }
+
+                AppConfig.ROUTE_START_FROM_LATEST -> {
+                    whereBuilder.addWhereEqualTo(Music.COLUMN_LAST_PLAY_TIME, value)
+                }
+
+                else -> {
+                    // 不加条件 → SELECT * FROM music
+                }
+            }
+        }
+        val builder = QueryBuilder.create().where(whereBuilder)
+        if (type == AppConfig.ROUTE_START_FROM_LATEST) {
+            builder.orderBy("-${Music.COLUMN_LAST_PLAY_TIME}")
+            builder.limit(100)
+        }
+        return builder
     }
 
     /**
