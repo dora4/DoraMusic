@@ -102,11 +102,11 @@ object MusicScanner : AppConfig {
         val select = StringBuffer(DEFENSE_SQL_INJECTION_HEADER)
         // 查询语句：检索出时长大于1分钟，文件大小大于1MB的媒体文件
         if (sp.getFilterSize()) {
-            select.append(" and ${MediaStore.Audio.Media.SIZE} > " +
+            select.append(" AND ${MediaStore.Audio.Media.SIZE} > " +
                     "${AppConfig.SCANNER_FILTER_SIZE}")
         }
         if (sp.getFilterTime()) {
-            select.append(" and ${MediaStore.Audio.Media.DURATION} > " +
+            select.append(" AND ${MediaStore.Audio.Media.DURATION} > " +
                     "${AppConfig.SCANNER_FILTER_DURATION}")
         }
         if (TextUtils.isNotEmpty(selections)) {
@@ -175,23 +175,23 @@ object MusicScanner : AppConfig {
         // 此处仅为演示原始SQL写法，建议使用WhereBuilder
         val sql = when (type) {
             AppConfig.ROUTE_START_FROM_ARTIST -> {
-                "select * from music where ${Music.COLUMN_ARTIST} = ?"
+                "SELECT * FROM music WHERE ${Music.COLUMN_ARTIST} = ?"
             }
             AppConfig.ROUTE_START_FROM_ALBUM -> {
-                "select * from music where ${Music.COLUMN_ALBUM_ID} = ?"
+                "SELECT * FROM music WHERE ${Music.COLUMN_ALBUM_ID} = ?"
             }
             AppConfig.ROUTE_START_FROM_FOLDER -> {
-                "select * from music where ${Music.COLUMN_FOLDER} = ?"
+                "SELECT * FROM music WHERE ${Music.COLUMN_FOLDER} = ?"
             }
             AppConfig.ROUTE_START_FROM_FAVORITE -> {
-                "select * from music where ${Music.COLUMN_FAVORITE} = ?"
+                "SELECT * FROM music WHERE ${Music.COLUMN_FAVORITE} = ?"
             }
             AppConfig.ROUTE_START_FROM_LATEST -> {
-                "select * from music where ${Music.COLUMN_LAST_PLAY_TIME} > ? order by " +
-                        "${Music.COLUMN_LAST_PLAY_TIME} desc limit 100"
+                "SELECT * FROM music WHERE ${Music.COLUMN_LAST_PLAY_TIME} > ? ORDER BY " +
+                        "${Music.COLUMN_LAST_PLAY_TIME} DESC LIMIT 100"
             }
             // 没有这种情况
-            else -> { "select * from music" }
+            else -> { "SELECT * FROM music" }
         }
         return parseCursor(Orm.getDB().rawQuery(sql, arrayOf(selection)))
     }
@@ -233,20 +233,23 @@ object MusicScanner : AppConfig {
         val sp = PrefsManager(context)
         val uri = MediaStore.Files.getContentUri("external")
         val cr = context.contentResolver
-        val selection = StringBuilder(MediaStore.Files.FileColumns.MEDIA_TYPE
-                + " = " + MediaStore.Files.FileColumns.MEDIA_TYPE_AUDIO + " and " + "("
-                + MediaStore.Files.FileColumns.DATA + " like '%.mp3' or "
-                + MediaStore.Files.FileColumns.DATA + " like '%.flac' or "
-                + MediaStore.Files.FileColumns.DATA + " like '%.wav' or "
-                + MediaStore.Files.FileColumns.DATA + " like '%.ape' or "
-                + MediaStore.Files.FileColumns.DATA + " like '%.m4a' or "
-                + MediaStore.Files.FileColumns.DATA + " like '%.aac')")
+
+        val audioExtensions = listOf("mp3", "flac", "wav", "ape", "m4a", "aac")
+        val likeConditions = audioExtensions.joinToString(" OR ") { ext ->
+            "${MediaStore.Files.FileColumns.DATA} LIKE '%.${ext}'"
+        }
+        val selection = StringBuilder().apply {
+            append("${MediaStore.Files.FileColumns.MEDIA_TYPE} = ${MediaStore.Files.FileColumns.MEDIA_TYPE_AUDIO}")
+            append(" AND (")
+            append(likeConditions)
+            append(")")
+        }
         // 查询语句：检索出.mp3为后缀名，时长大于1分钟，文件大小大于1MB的媒体文件
         if (sp.getFilterSize()) {
-            selection.append(" and " + MediaStore.Audio.Media.SIZE + " > " + AppConfig.SCANNER_FILTER_SIZE)
+            selection.append(" AND " + MediaStore.Audio.Media.SIZE + " > " + AppConfig.SCANNER_FILTER_SIZE)
         }
         if (sp.getFilterTime()) {
-            selection.append(" and " + MediaStore.Audio.Media.DURATION + " > " + AppConfig.SCANNER_FILTER_DURATION)
+            selection.append(" AND " + MediaStore.Audio.Media.DURATION + " > " + AppConfig.SCANNER_FILTER_DURATION)
         }
 //        selection.append(") group by ( " + MediaStore.Files.FileColumns.PARENT)
         return if (folderDao.count() > 0) {
@@ -271,7 +274,7 @@ object MusicScanner : AppConfig {
         } else {
             getArtistList(cr.query(uri, projArtist,
                     null, null, MediaStore.Audio.Artists.NUMBER_OF_TRACKS
-                    + " desc"))
+                    + " DESC"))
         }
     }
 
@@ -287,13 +290,13 @@ object MusicScanner : AppConfig {
         val uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
         val cr = context.contentResolver
         val where = StringBuilder(MediaStore.Audio.Albums._ID
-                + " in (select distinct " + MediaStore.Audio.Media.ALBUM_ID
-                + " from audio_meta where (1=1 ")
+                + " IN (SELECT DISTINCT " + MediaStore.Audio.Media.ALBUM_ID
+                + " FROM audio_meta WHERE (1=1 ")
         if (sp.getFilterSize()) {
-            where.append(" and " + MediaStore.Audio.Media.SIZE + " > " + AppConfig.SCANNER_FILTER_SIZE)
+            where.append(" AND " + MediaStore.Audio.Media.SIZE + " > " + AppConfig.SCANNER_FILTER_SIZE)
         }
         if (sp.getFilterTime()) {
-            where.append(" and " + MediaStore.Audio.Media.DURATION + " > " + AppConfig.SCANNER_FILTER_DURATION)
+            where.append(" AND " + MediaStore.Audio.Media.DURATION + " > " + AppConfig.SCANNER_FILTER_DURATION)
         }
         where.append("))")
         return if (albumDao.count() > 0) {
