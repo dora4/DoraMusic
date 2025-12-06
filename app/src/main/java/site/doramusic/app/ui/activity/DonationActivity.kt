@@ -11,6 +11,7 @@ import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.skin.SkinManager
+import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 
 import site.doramusic.app.R
@@ -26,7 +27,7 @@ import site.doramusic.app.ui.adapter.DonationAdapter
  * 感谢信和捐赠记录。就算清除了数据，捐赠记录也会永久在区块链上存证。
  */
 @Route(path = ARoutePath.ACTIVITY_DONATION)
-class DonationActivity : BaseSkinActivity<ActivityDonationBinding>() {
+class DonationActivity : BaseSkinBindingActivity<ActivityDonationBinding>() {
 
     private val adapter: DonationAdapter = DonationAdapter()
 

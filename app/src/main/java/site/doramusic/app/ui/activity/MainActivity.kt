@@ -25,6 +25,7 @@ import dora.http.DoraHttp.result
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
+import dora.skin.base.BaseSkinBindingActivity
 import dora.util.IntentUtils
 import dora.util.NetUtils
 import dora.util.PermissionHelper
@@ -58,7 +59,7 @@ import java.io.File
  * 主界面。
  */
 @Route(path = ARoutePath.ACTIVITY_MAIN)
-class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBackNavigator, AppConfig {
+class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer, IBackNavigator, AppConfig {
 
     /**
      * 记录上次点击的时间，用于连续点击返回键的处理。

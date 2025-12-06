@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebIndicator
 import dora.skin.SkinManager
+import dora.skin.base.BaseSkinBindingActivity
 import dora.util.IntentUtils
 import dora.util.StatusBarUtils
 import dora.util.ViewUtils
@@ -28,7 +29,7 @@ import site.doramusic.app.databinding.ActivityBrowserBinding
  * 浏览器页面，主要用于加载用户协议和隐私权政策等。
  */
 @Route(path = ARoutePath.ACTIVITY_BROWSER)
-class BrowserActivity : BaseSkinActivity<ActivityBrowserBinding>() {
+class BrowserActivity : BaseSkinBindingActivity<ActivityBrowserBinding>() {
 
     private var title: String? = null
     private var url: String? = null

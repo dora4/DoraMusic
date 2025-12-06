@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.skin.SkinManager
+import dora.skin.base.BaseSkinBindingActivity
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.widget.DoraTitleBar
@@ -28,7 +29,7 @@ import site.doramusic.app.util.PrefsManager
  * 换肤界面，选择颜色。
  */
 @Route(path = ARoutePath.ACTIVITY_COLOR_PICKER)
-class ColorPickerActivity : BaseSkinActivity<ActivityColorPickerBinding>() {
+class ColorPickerActivity : BaseSkinBindingActivity<ActivityColorPickerBinding>() {
 
     private lateinit var colorDrawable: ColorDrawable
     private lateinit var colorAdapter: ColorAdapter

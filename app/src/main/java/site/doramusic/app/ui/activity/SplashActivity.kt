@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.arouter.openWithFinish
+import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
@@ -16,7 +17,7 @@ import site.doramusic.app.util.MusicUtils
  * 启动页。
  */
 @Route(path = ARoutePath.ACTIVITY_SPLASH)
-class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
+class SplashActivity : BaseSkinBindingActivity<ActivitySplashBinding>() {
 
     override fun onSetStatusBar() {
         StatusBarUtils.setTransparencyStatusBar(this)

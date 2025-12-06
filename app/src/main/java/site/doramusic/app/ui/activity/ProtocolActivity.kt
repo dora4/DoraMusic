@@ -8,6 +8,7 @@ import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.skin.SkinManager
+import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.ARoutePath
@@ -19,7 +20,7 @@ import site.doramusic.app.databinding.ActivityProtocolBinding
  * 用户协议和隐私政策。
  */
 @Route(path = ARoutePath.ACTIVITY_PROTOCOL)
-class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
+class ProtocolActivity : BaseSkinBindingActivity<ActivityProtocolBinding>() {
 
     private var webView: WebView? = null
     private var title: String? = null

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.skin.SkinManager
+import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 import dora.widget.DoraEqualizerView
 import site.doramusic.app.R
@@ -22,7 +23,7 @@ import site.doramusic.app.util.PrefsManager
  * 均衡器界面。
  */
 @Route(path = ARoutePath.ACTIVITY_EQUALIZER)
-class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
+class EqualizerActivity : BaseSkinBindingActivity<ActivityEqualizerBinding>(),
         DoraEqualizerView.OnUpdateDecibelListener {
 
     private lateinit var prefsManager: PrefsManager

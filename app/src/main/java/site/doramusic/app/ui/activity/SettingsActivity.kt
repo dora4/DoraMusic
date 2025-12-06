@@ -37,12 +37,13 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.model.Donation
 import site.doramusic.app.util.PrefsManager
 import androidx.core.net.toUri
+import dora.skin.base.BaseSkinBindingActivity
 
 /**
  * 设置界面。
  */
 @Route(path = ARoutePath.ACTIVITY_SETTINGS)
-class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
+class SettingsActivity : BaseSkinBindingActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
 
     private lateinit var prefsManager: PrefsManager
     private var updateDialog: DoraLoadingDialog? = null
