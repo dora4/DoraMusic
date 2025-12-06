@@ -59,16 +59,17 @@ object MusicScanner : AppConfig {
             TableManager.recreateTable(Folder::class.java)
         }
     }
+
     @JvmStatic
     fun scan(context: Context): Observable<List<Music>> {
         return Observable.fromCallable {
+            // 1. 读取旧收藏列表
+            val oldFavorites = musicDao.select(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FAVORITE, Music.IS_FAVORITE))
+            val favoriteMap = oldFavorites.associateBy { it.data }   // 用文件路径最稳
             try {
                 recreateTables()
             } catch (ignored: Exception) {
             }
-            // 1. 读取旧收藏列表
-            val oldFavorites = musicDao.select(WhereBuilder.create().addWhereEqualTo("favorite", Music.IS_FAVORITE))
-            val favoriteMap = oldFavorites.associateBy { it.data }   // 用文件路径最稳
             var musics: List<Music> = arrayListOf()
             Transaction.execute(Music::class.java) {
                 // 2. 重新扫描
