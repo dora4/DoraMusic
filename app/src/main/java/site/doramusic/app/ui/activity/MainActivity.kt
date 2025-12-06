@@ -17,9 +17,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.arouter.open
-import dora.db.builder.QueryBuilder
-import dora.db.builder.WhereBuilder
-import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.http.DoraHttp
 import dora.http.DoraHttp.api
@@ -46,7 +43,6 @@ import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
 import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.databinding.ActivityMainBinding
-import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService

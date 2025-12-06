@@ -27,6 +27,7 @@ import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.model.Donation
 import site.doramusic.app.model.DownloadTask
+import java.util.concurrent.TimeUnit
 
 /**
  * 朵拉音乐APP。
@@ -96,6 +97,8 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun initHttp() {
         RetrofitManager.initConfig {
             okhttp {
+                connectTimeout(3, TimeUnit.SECONDS)
+                readTimeout(3, TimeUnit.SECONDS)
                 // dcache高版本自动添加FormatLogInterceptor
 //                interceptors().add(FormatLogInterceptor())
                 build()
