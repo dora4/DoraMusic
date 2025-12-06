@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 87
-    val version = "1.8.4"
+    val code = 88
+    val version = "1.8.5"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -119,7 +119,7 @@ dependencies {
         exclude(group = "com.madgag.spongycastle", module = "core")
     }
 
-    implementation("com.github.dora4:dcache-android:3.6.0")
+    implementation("com.github.dora4:dcache-android:3.6.3")
 
     implementation("com.github.dora4:dview-titlebar:1.37")
     implementation("com.github.dora4:dview-toggle-button:1.5")
