@@ -383,19 +383,19 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
      */
     private fun performScanMusic() {
         mBinding.dlMain.closeDrawer(GravityCompat.START)
-        val builder = QueryBuilder.create().where(
-            WhereBuilder.create()
-                .addWhereEqualTo(Music.COLUMN_FAVORITE, 1))
-        val favoriteCount = DaoFactory.getDao(Music::class.java).count(builder)
-        if (favoriteCount > 0) { // 有收藏的歌曲
-            val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-            DoraAlertDialog.create(this).show(getString(R.string.scan_prompt)) {
-                themeColor(skinThemeColor)
-                positiveListener { scanMusic() }
-            }
-        } else {
+//        val builder = QueryBuilder.create().where(
+//            WhereBuilder.create()
+//                .addWhereEqualTo(Music.COLUMN_FAVORITE, 1))
+//        val favoriteCount = DaoFactory.getDao(Music::class.java).count(builder)
+//        if (favoriteCount > 0) { // 有收藏的歌曲
+//            val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+//            DoraAlertDialog.create(this).show(getString(R.string.scan_prompt)) {
+//                themeColor(skinThemeColor)
+//                positiveListener { scanMusic() }
+//            }
+//        } else {
             scanMusic()
-        }
+//        }
     }
 
     /**
