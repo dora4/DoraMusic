@@ -147,7 +147,9 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
                     startActivity(IntentUtils.getRequestStoragePermissionIntent(packageName))
                 } else {
                     helper.permissions(PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE).request {
-                        requestVPNPermission()
+                        if (it) {
+                            requestVPNPermission()
+                        }
                     }
                 }
             } else {
