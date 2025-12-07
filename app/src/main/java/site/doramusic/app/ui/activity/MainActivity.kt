@@ -141,6 +141,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
                 helper.permissions(PermissionHelper.Permission.POST_NOTIFICATIONS).request(null)
             }
         }
+        prefsManager = PrefsManager(this)
         if (prefsManager.isColdLaunchAutoConnectVPN() && NetUtils.checkNetworkAvailable(this)) {
             if (!PermissionHelper.hasStoragePermission(this)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -453,7 +454,6 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
             ContextCompat.getColor(this, R.color.colorPrimary), StatusBarUtils.ALPHA_FULL)
         homeFragment = HomeFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fl_main, homeFragment).commit()
-        prefsManager = PrefsManager(this)
         // 初始化侧边栏菜单
         initMenu()
         // 应用正确皮肤
