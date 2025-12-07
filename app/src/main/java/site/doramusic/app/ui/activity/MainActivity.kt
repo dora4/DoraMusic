@@ -33,6 +33,9 @@ import dora.util.ToastUtils
 import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraSingleButtonDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import site.doramusic.app.BuildConfig
 import site.doramusic.app.R
 import site.doramusic.app.base.callback.OnBackListener
@@ -117,11 +120,9 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_VPN_PERMISSION) {
-                try {
-                    DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
+                CoroutineScope(Dispatchers.IO).launch {
+                    DoraFund.connectVPN(this@MainActivity, DORA_FUND_ACCESS_KEY,
                         DORA_FUND_SECRET_KEY)
-                } catch (ignore: Exception) {
-                    // 服务访问不上兜底，否则ANR
                 }
             } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
                 erc20AddrView?.text = DoraFund.getCurrentAddress()
