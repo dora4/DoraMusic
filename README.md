@@ -44,6 +44,12 @@ Android7.0+
 - 用户版：[查看详情](https://www.pgyer.com/doramusic)
 - 开发版：[点此下载](https://github.com/dora4/DoraMusic/releases)
 
+### 检查清单
+
+发现异常，请及时联系开发者。
+
+https://github.com/dora4/DoraMusic/blob/main/Checklist.md
+
 ### Discord社群
 
 欢迎加入社群一起交流最近流行的歌曲。
