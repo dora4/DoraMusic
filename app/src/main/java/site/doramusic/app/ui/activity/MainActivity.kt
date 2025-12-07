@@ -7,16 +7,13 @@ import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
-import de.blinkt.openvpn.core.OpenVPNService
 import dora.arouter.open
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.http.DoraHttp
@@ -72,16 +69,6 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
     private var erc20AddrView: TextView? = null
     private lateinit var helper: PermissionHelper
 
-    private val vpnPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            onVPNPermissionGranted()
-        } else {
-            onVPNPermissionDenied()
-        }
-    }
-
     private val selectMusicLauncher =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
             uri?.let {
@@ -120,16 +107,19 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
     }
 
     companion object {
-        const val REQUEST_WALLET_AUTHORIZATION = 1
+        const val REQUEST_VPN_PERMISSION = 1
+        const val REQUEST_WALLET_AUTHORIZATION = 2
 
         const val EVENT_TYPE_SCAN_PROMPT = "scan_prompt"
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
+            if (requestCode == REQUEST_VPN_PERMISSION) {
+                DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
+                    DORA_FUND_SECRET_KEY)
+            } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
                 erc20AddrView?.text = DoraFund.getCurrentAddress()
             }
         }
@@ -169,26 +159,14 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
     private fun requestVPNPermission() {
         val intent = VpnService.prepare(this)
         if (intent != null) {
-            // Android 5+ 都支持
-            vpnPermissionLauncher.launch(intent)
+            startActivityForResult(intent, REQUEST_VPN_PERMISSION)
         } else {
-            // 已授权，无需弹窗
-            onVPNPermissionGranted()
+            this@MainActivity.onActivityResult(
+                REQUEST_VPN_PERMISSION,
+                RESULT_OK,
+                null
+            )
         }
-    }
-
-    private fun onVPNPermissionGranted() {
-        DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
-            DORA_FUND_SECRET_KEY)
-    }
-
-    private fun onVPNPermissionDenied() {
-        Toast.makeText(this, "VPN 权限被拒绝", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun startVPNService() {
-         val intent = Intent(this, OpenVPNService::class.java)
-         ContextCompat.startForegroundService(this, intent)
     }
 
     /**
