@@ -46,13 +46,13 @@ Android7.0+
 
 ### 版本发布流程
 
-1.修改并提交代码
+1. 修改并提交代码
 
-2.CI/CD构建自动发布开发版到GitHub Release
+2. CI/CD构建自动发布开发版到GitHub Release
 
-3.真机体验
+3. 真机体验
 
-4.从GitHub Release下载，然后上传稳定的用户版到蒲公英分发平台，如果和GitHub Release公示的sha256值不一致请不要使用
+4. 从GitHub Release下载，然后上传稳定的用户版到蒲公英分发平台，如果和GitHub Release公示的sha256值不一致请不要使用
 
 ### 检查清单
 
