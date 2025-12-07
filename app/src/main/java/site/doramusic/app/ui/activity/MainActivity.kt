@@ -117,8 +117,12 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_VPN_PERMISSION) {
-                DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
-                    DORA_FUND_SECRET_KEY)
+                try {
+                    DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
+                        DORA_FUND_SECRET_KEY)
+                } catch (ignore: Exception) {
+                    // 服务访问不上兜底，否则ANR
+                }
             } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
                 erc20AddrView?.text = DoraFund.getCurrentAddress()
             }
@@ -138,7 +142,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
             PermissionHelper.Permission.POST_NOTIFICATIONS)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!helper.hasPermission(this, PermissionHelper.Permission.POST_NOTIFICATIONS)) {
-                helper.permissions(PermissionHelper.Permission.POST_NOTIFICATIONS).request(null)
+                helper.permissions(PermissionHelper.Permission.POST_NOTIFICATIONS).request()
             }
         }
         prefsManager = PrefsManager(this)
