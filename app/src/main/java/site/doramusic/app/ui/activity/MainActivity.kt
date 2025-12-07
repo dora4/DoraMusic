@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import de.blinkt.openvpn.core.OpenVPNService
 import dora.arouter.open
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.http.DoraHttp
@@ -190,8 +191,8 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
     }
 
     private fun startVPNService() {
-        val intent = VpnService.prepare(this@MainActivity)
-        ContextCompat.startForegroundService(this, intent)
+         val intent = Intent(this, OpenVPNService::class.java)
+         ContextCompat.startForegroundService(this, intent)
     }
 
     /**
