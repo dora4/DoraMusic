@@ -120,8 +120,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
     }
 
     companion object {
-        const val REQUEST_VPN_PERMISSION = 1
-        const val REQUEST_WALLET_AUTHORIZATION = 2
+        const val REQUEST_WALLET_AUTHORIZATION = 1
 
         const val EVENT_TYPE_SCAN_PROMPT = "scan_prompt"
     }
@@ -130,10 +129,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_VPN_PERMISSION) {
-                DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
-                    DORA_FUND_SECRET_KEY)
-            } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
+            if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
                 erc20AddrView?.text = DoraFund.getCurrentAddress()
             }
         }
@@ -182,8 +178,8 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
     }
 
     private fun onVPNPermissionGranted() {
-        Toast.makeText(this, "VPN 权限已授予", Toast.LENGTH_SHORT).show()
-        startVPNService()
+        DoraFund.connectVPN(this, DORA_FUND_ACCESS_KEY,
+            DORA_FUND_SECRET_KEY)
     }
 
     private fun onVPNPermissionDenied() {

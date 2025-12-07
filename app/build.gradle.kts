@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 89
-    val version = "1.8.6"
+    val code = 90
+    val version = "1.8.7"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -78,9 +78,6 @@ android {
     compileOptions {
         sourceCompatibility(JavaVersion.VERSION_17)
         targetCompatibility(JavaVersion.VERSION_17)
-    }
-    kotlinOptions {
-        jvmTarget = "17"
     }
 }
 
