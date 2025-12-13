@@ -264,18 +264,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         val artistCount = artistDao.count()
         val albumCount = albumDao.count()
         val folderCount = folderDao.count()
-        val favoriteBuild = QueryBuilder.create().where(
+        val favoriteMusicQuery = QueryBuilder.create().where(
             WhereBuilder.create()
                 .addWhereEqualTo(Music.COLUMN_FAVORITE, Music.IS_FAVORITE)
         )
-        val favoriteCount = musicDao.count(favoriteBuild)
-        val latestBuild = QueryBuilder.create().where(
+        val favoriteCount = musicDao.count(favoriteMusicQuery)
+        val latestMusicQuery = QueryBuilder.create().where(
             WhereBuilder.create()
                 .addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0)
         )
         val latestCount =
             ViewUtils.clamp(
-                musicDao.count(latestBuild).toFloat(),
+                musicDao.count(latestMusicQuery).toFloat(),
                 MAX_RECENT_MUSIC_NUM.toFloat(),
                 0f
             ).toLong()
@@ -341,7 +341,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private fun refreshUI(progress: Int, music: Music, showPlay: Boolean, pendingProgress: Int) {
         musicPlay.refreshUI(progress, music.duration, music)
         musicPlay.showPlay(showPlay)
-
         bottomBar.refreshUI(progress, music.duration, music)
         bottomBar.setSecondaryProgress(pendingProgress)
         bottomBar.showPlay(showPlay)
@@ -397,7 +396,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 .into(holder.imageView)
         }
 
-        inner class BannerViewHolder(var imageView: ImageView) : RecyclerView.ViewHolder(
+        class BannerViewHolder(var imageView: ImageView) : RecyclerView.ViewHolder(
             imageView
         )
     }
