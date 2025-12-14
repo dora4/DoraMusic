@@ -1,6 +1,5 @@
 package site.doramusic.app.ui.adapter
 
-import android.widget.SectionIndexer
 import androidx.annotation.LayoutRes
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -10,7 +9,7 @@ import site.doramusic.app.sort.PinyinComparator
 import site.doramusic.app.sort.Sort
 import java.util.*
 
-abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolder>, SectionIndexer {
+abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolder> {
 
     private var comparator: PinyinComparator
     private var needSort = true
@@ -56,25 +55,25 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
         return list
     }
 
-    override fun getPositionForSection(sectionIndex: Int): Int {
-        for (i in 0 until itemCount) {
-            val sortLetter = data[i].sortLetter
-            if (sortLetter != null) {
-                val first = sortLetter.uppercase(Locale.ENGLISH)[0]
-                if (first.code == sectionIndex) {
-                    return i
-                }
-            }
-        }
-        return -1
-    }
-
-    override fun getSectionForPosition(pos: Int): Int {
-        return if (getItem(pos).sortLetter == null)
-            -1
-        else
-            getItem(pos).sortLetter.uppercase(Locale.ENGLISH)[0].code
-    }
+//    override fun getPositionForSection(sectionIndex: Int): Int {
+//        for (i in 0 until itemCount) {
+//            val sortLetter = data[i].sortLetter
+//            if (sortLetter != null) {
+//                val first = sortLetter.uppercase(Locale.ENGLISH)[0]
+//                if (first.code == sectionIndex) {
+//                    return i
+//                }
+//            }
+//        }
+//        return -1
+//    }
+//
+//    override fun getSectionForPosition(pos: Int): Int {
+//        return if (getItem(pos).sortLetter == null)
+//            -1
+//        else
+//            getItem(pos).sortLetter.uppercase(Locale.ENGLISH)[0].code
+//    }
 
     fun getPositionForSection(sectionIndex: Char): Int {
         for (i in 0 until itemCount) {
