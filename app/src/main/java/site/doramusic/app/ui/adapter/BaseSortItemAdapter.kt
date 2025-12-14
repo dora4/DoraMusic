@@ -28,6 +28,7 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
     }
 
     private fun sort() {
+//        data.sortWith(comparator)
         data.sortBy { it.sortLetter }
     }
 
