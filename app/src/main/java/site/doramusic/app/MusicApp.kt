@@ -16,8 +16,11 @@ import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_ORDER_ID
+import site.doramusic.app.base.conf.AppConfig.Companion.CONNECT_TIMEOUT
 import site.doramusic.app.base.conf.AppConfig.Companion.DB_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.DB_VERSION
+import site.doramusic.app.base.conf.AppConfig.Companion.READ_TIMEOUT
+import site.doramusic.app.base.conf.AppConfig.Companion.URL_DOMAIN
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
@@ -46,6 +49,7 @@ class MusicApp : BaseApplication(), AppConfig {
         init()
         // 懒加载
         ThreadUtils.lazyLoad {
+            // 耗时操作延迟加载，不影响启动速度，代价是调用之前要先检测是否初始化完成
             val startTime = System.currentTimeMillis()
             LogUtils.d("initPay start time:$startTime")
             initPay()
@@ -67,7 +71,7 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun initPay() {
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
         DoraFund.init(this, APP_NAME,
-            getString(R.string.app_desc), "http://doramusic.site",
+            getString(R.string.app_desc), URL_DOMAIN,
             arrayOf(EVMChains.POLYGON), skinThemeColor,
             object : DoraFund.PayListener {
                 override fun onPayFailure(orderId: String, msg: String) {
@@ -97,8 +101,8 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun initHttp() {
         RetrofitManager.initConfig {
             okhttp {
-                connectTimeout(3, TimeUnit.SECONDS)
-                readTimeout(3, TimeUnit.SECONDS)
+                connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 // dcache高版本自动添加FormatLogInterceptor
 //                interceptors().add(FormatLogInterceptor())
                 build()

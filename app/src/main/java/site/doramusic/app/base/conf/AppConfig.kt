@@ -15,7 +15,12 @@ interface AppConfig {
         const val APP_SLOGAN = "版权所有，侵权必究"
         val COPY_RIGHT = "doramusic ©2023~${Calendar.getInstance().get(Calendar.YEAR)}"
 
+        // Http设置
+        const val CONNECT_TIMEOUT = 3L
+        const val READ_TIMEOUT = 3L
+
         // 域名
+        const val URL_DOMAIN = "http://doramusic.site"
         const val URL_APP_SERVER = "http://doramusic.site:8080"
         const val URL_FILE_SERVER = "http://dorachat.com:9999"
         const val URL_AD_SERVER = "http://dorachat.com:9091"
