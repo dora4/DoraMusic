@@ -56,10 +56,6 @@ abstract class BaseSortItemAdapter<T : Sort> : BaseQuickAdapter<T, BaseViewHolde
         return list
     }
 
-    override fun getSections(): Array<Any> {
-        return arrayOf(0)
-    }
-
     override fun getPositionForSection(sectionIndex: Int): Int {
         for (i in 0 until itemCount) {
             val sortLetter = data[i].sortLetter
