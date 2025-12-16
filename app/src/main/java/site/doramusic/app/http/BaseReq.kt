@@ -8,8 +8,19 @@ import java.util.Locale
 
 open class BaseReq {
 
+    /**
+     * 根据不同的语种返回本地化的内容。
+     */
     var lang: String = ""
+
+    /**
+     * 数据载体。
+     */
     var payload: String = ""
+
+    /**
+     * 防抓包伪造签名重复请求，签名过期，拒绝请求。
+     */
     var timestamp: String = ""
 
     /**
