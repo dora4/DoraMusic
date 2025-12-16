@@ -6,7 +6,7 @@ import dora.util.LanguageUtils
 import java.lang.reflect.Modifier
 import java.util.Locale
 
-open class BaseReq {
+abstract class BaseReq {
 
     /**
      * 根据不同的语种返回本地化的内容。
