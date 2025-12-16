@@ -12,6 +12,11 @@ open class BaseReq {
     var payload: String = ""
     var timestamp: String = ""
 
+    /**
+     * 可信客户端签名，ENC_SIGN模式下，签名不正确，拒绝请求。
+     */
+    var signature: String? = null
+
     init {
         lang = LanguageUtils.getLangTag(GlobalContext.get()).ifEmpty { Locale.getDefault().language }
         timestamp = (System.currentTimeMillis() / 1000).toString()
