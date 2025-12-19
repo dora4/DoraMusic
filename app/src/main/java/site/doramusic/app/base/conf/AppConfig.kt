@@ -23,7 +23,7 @@ interface AppConfig {
         const val URL_DOMAIN = "http://doramusic.site"
         const val URL_COMMON_API = "http://dorachat.com:9696/api"
         const val URL_FILE_SERVER = "http://dorachat.com:9999"
-        const val URL_AD_SERVER = "http://dorachat.com:9091"
+        const val URL_AD_SERVER = URL_COMMON_API
 
         // api key
         const val DORA_FUND_ACCESS_KEY = "vs42INhGWDnq"
@@ -94,6 +94,8 @@ interface AppConfig {
 
         // 换肤
         const val COLOR_THEME = "skin_theme_color" // 主色调的换肤key
+
+        const val CONF_ENABLE_BANNER_AD = "enable_banner_ad"
 
         // 100首推荐歌曲
         val SONG_MAP = mapOf(
