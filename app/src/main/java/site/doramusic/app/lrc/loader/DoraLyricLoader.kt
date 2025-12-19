@@ -27,52 +27,52 @@ class DoraLyricLoader(scroller: LyricScroller, listener: LyricListener) : LyricL
                 loadLocalLrc(file.absolutePath)
             } else {
                 clearLocalLrc()
-                val service = RetrofitManager.getService(MusicService::class.java)
-                val call = service.searchLrc(musicName, artist)
-                call.enqueue(object: DoraCallback<DoraLyric>(){
-
-                    override fun onSuccess(body: DoraLyric) {
-                        val lrc = body.lrc
-                        if (TextUtils.isNotEmpty(lrc) &&
-                            TextUtils.isEqualTo(musicName, body.musicName) &&
-                            TextUtils.isEqualTo(artist, body.musicArtist) ) {
-                            Handler(Looper.getMainLooper()).post {
-                                val lyricSavePath = "$LRC_SAVE_FOLDER/$lrcSaveFileName"
-                                lyricScroller.loadLyric(lyricSavePath)
-                                lyricScroller.setLyricListener(lyricListener)
-                            }
-                            saveLrc(lrc!!, lrcSaveFileName)
-                        }
-                    }
-
-                    override fun onFailure(code: Int, msg: String) {
-                        clearLocalLrc()
-                    }
-                })
+//                val service = RetrofitManager.getService(MusicService::class.java)
+//                val call = service.searchLrc(musicName, artist)
+//                call.enqueue(object: DoraCallback<DoraLyric>(){
+//
+//                    override fun onSuccess(body: DoraLyric) {
+//                        val lrc = body.lrc
+//                        if (TextUtils.isNotEmpty(lrc) &&
+//                            TextUtils.isEqualTo(musicName, body.musicName) &&
+//                            TextUtils.isEqualTo(artist, body.musicArtist) ) {
+//                            Handler(Looper.getMainLooper()).post {
+//                                val lyricSavePath = "$LRC_SAVE_FOLDER/$lrcSaveFileName"
+//                                lyricScroller.loadLyric(lyricSavePath)
+//                                lyricScroller.setLyricListener(lyricListener)
+//                            }
+//                            saveLrc(lrc!!, lrcSaveFileName)
+//                        }
+//                    }
+//
+//                    override fun onFailure(code: Int, msg: String) {
+//                        clearLocalLrc()
+//                    }
+//                })
             }
         }
     }
 
     override fun searchLrcBySongId(id: Long, lrcSaveFileName: String) {
-        val service = RetrofitManager.getService(MusicService::class.java)
-        val call = service.lyric(id)
-        call.enqueue(object: DoraCallback<DoraLyric>(){
-
-            override fun onSuccess(body: DoraLyric) {
-                val lrc = body.lrc
-                if (TextUtils.isNotEmpty(lrc)) {
-                    Handler(Looper.getMainLooper()).post {
-                        val lyricSavePath = "$LRC_SAVE_FOLDER/$lrcSaveFileName"
-                        lyricScroller.loadLyric(lyricSavePath)
-                        lyricScroller.setLyricListener(lyricListener)
-                    }
-                    saveLrc(lrc!!, lrcSaveFileName)
-                }
-            }
-
-            override fun onFailure(code: Int, msg: String) {
-                clearLocalLrc()
-            }
-        })
+//        val service = RetrofitManager.getService(MusicService::class.java)
+//        val call = service.lyric(id)
+//        call.enqueue(object: DoraCallback<DoraLyric>(){
+//
+//            override fun onSuccess(body: DoraLyric) {
+//                val lrc = body.lrc
+//                if (TextUtils.isNotEmpty(lrc)) {
+//                    Handler(Looper.getMainLooper()).post {
+//                        val lyricSavePath = "$LRC_SAVE_FOLDER/$lrcSaveFileName"
+//                        lyricScroller.loadLyric(lyricSavePath)
+//                        lyricScroller.setLyricListener(lyricListener)
+//                    }
+//                    saveLrc(lrc!!, lrcSaveFileName)
+//                }
+//            }
+//
+//            override fun onFailure(code: Int, msg: String) {
+//                clearLocalLrc()
+//            }
+//        })
     }
 }
