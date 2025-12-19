@@ -25,8 +25,9 @@ interface AppConfig {
         const val URL_FILE_SERVER = "http://dorachat.com:9999"
         const val URL_AD_SERVER = "http://dorachat.com:9091"
 
-        // key
+        // api key
         const val DORA_FUND_ACCESS_KEY = "vs42INhGWDnq"
+        // api secret
         const val DORA_FUND_SECRET_KEY = "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw"
         const val PGYER_API_KEY = "b32485d39298de8a302c67883e192107"
         const val PGYER_APP_KEY = "ee2ab0aa8ba49f78e2ac1cf4f1d54c66"
