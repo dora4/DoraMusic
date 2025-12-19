@@ -108,7 +108,6 @@ class MusicApp : BaseApplication(), AppConfig {
                 build()
             }
             // 这里可以指定不同节点的API服务
-            mappingBaseUrl(MusicService::class.java, AppConfig.URL_APP_SERVER)
             mappingBaseUrl(FileService::class.java, AppConfig.URL_FILE_SERVER)
             mappingBaseUrl(AdService::class.java, AppConfig.URL_AD_SERVER)
         }
