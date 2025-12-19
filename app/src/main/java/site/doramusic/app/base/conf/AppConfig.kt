@@ -95,8 +95,6 @@ interface AppConfig {
         // 换肤
         const val COLOR_THEME = "skin_theme_color" // 主色调的换肤key
 
-        const val CONF_ENABLE_BANNER_AD = "enable_banner_ad"
-
         // 100首推荐歌曲
         val SONG_MAP = mapOf(
             "是你" to "https://www.youtube.com/watch?v=aM0EBp9OaAM",
