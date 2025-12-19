@@ -41,7 +41,7 @@ Android7.0+
 
 <p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
 
-- 用户版：[查看详情](https://www.pgyer.com/doramusic) 官方高速下载通道建设中，请稍候...
+- 用户版：[查看详情](https://www.pgyer.com/doramusic) （官方高速下载通道建设中，请稍候...）
 - 开发版：[点此下载](https://github.com/dora4/DoraMusic/releases)
 
 ### 版本发布流程
