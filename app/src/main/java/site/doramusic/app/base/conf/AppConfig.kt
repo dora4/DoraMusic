@@ -16,12 +16,12 @@ interface AppConfig {
         val COPY_RIGHT = "doramusic ©2023~${Calendar.getInstance().get(Calendar.YEAR)}"
 
         // Http设置
-        const val CONNECT_TIMEOUT = 3L
+        const val CONNECT_TIMEOUT = 10L
         const val READ_TIMEOUT = 3L
 
         // 域名，仅展示在钱包，不校验，随便写
         const val URL_DOMAIN = "http://doramusic.site"
-        const val URL_COMMON_API = "http://dorachat.com:9696/api"
+        const val URL_COMMON_API = "http://dorachat.com:9696/api/"
         const val URL_FILE_SERVER = "http://dorachat.com:9999"
         const val URL_AD_SERVER = URL_COMMON_API
 

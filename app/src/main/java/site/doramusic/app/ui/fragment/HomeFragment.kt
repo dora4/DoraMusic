@@ -233,8 +233,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     private fun loadAds(binding: FragmentHomeBinding) {
         net {
-            val adEnable = result(AdService::class) { isShowBannerAds(PRODUCT_NAME) }?.data
-            if (adEnable == true) {
+            val adEnable = result(AdService::class) { isShowBannerAds(PRODUCT_NAME) }?.data?.configValue
+            if (adEnable == "true") {
                 // 广告印象
                 spmAdImpression("official")
                 binding.banner.visibility = View.VISIBLE

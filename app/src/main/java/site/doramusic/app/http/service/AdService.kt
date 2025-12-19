@@ -7,6 +7,7 @@ import retrofit2.http.Query
 import site.doramusic.app.base.conf.AppConfig.Companion.CONF_ENABLE_BANNER_AD
 import site.doramusic.app.http.ApiResult
 import site.doramusic.app.http.DoraBannerAd
+import site.doramusic.app.http.DoraConfig
 
 /**
  * 通用广告服务。
@@ -21,8 +22,9 @@ interface AdService : ApiService {
 
     /**
      * 检测是否显示该应用的横幅广告。
+     * http://dorachat.com:9696/api/config/get?productName=doramusic&configName=enable_banner_ad
      */
     @GET("config/get")
     fun isShowBannerAds(@Query("productName") productName: String,
-                        @Query("configName") configName: String = CONF_ENABLE_BANNER_AD): Call<ApiResult<Boolean>>
+                        @Query("configName") configName: String = CONF_ENABLE_BANNER_AD): Call<ApiResult<DoraConfig>>
 }
