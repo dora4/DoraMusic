@@ -12,7 +12,6 @@ import dora.arouter.open
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils.spmSelectContent
-import dora.pgyer.PgyVersionUpdate
 import dora.skin.SkinManager
 import dora.pay.DoraFund
 import dora.pay.DoraFund.ERC20_ADDRESS
@@ -30,8 +29,6 @@ import site.doramusic.app.base.conf.AppConfig.Companion.DISCORD_GROUP_INVITE_COD
 import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
 import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
-import site.doramusic.app.base.conf.AppConfig.Companion.PGYER_API_KEY
-import site.doramusic.app.base.conf.AppConfig.Companion.PGYER_APP_KEY
 import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.model.Donation
