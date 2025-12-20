@@ -133,7 +133,6 @@ dependencies {
     implementation("com.github.dora4:dview-rotate-view:1.2")
     implementation("com.github.dora4:dview-equalizer-view:1.2")
     implementation("com.github.dora4:dview-radio-group:1.0")
-    implementation("com.github.dora4:dview-toast:1.1")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")

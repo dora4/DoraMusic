@@ -22,7 +22,6 @@ import dora.util.TextUtils
 import dora.util.ViewUtils
 import dora.widget.DoraRadioGroup
 import dora.widget.DoraTitleBar
-import dora.widget.Tips
 import dora.widget.panel.MenuPanelItemRoot
 import dora.widget.panel.menu.InputMenuPanelItem
 import site.doramusic.app.R
@@ -55,7 +54,7 @@ class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
                     if (!NetUtils.checkNetworkAvailable()) {
-                        Tips.showWarning(R.string.no_internet_connection)
+                        showLongToast(getString(R.string.no_internet_connection))
                         return
                     }
                     SpmUtils.selectContent(this@FeedbackActivity, "提交反馈信息")
@@ -65,25 +64,25 @@ class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
                     ) as EditText
                     val content = ViewUtils.getText(etInput)
                     if (TextUtils.isEmpty(content)) {
-                        Tips.showWarning(getString(R.string.please_input_content))
+                        showShortToast(getString(R.string.please_input_content))
                         return
                     }
-                    Tips.show(getString(R.string.submitting_please_wait))
+                    showShortToast(getString(R.string.submitting_please_wait))
                     net {
                         val req = ReqFeedback(productName = PRODUCT_NAME,
                             feedbackType = feedbackType, feedbackContent = content)
                         val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
                         if (body == null) {
-                            Tips.showWarning(R.string.failed_to_feedback)
+                            showShortToast(getString(R.string.failed_to_feedback))
                             return@net
                         }
                         try {
                             val ok = api(FeedbackService::class) { commitFeedback(body.toRequestBody()) }?.data as Boolean
                             if (ok) {
-                                Tips.showSuccess(R.string.feedback_successfully)
+                                showLongToast(getString(R.string.feedback_successfully))
                                 finish()
                             } else {
-                                Tips.showWarning(R.string.failed_to_feedback)
+                                showLongToast(getString(R.string.failed_to_feedback))
                             }
                         } catch (e: Exception) {
                             LogUtils.e(e.toString())
