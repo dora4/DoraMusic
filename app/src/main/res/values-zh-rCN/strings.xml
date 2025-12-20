@@ -79,4 +79,14 @@
     <string name="donation_detail">捐赠时间：%1$s\n交易哈希：%2$s</string>
     <string name="evm_login_first">请先使用EVM钱包登录</string>
     <string name="uploaded_successfully">上传成功</string>
+    <string name="suggestion">建议</string>
+    <string name="question">问题</string>
+    <string name="please_input_content">请输入内容</string>
+    <string name="submitting_please_wait">正在提交，请稍候</string>
+    <string name="feedback">用户反馈</string>
+    <string name="feedback_title">反馈内容</string>
+    <string name="input_feedback_content">输入您要反馈的内容</string>
+    <string name="feedback_successfully">反馈成功，感谢您的支持！</string>
+    <string name="failed_to_feedback">反馈失败，请稍后重试！</string>
+    <string name="no_internet_connection">无法连接互联网</string>
 </resources>

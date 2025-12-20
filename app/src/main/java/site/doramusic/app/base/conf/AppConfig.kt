@@ -24,6 +24,7 @@ interface AppConfig {
         const val URL_COMMON_API = "http://dorachat.com:9696/api/"
         const val URL_FILE_SERVER = "http://dorachat.com:9999"
         const val URL_AD_SERVER = URL_COMMON_API
+        const val URL_FEEDBACK_SERVER = URL_COMMON_API
 
         // api key
         const val DORA_FUND_ACCESS_KEY = "vs42INhGWDnq"

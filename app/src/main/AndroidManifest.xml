@@ -107,6 +107,12 @@
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait" />
         <activity
+            android:name=".feedback.FeedbackActivity"
+            android:exported="false"
+            android:label="反馈"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
                 android:name=".ui.activity.BrowserActivity"
                 android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
                 android:exported="false"

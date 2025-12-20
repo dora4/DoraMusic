@@ -87,4 +87,14 @@ The [Dora Music] Team</string>
     <string name="donation_detail">Donation Time:%1$s\nTransaction Hash:%2$s</string>
     <string name="evm_login_first">Please log in with your EVM wallet first.</string>
     <string name="uploaded_successfully">Upload successful</string>
+    <string name="suggestion">Suggestion</string>
+    <string name="question">Question</string>
+    <string name="please_input_content">Please input content.</string>
+    <string name="submitting_please_wait">Submitting, please wait.</string>
+    <string name="feedback">Feedback</string>
+    <string name="feedback_title">Feedback Content</string>
+    <string name="input_feedback_content">Enter the content you want to give feedback</string>
+    <string name="feedback_successfully">Feedback successful, thank you for your support!</string>
+    <string name="failed_to_feedback">Feedback failed, please try again later!</string>
+    <string name="no_internet_connection">No internet connection</string>
 </resources>

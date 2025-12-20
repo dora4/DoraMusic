@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <View
+            android:id="@+id/statusbar_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/skin_theme_color" />
+
+        <dora.widget.DoraTitleBar
+            android:id="@+id/titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:dview_title="@string/feedback"
+            android:background="@color/skin_theme_color"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/feedback_bg"/>
+                <dora.widget.DoraRadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+                    <RadioButton
+                        android:id="@+id/rb_suggestion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:paddingVertical="4dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_margin="5dp"
+                        android:text="@string/suggestion"
+                        android:textSize="16sp"
+                        android:textColor="@color/selector_theme_rb_color"
+                        android:background="@drawable/selector_theme_rb"/>
+                    <RadioButton
+                        android:id="@+id/rb_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:paddingVertical="4dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_margin="5dp"
+                        android:text="@string/question"
+                        android:textSize="16sp"
+                        android:textColor="@color/selector_theme_rb_color"
+                        android:background="@drawable/selector_theme_rb"/>
+                </dora.widget.DoraRadioGroup>
+                <dora.widget.panel.MenuPanel
+                    android:id="@+id/menuPanel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

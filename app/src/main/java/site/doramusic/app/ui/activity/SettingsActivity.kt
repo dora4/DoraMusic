@@ -38,6 +38,7 @@ import site.doramusic.app.model.Donation
 import site.doramusic.app.util.PrefsManager
 import androidx.core.net.toUri
 import dora.skin.base.BaseSkinBindingActivity
+import site.doramusic.app.feedback.FeedbackActivity
 
 /**
  * 设置界面。
@@ -184,6 +185,10 @@ class SettingsActivity : BaseSkinBindingActivity<ActivitySettingsBinding>(), App
                 shareIntent = Intent.createChooser(shareIntent,
                     getString(R.string.select_sharing_method))
                 startActivity(shareIntent)
+            }
+            R.id.rl_settings_feedback -> {
+                val feedbackIntent = Intent(this, FeedbackActivity::class.java)
+                startActivity(feedbackIntent)
             }
             R.id.rl_settings_donate -> {
                 if (!DoraFund.isWalletConnected()) {

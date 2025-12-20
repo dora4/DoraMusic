@@ -49,7 +49,7 @@ class ColorPickerActivity : BaseSkinBindingActivity<ActivityColorPickerBinding>(
     override fun initData(savedInstanceState: Bundle?, binding: ActivityColorPickerBinding) {
         binding.statusbarColorPicker.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(mBinding.statusbarColorPicker, COLOR_THEME)
+        SkinManager.getLoader().setBackgroundColor(binding.statusbarColorPicker, COLOR_THEME)
         binding.titlebarColorPicker.addMenuButton(R.drawable.ic_save)
         binding.titlebarColorPicker.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {

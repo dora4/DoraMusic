@@ -15,7 +15,7 @@
             android:id="@+id/titlebar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/skin_theme_color"
             app:dview_title="@string/qr_code_scan_result"/>
         <RelativeLayout
             android:id="@+id/rl_browser_web_page"

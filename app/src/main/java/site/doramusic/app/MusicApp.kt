@@ -12,6 +12,7 @@ import dora.pay.EVMChains
 import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
+import dora.widget.Tips
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
@@ -25,6 +26,7 @@ import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
+import site.doramusic.app.feedback.FeedbackService
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
@@ -64,6 +66,7 @@ class MusicApp : BaseApplication(), AppConfig {
         LogUtils.d("init start time:$startTime")
         initDb()    // 初始化SQLite数据库的表
         initHttp()   // 初始化网络框架
+        Tips.init(this)
         val endTime = System.currentTimeMillis()
         LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
     }
@@ -109,6 +112,7 @@ class MusicApp : BaseApplication(), AppConfig {
             }
             // 这里可以指定不同节点的API服务
             mappingBaseUrl(FileService::class.java, AppConfig.URL_FILE_SERVER)
+            mappingBaseUrl(FeedbackService::class.java, AppConfig.URL_FEEDBACK_SERVER)
             mappingBaseUrl(AdService::class.java, AppConfig.URL_AD_SERVER)
         }
     }
