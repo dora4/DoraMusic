@@ -30,6 +30,7 @@ import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.model.Donation
 import site.doramusic.app.model.DownloadTask
+import site.doramusic.app.upgrade.ApkService
 import java.util.concurrent.TimeUnit
 
 /**
@@ -111,6 +112,7 @@ class MusicApp : BaseApplication(), AppConfig {
             mappingBaseUrl(FileService::class.java, AppConfig.URL_FILE_SERVER)
             mappingBaseUrl(FeedbackService::class.java, AppConfig.URL_FEEDBACK_SERVER)
             mappingBaseUrl(AdService::class.java, AppConfig.URL_AD_SERVER)
+            mappingBaseUrl(ApkService::class.java, AppConfig.URL_APK_SERVER)
         }
     }
 

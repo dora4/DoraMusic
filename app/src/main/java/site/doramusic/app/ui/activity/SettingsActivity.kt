@@ -37,8 +37,13 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.model.Donation
 import site.doramusic.app.util.PrefsManager
 import androidx.core.net.toUri
+import dora.http.DoraHttp.net
+import dora.http.DoraHttp.result
 import dora.skin.base.BaseSkinBindingActivity
+import dora.util.ApkUtils
+import site.doramusic.app.base.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.feedback.FeedbackActivity
+import site.doramusic.app.upgrade.ApkService
 
 /**
  * 设置界面。
@@ -257,31 +262,49 @@ class SettingsActivity : BaseSkinBindingActivity<ActivitySettingsBinding>(), App
                 DeepLinkUtils.openDiscordGroup(this@SettingsActivity, DISCORD_GROUP_INVITE_CODE)
             }
             R.id.rl_settings_check_update -> {
-                PgyVersionUpdate.checkVersion(this, PGYER_API_KEY,
-                    PGYER_APP_KEY, object : PgyVersionUpdate.UpdateListener {
-                        override fun onError(msg: String) {
-                        }
-
-                        override fun onLatestVersion() {
-                            showShortToast(getString(R.string.already_latest_version))
-                        }
-
-                        override fun onUpdate(
-                            versionCode: Int,
-                            versionName: String,
-                            isForceUpdate: Boolean,
-                            updateLog: String,
-                            downloadUrl: String
-                        ) {
+                net {
+                    val appInfo = result(ApkService::class) { checkUpdate(PRODUCT_NAME) }?.data
+                    if (appInfo != null) {
+                        val curVerCode = ApkUtils.getVersionCode(this)
+                        if (appInfo.versionCode > curVerCode) {
+                            // 有更新
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.data = downloadUrl.toUri()
+                            intent.data = appInfo.downloadUrl.toUri()
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             try {
                                 startActivity(intent)
                             } catch (ignore: ActivityNotFoundException) {
                             }
+                        } else {
+                            showShortToast(getString(R.string.already_latest_version))
                         }
-                    })
+                    }
+                }
+//                PgyVersionUpdate.checkVersion(this, PGYER_API_KEY,
+//                    PGYER_APP_KEY, object : PgyVersionUpdate.UpdateListener {
+//                        override fun onError(msg: String) {
+//                        }
+//
+//                        override fun onLatestVersion() {
+//                            showShortToast(getString(R.string.already_latest_version))
+//                        }
+//
+//                        override fun onUpdate(
+//                            versionCode: Int,
+//                            versionName: String,
+//                            isForceUpdate: Boolean,
+//                            updateLog: String,
+//                            downloadUrl: String
+//                        ) {
+//                            val intent = Intent(Intent.ACTION_VIEW)
+//                            intent.data = downloadUrl.toUri()
+//                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                            try {
+//                                startActivity(intent)
+//                            } catch (ignore: ActivityNotFoundException) {
+//                            }
+//                        }
+//                    })
             }
             R.id.rl_settings_user_protocol -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
