@@ -14,5 +14,5 @@ interface ApkService : ApiService {
      */
     @POST("checkUpdateApk")
     @FormUrlEncoded
-    fun checkUpdate(@Field("platformName") platformName: String): Call<ApiResult<DoraAppInfo>>
+    fun checkUpdate(@Field("productName") productName: String): Call<ApiResult<DoraAppInfo>>
 }
