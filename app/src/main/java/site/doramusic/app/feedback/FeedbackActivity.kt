@@ -39,13 +39,14 @@ class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
     }
 
     override fun onSetStatusBar() {
-        StatusBarUtils.setTransparencyStatusBar(this)
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        StatusBarUtils.setStatusBarColor(this, skinThemeColor)
     }
 
+
     override fun initData(savedInstanceState: Bundle?, binding: ActivityFeedbackBinding) {
-        binding.statusbarFeedback.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(binding.statusbarFeedback, COLOR_THEME)
+        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        binding.titlebar.setBackgroundColor(skinThemeColor)
         binding.titlebar.addMenuButton(R.drawable.ic_save)
             .setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
