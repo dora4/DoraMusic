@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.just.agentweb.AgentWeb
 import com.youth.banner.adapter.BannerAdapter
 import dora.BaseFragment
 import dora.arouter.open
@@ -60,6 +62,7 @@ import site.doramusic.app.http.service.AdService
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MusicControl
+import site.doramusic.app.media.SimpleAudioPlayer
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.BrowserActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
@@ -86,6 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private lateinit var albumDao: OrmDao<Album>
     private lateinit var folderDao: OrmDao<Folder>
     private val adapter = HomeAdapter()
+    private var player: SimpleAudioPlayer? = null
 
     val isHome: Boolean
         get() = uiManager.isLocal && !musicPlay.isOpened
@@ -249,14 +253,34 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 }
                 val imageAdapter = ImageAdapter(result)
                 imageAdapter.setOnBannerListener { _, position ->
-                    val intent = Intent(activity, BrowserActivity::class.java)
-                    intent.putExtra(EXTRA_TITLE, APP_NAME)
-                    intent.putExtra(EXTRA_URL, banners?.get(position)?.detailUrl)
-                    startActivity(intent)
+                    val url = banners?.get(position)?.detailUrl
+                        url?.let {
+                            val ext = getFileExtension(url)
+                            when (ext) {
+                                "mp3", "aac", "flac" -> {
+                                    if (player == null) {
+                                        player = SimpleAudioPlayer(requireContext())
+                                    }
+                                    player?.playByUrl(url)
+                                }
+                                else -> {
+                                    val intent = Intent(activity, BrowserActivity::class.java)
+                                    intent.putExtra(EXTRA_TITLE, APP_NAME)
+                                    intent.putExtra(EXTRA_URL, url)
+                                    startActivity(intent)
+                                }
+                            }
+                        }
                 }
                 binding.banner.setAdapter(imageAdapter)
             }
         }
+    }
+
+    fun getFileExtension(url: String): String {
+        return url.substringAfterLast('.', "")
+            .substringBefore('?')
+            .lowercase()
     }
 
     private fun getHomeItems(): List<HomeItem> {

@@ -49,7 +49,7 @@ class SimpleAudioPlayer(private var context: Context) {
                 //防止第二次调用报java.lang.IllegalStateException
                 mediaPlayer?.reset()
                 mediaPlayer?.setDataSource(url)
-                mediaPlayer?.prepare()
+                mediaPlayer?.prepareAsync()
                 mediaPlayer?.setOnPreparedListener {
                     mediaPlayer?.start()
                 }

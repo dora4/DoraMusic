@@ -6,8 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
@@ -60,18 +58,6 @@ class BrowserActivity : BaseSkinBindingActivity<ActivityBrowserBinding>() {
         title?.let { binding.titlebar.title = it }
         val webIndicator = WebIndicator(this)
         webIndicator.setColor(skinThemeColor)
-        agentWeb = AgentWeb.with(this)
-            .setAgentWebParent(
-                binding.rlBrowserWebPage,
-                LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-            )
-            .setCustomIndicator(webIndicator)
-            .createAgentWeb()
-            .ready()
-            .go(url)
         binding.titlebar.addMenuButton(R.drawable.ic_min)
         binding.titlebar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
