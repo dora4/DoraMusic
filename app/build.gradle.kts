@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 102
-    val version = "1.9.0"
+    val code = 103
+    val version = "1.9.1"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24

@@ -24,6 +24,7 @@ import site.doramusic.app.event.ChangeSkinEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.ui.adapter.ColorAdapter
 import site.doramusic.app.util.PrefsManager
+import androidx.core.graphics.drawable.toDrawable
 
 /**
  * 换肤界面，选择颜色。
@@ -94,7 +95,7 @@ class ColorPickerActivity : BaseSkinBindingActivity<ActivityColorPickerBinding>(
         binding.rvColorPicker.adapter = colorAdapter
         colorAdapter.selectedPosition = if (prefsManager.getSkinType() == 0) 0 else prefsManager.getSkinType() - 1
         val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-        colorDrawable = ColorDrawable(skinThemeColor)
+        colorDrawable = skinThemeColor.toDrawable()
         binding.ivColorPickerPreview.background = colorDrawable
         colorAdapter.setOnItemClickListener { _, _, position ->
             val color = colors[position].backgroundColor

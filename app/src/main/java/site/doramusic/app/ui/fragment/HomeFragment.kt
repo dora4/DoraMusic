@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
@@ -20,7 +19,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.just.agentweb.AgentWeb
 import com.youth.banner.adapter.BannerAdapter
 import dora.BaseFragment
 import dora.arouter.open
@@ -237,8 +235,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     private fun loadAds(binding: FragmentHomeBinding) {
         net {
-            val adEnable = result(AdService::class) { isShowBannerAds(PRODUCT_NAME) }?.data?.configValue
-            if (adEnable == "true") {
+            val data =  result(AdService::class) { isShowBannerAds(PRODUCT_NAME) }?.data
+            val visible = data?.visible
+            val adEnable = data?.configValue
+            if (visible == 1 && adEnable == "true") {
                 // 广告印象
                 spmAdImpression("official")
                 binding.banner.visibility = View.VISIBLE
