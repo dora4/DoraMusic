@@ -1,5 +1,6 @@
 package site.doramusic.app.base.conf
 
+import android.net.Uri
 import dora.util.IoUtils
 import java.util.Calendar
 
@@ -31,7 +32,7 @@ interface AppConfig {
         /**
          * 系统消息推送。
          */
-        const val URL_WS_SYS_MSG = "ws://dorachat.com:9696/api/ws/sysmsg?productName=$PRODUCT_NAME"
+        val URL_WS_SYS_MSG = "ws://dorachat.com:9696/api/ws/sysmsg?productName=${Uri.encode(PRODUCT_NAME)}"
 
         // api key
         const val DORA_FUND_ACCESS_KEY = "vs42INhGWDnq"

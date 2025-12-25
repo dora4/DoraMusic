@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat
 import dora.util.LogUtils
 import dora.util.ProcessUtils
 import site.doramusic.app.R
+import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_FAVORITE
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
@@ -27,6 +28,7 @@ import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_IS_PLAYING
 import site.doramusic.app.db.Music
 import site.doramusic.app.receiver.MusicPlayReceiver
 import site.doramusic.app.shake.ShakeDetector
+import site.doramusic.app.sysmsg.SysMsgWsManager
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.util.PrefsManager
 
@@ -55,6 +57,11 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     private lateinit var detector: ShakeDetector
     private var handler: Handler = Handler(Looper.getMainLooper())
 
+    /**
+     * 天然挂载点，极具优势。
+     */
+    private lateinit var sysMsgWsManager: SysMsgWsManager
+
     override fun onBind(intent: Intent): IBinder? {
         binder = MediaServiceImpl()
         return binder
@@ -82,6 +89,8 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         detector = ShakeDetector(this)
         detector.setOnShakeListener(this)
         detector.start()
+        sysMsgWsManager = SysMsgWsManager()
+        sysMsgWsManager.connect(AppConfig.URL_WS_SYS_MSG)
     }
 
     override fun onDestroy() {
@@ -89,6 +98,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         LogUtils.e("媒体服务被销毁")
         mc.exit()
         simplePlayer?.exit()
+        sysMsgWsManager.close()
         // 服务被回收，直接退出所有进程
         ProcessUtils.killAllProcesses()
     }
