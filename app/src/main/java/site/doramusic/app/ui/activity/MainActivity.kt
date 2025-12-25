@@ -412,7 +412,9 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
                     .show(
                         EVENT_TYPE_SCAN_PROMPT, "受Android13以上系统限制，读取音频文件权限仅能访问" +
                                 "Music、Download等特定目录的音频文件。如需访问所有目录的音频文件，请在【设置】->【应用程序】->【权限】中手动开启全部文件读取权限。"
-                    )
+                    ) {
+                        themeColor(SkinManager.getLoader().getColor(COLOR_THEME))
+                    }
             } else {
                 helper.permissions(
                     PermissionHelper.Permission.READ_EXTERNAL_STORAGE

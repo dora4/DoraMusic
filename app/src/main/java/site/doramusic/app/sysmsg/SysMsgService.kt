@@ -1,10 +1,9 @@
 package site.doramusic.app.sysmsg
 
 import dora.http.retrofit.ApiService
-import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.GET
+import retrofit2.http.Query
 import site.doramusic.app.http.ApiResult
 
 /**
@@ -12,6 +11,9 @@ import site.doramusic.app.http.ApiResult
  */
 interface SysMsgService : ApiService {
 
-    @POST("sysmsg/list")
-    fun getSysMsgList(@Body req: RequestBody): Call<ApiResult<List<DoraSysMsg>>>
+    /**
+     * 获取系统公告。
+     */
+    @GET("sysmsg/list")
+    fun getSysMsgList(@Query("productName") productName: String): Call<ApiResult<MutableList<DoraSysMsg>>>
 }

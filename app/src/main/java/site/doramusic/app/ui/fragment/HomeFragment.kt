@@ -21,7 +21,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.youth.banner.adapter.BannerAdapter
 import dora.BaseFragment
-import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
@@ -34,10 +33,10 @@ import dora.skin.SkinManager
 import dora.pay.DoraFund
 import dora.util.*
 import dora.widget.DoraFlipperView
+import dora.widget.DoraSingleButtonDialog
 import dora.widget.DoraTitleBar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.ARoutePath
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
@@ -46,7 +45,6 @@ import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.base.conf.AppConfig.Companion.MUSIC_MENU_GRID_COLUMN_NUM
 import site.doramusic.app.base.conf.AppConfig.Companion.MAX_RECENT_MUSIC_NUM
 import site.doramusic.app.base.conf.AppConfig.Companion.PRODUCT_NAME
-import site.doramusic.app.base.conf.AppConfig.Companion.SONG_MAP
 import site.doramusic.app.databinding.FragmentHomeBinding
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
@@ -56,11 +54,14 @@ import site.doramusic.app.event.ChangeSkinEvent
 import site.doramusic.app.event.PlayMusicEvent
 import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
+import site.doramusic.app.event.SysMsgEvent
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MusicControl
 import site.doramusic.app.media.SimpleAudioPlayer
+import site.doramusic.app.sysmsg.DoraSysMsg
+import site.doramusic.app.sysmsg.SysMsgService
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.BrowserActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
@@ -88,12 +89,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private lateinit var folderDao: OrmDao<Folder>
     private val adapter = HomeAdapter()
     private var player: SimpleAudioPlayer? = null
+    private val sysMsgList = mutableListOf<DoraSysMsg>()
+    private lateinit var tipDialog: DoraSingleButtonDialog
 
     val isHome: Boolean
         get() = uiManager.isLocal && !musicPlay.isOpened
 
     val isSlidingDrawerOpened: Boolean
         get() = musicPlay.isOpened
+
+    companion object {
+        const val EVENT_TYPE_SHOW_SYS_MSG_CONTENT = "show_sys_msg_content"
+    }
 
     data class HomeItem @JvmOverloads constructor(
         @DrawableRes val iconRes: Int, val name: String,
@@ -105,11 +112,65 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
+    private fun loadSysMsg(binding: FragmentHomeBinding) {
+        if (!NetUtils.checkNetworkAvailable(requireContext())) {
+            binding.fpHome.visibility = View.GONE
+            return
+        }
+        net {
+            val list = result(SysMsgService::class) { getSysMsgList(PRODUCT_NAME) }?.data
+            val visibleList = list?.filter { it.visible == 1 }
+            if (visibleList.isNullOrEmpty()) {
+                binding.fpHome.visibility = View.GONE
+                return@net
+            }
+            showSysMsg(visibleList)
+        }
+    }
+
+    private fun showSysMsg(list: List<DoraSysMsg>) {
+        sysMsgList.clear()
+        sysMsgList.addAll(list)
+
+        mBinding.fpHome.visibility = View.VISIBLE
+        mBinding.fpHome.clear()
+        sysMsgList.forEach {
+            mBinding.fpHome.addText(it.title)
+        }
+        mBinding.fpHome.setFlipperListener(object : DoraFlipperView.FlipperListener {
+
+            override fun onFlipStart() {
+            }
+
+            override fun onFlipFinish() {
+                // 全部播完隐藏
+                mBinding.fpHome.visibility = View.GONE
+            }
+
+            override fun onItemClick(index: Int, text: String) {
+                tipDialog.show(
+                        EVENT_TYPE_SHOW_SYS_MSG_CONTENT, sysMsgList[index].content
+                    ) {
+                        themeColor(SkinManager.getLoader().getColor(COLOR_THEME))
+                    }
+            }
+
+            override fun onLoadText(index: Int, text: String) {
+            }
+        })
+    }
+
     override fun initData(savedInstanceState: Bundle?, binding: FragmentHomeBinding) {
         musicDao = DaoFactory.getDao(Music::class.java)
         artistDao = DaoFactory.getDao(Artist::class.java)
         albumDao = DaoFactory.getDao(Album::class.java)
         folderDao = DaoFactory.getDao(Folder::class.java)
+        tipDialog = DoraSingleButtonDialog(
+            requireActivity(),
+            listener = object : DoraSingleButtonDialog.DialogListener {
+                override fun onButtonClick(eventType: String) {
+                }
+            })
         MediaManager.connectService(requireContext())
         MediaManager.setOnCompletionListener(this)
         defaultArtwork = BitmapFactory.decodeResource(
@@ -143,36 +204,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
             }
         })
-        if (NetUtils.checkNetworkAvailable(requireContext())) {
-            // 有网才加载推荐歌曲
-            binding.fpHomeRecommendMusics.visibility = View.VISIBLE
-            val titles = SONG_MAP.keys.toList()
-            // 随机抽取10条，保证不重复
-            titles.shuffled()
-                .take(10)
-                .forEach { title ->
-                    binding.fpHomeRecommendMusics.addText(title)
-                }
-            binding.fpHomeRecommendMusics.setFlipperListener(object : DoraFlipperView.FlipperListener {
-
-                override fun onFlipFinish() {
-                    // 加载完隐藏
-                    binding.fpHomeRecommendMusics.visibility = View.GONE
-                }
-
-                override fun onFlipStart() {
-                }
-
-                override fun onItemClick(text: String) {
-                    val url = SONG_MAP[text]
-                    spmSelectContent("查看推荐歌曲队列的内容")
-                    open(ARoutePath.ACTIVITY_BROWSER) {
-                        withString(EXTRA_TITLE, getString(R.string.app_name))
-                        withString(EXTRA_URL, url)
-                    }
-                }
-            })
-        }
+//        if (NetUtils.checkNetworkAvailable(requireContext())) {
+//            // 有网才加载推荐歌曲
+//            binding.fpHomeRecommendMusics.visibility = View.VISIBLE
+//            val titles = SONG_MAP.keys.toList()
+//            // 随机抽取10条，保证不重复
+//            titles.shuffled()
+//                .take(10)
+//                .forEach { title ->
+//                    binding.fpHomeRecommendMusics.addText(title)
+//                }
+//            binding.fpHomeRecommendMusics.setFlipperListener(object : DoraFlipperView.FlipperListener {
+//
+//                override fun onFlipFinish() {
+//                    // 加载完隐藏
+//                    binding.fpHomeRecommendMusics.visibility = View.GONE
+//                }
+//
+//                override fun onFlipStart() {
+//                }
+//
+//                override fun onItemClick(text: String) {
+//                    val url = SONG_MAP[text]
+//                    spmSelectContent("查看推荐歌曲队列的内容")
+//                    open(ARoutePath.ACTIVITY_BROWSER) {
+//                        withString(EXTRA_TITLE, getString(R.string.app_name))
+//                        withString(EXTRA_URL, url)
+//                    }
+//                }
+//            })
+//        }
+        loadSysMsg(binding)
         binding.rvHomeModule.adapter = adapter
         binding.rvHomeModule.setBackgroundResource(R.drawable.shape_home_module)
         binding.rvHomeModule.itemAnimator = DefaultItemAnimator()
@@ -201,6 +263,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             uiManager.setContentType(from)
         }
         adapter.setList(getHomeItems())
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(SysMsgEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    sysMsgList.add(it.sysMsg)
+                    mBinding.fpHome.visibility = View.VISIBLE
+                    mBinding.fpHome.addText(it.sysMsg.title)
+                }
+        )
         addDisposable(RxBus.getInstance()
             .toObservable(RefreshHomeItemEvent::class.java)
             .observeOn(AndroidSchedulers.mainThread())
@@ -450,7 +522,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             for (i in values.indices) {
                 decibels[i] = Integer.valueOf(values[i])
             }
-            MediaManager.setEqualizer(decibels)
+            try {
+                MediaManager.setEqualizer(decibels)
+            } catch (ignore : RuntimeException) {
+            }
         }
     }
 

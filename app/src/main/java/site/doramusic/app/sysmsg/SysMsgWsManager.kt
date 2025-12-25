@@ -2,12 +2,15 @@ package site.doramusic.app.sysmsg
 
 import android.os.Handler
 import android.os.Looper
+import com.google.gson.Gson
 import dora.util.LogUtils
+import dora.util.RxBus
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import site.doramusic.app.event.SysMsgEvent
 import java.util.concurrent.TimeUnit
 
 class SysMsgWsManager {
@@ -27,7 +30,19 @@ class SysMsgWsManager {
             }
 
             override fun onMessage(ws: WebSocket, text: String) {
-                LogUtils.d("ws收到系统消息: $text")
+                try {
+                    val sysMsg = Gson().fromJson(text, DoraSysMsg::class.java)
+                    // 二次校验
+                    if (sysMsg == null || sysMsg.title.isBlank()) {
+                        LogUtils.w("ws sysmsg invalid payload: $text")
+                        return
+                    }
+                    RxBus.getInstance().post(SysMsgEvent(sysMsg))
+                    LogUtils.d("ws 收到系统消息: ${sysMsg.title}")
+                } catch (e: Exception) {
+                    // 兜底：解析异常不能影响 WS
+                    LogUtils.e("ws sysmsg parse error: $text\n${e.toString()}")
+                }
             }
 
             override fun onFailure(ws: WebSocket, t: Throwable, r: Response?) {

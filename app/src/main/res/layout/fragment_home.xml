@@ -207,7 +207,7 @@
                 android:layout_below="@+id/titlebar_home">
 
                 <dora.widget.DoraFlipperView
-                    android:id="@+id/fp_home_recommend_musics"
+                    android:id="@+id/fp_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:dview_fv_flipInterval="5000"
