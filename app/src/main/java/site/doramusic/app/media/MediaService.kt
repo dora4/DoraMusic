@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import dora.util.LogUtils
 import dora.util.ProcessUtils
+import dora.util.RxBus
 import site.doramusic.app.R
 import site.doramusic.app.base.conf.AppConfig
 import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_FAVORITE
@@ -26,6 +27,7 @@ import site.doramusic.app.base.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.APP_PACKAGE_NAME
 import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_IS_PLAYING
 import site.doramusic.app.db.Music
+import site.doramusic.app.event.SysMsgEvent
 import site.doramusic.app.receiver.MusicPlayReceiver
 import site.doramusic.app.shake.ShakeDetector
 import site.doramusic.app.sysmsg.SysMsgWsManager
@@ -82,7 +84,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         prefsManager = PrefsManager(this)
         simplePlayer = SimpleAudioPlayer(this)
         mc = MusicControl(this)
@@ -91,6 +93,13 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         detector.start()
         sysMsgWsManager = SysMsgWsManager()
         sysMsgWsManager.connect(AppConfig.URL_WS_SYS_MSG)
+        RxBus.getInstance().toObservable(SysMsgEvent::class.java)
+            .subscribe { event ->
+                val msg = event.sysMsg
+                val title = msg.title.ifBlank { "系统消息" }
+                val content = msg.content.orEmpty()
+                showSysMsgNotification(title, content)
+            }
     }
 
     override fun onDestroy() {
@@ -273,7 +282,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
             .setCustomContentView(remoteViews)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
-        notificationManager?.notify(NOTIFICATION_ID, notification)
+        notificationManager?.notify(NOTIFICATION_ID_MUSIC, notification)
     }
 
     @SuppressLint("ForegroundServiceType", "RemoteViewLayout")
@@ -361,7 +370,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
 
-        startForeground(NOTIFICATION_ID, notification)
+        startForeground(NOTIFICATION_ID_MUSIC, notification)
     }
 
     /**
@@ -383,11 +392,48 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
     private fun cancelNotification() {
         stopForeground(true)
-        notificationManager?.cancel(NOTIFICATION_ID)
+        notificationManager?.cancel(NOTIFICATION_ID_MUSIC)
+    }
+
+    private fun showSysMsgNotification(title: String, content: String) {
+        val channelId = "$APP_PACKAGE_NAME-sysmsg"
+        val channelName = "${APP_NAME}系统消息"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                enableLights(true)
+                enableVibration(true)
+                setShowBadge(true)
+            }
+            notificationManager?.createNotificationChannel(channel)
+        }
+
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pi = PendingIntent.getActivity(
+            this, 0, intent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
+            else PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(title)
+            .setContentText(content)
+            .setContentIntent(pi)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+        // 使用独立通知ID，避免覆盖音乐通知
+        notificationManager?.notify(NOTIFICATION_ID_SYS_MSG, notification)
     }
 
     companion object {
-        private const val NOTIFICATION_ID = 0x1
+        private const val NOTIFICATION_ID_MUSIC = 0x1// 音乐通知
+        private const val NOTIFICATION_ID_SYS_MSG = 0x2  // 系统消息通知
         const val NOTIFICATION_TITLE = "notification_title"
         const val NOTIFICATION_NAME = "notification_name"
     }

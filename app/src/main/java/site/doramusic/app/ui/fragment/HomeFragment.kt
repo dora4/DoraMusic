@@ -148,11 +148,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             }
 
             override fun onItemClick(index: Int, text: String) {
+                val sysMsg = sysMsgList[index]
                 tipDialog.show(
-                        EVENT_TYPE_SHOW_SYS_MSG_CONTENT, sysMsgList[index].content
-                    ) {
-                        themeColor(SkinManager.getLoader().getColor(COLOR_THEME))
-                    }
+                    EVENT_TYPE_SHOW_SYS_MSG_CONTENT, sysMsg.content
+                ) {
+                    themeColor(SkinManager.getLoader().getColor(COLOR_THEME))
+                }
             }
 
             override fun onLoadText(index: Int, text: String) {
