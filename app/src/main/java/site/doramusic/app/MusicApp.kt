@@ -30,6 +30,7 @@ import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.model.Donation
 import site.doramusic.app.model.DownloadTask
+import site.doramusic.app.sysmsg.SysMsgService
 import site.doramusic.app.upgrade.ApkService
 import java.util.concurrent.TimeUnit
 
@@ -104,15 +105,18 @@ class MusicApp : BaseApplication(), AppConfig {
             okhttp {
                 connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-                // dcache高版本自动添加FormatLogInterceptor
-//                interceptors().add(FormatLogInterceptor())
                 build()
             }
-            // 这里可以指定不同节点的API服务
+            // 文件
             mappingBaseUrl(FileService::class.java, AppConfig.URL_FILE_SERVER)
+            // 建议反馈
             mappingBaseUrl(FeedbackService::class.java, AppConfig.URL_FEEDBACK_SERVER)
+            // 官方产品簇
             mappingBaseUrl(AdService::class.java, AppConfig.URL_AD_SERVER)
+            // 应用更新
             mappingBaseUrl(ApkService::class.java, AppConfig.URL_APK_SERVER)
+            // 系统消息
+            mappingBaseUrl(SysMsgService::class.java, AppConfig.URL_SYS_MSG_SERVER)
         }
     }
 

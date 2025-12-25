@@ -26,6 +26,7 @@ interface AppConfig {
         const val URL_AD_SERVER = URL_COMMON_API
         const val URL_FEEDBACK_SERVER = URL_COMMON_API
         const val URL_APK_SERVER = URL_COMMON_API
+        const val URL_SYS_MSG_SERVER = URL_COMMON_API
 
         // api key
         const val DORA_FUND_ACCESS_KEY = "vs42INhGWDnq"
