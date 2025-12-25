@@ -28,6 +28,11 @@ interface AppConfig {
         const val URL_APK_SERVER = URL_COMMON_API
         const val URL_SYS_MSG_SERVER = URL_COMMON_API
 
+        /**
+         * 系统消息推送。
+         */
+        const val URL_WS_SYS_MSG = "ws://dorachat.com:9696/api/ws/sysmsg?productName=$PRODUCT_NAME"
+
         // api key
         const val DORA_FUND_ACCESS_KEY = "vs42INhGWDnq"
         // api secret，不要泄露给任何人，开源项目无所谓
