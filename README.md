@@ -64,7 +64,7 @@ https://github.com/dora4/DoraMusic/blob/main/Checklist.md
 
 DoraChat开发中，无需披露个人信息，即可在官方聊天室聊天。
 
-https://discord.gg/HUx8dDSZaP
+![Screenshot_20251228_070405_Dora Chat](https://github.com/user-attachments/assets/05859ba3-e92d-4ea7-ad31-f44422cbf942)
 
 ### 近期热门DJ
 
