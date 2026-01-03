@@ -1,4 +1,4 @@
-package site.doramusic.app.base.callback
+package site.doramusic.app.ui
 
 /**
  * 在主界面中，返回上一页的监听器。

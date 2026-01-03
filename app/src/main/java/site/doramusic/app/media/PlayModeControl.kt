@@ -7,7 +7,7 @@ import android.widget.TextView
 import dora.util.ToastUtils
 
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.conf.AppConfig
 
 /**
  * 音乐播放模式的控制类。

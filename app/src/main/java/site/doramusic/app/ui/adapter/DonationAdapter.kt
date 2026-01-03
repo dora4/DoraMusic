@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import dora.skin.SkinManager
 import dora.widget.DoraCouponView
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.model.Donation
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat

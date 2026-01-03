@@ -1,4 +1,4 @@
-package site.doramusic.app.base.conf
+package site.doramusic.app.conf
 
 interface ARoutePath {
 

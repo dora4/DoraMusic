@@ -9,7 +9,7 @@ import android.os.IBinder
 import android.os.RemoteException
 import dora.util.LogUtils
 
-import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.db.Music
 
 /**

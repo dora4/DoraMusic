@@ -10,7 +10,7 @@
 //import org.aspectj.lang.annotation.Aspect
 //import org.aspectj.lang.annotation.Pointcut
 //import site.doramusic.app.annotation.RequirePermission
-//import site.doramusic.app.base.conf.ARoutePath
+//import site.doramusic.app.conf.ARoutePath
 //import site.doramusic.app.ui.fragment.ProtocolFragment
 //
 ///**
@@ -91,7 +91,7 @@
 //import org.aspectj.lang.annotation.Aspect
 //import org.aspectj.lang.annotation.Pointcut
 //import site.doramusic.app.annotation.RequirePermission
-//import site.doramusic.app.base.conf.ARoutePath
+//import site.doramusic.app.conf.ARoutePath
 //import site.doramusic.app.ui.fragment.ProtocolFragment
 //
 ///**

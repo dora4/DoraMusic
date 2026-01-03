@@ -15,10 +15,10 @@ import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.ARoutePath
-import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
-import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_PENDING
-import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TIMESTAMP
+import site.doramusic.app.conf.ARoutePath
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.conf.AppConfig.Companion.COLUMN_PENDING
+import site.doramusic.app.conf.AppConfig.Companion.COLUMN_TIMESTAMP
 import site.doramusic.app.databinding.ActivityDonationBinding
 import site.doramusic.app.model.Donation
 import site.doramusic.app.ui.adapter.DonationAdapter

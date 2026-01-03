@@ -9,7 +9,7 @@ import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.ARoutePath
+import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.databinding.ActivitySplashBinding
 import site.doramusic.app.util.MusicUtils
 

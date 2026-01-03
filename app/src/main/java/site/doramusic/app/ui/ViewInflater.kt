@@ -2,7 +2,7 @@ package site.doramusic.app.ui
 
 import android.view.View
 import dora.db.table.OrmTable
-import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.conf.AppConfig
 
 /**
  * 视图加载器。

@@ -15,7 +15,7 @@ import dora.util.TextUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder

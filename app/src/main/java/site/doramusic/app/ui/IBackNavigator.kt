@@ -1,6 +1,6 @@
 package site.doramusic.app.ui
 
-import site.doramusic.app.base.callback.OnBackListener
+import site.doramusic.app.ui.OnBackListener
 
 /**
  * 界面返回接口。

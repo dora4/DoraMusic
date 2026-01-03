@@ -1,4 +1,4 @@
-package site.doramusic.app.shake
+package site.doramusic.app.sensor
 
 import android.content.Context
 import android.hardware.Sensor

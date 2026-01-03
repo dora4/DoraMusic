@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import dora.skin.SkinManager
 import dora.util.DensityUtils
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.ui.fragment.HomeFragment
 
 class HomeAdapter : BaseQuickAdapter<HomeFragment.HomeItem, BaseViewHolder>(

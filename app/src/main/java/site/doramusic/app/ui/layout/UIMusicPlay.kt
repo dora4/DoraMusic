@@ -47,7 +47,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.lrc.LyricLine

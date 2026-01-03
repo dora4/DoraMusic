@@ -21,7 +21,7 @@ import dora.util.LogUtils;
 import dora.util.RxBus;
 import dora.util.TextUtils;
 import dora.util.ToastUtils;
-import site.doramusic.app.base.conf.AppConfig;
+import site.doramusic.app.conf.AppConfig;
 import site.doramusic.app.db.Music;
 import site.doramusic.app.event.PlayMusicEvent;
 import site.doramusic.app.event.RefreshHomeItemEvent;

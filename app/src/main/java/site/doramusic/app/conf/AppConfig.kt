@@ -1,4 +1,4 @@
-package site.doramusic.app.base.conf
+package site.doramusic.app.conf
 
 import android.net.Uri
 import dora.util.IoUtils

@@ -8,12 +8,12 @@ import dora.db.table.Ignore
 import dora.db.table.OrmTable
 import dora.db.table.Since
 import dora.db.table.Table
-import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_ORDER_ID
-import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_PENDING
-import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TIMESTAMP
-import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TOKEN_AMOUNT
-import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TOKEN_SYMBOL
-import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_TRANSACTION_HASH
+import site.doramusic.app.conf.AppConfig.Companion.COLUMN_ORDER_ID
+import site.doramusic.app.conf.AppConfig.Companion.COLUMN_PENDING
+import site.doramusic.app.conf.AppConfig.Companion.COLUMN_TIMESTAMP
+import site.doramusic.app.conf.AppConfig.Companion.COLUMN_TOKEN_AMOUNT
+import site.doramusic.app.conf.AppConfig.Companion.COLUMN_TOKEN_SYMBOL
+import site.doramusic.app.conf.AppConfig.Companion.COLUMN_TRANSACTION_HASH
 
 @Since(version = 3)
 @Table("donation")

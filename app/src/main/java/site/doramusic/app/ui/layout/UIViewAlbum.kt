@@ -16,8 +16,8 @@ import dora.skin.SkinManager
 import dora.widget.DoraLetterView
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.conf.AppConfig
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Album
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager

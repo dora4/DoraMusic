@@ -11,11 +11,11 @@ import dora.firebase.SpmUtils
 import dora.util.LogUtils
 import dora.util.RxBus
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_FAVORITE
-import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
-import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_NEXT
-import site.doramusic.app.base.conf.AppConfig.Companion.ACTION_PREV
-import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_IS_PLAYING
+import site.doramusic.app.conf.AppConfig.Companion.ACTION_FAVORITE
+import site.doramusic.app.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
+import site.doramusic.app.conf.AppConfig.Companion.ACTION_NEXT
+import site.doramusic.app.conf.AppConfig.Companion.ACTION_PREV
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_IS_PLAYING
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.media.MediaManager

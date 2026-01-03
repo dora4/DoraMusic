@@ -26,8 +26,8 @@ import dora.widget.DoraTitleBar
 import dora.widget.panel.MenuPanelItemRoot
 import dora.widget.panel.menu.InputMenuPanelItem
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
-import site.doramusic.app.base.conf.AppConfig.Companion.PRODUCT_NAME
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityFeedbackBinding
 import site.doramusic.app.http.SecureRequestBuilder
 

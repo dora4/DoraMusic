@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import dora.skin.SkinManager
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.util.PrefsManager
 import java.util.*

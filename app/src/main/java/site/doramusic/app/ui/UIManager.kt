@@ -9,8 +9,7 @@ import androidx.viewpager.widget.ViewPager
 import dora.db.table.OrmTable
 import dora.util.RxBus
 import site.doramusic.app.R
-import site.doramusic.app.base.callback.OnBackListener
-import site.doramusic.app.base.conf.AppConfig
+import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.ui.layout.IPlayerLyricDrawer

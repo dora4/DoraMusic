@@ -13,8 +13,8 @@ import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 import dora.widget.DoraEqualizerView
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.ARoutePath
-import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.conf.ARoutePath
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityEqualizerBinding
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.util.PrefsManager

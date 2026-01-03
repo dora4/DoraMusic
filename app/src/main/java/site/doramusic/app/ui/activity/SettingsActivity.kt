@@ -21,14 +21,14 @@ import dora.widget.DoraBottomMenuDialog
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraToggleButton
 import site.doramusic.app.R
-import site.doramusic.app.base.conf.ARoutePath
-import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
-import site.doramusic.app.base.conf.AppConfig.Companion.COLUMN_PENDING
-import site.doramusic.app.base.conf.AppConfig.Companion.DISCORD_GROUP_INVITE_CODE
-import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
-import site.doramusic.app.base.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
-import site.doramusic.app.base.conf.AppConfig.Companion.EXTRA_TITLE
+import site.doramusic.app.conf.ARoutePath
+import site.doramusic.app.conf.AppConfig
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.conf.AppConfig.Companion.COLUMN_PENDING
+import site.doramusic.app.conf.AppConfig.Companion.DISCORD_GROUP_INVITE_CODE
+import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
+import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.model.Donation
@@ -38,7 +38,7 @@ import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.skin.base.BaseSkinBindingActivity
 import dora.util.ApkUtils
-import site.doramusic.app.base.conf.AppConfig.Companion.PRODUCT_NAME
+import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.feedback.FeedbackActivity
 import site.doramusic.app.upgrade.ApkService
 

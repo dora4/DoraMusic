@@ -28,8 +28,8 @@ import dora.util.TextUtils
 import dora.util.ViewUtils
 import site.doramusic.app.R
 //import site.doramusic.app.annotation.SingleClick
-import site.doramusic.app.base.conf.AppConfig
-import site.doramusic.app.base.conf.AppConfig.Companion.COLOR_THEME
+import site.doramusic.app.conf.AppConfig
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Music
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.PlayModeControl
