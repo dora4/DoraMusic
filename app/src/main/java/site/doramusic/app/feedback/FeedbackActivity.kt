@@ -11,7 +11,6 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 
 import dora.firebase.SpmUtils
 import dora.http.DoraHttp.api
