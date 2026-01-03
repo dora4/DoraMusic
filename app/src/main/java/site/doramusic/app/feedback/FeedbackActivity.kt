@@ -1,6 +1,5 @@
 package site.doramusic.app.feedback
 
-import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -9,7 +8,6 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 
 import dora.firebase.SpmUtils
@@ -55,7 +53,6 @@ class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
 
                 override fun onIconBackClick(icon: AppCompatImageView) {}
 
-                @RequiresApi(Build.VERSION_CODES.O)
                 override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
                     if (!NetUtils.checkNetworkAvailable()) {
                         showLongToast(getString(R.string.no_internet_connection))

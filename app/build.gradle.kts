@@ -108,7 +108,6 @@ dependencies {
     // Dora全家桶
     implementation("com.github.dora4:dora:1.3.53")
     implementation("com.github.dora4:dora-arouter-support:1.6")
-    implementation("com.github.dora4:dora-pgyer-support:1.10")
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.5")
     implementation("com.github.dora4:dora-glide-support:1.4")

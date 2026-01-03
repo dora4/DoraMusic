@@ -277,31 +277,6 @@ class SettingsActivity : BaseSkinBindingActivity<ActivitySettingsBinding>(), App
                         }
                     }
                 }
-//                PgyVersionUpdate.checkVersion(this, PGYER_API_KEY,
-//                    PGYER_APP_KEY, object : PgyVersionUpdate.UpdateListener {
-//                        override fun onError(msg: String) {
-//                        }
-//
-//                        override fun onLatestVersion() {
-//                            showShortToast(getString(R.string.already_latest_version))
-//                        }
-//
-//                        override fun onUpdate(
-//                            versionCode: Int,
-//                            versionName: String,
-//                            isForceUpdate: Boolean,
-//                            updateLog: String,
-//                            downloadUrl: String
-//                        ) {
-//                            val intent = Intent(Intent.ACTION_VIEW)
-//                            intent.data = downloadUrl.toUri()
-//                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                            try {
-//                                startActivity(intent)
-//                            } catch (ignore: ActivityNotFoundException) {
-//                            }
-//                        }
-//                    })
             }
             R.id.rl_settings_user_protocol -> {
                 open(ARoutePath.ACTIVITY_PROTOCOL) {

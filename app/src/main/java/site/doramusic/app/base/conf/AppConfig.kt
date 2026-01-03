@@ -38,8 +38,6 @@ interface AppConfig {
         const val DORA_FUND_ACCESS_KEY = "vs42INhGWDnq"
         // api secret，不要泄露给任何人，开源项目无所谓
         const val DORA_FUND_SECRET_KEY = "RrZqzf1Vh8StMqyHhpfCu6TPOQMoCRYw"
-        const val PGYER_API_KEY = "b32485d39298de8a302c67883e192107"
-        const val PGYER_APP_KEY = "ee2ab0aa8ba49f78e2ac1cf4f1d54c66"
         const val DISCORD_GROUP_INVITE_CODE = "HUx8dDSZaP"
 
 
