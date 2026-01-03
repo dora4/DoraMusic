@@ -121,7 +121,7 @@ class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
                         content: String
                     ) {
                         val used = countCharWidth(content)
-                        val text = "$used/2048"
+                        val text = "$used/1024"
                         val usedStr = used.toString()
                         val spanned = SpannableStringBuilder(text).apply {
                             setSpan(
@@ -141,11 +141,11 @@ class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
         val etInput = binding.menuPanel.getViewByPosition(0, InputMenuPanelItem.ID_EDIT_TEXT_INPUT) as EditText
         etInput.layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            DensityUtils.dp2px(1000f)
+            DensityUtils.dp2px(500f)
         )
         etInput.gravity = Gravity.TOP
         etInput.isSingleLine = false
-        ViewUtils.setMaxLength(etInput, 1024, 2048)
+        ViewUtils.setMaxLength(etInput, 512, 1024)
     }
 
     /**
