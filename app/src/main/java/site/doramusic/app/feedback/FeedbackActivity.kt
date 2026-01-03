@@ -2,12 +2,16 @@ package site.doramusic.app.feedback
 
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 
 import dora.firebase.SpmUtils
 import dora.http.DoraHttp.api
@@ -110,15 +114,63 @@ class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
                 MenuPanelItemRoot.Span(DensityUtils.DP10),
                 getString(R.string.input_feedback_content),
                 "",
-                null
+                null,
+                watcher = object : InputMenuPanelItem.ContentWatcher {
+                    override fun onContentChanged(
+                        item: InputMenuPanelItem,
+                        content: String
+                    ) {
+                        val used = countCharWidth(content)
+                        val text = "$used/2048"
+                        val usedStr = used.toString()
+                        val spanned = SpannableStringBuilder(text).apply {
+                            setSpan(
+                                ForegroundColorSpan(
+                                    skinThemeColor
+                                ),
+                                0,
+                                usedStr.length,
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
+                        }
+                        binding.tvInputLimit.text = spanned
+                    }
+                }
             )
         )
         val etInput = binding.menuPanel.getViewByPosition(0, InputMenuPanelItem.ID_EDIT_TEXT_INPUT) as EditText
         etInput.layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            DensityUtils.dp2px(270f)
+            DensityUtils.dp2px(1000f)
         )
         etInput.gravity = Gravity.TOP
         etInput.isSingleLine = false
+        ViewUtils.setMaxLength(etInput, 1024, 2048)
+    }
+
+    /**
+     * 计算字符串占用的字符数。
+     * 中文 / 全角字符 = 2
+     * 其他字符 = 1
+     */
+    fun countCharWidth(text: String): Int {
+        var count = 0
+        for (c in text) {
+            count += if (isFullWidth(c)) 2 else 1
+        }
+        return count
+    }
+
+    /**
+     * 判断是否为中文 / 全角字符。
+     */
+    fun isFullWidth(c: Char): Boolean {
+        val ub = Character.UnicodeBlock.of(c)
+        return ub === Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS ||
+                ub === Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS ||
+                ub === Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A ||
+                ub === Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B ||
+                ub === Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION ||
+                ub === Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
     }
 }
