@@ -49,7 +49,7 @@
                 android:value="GlobalConfig" />
         <activity
                 android:name=".ui.activity.SplashActivity"
-                android:exported="true"
+                android:exported="false"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.Launch">
             <intent-filter>
@@ -112,7 +112,7 @@
 
         <service
                 android:name=".media.MediaService"
-                android:exported="true"
+                android:exported="false"
                 android:foregroundServiceType="mediaPlayback"
                 android:label="DoraMusic Media">
             <intent-filter>
@@ -123,14 +123,14 @@
         <service android:name=".service.DownloadService" />
         <receiver
                 android:name=".receiver.BatteryReceiver"
-                android:exported="true">
+                android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
             </intent-filter>
         </receiver>
         <receiver
                 android:name=".receiver.EarphoneReceiver"
-                android:exported="true">
+                android:exported="false">
             <intent-filter>
                 <action android:name="android.media.AUDIO_BECOMING_NOISY" />
                 <action android:name="android.intent.action.HEADSET_PLUG" />
@@ -140,7 +140,7 @@
 
         <receiver
                 android:name=".receiver.MusicPlayReceiver"
-                android:exported="true">
+                android:exported="false">
             <intent-filter>
                 <action android:name="site.doramusic.app.intent.ACTION_PREV" />
                 <action android:name="site.doramusic.app.intent.ACTION_NEXT" />
