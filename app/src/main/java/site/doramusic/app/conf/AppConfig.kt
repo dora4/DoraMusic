@@ -24,6 +24,8 @@ interface AppConfig {
         const val URL_DOMAIN = "http://doramusic.site"
         const val URL_COMMON_API = "http://dorachat.com:9696/api/"
         const val URL_FILE_SERVER = "http://dorachat.com:9999"
+
+        const val URL_AUTH_SERVER = URL_COMMON_API
         const val URL_AD_SERVER = URL_COMMON_API
         const val URL_FEEDBACK_SERVER = URL_COMMON_API
         const val URL_APK_SERVER = URL_COMMON_API
@@ -58,7 +60,7 @@ interface AppConfig {
 
         // 数据库相关
         const val DB_NAME = "db_doramusic"
-        const val DB_VERSION = 4
+        const val DB_VERSION = 5
         const val COLUMN_ORDER_ID = "order_id"
         const val COLUMN_TOKEN_AMOUNT = "token_amount"
         const val COLUMN_TOKEN_SYMBOL = "token_symbol"

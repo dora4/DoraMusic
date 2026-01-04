@@ -12,6 +12,11 @@ import dora.pay.EVMChains
 import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
+import site.doramusic.app.auth.AuthInterceptor
+import site.doramusic.app.auth.AuthService
+import site.doramusic.app.auth.DoraUser
+import site.doramusic.app.auth.DoraUserInfo
+import site.doramusic.app.auth.TokenStore
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
@@ -101,14 +106,17 @@ class MusicApp : BaseApplication(), AppConfig {
     }
 
     private fun initHttp() {
+        TokenStore.init(this)
         RetrofitManager.initConfig {
             okhttp {
                 connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                addInterceptor(AuthInterceptor())
                 build()
             }
-            // 文件
-            mappingBaseUrl(FileService::class.java, AppConfig.URL_FILE_SERVER)
+            flow(true)
+            // 认证
+            mappingBaseUrl(AuthService::class.java, AppConfig.URL_AUTH_SERVER)
             // 建议反馈
             mappingBaseUrl(FeedbackService::class.java, AppConfig.URL_FEEDBACK_SERVER)
             // 官方产品簇
@@ -117,6 +125,8 @@ class MusicApp : BaseApplication(), AppConfig {
             mappingBaseUrl(ApkService::class.java, AppConfig.URL_APK_SERVER)
             // 系统消息
             mappingBaseUrl(SysMsgService::class.java, AppConfig.URL_SYS_MSG_SERVER)
+            // 文件
+            mappingBaseUrl(FileService::class.java, AppConfig.URL_FILE_SERVER)
         }
     }
 
@@ -127,7 +137,8 @@ class MusicApp : BaseApplication(), AppConfig {
             // 所管理的表
             .tables(Music::class.java, Artist::class.java,
                 Album::class.java, Folder::class.java,
-                Donation::class.java, DownloadTask::class.java
+                Donation::class.java, DownloadTask::class.java,
+                DoraUserInfo::class.java
             )
             .build())
     }

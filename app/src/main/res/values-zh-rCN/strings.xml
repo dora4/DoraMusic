@@ -89,4 +89,10 @@
     <string name="feedback_successfully">反馈成功，感谢您的支持！</string>
     <string name="failed_to_feedback">反馈失败，请稍后重试！</string>
     <string name="no_internet_connection">无法连接互联网</string>
+
+
+    <string name="wallet_connected">钱包已经连接过了</string>
+    <string name="using_wallet_authorization_first">请先使用钱包授权登录</string>
+    <string name="at_least_6_characters_long">密码不能少于6个字符</string>
+
 </resources>

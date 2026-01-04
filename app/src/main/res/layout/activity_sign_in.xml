@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/sign_in_bg">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="113dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_sign_in_card">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="36dp"
+                    android:text="Sign in"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    android:textColor="#262628"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="36dp"
+                    android:text="Password"
+                    android:textSize="20sp"
+                    android:textColor="#9B9B9B"/>
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="36dp"
+                    android:padding="8dp"
+                    android:maxLength="16"
+                    android:inputType="textPassword"
+                    android:background="@drawable/shape_sign_in_input_bg"/>
+                <Button
+                    android:id="@+id/btn_sign_in"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginHorizontal="36dp"
+                    android:text="SIGN IN"
+                    android:textColor="@color/white"
+                    android:background="@drawable/shape_sign_in_btn_bg"/>
+                <TextView
+                    android:id="@+id/tv_sign_in_forget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginVertical="40dp"
+                    android:text="Forget your password?"
+                    android:textSize="16sp"
+                    android:textColor="#262628"/>
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_sign_in_card_bottom"
+                android:layout_marginHorizontal="29dp">
+                <TextView
+                    android:id="@+id/tv_sign_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginVertical="30dp"
+                    android:text="Don't have an account?Sign up"
+                    android:textSize="16sp"
+                    android:textColor="#9B9B9B"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/tv_connect_wallet"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="60dp"
+            android:src="@drawable/ic_wallet_connect"/>
+    </FrameLayout>
+</layout>

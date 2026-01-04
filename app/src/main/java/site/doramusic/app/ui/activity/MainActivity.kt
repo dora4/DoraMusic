@@ -30,14 +30,16 @@ import dora.util.PermissionHelper
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.util.ToastUtils
-import dora.widget.DoraAlertDialog
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraSingleButtonDialog
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import site.doramusic.app.BuildConfig
 import site.doramusic.app.R
+import site.doramusic.app.auth.SignInActivity
+import site.doramusic.app.auth.UserManager
 import site.doramusic.app.ui.OnBackListener
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
@@ -46,6 +48,7 @@ import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
 import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.event.RefreshHomeItemEvent
+import site.doramusic.app.event.SignInEvent
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
@@ -266,26 +269,36 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
         erc20AddrView = headerView.findViewById<TextView>(R.id.tv_drawer_header_nickname)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         versionNameView.text = BuildConfig.APP_VERSION
-        if (DoraFund.isWalletConnected()) {
-            erc20AddrView!!.text = DoraFund.getCurrentAddress()
+        val user = UserManager.ins?.currentUser
+        if (user != null) {
+            erc20AddrView!!.text = user.erc20
         }
         avatarView.setOnClickListener {
-            // 钱包授权登录
-            if (!DoraFund.isWalletConnected()) {
-                spmSelectContent("钱包授权登录")
-                closeDrawer()
-                DoraFund.connectWallet(this, REQUEST_WALLET_AUTHORIZATION)
+            val user = UserManager.ins?.currentUser
+            if (user != null) {
+                // 预留注销登录逻辑
             } else {
-                spmSelectContent("取消钱包授权")
-                val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-                DoraAlertDialog.create(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
-                    themeColor(skinThemeColor)
-                    positiveListener {
-                        DoraFund.disconnectWallet()
-                        erc20AddrView?.text = ""
-                    }
-                }
+                val intent = Intent(this, SignInActivity::class.java)
+                startActivity(intent)
+                closeDrawer()
             }
+            // 旧代码先保留
+//            // 钱包授权登录
+//            if (!DoraFund.isWalletConnected()) {
+//                spmSelectContent("钱包授权登录")
+//                closeDrawer()
+//                DoraFund.connectWallet(this, REQUEST_WALLET_AUTHORIZATION)
+//            } else {
+//                spmSelectContent("取消钱包授权")
+//                val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+//                DoraAlertDialog.create(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
+//                    themeColor(skinThemeColor)
+//                    positiveListener {
+//                        DoraFund.disconnectWallet()
+//                        erc20AddrView?.text = ""
+//                    }
+//                }
+//            }
         }
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -467,6 +480,14 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
         applySkin()
         // 关闭电池优化，保活
         IntentUtils.ensureIgnoreBatteryOptimization(this)
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(SignInEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    erc20AddrView?.text = it.erc20
+                }
+        )
         // 返回键处理
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
