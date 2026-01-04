@@ -90,7 +90,7 @@ kapt {
 }
 
 kotlin {
-    // 安装了多jdk等情况下，编译时自动帮你选jvm
+    // 安装了多jdk的情况下，编译时自动帮你选jvm
     jvmToolchain(17)
 }
 
