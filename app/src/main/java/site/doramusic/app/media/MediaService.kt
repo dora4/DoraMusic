@@ -29,7 +29,7 @@ import site.doramusic.app.conf.AppConfig.Companion.EXTRA_IS_PLAYING
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.SysMsgEvent
 import site.doramusic.app.receiver.MusicPlayReceiver
-import site.doramusic.app.sensor.ShakeDetector
+import site.doramusic.app.shake.ShakeDetector
 import site.doramusic.app.sysmsg.SysMsgWsManager
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.util.PrefsManager
