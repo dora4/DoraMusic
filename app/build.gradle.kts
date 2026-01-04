@@ -119,7 +119,7 @@ dependencies {
     implementation("com.github.dora4:dcache-android:3.6.3")
 
     implementation("com.github.dora4:dview-titlebar:1.37")
-    implementation("com.github.dora4:dview-menu-panel:1.39")
+    implementation("com.github.dora4:dview-menu-panel:1.47")
     implementation("com.github.dora4:dview-toggle-button:1.5")
     implementation("com.github.dora4:dview-alert-dialog:1.34")
     implementation("com.github.dora4:dview-loading-dialog:1.5")
