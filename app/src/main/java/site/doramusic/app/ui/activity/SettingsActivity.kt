@@ -227,30 +227,31 @@ class SettingsActivity : BaseSkinBindingActivity<ActivitySettingsBinding>(), App
                                 0.0
                             }
                         }
-                        DoraFund.pay(this@SettingsActivity,
-                            DORA_FUND_ACCESS_KEY,
-                            DORA_FUND_SECRET_KEY,
-                            getString(R.string.i_want_to_donate),
-                            getString(R.string.donation_speech),
-                            ERC20_ADDRESS,
-                            amount,
-                            null,
-                            object : DoraFund.OrderListener {
-                                override fun onPrintOrder(
-                                    orderId: String,
-                                    chain: Modal.Model.Chain,
-                                    value: Double
-                                ) {
-                                    // 保存捐赠信息
-                                    val donation = Donation(
-                                        orderId = orderId,
-                                        tokenAmount = value,
-                                        tokenSymbol = "POL",
-                                        timestamp = System.currentTimeMillis(),
-                                    )
-                                    DaoFactory.getDao(Donation::class.java).insertAsync(donation)
-                                }
-                            })
+                        showLongToast("捐赠功能暂时关闭")
+//                        DoraFund.pay(this@SettingsActivity,
+//                            DORA_FUND_ACCESS_KEY,
+//                            DORA_FUND_SECRET_KEY,
+//                            getString(R.string.i_want_to_donate),
+//                            getString(R.string.donation_speech),
+//                            ERC20_ADDRESS,
+//                            amount,
+//                            null,
+//                            object : DoraFund.OrderListener {
+//                                override fun onPrintOrder(
+//                                    orderId: String,
+//                                    chain: Modal.Model.Chain,
+//                                    value: Double
+//                                ) {
+//                                    // 保存捐赠信息
+//                                    val donation = Donation(
+//                                        orderId = orderId,
+//                                        tokenAmount = value,
+//                                        tokenSymbol = "POL",
+//                                        timestamp = System.currentTimeMillis(),
+//                                    )
+//                                    DaoFactory.getDao(Donation::class.java).insertAsync(donation)
+//                                }
+//                            })
                     }
                 })
             }
