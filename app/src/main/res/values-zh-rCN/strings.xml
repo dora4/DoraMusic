@@ -94,5 +94,6 @@
     <string name="wallet_connected">钱包已经连接过了</string>
     <string name="using_wallet_authorization_first">请先使用钱包授权登录</string>
     <string name="at_least_6_characters_long">密码不能少于6个字符</string>
+    <string name="chat_room">聊天室</string>
 
 </resources>

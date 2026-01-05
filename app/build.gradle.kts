@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 108
-    val version = "1.9.6"
+    val code = 109
+    val version = "2.0.0"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -136,6 +136,8 @@ dependencies {
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")
+    implementation("androidx.activity:activity:1.12.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     kapt("com.alibaba:arouter-compiler:1.5.2")
 
     // AgentWeb

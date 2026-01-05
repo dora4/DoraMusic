@@ -26,6 +26,7 @@ interface AppConfig {
         const val URL_FILE_SERVER = "http://dorachat.com:9999"
 
         const val URL_AUTH_SERVER = URL_COMMON_API
+        const val URL_CHAT_SERVER = URL_COMMON_API
         const val URL_AD_SERVER = URL_COMMON_API
         const val URL_FEEDBACK_SERVER = URL_COMMON_API
         const val URL_APK_SERVER = URL_COMMON_API
@@ -52,6 +53,7 @@ interface AppConfig {
         const val EXTRA_IS_PLAYING = "isPlaying"
         const val EXTRA_TITLE = "title"
         const val EXTRA_URL = "url"
+        const val EXTRA_ERC20 = "erc20"
 
         // 文件夹相关
         const val LOG_PATH = "DoraMusic/log"

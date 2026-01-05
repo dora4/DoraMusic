@@ -17,6 +17,7 @@ import site.doramusic.app.auth.AuthService
 import site.doramusic.app.auth.DoraUser
 import site.doramusic.app.auth.DoraUserInfo
 import site.doramusic.app.auth.TokenStore
+import site.doramusic.app.chat.ChatService
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
@@ -114,9 +115,14 @@ class MusicApp : BaseApplication(), AppConfig {
                 addInterceptor(AuthInterceptor())
                 build()
             }
+            // 支持Observable请求
+            rxJava(true)
+            // 支持Flow请求
             flow(true)
             // 认证
             mappingBaseUrl(AuthService::class.java, AppConfig.URL_AUTH_SERVER)
+            // 聊天室
+            mappingBaseUrl(ChatService::class.java, AppConfig.URL_CHAT_SERVER)
             // 建议反馈
             mappingBaseUrl(FeedbackService::class.java, AppConfig.URL_FEEDBACK_SERVER)
             // 官方产品簇
