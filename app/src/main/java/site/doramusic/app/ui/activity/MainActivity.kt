@@ -114,6 +114,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
 
     companion object {
         const val REQUEST_VPN_PERMISSION = 1
+        @Deprecated("使用Dora Chat账号认证")
         const val REQUEST_WALLET_AUTHORIZATION = 2
 
         const val EVENT_TYPE_SCAN_PROMPT = "scan_prompt"
@@ -128,7 +129,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
                         DORA_FUND_SECRET_KEY)
                 }
             } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
-                erc20AddrView?.text = DoraFund.getCurrentAddress()
+//                erc20AddrView?.text = DoraFund.getCurrentAddress()
             }
         }
     }

@@ -38,6 +38,7 @@ import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.skin.base.BaseSkinBindingActivity
 import dora.util.ApkUtils
+import site.doramusic.app.auth.UserManager
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.feedback.FeedbackActivity
 import site.doramusic.app.upgrade.ApkService
@@ -193,24 +194,25 @@ class SettingsActivity : BaseSkinBindingActivity<ActivitySettingsBinding>(), App
                 startActivity(feedbackIntent)
             }
             R.id.rl_settings_donate -> {
-                if (!DoraFund.isWalletConnected()) {
-                    DoraFund.connectWallet(this)
+                if (UserManager.ins?.currentUser == null) {
+                    showLongToast("请先登录")
+//                    DoraFund.connectWallet(this)
                     return
                 }
                 val menus = arrayOf(
                     getString(R.string.donation_desc_1),
                     getString(R.string.donation_desc_2),
-                    getString(R.string.donation_desc_3),
-                    getString(R.string.disconnect_wallet)
+                    getString(R.string.donation_desc_3)
+//                    getString(R.string.disconnect_wallet)
                 )
                 val dialog = DoraBottomMenuDialog().show(this, menus)
                 dialog.setOnMenuClickListener(object : DoraBottomMenuDialog.OnMenuClickListener {
                     override fun onMenuClick(position: Int, menu: String) {
                         dialog.dismiss()
-                        if (position == 3) {
-                            DoraFund.disconnectWallet()
-                            return
-                        }
+//                        if (position == 3) {
+//                            DoraFund.disconnectWallet()
+//                            return
+//                        }
                         val amount = when (position) {
                             0 -> {
                                 0.1
