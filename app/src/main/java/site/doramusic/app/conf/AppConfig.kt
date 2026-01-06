@@ -36,6 +36,7 @@ interface AppConfig {
          * 系统消息推送。
          */
         val URL_WS_SYS_MSG = "ws://dorachat.com:9696/api/ws/sysmsg?productName=${Uri.encode(PRODUCT_NAME)}"
+        val URL_WS_CHAT = "ws://dorachat.com:9696/api/ws/chat?partitionId=${Uri.encode(PRODUCT_NAME)}"
 
         // api key
         const val DORA_FUND_ACCESS_KEY = "vs42INhGWDnq"
