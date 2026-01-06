@@ -136,8 +136,6 @@ dependencies {
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")
-    implementation("androidx.activity:activity:1.12.2")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     kapt("com.alibaba:arouter-compiler:1.5.2")
 
     // AgentWeb

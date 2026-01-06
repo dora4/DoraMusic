@@ -20,7 +20,7 @@ import dora.http.DoraHttp
 import dora.http.DoraHttp.api
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
-import dora.http.DoraHttp.rxResult
+import dora.http.DoraHttp.rxApi
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
@@ -54,7 +54,6 @@ import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.event.SignInEvent
-import site.doramusic.app.feedback.ReqFeedback
 import site.doramusic.app.http.SecureRequestBuilder
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
@@ -317,23 +316,28 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
                 // 聊天室
                 R.id.menu_chat_room -> {
                     net {
-                        val req = ReqJoinChannel(roomId = PRODUCT_NAME)
-                        val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
-                                ?: return@net
-                        val ok = rxResult(ChatService::class) { joinChannel(body.toRequestBody()) }?.data
-                        if (ok == true) {
+                        try {
                             val user = UserManager.ins?.currentUser
                             if (user == null) {
+                                showLongToast("请先登录")
                                 val intent = Intent(this, SignInActivity::class.java)
                                 startActivity(intent)
                                 closeDrawer()
                                 return@net
                             }
-                            open(ARoutePath.ACTIVITY_CHAT_ROOM) {
-                                withString(EXTRA_ERC20, user.erc20)
+                            val req = ReqJoinChannel(roomId = PRODUCT_NAME)
+                            val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
+                                ?: return@net
+                            val ok = rxApi(ChatService::class) { joinChannel(body.toRequestBody()) }?.data
+                            if (ok == true) {
+                                open(ARoutePath.ACTIVITY_CHAT_ROOM) {
+                                    withString(EXTRA_ERC20, user.erc20)
+                                }
+                            } else {
+                                showLongToast("加入聊天室失败")
                             }
-                        } else {
-                            showLongToast("加入聊天室失败")
+                        } catch (e: Exception) {
+                            showLongToast(e.toString())
                         }
                     }
                 }

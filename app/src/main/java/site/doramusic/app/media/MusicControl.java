@@ -259,7 +259,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 mPlayState = MPS_INVALID;
                 if (pos < mPlaylist.size()) {
                     pos++;
-                    playById(mPlaylist.get(pos).songId);
+                    if (pos < mPlaylist.size()) {
+                        playById(mPlaylist.get(pos).songId);
+                    }
                 }
                 return false;
             }
