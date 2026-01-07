@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <dora.widget.DoraTitleBar
+            android:id="@+id/titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/skin_theme_color"
+            app:dview_title="@string/chat_room"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#FAFAFA">
+            <ImageView
+                android:id="@+id/ivMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"/>
+            <RelativeLayout
+                android:id="@+id/btnSend"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true">
+                <ImageView
+                    android:id="@+id/ivSend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_send_msg"/>
+            </RelativeLayout>
+            <EditText
+                android:id="@+id/etInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/ivMore"
+                android:layout_toStartOf="@id/btnSend"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:hint="Type a message..."/>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

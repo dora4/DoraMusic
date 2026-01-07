@@ -20,6 +20,7 @@ import dora.http.DoraHttp
 import dora.http.DoraHttp.api
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
+import dora.http.DoraHttp.rxApi
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
@@ -40,15 +41,20 @@ import site.doramusic.app.BuildConfig
 import site.doramusic.app.R
 import site.doramusic.app.auth.SignInActivity
 import site.doramusic.app.auth.UserManager
+import site.doramusic.app.chat.ChatService
+import site.doramusic.app.chat.ReqJoinChannel
 import site.doramusic.app.ui.OnBackListener
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
 import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_ERC20
+import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.event.SignInEvent
+import site.doramusic.app.http.SecureRequestBuilder
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
@@ -307,6 +313,34 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
 //                R.id.menu_upload_music -> selectMusicFile()
                 // 扫描歌曲
                 R.id.menu_scan_music -> performScanMusic()
+                // 聊天室
+                R.id.menu_chat_room -> {
+                    net {
+                        try {
+                            val user = UserManager.ins?.currentUser
+                            if (user == null) {
+                                showLongToast("请先登录")
+                                val intent = Intent(this, SignInActivity::class.java)
+                                startActivity(intent)
+                                closeDrawer()
+                                return@net
+                            }
+                            val req = ReqJoinChannel(roomId = PRODUCT_NAME)
+                            val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
+                                ?: return@net
+                            val ok = rxApi(ChatService::class) { joinChannel(body.toRequestBody()) }?.data
+                            if (ok == true) {
+                                open(ARoutePath.ACTIVITY_CHAT_ROOM) {
+                                    withString(EXTRA_ERC20, user.erc20)
+                                }
+                            } else {
+                                showLongToast("加入聊天室失败")
+                            }
+                        } catch (e: Exception) {
+                            showLongToast(e.toString())
+                        }
+                    }
+                }
                 // 更换换肤
                 R.id.menu_change_skin -> open(ARoutePath.ACTIVITY_COLOR_PICKER)
                 // 均衡器

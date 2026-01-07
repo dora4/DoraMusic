@@ -101,5 +101,6 @@ The [Dora Music] Team</string>
     <string name="wallet_connected">The wallet has already been connected.</string>
     <string name="using_wallet_authorization_first">Please log in using wallet authorization first.</string>
     <string name="at_least_6_characters_long">The password must be at least 6 characters long.</string>
+    <string name="chat_room">Chat Room</string>
 
 </resources>
