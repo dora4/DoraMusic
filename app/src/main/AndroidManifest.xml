@@ -73,6 +73,13 @@
             android:label="登录"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".chat.ChatRoomActivity"
+            android:exported="false"
+            android:label="聊天室"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
                 android:name=".ui.activity.EqualizerActivity"
                 android:exported="false"

@@ -78,7 +78,7 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
             adapter.setList(data?.list?.reversed())
         }
         binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
-        RxBus.getInstance()
+        addDisposable(RxBus.getInstance()
             .toObservable(ChannelMsgEvent::class.java)
             .subscribe { event ->
                 val msg = event.msg
@@ -100,7 +100,7 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
                     adapter.addData(uiMsg)
                     binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
                 }
-            }
+            })
         binding.btnSend.setOnClickListener {
             val content = ViewUtils.getText(binding.etInput)
             if (content.isBlank()) return@setOnClickListener
