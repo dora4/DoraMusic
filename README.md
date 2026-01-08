@@ -62,7 +62,7 @@ https://github.com/dora4/DoraMusic/blob/main/Checklist.md
 
 ### 社区搭建
 
-DoraChat开发中，引领下一代互联网登录方式，无需披露个人信息，即可在官方聊天室聊天。且不用输入用户名，点击钱包连接即可自动获取ERC20地址，省时省心。
+DoraChat开发中（未开放注册），引领下一代互联网登录方式，无需披露个人信息，即可在官方聊天室聊天。且不用输入用户名，点击钱包连接即可自动获取ERC20地址，省时省心。
 
 <p><img width="542" height="1206" src="https://github.com/user-attachments/assets/05859ba3-e92d-4ea7-ad31-f44422cbf942"></p>
 
