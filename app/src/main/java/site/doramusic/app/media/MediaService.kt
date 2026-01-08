@@ -64,7 +64,6 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
      * 天然挂载点，极具优势。
      */
     private lateinit var sysMsgWsManager: SysMsgWsManager
-    private lateinit var chatWsManager: ChatWsManager
 
     override fun onBind(intent: Intent): IBinder? {
         binder = MediaServiceImpl()
@@ -95,8 +94,6 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         detector.start()
         sysMsgWsManager = SysMsgWsManager()
         sysMsgWsManager.connect(AppConfig.URL_WS_SYS_MSG)
-        chatWsManager = ChatWsManager()
-        chatWsManager.connect(AppConfig.URL_WS_CHAT)
         RxBus.getInstance().toObservable(SysMsgEvent::class.java)
             .subscribe { event ->
                 val msg = event.sysMsg

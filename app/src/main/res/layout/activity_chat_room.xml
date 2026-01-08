@@ -27,15 +27,14 @@
             android:clipToPadding="false"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/light_gray"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="#FAFAFA">
-            <ImageView
-                android:id="@+id/ivMore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"/>
+            android:background="@color/white">
             <RelativeLayout
                 android:id="@+id/btnSend"
                 android:layout_width="45dp"
@@ -47,17 +46,20 @@
                     android:id="@+id/ivSend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:tint="@color/colorPrimary"
                     android:src="@drawable/ic_send_msg"/>
             </RelativeLayout>
             <EditText
                 android:id="@+id/etInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/ivMore"
                 android:layout_toStartOf="@id/btnSend"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
-                android:hint="Type a message..."/>
+                android:imeOptions="actionSend"
+                android:inputType="text"
+                android:hint="输入内容"/>
         </RelativeLayout>
     </LinearLayout>
 </layout>

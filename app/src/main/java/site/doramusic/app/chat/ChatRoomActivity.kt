@@ -2,6 +2,7 @@ package site.doramusic.app.chat
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.http.DoraHttp.net
@@ -14,6 +15,7 @@ import dora.util.StatusBarUtils
 import dora.util.ViewUtils
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
+import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_ERC20
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
@@ -39,9 +41,29 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
         erc20 = IntentUtils.getStringExtra(intent, EXTRA_ERC20)
     }
 
-    override fun initData(savedInstanceState: Bundle?, binding: ActivityChatRoomBinding) {
-        val adapter = ChannelMsgAdapter()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        // 保持聊天界面不熄屏
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        super.onCreate(savedInstanceState)
+    }
 
+    override fun onStart() {
+        super.onStart()
+        ChatWsManager.connect(AppConfig.URL_WS_CHAT)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        ChatWsManager.close()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ChatWsManager.close() // 兜底，不作为主逻辑
+    }
+
+    override fun initData(savedInstanceState: Bundle?, binding: ActivityChatRoomBinding) {
+        val adapter = ChannelMsgAdapter(erc20)
         binding.recyclerView.layoutManager = LinearLayoutManager(this).apply {
             stackFromEnd = true   // 像聊天一样从底部开始
         }
@@ -55,9 +77,7 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
                 rxResult(ChatService::class) { getChannelMsgList(body.toRequestBody()) }?.data
             adapter.setList(data?.list?.reversed())
         }
-
         binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
-
         RxBus.getInstance()
             .toObservable(ChannelMsgEvent::class.java)
             .subscribe { event ->
@@ -78,7 +98,6 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
                 )
                 runOnUiThread {
                     adapter.addData(uiMsg)
-                    // 滚到底部
                     binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
                 }
             }
@@ -95,7 +114,7 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
                         msgId = System.currentTimeMillis(), // 临时 ID
                         roomId = PRODUCT_NAME,
                         senderId = erc20,
-                        senderName = "Me",
+                        senderName = erc20,
                         senderRole = 0,
                         msgType = 0,
                         msgContent = content,
@@ -104,9 +123,8 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
                     adapter.addData(localMsg)
                     binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
                     binding.etInput.setText("")
-                    showLongToast("消息已发送")
                 } else {
-                    showLongToast("消息发送失败")
+                    showLongToast("消息未发送")
                 }
             }
         }

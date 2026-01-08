@@ -12,7 +12,7 @@ interface ChatService : ApiService {
     /**
      * 加入聊天室。
      *
-     * @see site.doramusic.app.chat.ReqJoinChannel
+     * @see ReqJoinChannel
      */
     @POST("chat/channel/join")
     fun joinChannel(@Body body: RequestBody): Observable<ApiResult<Boolean>>
@@ -20,7 +20,7 @@ interface ChatService : ApiService {
     /**
      * 离开聊天室。
      *
-     * @see site.doramusic.app.chat.ReqLeaveChannel
+     * @see ReqLeaveChannel
      */
     @POST("chat/channel/leave")
     fun leaveChannel(@Body body: RequestBody): Observable<ApiResult<Boolean>>
@@ -28,7 +28,7 @@ interface ChatService : ApiService {
     /**
      * 发送消息。
      *
-     * @see site.doramusic.app.chat.ReqSendChannelMsg
+     * @see ReqSendChannelMsg
      */
     @POST("chat/channel/send")
     fun sendMsg(@Body body: RequestBody): Observable<ApiResult<Boolean>>
@@ -37,7 +37,7 @@ interface ChatService : ApiService {
      * 拉取频道消息列表。
      * 支持cursor+limit（向上翻历史）
      *
-     * @see site.doramusic.app.chat.ReqChannelMsgList
+     * @see ReqChannelMsgList
      */
     @POST("chat/channel/msg/list")
     fun getChannelMsgList(@Body body: RequestBody): Observable<ApiResult<DoraChannelMsgList>>
