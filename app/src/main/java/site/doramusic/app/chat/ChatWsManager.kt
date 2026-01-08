@@ -14,13 +14,29 @@ import site.doramusic.app.auth.TokenStore
 import site.doramusic.app.event.ChannelMsgEvent
 import java.util.concurrent.TimeUnit
 
-class ChatWsManager {
+/**
+ * 聊天用的WebSocket要有状态机。
+ */
+object ChatWsManager {
+
+    @Volatile
+    private var state = WsState.IDLE
+
+    private val lock = Any()
 
     private var webSocket: WebSocket? = null
     private val handler = Handler(Looper.getMainLooper())
     private val gson = Gson()
+    private var wsUrl: String? = null
 
     fun connect(url: String) {
+        synchronized(lock) {
+            if (state == WsState.CONNECTED || state == WsState.CONNECTING) {
+                return
+            }
+            state = WsState.CONNECTING
+            wsUrl = url
+        }
         val client = OkHttpClient.Builder()
             .pingInterval(30, TimeUnit.SECONDS)
             .build()
@@ -33,6 +49,13 @@ class ChatWsManager {
         webSocket = client.newWebSocket(request, object : WebSocketListener() {
 
             override fun onOpen(ws: WebSocket, response: Response) {
+                synchronized(lock) {
+                    if (state != WsState.CONNECTING) {
+                        ws.close(1000, "invalid state")
+                        return
+                    }
+                    state = WsState.CONNECTED
+                }
                 LogUtils.d("chat ws 已连接")
             }
 
@@ -52,16 +75,36 @@ class ChatWsManager {
 
             override fun onFailure(ws: WebSocket, t: Throwable, r: Response?) {
                 LogUtils.e("chat ws 断开，5 秒后重连\n${t}")
-                handler.postDelayed({ connect(url) }, 5000)
+                synchronized(lock) {
+                    if (state == WsState.CLOSED) return
+                    state = WsState.IDLE
+                }
+                handler.postDelayed({
+                    wsUrl?.let { connect(it) }
+                }, 5000)
             }
         })
     }
 
     fun send(text: String) {
-        webSocket?.send(text)
+        synchronized(lock) {
+            if (state != WsState.CONNECTED) return
+            webSocket?.send(text)
+        }
     }
 
     fun close() {
-        webSocket?.close(1000, "chat ws close")
+        synchronized(lock) {
+            state = WsState.CLOSED
+            handler.removeCallbacksAndMessages(null)
+            webSocket?.close(1000, "chat ws close")
+        }
+    }
+
+    enum class WsState {
+        IDLE,
+        CONNECTING,
+        CONNECTED,
+        CLOSED
     }
 }
