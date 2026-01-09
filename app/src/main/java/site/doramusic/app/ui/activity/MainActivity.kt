@@ -53,7 +53,7 @@ import site.doramusic.app.conf.AppConfig.Companion.EXTRA_ERC20
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.event.RefreshHomeItemEvent
-import site.doramusic.app.event.SignInEvent
+import site.doramusic.app.auth.SignInEvent
 import site.doramusic.app.http.SecureRequestBuilder
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService

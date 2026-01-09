@@ -20,7 +20,7 @@ import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_ERC20
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityChatRoomBinding
-import site.doramusic.app.event.ChannelMsgEvent
+import site.doramusic.app.chat.ChannelMsgEvent
 import site.doramusic.app.http.SecureRequestBuilder
 
 @Route(path = ARoutePath.ACTIVITY_CHAT_ROOM)

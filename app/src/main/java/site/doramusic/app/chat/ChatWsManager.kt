@@ -11,7 +11,7 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import site.doramusic.app.auth.TokenStore
-import site.doramusic.app.event.ChannelMsgEvent
+import site.doramusic.app.chat.ChannelMsgEvent
 import java.util.concurrent.TimeUnit
 
 /**

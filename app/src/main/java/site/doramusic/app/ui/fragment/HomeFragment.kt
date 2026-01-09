@@ -54,7 +54,7 @@ import site.doramusic.app.event.ChangeSkinEvent
 import site.doramusic.app.event.PlayMusicEvent
 import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
-import site.doramusic.app.event.SysMsgEvent
+import site.doramusic.app.sysmsg.SysMsgEvent
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager

@@ -10,7 +10,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
-import site.doramusic.app.event.SysMsgEvent
+import site.doramusic.app.sysmsg.SysMsgEvent
 import java.util.concurrent.TimeUnit
 
 class SysMsgWsManager {

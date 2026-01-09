@@ -5,6 +5,9 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
+/**
+ * 请求数据最终实体。
+ */
 data class ReqBody(
     val mode: String = "",
     val key: String = "",

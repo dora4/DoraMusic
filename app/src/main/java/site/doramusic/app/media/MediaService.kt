@@ -28,7 +28,7 @@ import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.conf.AppConfig.Companion.APP_PACKAGE_NAME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_IS_PLAYING
 import site.doramusic.app.db.Music
-import site.doramusic.app.event.SysMsgEvent
+import site.doramusic.app.sysmsg.SysMsgEvent
 import site.doramusic.app.receiver.MusicPlayReceiver
 import site.doramusic.app.shake.ShakeDetector
 import site.doramusic.app.sysmsg.SysMsgWsManager

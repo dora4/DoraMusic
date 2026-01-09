@@ -22,7 +22,7 @@ import dora.widget.DoraLoadingDialog
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivitySignInBinding
-import site.doramusic.app.event.SignInEvent
+import site.doramusic.app.auth.SignInEvent
 import site.doramusic.app.http.SecureRequestBuilder
 
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {

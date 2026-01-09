@@ -5,6 +5,7 @@ import java.io.Serializable
 /**
  * 前后端交互数据标准。
  */
+@Deprecated("使用ApiResult")
 class DoraResponse<T> : Serializable {
 
     var ok: Boolean = false

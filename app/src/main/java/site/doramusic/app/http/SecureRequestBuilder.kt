@@ -3,6 +3,9 @@ package site.doramusic.app.http
 import dora.util.CryptoUtils
 import java.security.SecureRandom
 
+/**
+ * 用于安全请求的工具，主要用于对接口数据进行加密（AES+RSA）。
+ */
 object SecureRequestBuilder {
 
     const val AES_KEY_LENGTH = 16 // bytes (128位)
@@ -70,7 +73,7 @@ object SecureRequestBuilder {
             }
             // 端到端加密 + 客户端签名
             SecureMode.ENC_SIGN -> {
-                // 不告诉你，这个项目不提供可信客户端能力
+                // 这个项目不提供可信客户端能力
                 null
             }
         }

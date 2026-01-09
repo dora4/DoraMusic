@@ -20,6 +20,7 @@ import site.doramusic.app.auth.TokenStore
 import site.doramusic.app.auth.UserManager
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.databinding.ActivitySplashBinding
+import site.doramusic.app.http.ApiCode
 import site.doramusic.app.http.SecureRequestBuilder
 import site.doramusic.app.util.MusicUtils
 
@@ -49,7 +50,7 @@ class SplashActivity : BaseSkinBindingActivity<ActivitySplashBinding>() {
                     RetrofitManager.getService(AuthService::class.java)
                         .checkToken(body.toRequestBody())
                 }, successBlock = {
-                    if (it.code == "000000") {
+                    if (it.code == ApiCode.SUCCESS) {
                         // 请求成功
                         it.data?.let {
                             UserManager.ins?.setCurrentUser(DoraUser(it.erc20, it.latestSignIn))
@@ -73,7 +74,7 @@ class SplashActivity : BaseSkinBindingActivity<ActivitySplashBinding>() {
                 if (MusicApp.isAppInitialized) {
                     launchMain()
                 } else {
-                    // 还没初始化完成，50ms 后再次检查
+                    // 还没初始化完成，50ms后再次检查
                     handler.postDelayed(this, 50)
                 }
             }
