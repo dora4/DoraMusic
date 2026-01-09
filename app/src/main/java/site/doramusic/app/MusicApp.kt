@@ -14,7 +14,6 @@ import dora.util.ThreadUtils
 import dora.util.ToastUtils
 import site.doramusic.app.auth.AuthInterceptor
 import site.doramusic.app.auth.AuthService
-import site.doramusic.app.auth.DoraUser
 import site.doramusic.app.auth.DoraUserInfo
 import site.doramusic.app.auth.TokenStore
 import site.doramusic.app.chat.ChatService

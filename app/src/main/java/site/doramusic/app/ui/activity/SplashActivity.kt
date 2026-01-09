@@ -72,6 +72,7 @@ class SplashActivity : BaseSkinBindingActivity<ActivitySplashBinding>() {
             override fun run() {
                 if (MusicApp.isAppInitialized) {
                     launchMain()
+                    finish()
                 } else {
                     // 还没初始化完成，50ms 后再次检查
                     handler.postDelayed(this, 50)
