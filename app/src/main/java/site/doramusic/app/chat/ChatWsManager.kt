@@ -11,7 +11,6 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import site.doramusic.app.auth.TokenStore
-import site.doramusic.app.chat.ChannelMsgEvent
 import java.util.concurrent.TimeUnit
 
 /**
@@ -40,7 +39,7 @@ object ChatWsManager {
         val client = OkHttpClient.Builder()
             .pingInterval(30, TimeUnit.SECONDS)
             .build()
-
+        // 认证ws的正确方式，不要使用头包发token
         val request = Request.Builder()
             .url(url)
             .addHeader("Authorization", "Bearer ${TokenStore.accessToken()}")

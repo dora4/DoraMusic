@@ -73,7 +73,7 @@ object SecureRequestBuilder {
             }
             // 端到端加密 + 客户端签名
             SecureMode.ENC_SIGN -> {
-                // 这个项目不提供可信客户端能力
+                // 使用这种方式，需要将计算出的签名赋值给sign字段。
                 null
             }
         }
