@@ -11,18 +11,18 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import dora.BaseActivity
 import dora.firebase.SpmUtils.spmLogin
+import dora.http.DoraHttp.flowRequest
 import dora.http.DoraHttp.net
-import dora.http.DoraHttp.result
+import dora.http.retrofit.RetrofitManager
 import dora.pay.DoraFund
 import dora.util.RxBus
 import dora.util.StatusBarUtils
-import dora.util.TextUtils
 import dora.util.ViewUtils
 import dora.widget.DoraLoadingDialog
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivitySignInBinding
-import site.doramusic.app.auth.SignInEvent
+import site.doramusic.app.http.ApiCode
 import site.doramusic.app.http.SecureRequestBuilder
 
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {
@@ -84,26 +84,31 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
                 val req = ReqSignIn(erc20, authWord, AppConfig.PRODUCT_NAME)
                 val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
                     ?: return@net
-                val user = result(AuthService::class) {
-                    signIn(body.toRequestBody())
-                }?.data
-                if (user == null) {
+                flowRequest(requestBlock = {
+                    RetrofitManager.getService(AuthService::class.java)
+                        .signIn(body.toRequestBody())
+                }, successBlock = {
+                    if (it.code == ApiCode.SUCCESS) {
+                        spmLogin("Dora Chat官方帐号")
+                        val user = it.data
+                        if (user != null) {
+                            UserManager.ins?.setCurrentUser(DoraUser(user.erc20, user.latestSignIn))
+                            TokenStore.save(user.accessToken, user.refreshToken)
+                            RxBus.getInstance().post(SignInEvent(user.erc20))
+                            showLongToast("登录成功")
+                            finish()
+                        } else {
+                            showLongToast("登录失败")
+                            dialog.dismissWithAnimation()
+                        }
+                    } else {
+                        showLongToast(it.msg)
+                        dialog.dismissWithAnimation()
+                    }
+                }, failureBlock = {
                     showLongToast("登录失败")
                     dialog.dismissWithAnimation()
-                    return@net
-                }
-                val token = user.accessToken
-                if (TextUtils.isEmpty(token)) {
-                    showLongToast("登录失败")
-                    dialog.dismissWithAnimation()
-                    return@net
-                }
-                spmLogin("Dora Chat官方帐号")
-                UserManager.ins?.setCurrentUser(DoraUser(user.erc20, user.latestSignIn))
-                TokenStore.save(user.accessToken, user.refreshToken)
-                RxBus.getInstance().post(SignInEvent(user.erc20))
-                showLongToast("登录成功")
-                finish()
+                })
             }
         }
     }

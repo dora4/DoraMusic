@@ -19,7 +19,7 @@ interface AuthService : ApiService {
      * @see site.doramusic.app.auth.ReqSignIn
      */
     @POST("auth/signIn")
-    fun signIn(@Body body: RequestBody): Call<ApiResult<DoraUser>>
+    fun signIn(@Body body: RequestBody): Flow<ApiResult<DoraUser>>
 
     /**
      * 注销登录。
