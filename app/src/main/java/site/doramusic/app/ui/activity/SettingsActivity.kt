@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.walletconnect.web3.modal.client.Modal
 import dora.arouter.open
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.skin.SkinManager
-import dora.pay.DoraFund
-import dora.pay.DoraFund.ERC20_ADDRESS
 import dora.util.DeepLinkUtils
 import dora.util.StatusBarUtils
 import dora.widget.DoraBottomMenuDialog
@@ -26,8 +23,6 @@ import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.COLUMN_PENDING
 import site.doramusic.app.conf.AppConfig.Companion.DISCORD_GROUP_INVITE_CODE
-import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
-import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.databinding.ActivitySettingsBinding
 import site.doramusic.app.media.MediaManager
