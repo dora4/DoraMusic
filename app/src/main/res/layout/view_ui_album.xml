@@ -17,7 +17,6 @@
         android:id="@+id/titlebar_album"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/skin_theme_color"
         app:dview_isClickBackIconClose="false"
         app:dview_backIconSize="30dp"
         app:dview_backIcon="@drawable/ic_back"

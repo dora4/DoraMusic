@@ -28,9 +28,9 @@ class PlaylistItemAdapter : BaseSortItemAdapter<Music>(R.layout.item_playlist) {
         holder.getView<TextView>(R.id.tv_playlist_music_artist).text = item.artist
         val prefsManager = PrefsManager(context)
         if (prefsManager.getSkinType() == 0) {
-            tvNumber.setBackgroundColor(prefsManager.getSkinColor())
+            tvNumber.setTextColor(prefsManager.getSkinColor())
         } else {
-            tvNumber.setBackgroundColor(SkinManager.getLoader().getColor(COLOR_THEME))
+            tvNumber.setTextColor(SkinManager.getLoader().getColor(COLOR_THEME))
         }
     }
 }

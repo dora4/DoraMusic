@@ -142,7 +142,7 @@ class PrefsManager(val context: Context) {
         const val PREFS_CLOSE_BANNER = "prefs_close_banner"
 
         /**
-         * 皮肤类型为0时的自定义颜色（暂时没有用上）。
+         * 皮肤类型为0时的自定义颜色。
          */
         const val PREFS_SKIN_COLOR = "prefs_skin_color"
 
