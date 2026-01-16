@@ -31,7 +31,23 @@ interface ChatService : ApiService {
      * @see ReqSendChannelMsg
      */
     @POST("chat/channel/send")
-    fun sendMsg(@Body body: RequestBody): Observable<ApiResult<Boolean>>
+    fun sendMsg(@Body body: RequestBody): Observable<ApiResult<Long>>
+
+    /**
+     * 撤回自己发送的消息。
+     *
+     * @see ReqRecallChannelMsg
+     */
+    @POST("chat/channel/recall")
+    fun recallMsg(@Body body: RequestBody): Observable<ApiResult<Boolean>>
+
+    /**
+     * 删除消息（仅自己不可见），可删除自己发送的消息，也可删除别人的骚扰信息。
+     *
+     * @see ReqDeleteChannelMsg
+     */
+    @POST("chat/channel/msg/delete")
+    fun deleteMsg(@Body body: RequestBody): Observable<ApiResult<Boolean>>
 
     /**
      * 拉取频道消息列表。

@@ -20,7 +20,6 @@ import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_ERC20
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityChatRoomBinding
-import site.doramusic.app.chat.ChannelMsgEvent
 import site.doramusic.app.http.SecureRequestBuilder
 
 @Route(path = ARoutePath.ACTIVITY_CHAT_ROOM)
@@ -108,16 +107,16 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
             val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
                 ?: return@setOnClickListener
             net {
-                val ok = rxResult(ChatService::class) { sendMsg(body.toRequestBody()) }?.data
-                if (ok == true) {
+                val msgId = rxResult(ChatService::class) { sendMsg(body.toRequestBody()) }?.data
+                if (msgId != null) {
                     val localMsg = DoraChannelMsg(
                         msgId = System.currentTimeMillis(), // 临时 ID
                         roomId = PRODUCT_NAME,
                         senderId = erc20,
                         senderName = erc20,
-                        senderRole = 0,
                         msgType = 0,
                         msgContent = content,
+                        recall = 0,
                         ts = System.currentTimeMillis()
                     )
                     adapter.addData(localMsg)

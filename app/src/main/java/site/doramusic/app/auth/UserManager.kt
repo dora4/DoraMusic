@@ -1,10 +1,12 @@
 package site.doramusic.app.auth
 
 class UserManager {
-    
+
     var currentUser: DoraUser? = null
         private set
     var userInfo: DoraUserInfo? = null
+        private set
+    var userAvatar: String? = null
         private set
 
     private val userMap: MutableMap<String, DoraUser> = HashMap()
@@ -33,8 +35,12 @@ class UserManager {
         }
     }
 
-    fun setUserInfo(userInfo: DoraUserInfo) {
+    fun setUserInfo(userInfo: DoraUserInfo?) {
         this.userInfo = userInfo
+    }
+
+    fun setUserAvatar(userAvatar: String?) {
+        this.userAvatar = userAvatar
     }
 
     companion object {
