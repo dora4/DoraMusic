@@ -90,6 +90,7 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
                     roomId = msg.roomId,
                     senderId = msg.senderId,
                     senderName = msg.senderName,
+                    senderAvatar = msg.senderAvatar,
                     senderRole = msg.senderRole,
                     msgType = msg.msgType,
                     msgContent = msg.msgContent,
@@ -114,6 +115,8 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
                         roomId = PRODUCT_NAME,
                         senderId = erc20,
                         senderName = erc20,
+                        senderAvatar = "", // 通过DoraUserInfo拿，先不考虑
+                        senderRole = 0,
                         msgType = 0,
                         msgContent = content,
                         recall = 0,
