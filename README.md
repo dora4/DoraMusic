@@ -76,25 +76,22 @@ https://github.com/dora4/DoraMusic/blob/main/Recommend_DJ.md
 ### 软件截图
 
 1. 快捷播放列表（便于单手操作）
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_1.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_012819_Dora Music.jpg"></p>
 
 2. 主界面
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_2.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_012746_Dora Music.jpg"></p>
 
-3. 侧边栏
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_3.jpg"></p>
+3. 字母导航
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_013332_Dora Music.jpg"></p>
 
-4. 通知
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_4.jpg"></p>
+4. 设置
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_013426_Dora Music.jpg"></p>
 
-5. 均衡器
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_5.jpg"></p>
+5. 更换主题色
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_012805_Dora Music.jpg"></p>
 
 6. 播放控制
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_6.jpg"></p>
-
-7. 歌词
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_7.jpg"></p>
+<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_013230_Dora Music.jpg"></p>
 
 本开源项目仅限学习交流用途的分享传播，未经授权禁止用于其他用途。版权所有，侵权必究！
 
