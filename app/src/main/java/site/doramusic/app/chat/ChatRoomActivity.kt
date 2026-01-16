@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.rxResult
-import dora.skin.SkinManager
-import dora.skin.base.BaseSkinBindingActivity
 import dora.util.IntentUtils
 import dora.util.RxBus
 import dora.util.StatusBarUtils
@@ -16,14 +14,15 @@ import dora.util.ViewUtils
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_ERC20
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityChatRoomBinding
 import site.doramusic.app.http.SecureRequestBuilder
+import site.doramusic.app.ui.activity.BaseSkinActivity
+import site.doramusic.app.util.ThemeSelector
 
 @Route(path = ARoutePath.ACTIVITY_CHAT_ROOM)
-class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
+class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
 
     private lateinit var erc20: String
 
@@ -32,7 +31,7 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
     }
 
     override fun onSetStatusBar() {
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(this)
         StatusBarUtils.setStatusBarColor(this, skinThemeColor)
     }
 
@@ -62,6 +61,7 @@ class ChatRoomActivity : BaseSkinBindingActivity<ActivityChatRoomBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityChatRoomBinding) {
+        ThemeSelector.applyViewTheme(binding.titlebar)
         val adapter = ChannelMsgAdapter(erc20)
         binding.recyclerView.layoutManager = LinearLayoutManager(this).apply {
             stackFromEnd = true   // 像聊天一样从底部开始

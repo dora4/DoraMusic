@@ -12,22 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
-import dora.skin.SkinManager
 import dora.widget.DoraLetterView
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Folder
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.FolderItemAdapter
+import site.doramusic.app.util.ThemeSelector
 import java.util.*
 
 class UIViewFolder(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private lateinit var statusBarFolder: View
-    private lateinit var titlebar: DoraTitleBar
+    private lateinit var titleBar: DoraTitleBar
     private lateinit var adapter: FolderItemAdapter
     private lateinit var rvFolder: RecyclerView
 
@@ -46,11 +45,12 @@ class UIViewFolder(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
         statusBarFolder = view.findViewById(R.id.statusbar_folder)
         statusBarFolder.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarFolder, COLOR_THEME)
+        ThemeSelector.applyViewTheme(statusBarFolder)
         lvFolder = view.findViewById(R.id.lv_folder)
         tvFolderDialog = view.findViewById(R.id.tv_folder_dialog)
-        titlebar = view.findViewById(R.id.titlebar_folder)
-        titlebar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+        titleBar = view.findViewById(R.id.titlebar_folder)
+        ThemeSelector.applyViewTheme(titleBar)
+        titleBar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
             override fun onIconBackClick(icon: AppCompatImageView) {
                 manager.setCurrentItem()
@@ -71,7 +71,7 @@ class UIViewFolder(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
         rvFolder.addItemDecoration(DividerItemDecoration(manager.view.context, RecyclerView.VERTICAL))
         rvFolder.adapter = adapter
 
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(view.context)
         lvFolder.hoverTextColor = skinThemeColor
         lvFolder.setOnLetterChangeListener(object : DoraLetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {

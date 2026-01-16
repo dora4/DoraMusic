@@ -11,6 +11,7 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.util.PrefsManager
+import site.doramusic.app.util.ThemeSelector
 import java.util.*
 
 class LyricAdapter(private var context: Context) : BaseAdapter() {
@@ -101,7 +102,7 @@ class LyricAdapter(private var context: Context) : BaseAdapter() {
                 val skinColor = prefsManager.getSkinColor()
                 holder.lyricLine!!.setTextColor(context.resources.getColor(skinColor))
             } else {
-                val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+                val skinThemeColor = ThemeSelector.getThemeColor(context)
                 holder.lyricLine!!.setTextColor(context.resources.getColor(skinThemeColor))
             }
             holder.lyricLine!!.textSize = currentSize

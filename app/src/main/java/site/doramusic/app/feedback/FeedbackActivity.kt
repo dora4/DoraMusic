@@ -13,8 +13,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import dora.firebase.SpmUtils
 import dora.http.DoraHttp.api
 import dora.http.DoraHttp.net
-import dora.skin.SkinManager
-import dora.skin.base.BaseSkinBindingActivity
 import dora.util.DensityUtils
 import dora.util.LogUtils
 import dora.util.NetUtils
@@ -26,12 +24,13 @@ import dora.widget.DoraTitleBar
 import dora.widget.panel.MenuPanelItemRoot
 import dora.widget.panel.menu.InputMenuPanelItem
 import site.doramusic.app.R
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityFeedbackBinding
 import site.doramusic.app.http.SecureRequestBuilder
+import site.doramusic.app.ui.activity.BaseSkinActivity
+import site.doramusic.app.util.ThemeSelector
 
-class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
+class FeedbackActivity : BaseSkinActivity<ActivityFeedbackBinding>() {
 
     private var feedbackType = 0
 
@@ -40,14 +39,13 @@ class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
     }
 
     override fun onSetStatusBar() {
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(this)
         StatusBarUtils.setStatusBarColor(this, skinThemeColor)
     }
 
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityFeedbackBinding) {
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-        binding.titlebar.setBackgroundColor(skinThemeColor)
+        ThemeSelector.applyViewTheme(binding.titlebar)
         binding.titlebar.addMenuButton(R.drawable.ic_save)
             .setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
@@ -122,7 +120,7 @@ class FeedbackActivity : BaseSkinBindingActivity<ActivityFeedbackBinding>() {
                         val spanned = SpannableStringBuilder(text).apply {
                             setSpan(
                                 ForegroundColorSpan(
-                                    skinThemeColor
+                                    ThemeSelector.getThemeColor(this@FeedbackActivity)
                                 ),
                                 0,
                                 usedStr.length,

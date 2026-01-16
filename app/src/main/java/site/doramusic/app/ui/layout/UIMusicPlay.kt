@@ -39,6 +39,7 @@ import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.db.table.OrmTable
+import dora.skin.SkinManager
 import dora.util.DensityUtils
 import dora.util.RxBus
 import dora.util.ScreenUtils
@@ -48,6 +49,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
+import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.lrc.LyricLine
@@ -60,6 +62,7 @@ import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.LyricAdapter
 import site.doramusic.app.util.MusicTimer
+import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.SlidingView
 
 /**
@@ -85,6 +88,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private lateinit var sbMusicPlayVolume: SeekBar
     private lateinit var tvSlidingMusicName: TextView
     private lateinit var tvSlidingArtist: TextView
+    private lateinit var llBottomLayout: LinearLayout
     private lateinit var tvMusicPlayTotalTime: TextView
     private lateinit var tvMusicPlayCurTime: TextView
     private lateinit var btnMusicPlayPrev: ImageButton
@@ -179,6 +183,15 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             })
     }
 
+    fun updateBottomBarColor() {
+        val prefsManager = PrefsManager(contentView.context)
+        if (prefsManager.getSkinType() == 0) {
+            llBottomLayout.setBackgroundColor(prefsManager.getSkinColor())
+        } else {
+            llBottomLayout.setBackgroundColor(SkinManager.getLoader().getColor(COLOR_THEME))
+        }
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun initViews() {
         rvHomeModule = findViewById(R.id.rv_home_module) as RecyclerView
@@ -186,6 +199,8 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         statusBarLyric = findViewById(R.id.statusbar_lyric)
         tvSlidingMusicName = findViewById(R.id.tv_sliding_music_name) as TextView
         tvSlidingArtist = findViewById(R.id.tv_sliding_artist) as TextView
+        llBottomLayout = findViewById(R.id.ll_player_bottom_layout) as LinearLayout
+        updateBottomBarColor()
         btnMusicPlayPrev = findViewById(R.id.btn_music_play_prev) as ImageButton
         btnMusicPlayNext = findViewById(R.id.btn_music_play_next) as ImageButton
         btnMusicPlayPlay = findViewById(R.id.btn_music_play_play) as ImageButton

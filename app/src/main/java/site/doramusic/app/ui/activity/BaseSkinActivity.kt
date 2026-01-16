@@ -20,7 +20,6 @@ import dora.util.ReflectionUtils
 import java.lang.reflect.Constructor
 import java.lang.reflect.Method
 
-@Deprecated("已过时，直接使用skins框架的BaseSkinBindingActivity")
 abstract class BaseSkinActivity<T : ViewDataBinding> : BaseActivity<T>(),
     ISkinChangeListener, LayoutInflaterFactory {
 

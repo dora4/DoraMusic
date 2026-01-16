@@ -14,12 +14,12 @@ class ColorAdapter : BaseQuickAdapter<ColorPickerActivity
     /**
      * 外部要用，不能private。
      */
-    var selectedPosition = -1 // 选中的位置
+    var selectedPosition = 0 // 选中的位置
 
     override fun convert(holder: BaseViewHolder, item: ColorPickerActivity.ColorData) {
         val ivChoiceColorSkinBg = holder.getView(R.id.iv_color_picker_skin_bg) as ImageView
         val ivChoiceColorSkinSelect = holder.getView(R.id.iv_color_picker_skin_select) as ImageView
-        ivChoiceColorSkinBg.setImageResource(item.backgroundResId)
+        ivChoiceColorSkinBg.setImageDrawable(item.backgroundDrawable)
         if (getItemPosition(item) == selectedPosition) {
             ivChoiceColorSkinSelect.visibility = View.VISIBLE
         } else {

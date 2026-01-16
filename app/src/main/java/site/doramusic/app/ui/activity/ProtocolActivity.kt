@@ -7,20 +7,18 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
-import dora.skin.SkinManager
-import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.databinding.ActivityProtocolBinding
+import site.doramusic.app.util.ThemeSelector
 
 /**
  * 用户协议和隐私政策。
  */
 @Route(path = ARoutePath.ACTIVITY_PROTOCOL)
-class ProtocolActivity : BaseSkinBindingActivity<ActivityProtocolBinding>() {
+class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
 
     private var webView: WebView? = null
     private var title: String? = null
@@ -42,7 +40,8 @@ class ProtocolActivity : BaseSkinBindingActivity<ActivityProtocolBinding>() {
     override fun initData(savedInstanceState: Bundle?, binding: ActivityProtocolBinding) {
         binding.statusbarPrivacyPolicy.layoutParams = LinearLayout
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(binding.statusbarPrivacyPolicy, COLOR_THEME)
+        ThemeSelector.applyViewTheme(binding.statusbarPrivacyPolicy)
+        ThemeSelector.applyViewTheme(binding.titlebarPrivacyPolicy)
         webView = WebView(applicationContext)
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,

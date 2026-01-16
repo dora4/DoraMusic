@@ -21,13 +21,11 @@ import dora.db.dao.DaoFactory
 import dora.db.exception.OrmTaskException
 import dora.db.table.OrmTable
 import dora.firebase.SpmUtils
-import dora.skin.SkinManager
 import dora.widget.DoraLetterView
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.conf.AppConfig.Companion.ROUTE_START_FROM_ALBUM
 import site.doramusic.app.conf.AppConfig.Companion.ROUTE_START_FROM_ARTIST
@@ -43,6 +41,7 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.MusicItemAdapter
+import site.doramusic.app.util.ThemeSelector
 
 class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
     AppConfig {
@@ -107,12 +106,13 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         val activity = view.context as Activity
         statusBarMusic = view.findViewById<View>(R.id.statusbar_music).apply {
             layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight())
-            SkinManager.getLoader().setBackgroundColor(this, COLOR_THEME)
+            ThemeSelector.applyViewTheme(this)
         }
 
         lvMusic = view.findViewById(R.id.lv_music)
         tvMusicDialog = view.findViewById(R.id.tv_music_dialog)
         titleBar = view.findViewById(R.id.titlebar_music)
+        ThemeSelector.applyViewTheme(titleBar)
         rvMusic = view.findViewById(R.id.rv_music)
 
         setupTitleBar()
@@ -143,7 +143,7 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupLetterView() {
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(manager.view.context)
         lvMusic.hoverTextColor = skinThemeColor
         lvMusic.setOnLetterChangeListener(object : DoraLetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {

@@ -48,19 +48,19 @@
                 android:scrollbars="none" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_color_picker_preview"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_color_picker_bottom"
             android:layout_below="@+id/titlebar_color_picker"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:src="@drawable/select_skin_preview_bg" />
+            android:background="@color/black"
+            android:padding="30dp"
+            android:layout_weight="1">
+            <dora.widget.ColorRingPickerView
+                android:id="@+id/color_ring_view"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"/>
+        </FrameLayout>
     </RelativeLayout>
 </layout>

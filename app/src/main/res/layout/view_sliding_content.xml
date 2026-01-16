@@ -65,16 +65,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="00:00"
-                    android:textColor="@color/colorTextSecondary"
+                android:textColor="@color/colorTextSecondary"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_player_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
             android:layout_marginTop="5dp"
-            android:background="@color/skin_theme_color"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -84,7 +84,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_playmode_list_loop"
-                    app:tint="@color/white"
+                app:tint="@color/white"
                 android:background="@drawable/selector_music_btn" />
 
             <ImageButton
@@ -93,7 +93,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/selector_music_btn"
-                    app:tint="@color/white"
+                app:tint="@color/white"
                 android:src="@drawable/ic_player_prev" />
 
             <FrameLayout
@@ -106,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/selector_music_btn"
-                        app:tint="@color/white"
+                    app:tint="@color/white"
                     android:src="@drawable/ic_player_pause"
                     android:visibility="gone" />
 
@@ -115,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/selector_music_btn"
-                        app:tint="@color/white"
+                    app:tint="@color/white"
                     android:src="@drawable/ic_player_play" />
             </FrameLayout>
 
@@ -125,7 +125,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/selector_music_btn"
-                    app:tint="@color/white"
+                app:tint="@color/white"
                 android:src="@drawable/ic_player_next" />
 
             <ImageButton
@@ -134,7 +134,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/selector_music_btn"
-                    app:tint="@color/white"
+                app:tint="@color/white"
                 android:src="@drawable/ic_favorite_unchecked" />
         </LinearLayout>
     </LinearLayout>
@@ -161,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-                app:tint="@color/gray"
+            app:tint="@color/gray"
             android:src="@drawable/ic_volume_mute" />
 
         <SeekBar
@@ -182,7 +182,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-                app:tint="@color/gray"
+            app:tint="@color/gray"
             android:src="@drawable/ic_volume_sound" />
     </LinearLayout>
 

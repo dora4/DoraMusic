@@ -6,7 +6,6 @@ import dora.db.OrmConfig
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.http.retrofit.RetrofitManager
-import dora.skin.SkinManager
 import dora.pay.DoraFund
 import dora.pay.EVMChains
 import dora.util.LogUtils
@@ -19,7 +18,6 @@ import site.doramusic.app.auth.TokenStore
 import site.doramusic.app.chat.ChatService
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.COLUMN_ORDER_ID
 import site.doramusic.app.conf.AppConfig.Companion.CONNECT_TIMEOUT
 import site.doramusic.app.conf.AppConfig.Companion.DB_NAME
@@ -37,6 +35,7 @@ import site.doramusic.app.model.Donation
 import site.doramusic.app.model.DownloadTask
 import site.doramusic.app.sysmsg.SysMsgService
 import site.doramusic.app.upgrade.ApkService
+import site.doramusic.app.util.ThemeSelector
 import java.util.concurrent.TimeUnit
 
 /**
@@ -76,7 +75,7 @@ class MusicApp : BaseApplication(), AppConfig {
     }
 
     private fun initPay() {
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(applicationContext)
         DoraFund.init(this, APP_NAME,
             getString(R.string.app_desc), URL_DOMAIN,
             arrayOf(EVMChains.POLYGON), skinThemeColor,

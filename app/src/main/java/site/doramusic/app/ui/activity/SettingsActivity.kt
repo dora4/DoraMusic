@@ -11,7 +11,6 @@ import dora.arouter.open
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils.spmSelectContent
-import dora.skin.SkinManager
 import dora.util.DeepLinkUtils
 import dora.util.StatusBarUtils
 import dora.widget.DoraBottomMenuDialog
@@ -20,7 +19,6 @@ import dora.widget.DoraToggleButton
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.COLUMN_PENDING
 import site.doramusic.app.conf.AppConfig.Companion.DISCORD_GROUP_INVITE_CODE
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
@@ -31,18 +29,18 @@ import site.doramusic.app.util.PrefsManager
 import androidx.core.net.toUri
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
-import dora.skin.base.BaseSkinBindingActivity
 import dora.util.ApkUtils
 import site.doramusic.app.auth.UserManager
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.feedback.FeedbackActivity
 import site.doramusic.app.upgrade.ApkService
+import site.doramusic.app.util.ThemeSelector
 
 /**
  * 设置界面。
  */
 @Route(path = ARoutePath.ACTIVITY_SETTINGS)
-class SettingsActivity : BaseSkinBindingActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
+class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig, View.OnClickListener {
 
     private lateinit var prefsManager: PrefsManager
     private var updateDialog: DoraLoadingDialog? = null
@@ -60,11 +58,12 @@ class SettingsActivity : BaseSkinBindingActivity<ActivitySettingsBinding>(), App
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
         )
-        SkinManager.getLoader().setBackgroundColor(binding.statusbarSettings, COLOR_THEME)
+        ThemeSelector.applyViewTheme(binding.statusbarSettings)
+        ThemeSelector.applyViewTheme(binding.titlebarSettings)
         binding.v = this
         updateDialog = DoraLoadingDialog(this)
         prefsManager = PrefsManager(this)
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(this)
         binding.tbSettingsAutoPlay.checkedColor = skinThemeColor
         binding.tbSettingsAutoConnectVpn.checkedColor = skinThemeColor
         binding.tbSettingsShake.checkedColor = skinThemeColor

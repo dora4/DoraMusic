@@ -6,11 +6,11 @@ import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -24,7 +24,6 @@ import dora.http.DoraHttp.rxApi
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
-import dora.skin.base.BaseSkinBindingActivity
 import dora.util.IntentUtils
 import dora.util.NetUtils
 import dora.util.PermissionHelper
@@ -46,7 +45,6 @@ import site.doramusic.app.chat.ReqJoinChannel
 import site.doramusic.app.ui.OnBackListener
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
 import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_ERC20
@@ -54,6 +52,7 @@ import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.auth.SignInEvent
+import site.doramusic.app.event.ChangeSkinEvent
 import site.doramusic.app.http.SecureRequestBuilder
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
@@ -63,19 +62,21 @@ import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.ui.layout.IMenuDrawer
 import site.doramusic.app.util.IPFSUtils
 import site.doramusic.app.util.PrefsManager
+import site.doramusic.app.util.ThemeSelector
 import java.io.File
 
 /**
  * 主界面。
  */
 @Route(path = ARoutePath.ACTIVITY_MAIN)
-class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer, IBackNavigator, AppConfig {
+class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBackNavigator, AppConfig {
 
     /**
      * 记录上次点击的时间，用于连续点击返回键的处理。
      */
     private var lastTime: Long = 0
     private lateinit var homeFragment: HomeFragment
+    private lateinit var drawerHeader: RelativeLayout
     private val backListeners: MutableList<OnBackListener> = ArrayList()
     private lateinit var prefsManager: PrefsManager
     private var erc20AddrView: TextView? = null
@@ -156,7 +157,6 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
                 helper.permissions(PermissionHelper.Permission.POST_NOTIFICATIONS).request()
             }
         }
-        prefsManager = PrefsManager(this)
         if (prefsManager.isColdLaunchAutoConnectVPN() && NetUtils.checkNetworkAvailable(this)) {
             if (!PermissionHelper.hasStoragePermission(this)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -210,6 +210,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
         val manager = PrefsManager(this)
         when (manager.getSkinType()) {
             0 -> {
+                SkinManager.changeSkin("custom")
             }
             1 -> {
                 SkinManager.changeSkin("cyan")
@@ -272,6 +273,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
             }
         })
         val headerView = mBinding.nvMain.getHeaderView(0)
+        drawerHeader = headerView.findViewById<RelativeLayout>(R.id.rl_drawer_header)
         val avatarView = headerView.findViewById<AppCompatImageView>(R.id.iv_drawer_header_avatar)
         erc20AddrView = headerView.findViewById<TextView>(R.id.tv_drawer_header_nickname)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
@@ -297,8 +299,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
 //                DoraFund.connectWallet(this, REQUEST_WALLET_AUTHORIZATION)
 //            } else {
 //                spmSelectContent("取消钱包授权")
-//                val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-//                DoraAlertDialog.create(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
+//                val skinThemeColor = ThemeSelector.getThemeColor()//                DoraAlertDialog.create(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
 //                    themeColor(skinThemeColor)
 //                    positiveListener {
 //                        DoraFund.disconnectWallet()
@@ -416,8 +417,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
 //                .addWhereEqualTo(Music.COLUMN_FAVORITE, 1))
 //        val favoriteCount = DaoFactory.getDao(Music::class.java).count(builder)
 //        if (favoriteCount > 0) { // 有收藏的歌曲
-//            val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-//            DoraAlertDialog.create(this).show(getString(R.string.scan_prompt)) {
+//            val skinThemeColor = ThemeSelector.getThemeColor()//            DoraAlertDialog.create(this).show(getString(R.string.scan_prompt)) {
 //                themeColor(skinThemeColor)
 //                positiveListener { scanMusic() }
 //            }
@@ -461,7 +461,7 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
                         EVENT_TYPE_SCAN_PROMPT, "受Android13以上系统限制，读取音频文件权限仅能访问" +
                                 "Music、Download等特定目录的音频文件。如需访问所有目录的音频文件，请在【设置】->【应用程序】->【权限】中手动开启全部文件读取权限。"
                     ) {
-                        themeColor(SkinManager.getLoader().getColor(COLOR_THEME))
+                        themeColor(ThemeSelector.getThemeColor(this@MainActivity))
                     }
             } else {
                 helper.permissions(
@@ -505,8 +505,9 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityMainBinding) {
+        prefsManager = PrefsManager(this)
         StatusBarUtils.setStatusBarWithDrawerLayout(this, binding.dlMain,
-            ContextCompat.getColor(this, R.color.colorPrimary), StatusBarUtils.ALPHA_FULL)
+            ThemeSelector.getThemeColor(this), StatusBarUtils.ALPHA_FULL)
         homeFragment = HomeFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fl_main, homeFragment).commit()
         // 初始化侧边栏菜单
@@ -521,6 +522,13 @@ class MainActivity : BaseSkinBindingActivity<ActivityMainBinding>(), IMenuDrawer
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     erc20AddrView?.text = it.erc20
+                }
+        )
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(ChangeSkinEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
                 }
         )
         // 返回键处理

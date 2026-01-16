@@ -8,7 +8,6 @@ import dora.arouter.openWithFinish
 import dora.http.DoraHttp.flowRequest
 import dora.http.DoraHttp.net
 import dora.http.retrofit.RetrofitManager
-import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 import dora.util.TextUtils
 import site.doramusic.app.MusicApp
@@ -28,7 +27,7 @@ import site.doramusic.app.util.MusicUtils
  * 启动页。
  */
 @Route(path = ARoutePath.ACTIVITY_SPLASH)
-class SplashActivity : BaseSkinBindingActivity<ActivitySplashBinding>() {
+class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
     override fun onSetStatusBar() {
         StatusBarUtils.setTransparencyStatusBar(this)

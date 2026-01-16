@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:foreground="?selectableItemBackgroundBorderless"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingVertical="10dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_home_module_icon"

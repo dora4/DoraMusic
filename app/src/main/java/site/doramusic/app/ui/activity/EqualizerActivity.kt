@@ -8,22 +8,20 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
-import dora.skin.SkinManager
-import dora.skin.base.BaseSkinBindingActivity
 import dora.util.StatusBarUtils
 import dora.widget.DoraEqualizerView
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.databinding.ActivityEqualizerBinding
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.util.PrefsManager
+import site.doramusic.app.util.ThemeSelector
 
 /**
  * 均衡器界面。
  */
 @Route(path = ARoutePath.ACTIVITY_EQUALIZER)
-class EqualizerActivity : BaseSkinBindingActivity<ActivityEqualizerBinding>(),
+class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         DoraEqualizerView.OnUpdateDecibelListener {
 
     private lateinit var prefsManager: PrefsManager
@@ -47,7 +45,7 @@ class EqualizerActivity : BaseSkinBindingActivity<ActivityEqualizerBinding>(),
         val freqs = IntArray(bands.toInt())
         for (i in 0 until bands) {
             val centerFreq = equalizer.getCenterFreq(i.toShort()) / 1000
-            freqs[i.toInt()] = centerFreq
+            freqs[i] = centerFreq
         }
         return freqs
     }
@@ -55,7 +53,8 @@ class EqualizerActivity : BaseSkinBindingActivity<ActivityEqualizerBinding>(),
     override fun initData(savedInstanceState: Bundle?, binding: ActivityEqualizerBinding) {
         binding.statusbarEqualizer.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(binding.statusbarEqualizer, COLOR_THEME)
+        ThemeSelector.applyViewTheme(binding.statusbarEqualizer)
+        ThemeSelector.applyViewTheme(binding.titlebarEqualizer)
         prefsManager = PrefsManager(this)
         val equalizerFreq = getEqualizerFreq()
         val size = equalizerFreq.size
@@ -92,7 +91,7 @@ class EqualizerActivity : BaseSkinBindingActivity<ActivityEqualizerBinding>(),
         binding.rbEqualizerShake.buttonDrawable = BitmapDrawable()
         binding.rbEqualizerCountry.buttonDrawable = BitmapDrawable()
 
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(this)
         binding.evEqualizer.setThemeColor(skinThemeColor)
         val colors = intArrayOf(skinThemeColor, Color.WHITE)
         val state = arrayOf(intArrayOf(android.R.attr.state_checked), IntArray(0))

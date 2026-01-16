@@ -1,6 +1,7 @@
 package site.doramusic.app.util
 
 import android.content.Context
+import androidx.annotation.ColorInt
 import dora.util.SPUtils
 
 class PrefsManager(val context: Context) {
@@ -92,6 +93,10 @@ class PrefsManager(val context: Context) {
 
     fun saveSkinType(skinType: Int) {
         SPUtils.writeInteger(context, PREFS_SKIN_TYPE, skinType)
+    }
+
+    fun saveSkinColor(@ColorInt color: Int) {
+        SPUtils.writeInteger(context, PREFS_SKIN_COLOR, color)
     }
 
     companion object {

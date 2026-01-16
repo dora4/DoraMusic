@@ -1,6 +1,7 @@
 package site.doramusic.app.ui.layout
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -40,6 +41,7 @@ import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.MarqueeTextView
 import java.util.Locale
 import androidx.core.graphics.drawable.toDrawable
+import site.doramusic.app.util.ThemeSelector
 
 /**
  * 底部控制条。
@@ -125,7 +127,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     fun updateProgressColor() {
-        playbackProgress.progressTintList = SkinManager.getLoader().getColorStateList(COLOR_THEME)
+        playbackProgress.progressTintList = ColorStateList.valueOf(ThemeSelector.getThemeColor(contentView.context))
     }
 
     private fun initViews() {
@@ -251,6 +253,8 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             val height = ScreenUtils.getContentHeight() * 2 / 5
             val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
             contentView.layoutParams = layoutParams
+            val llPlaylist: LinearLayout = contentView.findViewById(R.id.ll_playlist)
+            ThemeSelector.applyViewTheme(llPlaylist)
             val tvPlaylistPlayMode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
             val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
             val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)

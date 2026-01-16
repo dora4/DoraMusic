@@ -29,7 +29,6 @@ import dora.firebase.SpmUtils.spmAdImpression
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
-import dora.skin.SkinManager
 import dora.pay.DoraFund
 import dora.util.*
 import dora.widget.DoraFlipperView
@@ -39,7 +38,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.conf.AppConfig.Companion.MUSIC_MENU_GRID_COLUMN_NUM
@@ -72,6 +70,7 @@ import site.doramusic.app.ui.layout.UIMusicPlay
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.MusicUtils
 import site.doramusic.app.util.PrefsManager
+import site.doramusic.app.util.ThemeSelector
 import java.util.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
@@ -152,7 +151,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 tipDialog.show(
                     EVENT_TYPE_SHOW_SYS_MSG_CONTENT, sysMsg.content
                 ) {
-                    themeColor(SkinManager.getLoader().getColor(COLOR_THEME))
+                    themeColor(ThemeSelector.getThemeColor(requireContext()))
                 }
             }
 
@@ -291,7 +290,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 bottomBar.updateProgressColor()
-                val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+                musicPlay.updateBottomBarColor()
+                val skinThemeColor = ThemeSelector.getThemeColor(requireContext())
                 DoraFund.setThemeColor(skinThemeColor)
             })
         addDisposable(RxBus.getInstance()
@@ -377,19 +377,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 0f
             ).toLong()
         val homeItems = ArrayList<HomeItem>()
-        homeItems.add(HomeItem(R.drawable.ic_local_music_transparent, getString(R.string.my_music), musicCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_artist_transparent, getString(R.string.artist), artistCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_album_transparent, getString(R.string.album), albumCount))
-        homeItems.add(HomeItem(R.drawable.ic_local_folder_transparent, getString(R.string.folder), folderCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_music, getString(R.string.my_music), musicCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_artist, getString(R.string.artist), artistCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_album, getString(R.string.album), albumCount))
+        homeItems.add(HomeItem(R.drawable.ic_local_folder, getString(R.string.folder), folderCount))
         homeItems.add(
             HomeItem(
-                R.drawable.ic_local_favorite_transparent,
+                R.drawable.ic_local_favorite,
                 getString(R.string.my_favorite), favoriteCount
             )
         )
         homeItems.add(
             HomeItem(
-                R.drawable.ic_local_latest_transparent,
+                R.drawable.ic_local_latest,
                 getString(R.string.latest_play), latestCount
             )
         )

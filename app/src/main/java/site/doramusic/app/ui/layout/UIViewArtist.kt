@@ -12,22 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
-import dora.skin.SkinManager
 import dora.widget.DoraLetterView
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Artist
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.ArtistItemAdapter
+import site.doramusic.app.util.ThemeSelector
 import java.util.*
 
 class UIViewArtist(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private lateinit var rvArtist: RecyclerView
-    private lateinit var titlebar: DoraTitleBar
+    private lateinit var titleBar: DoraTitleBar
     private lateinit var adapter: ArtistItemAdapter
     private lateinit var statusBarArtist: View
     private lateinit var lvArtist: DoraLetterView
@@ -45,14 +44,15 @@ class UIViewArtist(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
         statusBarArtist = view.findViewById(R.id.statusbar_artist)
         statusBarArtist.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarArtist, COLOR_THEME)
+        ThemeSelector.applyViewTheme(statusBarArtist)
         rvArtist = view.findViewById(R.id.rv_artist)
         lvArtist = view.findViewById(R.id.lv_artist)
         tvArtistDialog = view.findViewById(R.id.tv_artist_dialog)
         rvArtist.layoutManager = LinearLayoutManager(view.context)
         rvArtist.addItemDecoration(DividerItemDecoration(view.context, LinearLayoutManager.VERTICAL))
-        titlebar = view.findViewById(R.id.titlebar_artist)
-        titlebar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+        titleBar = view.findViewById(R.id.titlebar_artist)
+        ThemeSelector.applyViewTheme(titleBar)
+        titleBar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
             override fun onIconBackClick(icon: AppCompatImageView) {
                 manager.setCurrentItem()
@@ -70,7 +70,7 @@ class UIViewArtist(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(d
         }
         rvArtist.adapter = adapter
 
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(view.context)
         lvArtist.hoverTextColor = skinThemeColor
         lvArtist.setOnLetterChangeListener(object : DoraLetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {

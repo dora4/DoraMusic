@@ -12,22 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
-import dora.skin.SkinManager
 import dora.widget.DoraLetterView
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Album
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.AlbumItemAdapter
+import site.doramusic.app.util.ThemeSelector
 import java.util.*
 
 class UIViewAlbum(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager) {
 
     private lateinit var statusBarAlbum: View
-    private lateinit var titlebar: DoraTitleBar
+    private lateinit var titleBar: DoraTitleBar
     private lateinit var rvAlbum: RecyclerView
     private lateinit var adapter: AlbumItemAdapter
     private lateinit var lvAlbum: DoraLetterView
@@ -45,9 +44,10 @@ class UIViewAlbum(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         statusBarAlbum = view.findViewById(R.id.statusbar_album)
         statusBarAlbum.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getStatusBarHeight())
-        SkinManager.getLoader().setBackgroundColor(statusBarAlbum, COLOR_THEME)
-        titlebar = view.findViewById(R.id.titlebar_album)
-        titlebar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+        ThemeSelector.applyViewTheme(statusBarAlbum)
+        titleBar = view.findViewById(R.id.titlebar_album)
+        ThemeSelector.applyViewTheme(titleBar)
+        titleBar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
             override fun onIconBackClick(icon: AppCompatImageView) {
                 manager.setCurrentItem()
@@ -69,7 +69,7 @@ class UIViewAlbum(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             )
         }
         rvAlbum.adapter = adapter
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(view.context)
         lvAlbum.hoverTextColor = skinThemeColor
         lvAlbum.setOnLetterChangeListener(object : DoraLetterView.OnLetterChangeListener {
             override fun onChanged(letter: String) {

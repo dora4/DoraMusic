@@ -12,24 +12,22 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebIndicator
-import dora.skin.SkinManager
-import dora.skin.base.BaseSkinBindingActivity
 import dora.util.IntentUtils
 import dora.util.StatusBarUtils
 import dora.util.ViewUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.databinding.ActivityBrowserBinding
+import site.doramusic.app.util.ThemeSelector
 
 /**
  * 浏览器页面，主要用于加载用户协议和隐私权政策等。
  */
 @Route(path = ARoutePath.ACTIVITY_BROWSER)
-class BrowserActivity : BaseSkinBindingActivity<ActivityBrowserBinding>() {
+class BrowserActivity : BaseSkinActivity<ActivityBrowserBinding>() {
 
     private var title: String? = null
     private var url: String? = null
@@ -45,7 +43,7 @@ class BrowserActivity : BaseSkinBindingActivity<ActivityBrowserBinding>() {
     }
 
     override fun onSetStatusBar() {
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
+        val skinThemeColor = ThemeSelector.getThemeColor(this)
         StatusBarUtils.setStatusBarColor(this, skinThemeColor)
     }
 
@@ -55,8 +53,8 @@ class BrowserActivity : BaseSkinBindingActivity<ActivityBrowserBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityBrowserBinding) {
-        val skinThemeColor = SkinManager.getLoader().getColor(COLOR_THEME)
-        binding.titlebar.setBackgroundColor(skinThemeColor)
+        val skinThemeColor = ThemeSelector.getThemeColor(this)
+        ThemeSelector.applyViewTheme(binding.titlebar)
         title?.let { binding.titlebar.title = it }
         val webIndicator = WebIndicator(this)
         webIndicator.setColor(skinThemeColor)
