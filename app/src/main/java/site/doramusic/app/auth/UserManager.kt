@@ -26,12 +26,13 @@ class UserManager {
         }
         currentUser = null
         userInfo = null
+        userAvatar = null
     }
 
-    fun setCurrentUser(chatUser: DoraUser) {
-        currentUser = chatUser
-        if (!userMap.containsKey(chatUser.erc20)) {
-            userMap[chatUser.erc20] = chatUser
+    fun setCurrentUser(user: DoraUser) {
+        currentUser = user
+        if (!userMap.containsKey(user.erc20)) {
+            userMap[user.erc20] = user
         }
     }
 
