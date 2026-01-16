@@ -254,7 +254,12 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
             contentView.layoutParams = layoutParams
             val llPlaylist: LinearLayout = contentView.findViewById(R.id.ll_playlist)
-            ThemeSelector.applyViewTheme(llPlaylist)
+            val prefsManager = PrefsManager(contentView.context)
+            if (prefsManager.getSkinType() == 0) {
+                llPlaylist.setBackgroundColor(prefsManager.getSkinColor())
+            } else {
+                llPlaylist.setBackgroundColor(SkinManager.getLoader().getColor(COLOR_THEME))
+            }
             val tvPlaylistPlayMode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
             val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
             val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
