@@ -41,7 +41,7 @@ data class DoraChannelMsg(
      */
     var msgContent: String = "",
     /**
-     * 0-正常，1-已撤回。
+     * 0-正常，1-已撤回（仅发送不超过2分钟的消息）。
      */
     var recall: Int = 0,
     /**
