@@ -1,6 +1,4 @@
-package site.doramusic.app.auth
-
-import site.doramusic.app.http.BaseReq
+package com.dorachat.auth
 
 data class ReqToken(val token: String) : BaseReq() {
 

@@ -1,4 +1,4 @@
-package site.doramusic.app.auth
+package com.dorachat.auth
 
 data class DoraUser(
     val erc20: String,

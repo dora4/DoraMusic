@@ -1,14 +1,15 @@
-package site.doramusic.app.auth
+package com.dorachat.auth
 
+import dora.util.RxBus
 import java.util.concurrent.atomic.AtomicBoolean
 
-object LoginExpiredBus {
+internal object SignInExpiredBus {
 
     private val fired = AtomicBoolean(false)
 
     fun postOnce() {
         if (fired.compareAndSet(false, true)) {
-            // 在这里统一退出登录
+            RxBus.getInstance().post(SignOutEvent())
         }
     }
 

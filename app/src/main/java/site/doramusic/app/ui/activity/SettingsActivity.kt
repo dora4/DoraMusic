@@ -27,10 +27,10 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.model.Donation
 import site.doramusic.app.util.PrefsManager
 import androidx.core.net.toUri
+import com.dorachat.auth.UserManager
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.util.ApkUtils
-import site.doramusic.app.auth.UserManager
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.feedback.FeedbackActivity
 import site.doramusic.app.upgrade.ApkService

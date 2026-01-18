@@ -1,5 +1,11 @@
 package site.doramusic.app
 
+import androidx.core.content.ContextCompat
+import com.dorachat.auth.AuthInterceptor
+import com.dorachat.auth.AuthService
+import com.dorachat.auth.DoraChatConfig
+import com.dorachat.auth.DoraChatSDK
+import com.dorachat.auth.DoraUserInfo
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
@@ -11,10 +17,6 @@ import dora.pay.EVMChains
 import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
-import site.doramusic.app.auth.AuthInterceptor
-import site.doramusic.app.auth.AuthService
-import site.doramusic.app.auth.DoraUserInfo
-import site.doramusic.app.auth.TokenStore
 import site.doramusic.app.chat.ChatService
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
@@ -69,9 +71,23 @@ class MusicApp : BaseApplication(), AppConfig {
         val startTime = System.currentTimeMillis()
         LogUtils.d("init start time:$startTime")
         initDb()    // 初始化SQLite数据库的表
+        initAuth()  // 初始化Dora Chat认证SDK
         initHttp()   // 初始化网络框架
         val endTime = System.currentTimeMillis()
         LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
+    }
+
+    private fun initAuth() {
+        val config = DoraChatConfig.Builder(
+            apiBaseUrl = AppConfig.URL_AUTH_SERVER,
+            partitionId = "doramusic",
+            appName = "Dora Music",
+            themeColor = ContextCompat.getColor(this, R.color.colorPrimary)
+        )
+            .enableLog(true)
+            .autoRefreshToken(true)
+            .build()
+        DoraChatSDK.init(this, config)
     }
 
     private fun initPay() {
@@ -105,7 +121,6 @@ class MusicApp : BaseApplication(), AppConfig {
     }
 
     private fun initHttp() {
-        TokenStore.init(this)
         RetrofitManager.initConfig {
             okhttp {
                 connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)

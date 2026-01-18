@@ -14,6 +14,9 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.dorachat.auth.ARouterPath
+import com.dorachat.auth.SignInEvent
+import com.dorachat.auth.UserManager
 import dora.arouter.open
 import dora.firebase.SpmUtils.spmSelectContent
 import dora.http.DoraHttp
@@ -38,8 +41,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import site.doramusic.app.BuildConfig
 import site.doramusic.app.R
-import site.doramusic.app.auth.SignInActivity
-import site.doramusic.app.auth.UserManager
 import site.doramusic.app.chat.ChatService
 import site.doramusic.app.chat.ReqJoinChannel
 import site.doramusic.app.ui.OnBackListener
@@ -51,7 +52,6 @@ import site.doramusic.app.conf.AppConfig.Companion.EXTRA_ERC20
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.event.RefreshHomeItemEvent
-import site.doramusic.app.auth.SignInEvent
 import site.doramusic.app.event.ChangeSkinEvent
 import site.doramusic.app.http.SecureRequestBuilder
 import site.doramusic.app.http.service.FileService
@@ -287,8 +287,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             if (user != null) {
                 // 预留注销登录逻辑
             } else {
-                val intent = Intent(this, SignInActivity::class.java)
-                startActivity(intent)
+                open(ARouterPath.ACTIVITY_SIGN_IN)
                 closeDrawer()
             }
             // 旧代码先保留
@@ -321,8 +320,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                             val user = UserManager.ins?.currentUser
                             if (user == null) {
                                 showLongToast("请先登录")
-                                val intent = Intent(this, SignInActivity::class.java)
-                                startActivity(intent)
+                                open(ARouterPath.ACTIVITY_SIGN_IN)
                                 closeDrawer()
                                 return@net
                             }

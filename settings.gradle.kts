@@ -40,4 +40,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DoraMusic"
 include(":app")
+include(":authsdk")
 

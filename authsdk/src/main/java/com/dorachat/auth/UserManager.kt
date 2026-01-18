@@ -1,7 +1,7 @@
-package site.doramusic.app.auth
+package com.dorachat.auth
 
 class UserManager {
-
+    
     var currentUser: DoraUser? = null
         private set
     var userInfo: DoraUserInfo? = null

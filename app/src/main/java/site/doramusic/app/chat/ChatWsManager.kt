@@ -2,6 +2,8 @@ package site.doramusic.app.chat
 
 import android.os.Handler
 import android.os.Looper
+import com.dorachat.auth.AuthManager
+import com.dorachat.auth.DoraChatSDK
 import com.google.gson.Gson
 import dora.util.LogUtils
 import dora.util.RxBus
@@ -10,7 +12,6 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
-import site.doramusic.app.auth.TokenStore
 import java.util.concurrent.TimeUnit
 
 /**
@@ -42,7 +43,7 @@ object ChatWsManager {
         // 认证ws的正确方式，不要使用头包发token
         val request = Request.Builder()
             .url(url)
-            .addHeader("Authorization", "Bearer ${TokenStore.accessToken()}")
+            .addHeader("Authorization", "Bearer ${AuthManager.getAccessToken()}")
             .build()
 
         webSocket = client.newWebSocket(request, object : WebSocketListener() {

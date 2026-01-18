@@ -1,4 +1,4 @@
-package site.doramusic.app.auth
+package com.dorachat.auth
 
 import dora.db.constraint.Id
 import dora.db.migration.OrmMigration

@@ -1,12 +1,12 @@
-package site.doramusic.app.auth
+package com.dorachat.auth
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import androidx.core.content.edit
 
-object TokenStore {
+internal object TokenStore {
 
     private const val PREFERENCE_NAME = "secure_token"
     private const val KEY_ACCESS = "access_token"

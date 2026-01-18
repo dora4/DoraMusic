@@ -1,0 +1,18 @@
+<resources>
+    <string name="please_sign_in_first">Please sign in first.</string>
+    <string name="wallet_connected">The wallet has already been connected.</string>
+    <string name="using_wallet_authorization_first">Please log in using wallet authorization first.</string>
+    <string name="at_least_6_characters_long">The password must be at least 6 characters long.</string>
+    <string name="don_t_have_an_account">Don\'t have an account? %1$s</string>
+    <string name="sign_up">Sign up</string>
+    <string name="now_sign_in">Sign in…</string>
+    <string name="failed_to_sign_in">Failed to sign in</string>
+    <string name="signed_in_successfully">Signed in successfully</string>
+    <string name="failed_to_sign_in_with_error">Failed to sign in, %1$s</string>
+    <string name="forget_your_password">Forget your password?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_in_button">SIGN IN</string>
+    <string name="password">Password</string>
+    <string name="forward_dora_chat">Please visit %1$s to download Dora Chat</string>
+    <string name="unable_to_open_browser">Unable to open browser</string>
+</resources>

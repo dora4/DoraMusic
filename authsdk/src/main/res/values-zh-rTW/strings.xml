@@ -1,0 +1,18 @@
+<resources>
+    <string name="please_sign_in_first">請先登入。</string>
+    <string name="wallet_connected">錢包已經連接。</string>
+    <string name="using_wallet_authorization_first">請先使用錢包授權登入。</string>
+    <string name="at_least_6_characters_long">密碼長度至少需 6 個字元。</string>
+    <string name="don_t_have_an_account">Don\'t have an account? %1$s</string>
+    <string name="sign_up">註冊</string>
+    <string name="now_sign_in">正在登入…</string>
+    <string name="failed_to_sign_in">登入失敗</string>
+    <string name="signed_in_successfully">登入成功</string>
+    <string name="failed_to_sign_in_with_error">登入失敗， %1$s</string>
+    <string name="forget_your_password">忘記密碼？</string>
+    <string name="sign_in">登入</string>
+    <string name="sign_in_button">登入</string>
+    <string name="password">密碼</string>
+    <string name="forward_dora_chat">請前往 %1$s 下載 Dora Chat</string>
+    <string name="unable_to_open_browser">無法開啟瀏覽器</string>
+</resources>

@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 117
-    val version = "2.0.6"
+    val code = 118
+    val version = "2.0.7"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -103,6 +103,7 @@ fun libFileTree() : ConfigurableFileTree {
 
 dependencies {
     implementation(libFileTree())
+    implementation(project(":authsdk"))
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.12.0")
 

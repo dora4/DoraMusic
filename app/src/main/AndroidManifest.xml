@@ -68,13 +68,6 @@
                 android:screenOrientation="portrait" />
 
         <activity
-            android:name=".auth.SignInActivity"
-            android:exported="false"
-            android:label="登录"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".chat.ChatRoomActivity"
             android:exported="false"
             android:label="聊天室"
