@@ -83,7 +83,16 @@ class AuthInterceptor : Interceptor {
             client.newCall(request).execute().use { resp ->
                 if (!resp.isSuccessful) return null
                 val str = resp.body?.string() ?: return null
-                val data = JSONObject(str).optJSONObject("data") ?: return null
+                val root = JSONObject(str)
+                val code = root.optString("code")
+                if (code != ApiCode.SUCCESS) {
+                    if (code == ApiCode.ERROR_SIGN_IN_EXPIRED) {
+                        // refresh token 失效 → 强制退出
+                        signOut(request)
+                    }
+                    return null
+                }
+                val data = root.optJSONObject("data") ?: return null
                 val newAccessToken = data.optString("accessToken")
                 val newRefreshToken = data.optString("refreshToken")
                 if (newAccessToken.isNullOrEmpty() || newRefreshToken.isNullOrEmpty()) return null
