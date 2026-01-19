@@ -35,6 +35,7 @@ object AuthManager {
                 if (it.code == ApiCode.SUCCESS) {
                     val user = it.data
                     if (user != null) {
+                        SignInExpiredBus.reset()
                         UserManager.ins?.setCurrentUser(DoraUser(user.erc20, user.latestSignIn))
                         TokenStore.save(user.accessToken, user.refreshToken)
                         RxBus.getInstance().post(SignInEvent(user.erc20))
