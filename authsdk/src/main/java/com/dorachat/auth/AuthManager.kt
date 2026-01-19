@@ -73,12 +73,13 @@ object AuthManager {
             val body =
                 SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC) ?: return@net
             DoraHttp.result(AuthService::class) { signOut(body.toRequestBody()) }
+            UserManager.ins?.removeCurrentUser()
             RxBus.getInstance().post(SignOutEvent())
             TokenStore.clear()
         }
     }
 
-    fun checkToken(callback: () -> Unit) {
+    fun checkToken(callback: (DoraUser?) -> Unit) {
         DoraHttp.net {
             val token = TokenStore.accessToken().orEmpty()
             if (TextUtils.isNotEmpty(token)) {
@@ -99,16 +100,16 @@ object AuthManager {
                             )
                         }
                     }
-                    callback()
+                    callback(it.data)
                 }, failureBlock = {
                     if (DoraChatSDK.getConfig()?.enableLog == true) {
                         LogUtils.e(it)
                     }
-                    callback()
+                    callback(null)
                 })
             } else {
                 // 第一次token都没有走这里
-                callback()
+                callback(null)
             }
         }
     }
