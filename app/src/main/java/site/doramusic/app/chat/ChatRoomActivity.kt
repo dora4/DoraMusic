@@ -12,11 +12,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildLongClickListener
 import com.dorachat.auth.ApiCode
 import dora.http.DoraHttp.net
-import dora.http.DoraHttp.rxApi
 import dora.http.DoraHttp.rxResult
 import dora.util.DensityUtils
 import dora.util.IntentUtils
-import dora.util.LogUtils
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.util.ViewUtils
@@ -147,7 +145,6 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                             if (resp != null) {
                                 if (resp.code != ApiCode.SUCCESS) {
                                     showLongToast(resp.msg)
-                                    LogUtils.e(resp.msg)
                                 } else {
                                     val ok = resp.data as Boolean
                                     if (ok) {
