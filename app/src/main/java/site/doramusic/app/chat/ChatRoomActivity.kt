@@ -99,7 +99,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
     private fun loadLatest() {
         loadingHistory = true
         net {
-            val req = ReqChannelMsgList(PRODUCT_NAME, null, 20)
+            val req = ReqChannelMsgList(roomId = PRODUCT_NAME, cursor = null, limit = 20)
             val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
                 ?: return@net
 
@@ -127,7 +127,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
         if (lastMsgSeq == null) return
         loadingHistory = true
         net {
-            val req = ReqChannelMsgList(PRODUCT_NAME, lastMsgSeq, 20)
+            val req = ReqChannelMsgList(roomId = PRODUCT_NAME, cursor = lastMsgSeq, limit = 20)
             val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
                 ?: return@net
             val data = rxResult(ChatService::class) {
