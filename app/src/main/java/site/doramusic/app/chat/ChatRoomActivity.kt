@@ -1,16 +1,26 @@
 package site.doramusic.app.chat
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemChildLongClickListener
+import com.dorachat.auth.ApiCode
 import dora.http.DoraHttp.net
+import dora.http.DoraHttp.rxApi
 import dora.http.DoraHttp.rxResult
+import dora.util.DensityUtils
 import dora.util.IntentUtils
+import dora.util.LogUtils
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.util.ViewUtils
+import dora.widget.DoraPopupWindow
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
@@ -25,6 +35,7 @@ import site.doramusic.app.util.ThemeSelector
 class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
 
     private lateinit var erc20: String
+    private lateinit var adapter: ChannelMsgAdapter
 
     override fun getLayoutId(): Int {
         return R.layout.activity_chat_room
@@ -60,9 +71,25 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
         ChatWsManager.close() // 兜底，不作为主逻辑
     }
 
+    private fun handleRecallEvent(chatMsg: DoraChannelMsg) {
+        val recalledMsgId = chatMsg.msgContent.toLongOrNull() ?: return
+        runOnUiThread {
+            val list = adapter.data
+            for (i in list.indices) {
+                val target = list[i]
+                if (target.msgId == recalledMsgId) {
+                    target.recall = 1
+                    target.msgContent = "[该消息已被撤回]"
+                    adapter.setData(i, target)
+                    break
+                }
+            }
+        }
+    }
+
     override fun initData(savedInstanceState: Bundle?, binding: ActivityChatRoomBinding) {
         ThemeSelector.applyViewTheme(binding.titlebar)
-        val adapter = ChannelMsgAdapter(erc20)
+        adapter = ChannelMsgAdapter(erc20)
         binding.recyclerView.layoutManager = LinearLayoutManager(this).apply {
             stackFromEnd = true   // 像聊天一样从底部开始
         }
@@ -76,6 +103,66 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 rxResult(ChatService::class) { getChannelMsgList(body.toRequestBody()) }?.data
             adapter.setList(data?.list?.reversed())
         }
+        adapter.addChildLongClickViewIds(R.id.rl_left_content, R.id.rl_right_content)
+        adapter.setOnItemChildLongClickListener(object : OnItemChildLongClickListener {
+            override fun onItemChildLongClick(
+                adapter: BaseQuickAdapter<*, *>,
+                view: View,
+                position: Int
+            ): Boolean {
+                val popup = DoraPopupWindow.create(this@ChatRoomActivity)
+                    .contentView(R.layout.layout_msg_op)
+                    .cornerRadius(12f)
+                    .backgroundColor(Color.WHITE)
+                    .build()
+                popup.show(view, DensityUtils.DP60, -DensityUtils.DP60)
+                val tvMsgRecall = popup.contentView.findViewById<TextView>(R.id.tv_msg_recall)
+                val tvMsgDelete = popup.contentView.findViewById<TextView>(R.id.tv_msg_delete)
+                tvMsgRecall.setOnClickListener(object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        popup.dismiss()
+                        net {
+                            val msg = adapter.getItem(position) as DoraChannelMsg
+                            val req = ReqRecallChannelMsg(roomId = PRODUCT_NAME, msgId = msg.msgId)
+                            val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
+                                ?: return@net
+                            val resp = rxResult(ChatService::class) { recallMsg(body.toRequestBody()) }
+                            if (resp != null) {
+                                if (resp.code != ApiCode.SUCCESS) {
+                                    showLongToast(resp.msg)
+                                }
+                            }
+                        }
+                    }
+                })
+                tvMsgDelete.setOnClickListener(object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        popup.dismiss()
+                        net {
+                            val msg = adapter.getItem(position) as DoraChannelMsg
+                            val req = ReqDeleteChannelMsg(roomId = PRODUCT_NAME, msgId = msg.msgId)
+                            val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
+                                ?: return@net
+                            val resp = rxResult(ChatService::class) { deleteMsg(body.toRequestBody()) }
+                            if (resp != null) {
+                                if (resp.code != ApiCode.SUCCESS) {
+                                    showLongToast(resp.msg)
+                                    LogUtils.e(resp.msg)
+                                } else {
+                                    val ok = resp.data as Boolean
+                                    if (ok) {
+                                        runOnUiThread {
+                                            adapter.removeAt(position)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                })
+                return true
+            }
+        })
         binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
         addDisposable(RxBus.getInstance()
             .toObservable(ChannelMsgEvent::class.java)
@@ -83,6 +170,11 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 val msg = event.msg
                 // 不是当前房间，直接忽略，聊天室这里都是当前房间的😂
                 if (msg.roomId != PRODUCT_NAME) return@subscribe
+                // 撤回事件
+                if (msg.msgType == 100) {
+                    handleRecallEvent(msg)
+                    return@subscribe
+                }
                 // 自己发送的不收
                 if (msg.senderId == erc20) return@subscribe
                 val uiMsg = DoraChannelMsg(
