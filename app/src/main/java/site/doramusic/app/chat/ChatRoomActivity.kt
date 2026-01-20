@@ -102,14 +102,15 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
             val req = ReqChannelMsgList(roomId = PRODUCT_NAME, cursor = null, limit = 20)
             val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
                 ?: return@net
-
             val data = rxResult(ChatService::class) {
                 getChannelMsgList(body.toRequestBody())
             }?.data
-
             val list = data?.list ?: emptyList()
             if (list.isNotEmpty()) {
                 val uiList = list.reversed()
+                ChannelMsgDispatcher.initMaxSeq(
+                    uiList.maxOf { it.msgSeq }
+                )
                 lastMsgSeq = uiList.first().msgSeq // 记录最早一条
                 adapter.setList(uiList)
                 mBinding.recyclerView.scrollToPosition(adapter.itemCount - 1)
@@ -142,10 +143,8 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                     val oldFirstPos =
                         (mBinding.recyclerView.layoutManager as LinearLayoutManager)
                             .findFirstVisibleItemPosition()
-
                     adapter.addData(0, uiList)
                     lastMsgSeq = uiList.first().msgSeq
-
                     // 保持视觉位置不跳
                     mBinding.recyclerView.scrollToPosition(oldFirstPos + uiList.size)
                 }
@@ -155,6 +154,8 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityChatRoomBinding) {
+        // 进房间第一件事，重置seq
+        ChannelMsgDispatcher.reset()
         ThemeSelector.applyViewTheme(binding.titlebar)
         adapter = ChannelMsgAdapter(erc20)
         binding.recyclerView.layoutManager = LinearLayoutManager(this).apply {
@@ -162,7 +163,6 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.itemAnimator = null
-
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val lm = recyclerView.layoutManager as LinearLayoutManager
@@ -175,8 +175,6 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
             }
         })
         loadLatest()
-
-
         adapter.addChildLongClickViewIds(R.id.rl_left_content, R.id.rl_right_content)
         adapter.setOnItemChildLongClickListener(object : OnItemChildLongClickListener {
             override fun onItemChildLongClick(

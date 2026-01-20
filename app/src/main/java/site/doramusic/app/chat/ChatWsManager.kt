@@ -3,15 +3,17 @@ package site.doramusic.app.chat
 import android.os.Handler
 import android.os.Looper
 import com.dorachat.auth.AuthManager
-import com.dorachat.auth.DoraChatSDK
 import com.google.gson.Gson
+import dora.http.DoraHttp.net
+import dora.http.DoraHttp.rxResult
 import dora.util.LogUtils
-import dora.util.RxBus
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
+import site.doramusic.app.http.SecureRequestBuilder
 import java.util.concurrent.TimeUnit
 
 /**
@@ -57,6 +59,8 @@ object ChatWsManager {
                     state = WsState.CONNECTED
                 }
                 LogUtils.d("chat ws 已连接")
+                // 重连成功后补缺失消息
+                appendMsg()
             }
 
             override fun onMessage(ws: WebSocket, text: String) {
@@ -67,7 +71,7 @@ object ChatWsManager {
                         LogUtils.w("chat ws invalid payload: $text")
                         return
                     }
-                    RxBus.getInstance().post(ChannelMsgEvent(msg))
+                    ChannelMsgDispatcher.dispatch(msg)
                 } catch (e: Exception) {
                     LogUtils.e("chat ws parse error: $text\n${e}")
                 }
@@ -84,6 +88,32 @@ object ChatWsManager {
                 }, 5000)
             }
         })
+    }
+
+    /**
+     * 断线重连后补缺失消息。你离开那会，这里已经过去一个世纪😂。
+     */
+    private fun appendMsg() {
+        val fromSeq = ChannelMsgDispatcher.getMaxSeq()
+        if (fromSeq <= 0) return
+        net {
+            val req = ReqChannelMsgList(
+                roomId = PRODUCT_NAME,
+                cursor = null,
+                msgSeq = fromSeq,
+                limit = 50
+            )
+            val body = SecureRequestBuilder.build(
+                req,
+                SecureRequestBuilder.SecureMode.ENC
+            ) ?: return@net
+            val data = rxResult(ChatService::class) {
+                getChannelMsgList(body.toRequestBody())
+            }?.data ?: return@net
+            data.list.forEach {
+                ChannelMsgDispatcher.dispatch(it)
+            }
+        }
     }
 
     fun send(text: String) {
