@@ -70,18 +70,15 @@ object AuthManager {
     }
 
     fun signOut() {
-        val token = getAccessToken()
-        if (token != null) {
-            net {
-                val req = ReqToken(token)
-                val body =
-                    SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
-                        ?: return@net
-                DoraHttp.result(AuthService::class) { signOut(body.toRequestBody()) }
-                UserManager.ins?.removeCurrentUser()
-                RxBus.getInstance().post(SignOutEvent())
-                TokenStore.clear()
-            }
+        net {
+            val req = ReqToken(getAccessToken() ?: "")
+            val body =
+                SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
+                    ?: return@net
+            DoraHttp.result(AuthService::class) { signOut(body.toRequestBody()) }
+            UserManager.ins?.removeCurrentUser()
+            RxBus.getInstance().post(SignOutEvent())
+            TokenStore.clear()
         }
     }
 
