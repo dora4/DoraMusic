@@ -289,7 +289,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 DoraDoubleButtonDialog(this, listener = object : DoraDoubleButtonDialog.DialogListener {
                     override fun onConfirm(eventType: String) {
                         if (eventType == EVENT_TYPE_SIGN_OUT) {
-                            AuthManager.signOut(AuthManager.getAccessToken() ?: "")
+                            AuthManager.signOut()
                             erc20AddrView?.text = ""
                         }
                     }

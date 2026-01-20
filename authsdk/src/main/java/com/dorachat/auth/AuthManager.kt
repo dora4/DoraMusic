@@ -3,6 +3,7 @@ package com.dorachat.auth
 import android.content.Context
 import androidx.core.content.ContextCompat
 import dora.http.DoraHttp
+import dora.http.DoraHttp.net
 import dora.http.retrofit.RetrofitManager
 import dora.util.LogUtils
 import dora.util.RxBus
@@ -24,7 +25,7 @@ object AuthManager {
     }
 
     fun signIn(context: Context, erc20: String, authWord: String, listener: SignInListener? = null) {
-        DoraHttp.net {
+        net {
             val req = ReqSignIn(erc20, authWord, partitionId)
             val body =
                 SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC) ?: return@net
@@ -68,20 +69,24 @@ object AuthManager {
         }
     }
 
-    fun signOut(token: String) {
-        DoraHttp.net {
-            val req = ReqToken(token)
-            val body =
-                SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC) ?: return@net
-            DoraHttp.result(AuthService::class) { signOut(body.toRequestBody()) }
-            UserManager.ins?.removeCurrentUser()
-            RxBus.getInstance().post(SignOutEvent())
-            TokenStore.clear()
+    fun signOut() {
+        val token = getAccessToken()
+        if (token != null) {
+            net {
+                val req = ReqToken(token)
+                val body =
+                    SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
+                        ?: return@net
+                DoraHttp.result(AuthService::class) { signOut(body.toRequestBody()) }
+                UserManager.ins?.removeCurrentUser()
+                RxBus.getInstance().post(SignOutEvent())
+                TokenStore.clear()
+            }
         }
     }
 
     fun checkToken(callback: (DoraUser?) -> Unit) {
-        DoraHttp.net {
+        net {
             val token = TokenStore.accessToken().orEmpty()
             if (TextUtils.isNotEmpty(token)) {
                 val req = ReqToken(token)
