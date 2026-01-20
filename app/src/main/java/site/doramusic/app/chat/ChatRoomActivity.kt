@@ -7,6 +7,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildLongClickListener
@@ -34,6 +35,9 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
 
     private lateinit var erc20: String
     private lateinit var adapter: ChannelMsgAdapter
+    private var loadingHistory = false
+    private var noMoreHistory = false
+    private var lastMsgSeq: Long? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_chat_room
@@ -85,6 +89,71 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
         }
     }
 
+    override fun isAutoDispose(): Boolean {
+        return true
+    }
+
+    /**
+     * 首次进入：拉最新一页。
+     */
+    private fun loadLatest() {
+        loadingHistory = true
+        net {
+            val req = ReqChannelMsgList(PRODUCT_NAME, null, 20)
+            val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
+                ?: return@net
+
+            val data = rxResult(ChatService::class) {
+                getChannelMsgList(body.toRequestBody())
+            }?.data
+
+            val list = data?.list ?: emptyList()
+            if (list.isNotEmpty()) {
+                val uiList = list.reversed()
+                lastMsgSeq = uiList.first().msgSeq // 记录最早一条
+                adapter.setList(uiList)
+                mBinding.recyclerView.scrollToPosition(adapter.itemCount - 1)
+            } else {
+                noMoreHistory = true
+            }
+            loadingHistory = false
+        }
+    }
+
+    /**
+     * 拉历史消息。
+     */
+    private fun loadHistory() {
+        if (lastMsgSeq == null) return
+        loadingHistory = true
+        net {
+            val req = ReqChannelMsgList(PRODUCT_NAME, lastMsgSeq, 20)
+            val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
+                ?: return@net
+            val data = rxResult(ChatService::class) {
+                getChannelMsgList(body.toRequestBody())
+            }?.data
+            val list = data?.list ?: emptyList()
+            if (list.isEmpty()) {
+                noMoreHistory = true
+            } else {
+                val uiList = list.reversed()
+                runOnUiThread {
+                    val oldFirstPos =
+                        (mBinding.recyclerView.layoutManager as LinearLayoutManager)
+                            .findFirstVisibleItemPosition()
+
+                    adapter.addData(0, uiList)
+                    lastMsgSeq = uiList.first().msgSeq
+
+                    // 保持视觉位置不跳
+                    mBinding.recyclerView.scrollToPosition(oldFirstPos + uiList.size)
+                }
+            }
+            loadingHistory = false
+        }
+    }
+
     override fun initData(savedInstanceState: Bundle?, binding: ActivityChatRoomBinding) {
         ThemeSelector.applyViewTheme(binding.titlebar)
         adapter = ChannelMsgAdapter(erc20)
@@ -93,14 +162,21 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.itemAnimator = null
-        net {
-            val req = ReqChannelMsgList(roomId = PRODUCT_NAME, null, 20)
-            val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
-                ?: return@net
-            val data =
-                rxResult(ChatService::class) { getChannelMsgList(body.toRequestBody()) }?.data
-            adapter.setList(data?.list?.reversed())
-        }
+
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val lm = recyclerView.layoutManager as LinearLayoutManager
+                if (lm.findFirstVisibleItemPosition() == 0 &&
+                    !loadingHistory &&
+                    !noMoreHistory
+                ) {
+                    loadHistory()
+                }
+            }
+        })
+        loadLatest()
+
+
         adapter.addChildLongClickViewIds(R.id.rl_left_content, R.id.rl_right_content)
         adapter.setOnItemChildLongClickListener(object : OnItemChildLongClickListener {
             override fun onItemChildLongClick(
@@ -200,7 +276,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 val msgId = rxResult(ChatService::class) { sendMsg(body.toRequestBody()) }?.data
                 if (msgId != null) {
                     val localMsg = DoraChannelMsg(
-                        msgId = System.currentTimeMillis(), // 临时 ID
+                        msgId = msgId,
                         roomId = PRODUCT_NAME,
                         senderId = erc20,
                         senderName = erc20,
