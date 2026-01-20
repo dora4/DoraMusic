@@ -1,6 +1,7 @@
 package com.dorachat.auth
 
 import com.google.gson.Gson
+import dora.util.ToastUtils
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -85,8 +86,10 @@ class AuthInterceptor : Interceptor {
                 val str = resp.body?.string() ?: return null
                 val root = JSONObject(str)
                 val code = root.optString("code")
+                val msg = root.optString("msg")
                 if (code != ApiCode.SUCCESS) {
                     if (code == ApiCode.ERROR_SIGN_IN_EXPIRED) {
+                        ToastUtils.showLong(msg)
                         // refresh token 失效 → 强制退出
                         signOut(request)
                     }

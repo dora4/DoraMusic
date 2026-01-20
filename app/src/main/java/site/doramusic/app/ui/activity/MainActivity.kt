@@ -15,6 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.dorachat.auth.ARouterPath
+import com.dorachat.auth.AuthManager
 import com.dorachat.auth.SignInEvent
 import com.dorachat.auth.UserManager
 import dora.arouter.open
@@ -33,6 +34,7 @@ import dora.util.PermissionHelper
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.util.ToastUtils
+import dora.widget.DoraDoubleButtonDialog
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraSingleButtonDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -121,10 +123,10 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
 
     companion object {
         const val REQUEST_VPN_PERMISSION = 1
-        @Deprecated("使用Dora Chat账号认证")
-        const val REQUEST_WALLET_AUTHORIZATION = 2
 
         const val EVENT_TYPE_SCAN_PROMPT = "scan_prompt"
+
+        const val EVENT_TYPE_SIGN_OUT = "sign_out"
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -135,8 +137,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                     DoraFund.connectVPN(this@MainActivity, DORA_FUND_ACCESS_KEY,
                         DORA_FUND_SECRET_KEY)
                 }
-            } else if (requestCode == REQUEST_WALLET_AUTHORIZATION) {
-//                erc20AddrView?.text = DoraFund.getCurrentAddress()
             }
         }
     }
@@ -285,27 +285,25 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         avatarView.setOnClickListener {
             val user = UserManager.ins?.currentUser
             if (user != null) {
-                // 预留注销登录逻辑
+                val skinThemeColor = ThemeSelector.getThemeColor(this)
+                DoraDoubleButtonDialog(this, listener = object : DoraDoubleButtonDialog.DialogListener {
+                    override fun onConfirm(eventType: String) {
+                        if (eventType == EVENT_TYPE_SIGN_OUT) {
+                            AuthManager.signOut(AuthManager.getAccessToken() ?: "")
+                            erc20AddrView?.text = ""
+                        }
+                    }
+
+                    override fun onCancel(eventType: String) {
+                    }
+
+                }).show(EVENT_TYPE_SIGN_OUT, getString(R.string.are_you_sure_sign_out)) {
+                    themeColor(skinThemeColor)
+                }
             } else {
                 open(ARouterPath.ACTIVITY_SIGN_IN)
                 closeDrawer()
             }
-            // 旧代码先保留
-//            // 钱包授权登录
-//            if (!DoraFund.isWalletConnected()) {
-//                spmSelectContent("钱包授权登录")
-//                closeDrawer()
-//                DoraFund.connectWallet(this, REQUEST_WALLET_AUTHORIZATION)
-//            } else {
-//                spmSelectContent("取消钱包授权")
-//                val skinThemeColor = ThemeSelector.getThemeColor()//                DoraAlertDialog.create(this).show(getString(R.string.are_you_sure_disconnect_wallet)) {
-//                    themeColor(skinThemeColor)
-//                    positiveListener {
-//                        DoraFund.disconnectWallet()
-//                        erc20AddrView?.text = ""
-//                    }
-//                }
-//            }
         }
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {

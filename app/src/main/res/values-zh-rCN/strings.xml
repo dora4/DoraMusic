@@ -74,7 +74,7 @@
     <string name="already_latest_version">已是最新版本</string>
     <string name="donation_certificate">赞助者的感谢信</string>
     <string name="appreciation_content">感谢您的支持 尊敬的捐赠者： 感谢您对本软件项目的支持与捐赠。您的支持对于项目的持续开发和维护至关重要，我们将继续努力，优化功能，提升体验，回馈社区。 衷心感谢您的慷慨与信任！ 祝好！ 朵拉音乐 团队</string>
-    <string name="are_you_sure_disconnect_wallet">确认要断开钱包连接吗？</string>
+    <string name="are_you_sure_sign_out">确认要注销登录吗？</string>
     <string name="discord">Discord</string>
     <string name="donation_detail">捐赠时间：%1$s\n交易哈希：%2$s</string>
     <string name="evm_login_first">请先使用EVM钱包登录</string>
