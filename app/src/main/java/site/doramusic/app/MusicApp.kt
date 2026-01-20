@@ -1,16 +1,11 @@
 package site.doramusic.app
 
-import android.content.Intent
 import androidx.core.content.ContextCompat
-import com.alibaba.android.arouter.launcher.ARouter
-import com.dorachat.auth.ARouterPath
 import com.dorachat.auth.AuthInterceptor
 import com.dorachat.auth.AuthService
 import com.dorachat.auth.DoraChatConfig
 import com.dorachat.auth.DoraChatSDK
 import com.dorachat.auth.DoraUserInfo
-import com.dorachat.auth.SignInEvent
-import com.dorachat.auth.SignOutEvent
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
@@ -20,12 +15,9 @@ import dora.http.retrofit.RetrofitManager
 import dora.pay.DoraFund
 import dora.pay.EVMChains
 import dora.util.LogUtils
-import dora.util.RxBus
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.chat.ChatService
-import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.conf.AppConfig.Companion.COLUMN_ORDER_ID
