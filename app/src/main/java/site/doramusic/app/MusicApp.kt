@@ -75,36 +75,12 @@ class MusicApp : BaseApplication(), AppConfig {
         }
     }
 
-    private fun handleSignIn() {
-        ARouter.getInstance().build(ARoutePath.ACTIVITY_MAIN)
-            .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK or
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK)
-    }
-
-    private fun handleSignOut() {
-        ARouter.getInstance().build(ARouterPath.ACTIVITY_SIGN_IN)
-            .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK)
-    }
-
     private fun init() {
         val startTime = System.currentTimeMillis()
         LogUtils.d("init start time:$startTime")
         initDb()    // 初始化SQLite数据库的表
         initAuth()  // 初始化Dora Chat认证SDK
         initHttp()   // 初始化网络框架
-        RxBus.getInstance()
-            .toObservable(SignInEvent::class.java)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                handleSignIn()
-            }
-        RxBus.getInstance()
-            .toObservable(SignOutEvent::class.java)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                handleSignOut()
-            }
         val endTime = System.currentTimeMillis()
         LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
     }

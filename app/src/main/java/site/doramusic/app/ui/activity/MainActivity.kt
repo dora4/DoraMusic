@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.dorachat.auth.ARouterPath
 import com.dorachat.auth.AuthManager
 import com.dorachat.auth.SignInEvent
+import com.dorachat.auth.SignOutEvent
 import com.dorachat.auth.UserManager
 import dora.arouter.open
 import dora.firebase.SpmUtils.spmSelectContent
@@ -290,7 +291,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                     override fun onConfirm(eventType: String) {
                         if (eventType == EVENT_TYPE_SIGN_OUT) {
                             AuthManager.signOut()
-                            erc20AddrView?.text = ""
+                            closeDrawer()
                         }
                     }
 
@@ -522,9 +523,10 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         )
         addDisposable(
             RxBus.getInstance()
-                .toObservable(ChangeSkinEvent::class.java)
+                .toObservable(SignOutEvent::class.java)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
+                    erc20AddrView?.text = ""
                 }
         )
         // 返回键处理
