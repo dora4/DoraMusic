@@ -94,24 +94,32 @@ object ChatWsManager {
      * 断线重连后补缺失消息。你离开那会，这里已经过去一个世纪😂。
      */
     private fun appendMsg() {
-        val fromSeq = ChannelMsgDispatcher.getMaxSeq()
+        var fromSeq = ChannelMsgDispatcher.getMaxSeq()
         if (fromSeq <= 0) return
         net {
-            val req = ReqChannelMsgList(
-                roomId = PRODUCT_NAME,
-                cursor = null,
-                msgSeq = fromSeq,
-                limit = 50
-            )
-            val body = SecureRequestBuilder.build(
-                req,
-                SecureRequestBuilder.SecureMode.ENC
-            ) ?: return@net
-            val data = rxResult(ChatService::class) {
-                getChannelMsgList(body.toRequestBody())
-            }?.data ?: return@net
-            data.list.forEach {
-                ChannelMsgDispatcher.dispatch(it)
+            while (true) {
+                val req = ReqChannelMsgList(
+                    roomId = PRODUCT_NAME,
+                    cursor = null,
+                    msgSeq = fromSeq,
+                    limit = 50
+                )
+                val body = SecureRequestBuilder.build(
+                    req,
+                    SecureRequestBuilder.SecureMode.ENC
+                ) ?: break
+                val data = rxResult(ChatService::class) {
+                    getChannelMsgList(body.toRequestBody())
+                }?.data ?: break
+                val list = data.list
+                if (list.isEmpty()) break
+                list.forEach {
+                    ChannelMsgDispatcher.dispatch(it)
+                }
+                // 更新锚点
+                fromSeq = list.maxOf { it.msgSeq }
+                // 少于limit，说明拉完了
+                if (list.size < 50) break
             }
         }
     }
