@@ -240,7 +240,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
             .subscribe { event ->
                 val msg = event.msg
                 // 不是当前房间，直接忽略，聊天室这里都是当前房间的😂
-                if (msg.roomId != PRODUCT_NAME) return@subscribe
+                if (msg.sessionId != PRODUCT_NAME) return@subscribe
                 // 撤回事件
                 if (msg.msgType == 100) {
                     handleRecallEvent(msg)
@@ -250,7 +250,8 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 if (msg.senderId == erc20) return@subscribe
                 val uiMsg = DoraChannelMsg(
                     msgId = msg.msgId,
-                    roomId = msg.roomId,
+                    chatType = 2,
+                    sessionId = msg.sessionId,
                     senderId = msg.senderId,
                     senderName = msg.senderName,
                     senderAvatar = msg.senderAvatar,
@@ -275,7 +276,8 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 if (msgId != null) {
                     val localMsg = DoraChannelMsg(
                         msgId = msgId,
-                        roomId = PRODUCT_NAME,
+                        chatType = 2,
+                        sessionId = PRODUCT_NAME,
                         senderId = erc20,
                         senderName = erc20,
                         senderAvatar = "", // 通过UserManager拿，先不考虑

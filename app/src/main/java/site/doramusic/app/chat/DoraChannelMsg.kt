@@ -1,21 +1,25 @@
 package site.doramusic.app.chat
 
 /**
- * 聊天室消息实体。
+ * 聊天室消息实体，这个其实是通用实体类，固定chatType=2。
  */
 data class DoraChannelMsg(
     /**
-     * 消息ID。
+     * 消息ID，不重复。
      */
     var msgId: Long = 0,
     /**
-     * 消息序号，后端原子递增，防止被并发写穿。
+     * 消息序号，同一sessionId下，原子递增，由后端保证线程安全。
      */
     val msgSeq: Long = 0,
     /**
-     * 房间ID。
+     * 聊天类型，0-私聊，1-群聊，2-聊天室，3-客服。
      */
-    val roomId: String = "",
+    val chatType: Int = 2,
+    /**
+     * 会话ID，相较于原roomId的设计，是更高级别的抽象，聊天室这里固定使用房间ID即可。
+     */
+    val sessionId: String = "",
     /**
      * 发送者的ERC20地址。
      */
@@ -41,7 +45,7 @@ data class DoraChannelMsg(
      */
     var msgContent: String = "",
     /**
-     * 0-正常，1-已撤回（仅发送不超过2分钟的消息）。
+     * 0-正常，1-已撤回（仅发送不超过2分钟的消息可被撤回）。
      */
     var recall: Int = 0,
     /**
