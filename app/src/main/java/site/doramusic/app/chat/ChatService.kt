@@ -10,7 +10,7 @@ import site.doramusic.app.http.ApiResult
 interface ChatService : ApiService {
 
     /**
-     * 加入聊天室。
+     * 加入聊天室。影响是否可以在这个聊天室发送消息。
      *
      * @see ReqJoinChannel
      */
@@ -18,7 +18,7 @@ interface ChatService : ApiService {
     fun joinChannel(@Body body: RequestBody): Observable<ApiResult<Boolean>>
 
     /**
-     * 离开聊天室。
+     * 离开聊天室（没有使用到，仅保留设计完整性）。影响是否可以在这个聊天室发送消息。
      *
      * @see ReqLeaveChannel
      */
