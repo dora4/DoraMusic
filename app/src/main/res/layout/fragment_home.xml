@@ -215,20 +215,37 @@
                     app:dview_fv_textSize="15sp"
                     android:visibility="gone"
                     android:background="#AA000000"/>
-
-                <com.youth.banner.Banner
-                    android:id="@+id/banner"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="256dp"
-                    android:background="@color/colorPanelBg"
-                    android:layout_marginTop="24dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:visibility="gone"
-                    app:banner_indicator_normal_width="5dp"
-                    app:banner_indicator_radius="5dp"
-                    app:banner_indicator_selected_width="5dp" />
-
+                    android:layout_height="wrap_content">
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="256dp"
+                        android:background="@color/colorPanelBg"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginHorizontal="24dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:visibility="gone"
+                        app:banner_indicator_normal_width="5dp"
+                        app:banner_indicator_radius="5dp"
+                        app:banner_indicator_selected_width="5dp" />
+                    <dora.widget.DoraIndicatorView
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        app:dview_iv_indicatorCount="8"
+                        app:dview_iv_indicatorWidth="12dp"
+                        app:dview_iv_indicatorHeight="12dp"
+                        app:dview_iv_indicatorSpacing="8dp"
+                        app:dview_iv_indicatorShape="circle"
+                        app:dview_iv_indicatorSelectedColor="#DADADA"
+                        app:dview_iv_indicatorUnselectedColor="#E1E1E1"
+                        app:dview_iv_indicatorScaleFactor="1.2"
+                        app:dview_iv_indicatorAlphaFactor="0.5" />
+                </FrameLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_home_module"
                     android:layout_width="match_parent"

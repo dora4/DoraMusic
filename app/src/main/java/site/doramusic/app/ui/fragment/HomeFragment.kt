@@ -324,8 +324,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                         }
                     }
                 }
+                binding.indicator.setIndicatorCount(result.size)
                 val imageAdapter = ImageAdapter(result)
                 imageAdapter.setOnBannerListener { _, position ->
+                    // 改变指示器选中
+                    binding.indicator.pageChangeCallback.onPageSelected(position)
                     val url = banners?.get(position)?.detailUrl
                         url?.let {
                             val ext = getFileExtension(url)
