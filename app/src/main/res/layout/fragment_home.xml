@@ -233,7 +233,7 @@
                     <com.youth.banner.Banner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="256dp"
+                        android:layout_height="match_parent"
                         android:background="@color/colorPanelBg"
                         app:layout_constraintDimensionRatio="16:9"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -243,9 +243,8 @@
                     <dora.widget.DoraIndicatorView
                         android:id="@+id/indicator"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:layout_marginBottom="10dp"
                         app:dview_iv_indicatorAlphaFactor="0.6"
                         app:dview_iv_indicatorHeight="6dp"
                         app:dview_iv_indicatorScaleFactor="1.2"

@@ -327,6 +327,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                         }
                     }
                 }
+                // 宽高比固定16:9，便于展示图片
+                binding.clBanner.layoutParams.height = (ScreenUtils.getScreenWidth() - DensityUtils.dp2px(48f)) * 9 / 16
                 binding.indicator.setIndicatorCount(result.size)
                 binding.banner.addOnPageChangeListener(object : OnPageChangeListener {
                     override fun onPageScrolled(
