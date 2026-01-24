@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
     </data>
 
     <RelativeLayout
@@ -13,12 +14,14 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/ll_home_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
+
             <ProgressBar
                 android:id="@+id/sb_home_bottom_playback"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -51,10 +54,10 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:padding="6dp"
-                    app:tint="@color/silver"
                     android:background="@color/white"
-                    android:src="@drawable/ic_bottom_bar_playlist" />
+                    android:padding="6dp"
+                    android:src="@drawable/ic_bottom_bar_playlist"
+                    app:tint="@color/silver" />
 
                 <View
                     android:id="@+id/view_home_bottom_divider"
@@ -71,10 +74,10 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@id/view_home_bottom_divider"
-                    android:padding="4dp"
-                    app:tint="@color/silver"
                     android:background="@color/white"
-                    android:src="@drawable/ic_bottom_bar_next" />
+                    android:padding="4dp"
+                    android:src="@drawable/ic_bottom_bar_next"
+                    app:tint="@color/silver" />
 
                 <FrameLayout
                     android:id="@+id/fl_home_bottom_play_pause"
@@ -88,27 +91,27 @@
                         android:id="@+id/btn_home_bottom_pause"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:padding="4dp"
-                        app:tint="@color/silver"
                         android:background="@color/white"
+                        android:padding="4dp"
                         android:src="@drawable/ic_bottom_bar_pause"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        app:tint="@color/silver" />
 
                     <ImageButton
                         android:id="@+id/btn_home_bottom_play"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:padding="4dp"
-                        app:tint="@color/silver"
                         android:background="@color/white"
-                        android:src="@drawable/ic_bottom_bar_play" />
+                        android:padding="4dp"
+                        android:src="@drawable/ic_bottom_bar_play"
+                        app:tint="@color/silver" />
                 </FrameLayout>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
                     android:layout_centerVertical="true"
+                    android:layout_margin="6dp"
                     android:layout_toStartOf="@id/fl_home_bottom_play_pause"
                     android:layout_toEndOf="@id/iv_home_bottom_album"
                     android:orientation="vertical">
@@ -121,18 +124,18 @@
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
                         android:text="@string/brand"
-                            android:textSize="15sp"
-                        android:textColor="@color/colorTextSecondary" />
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="15sp" />
 
                     <site.doramusic.app.widget.MarqueeTextView
                         android:id="@+id/tv_home_bottom_artist"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_home_bottom_music_name"
+                        android:layout_marginTop="1dp"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                            android:layout_marginTop="1dp"
-                            android:text="@string/slogan"
+                        android:text="@string/slogan"
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="13sp" />
 
@@ -140,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_home_bottom_artist"
-                            android:layout_marginTop="2dp"
+                        android:layout_marginTop="2dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -151,15 +154,15 @@
                             android:focusableInTouchMode="false"
                             android:gravity="center_horizontal"
                             android:text="00:00"
-                                android:textSize="14sp"
-                            android:textColor="@color/colorTextSecondary" />
+                            android:textColor="@color/colorTextSecondary"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="-"
-                                android:textSize="14sp"
-                            android:textColor="@color/colorTextSecondary" />
+                            android:textColor="@color/colorTextSecondary"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tv_home_bottom_duration"
@@ -167,8 +170,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:text="00:00"
-                                android:textSize="14sp"
-                            android:textColor="@color/colorTextSecondary" />
+                            android:textColor="@color/colorTextSecondary"
+                            android:textSize="14sp" />
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
@@ -182,39 +185,43 @@
             android:layout_height="match_parent"
             android:layout_above="@id/ll_home_bottom_layout"
             android:background="@drawable/theme_bg">
+
             <View
                 android:id="@+id/statusbar_home"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/white"/>
+                android:background="@color/white" />
+
             <dora.widget.DoraTitleBar
                 android:id="@+id/titlebar_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/statusbar_home"
                 android:background="@color/white"
-                app:dview_title="@string/app_name"
-                app:dview_titleTextSize="18sp"
-                app:dview_isTitleTextBold="false"
-                app:dview_titleTextColor="@color/colorTextPrimary"
-                app:dview_isClickBackIconClose="false"
                 app:dview_backIcon="@drawable/ic_titlebar_menu"
-                app:dview_backIconSize="24dp"/>
+                app:dview_backIconSize="24dp"
+                app:dview_isClickBackIconClose="false"
+                app:dview_isTitleTextBold="false"
+                app:dview_title="@string/app_name"
+                app:dview_titleTextColor="@color/colorTextPrimary"
+                app:dview_titleTextSize="18sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_below="@+id/titlebar_home">
+                android:layout_below="@+id/titlebar_home"
+                android:orientation="vertical">
 
                 <dora.widget.DoraFlipperView
                     android:id="@+id/fp_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#AA000000"
+                    android:visibility="gone"
                     app:dview_fv_flipInterval="5000"
                     app:dview_fv_textColor="@color/white"
-                    app:dview_fv_textSize="15sp"
-                    android:visibility="gone"
-                    android:background="#AA000000"/>
+                    app:dview_fv_textSize="15sp" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_banner"
                     android:layout_width="match_parent"
@@ -228,27 +235,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="256dp"
                         android:background="@color/colorPanelBg"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintDimensionRatio="16:9"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintDimensionRatio="16:9"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <dora.widget.DoraIndicatorView
                         android:id="@+id/indicator"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:padding="10dp"
-                        app:layout_constraintBottom_toBottomOf="@id/banner"
-                        app:layout_constraintStart_toStartOf="@id/banner"
-                        app:layout_constraintEnd_toEndOf="@id/banner"
-                        app:dview_iv_indicatorWidth="6dp"
+                        android:layout_marginBottom="10dp"
+                        app:dview_iv_indicatorAlphaFactor="0.6"
                         app:dview_iv_indicatorHeight="6dp"
-                        app:dview_iv_indicatorSpacing="4dp"
-                        app:dview_iv_indicatorShape="circle"
-                        app:dview_iv_indicatorSelectedColor="#DADADA"
-                        app:dview_iv_indicatorUnselectedColor="#E1E1E1"
                         app:dview_iv_indicatorScaleFactor="1.2"
-                        app:dview_iv_indicatorAlphaFactor="0.6" />
+                        app:dview_iv_indicatorSelectedColor="#DADADA"
+                        app:dview_iv_indicatorShape="circle"
+                        app:dview_iv_indicatorSpacing="4dp"
+                        app:dview_iv_indicatorUnselectedColor="#E1E1E1"
+                        app:dview_iv_indicatorWidth="6dp"
+                        app:layout_constraintBottom_toBottomOf="@id/banner"
+                        app:layout_constraintEnd_toEndOf="@id/banner"
+                        app:layout_constraintStart_toStartOf="@id/banner" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_home_module"
                     android:layout_width="match_parent"
@@ -256,9 +266,9 @@
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="8dp"
-                    android:paddingVertical="10dp"
-                    android:paddingHorizontal="10dp"
                     android:overScrollMode="never"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3" />
             </LinearLayout>
@@ -281,17 +291,18 @@
         <View
             android:id="@+id/statusbar_music_play"
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp" />
+
         <site.doramusic.app.widget.SlidingView
             android:id="@+id/sv_home_drawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/statusbar_music_play"
             android:allowSingleTap="true"
             android:background="@color/transparent"
             android:content="@+id/sliding_content"
             android:handle="@+id/sliding_handle"
-            android:visibility="invisible"
-            android:layout_below="@+id/statusbar_music_play">
+            android:visibility="invisible">
 
             <include layout="@layout/view_sliding_handle" />
 
