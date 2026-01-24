@@ -15,11 +15,14 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.youth.banner.Banner
 import com.youth.banner.adapter.BannerAdapter
+import com.youth.banner.listener.OnPageChangeListener
 import dora.BaseFragment
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
@@ -314,7 +317,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             if (visible == 1 && adEnable == "true") {
                 // 广告印象
                 spmAdImpression("official")
-                binding.banner.visibility = View.VISIBLE
+                binding.clBanner.visibility = View.VISIBLE
                 val banners = result(AdService::class) { getBannerAds(PRODUCT_NAME) }?.data
                 val result = arrayListOf<String>()
                 if (banners != null) {
@@ -325,10 +328,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     }
                 }
                 binding.indicator.setIndicatorCount(result.size)
+                binding.banner.addOnPageChangeListener(object : OnPageChangeListener {
+                    override fun onPageScrolled(
+                        position: Int,
+                        positionOffset: Float,
+                        positionOffsetPixels: Int
+                    ) {
+                        binding.indicator.pageChangeCallback.onPageScrolled(position, positionOffset,
+                            positionOffsetPixels)
+                    }
+
+                    override fun onPageSelected(position: Int) {
+                        binding.indicator.pageChangeCallback.onPageSelected(position)
+                    }
+
+                    override fun onPageScrollStateChanged(state: Int) {
+                        binding.indicator.pageChangeCallback.onPageScrollStateChanged(state)
+                    }
+                })
                 val imageAdapter = ImageAdapter(result)
                 imageAdapter.setOnBannerListener { _, position ->
-                    // 改变指示器选中
-                    binding.indicator.pageChangeCallback.onPageSelected(position)
                     val url = banners?.get(position)?.detailUrl
                         url?.let {
                             val ext = getFileExtension(url)
