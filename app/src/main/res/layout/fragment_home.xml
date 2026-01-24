@@ -245,6 +245,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:visibility="gone"
                         app:dview_iv_indicatorAlphaFactor="0.6"
                         app:dview_iv_indicatorHeight="6dp"
                         app:dview_iv_indicatorScaleFactor="1.2"
