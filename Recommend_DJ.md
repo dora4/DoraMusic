@@ -34,7 +34,7 @@
 - 风催雨 https://www.youtube.com/watch?v=h0tojPD-65g
 - 美人画卷 https://www.youtube.com/watch?v=Ai8dlJlWeuE
 - 选择失忆 https://www.youtube.com/watch?v=Sfd8qBKvdMg
-- 秒针 https://www.youtube.com/watch?v=tN6-VYvstGM
+- 福气马上来 https://youtu.be/St1JoiQS6cw?si=_Jz29X3SJW8IT3Qh
 - 爱情有时很残忍 https://www.youtube.com/watch?v=H6TUN01DoQQ
 - 孤城 https://www.youtube.com/watch?v=ChRYTbz67IE
 - 虞兮叹 https://www.youtube.com/watch?v=ACmrAE4ov94
