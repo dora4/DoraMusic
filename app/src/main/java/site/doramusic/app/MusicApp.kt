@@ -94,7 +94,7 @@ class MusicApp : BaseApplication(), AppConfig {
         val skinThemeColor = ThemeSelector.getThemeColor(applicationContext)
         DoraFund.init(this, APP_NAME,
             getString(R.string.app_desc), URL_DOMAIN,
-            arrayOf(EVMChains.POLYGON), skinThemeColor,
+            arrayOf(EVMChains.ETHEREUM, EVMChains.POLYGON, EVMChains.AVALANCHE, EVMChains.BSC), skinThemeColor,
             object : DoraFund.PayListener {
                 override fun onPayFailure(orderId: String, msg: String) {
                 }
