@@ -60,6 +60,10 @@ DoraChat开发中（未开放注册），引领下一代互联网登录方式，
 
 <p><img width="542" height="1206" src="https://github.com/user-attachments/assets/05859ba3-e92d-4ea7-ad31-f44422cbf942"></p>
 
+### Crash监测
+
+<img width="456" height="494" alt="截屏2026-02-25 14 48 28" src="https://github.com/user-attachments/assets/993e2432-a296-474e-9abf-e6cb9108cd9c" />
+
 ### 错误码
 https://github.com/dora4/DoraMusic/blob/main/ERROR_CODE.md
 
