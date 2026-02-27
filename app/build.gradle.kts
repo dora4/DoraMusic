@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 129
-    val version = "2.0.18"
+    val code = 131
+    val version = "2.1.1"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -103,13 +103,12 @@ fun libFileTree() : ConfigurableFileTree {
 
 dependencies {
     implementation(libFileTree())
-    implementation(project(":authsdk"))
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
     implementation("com.github.dora4:dora:1.3.57")
-    implementation("com.github.dora4:dora-arouter-support:1.6")
+    implementation("com.github.dora4:dora-arouter-support:1.10")
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.5")
     implementation("com.github.dora4:dora-glide-support:1.6")
@@ -137,6 +136,8 @@ dependencies {
     implementation("com.github.dora4:dview-color-picker:1.0")
     implementation("com.github.dora4:dview-popup-window:1.3")
     implementation("com.github.dora4:dview-indicator-view:1.1")
+
+    implementation("com.github.dora4:dorachat-authsdk:1.0")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")
