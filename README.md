@@ -56,7 +56,7 @@ Android7.0+
 
 ### 社区搭建
 
-DoraChat开发中（未开放注册），引领下一代互联网登录方式，无需披露个人信息，即可在官方聊天室匿名聊天。连接Web3钱包自动获取ERC20地址，无需手动输入用户名。
+DoraChat开发中（未开放注册），引领下一代互联网登录方式，无需披露个人信息，即可在官方聊天室匿名聊天。连接Web3钱包自动获取ERC20地址，替代手动输入用户名。
 
 <p><img width="542" height="1206" src="https://github.com/user-attachments/assets/05859ba3-e92d-4ea7-ad31-f44422cbf942"></p>
 
