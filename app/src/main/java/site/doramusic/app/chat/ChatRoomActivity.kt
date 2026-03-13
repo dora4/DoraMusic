@@ -241,7 +241,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 val msg = event.msg
                 // 不是当前房间，直接忽略，聊天室这里都是当前房间的😂
                 if (msg.sessionId != PRODUCT_NAME) return@subscribe
-                // 撤回事件，不单独设计成一个事件，利用了拉缺失消息的特性，否则丢失了撤回事件，消息被当前客户端偷看
+                // 撤回事件
                 if (msg.msgType == 100) {
                     handleRecallEvent(msg)
                     return@subscribe
