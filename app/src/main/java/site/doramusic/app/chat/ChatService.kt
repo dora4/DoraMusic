@@ -31,7 +31,7 @@ interface ChatService : ApiService {
      * @see ReqSendChannelMsg
      */
     @POST("chat/channel/send")
-    fun sendMsg(@Body body: RequestBody): Observable<ApiResult<Long>>
+    fun sendMsg(@Body body: RequestBody): Observable<ApiResult<SendMsgResult>>
 
     /**
      * 撤回自己发送的消息。

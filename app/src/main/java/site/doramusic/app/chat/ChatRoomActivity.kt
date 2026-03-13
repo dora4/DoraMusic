@@ -272,10 +272,11 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
             val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
                 ?: return@setOnClickListener
             net {
-                val msgId = rxResult(ChatService::class) { sendMsg(body.toRequestBody()) }?.data
-                if (msgId != null) {
+                val result = rxResult(ChatService::class) { sendMsg(body.toRequestBody()) }?.data
+                if (result != null) {
                     val localMsg = DoraChannelMsg(
-                        msgId = msgId,
+                        msgId = result.msgId,
+                        msgSeq = result.msgSeq,
                         chatType = 2,
                         sessionId = PRODUCT_NAME,
                         senderId = erc20,
