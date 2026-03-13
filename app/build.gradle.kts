@@ -107,10 +107,10 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dora:1.3.57")
+    implementation("com.github.dora4:dora:1.3.60")
     implementation("com.github.dora4:dora-arouter-support:1.10")
     implementation("com.github.dora4:dora-firebase-support:1.14")
-    implementation("com.github.dora4:dora-brvah-support:1.5")
+    implementation("com.github.dora4:dora-brvah-support:1.6")
     implementation("com.github.dora4:dora-glide-support:1.6")
     implementation("com.github.dora4:dora-walletconnect-support:2.1.34") {
         exclude(group = "com.madgag.spongycastle", module = "core")
@@ -126,7 +126,7 @@ dependencies {
     implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.11")
     implementation("com.github.dora4:dview-bottom-dialog:1.13")
-    implementation("com.github.dora4:dview-avatar:1.4")
+    implementation("com.github.dora4:dview-avatar:1.5")
     implementation("com.github.dora4:dview-flipper-view:1.10")
     implementation("com.github.dora4:dview-coupon-view:1.16")
     implementation("com.github.dora4:dview-sidebar:1.4")

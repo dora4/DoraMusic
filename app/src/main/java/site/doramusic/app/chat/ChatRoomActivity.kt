@@ -94,7 +94,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
     }
 
     /**
-     * 首次进入：拉最新一页。
+     * 首次进入，拉最新一页。
      */
     private fun loadLatest() {
         loadingHistory = true
@@ -241,7 +241,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 val msg = event.msg
                 // 不是当前房间，直接忽略，聊天室这里都是当前房间的😂
                 if (msg.sessionId != PRODUCT_NAME) return@subscribe
-                // 撤回事件
+                // 撤回事件，不单独设计成一个事件，利用了拉缺失消息的特性，否则丢失了撤回事件，消息被当前客户端偷看
                 if (msg.msgType == 100) {
                     handleRecallEvent(msg)
                     return@subscribe
@@ -250,6 +250,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 if (msg.senderId == erc20) return@subscribe
                 val uiMsg = DoraChannelMsg(
                     msgId = msg.msgId,
+                    msgSeq = msg.msgSeq,
                     chatType = 2,
                     sessionId = msg.sessionId,
                     senderId = msg.senderId,
@@ -258,7 +259,10 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                     senderRole = msg.senderRole,
                     msgType = msg.msgType,
                     msgContent = msg.msgContent,
-                    ts = msg.ts
+                    recall = msg.recall, // 这里仅保证逻辑严谨性，消息是否被撤回，推送过来了肯定是没被撤回的
+                    atUserIds = msg.atUserIds, // 这里仅保证逻辑严谨性，暂时没有使用到
+                    replyMsgId = msg.replyMsgId, // 这里仅保证逻辑严谨性，暂时没有使用到
+                    ts = msg.ts // 以服务器的时间戳为准
                 )
                 runOnUiThread {
                     adapter.addData(uiMsg)
@@ -280,7 +284,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                         chatType = 2,
                         sessionId = PRODUCT_NAME,
                         senderId = erc20,
-                        senderName = erc20,
+                        senderName = erc20,// 通过UserManager拿，先不考虑
                         senderAvatar = "", // 通过UserManager拿，先不考虑
                         senderRole = 0,
                         msgType = 0,
@@ -290,6 +294,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                     )
                     adapter.addData(localMsg)
                     binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
+                    // 清空输入框的内容
                     binding.etInput.setText("")
                 } else {
                     showLongToast("消息未发送")
