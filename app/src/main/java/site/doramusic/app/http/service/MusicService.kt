@@ -3,21 +3,21 @@ package site.doramusic.app.http.service
 import dora.http.retrofit.ApiService
 import retrofit2.Call
 import retrofit2.http.*
-import site.doramusic.app.http.DoraResponse
+import site.doramusic.app.http.ApiResult
 import site.doramusic.app.lrc.DoraLyric
 
 interface MusicService : ApiService {
 
     @GET("searchLrc")
     fun searchLrc(@Query("musicName") musicName: String,
-                  @Query("musicArtist") musicArtist: String): Call<DoraResponse<DoraLyric>>
+                  @Query("musicArtist") musicArtist: String): Call<ApiResult<DoraLyric>>
 
     @FormUrlEncoded
     @POST("lyric")
-    fun lyric(@Field("id") id: Long): Call<DoraResponse<DoraLyric>>
+    fun lyric(@Field("id") id: Long): Call<ApiResult<DoraLyric>>
 
     @FormUrlEncoded
     @POST("saveMusicInfo")
     fun saveMusicInfo(@Field("erc20Address") uploader: String, @Field("cid") cid: String) :
-            Call<DoraResponse<Boolean>>
+            Call<ApiResult<Boolean>>
 }

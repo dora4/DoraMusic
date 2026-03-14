@@ -1,13 +1,6 @@
 package site.doramusic.app.lrc.loader
 
-import android.os.Handler
-import android.os.Looper
-import dora.http.retrofit.RetrofitManager
-import dora.util.TextUtils
 import site.doramusic.app.db.Music
-import site.doramusic.app.http.DoraCallback
-import site.doramusic.app.http.service.MusicService
-import site.doramusic.app.lrc.DoraLyric
 import site.doramusic.app.lrc.LyricScroller
 import site.doramusic.app.lrc.LyricScroller.LyricListener
 import java.io.File

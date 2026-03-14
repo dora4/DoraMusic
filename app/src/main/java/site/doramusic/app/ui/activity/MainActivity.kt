@@ -393,7 +393,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             net {
                 val ok = result {
                     RetrofitManager.getService(MusicService::class.java).saveMusicInfo(erc20Address, it)
-                }?.result as Boolean
+                }?.data as Boolean
                 if (ok) {
                     showShortToast(getString(R.string.uploaded_successfully))
                 }
