@@ -46,7 +46,6 @@ abstract class BaseReq {
                 }
             clazz = clazz.superclass
         }
-        // 父类字段（显式加入，避免遗漏）
         map["lang"] = lang
         map["payload"] = payload
         map["timestamp"] = timestamp

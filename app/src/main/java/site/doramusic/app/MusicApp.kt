@@ -41,7 +41,8 @@ import site.doramusic.app.util.ThemeSelector
 import java.util.concurrent.TimeUnit
 
 /**
- * 朵拉音乐APP。
+ * 朵拉音乐，永久免费！它是一个开源的Android手机本地音乐播放器。极致体验，启动秒播，为专注工作而生。
+ * 完全掌控音乐播放内核，体验DIY一个音乐播放器的乐趣。
  */
 class MusicApp : BaseApplication(), AppConfig {
 
