@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 131
-    val version = "2.1.1"
+    val code = 132
+    val version = "2.1.2"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -107,11 +107,11 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dora:1.3.60")
+    implementation("com.github.dora4:dora:1.3.61")
     implementation("com.github.dora4:dora-arouter-support:1.10")
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.6")
-    implementation("com.github.dora4:dora-glide-support:1.6")
+    implementation("com.github.dora4:dora-glide-support:1.7")
     implementation("com.github.dora4:dora-walletconnect-support:2.1.34") {
         exclude(group = "com.madgag.spongycastle", module = "core")
     }

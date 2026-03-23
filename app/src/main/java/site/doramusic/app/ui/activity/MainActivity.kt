@@ -368,7 +368,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 try {
                     val ok = api(MusicService::class) {
                         saveMusicInfo(erc20Address, cid)
-                    }?.result as Boolean
+                    }?.data as Boolean
                     if (ok) {
                         showShortToast(getString(R.string.uploaded_successfully))
                     }

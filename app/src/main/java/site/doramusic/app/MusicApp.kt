@@ -24,6 +24,7 @@ import site.doramusic.app.conf.AppConfig.Companion.COLUMN_ORDER_ID
 import site.doramusic.app.conf.AppConfig.Companion.CONNECT_TIMEOUT
 import site.doramusic.app.conf.AppConfig.Companion.DB_NAME
 import site.doramusic.app.conf.AppConfig.Companion.DB_VERSION
+import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.conf.AppConfig.Companion.READ_TIMEOUT
 import site.doramusic.app.conf.AppConfig.Companion.URL_DOMAIN
 import site.doramusic.app.db.Album
@@ -81,8 +82,8 @@ class MusicApp : BaseApplication(), AppConfig {
     private fun initAuth() {
         val config = DoraChatConfig.Builder(
             apiBaseUrl = AppConfig.URL_AUTH_SERVER,
-            partitionId = "doramusic",
-            appName = "Dora Music",
+            partitionId = PRODUCT_NAME,
+            appName = APP_NAME,
             themeColor = ContextCompat.getColor(this, R.color.colorPrimary)
         )
             .enableLog(true)
