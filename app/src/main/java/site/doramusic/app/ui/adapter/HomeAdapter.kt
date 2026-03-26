@@ -1,15 +1,11 @@
 package site.doramusic.app.ui.adapter
 
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.widget.AppCompatImageView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import dora.skin.SkinManager
 import site.doramusic.app.R
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.util.ThemeSelector
 

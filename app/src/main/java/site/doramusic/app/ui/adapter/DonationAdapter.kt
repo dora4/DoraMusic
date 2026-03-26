@@ -2,10 +2,8 @@ package site.doramusic.app.ui.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import dora.skin.SkinManager
 import dora.widget.DoraCouponView
 import site.doramusic.app.R
-import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.model.Donation
 import site.doramusic.app.util.ThemeSelector
 import java.text.DecimalFormat
