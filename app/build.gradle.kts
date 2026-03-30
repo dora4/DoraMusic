@@ -12,7 +12,7 @@ android {
     compileSdk = 36
 
     val code = 132
-    val version = "2.1.2"
+    val version = "2.1.3"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24

@@ -31,14 +31,14 @@ class ChannelMsgAdapter(val erc20: String) :
             holder.setText(R.id.tv_left_name, item.senderId)
             holder.setText(
                 R.id.tv_left_content,
-                item.msgContent
+                if (item.msgType == 100) context.getString(R.string.recalled_a_message) else item.msgContent
             )
         } else {
             holder.setGone(R.id.rl_left_content, true)
             holder.setVisible(R.id.rl_right_content, true)
             holder.setText(
                 R.id.tv_right_content,
-                item.msgContent
+                if (item.msgType == 100) context.getString(R.string.recalled_a_message) else item.msgContent
             )
         }
         showMsg(holder, item.recall == 0)

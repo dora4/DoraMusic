@@ -244,10 +244,9 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 // 撤回事件
                 if (msg.msgType == 100) {
                     handleRecallEvent(msg)
-                    return@subscribe
                 }
                 // 自己发送的不收
-                if (msg.senderId == erc20) return@subscribe
+                if (msg.senderId == erc20 && msg.msgType != 100) return@subscribe
                 val uiMsg = DoraChannelMsg(
                     msgId = msg.msgId,
                     msgSeq = msg.msgSeq,

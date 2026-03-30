@@ -4,6 +4,8 @@ import android.os.Handler
 import android.os.Looper
 import com.dorachat.auth.AuthManager
 import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.rxResult
 import dora.util.LogUtils
@@ -66,15 +68,23 @@ object ChatWsManager {
             override fun onMessage(ws: WebSocket, text: String) {
                 LogUtils.d("chat ws 收到消息：$text")
                 try {
-                    val msg = gson.fromJson(text, DoraChannelMsg::class.java)
-                    if (msg == null || msg.msgContent.isBlank()) {
-                        LogUtils.w("chat ws invalid payload: $text")
-                        return
+                    val type = object : TypeToken<WsPacket<JsonObject>>() {}.type
+                    val packet: WsPacket<JsonObject> = gson.fromJson(text, type)
+                    when (packet.type) {
+                        "channel_msg" -> handleChatMsg(packet)
                     }
-                    ChannelMsgDispatcher.dispatch(msg)
                 } catch (e: Exception) {
                     LogUtils.e("chat ws parse error: $text\n${e}")
                 }
+            }
+
+            private fun handleChatMsg(packet: WsPacket<JsonObject>) {
+                val msg = gson.fromJson(packet.data,
+                    DoraChannelMsg::class.java)
+                if (msg == null || msg.msgContent.isBlank()) {
+                    return
+                }
+                ChannelMsgDispatcher.dispatch(msg)
             }
 
             override fun onFailure(ws: WebSocket, t: Throwable, r: Response?) {
