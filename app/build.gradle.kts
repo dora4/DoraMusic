@@ -108,11 +108,11 @@ dependencies {
 
     // Dora全家桶
     implementation("com.github.dora4:dora:1.3.61")
-    implementation("com.github.dora4:dora-arouter-support:1.10")
+    implementation("com.github.dora4:dora-arouter-support:1.11")
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.6")
     implementation("com.github.dora4:dora-glide-support:1.7")
-    implementation("com.github.dora4:dora-walletconnect-support:2.1.34") {
+    implementation("com.github.dora4:dora-walletconnect-support:2.1.35") {
         exclude(group = "com.madgag.spongycastle", module = "core")
     }
 
@@ -121,7 +121,7 @@ dependencies {
     implementation("com.github.dora4:dview-titlebar:1.37")
     implementation("com.github.dora4:dview-menu-panel:1.47")
     implementation("com.github.dora4:dview-toggle-button:1.5")
-    implementation("com.github.dora4:dview-alert-dialog:1.34")
+    implementation("com.github.dora4:dview-alert-dialog:1.35")
     implementation("com.github.dora4:dview-loading-dialog:1.5")
     implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.11")
@@ -137,7 +137,7 @@ dependencies {
     implementation("com.github.dora4:dview-popup-window:1.3")
     implementation("com.github.dora4:dview-indicator-view:1.1")
 
-    implementation("com.github.dora4:dorachat-authsdk:1.0")
+    implementation("com.github.dora4:dorachat-authsdk:1.0.3")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")
