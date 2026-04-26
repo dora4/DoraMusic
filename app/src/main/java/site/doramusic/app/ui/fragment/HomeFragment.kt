@@ -330,6 +330,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                                         val intent = Intent(requireContext(), FloatingPlayer::class.java)
                                         intent.putExtra(EXTRA_URL, url)
                                         requireContext().startService(intent)
+                                    } else {
+                                        startActivity(IntentUtils.getRequestOverlayPermissionIntent(requireContext().packageName))
                                     }
                                 }
                                 else -> {
