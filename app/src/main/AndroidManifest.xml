@@ -129,7 +129,10 @@
             </intent-filter>
         </service>
 
+        <service android:name=".media.FloatingPlayer" />
+
         <service android:name=".service.DownloadService" />
+
         <receiver
                 android:name=".receiver.BatteryReceiver"
                 android:exported="false">

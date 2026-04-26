@@ -55,10 +55,10 @@ import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.sysmsg.SysMsgEvent
 import site.doramusic.app.http.service.AdService
+import site.doramusic.app.media.FloatingPlayer
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MusicControl
-import site.doramusic.app.media.SimpleAudioPlayer
 import site.doramusic.app.sysmsg.DoraSysMsg
 import site.doramusic.app.sysmsg.SysMsgService
 import site.doramusic.app.ui.UIManager
@@ -88,7 +88,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private lateinit var albumDao: OrmDao<Album>
     private lateinit var folderDao: OrmDao<Folder>
     private val adapter = HomeAdapter()
-    private var player: SimpleAudioPlayer? = null
     private val sysMsgList = mutableListOf<DoraSysMsg>()
     private lateinit var tipDialog: DoraSingleButtonDialog
 
@@ -327,10 +326,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                             val ext = getFileExtension(url)
                             when (ext) {
                                 "mp3", "aac", "flac" -> {
-                                    if (player == null) {
-                                        player = SimpleAudioPlayer(requireContext())
+                                    if (IntentUtils.hasOverlayPermission(requireContext())) {
+                                        val intent = Intent(requireContext(), FloatingPlayer::class.java)
+                                        intent.putExtra(EXTRA_URL, url)
+                                        requireContext().startService(intent)
                                     }
-                                    player?.playByUrl(url)
                                 }
                                 else -> {
                                     val intent = Intent(activity, BrowserActivity::class.java)

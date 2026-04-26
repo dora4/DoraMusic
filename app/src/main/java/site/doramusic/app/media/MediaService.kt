@@ -18,7 +18,6 @@ import dora.util.LogUtils
 import dora.util.ProcessUtils
 import dora.util.RxBus
 import site.doramusic.app.R
-import site.doramusic.app.chat.ChatWsManager
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.ACTION_FAVORITE
 import site.doramusic.app.conf.AppConfig.Companion.ACTION_NEXT
@@ -107,7 +106,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         super.onDestroy()
         LogUtils.e("媒体服务被销毁")
         mc.exit()
-        simplePlayer?.exit()
+        simplePlayer?.close()
         sysMsgWsManager.close()
         // 服务被回收，直接退出所有进程
         ProcessUtils.killAllProcesses()
