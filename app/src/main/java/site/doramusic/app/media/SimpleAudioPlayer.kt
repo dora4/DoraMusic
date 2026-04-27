@@ -3,6 +3,7 @@ package site.doramusic.app.media
 import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.Uri
 import dora.util.LogUtils
 
 import java.io.IOException
@@ -99,13 +100,46 @@ class SimpleAudioPlayer(private val context: Context) {
         }
     }
 
-    // ===================== 播放内置文件 =====================
-    fun playByRawId(rawId: Int) {
+    fun playByUri(uri: Uri) {
+        if (!requestFocus()) return
         try {
             if (mediaPlayer == null) {
                 mediaPlayer = MediaPlayer()
             }
-            if (!requestFocus()) return
+            mediaPlayer?.reset()
+            state = State.PREPARING
+            mediaPlayer?.setDataSource(context, uri)
+            mediaPlayer?.prepareAsync()
+            mediaPlayer?.setOnPreparedListener {
+                it.start()
+                state = State.PLAYING
+                stateListener?.onPlay()
+                isPlaying = true
+            }
+            mediaPlayer?.setOnCompletionListener {
+                completeListener?.onComplete()
+                state = State.STOPPED
+                isPlaying = false
+            }
+        } catch (e: SecurityException) {
+            LogUtils.e("playByUri permission denied: ${e.message}")
+            releasePlayer()
+        } catch (e: IOException) {
+            LogUtils.e("playByUri IO error: ${e.message}")
+            releasePlayer()
+        } catch (e: Exception) {
+            LogUtils.e("playByUri error: ${e.message}")
+            releasePlayer()
+        }
+    }
+
+    // ===================== 播放内置文件 =====================
+    fun playByRawId(rawId: Int) {
+        if (!requestFocus()) return
+        try {
+            if (mediaPlayer == null) {
+                mediaPlayer = MediaPlayer()
+            }
             mediaPlayer?.reset()
             val afd = context.resources.openRawResourceFd(rawId)
             mediaPlayer?.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
@@ -123,6 +157,14 @@ class SimpleAudioPlayer(private val context: Context) {
         } catch (e: Exception) {
             LogUtils.e("playByRawId error: ${e.message}")
             releasePlayer()
+        }
+    }
+
+    fun play(source: String) {
+        if (source.startsWith("content://")) {
+            playByUri(Uri.parse(source))
+        } else {
+            playByUrl(source)
         }
     }
 

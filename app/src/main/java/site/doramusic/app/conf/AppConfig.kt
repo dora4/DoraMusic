@@ -58,6 +58,7 @@ interface AppConfig {
         const val EXTRA_IS_PLAYING = "isPlaying"
         const val EXTRA_TITLE = "title"
         const val EXTRA_URL = "url"
+        const val EXTRA_URI = "uri"
         const val EXTRA_ERC20 = "erc20"
 
         // 文件夹相关

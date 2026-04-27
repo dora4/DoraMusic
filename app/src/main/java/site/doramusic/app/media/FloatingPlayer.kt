@@ -1,11 +1,13 @@
 package site.doramusic.app.media
 
 import android.content.Intent
+import android.net.Uri
 import android.widget.ImageView
 import dora.BaseFloatingWindowService
 import dora.util.DensityUtils
 import dora.util.ScreenUtils
 import site.doramusic.app.R
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URI
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URL
 
 class FloatingPlayer : BaseFloatingWindowService() {
@@ -47,6 +49,12 @@ class FloatingPlayer : BaseFloatingWindowService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // 优先URI
+        val uri: Uri? = intent?.getParcelableExtra(EXTRA_URI)
+        if (uri != null) {
+            playByUri(uri)
+            return START_STICKY
+        }
         val url = intent?.getStringExtra(EXTRA_URL)
         if (!url.isNullOrEmpty()) {
             if (url != currentUrl) {
@@ -76,6 +84,10 @@ class FloatingPlayer : BaseFloatingWindowService() {
 
     fun playByUrl(url: String) {
         audioPlayer.playByUrl(url)
+    }
+
+    fun playByUri(uri: Uri) {
+        audioPlayer.playByUri(uri)
     }
 
     override fun getLayoutId(): Int {
