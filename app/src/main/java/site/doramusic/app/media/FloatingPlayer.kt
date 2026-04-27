@@ -15,7 +15,7 @@ class FloatingPlayer : BaseFloatingWindowService() {
     private var isInitialized = false
     private var ivPauseResume: ImageView? = null
 
-    private fun updatePlayIcon(isPlaying: Boolean) {
+    private fun updatePlayerIcon(isPlaying: Boolean) {
         ivPauseResume?.setImageResource(
             if (isPlaying) R.drawable.ic_player_pause
             else R.drawable.ic_player_play
@@ -27,18 +27,17 @@ class FloatingPlayer : BaseFloatingWindowService() {
         audioPlayer = SimpleAudioPlayer(this)
         audioPlayer.setOnPlayCompleteListener(object : SimpleAudioPlayer.OnPlayCompleteListener {
             override fun onComplete() {
-                audioPlayer.close()
                 stopSelf()
             }
         })
         audioPlayer.setOnStateChangeListener(object : SimpleAudioPlayer.OnStateChangeListener {
 
             override fun onPlay() {
-                updatePlayIcon(true)
+                updatePlayerIcon(true)
             }
 
             override fun onPause() {
-                updatePlayIcon(false)
+                updatePlayerIcon(false)
             }
 
             override fun onStop() {
@@ -61,18 +60,18 @@ class FloatingPlayer : BaseFloatingWindowService() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         audioPlayer.close()
+        super.onDestroy()
     }
 
     fun resume() {
         audioPlayer.resume()
-        updatePlayIcon(true)
+        updatePlayerIcon(true)
     }
 
     fun pause() {
         audioPlayer.pause()
-        updatePlayIcon(false)
+        updatePlayerIcon(false)
     }
 
     fun playByUrl(url: String) {
@@ -99,7 +98,6 @@ class FloatingPlayer : BaseFloatingWindowService() {
             }
         }
         ivStop.setOnClickListener {
-            audioPlayer.close()
             stopSelf()
         }
     }

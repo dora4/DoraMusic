@@ -34,6 +34,14 @@ class SimpleAudioPlayer(private val context: Context) {
         fun onStop()
     }
 
+    fun setOnPlayCompleteListener(listener: OnPlayCompleteListener) {
+        this.completeListener = listener
+    }
+
+    interface OnPlayCompleteListener {
+        fun onComplete()
+    }
+
     // ===================== 状态机 =====================
     private enum class State {
         IDLE,
@@ -48,14 +56,6 @@ class SimpleAudioPlayer(private val context: Context) {
 
     fun isPlaying(): Boolean {
         return state == State.PLAYING && mediaPlayer?.isPlaying == true
-    }
-
-    interface OnPlayCompleteListener {
-        fun onComplete()
-    }
-
-    fun setOnPlayCompleteListener(listener: OnPlayCompleteListener) {
-        this.completeListener = listener
     }
 
     // ===================== 音频焦点 =====================
