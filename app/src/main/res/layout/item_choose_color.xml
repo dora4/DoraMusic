@@ -5,6 +5,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="2dp">
@@ -13,7 +14,14 @@
         android:id="@+id/iv_color_picker_skin_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
+    <TextView
+        android:id="@+id/tv_color_picker_color_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/color_name_custom"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:text="@color/white"/>
     <ImageView
         android:id="@+id/iv_color_picker_skin_select"
         android:layout_width="wrap_content"
@@ -21,6 +29,6 @@
         android:layout_gravity="end|bottom"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="5dp"
-            android:tint="#61B15A"
+        android:tint="#61B15A"
         android:src="@drawable/ic_skin_selected" />
 </FrameLayout>

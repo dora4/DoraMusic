@@ -2,6 +2,7 @@ package site.doramusic.app.ui.adapter
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 
@@ -18,8 +19,10 @@ class ColorAdapter : BaseQuickAdapter<ColorPickerActivity
 
     override fun convert(holder: BaseViewHolder, item: ColorPickerActivity.ColorData) {
         val ivChoiceColorSkinBg = holder.getView(R.id.iv_color_picker_skin_bg) as ImageView
+        val tvChoiceColorColorName = holder.getView(R.id.tv_color_picker_color_name) as TextView
         val ivChoiceColorSkinSelect = holder.getView(R.id.iv_color_picker_skin_select) as ImageView
         ivChoiceColorSkinBg.setImageDrawable(item.backgroundDrawable)
+        tvChoiceColorColorName.text = item.colorName
         if (getItemPosition(item) == selectedPosition) {
             ivChoiceColorSkinSelect.visibility = View.VISIBLE
         } else {

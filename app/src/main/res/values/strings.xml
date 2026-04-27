@@ -103,5 +103,16 @@ The [Dora Music] Team</string>
     <string name="at_least_6_characters_long">The password must be at least 6 characters long.</string>
     <string name="chat_room">Chat Room</string>
     <string name="recalled_a_message">I recalled a message</string>
+    <string name="color_name_custom">Custom</string>
+    <string name="color_name_cyan">Cyan</string>
+    <string name="color_name_orange">Orange</string>
+    <string name="color_name_black">Black</string>
+    <string name="color_name_green">Green</string>
+    <string name="color_name_red">Red</string>
+    <string name="color_name_blue">Blue</string>
+    <string name="color_name_purple">Purple</string>
+    <string name="color_name_yellow">Yellow</string>
+    <string name="color_name_pink">Pink</string>
+    <string name="color_name_gold">Gold</string>
 
 </resources>

@@ -96,5 +96,16 @@
     <string name="at_least_6_characters_long">密码不能少于6个字符</string>
     <string name="chat_room">聊天室</string>
     <string name="recalled_a_message">撤回了一条消息</string>
+    <string name="color_name_custom">自定义</string>
+    <string name="color_name_cyan">初恋青</string>
+    <string name="color_name_orange">活力橙</string>
+    <string name="color_name_black">曜石黑</string>
+    <string name="color_name_green">叶绿</string>
+    <string name="color_name_red">鸽血红</string>
+    <string name="color_name_blue">海蓝</string>
+    <string name="color_name_purple">魅惑紫</string>
+    <string name="color_name_yellow">金黄</string>
+    <string name="color_name_pink">少女粉</string>
+    <string name="color_name_gold">暗金</string>
 
 </resources>

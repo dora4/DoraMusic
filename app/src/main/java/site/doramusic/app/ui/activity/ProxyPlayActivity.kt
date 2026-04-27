@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dora.util.IntentUtils
-import dora.util.ToastUtils
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URI
-import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.media.FloatingPlayer
 
 /**
@@ -28,7 +26,7 @@ class ProxyPlayActivity : Activity() {
                     putExtra(EXTRA_URI, uri)
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
-                // 把 URI权限交给Service
+                // 把URI权限交给Service
                 grantUriPermission(
                     packageName,
                     uri,

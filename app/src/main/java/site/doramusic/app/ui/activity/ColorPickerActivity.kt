@@ -41,7 +41,7 @@ class ColorPickerActivity : BaseSkinActivity<ActivityColorPickerBinding>() {
     private lateinit var customColor: ColorData
     private var selectColor: Int = Color.BLACK
 
-    data class ColorData(val backgroundDrawable: Drawable? = null, val backgroundColor: Int)
+    data class ColorData(val colorName: String, val backgroundDrawable: Drawable? = null, val backgroundColor: Int)
 
     override fun getLayoutId(): Int {
         return R.layout.activity_color_picker
@@ -76,30 +76,41 @@ class ColorPickerActivity : BaseSkinActivity<ActivityColorPickerBinding>() {
         if (prefsManager.getSkinType() == 0) {
             selectColor = prefsManager.getSkinColor()
         }
-        customColor = ColorData(getDrawable(R.drawable.shape_color_default),
+        customColor = ColorData(
+            ContextCompat.getString(this, R.string.color_name_custom), getDrawable(R.drawable.shape_color_default),
             ContextCompat.getColor(this, R.color.skin_theme_color_cyan))
         customColor.backgroundDrawable?.setTint(selectColor)
         colors = mutableListOf(
             customColor,
-            ColorData(getDrawable(R.drawable.shape_color_cyan),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_cyan), getDrawable(R.drawable.shape_color_cyan),
                 ContextCompat.getColor(this, R.color.skin_theme_color_cyan)),
-            ColorData(getDrawable(R.drawable.shape_color_orange),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_orange), getDrawable(R.drawable.shape_color_orange),
                 ContextCompat.getColor(this, R.color.skin_theme_color_orange)),
-            ColorData(getDrawable(R.drawable.shape_color_black),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_black), getDrawable(R.drawable.shape_color_black),
                 ContextCompat.getColor(this, R.color.skin_theme_color_black)),
-            ColorData(getDrawable(R.drawable.shape_color_green),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_green), getDrawable(R.drawable.shape_color_green),
                 ContextCompat.getColor(this, R.color.skin_theme_color_green)),
-            ColorData(getDrawable(R.drawable.shape_color_red),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_red), getDrawable(R.drawable.shape_color_red),
                 ContextCompat.getColor(this, R.color.skin_theme_color_red)),
-            ColorData(getDrawable(R.drawable.shape_color_blue),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_blue), getDrawable(R.drawable.shape_color_blue),
                 ContextCompat.getColor(this, R.color.skin_theme_color_blue)),
-            ColorData(getDrawable(R.drawable.shape_color_purple),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_purple), getDrawable(R.drawable.shape_color_purple),
                 ContextCompat.getColor(this, R.color.skin_theme_color_purple)),
-            ColorData(getDrawable(R.drawable.shape_color_yellow),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_yellow), getDrawable(R.drawable.shape_color_yellow),
                 ContextCompat.getColor(this, R.color.skin_theme_color_yellow)),
-            ColorData(getDrawable(R.drawable.shape_color_pink),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_pink), getDrawable(R.drawable.shape_color_pink),
                 ContextCompat.getColor(this, R.color.skin_theme_color_pink)),
-            ColorData(getDrawable(R.drawable.shape_color_gold),
+            ColorData(
+                ContextCompat.getString(this, R.string.color_name_gold), getDrawable(R.drawable.shape_color_gold),
                 ContextCompat.getColor(this, R.color.skin_theme_color_gold))
             )
 
