@@ -24,6 +24,10 @@ class PrefsManager(val context: Context) {
         return SPUtils.readBoolean(context, PREFS_SHAKE_CHANGE_MUSIC, true)
     }
 
+    fun getDarkMode(): Boolean {
+        return SPUtils.readBoolean(context, PREFS_DAY_NIGHT_MODE, true)
+    }
+
     fun getBassBoost(): Boolean {
         return SPUtils.readBoolean(context, PREFS_BASS_BOOST_ENABLE, false)
     }
@@ -63,6 +67,11 @@ class PrefsManager(val context: Context) {
     fun saveShakeChangeMusic(flag: Boolean) {
         SPUtils.writeBoolean(context, PREFS_SHAKE_CHANGE_MUSIC, flag)
     }
+
+    fun saveDarkMode(flag: Boolean) {
+        SPUtils.writeBoolean(context, PREFS_DAY_NIGHT_MODE, flag)
+    }
+
 
     fun saveBassBoost(flag: Boolean) {
         SPUtils.writeBoolean(context, PREFS_BASS_BOOST_ENABLE, flag)
@@ -135,6 +144,11 @@ class PrefsManager(val context: Context) {
          * 重低音参数。
          */
         const val PREFS_EQUALIZER_DECIBELS = "prefs_equalizer_decibels"
+
+        /**
+         * 深色模式。
+         */
+        const val PREFS_DAY_NIGHT_MODE = "prefs_day_night_mode"
 
         /**
          * 横幅开关。

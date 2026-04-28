@@ -18,6 +18,7 @@
             android:id="@+id/titlebar_privacy_policy"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            app:dview_backIconTint="@color/white"
             android:background="@color/skin_theme_color"/>
 
         <FrameLayout

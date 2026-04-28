@@ -24,6 +24,7 @@
                 android:id="@+id/titlebar_donation"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+            app:dview_backIconTint="@color/white"
                 app:dview_title="@string/donation_certificate"
                 android:background="@color/skin_theme_color" />
 

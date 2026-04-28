@@ -1,10 +1,12 @@
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <!-- colorPrimaryDark决定状态栏的默认颜色等 -->
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="Q">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

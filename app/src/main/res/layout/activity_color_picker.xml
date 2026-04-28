@@ -23,6 +23,7 @@
             android:id="@+id/titlebar_color_picker"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            app:dview_backIconTint="@color/white"
             app:dview_title="@string/choose_color"
             android:layout_below="@+id/statusbar_color_picker"
             android:background="@color/skin_theme_color" />

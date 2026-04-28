@@ -2,10 +2,13 @@ package site.doramusic.app.ui.activity
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatDelegate
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.arouter.open
 import dora.db.builder.WhereBuilder
@@ -31,6 +34,7 @@ import com.dorachat.auth.UserManager
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.util.ApkUtils
+import dora.util.ToastUtils
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.feedback.FeedbackActivity
 import site.doramusic.app.upgrade.ApkService
@@ -67,11 +71,13 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsAutoPlay.checkedColor = skinThemeColor
         binding.tbSettingsAutoConnectVpn.checkedColor = skinThemeColor
         binding.tbSettingsShake.checkedColor = skinThemeColor
+        binding.tbSettingsDarkMode.checkedColor = skinThemeColor
         binding.tbSettingsBassBoost.checkedColor = skinThemeColor
         binding.tbSettingsCloseBanner.checkedColor = skinThemeColor
         binding.tbSettingsAutoPlay.isChecked = prefsManager.isColdLaunchAutoPlay()
         binding.tbSettingsAutoConnectVpn.isChecked = prefsManager.isColdLaunchAutoConnectVPN()
         binding.tbSettingsShake.isChecked = prefsManager.getShakeChangeMusic()
+        binding.tbSettingsDarkMode.isChecked = prefsManager.getDarkMode()
         binding.tbSettingsBassBoost.isChecked = prefsManager.getBassBoost()
         binding.tbSettingsCloseBanner.isChecked = prefsManager.isBannerClosed()
         if (DaoFactory.getDao(Donation::class.java).count(
@@ -111,6 +117,20 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 }
                 binding.tbSettingsShake.isChecked = isChecked
                 prefsManager.saveShakeChangeMusic(isChecked)
+            }
+        })
+        binding.tbSettingsDarkMode.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
+                if (isChecked) {
+                    spmSelectContent("打开深色模式开关")
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    spmSelectContent("关闭深色模式开关")
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+                binding.tbSettingsDarkMode.isChecked = isChecked
+                prefsManager.saveDarkMode(isChecked)
+                this@SettingsActivity.finish()
             }
         })
         binding.tbSettingsBassBoost.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
@@ -159,6 +179,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 val isChecked = mBinding.tbSettingsShake.isChecked
                 mBinding.tbSettingsShake.isChecked = !isChecked
                 prefsManager.saveShakeChangeMusic(!isChecked)
+            }
+            R.id.rl_settings_dark_mode -> {
+                val isChecked = mBinding.tbSettingsDarkMode.isChecked
+                mBinding.tbSettingsDarkMode.isChecked = !isChecked
+                prefsManager.saveDarkMode(!isChecked)
             }
             R.id.rl_settings_bass_boost -> {
                 val isChecked = mBinding.tbSettingsBassBoost.isChecked

@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/skin_theme_color"
+            app:dview_backIconTint="@color/white"
             app:dview_title="@string/chat_room"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

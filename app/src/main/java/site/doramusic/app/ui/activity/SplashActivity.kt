@@ -1,17 +1,21 @@
 package site.doramusic.app.ui.activity
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatDelegate
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.dorachat.auth.AuthManager
 import dora.arouter.openWithFinish
+import dora.util.SPUtils
 import dora.util.StatusBarUtils
 import site.doramusic.app.MusicApp
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.databinding.ActivitySplashBinding
 import site.doramusic.app.util.MusicUtils
+import site.doramusic.app.util.PrefsManager
 
 /**
  * 启动页。
@@ -29,6 +33,12 @@ class SplashActivity : BaseSkinActivity<ActivitySplashBinding>() {
 
     private fun launchMain() {
         AuthManager.checkToken {
+            // 始终以软件保存的暗色模式为准
+            if (SPUtils.readBoolean(this@SplashActivity, PrefsManager.PREFS_DAY_NIGHT_MODE)) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
             openWithFinish(ARoutePath.ACTIVITY_MAIN)
         }
     }
