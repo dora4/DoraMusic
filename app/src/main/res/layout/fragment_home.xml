@@ -199,7 +199,7 @@
                 android:layout_below="@+id/statusbar_home"
                 android:background="@color/white"
                 app:dview_backIcon="@drawable/ic_titlebar_menu"
-                app:dview_backIconTint="@color/white"
+                app:dview_backIconTint="@color/home_menu_icon"
                 app:dview_backIconSize="24dp"
                 app:dview_isClickBackIconClose="false"
                 app:dview_isTitleTextBold="false"

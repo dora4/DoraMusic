@@ -52,4 +52,5 @@
     <color name="divider_color">#6fffffff</color>
     <color name="transparent">#00000000</color>
     <color name="trans_white">#afffffff</color>
+    <color name="home_menu_icon">@color/white</color>
 </resources>
