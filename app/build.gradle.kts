@@ -107,7 +107,7 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dora:1.3.62")
+    implementation("com.github.dora4:dora:1.3.63")
     implementation("com.github.dora4:dora-arouter-support:1.11")
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.6")
@@ -133,7 +133,7 @@ dependencies {
     implementation("com.github.dora4:dview-rotate-view:1.2")
     implementation("com.github.dora4:dview-equalizer-view:1.2")
     implementation("com.github.dora4:dview-radio-group:1.0")
-    implementation("com.github.dora4:dview-color-picker:1.0")
+    implementation("com.github.dora4:dview-color-picker:1.1")
     implementation("com.github.dora4:dview-popup-window:1.5")
     implementation("com.github.dora4:dview-indicator-view:1.1")
 

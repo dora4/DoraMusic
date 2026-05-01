@@ -25,7 +25,7 @@ class PrefsManager(val context: Context) {
     }
 
     fun getDarkMode(): Boolean {
-        return SPUtils.readBoolean(context, PREFS_DAY_NIGHT_MODE, true)
+        return SPUtils.readBoolean(context, PREFS_DAY_NIGHT_MODE, false)
     }
 
     fun getBassBoost(): Boolean {
