@@ -48,14 +48,11 @@ import java.util.concurrent.TimeUnit
 class MusicApp : BaseApplication(), AppConfig {
 
     companion object {
-
-        lateinit var app: MusicApp
         var isAppInitialized = false
     }
 
     override fun onCreate() {
         super.onCreate()
-        app = this
         init()
         // 懒加载
         ThreadUtils.lazyLoad {
