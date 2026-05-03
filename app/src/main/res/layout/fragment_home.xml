@@ -67,7 +67,7 @@
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="2dp"
                     android:layout_toStartOf="@id/btn_home_bottom_menu"
-                    android:background="#77ffffff" />
+                    android:background="@color/colorPanelFg" />
 
                 <ImageButton
                     android:id="@+id/btn_home_bottom_next"

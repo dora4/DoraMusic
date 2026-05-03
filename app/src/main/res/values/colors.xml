@@ -59,4 +59,5 @@
     <color name="album_text_color">#3C5F78</color>
     <color name="loading_bg_color">#A7333333</color>
     <color name="dview_loading_bg_color">#A7333333</color>
+    <color name="dview_loading_text_color">@color/white</color>
 </resources>
