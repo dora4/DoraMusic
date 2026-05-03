@@ -42,6 +42,7 @@
     <color name="skin_theme_color_pink">@color/girl_pink</color>
     <color name="skin_theme_color_gold">@color/dark_gold</color>
 
+    <color name="colorPanelFg">@color/white</color>
     <color name="colorPanelBg">#F5F5F9</color>
     <color name="colorPrimary">@color/skin_theme_color</color>
     <color name="colorPrimaryDark">@color/skin_theme_color</color>
@@ -53,4 +54,9 @@
     <color name="transparent">#00000000</color>
     <color name="trans_white">#afffffff</color>
     <color name="home_menu_icon">@color/black</color>
+    <color name="letterview_preview_bg_color">#7f000000</color>
+    <color name="letterview_preview_text_color">@color/white</color>
+    <color name="album_text_color">#3C5F78</color>
+    <color name="loading_bg_color">#A7333333</color>
+    <color name="dview_loading_bg_color">#A7333333</color>
 </resources>

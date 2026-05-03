@@ -64,6 +64,7 @@ import site.doramusic.app.ui.adapter.LyricAdapter
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.SlidingView
+import androidx.core.graphics.createBitmap
 
 /**
  * 音乐播放控制、歌词滚动界面。
@@ -236,6 +237,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         val lp = FrameLayout.LayoutParams(ScreenUtils.getScreenWidth() - dp40,
             ScreenUtils.getScreenWidth() - dp40)
         lp.gravity = Gravity.CENTER
+        rotateCoverView.setTextColor(ContextCompat.getColor(manager.view.context, R.color.album_text_color))
         rotateCoverView.setAppName(AppConfig.APP_NAME)
         rotateCoverView.setAlbumText(AppConfig.ALBUM_TEXT)
         rotateCoverView.setAppSlogan(AppConfig.APP_SLOGAN)
@@ -518,7 +520,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 volumeHandler.postDelayed(r, 3000)
             }
             // 播放模式
-            R.id.btn_music_play_mode -> playModeControl.changePlayMode(btnMusicPlayMode!!)
+            R.id.btn_music_play_mode -> playModeControl.changePlayMode(btnMusicPlayMode)
             // 喜爱
             R.id.btn_music_play_favorite -> {
                 if (curMusic == null) {
@@ -572,7 +574,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         val width = bmp.width + DensityUtils.DP50
         val height = bmp.height + DensityUtils.DP100
         // 创建一个空的Bitmap(内存区域),宽度等于第一张图片的宽度，高度等于两张图片高度总和
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val bitmap = createBitmap(width, height)
         // 将bitmap放置到绘制区域,并将要拼接的图片绘制到指定内存区域
         val canvas = Canvas(bitmap)
         val paint = Paint()

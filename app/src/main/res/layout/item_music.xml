@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
         android:id="@+id/ll_music_list"
     android:gravity="center_vertical"
-    android:background="@color/white"
+    android:background="@color/colorPanelFg"
     android:orientation="horizontal">
 
     <LinearLayout

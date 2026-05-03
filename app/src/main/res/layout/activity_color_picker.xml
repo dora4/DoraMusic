@@ -6,12 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white_smoke">
+        android:background="@color/colorPanelFg">
 
         <View
             android:id="@+id/statusbar_color_picker"
@@ -23,22 +24,22 @@
             android:id="@+id/titlebar_color_picker"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            app:dview_backIconTint="@color/white"
-            app:dview_title="@string/choose_color"
             android:layout_below="@+id/statusbar_color_picker"
-            android:background="@color/skin_theme_color" />
+            android:background="@color/skin_theme_color"
+            app:dview_backIconTint="@color/white"
+            app:dview_title="@string/choose_color" />
 
         <LinearLayout
             android:id="@+id/ll_color_picker_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
             android:background="@color/white"
-            android:layout_alignParentBottom="true">
+            android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5px"
+                android:layout_height="1px"
                 android:background="@color/light_gray" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -54,14 +55,15 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_color_picker_bottom"
             android:layout_below="@+id/titlebar_color_picker"
+            android:layout_weight="1"
             android:background="@color/black"
-            android:padding="30dp"
-            android:layout_weight="1">
+            android:padding="30dp">
+
             <dora.widget.ColorRingPickerView
                 android:id="@+id/color_ring_view"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
         </FrameLayout>
     </RelativeLayout>
 </layout>

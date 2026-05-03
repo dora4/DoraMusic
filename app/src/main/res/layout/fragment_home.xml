@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:background="@color/colorPanelFg"
             android:orientation="vertical">
 
             <ProgressBar
@@ -35,7 +36,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="@color/white">
+                android:background="@color/colorPanelFg">
 
                 <ImageView
                     android:id="@+id/iv_home_bottom_album"
@@ -54,7 +55,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:background="@color/white"
+                    android:background="@color/colorPanelFg"
                     android:padding="6dp"
                     android:src="@drawable/ic_bottom_bar_playlist"
                     app:tint="@color/silver" />
@@ -74,7 +75,7 @@
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@id/view_home_bottom_divider"
-                    android:background="@color/white"
+                    android:background="@color/colorPanelFg"
                     android:padding="4dp"
                     android:src="@drawable/ic_bottom_bar_next"
                     app:tint="@color/silver" />
@@ -91,7 +92,7 @@
                         android:id="@+id/btn_home_bottom_pause"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@color/white"
+                        android:background="@color/colorPanelFg"
                         android:padding="4dp"
                         android:src="@drawable/ic_bottom_bar_pause"
                         android:visibility="gone"
@@ -101,7 +102,7 @@
                         android:id="@+id/btn_home_bottom_play"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@color/white"
+                        android:background="@color/colorPanelFg"
                         android:padding="4dp"
                         android:src="@drawable/ic_bottom_bar_play"
                         app:tint="@color/silver" />
@@ -190,14 +191,14 @@
                 android:id="@+id/statusbar_home"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/white" />
+                android:background="@color/colorPanelFg" />
 
             <dora.widget.DoraTitleBar
                 android:id="@+id/titlebar_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/statusbar_home"
-                android:background="@color/white"
+                android:background="@color/colorPanelFg"
                 app:dview_backIcon="@drawable/ic_titlebar_menu"
                 app:dview_backIconTint="@color/home_menu_icon"
                 app:dview_backIconSize="24dp"
@@ -217,7 +218,7 @@
                     android:id="@+id/fp_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#AA000000"
+                    android:background="#AA222831"
                     android:visibility="gone"
                     app:dview_fv_flipInterval="5000"
                     app:dview_fv_textColor="@color/white"

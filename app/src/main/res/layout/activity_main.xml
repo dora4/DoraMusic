@@ -19,12 +19,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <!--去掉background，会影响4.4系统的状态栏-->
+        <!-- 使用透明色去掉item background -->
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nv_main"
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:background="@color/colorPanelBg"
             app:menu="@menu/menu"
             app:itemBackground="@drawable/selector_menu_bg"
             app:itemTextColor="@color/colorTextSecondary"

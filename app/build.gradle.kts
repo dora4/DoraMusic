@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 140
-    val version = "2.1.11"
+    val code = 141
+    val version = "2.1.12"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -122,7 +122,7 @@ dependencies {
     implementation("com.github.dora4:dview-menu-panel:1.47")
     implementation("com.github.dora4:dview-toggle-button:1.5")
     implementation("com.github.dora4:dview-alert-dialog:1.35")
-    implementation("com.github.dora4:dview-loading-dialog:1.5")
+    implementation("com.github.dora4:dview-loading-dialog:1.7")
     implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.11")
     implementation("com.github.dora4:dview-bottom-dialog:1.13")
@@ -130,7 +130,7 @@ dependencies {
     implementation("com.github.dora4:dview-flipper-view:1.10")
     implementation("com.github.dora4:dview-coupon-view:1.16")
     implementation("com.github.dora4:dview-sidebar:1.4")
-    implementation("com.github.dora4:dview-rotate-view:1.2")
+    implementation("com.github.dora4:dview-rotate-view:1.6")
     implementation("com.github.dora4:dview-equalizer-view:1.2")
     implementation("com.github.dora4:dview-radio-group:1.0")
     implementation("com.github.dora4:dview-color-picker:1.1")

@@ -47,7 +47,7 @@
             android:layout_gravity="center"
             android:background="@drawable/shape_letterview_dialog_bg"
             android:gravity="center"
-            android:textColor="@android:color/white"
+            android:textColor="@color/letterview_preview_text_color"
             android:textSize="36sp"
             android:visibility="gone" />
     </FrameLayout>

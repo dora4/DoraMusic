@@ -2,22 +2,22 @@
 
 <!-- 歌词滚动播放页面内容 -->
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sliding_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/colorPanelBg">
+
     <ImageButton
         android:id="@+id/btn_music_play_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="10dp"
-            app:tint="@color/gray"
-            android:src="@drawable/shape_volume_voice"
-        android:background="@drawable/shape_volume_bg"/>
+        android:layout_alignParentRight="true"
+        android:background="@drawable/shape_volume_bg"
+        android:padding="10dp"
+        android:src="@drawable/shape_volume_voice"
+        app:tint="@color/gray" />
 
     <LinearLayout
         android:id="@+id/ll_music_play_bottom"
@@ -29,19 +29,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_music_play_cur_time"
                 android:layout_width="40dp"
-                android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:gravity="center_horizontal"
                 android:text="00:00"
                 android:textColor="@color/colorTextSecondary"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <SeekBar
                 android:id="@+id/sb_music_play_playback"
@@ -55,15 +55,15 @@
                 android:paddingRight="12dp"
                 android:progressDrawable="@drawable/selector_player_seekbar"
                 android:thumb="@drawable/selector_player_seekbar_thumb"
-                android:thumbOffset="12dp"/>
+                android:thumbOffset="12dp" />
 
             <TextView
                 android:id="@+id/tv_music_play_total_time"
                 android:layout_width="40dp"
-                android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:gravity="center_horizontal"
                 android:text="00:00"
                 android:textColor="@color/colorTextSecondary"
                 android:textStyle="bold" />
@@ -73,19 +73,19 @@
             android:id="@+id/ll_player_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp_10"
             android:layout_marginTop="5dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_10">
 
             <ImageButton
                 android:id="@+id/btn_music_play_mode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/selector_music_btn"
                 android:src="@drawable/ic_playmode_list_loop"
-                app:tint="@color/white"
-                android:background="@drawable/selector_music_btn" />
+                app:tint="@color/white" />
 
             <ImageButton
                 android:id="@+id/btn_music_play_prev"
@@ -93,8 +93,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/selector_music_btn"
-                app:tint="@color/white"
-                android:src="@drawable/ic_player_prev" />
+                android:src="@drawable/ic_player_prev"
+                app:tint="@color/white" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -106,17 +106,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/selector_music_btn"
-                    app:tint="@color/white"
                     android:src="@drawable/ic_player_pause"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:tint="@color/white" />
 
                 <ImageButton
                     android:id="@+id/btn_music_play_play"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/selector_music_btn"
-                    app:tint="@color/white"
-                    android:src="@drawable/ic_player_play" />
+                    android:src="@drawable/ic_player_play"
+                    app:tint="@color/white" />
             </FrameLayout>
 
             <ImageButton
@@ -125,8 +125,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/selector_music_btn"
-                app:tint="@color/white"
-                android:src="@drawable/ic_player_next" />
+                android:src="@drawable/ic_player_next"
+                app:tint="@color/white" />
 
             <ImageButton
                 android:id="@+id/btn_music_play_favorite"
@@ -134,10 +134,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/selector_music_btn"
-                app:tint="@color/white"
-                android:src="@drawable/ic_favorite_unchecked" />
+                android:src="@drawable/ic_favorite_unchecked"
+                app:tint="@color/white" />
         </LinearLayout>
     </LinearLayout>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_music_play_cover_lyric"
         android:layout_width="match_parent"
@@ -146,7 +147,7 @@
         android:layout_below="@id/ll_music_play_volume"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never" />
 
     <LinearLayout
         android:id="@+id/ll_music_play_volume"
@@ -161,8 +162,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:tint="@color/gray"
-            android:src="@drawable/ic_volume_mute" />
+            android:src="@drawable/ic_volume_mute"
+            app:tint="@color/gray" />
 
         <SeekBar
             android:id="@+id/sb_music_play_volume"
@@ -182,8 +183,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            app:tint="@color/gray"
-            android:src="@drawable/ic_volume_sound" />
+            android:src="@drawable/ic_volume_sound"
+            app:tint="@color/gray" />
     </LinearLayout>
 
 </RelativeLayout>

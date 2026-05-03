@@ -9,25 +9,34 @@
     <color name="teal_700">#FF018786</color>
 
     <!-- 初恋青 -->
-    <color name="first_love_cyan">#04D5D5</color>
+    <color name="first_love_cyan">#5CE1E6</color>
+
     <!-- 天蓝 -->
-    <color name="sky_blue">#389CFF</color>
+    <color name="sky_blue">#6FB8FF</color>
+
     <!-- 叶绿 -->
-    <color name="leaf_green">#009944</color>
+    <color name="leaf_green">#33CC77</color>
+
     <!-- 鸽血红 -->
-    <color name="pigeon_blood_red">#DB0000</color>
+    <color name="pigeon_blood_red">#FF4D4F</color>
+
     <!-- 活力橙 -->
-    <color name="vibrant_orange">#FF6600</color>
+    <color name="vibrant_orange">#FF8C42</color>
+
     <!-- 金黄 -->
-    <color name="gold_yellow">#FFD700</color>
+    <color name="gold_yellow">#FFD966</color>
+
     <!-- 少女粉 -->
-    <color name="girl_pink">#FFC0CB</color>
+    <color name="girl_pink">#FF9FB2</color>
+
     <!-- 魅惑紫 -->
-    <color name="enchanting_purple">#BB86FC</color>
-    <!-- 暗金 -->
-    <color name="dark_gold">#C8B245</color>
+    <color name="enchanting_purple">#CF9FFF</color>
+
+    <!-- 暗金） -->
+    <color name="dark_gold">#E6CC66</color>
+
     <!-- 曜石黑 -->
-    <color name="obsidian_black">#292421</color>
+    <color name="obsidian_black">#3A3431</color>
 
     <!-- 需要换肤的颜色 -->
     <color name="skin_theme_color">@color/first_love_cyan</color>
@@ -42,7 +51,8 @@
     <color name="skin_theme_color_pink">@color/girl_pink</color>
     <color name="skin_theme_color_gold">@color/dark_gold</color>
 
-    <color name="colorPanelBg">#F5F5F9</color>
+    <color name="colorPanelFg">#43454A</color>
+    <color name="colorPanelBg">#2B2D30</color>
     <color name="colorPrimary">@color/skin_theme_color</color>
     <color name="colorPrimaryDark">@color/skin_theme_color</color>
     <color name="colorAccent">@color/skin_theme_color</color>
@@ -53,4 +63,9 @@
     <color name="transparent">#00000000</color>
     <color name="trans_white">#afffffff</color>
     <color name="home_menu_icon">@color/white</color>
+    <color name="letterview_preview_bg_color">@color/white</color>
+    <color name="letterview_preview_text_color">@color/black</color>
+    <color name="album_text_color">@color/white</color>
+    <color name="loading_bg_color">@color/colorPanelFg</color>
+    <color name="dview_loading_bg_color">@color/colorPanelFg</color>
 </resources>
