@@ -18,7 +18,7 @@ interface AppConfig {
         val COPY_RIGHT = "doramusic ©2023~${Calendar.getInstance().get(Calendar.YEAR)}"
 
         // Http设置
-        const val CONNECT_TIMEOUT = 10L
+        const val CONNECT_TIMEOUT = 3L
         const val READ_TIMEOUT = 3L
 
         // 域名，仅展示在钱包，不校验，随便写
