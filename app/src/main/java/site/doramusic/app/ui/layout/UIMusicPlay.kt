@@ -142,9 +142,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     private fun dispose() {
-        if (disposable != null) {
-            disposable!!.dispose()
-        }
+        disposable?.dispose()
     }
 
     private val lyricListener = object : LyricScroller.LyricListener {
@@ -283,19 +281,19 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         }
     }
 
-    class MusicPlayPagerAdapter(private val pageViews: List<View>?) : PagerAdapter() {
+    class MusicPlayPagerAdapter(private val pageViews: List<View>) : PagerAdapter() {
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            container.removeView(pageViews!![position])
+            container.removeView(pageViews[position])
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            container.addView(pageViews!![position])
+            container.addView(pageViews[position])
             return pageViews[position]
         }
 
         override fun getCount(): Int {
-            return pageViews!!.size
+            return pageViews.size
         }
 
         override fun isViewFromObject(view: View, obj: Any): Boolean {

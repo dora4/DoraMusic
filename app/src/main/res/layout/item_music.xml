@@ -2,21 +2,25 @@
 
 <!-- 歌曲列表条目 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_music_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-        android:id="@+id/ll_music_list"
-    android:gravity="center_vertical"
     android:background="@color/colorPanelFg"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackgroundBorderless"
+    android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -27,19 +31,19 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_music_play_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:tint="@color/skin_theme_color"
-                android:visibility="gone" />
+                android:visibility="gone"
+                app:tint="@color/skin_theme_color" />
 
             <TextView
                 android:id="@+id/tv_music_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/colorTextPrimary"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -55,8 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8.0dip"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/colorTextSecondary"
                 android:textSize="12sp" />
 
@@ -65,9 +69,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/colorTextSecondary"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/colorTextSecondary"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

@@ -13,7 +13,7 @@
         android:id="@+id/btn_music_play_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:background="@drawable/shape_volume_bg"
         android:padding="10dp"
         android:src="@drawable/shape_volume_voice"
@@ -45,7 +45,7 @@
 
             <SeekBar
                 android:id="@+id/sb_music_play_playback"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:max="100"
@@ -161,7 +161,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/ic_volume_mute"
             app:tint="@color/gray" />
 

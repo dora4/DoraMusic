@@ -32,7 +32,7 @@
     <!-- 魅惑紫 -->
     <color name="enchanting_purple">#CF9FFF</color>
 
-    <!-- 暗金） -->
+    <!-- 暗金 -->
     <color name="dark_gold">#E6CC66</color>
 
     <!-- 曜石黑 -->
@@ -68,5 +68,5 @@
     <color name="album_text_color">@color/white</color>
     <color name="loading_bg_color">@color/colorPanelFg</color>
     <color name="dview_loading_bg_color">@color/colorPanelFg</color>
-    <color name="dview_loading_text_color">@color/colorPanelBg</color>
+    <color name="dview_loading_text_color">@color/white</color>
 </resources>

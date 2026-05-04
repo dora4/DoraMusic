@@ -7,8 +7,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/colorPanelFg"
-    android:paddingLeft="8dp"
-    android:paddingRight="25dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackgroundBorderless"
+    android:paddingStart="8dp"
+    android:paddingEnd="25dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
 

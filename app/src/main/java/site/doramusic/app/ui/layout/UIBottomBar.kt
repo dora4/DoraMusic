@@ -1,10 +1,10 @@
 package site.doramusic.app.ui.layout
 
+//import site.doramusic.app.annotation.SingleClick
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -16,9 +16,12 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import site.doramusic.app.util.MusicUtils
 import dora.db.builder.QueryBuilder
 import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils
@@ -28,7 +31,6 @@ import dora.util.ScreenUtils
 import dora.util.TextUtils
 import dora.util.ViewUtils
 import site.doramusic.app.R
-//import site.doramusic.app.annotation.SingleClick
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Music
@@ -37,11 +39,11 @@ import site.doramusic.app.media.PlayModeControl
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.PlaylistItemAdapter
+import site.doramusic.app.util.MusicUtils
 import site.doramusic.app.util.PrefsManager
+import site.doramusic.app.util.ThemeSelector
 import site.doramusic.app.widget.MarqueeTextView
 import java.util.Locale
-import androidx.core.graphics.drawable.toDrawable
-import site.doramusic.app.util.ThemeSelector
 
 /**
  * 底部控制条。
@@ -179,19 +181,16 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     fun refreshUI(curTime: Int, totalTime: Int, music: Music?) {
         if (music == null) return
         var tempTotalTime = totalTime
-
         tempTotalTime /= 1000
         val totalMinute = tempTotalTime / 60
         val totalSecond = tempTotalTime % 60
         val totalTimeString = String.format(
             Locale.getDefault(), "%02d:%02d", totalMinute,
                 totalSecond)
-
         tvHomeBottomDuration.text = totalTimeString
         if (TextUtils.isNotEqualTo(tvHomeBottomMusicName.text.toString(), music.musicName)) {
             tvHomeBottomMusicName.text = music.musicName
         }
-
         if (TextUtils.isNotEqualTo(tvHomeBottomArtist.text.toString(), music.artist)) {
             tvHomeBottomArtist.text = music.artist
         }
@@ -200,8 +199,11 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 val bitmap = MusicUtils.getCachedArtwork(manager.view.context, music.albumId.toLong(),
                     defaultAlbumIcon)
                 if (bitmap != null) {
-                    ivHomeBottomAlbum.setBackgroundDrawable(BitmapDrawable(manager.view.context
-                        .resources, bitmap))
+                    ivHomeBottomAlbum.setBackgroundDrawable(
+                        bitmap.toDrawable(
+                            manager.view.context
+                                .resources
+                        ))
                 }
                 MediaManager.updateNotification(bitmap, music.musicName, music.artist)
             } catch (e:UnsupportedOperationException) {
@@ -278,32 +280,28 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 ivPlaylistPlayMode.visibility = View.INVISIBLE
                 tvPlaylistCount.visibility = View.INVISIBLE
             }
-
             adapter.setList(MediaManager.playlist)
             adapter.setOnItemClickListener { _, _, position ->
                 MediaManager.playById(MediaManager.playlist[position].songId)
             }
-
-            ViewUtils.configRecyclerView(recyclerView)
+            recyclerView.setLayoutManager(LinearLayoutManager(recyclerView.context))
+            recyclerView.setHasFixedSize(true)
+            recyclerView.setItemAnimator(DefaultItemAnimator())
             recyclerView.adapter = adapter
-
             tvPlaylistPlayMode.setOnClickListener {
                 playModeControl.changePlayMode(tvPlaylistPlayMode, ivPlaylistPlayMode)
             }
             ivPlaylistPlayMode.setOnClickListener {
                 playModeControl.changePlayMode(tvPlaylistPlayMode, ivPlaylistPlayMode)
             }
-
             bottomSheetDialog?.behavior?.peekHeight = height
             bottomSheetDialog?.setContentView(contentView)
-
             // 监听弹窗关闭，避免变量引用错误
             bottomSheetDialog?.setOnDismissListener {
                 synchronized(this) {
                     bottomSheetDialog = null
                 }
             }
-
             bottomSheetDialog?.show()
         }
     }

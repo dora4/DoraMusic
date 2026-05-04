@@ -58,7 +58,6 @@
             android:layout_height="match_parent"
             android:overScrollMode="never"
             android:scrollbars="vertical"
-            android:scrollbarSize="1dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:scrollbarSize="1dp" />
     </LinearLayout>
 </layout>
