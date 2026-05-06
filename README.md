@@ -91,5 +91,8 @@ https://github.com/dora4/DoraMusic/blob/main/Recommend_DJ.md
 6. 播放控制
 <p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_013230_Dora Music.jpg"></p>
 
-本开源项目仅限学习交流用途的分享传播，未经授权禁止用于其他用途。版权所有，侵权必究！
+本开源项目带有音效版权和软件著作版权，版权所有，侵权必究！仅在系统预装应用场景下免授权。
+
+This open-source project includes sound effect copyrights and software copyright. All rights reserved. Infringement will be prosecuted. Authorization is waived only for system pre-installed application scenarios.
+
 
