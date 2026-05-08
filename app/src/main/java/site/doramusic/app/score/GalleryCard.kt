@@ -65,7 +65,7 @@ enum class CardRarity(
     val displayName: String
 ) {
 
-    L(0.001, "传奇"),
+    L(0.001, "传说"),
     U(0.003, "极品"),
     SSR(0.004, "超超稀有"),
     SR(0.006, "超级稀有"),
