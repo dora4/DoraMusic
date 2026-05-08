@@ -137,7 +137,7 @@ class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
 
         val adapter = GalleryCardAdapter(
             cards = galleryCards,
-            getCardImage = { number -> getPackImage(galleryId, number) },  // 这里 getBackImage 返回正面资源
+            getCardImage = { number -> getBackImage(galleryId, number) },  // 这里 getBackImage 返回正面资源
             onCardDraw = { card, pokerView ->
             }
         )
@@ -171,11 +171,11 @@ class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
                         if (isDrawn) {
                             // 如果已经翻出过，先翻回去再翻出
                             pokerView.reset()                 // 重置到背面
-                            pokerView.setBackImage(getPackImage(galleryId, card.number)) // 设置正面图片
+                            pokerView.setBackImage(getBackImage(galleryId, card.number)) // 设置正面图片
                             pokerView.flipCard()              // 翻出正面
                         } else {
                             // 直接翻出
-                            pokerView.setBackImage(getPackImage(galleryId, card.number))
+                            pokerView.setBackImage(getBackImage(galleryId, card.number))
                             pokerView.reset()
                             pokerView.flipCard()
                         }
@@ -211,7 +211,7 @@ class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
         }
     }
 
-    private fun getPackImage(galleryId: String, number: Int): Int {
+    private fun getBackImage(galleryId: String, number: Int): Int {
         fun prefixFor(galleryId: String): String = when (galleryId) {
             AppConfig.GALLERY_RAIN_FOREST -> "rain_forest"
             AppConfig.GALLERY_DESERT -> "desert"
