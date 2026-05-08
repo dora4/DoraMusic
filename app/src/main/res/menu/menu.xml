@@ -11,6 +11,9 @@
             android:id="@+id/menu_chat_room"
             android:title="@string/chat_room" />
         <item
+            android:id="@+id/menu_gallery_list"
+            android:title="@string/my_gallery" />
+        <item
                 android:id="@+id/menu_change_skin"
                 android:title="@string/change_skin" />
         <item

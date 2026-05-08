@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".score.DrawCardActivity">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/statusbar_draw_card"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/skin_theme_color" />
+        <dora.widget.DoraTitleBar
+            android:id="@+id/titlebar_draw_card"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:dview_title="@string/draw_cards_to_collect_gallery"
+            app:dview_backIconTint="@color/white"
+            android:background="@color/skin_theme_color"/>
+
+        <TextView
+            android:id="@+id/tvGalleryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/colorTextPrimary"
+            android:layout_marginTop="9dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/tvMyPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/colorTextPrimary"
+            android:layout_marginTop="9dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginBottom="5dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="9dp"
+            android:padding="4dp"
+            android:clipToPadding="false" />
+        <Button
+            android:id="@+id/btnDrawCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_theme_button_gold_yellow"
+            android:textColor="@color/white"
+            android:text="抽卡（消耗100积分）"/>
+    </LinearLayout>
+
+</layout>

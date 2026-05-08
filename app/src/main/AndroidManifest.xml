@@ -111,6 +111,18 @@
                 android:label="用户协议和隐私政策"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait" />
+        <activity
+            android:name=".score.GalleryListActivity"
+            android:exported="false"
+            android:label="图鉴列表"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".score.DrawCardActivity"
+            android:exported="false"
+            android:label="抽卡"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.DonationActivity"

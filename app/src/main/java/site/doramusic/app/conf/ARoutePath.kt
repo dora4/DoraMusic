@@ -14,5 +14,8 @@ interface ARoutePath {
         const val ACTIVITY_BROWSER = "$GROUP_APP/BrowserActivity"
         const val ACTIVITY_DONATION = "$GROUP_APP/DonationActivity"
         const val ACTIVITY_CHAT_ROOM = "$GROUP_APP/ChatRoomActivity"
+
+        const val ACTIVITY_GALLERY_LIST = "$GROUP_APP/GalleryListActivity"
+        const val ACTIVITY_DRAW_CARD = "$GROUP_APP/DrawCardActivity"
     }
 }

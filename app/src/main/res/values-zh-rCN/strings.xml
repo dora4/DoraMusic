@@ -108,5 +108,7 @@
     <string name="color_name_yellow">金黄</string>
     <string name="color_name_pink">少女粉</string>
     <string name="color_name_gold">暗金</string>
+    <string name="my_gallery">我的图鉴</string>
+    <string name="draw_cards_to_collect_gallery">抽卡集图鉴</string>
 
 </resources>

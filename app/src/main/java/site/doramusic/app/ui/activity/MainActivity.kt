@@ -338,7 +338,9 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                         }
                     }
                 }
-                // 更换换肤
+                // 我的图鉴
+                R.id.menu_gallery_list -> open(ARoutePath.ACTIVITY_GALLERY_LIST)
+                // 更换皮肤
                 R.id.menu_change_skin -> open(ARoutePath.ACTIVITY_COLOR_PICKER)
                 // 均衡器
                 R.id.menu_equalizer -> open(ARoutePath.ACTIVITY_EQUALIZER)

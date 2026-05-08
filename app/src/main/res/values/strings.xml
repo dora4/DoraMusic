@@ -115,5 +115,7 @@ The [Dora Music] Team</string>
     <string name="color_name_yellow">Yellow</string>
     <string name="color_name_pink">Pink</string>
     <string name="color_name_gold">Gold</string>
+    <string name="my_gallery">My Gallery</string>
+    <string name="draw_cards_to_collect_gallery">Draw Card</string>
 
 </resources>

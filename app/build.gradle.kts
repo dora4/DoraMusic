@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 148
-    val version = "2.1.19"
+    val code = 149
+    val version = "2.2.0"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -136,6 +136,7 @@ dependencies {
     implementation("com.github.dora4:dview-color-picker:1.1")
     implementation("com.github.dora4:dview-popup-window:1.5")
     implementation("com.github.dora4:dview-indicator-view:1.1")
+    implementation("com.github.dora4:dview-poker-view:1.1")
 
     implementation("com.github.dora4:dorachat-authsdk:1.1.2")
 

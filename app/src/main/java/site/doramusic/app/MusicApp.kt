@@ -36,6 +36,9 @@ import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.model.Donation
 import site.doramusic.app.model.DownloadTask
+import site.doramusic.app.score.GalleryCard
+import site.doramusic.app.score.PointsRecord
+import site.doramusic.app.score.UserPoints
 import site.doramusic.app.sysmsg.SysMsgService
 import site.doramusic.app.upgrade.ApkService
 import site.doramusic.app.util.ThemeSelector
@@ -156,7 +159,8 @@ class MusicApp : BaseApplication(), AppConfig {
             .tables(Music::class.java, Artist::class.java,
                 Album::class.java, Folder::class.java,
                 Donation::class.java, DownloadTask::class.java,
-                DoraUserInfo::class.java
+                DoraUserInfo::class.java, GalleryCard::class.java,
+                UserPoints::class.java, PointsRecord::class.java
             )
             .build())
     }

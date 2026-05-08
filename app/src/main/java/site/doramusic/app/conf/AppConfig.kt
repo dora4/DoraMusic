@@ -68,7 +68,7 @@ interface AppConfig {
 
         // 数据库相关
         const val DB_NAME = "db_doramusic"
-        const val DB_VERSION = 5
+        const val DB_VERSION = 6
         const val COLUMN_ORDER_ID = "order_id"
         const val COLUMN_TOKEN_AMOUNT = "token_amount"
         const val COLUMN_TOKEN_SYMBOL = "token_symbol"
@@ -110,5 +110,18 @@ interface AppConfig {
         const val MUSIC_MENU_GRID_COLUMN_NUM = 3    // 功能网格每行显示的个数
         // 换肤
         const val COLOR_THEME = "skin_theme_color" // 主色调的换肤key
+
+
+        const val GALLERY_RAIN_FOREST = "gallery_rain_forest" // 雨林
+        const val GALLERY_DESERT = "gallery_desert" // 沙漠
+        const val GALLERY_CITY = "gallery_city" // 都市
+        const val GALLERY_COUNTRYSIDE = "gallery_countryside" // 田园
+        const val GALLERY_PLATEAU = "gallery_plateau" // 高原
+        const val GALLERY_BEACH = "gallery_beach" // 海滩
+        const val GALLERY_GLACIER = "gallery_glacier" // 冰川
+        const val GALLERY_MOUNTAIN = "gallery_mountain" // 山地
+        const val GALLERY_UNDERSEA = "gallery_undersea" // 海底
+        const val GALLERY_HIGHWAY = "gallery_highway" // 公路
+        const val REQUEST_CODE_DRAW_CARD = 0
     }
 }
