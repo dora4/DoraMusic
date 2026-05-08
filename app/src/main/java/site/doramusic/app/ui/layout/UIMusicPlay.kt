@@ -236,6 +236,8 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             ScreenUtils.getScreenWidth() - dp40)
         lp.gravity = Gravity.CENTER
         rotateCoverView.setTextColor(ContextCompat.getColor(manager.view.context, R.color.album_text_color))
+        rotateCoverView.setMiddleColor(Color.parseColor("#FF4C718C"))
+        rotateCoverView.setInnerColor(Color.parseColor("#33AFC8D8"))
         rotateCoverView.setAppName(AppConfig.APP_NAME)
         rotateCoverView.setAlbumText(AppConfig.ALBUM_TEXT)
         rotateCoverView.setAppSlogan(AppConfig.APP_SLOGAN)
