@@ -50,7 +50,7 @@
     <color name="colorTextPrimary">#1A2025</color>
     <color name="colorTextSecondary">#8A8A8A</color>
     <color name="half_transparent">#3f000000</color>
-    <color name="divider_color">#6fffffff</color>
+    <color name="divider_color">@color/light_gray</color>
     <color name="transparent">#00000000</color>
     <color name="trans_white">#afffffff</color>
     <color name="home_menu_icon">@color/black</color>
