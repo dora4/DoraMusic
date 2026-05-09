@@ -41,8 +41,9 @@ class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
         ThemeSelector.applyViewTheme(binding.statusbarDrawCard)
         ThemeSelector.applyViewTheme(binding.titlebarDrawCard)
-        binding.tvGalleryName.text = "图鉴名称：$galleryName"
-        binding.tvMyPoints.text = "我的积分：${PointsManager.getTotalPoints()}"
+        binding.tvGalleryName.text = getString(R.string.gallery_name_format, galleryName)
+        binding.tvMyPoints.text =
+            getString(R.string.my_points_format, PointsManager.getTotalPoints())
         val gallery = Gallery(
             galleryId,
             listOf(
@@ -146,16 +147,17 @@ class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
         binding.recyclerView.adapter = adapter
         binding.btnDrawCard.setOnClickListener {
             if (SPUtils.readBoolean(this@DrawCardActivity, galleryId)) {
-                showShortToast("太棒了，你的图鉴已集齐！")
+                showShortToast(getString(R.string.collection_complete))
                 return@setOnClickListener
             }
             val totalPoints = PointsManager.getTotalPoints()
             // 先扣除积分
             if (totalPoints >= 100) {
                 PointsManager.addPoints(PointsSource.GACHA.desc, -100)
-                binding.tvMyPoints.text = "我的积分：${PointsManager.getTotalPoints()}"
+                binding.tvMyPoints.text = getString(R.string.my_points_format, PointsManager.getTotalPoints())
+
             } else {
-                showShortToast("积分不足!")
+                showShortToast(getString(R.string.insufficient_points))
                 return@setOnClickListener
             }
             val card = gallery.drawCardIgnoreDrawn() // 随机抽一张
@@ -200,13 +202,13 @@ class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
                         )
                         if (num >= 54 && !SPUtils.readBoolean(this@DrawCardActivity, galleryId)) {
                             SPUtils.writeBoolean(this@DrawCardActivity, galleryId, true)
-                            showLongToast("恭喜，卡片已集齐！")
+                            showLongToast(getString(R.string.collection_complete))
                         }
                     }
                     adapter.notifyItemChanged(index)
                 }
             } else {
-                showShortToast("已有该卡了")
+                showShortToast(getString(R.string.you_already_own_this_card))
             }
         }
     }

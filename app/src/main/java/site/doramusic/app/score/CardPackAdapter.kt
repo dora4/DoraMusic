@@ -12,7 +12,7 @@ class CardPackAdapter(
     override fun convert(holder: BaseViewHolder, item: CardPack) {
         holder.setImageResource(R.id.ivIcon, item.drawableRes)
         holder.setText(R.id.tvName, item.name)
-        holder.setText(R.id.tvStatus, if (item.ownNum == 54) "已集齐" else "(${item.ownNum}/54)")
+        holder.setText(R.id.tvStatus, if (item.ownNum == 54) context.getString(R.string.all_collected) else "(${item.ownNum}/54)")
         holder.itemView.setOnClickListener {
             onItemClick(item)
         }

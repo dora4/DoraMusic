@@ -117,5 +117,19 @@ The [Dora Music] Team</string>
     <string name="color_name_gold">Gold</string>
     <string name="my_gallery">My Gallery</string>
     <string name="draw_cards_to_collect_gallery">Draw Card</string>
+    <string name="all_collected">All collected</string>
+    <string name="collection_complete">Awesome! Your collection is complete!</string>
+    <string name="insufficient_points">Insufficient points!</string>
+    <string name="you_already_own_this_card">You already own this card.</string>
+    <string name="rain_forest">Rain Forest</string>
+    <string name="gallery_name_format">Collection Name: %1$s</string>
+    <string name="my_points_format">My Points: %1$d</string>
+    <string name="listening_reward">Listening Reward</string>
+    <string name="daily_login_reward">Daily Login Reward</string>
+    <string name="task_reward">Task Reward</string>
+    <string name="event_reward">Event Reward</string>
+    <string name="gacha_cost">Gacha Cost</string>
+    <string name="exchange_cost">Exchange Cost</string>
+    <string name="draw_card_btn_text">Draw Card (Costs 100 Points)</string>
 
 </resources>

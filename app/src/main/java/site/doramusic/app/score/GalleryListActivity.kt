@@ -56,7 +56,7 @@ class GalleryListActivity : BaseActivity<ActivityGalleryListBinding>() {
     private fun getCardPacks(): List<CardPack> {
         // 新加的卡包排在最前面
         val galleryIds = listOf(
-            AppConfig.GALLERY_RAIN_FOREST to "雨林",
+            AppConfig.GALLERY_RAIN_FOREST to getString(R.string.rain_forest),
 //            AppConfig.GALLERY_DESERT to "沙漠",
 //            AppConfig.GALLERY_CITY to "都市",
 //            AppConfig.GALLERY_COUNTRYSIDE to "田园",

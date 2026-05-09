@@ -110,5 +110,19 @@
     <string name="color_name_gold">暗金</string>
     <string name="my_gallery">我的图鉴</string>
     <string name="draw_cards_to_collect_gallery">抽卡集图鉴</string>
+    <string name="all_collected">已集齐</string>
+    <string name="collection_complete">恭喜，你的图鉴已集齐！</string>
+    <string name="insufficient_points">积分不足!</string>
+    <string name="you_already_own_this_card">已有该卡了</string>
+    <string name="rain_forest">雨林</string>
+    <string name="gallery_name_format">图鉴名称：%1$s</string>
+    <string name="my_points_format">我的积分：%1$d</string>
+    <string name="listening_reward">听歌时长积分</string>
+    <string name="daily_login_reward">每日登录奖励</string>
+    <string name="task_reward">任务奖励</string>
+    <string name="event_reward">活动奖励</string>
+    <string name="gacha_cost">抽奖消耗</string>
+    <string name="exchange_cost">兑换消耗</string>
+    <string name="draw_card_btn_text">抽卡（消耗100积分）</string>
 
 </resources>

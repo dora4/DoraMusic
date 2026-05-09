@@ -18,7 +18,35 @@ data class GalleryCard(
     val probability: Double = 0.0,
     override val isUpgradeRecreated: Boolean = false,
     override val migrations: Array<OrmMigration>? = arrayOf()
-) : OrmTable
+) : OrmTable {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as GalleryCard
+
+        if (id != other.id) return false
+        if (number != other.number) return false
+        if (isDrawn != other.isDrawn) return false
+        if (probability != other.probability) return false
+        if (isUpgradeRecreated != other.isUpgradeRecreated) return false
+        if (galleryId != other.galleryId) return false
+        if (!migrations.contentEquals(other.migrations)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + number
+        result = 31 * result + isDrawn.hashCode()
+        result = 31 * result + probability.hashCode()
+        result = 31 * result + isUpgradeRecreated.hashCode()
+        result = 31 * result + galleryId.hashCode()
+        result = 31 * result + (migrations?.contentHashCode() ?: 0)
+        return result
+    }
+}
 
 class Gallery(val id: String, private val cards: List<GalleryCard>) {
 

@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape_theme_button_gold_yellow"
             android:textColor="@color/white"
-            android:text="抽卡（消耗100积分）"/>
+            android:text="@string/draw_card_btn_text"/>
     </LinearLayout>
 
 </layout>
