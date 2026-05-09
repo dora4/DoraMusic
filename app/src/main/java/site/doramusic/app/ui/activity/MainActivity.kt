@@ -59,6 +59,7 @@ import site.doramusic.app.http.SecureRequestBuilder
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
+import site.doramusic.app.score.PointsManager
 import site.doramusic.app.ui.IBackNavigator
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.ui.layout.IMenuDrawer
@@ -82,6 +83,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     private val backListeners: MutableList<OnBackListener> = ArrayList()
     private lateinit var prefsManager: PrefsManager
     private var erc20AddrView: TextView? = null
+    private var pointsView: TextView? = null
     private lateinit var helper: PermissionHelper
 
     private val selectMusicLauncher =
@@ -191,6 +193,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
      * 打开侧边栏。
      */
     override fun openDrawer() {
+        refreshPoints()
         mBinding.dlMain.openDrawer(GravityCompat.START)
     }
 
@@ -250,6 +253,13 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         closeDrawer()
     }
 
+    private fun refreshPoints() {
+        pointsView?.text = getString(
+            R.string.my_points_format,
+            PointsManager.getTotalPoints()
+        )
+    }
+
     private fun initMenu() {
         // 禁用手势滑动打开
         mBinding.dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -276,7 +286,9 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         drawerHeader = headerView.findViewById<RelativeLayout>(R.id.rl_drawer_header)
         val avatarView = headerView.findViewById<AppCompatImageView>(R.id.iv_drawer_header_avatar)
         erc20AddrView = headerView.findViewById<TextView>(R.id.tv_drawer_header_nickname)
+        pointsView = headerView.findViewById<TextView>(R.id.tv_drawer_header_my_points)
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
+        pointsView!!.text = getString(R.string.my_points_format, PointsManager.getTotalPoints())
         versionNameView.text = BuildConfig.APP_VERSION
         val user = UserManager.ins?.currentUser
         if (user != null) {
@@ -445,11 +457,13 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                         }
                     })
                     .show(
-                        EVENT_TYPE_SCAN_PROMPT, "受Android13以上系统限制，读取音频文件权限仅能访问" +
-                                "Music、Download等特定目录的音频文件。如需访问所有目录的音频文件，请在【设置】->【应用程序】->【权限】中手动开启全部文件读取权限。"
+                        EVENT_TYPE_SCAN_PROMPT, getString(R.string.storage_permission_prompt)
                     ) {
                         themeColor(ThemeSelector.getThemeColor(this@MainActivity))
                     }
+                if (!PermissionHelper.hasStoragePermission(this)) {
+                    startActivity(IntentUtils.getRequestStoragePermissionIntent(packageName))
+                }
             } else {
                 helper.permissions(
                     PermissionHelper.Permission.READ_EXTERNAL_STORAGE

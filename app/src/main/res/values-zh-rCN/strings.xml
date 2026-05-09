@@ -124,5 +124,6 @@
     <string name="gacha_cost">抽奖消耗</string>
     <string name="exchange_cost">兑换消耗</string>
     <string name="draw_card_btn_text">抽卡（消耗100积分）</string>
+    <string name="storage_permission_prompt"><![CDATA[正在申请访问文件的权限，用于识别歌曲。你也可以在【设置】->【应用程序】->【权限】中手动开启文件读取权限。]]></string>
 
 </resources>

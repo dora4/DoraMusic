@@ -44,6 +44,7 @@ class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
         binding.tvGalleryName.text = getString(R.string.gallery_name_format, galleryName)
         binding.tvMyPoints.text =
             getString(R.string.my_points_format, PointsManager.getTotalPoints())
+        ThemeSelector.applyViewTheme(binding.btnDrawCard)
         val gallery = Gallery(
             galleryId,
             listOf(

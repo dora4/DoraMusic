@@ -26,6 +26,18 @@
         android:layout_marginHorizontal="10dp"
         android:textColor="@color/colorTextPrimary"
         android:layout_below="@id/iv_drawer_header_avatar"/>
+    <dora.widget.DoraMarqueeTextView
+        android:id="@+id/tv_drawer_header_my_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="13sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/tv_drawer_header_version_name"/>
     <TextView
         android:id="@+id/tv_drawer_header_version_name"
         android:layout_width="wrap_content"

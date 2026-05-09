@@ -30,10 +30,10 @@
             android:id="@+id/tvGalleryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textColor="@color/colorTextPrimary"
-            android:layout_marginTop="9dp"
-            android:layout_marginHorizontal="5dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"/>
 
         <TextView
@@ -41,23 +41,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/colorTextPrimary"
-            android:layout_marginTop="9dp"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="6dp"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="9dp"
             android:padding="4dp"
             android:clipToPadding="false" />
         <Button
             android:id="@+id/btnDrawCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_theme_button_gold_yellow"
+            android:background="@color/skin_theme_color"
             android:textColor="@color/white"
             android:text="@string/draw_card_btn_text"/>
     </LinearLayout>

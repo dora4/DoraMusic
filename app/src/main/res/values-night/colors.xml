@@ -65,7 +65,7 @@
     <color name="home_menu_icon">@color/white</color>
     <color name="letterview_preview_bg_color">@color/white</color>
     <color name="letterview_preview_text_color">@color/black</color>
-    <color name="album_text_color">@color/white</color>
+    <color name="rotate_view_text_color">@color/colorPanelBg</color>
     <color name="loading_bg_color">@color/colorPanelFg</color>
     <color name="dview_loading_bg_color">@color/colorPanelFg</color>
     <color name="dview_loading_text_color">@color/white</color>
