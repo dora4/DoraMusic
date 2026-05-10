@@ -21,9 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/selector_item_common"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?selectableItemBackgroundBorderless"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="4dp">
