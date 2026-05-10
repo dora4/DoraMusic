@@ -18,6 +18,9 @@ import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityDrawCardBinding
 import site.doramusic.app.util.ThemeSelector
 
+/**
+ * 抽卡界面。
+ */
 @Route(path = ARoutePath.ACTIVITY_DRAW_CARD)
 class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
 

@@ -18,6 +18,9 @@ import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityGalleryListBinding
 import site.doramusic.app.util.ThemeSelector
 
+/**
+ * 图鉴列表，每个大版本更新。
+ */
 @Route(path = ARoutePath.ACTIVITY_GALLERY_LIST)
 class GalleryListActivity : BaseActivity<ActivityGalleryListBinding>() {
 
