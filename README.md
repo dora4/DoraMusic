@@ -67,10 +67,6 @@ DoraChat（[种子用户体验版](https://www.pgyer.com/dorachat-android)），
 
 <img width="456" height="494" alt="截屏2026-02-25 14 48 28" src="https://github.com/user-attachments/assets/993e2432-a296-474e-9abf-e6cb9108cd9c" />
 
-### 近期热门DJ
-
-https://github.com/dora4/DoraMusic/blob/main/Recommend_DJ.md
-
 ### 软件截图
 
 1. 快捷播放列表（便于单手操作）
