@@ -51,6 +51,10 @@ import java.util.concurrent.TimeUnit
 class MusicApp : BaseApplication(), AppConfig {
 
     companion object {
+        
+        /**
+         * 标记是否初始化完成，可以从启动页进入主界面。
+         */
         var isAppInitialized = false
     }
 
