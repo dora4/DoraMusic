@@ -160,11 +160,17 @@ class MusicApp : BaseApplication(), AppConfig {
             .database(DB_NAME)      // 自定义数据库名称
             .version(DB_VERSION)    // 从1开始递增
             // 所管理的表
-            .tables(Music::class.java, Artist::class.java,
-                Album::class.java, Folder::class.java,
-                Donation::class.java, DownloadTask::class.java,
-                DoraUserInfo::class.java, GalleryCard::class.java,
-                UserPoints::class.java, PointsRecord::class.java
+            .tables(
+                Music::class.java,  // 歌曲
+                Artist::class.java, // 艺术家
+                Album::class.java,  // 专辑
+                Folder::class.java, // 文件夹
+                Donation::class.java,  // 捐助记录
+                DownloadTask::class.java,   // 下载任务队列（暂未使用）
+                DoraUserInfo::class.java, // 用户资料
+                GalleryCard::class.java,   // 图鉴卡片
+                UserPoints::class.java, // 用户积分
+                PointsRecord::class.java    // 积分变更记录
             )
             .build())
     }
