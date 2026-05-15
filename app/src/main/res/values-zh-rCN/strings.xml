@@ -44,6 +44,7 @@
     <string name="enable_dark_mode">开启深色模式</string>
     <string name="bass_boost">重低音</string>
     <string name="close_banner">关闭横幅</string>
+    <string name="keep_alive">保持主界面不息屏</string>
     <string name="logout">注销登录</string>
     <string name="brand">朵拉音乐</string>
     <string name="slogan">想听就听</string>
