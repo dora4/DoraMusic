@@ -49,7 +49,7 @@ class PrefsManager(val context: Context) {
     }
 
     fun isKeepOn(): Boolean {
-        return SPUtils.readBoolean(context, PREFS_CLOSE_BANNER, false)
+        return SPUtils.readBoolean(context, PREFS_KEEP_ON, false)
     }
 
     fun getSkinType(): Int {
@@ -162,7 +162,6 @@ class PrefsManager(val context: Context) {
          * 横幅开关。
          */
         const val PREFS_CLOSE_BANNER = "prefs_close_banner"
-
 
         /**
          * 保持主界面不息屏开关。
