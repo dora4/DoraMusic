@@ -80,6 +80,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsDarkMode.isChecked = prefsManager.getDarkMode()
         binding.tbSettingsBassBoost.isChecked = prefsManager.getBassBoost()
         binding.tbSettingsCloseBanner.isChecked = prefsManager.isBannerClosed()
+        binding.tbSettingsKeepAlive.isChecked = prefsManager.isKeepOn()
         if (DaoFactory.getDao(Donation::class.java).count(
                 WhereBuilder.create().addWhereEqualTo(COLUMN_PENDING, true)
         ) > 0) {
@@ -161,6 +162,17 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 prefsManager.saveBannerClose(isChecked)
             }
         })
+        binding.tbSettingsKeepAlive.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
+                if (isChecked) {
+                    spmSelectContent("关闭保持屏幕常亮")
+                } else {
+                    spmSelectContent("开启保持屏幕常亮")
+                }
+                binding.tbSettingsKeepAlive.isChecked = isChecked
+                prefsManager.saveKeepOn(isChecked)
+            }
+        })
     }
 
     override fun onClick(view: View) {
@@ -199,6 +211,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 val isChecked = mBinding.tbSettingsCloseBanner.isChecked
                 mBinding.tbSettingsCloseBanner.isChecked = !isChecked
                 prefsManager.saveBannerClose(!isChecked)
+            }
+            R.id.rl_settings_keep_alive -> {
+                val isChecked = mBinding.tbSettingsKeepAlive.isChecked
+                mBinding.tbSettingsKeepAlive.isChecked = !isChecked
+                prefsManager.saveKeepOn(!isChecked)
             }
             R.id.rl_settings_share -> {
                 var shareIntent = Intent(Intent.ACTION_SEND)
