@@ -42,6 +42,7 @@
     <string name="enable_dark_mode">Enable Dark Mode</string>
     <string name="bass_boost">Bass Boost</string>
     <string name="close_banner">Close banner</string>
+    <string name="keep_alive">Keep screen on</string>
     <string name="logout">Logout</string>
     <string name="brand">Dora Music</string>
     <string name="slogan">Listen Anytime</string>
