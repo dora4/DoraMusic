@@ -167,7 +167,7 @@ class MusicApp : BaseApplication(), AppConfig {
                 Folder::class.java, // 文件夹
                 Donation::class.java,  // 捐助记录
                 DownloadTask::class.java,   // 下载任务队列（暂未使用）
-                DoraUserInfo::class.java, // 用户资料
+                DoraUserInfo::class.java, // 用户资料（认证SDK引入，暂未使用）
                 GalleryCard::class.java,   // 图鉴卡片
                 UserPoints::class.java, // 用户积分
                 PointsRecord::class.java    // 积分变更记录
