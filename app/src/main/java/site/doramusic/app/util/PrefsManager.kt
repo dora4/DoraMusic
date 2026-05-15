@@ -48,6 +48,10 @@ class PrefsManager(val context: Context) {
         return SPUtils.readBoolean(context, PREFS_CLOSE_BANNER, false)
     }
 
+    fun isKeepOn(): Boolean {
+        return SPUtils.readBoolean(context, PREFS_CLOSE_BANNER, false)
+    }
+
     fun getSkinType(): Int {
         return SPUtils.readInteger(context, PREFS_SKIN_TYPE, 1)
     }
@@ -98,6 +102,10 @@ class PrefsManager(val context: Context) {
 
     fun saveBannerClose(closed: Boolean) {
         SPUtils.writeBoolean(context, PREFS_CLOSE_BANNER, closed)
+    }
+
+    fun saveKeepOn(keepOn: Boolean) {
+        SPUtils.writeBoolean(context, PREFS_KEEP_ON, keepOn)
     }
 
     fun saveSkinType(skinType: Int) {
@@ -154,6 +162,12 @@ class PrefsManager(val context: Context) {
          * 横幅开关。
          */
         const val PREFS_CLOSE_BANNER = "prefs_close_banner"
+
+
+        /**
+         * 保持主界面不息屏开关。
+         */
+        const val PREFS_KEEP_ON = "prefs_keep_on"
 
         /**
          * 皮肤类型为0时的自定义颜色。
