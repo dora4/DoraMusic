@@ -74,6 +74,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsDarkMode.checkedColor = skinThemeColor
         binding.tbSettingsBassBoost.checkedColor = skinThemeColor
         binding.tbSettingsCloseBanner.checkedColor = skinThemeColor
+        binding.tbSettingsKeepAlive.checkedColor = skinThemeColor
         binding.tbSettingsAutoPlay.isChecked = prefsManager.isColdLaunchAutoPlay()
         binding.tbSettingsAutoConnectVpn.isChecked = prefsManager.isColdLaunchAutoConnectVPN()
         binding.tbSettingsShake.isChecked = prefsManager.getShakeChangeMusic()
