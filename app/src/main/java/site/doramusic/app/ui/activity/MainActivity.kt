@@ -6,6 +6,7 @@ import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -158,6 +159,10 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             if (!helper.hasPermission(this, PermissionHelper.Permission.POST_NOTIFICATIONS)) {
                 helper.permissions(PermissionHelper.Permission.POST_NOTIFICATIONS).request()
             }
+        }
+        if (prefsManager.isKeepOn()) {
+            // 保持主界面不息屏
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
         if (prefsManager.isColdLaunchAutoConnectVPN() && NetUtils.checkNetworkAvailable(this)) {
             if (!PermissionHelper.hasStoragePermission(this)) {
