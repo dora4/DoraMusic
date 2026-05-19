@@ -26,11 +26,11 @@ data class DoraGuessingRank(
      * 盈利积分。
      */
     @SerializedName("profit")
-    val profit: Double,
+    val profit: Int,
 
     /**
      * 投注积分。
      */
     @SerializedName("totalBet")
-    val totalBet: Double
+    val totalBet: Int
 )
