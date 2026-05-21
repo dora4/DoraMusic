@@ -34,6 +34,7 @@ import site.doramusic.app.db.Music
 import site.doramusic.app.feedback.FeedbackService
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.FileService
+import site.doramusic.app.http.service.GuessingService
 import site.doramusic.app.model.Donation
 import site.doramusic.app.model.DownloadTask
 import site.doramusic.app.score.GalleryCard
@@ -51,7 +52,7 @@ import java.util.concurrent.TimeUnit
 class MusicApp : BaseApplication(), AppConfig {
 
     companion object {
-        
+
         /**
          * 标记是否初始化完成，可以从启动页进入主界面。
          */
@@ -152,6 +153,8 @@ class MusicApp : BaseApplication(), AppConfig {
             mappingBaseUrl(SysMsgService::class.java, AppConfig.URL_SYS_MSG_SERVER)
             // 文件
             mappingBaseUrl(FileService::class.java, AppConfig.URL_FILE_SERVER)
+            // 竞猜
+            mappingBaseUrl(GuessingService::class.java, GuessingService.SERVER_URL)
         }
     }
 
@@ -167,7 +170,7 @@ class MusicApp : BaseApplication(), AppConfig {
                 Folder::class.java, // 文件夹
                 Donation::class.java,  // 捐助记录
                 DownloadTask::class.java,   // 下载任务队列（暂未使用）
-                DoraUserInfo::class.java, // 用户资料（认证SDK引入，暂未使用）
+                DoraUserInfo::class.java, // 用户资料
                 GalleryCard::class.java,   // 图鉴卡片
                 UserPoints::class.java, // 用户积分
                 PointsRecord::class.java    // 积分变更记录
