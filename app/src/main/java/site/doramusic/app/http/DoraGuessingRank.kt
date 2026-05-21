@@ -23,7 +23,7 @@ data class DoraGuessingRank(
     val winRate: Double,
 
     /**
-     * 盈利积分。
+     * 盈亏积分。
      */
     @SerializedName("profit")
     val profit: Int,
