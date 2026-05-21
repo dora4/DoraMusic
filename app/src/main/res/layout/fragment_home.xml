@@ -223,7 +223,6 @@
                     app:dview_fv_flipInterval="5000"
                     app:dview_fv_textColor="@color/white"
                     app:dview_fv_textSize="15sp" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_banner"
                     android:layout_width="match_parent"
@@ -260,6 +259,38 @@
                         app:layout_constraintEnd_toEndOf="@id/banner"
                         app:layout_constraintStart_toStartOf="@id/banner" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_guessing_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:paddingHorizontal="25dp"
+                    android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="5dp"
+                        android:background="@drawable/shape_guessing_portal_border"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_hot"
+                            android:tint="@color/orange_red"
+                            android:layout_marginHorizontal="10dp"/>
+                        <TextView
+                            android:id="@+id/tv_guessing_topic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="竞猜活动开启中，点此参与"
+                            android:textSize="20sp"
+                            android:textColor="#FEA44A"/>
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_home_module"
