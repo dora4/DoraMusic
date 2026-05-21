@@ -133,4 +133,7 @@ The [Dora Music] Team</string>
     <string name="exchange_cost">Exchange Cost</string>
     <string name="draw_card_btn_text">Draw Card (Costs 100 Points)</string>
     <string name="storage_permission_prompt"><![CDATA[Requesting file access permission to identify songs. You can also manually enable file access permission in [Settings] -> [Apps] -> [Permissions].]]></string>
+    <string name="guessing">Guessing</string>
+    <string name="guessing_rank">Guessing Rank</string>
+    <string name="my_predictions">My Predictions</string>
 </resources>
