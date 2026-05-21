@@ -60,4 +60,7 @@
     <color name="loading_bg_color">#A7333333</color>
     <color name="dview_loading_bg_color">#A7333333</color>
     <color name="dview_loading_text_color">@color/white</color>
+    <color name="color_guessing_bet_normal">@color/colorPanelFg</color>
+    <color name="color_guessing_bet_disabled">#F5F5F5</color>
+    <color name="color_guessing_bet_pressed">#0F04D5D5</color>
 </resources>
