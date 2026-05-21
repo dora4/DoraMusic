@@ -19,15 +19,18 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.dorachat.auth.UserManager
 import com.youth.banner.adapter.BannerAdapter
 import com.youth.banner.listener.OnPageChangeListener
 import dora.BaseFragment
+import dora.arouter.open
 import dora.db.builder.QueryBuilder
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
 import dora.firebase.SpmUtils.spmAdImpression
 import dora.firebase.SpmUtils.spmSelectContent
+import dora.http.DoraHttp.api
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.pay.DoraFund
@@ -37,6 +40,7 @@ import dora.widget.DoraSingleButtonDialog
 import dora.widget.DoraTitleBar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.R
+import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
@@ -53,8 +57,10 @@ import site.doramusic.app.event.ChangeSkinEvent
 import site.doramusic.app.event.PlayMusicEvent
 import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
+import site.doramusic.app.http.GuestSession
 import site.doramusic.app.sysmsg.SysMsgEvent
 import site.doramusic.app.http.service.AdService
+import site.doramusic.app.http.service.GuessingService
 import site.doramusic.app.media.FloatingPlayer
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
@@ -186,6 +192,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         if (!prefsManager.isBannerClosed()) {
             loadAds(binding)
         }
+        loadGuessing(binding)
         binding.statusbarHome.layoutParams = RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
@@ -274,6 +281,69 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     override fun isAutoDispose(): Boolean {
         return true
+    }
+
+    private suspend fun initGuest() : GuestSession? {
+        val resp = try {
+             api(GuessingService::class) {
+                initGuest()
+            }?.data
+        } catch (e: Exception) {
+            showShortToast(e.toString())
+            null
+        }
+        SPUtils.writeString(requireContext(), "token", resp?.token)
+        SPUtils.writeString(requireContext(), "userId", resp?.userId)
+        return resp
+    }
+
+    private suspend fun getAvailableGuestSession(): GuestSession? {
+        val token = SPUtils.readString(requireContext(), "token")
+        val userId = SPUtils.readString(requireContext(), "userId")
+        // 本地没缓存
+        if (TextUtils.isEmpty(token) || TextUtils.isEmpty(userId)) {
+            return initGuest()
+        }
+        // 服务端验证 token
+        val resp = result(GuessingService::class) {
+            checkGuestToken(token)
+        }
+        return if (resp?.data == true) {
+            GuestSession(token, userId)
+        } else {
+            initGuest()
+        }
+    }
+
+    private fun loadGuessing(binding: FragmentHomeBinding) {
+        net {
+            val data = result(AdService::class) { isGuessingOpened(PRODUCT_NAME) }?.data
+            val visible = data?.visible
+            val guessingEnable = data?.configValue
+            if (visible == 1 && guessingEnable == "true") {
+                binding.rlGuessingContent.visibility = View.VISIBLE
+                var token: String?
+                var userId: String?
+                if (UserManager.ins?.currentUser == null) {
+                    val guestSession = getAvailableGuestSession()
+                    token = guestSession?.token
+                    userId = guestSession?.userId
+                } else {
+                    token = UserManager.ins?.currentUser?.accessToken
+                    userId = UserManager.ins?.currentUser?.erc20
+                }
+                binding.rlGuessingContent.setOnClickListener {
+                    open(ARoutePath.ACTIVITY_GUESSING) {
+                        withString("token", token)
+                        withString("userId", userId)
+                    }
+                }
+            }
+            val topic = result(AdService::class) { getGuessingTopic(PRODUCT_NAME) }?.data?.configValue
+            if (TextUtils.isNotEmpty(topic)) {
+                binding.tvGuessingTopic.text = topic
+            }
+        }
     }
 
     private fun loadAds(binding: FragmentHomeBinding) {
