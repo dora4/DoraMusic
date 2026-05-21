@@ -1,0 +1,39 @@
+package site.doramusic.app.ui.adapter
+
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import site.doramusic.app.R
+import site.doramusic.app.http.DoraGuessingRank
+import kotlin.math.roundToLong
+
+class GuessingRankAdapter(val type: Int) :
+    BaseQuickAdapter<DoraGuessingRank, BaseViewHolder>(R.layout.item_guessing_rank) {
+
+    override fun convert(holder: BaseViewHolder, item: DoraGuessingRank) {
+        holder.setText(R.id.tvRank, (holder.adapterPosition + 1).toString())
+        if (getItemPosition(item) == 0) {
+            holder.setGone(R.id.tvRank, true)
+            holder.setVisible(R.id.ivRank, true)
+            holder.setImageResource(R.id.ivRank, R.drawable.ic_rank_crown_gold)
+        } else if (getItemPosition(item) == 1) {
+            holder.setGone(R.id.tvRank, true)
+            holder.setVisible(R.id.ivRank, true)
+            holder.setImageResource(R.id.ivRank, R.drawable.ic_rank_crown_silver)
+        } else if (getItemPosition(item) == 2) {
+            holder.setGone(R.id.tvRank, true)
+            holder.setVisible(R.id.ivRank, true)
+            holder.setImageResource(R.id.ivRank, R.drawable.ic_rank_crown_copper)
+        }
+        holder.setText(R.id.tvTitle, item.userId)
+        if (type == 0) {
+            holder.setText(R.id.tvValue, "${(item.winRate * 100).roundToLong()}%")
+            holder.setText(R.id.tvLabel, "胜率")
+        } else if (type == 1) {
+            holder.setText(R.id.tvValue, item.profit.toString())
+            holder.setText(R.id.tvLabel, "盈亏")
+        } else if (type == 2) {
+            holder.setText(R.id.tvValue, item.totalBet.toString())
+            holder.setText(R.id.tvLabel, "投注")
+        }
+    }
+}
