@@ -33,6 +33,18 @@ data class DoraGuessingInfoWithItems(
     val remainSeconds: Long,
 
     /**
+     * 当前用户是否投注。
+     */
+    @SerializedName("isBet")
+    val isBet: Boolean = false,
+
+    /**
+     * 当前用户是否猜中。
+     */
+    @SerializedName("isHit")
+    val isHit: Boolean = false,
+
+    /**
      * 竞猜选项。
      */
     @SerializedName("items")
