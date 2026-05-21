@@ -92,6 +92,24 @@
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.GuessingActivity"
+            android:exported="false"
+            android:label="竞猜"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GuessingRankActivity"
+            android:exported="false"
+            android:label="竞猜排行榜"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GuessingRewardActivity"
+            android:exported="false"
+            android:label="竞猜奖励"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".feedback.FeedbackActivity"
             android:exported="false"
             android:label="反馈"
