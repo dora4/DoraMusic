@@ -15,6 +15,8 @@ interface AdService : ApiService {
 
     companion object {
         const val CONF_ENABLE_BANNER_AD = "enable_banner_ad"
+        const val CONF_ENABLE_GUESSING = "enable_guessing"
+        const val CONF_GUESSING_TOPIC = "guessing_topic"
     }
 
     /**
@@ -31,4 +33,18 @@ interface AdService : ApiService {
     @GET("config/get")
     fun isShowBannerAds(@Query("productName") productName: String,
                         @Query("configName") configName: String = CONF_ENABLE_BANNER_AD): Call<ApiResult<DoraConfig>>
+
+    /**
+     * 竞猜活动是否开启。
+     */
+    @GET("config/get")
+    fun isGuessingOpened(@Query("productName") productName: String,
+                         @Query("configName") configName: String = CONF_ENABLE_GUESSING): Call<ApiResult<DoraConfig>>
+
+    /**
+     * 获取竞猜主题信息。
+     */
+    @GET("config/get")
+    fun getGuessingTopic(@Query("productName") productName: String,
+                         @Query("configName") configName: String = CONF_GUESSING_TOPIC): Call<ApiResult<DoraConfig>>
 }
