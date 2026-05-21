@@ -35,17 +35,5 @@ data class DoraGuessingItem(
      * 是否正确答案。
      */
     @SerializedName("isWin")
-    val isWin: Boolean? = null,
-
-    /**
-     * 当前用户是否投注。
-     */
-    @SerializedName("isBet")
-    val isBet: Boolean? = null,
-
-    /**
-     * 当前用户是否猜中。
-     */
-    @SerializedName("isHit")
-    val isHit: Boolean? = null
+    val isWin: Boolean? = null
 )
