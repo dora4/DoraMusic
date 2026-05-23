@@ -25,7 +25,8 @@ import site.doramusic.app.http.service.GuessingService
 import site.doramusic.app.score.PointsManager
 import site.doramusic.app.score.PointsSource
 
-class GuessingAdapter(val token: String) :
+class GuessingAdapter(private val token: String,
+                      private val onPointsChanged: (() -> Unit)? = null) :
     BaseQuickAdapter<DoraGuessingInfoWithItems, BaseViewHolder>(
         R.layout.item_guessing
     ) {
@@ -70,9 +71,8 @@ class GuessingAdapter(val token: String) :
             holder.getView<FlowLayout>(
                 R.id.fl_options
             )
-        markView.clearTextMarks()
+        markView.clearDrawableMarks()
         if (item.status == 2) {
-            markView.clearDrawableMarks()
             if (item.isBet) {
                 if (item.isHit) {
                     markView.addDrawableMark(ContextCompat.getDrawable(context,
@@ -84,17 +84,20 @@ class GuessingAdapter(val token: String) :
                         gravity = Gravity.BOTTOM or Gravity.END, 0)
                 }
             } else {
-                markView.addDrawableMark(ContextCompat.getDrawable(context,
-                    R.drawable.ic_seal_miss) as Drawable,
-                    gravity = Gravity.BOTTOM or Gravity.END, 0)
+                // 未参与
+//                markView.addDrawableMark(ContextCompat.getDrawable(context,
+//                    R.drawable.ic_seal_miss) as Drawable,
+//                    gravity = Gravity.BOTTOM or Gravity.END, 0)
             }
         }
         tvTitle.text = item.title
         tvTime.text =
-            "时间：${TimeUtils.getTimeString(
-                item.closeTime * 1000,
-                "yyyy-MM-dd HH:mm"
-            )}"
+            context.getString(
+                R.string.time_format, TimeUtils.getTimeString(
+                    item.closeTime * 1000,
+                    "yyyy-MM-dd HH:mm"
+                )
+            )
         when (item.status) {
             0 -> {
                 markView.addDrawableMark(ContextCompat.getDrawable(context,
@@ -138,12 +141,12 @@ class GuessingAdapter(val token: String) :
                     betCache[it.id]
                         ?: it.totalScore
                 }
-            tvOdds.text = "赔率: ${
-                    calculateOdds(
-                        totalPool,
-                        currentBet
-                    )
-                }"
+            tvOdds.text = context.getString(
+                R.string.odds_format, calculateOdds(
+                    totalPool,
+                    currentBet
+                )
+            )
             tvOdds.visibility = View.VISIBLE
             val params = FlowLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -168,7 +171,7 @@ class GuessingAdapter(val token: String) :
                     && selectedOptionId != option.id
                 ) {
                     ToastUtils.showShort(
-                        "您已投注其它选项，只能继续追加"
+                        context.getString(R.string.already_bet_another_option)
                     )
                     return@setOnClickListener
                 }
@@ -248,11 +251,9 @@ class GuessingAdapter(val token: String) :
     ) {
         val totalPoints = PointsManager.getTotalPoints()
         if (amount > totalPoints) {
-            ToastUtils.showShort("积分不足")
+            ToastUtils.showShort(R.string.insufficient_points)
             return
         }
-        PointsManager.addPoints(PointsSource.EXCHANGE.desc, -amount.toInt(),
-            "竞猜扣除")
         net {
             try {
                 val req = ReqGuessingBet(
@@ -268,17 +269,20 @@ class GuessingAdapter(val token: String) :
                 if (ok == true) {
                     onSuccess?.invoke()
                     ToastUtils.showShort(
-                        "投注成功"
+                        context.getString(R.string.bet_successful)
                     )
+                    PointsManager.addPoints(PointsSource.EXCHANGE.desc, -amount.toInt(),
+                        "竞猜扣除")
+                    onPointsChanged?.invoke()
                 } else {
                     ToastUtils.showShort(
-                        "投注失败"
+                        context.getString(R.string.failed_to_bet)
                     )
                 }
             } catch (e: Exception) {
                 LogUtils.e(e)
                 ToastUtils.showShort(
-                    e.message ?: "投注失败"
+                    context.getString(R.string.failed_to_bet)
                 )
             } finally {
                 onFinish?.invoke()
