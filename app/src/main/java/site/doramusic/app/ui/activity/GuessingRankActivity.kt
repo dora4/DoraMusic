@@ -89,9 +89,9 @@ class GuessingRankActivity : BaseSkinActivity<ActivityGuessingRankBinding>() {
         ThemeSelector.applyViewTheme(binding.titlebarGuessingRank)
 
         initFragments()
-        binding.tabbar.addTextTab("胜率榜")
-        binding.tabbar.addTextTab("盈亏榜")
-        binding.tabbar.addTextTab("投注榜")
+        binding.tabbar.addTextTab(getString(R.string.win_rate_ranking))
+        binding.tabbar.addTextTab(getString(R.string.profit_loss_ranking))
+        binding.tabbar.addTextTab(getString(R.string.bet_ranking))
         binding.tabbar.setOnTabClickListener(object : DoraTabBar.OnTabClickListener {
 
             override fun onTabClick(view: View, position: Int) {
