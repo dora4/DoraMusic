@@ -21,19 +21,42 @@
             app:dview_backIconTint="@color/white"
             app:dview_title="@string/guessing"
             android:background="@color/skin_theme_color"/>
-        <TextView
-            android:id="@+id/tv_guessing_user_id"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="10dp"
-            android:textColor="@color/colorTextPrimary"
-            android:gravity="end"/>
-        <androidx.recyclerview.widget.RecyclerView
+            android:padding="10dp"
+            android:background="@color/colorPanelFg">
+            <TextView
+                android:id="@+id/tvMyPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextSecondary"/>
+            <TextView
+                android:id="@+id/tv_guessing_user_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/colorTextPrimary"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"/>
+
+        <dora.widget.pull.SwipeLayout
+            android:id="@+id/swipeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        <include layout="@layout/layout_swipe_layout_header"/>
+        <dora.widget.pull.PullableRecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            app:dview_canPullUp="false"/>
+            <include layout="@layout/layout_swipe_layout_footer"/>
+        </dora.widget.pull.SwipeLayout>
     </LinearLayout>
 </layout>
 
