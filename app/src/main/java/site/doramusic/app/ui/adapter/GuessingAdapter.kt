@@ -1,10 +1,12 @@
 package site.doramusic.app.ui.adapter
 
+import android.graphics.drawable.Drawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -70,36 +72,21 @@ class GuessingAdapter(val token: String) :
             )
         markView.clearTextMarks()
         if (item.status == 2) {
-            if (!item.isBet) {
-                markView.addTextMark(
-                    DoraMarkView.TextMark(
-                        text = "未参与",
-                        bgColor = 0x55BDBDBD.toInt(),
-                        textColor = 0xFFFFFFFF.toInt(),
-                        gravity = Gravity.BOTTOM or Gravity.END,
-                        textSizeSp = 16f
-                    )
-                )
-            } else if (item.isHit) {
-                markView.addTextMark(
-                    DoraMarkView.TextMark(
-                        text = "已中奖",
-                        bgColor = 0xAA4CAF50.toInt(),
-                        textColor = 0xFFFFFFFF.toInt(),
-                        gravity = Gravity.BOTTOM or Gravity.END,
-                        textSizeSp = 16f
-                    )
-                )
+            markView.clearDrawableMarks()
+            if (item.isBet) {
+                if (item.isHit) {
+                    markView.addDrawableMark(ContextCompat.getDrawable(context,
+                        R.drawable.ic_seal_win) as Drawable,
+                        gravity = Gravity.BOTTOM or Gravity.END, 0)
+                } else {
+                    markView.addDrawableMark(ContextCompat.getDrawable(context,
+                        R.drawable.ic_seal_lose) as Drawable,
+                        gravity = Gravity.BOTTOM or Gravity.END, 0)
+                }
             } else {
-                markView.addTextMark(
-                    DoraMarkView.TextMark(
-                        text = "未中奖",
-                        bgColor = 0xAAFF6600.toInt(),
-                        textColor = 0xFFFFFFFF.toInt(),
-                        gravity = Gravity.BOTTOM or Gravity.END,
-                        textSizeSp = 16f
-                    )
-                )
+                markView.addDrawableMark(ContextCompat.getDrawable(context,
+                    R.drawable.ic_seal_miss) as Drawable,
+                    gravity = Gravity.BOTTOM or Gravity.END, 0)
             }
         }
         tvTitle.text = item.title
@@ -109,23 +96,15 @@ class GuessingAdapter(val token: String) :
                 "yyyy-MM-dd HH:mm"
             )}"
         when (item.status) {
-            1 -> {
-                markView.addTextMark(
-                    DoraMarkView.TextMark(
-                        "已封盘",
-                        bgColor = 0xFFFF9800.toInt(),
-                        gravity = Gravity.TOP or Gravity.END
-                    )
-                )
+            0 -> {
+                markView.addDrawableMark(ContextCompat.getDrawable(context,
+                    R.drawable.ic_status_start_betting) as Drawable,
+                    gravity = Gravity.TOP or Gravity.END, 0)
             }
-            2 -> {
-                markView.addTextMark(
-                    DoraMarkView.TextMark(
-                        "已结束",
-                        bgColor = 0xFFBBBBBB.toInt(),
-                        gravity = Gravity.TOP or Gravity.END
-                    )
-                )
+            1 -> {
+                markView.addDrawableMark(ContextCompat.getDrawable(context,
+                    R.drawable.ic_status_stop_betting) as Drawable,
+                    gravity = Gravity.TOP or Gravity.END, 0)
             }
         }
         flow.removeAllViews()
