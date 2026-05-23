@@ -129,5 +129,22 @@
     <string name="guessing">竞猜活动</string>
     <string name="guessing_rank">竞猜排行榜</string>
     <string name="my_predictions">我的竞猜</string>
+    <string name="input_bet_score">输入投注积分</string>
+    <string name="confirm">确认</string>
+    <string name="time_format">时间：%1$s</string>
+    <string name="odds_format">赔率: %1$s</string>
+    <string name="already_bet_another_option">您已投注其它选项，只能继续追加</string>
+    <string name="bet_successful">投注成功</string>
+    <string name="failed_to_bet">投注失败</string>
+    <string name="rate">胜率</string>
+    <string name="profit">盈亏</string>
+    <string name="bet">投注</string>
+    <string name="win_rate_ranking">胜率榜</string>
+    <string name="profit_loss_ranking">盈亏榜</string>
+    <string name="bet_ranking">投注榜</string>
+    <string name="claim_reward">领取奖励</string>
+    <string name="claimed">已领取</string>
+    <string name="bet_format">投注：%1$d</string>
+    <string name="reward_format">奖励：%1$d</string>
 
 </resources>
