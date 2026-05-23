@@ -27,13 +27,13 @@ class GuessingRankAdapter(val type: Int) :
         holder.setText(R.id.tvTitle, item.userId)
         if (type == 0) {
             holder.setText(R.id.tvValue, "${(item.winRate * 100).roundToLong()}%")
-            holder.setText(R.id.tvLabel, "胜率")
+            holder.setText(R.id.tvLabel, context.getString(R.string.rate))
         } else if (type == 1) {
             holder.setText(R.id.tvValue, item.profit.toString())
-            holder.setText(R.id.tvLabel, "盈亏")
+            holder.setText(R.id.tvLabel, context.getString(R.string.profit))
         } else if (type == 2) {
             holder.setText(R.id.tvValue, item.totalBet.toString())
-            holder.setText(R.id.tvLabel, "投注")
+            holder.setText(R.id.tvLabel, context.getString(R.string.bet))
         }
     }
 }
