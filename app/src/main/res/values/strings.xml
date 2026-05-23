@@ -136,4 +136,21 @@ The [Dora Music] Team</string>
     <string name="guessing">Guessing</string>
     <string name="guessing_rank">Guessing Rank</string>
     <string name="my_predictions">My Predictions</string>
+    <string name="input_bet_score">Input bet scores</string>
+    <string name="confirm">Confirm</string>
+    <string name="time_format">Time: %1$s</string>
+    <string name="odds_format">Odds: %1$s</string>
+    <string name="already_bet_another_option">You have already placed a bet on another option and can only continue adding to it.</string>
+    <string name="bet_successful">Bet successful</string>
+    <string name="failed_to_bet">Failed to bet</string>
+    <string name="rate">Rate</string>
+    <string name="profit">Profit</string>
+    <string name="bet">Bet</string>
+    <string name="win_rate_ranking">Win Rate Ranking</string>
+    <string name="profit_loss_ranking">Profit &amp; Loss Ranking</string>
+    <string name="bet_ranking">Bet Ranking</string>
+    <string name="claim_reward">Claim Reward</string>
+    <string name="claimed">Claimed</string>
+    <string name="bet_format">Bet: %1$d</string>
+    <string name="reward_format">Reward: %1$d</string>
 </resources>
