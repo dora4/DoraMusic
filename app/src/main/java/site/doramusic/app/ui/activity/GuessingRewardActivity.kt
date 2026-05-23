@@ -103,9 +103,7 @@ class GuessingRewardActivity :
      * 领取奖励
      */
     private fun claim(item: DoraGuessingReward) {
-        if (item.claimed || !item.win) {
-            return
-        }
+        if (item.claimed || !item.win) return
         net {
             try {
                 val req = ReqGuessingClaim(
@@ -115,42 +113,27 @@ class GuessingRewardActivity :
                 val reward =
                     api(GuessingService::class) {
                         claim(req.toRequestBody())
-                    }?.data
-                if (reward != null) {
-                    item.claimed = true
-                    adapter.notifyDataSetChanged()
-                    val reqGuessingClaim = ReqGuessingClaim(item.guessingId, token)
-                    net {
-                        val reward = result(GuessingService::class) {
-                            claim(reqGuessingClaim.toRequestBody())
-                        }?.data as Long
-                        if (reward > 0) {
-                            PointsManager.addPoints(
-                                PointsSource.EVENT.desc,
-                                reward.toInt(), "竞猜活动"
-                            )
-                            ToastUtils.showShort(
-                                "领取成功 +$reward"
-                            )
-                        } else {
-                            ToastUtils.showShort("领取失败")
-                        }
-                    }
-
-                } else {
-
-                    ToastUtils.showShort(
-                        "领取失败"
+                    }?.data ?: 0L
+                if (reward > 0) {
+                    PointsManager.addPoints(
+                        PointsSource.EVENT.desc,
+                        reward.toInt(),
+                        "竞猜活动"
                     )
+                    ToastUtils.showShort("领取成功 +${reward}积分")
+                    item.claimed = true
+                    val index = data.indexOfFirst {
+                        it.guessingId == item.guessingId
+                    }
+                    if (index != -1) {
+                        adapter.notifyItemChanged(index)
+                    }
+                } else {
+                    ToastUtils.showShort("领取失败")
                 }
-
             } catch (e: Exception) {
-
                 LogUtils.e(e)
-
-                ToastUtils.showShort(
-                    e.message ?: "领取失败"
-                )
+                ToastUtils.showShort(e.message ?: "领取失败")
             }
         }
     }
