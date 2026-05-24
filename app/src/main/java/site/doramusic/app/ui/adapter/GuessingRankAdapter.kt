@@ -35,7 +35,10 @@ class GuessingRankAdapter(val type: Int) :
             holder.setVisible(R.id.ivRank, true)
             holder.setImageResource(R.id.ivRank, R.drawable.ic_rank_crown_copper)
         }
-        holder.setText(R.id.tvTitle, formatUserId(item.userId))
+        val title = item.nickname.takeUnless {
+            it.isNullOrEmpty()
+        } ?: formatUserId(item.userId)
+        holder.setText(R.id.tvTitle, title)
         if (type == 0) {
             holder.setText(
                 R.id.tvValue,
