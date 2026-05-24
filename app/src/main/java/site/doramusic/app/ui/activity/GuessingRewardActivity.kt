@@ -68,7 +68,6 @@ class GuessingRewardActivity :
             LinearLayoutManager(this)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         binding.recyclerView.adapter = adapter
-
         loadData()
     }
 
@@ -88,6 +87,9 @@ class GuessingRewardActivity :
                 data.clear()
                 if (result != null) {
                     data.addAll(result)
+                    mBinding.emptyLayout.showContent()
+                } else {
+                    mBinding.emptyLayout.showEmpty()
                 }
                 adapter.notifyDataSetChanged()
             } catch (e: Exception) {
