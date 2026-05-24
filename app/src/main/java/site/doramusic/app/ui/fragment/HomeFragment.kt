@@ -334,7 +334,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     token = AuthManager.getAccessToken()
                     userId = UserManager.ins?.currentUser?.erc20
                 }
-                showLongToast(token)
                 binding.rlGuessingContent.setOnClickListener {
                     open(ARoutePath.ACTIVITY_GUESSING) {
                         withString("token", token)
