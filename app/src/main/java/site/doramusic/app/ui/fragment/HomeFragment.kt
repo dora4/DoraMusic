@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.dorachat.auth.AuthManager
 import com.dorachat.auth.UserManager
 import com.youth.banner.adapter.BannerAdapter
 import com.youth.banner.listener.OnPageChangeListener
@@ -329,9 +330,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     token = guestSession?.token
                     userId = guestSession?.userId
                 } else {
-                    token = UserManager.ins?.currentUser?.accessToken
+                    // 由于SDK1.1.2版本暂未将访问token加载到user对象，直接从AuthManager拿
+                    token = AuthManager.getAccessToken()
                     userId = UserManager.ins?.currentUser?.erc20
                 }
+                showLongToast(token)
                 binding.rlGuessingContent.setOnClickListener {
                     open(ARoutePath.ACTIVITY_GUESSING) {
                         withString("token", token)
