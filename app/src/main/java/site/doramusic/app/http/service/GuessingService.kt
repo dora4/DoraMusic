@@ -11,6 +11,7 @@ import site.doramusic.app.http.ApiResult
 import site.doramusic.app.http.DoraGuessingInfoWithItems
 import site.doramusic.app.http.DoraGuessingRank
 import site.doramusic.app.http.DoraGuessingReward
+import site.doramusic.app.http.DoraGuessingUser
 import site.doramusic.app.http.GuestSession
 
 interface GuessingService : ApiService {
@@ -34,6 +35,18 @@ interface GuessingService : ApiService {
      */
     @GET("guest/checkToken")
     fun checkGuestToken(@Query("token") token: String): Call<ApiResult<Boolean>>
+
+    /**
+     * 设置昵称。
+     */
+    @POST("guessing/setNickname")
+    fun setNickname(@Body body: RequestBody): Call<ApiResult<Boolean>>
+
+    /**
+     * 获取竞猜用户信息。
+     */
+    @POST("guessing/profile")
+    fun getProfile(@Body body: RequestBody): Call<ApiResult<DoraGuessingUser>>
 
     /**
      * 获取竞猜列表。
