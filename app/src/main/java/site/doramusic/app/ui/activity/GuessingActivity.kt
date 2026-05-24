@@ -1,8 +1,11 @@
 package site.doramusic.app.ui.activity
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
@@ -19,6 +22,7 @@ import dora.widget.pull.SwipeLayout
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityGuessingBinding
+import site.doramusic.app.http.guessing.ReqGuessingNicknameSet
 import site.doramusic.app.http.guessing.ReqGuessingToken
 import site.doramusic.app.http.service.GuessingService
 import site.doramusic.app.score.PointsManager
@@ -46,6 +50,7 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
         mBinding.tvMyPoints.text =
             getString(R.string.my_points_format, PointsManager.getTotalPoints())
         loadList()
+        loadProfile()
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityGuessingBinding) {
@@ -55,7 +60,6 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
         ThemeSelector.applyViewTheme(binding.titlebarGuessing)
         binding.tvMyPoints.text =
             getString(R.string.my_points_format, PointsManager.getTotalPoints())
-        binding.tvGuessingUserId.text = formatUserId(userId)
         adapter = GuessingAdapter(token) {
             // 投注成功后刷新积分
             binding.tvMyPoints.text =
@@ -94,13 +98,16 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
                 }
             }
         })
-
+        binding.ivEditNickname.setOnClickListener {
+            showNicknameDialog()
+        }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@GuessingActivity)
             adapter = this@GuessingActivity.adapter
         }
         binding.swipeLayout.setOnSwipeListener(object : SwipeLayout.OnSwipeListener {
             override fun onRefresh(swipeLayout: SwipeLayout) {
+                loadProfile()
                 loadList()
                 swipeLayout.refreshFinish(SwipeLayout.SUCCEED)
             }
@@ -108,7 +115,6 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
             override fun onLoadMore(swipeLayout: SwipeLayout) {
             }
         })
-//        loadList()
     }
 
     private fun formatUserId(userId: String): String {
@@ -121,6 +127,57 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
 
     private fun isEvmAddress(address: String): Boolean {
         return address.matches(Regex("^0x[a-fA-F0-9]{40}$"))
+    }
+
+    private fun showNicknameDialog() {
+        val editText = EditText(this)
+        editText.setText(mBinding.tvGuessingUserId.text)
+        editText.filters = arrayOf(InputFilter.LengthFilter(16))
+
+        AlertDialog.Builder(this)
+            .setTitle("设置昵称")
+            .setView(editText)
+            .setPositiveButton(getString(R.string.confirm)) { _, _ ->
+
+                val nickname = editText.text.toString().trim()
+
+                if (nickname.isEmpty()) {
+                    showShortToast("昵称不能为空")
+                    return@setPositiveButton
+                }
+
+                updateNickname(nickname)
+            }
+            .setNegativeButton("取消", null)
+            .show()
+    }
+
+    private fun updateNickname(nickname: String) {
+        net {
+            val req = ReqGuessingNicknameSet(token, nickname)
+            val resp = result(GuessingService::class) {
+                setNickname(req.toRequestBody())
+            }
+            if (resp?.data == true) {
+                mBinding.tvGuessingUserId.text = nickname
+                showShortToast("设置成功")
+            } else {
+                showShortToast("设置失败")
+            }
+        }
+    }
+
+    private fun loadProfile() {
+        net {
+            val req = ReqGuessingToken(token)
+            val user = result(GuessingService::class) {
+                getProfile(req.toRequestBody())
+            }?.data
+            val title = user?.nickname
+                ?.ifEmpty { formatUserId(userId) }
+                ?: formatUserId(userId)
+            mBinding.tvGuessingUserId.text = title
+        }
     }
 
     private fun loadList() {
