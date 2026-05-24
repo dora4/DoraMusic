@@ -14,7 +14,7 @@ data class DoraGuessingRank(
      * 昵称。
      */
     @SerializedName("nickname")
-    val nickname: String,
+    val nickname: String? = null,
 
     /**
      * 胜率。
