@@ -55,7 +55,7 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
         ThemeSelector.applyViewTheme(binding.titlebarGuessing)
         binding.tvMyPoints.text =
             getString(R.string.my_points_format, PointsManager.getTotalPoints())
-        binding.tvGuessingUserId.text = userId
+        binding.tvGuessingUserId.text = formatUserId(userId)
         adapter = GuessingAdapter(token) {
             // 投注成功后刷新积分
             binding.tvMyPoints.text =
@@ -109,6 +109,18 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
             }
         })
 //        loadList()
+    }
+
+    private fun formatUserId(userId: String): String {
+        return if (isEvmAddress(userId)) {
+            "${userId.take(6)}****${userId.takeLast(4)}"
+        } else {
+            userId
+        }
+    }
+
+    private fun isEvmAddress(address: String): Boolean {
+        return address.matches(Regex("^0x[a-fA-F0-9]{40}$"))
     }
 
     private fun loadList() {
