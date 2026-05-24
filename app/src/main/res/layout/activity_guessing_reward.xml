@@ -21,10 +21,16 @@
             app:dview_backIconTint="@color/white"
             app:dview_title="@string/my_predictions"
             android:background="@color/skin_theme_color"/>
+
+        <dora.widget.DoraEmptyLayout
+            android:id="@+id/emptyLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        </dora.widget.DoraEmptyLayout>
     </LinearLayout>
 </layout>
 
