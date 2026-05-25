@@ -132,7 +132,7 @@
     <string name="input_bet_score">输入投注积分</string>
     <string name="confirm">确认</string>
     <string name="time_format">时间：%1$s</string>
-    <string name="odds_format">赔率: %1$s</string>
+    <string name="odds_format">赔率：%1$s</string>
     <string name="already_bet_another_option">您已投注其它选项，只能继续追加</string>
     <string name="bet_successful">投注成功</string>
     <string name="failed_to_bet">投注失败</string>
@@ -146,5 +146,8 @@
     <string name="claimed">已领取</string>
     <string name="bet_format">投注：%1$d</string>
     <string name="reward_format">奖励：%1$d</string>
+    <string name="set_nickname">设置昵称</string>
+    <string name="please_input_nickanme">请输入昵称</string>
+    <string name="bonus_format">赠送：%1$d</string>
 
 </resources>
