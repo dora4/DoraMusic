@@ -139,7 +139,6 @@ dependencies {
     implementation("com.github.dora4:dview-poker-view:1.1")
     implementation("com.github.dora4:dview-flow-layout:1.3")
     implementation("com.github.dora4:dview-mark-view:1.2")
-    implementation("com.github.dora4:dview-tabbar:1.1")
     implementation("com.github.dora4:dview-empty-layout:1.14")
     implementation("com.github.dora4:dview-swipe-layout:1.1")
 
