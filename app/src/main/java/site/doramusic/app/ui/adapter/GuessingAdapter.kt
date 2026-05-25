@@ -271,7 +271,7 @@ class GuessingAdapter(private val token: String,
                     ToastUtils.showShort(
                         context.getString(R.string.bet_successful)
                     )
-                    PointsManager.addPoints(PointsSource.EXCHANGE.desc, -amount.toInt(),
+                    PointsManager.addPoints(PointsSource.EVENT.desc, -amount.toInt(),
                         "竞猜扣除")
                     onPointsChanged?.invoke()
                 } else {
