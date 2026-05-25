@@ -9,35 +9,43 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/colorPanelBg">
+
         <View
             android:id="@+id/statusbar_guessing_rank"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/skin_theme_color" />
+
         <dora.widget.DoraTitleBar
             android:id="@+id/titlebar_guessing_rank"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="@color/skin_theme_color"
             app:dview_backIconTint="@color/white"
-            app:dview_title="@string/guessing_rank"
-            android:background="@color/skin_theme_color"/>
-        <dora.widget.DoraTabBar
-            android:id="@+id/tabbar"
+            app:dview_title="@string/guessing_rank" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPanelFg"
-            app:dview_isDivide="true"
-            app:dview_tabVerticalPadding="15dp"
-            app:dview_indicatorColor="@color/colorPrimary"
-            app:dview_tabSelectedTextColor="@color/colorPrimary"/>
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="fixed"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/colorTextSecondary" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider_color"/>
+            android:background="@color/divider_color" />
+
         <FrameLayout
             android:id="@+id/fl_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 </layout>
-
