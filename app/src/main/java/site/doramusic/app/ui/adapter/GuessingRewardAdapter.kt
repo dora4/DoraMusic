@@ -26,11 +26,17 @@ class GuessingRewardAdapter(
         holder.setText(R.id.tv_score, context.getString(R.string.bet_format, item.totalScore))
         holder.setGone(R.id.tv_reward, !item.win)
         holder.setGone(R.id.tv_odds, !item.win)
+        holder.setGone(R.id.tv_bonus, !item.win || item.winBonusScore <= 0)
         if (item.win) {
             holder.setText(R.id.tv_reward,
                 context.getString(R.string.reward_format, item.totalRewardScore))
-            holder.setText(R.id.tv_odds, context.getString(R.string.odds_format, item.totalRewardScore))
-
+            holder.setText(R.id.tv_odds, context.getString(R.string.odds_format, "${item.totalRewardScore * 1f / item.totalScore}"))
+            if (item.winBonusScore > 0) {
+                holder.setText(
+                    R.id.tv_bonus,
+                    context.getString(R.string.bonus_format, item.winBonusScore)
+                )
+            }
         }
         markView.addDrawableMark(
             ContextCompat.getDrawable(
