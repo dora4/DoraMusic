@@ -1,13 +1,12 @@
 package site.doramusic.app.ui.activity
 
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.google.android.material.tabs.TabLayout
 import dora.util.FragmentUtils
 import dora.util.StatusBarUtils
-import dora.widget.DoraTabBar
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityGuessingRankBinding
@@ -87,27 +86,39 @@ class GuessingRankActivity : BaseSkinActivity<ActivityGuessingRankBinding>() {
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
         ThemeSelector.applyViewTheme(binding.statusbarGuessingRank)
         ThemeSelector.applyViewTheme(binding.titlebarGuessingRank)
-
         initFragments()
-        binding.tabbar.addTextTab(getString(R.string.win_rate_ranking))
-        binding.tabbar.addTextTab(getString(R.string.profit_loss_ranking))
-        binding.tabbar.addTextTab(getString(R.string.bet_ranking))
-        binding.tabbar.setOnTabClickListener(object : DoraTabBar.OnTabClickListener {
+        binding.tabLayout.apply {
+            addTab(newTab().setText(R.string.win_rate_ranking))
+            addTab(newTab().setText(R.string.profit_loss_ranking))
+            addTab(newTab().setText(R.string.bet_ranking))
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
-            override fun onTabClick(view: View, position: Int) {
-                when (position) {
-                    0 -> {
-                        showWinFragment()
-                    }
-                    1 -> {
-                        showProfitFragment()
-                    }
-                    2 -> {
-                        showBetFragment()
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    when (tab.position) {
+                        0 -> showWinFragment()
+                        1 -> showProfitFragment()
+                        2 -> showBetFragment()
                     }
                 }
+
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab) {
+                }
+            })
+            // 禁止长按提示
+            post {
+                val tabStrip = getChildAt(0) as ViewGroup
+                for (i in 0 until tabStrip.childCount) {
+                    val tabView = tabStrip.getChildAt(i)
+                    tabView.setOnLongClickListener {
+                        true
+                    }
+                    tabView.isLongClickable = false
+                }
             }
-        })
+        }
     }
 
     override fun getLayoutId(): Int {
