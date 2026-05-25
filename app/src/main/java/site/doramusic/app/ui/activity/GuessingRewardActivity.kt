@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.http.DoraHttp.api
 import dora.http.DoraHttp.net
-import dora.http.DoraHttp.result
 import dora.util.IntentUtils
 import dora.util.LogUtils
 import dora.util.StatusBarUtils
@@ -72,7 +71,7 @@ class GuessingRewardActivity :
     }
 
     /**
-     * 加载竞猜奖励列表
+     * 加载竞猜奖励列表。
      */
     private fun loadData() {
         net {
@@ -102,7 +101,7 @@ class GuessingRewardActivity :
     }
 
     /**
-     * 领取奖励
+     * 领取奖励。
      */
     private fun claim(item: DoraGuessingReward) {
         if (item.claimed || !item.win) return
