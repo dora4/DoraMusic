@@ -153,4 +153,7 @@ The [Dora Music] Team</string>
     <string name="claimed">Claimed</string>
     <string name="bet_format">Bet: %1$d</string>
     <string name="reward_format">Reward: %1$d</string>
+    <string name="set_nickname">Set nickname</string>
+    <string name="please_input_nickanme">Please input nickname</string>
+    <string name="bonus_format">Bonus: %1$d</string>
 </resources>
