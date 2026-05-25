@@ -27,6 +27,7 @@ import site.doramusic.app.http.guessing.ReqGuessingToken
 import site.doramusic.app.http.service.GuessingService
 import site.doramusic.app.score.PointsManager
 import site.doramusic.app.ui.adapter.GuessingAdapter
+import site.doramusic.app.ui.dialog.NicknameDialog
 import site.doramusic.app.util.ThemeSelector
 
 @Route(path = ARoutePath.ACTIVITY_GUESSING)
@@ -109,6 +110,9 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
             override fun onRefresh(swipeLayout: SwipeLayout) {
                 loadProfile()
                 loadList()
+                // 也刷新积分
+                binding.tvMyPoints.text =
+                    getString(R.string.my_points_format, PointsManager.getTotalPoints())
                 swipeLayout.refreshFinish(SwipeLayout.SUCCEED)
             }
 
@@ -130,26 +134,12 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
     }
 
     private fun showNicknameDialog() {
-        val editText = EditText(this)
-        editText.setText(mBinding.tvGuessingUserId.text)
-        editText.filters = arrayOf(InputFilter.LengthFilter(16))
-
-        AlertDialog.Builder(this)
-            .setTitle("设置昵称")
-            .setView(editText)
-            .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-
-                val nickname = editText.text.toString().trim()
-
-                if (nickname.isEmpty()) {
-                    showShortToast("昵称不能为空")
-                    return@setPositiveButton
-                }
-
-                updateNickname(nickname)
-            }
-            .setNegativeButton("取消", null)
-            .show()
+        NicknameDialog(
+            this,
+            mBinding.tvGuessingUserId.text.toString()
+        ) { nickname ->
+            updateNickname(nickname)
+        }.show()
     }
 
     private fun updateNickname(nickname: String) {
