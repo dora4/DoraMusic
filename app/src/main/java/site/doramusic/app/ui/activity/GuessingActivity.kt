@@ -1,12 +1,21 @@
 package site.doramusic.app.ui.activity
 
-import android.app.AlertDialog
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
-import android.text.InputFilter
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +38,7 @@ import site.doramusic.app.score.PointsManager
 import site.doramusic.app.ui.adapter.GuessingAdapter
 import site.doramusic.app.ui.dialog.NicknameDialog
 import site.doramusic.app.util.ThemeSelector
+import androidx.core.graphics.drawable.toDrawable
 
 @Route(path = ARoutePath.ACTIVITY_GUESSING)
 class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
@@ -39,6 +49,115 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
 
     override fun onSetStatusBar() {
         StatusBarUtils.setTransparencyStatusBar(this)
+    }
+
+    private fun showRulePopup(anchor: View) {
+        val contentView = LayoutInflater.from(this)
+            .inflate(R.layout.popup_guessing_rule, null)
+
+        val tvRuleContent = contentView.findViewById<TextView>(R.id.tvRuleContent)
+
+        val content = """
+        【参与方式】
+        
+        支持游客登录与Dora Chat账号登录。
+        游客可直接参与竞猜，更换设备建议使用账号登录。
+        
+        【积分获取】
+        
+        每累计播放本地音乐1分钟，可获得10积分。
+        
+        【投注规则】
+        
+        • 单场竞猜投注范围：1~100000积分
+        • 站队后仅可追加当前选项
+        • 不可再投注其它选项
+        • 单场累计最高100000积分
+        
+        【赔率说明】
+        
+        赔率 = 奖励积分 ÷ 投入积分
+        
+        【排行榜】
+        
+        排行榜分为胜率榜、盈亏榜、投注榜。
+        胜率榜至少需要参与5场竞猜才会计入。
+        
+        游客登录显示游客ID；
+        账号登录显示ERC20钱包地址部分内容；
+        设置昵称后优先显示昵称。
+        
+        【竞猜结算】
+        
+        比赛开始自动封盘，特殊情况管理员可手动封盘。
+        封盘后不可继续投注。
+        
+        比赛结束后系统自动计算奖励积分，
+        需前往“我的竞猜”手动领取奖励。
+        
+        【淘汰赛额外奖励】
+        
+        冠亚军决赛：100000积分
+        三四名决赛：90000积分
+        半决赛：80000积分
+        1/4决赛：70000积分
+        1/8决赛：60000积分
+        1/16决赛：50000积分
+        
+    """.trimIndent()
+        val spannable = SpannableString(content)
+        val highlights = arrayOf(
+            "100000",
+            "90000",
+            "80000",
+            "70000",
+            "60000",
+            "50000",
+            "5",
+            "1~100000",
+            "“我的竞猜”"
+        )
+        highlights.forEach { item ->
+            var index = content.indexOf(item)
+            while (index >= 0) {
+                spannable.setSpan(
+                    ForegroundColorSpan(getColor(R.color.colorPrimary)),
+                    index,
+                    index + item.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                spannable.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    index,
+                    index + item.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                index = content.indexOf(
+                    item,
+                    index + item.length
+                )
+            }
+        }
+        tvRuleContent.text = spannable
+        val popupWindow = PopupWindow(
+            contentView,
+            (Resources.getSystem().displayMetrics.widthPixels * 0.85f).toInt(),
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+        popupWindow.isOutsideTouchable = true
+        popupWindow.isFocusable = true
+        popupWindow.elevation = 12f
+        popupWindow.setBackgroundDrawable(
+            Color.TRANSPARENT.toDrawable()
+        )
+        val rootView = window.decorView
+        popupWindow.showAtLocation(
+            rootView,
+            Gravity.CENTER,
+            0,
+            0
+        )
     }
 
     override fun onGetExtras(action: String?, bundle: Bundle?, intent: Intent) {
@@ -65,6 +184,9 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
             // 投注成功后刷新积分
             binding.tvMyPoints.text =
                 getString(R.string.my_points_format, PointsManager.getTotalPoints())
+        }
+        binding.layoutRule.setOnClickListener { v ->
+            showRulePopup(v)
         }
         binding.titlebarGuessing.addMenuButton(
             iconResId = R.drawable.ic_crown,
