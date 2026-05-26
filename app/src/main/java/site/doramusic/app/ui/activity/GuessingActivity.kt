@@ -13,6 +13,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -56,6 +57,7 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
             .inflate(R.layout.popup_guessing_rule, null)
 
         val tvRuleContent = contentView.findViewById<TextView>(R.id.tvRuleContent)
+        val ivRuleClose = contentView.findViewById<ImageView>(R.id.ivRuleClose)
 
         val content = """
         【参与方式】
@@ -95,7 +97,7 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
         比赛结束后系统自动计算奖励积分，
         需前往“我的竞猜”手动领取奖励。
         
-        【淘汰赛额外奖励】
+        【淘汰赛猜对胜负额外奖励】
         
         冠亚军决赛：100000积分
         三四名决赛：90000积分
@@ -158,6 +160,9 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
             0,
             0
         )
+        ivRuleClose.setOnClickListener {
+            popupWindow.dismiss()
+        }
     }
 
     override fun onGetExtras(action: String?, bundle: Bundle?, intent: Intent) {
