@@ -15,6 +15,8 @@ import dora.util.StatusBarUtils
 import dora.util.ToastUtils
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TOKEN
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_USER_ID
 import site.doramusic.app.databinding.ActivityGuessingRewardBinding
 import site.doramusic.app.http.DoraGuessingReward
 import site.doramusic.app.http.guessing.ReqGuessingClaim
@@ -41,8 +43,8 @@ class GuessingRewardActivity :
     }
 
     override fun onGetExtras(action: String?, bundle: Bundle?, intent: Intent) {
-        token = IntentUtils.getStringExtra(intent, "token")
-        userId = IntentUtils.getStringExtra(intent, "userId")
+        token = IntentUtils.getStringExtra(intent, EXTRA_TOKEN)
+        userId = IntentUtils.getStringExtra(intent, EXTRA_USER_ID)
     }
 
     override fun initData(
