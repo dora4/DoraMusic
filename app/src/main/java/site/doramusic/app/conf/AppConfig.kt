@@ -60,6 +60,10 @@ interface AppConfig {
         const val EXTRA_URL = "url"
         const val EXTRA_URI = "uri"
         const val EXTRA_ERC20 = "erc20"
+    
+        const val EXTRA_USER_ID = "userId"
+
+        const val EXTRA_TOKEN = "token"
 
         // 文件夹相关
         const val LOG_PATH = "DoraMusic/log"
