@@ -40,6 +40,8 @@ import site.doramusic.app.ui.adapter.GuessingAdapter
 import site.doramusic.app.ui.dialog.NicknameDialog
 import site.doramusic.app.util.ThemeSelector
 import androidx.core.graphics.drawable.toDrawable
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TOKEN
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_USER_ID
 
 @Route(path = ARoutePath.ACTIVITY_GUESSING)
 class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
@@ -166,8 +168,8 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
     }
 
     override fun onGetExtras(action: String?, bundle: Bundle?, intent: Intent) {
-        token = IntentUtils.getStringExtra(intent, "token")
-        userId = IntentUtils.getStringExtra(intent, "userId")
+        token = IntentUtils.getStringExtra(intent, EXTRA_TOKEN)
+        userId = IntentUtils.getStringExtra(intent, EXTRA_USER_ID)
     }
 
     override fun onResume() {
@@ -220,8 +222,8 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
                     open(ARoutePath.ACTIVITY_GUESSING_RANK)
                 } else {
                     open(ARoutePath.ACTIVITY_GUESSING_REWARD) {
-                        withString("userId", userId)
-                        withString("token", token)
+                        withString(EXTRA_USER_ID, userId)
+                        withString(EXTRA_TOKEN, token)
                     }
                 }
             }
