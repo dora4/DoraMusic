@@ -45,7 +45,9 @@ import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TOKEN
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URL
+import site.doramusic.app.conf.AppConfig.Companion.EXTRA_USER_ID
 import site.doramusic.app.conf.AppConfig.Companion.MUSIC_MENU_GRID_COLUMN_NUM
 import site.doramusic.app.conf.AppConfig.Companion.MAX_RECENT_MUSIC_NUM
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
@@ -153,7 +155,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 mBinding.fpHome.visibility = View.GONE
             }
 
-            override fun onItemClick(index: Int, text: String) {
+            override fun onClickText(index: Int, text: String) {
                 val sysMsg = sysMsgList[index]
                 tipDialog.show(
                     EVENT_TYPE_SHOW_SYS_MSG_CONTENT, sysMsg.content
@@ -293,14 +295,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             showShortToast(e.toString())
             null
         }
-        SPUtils.writeString(requireContext(), "token", resp?.token)
-        SPUtils.writeString(requireContext(), "userId", resp?.userId)
+        SPUtils.writeString(requireContext(), EXTRA_TOKEN, resp?.token)
+        SPUtils.writeString(requireContext(), EXTRA_USER_ID, resp?.userId)
         return resp
     }
 
     private suspend fun getAvailableGuestSession(): GuestSession? {
-        val token = SPUtils.readString(requireContext(), "token")
-        val userId = SPUtils.readString(requireContext(), "userId")
+        val token = SPUtils.readString(requireContext(), EXTRA_TOKEN)
+        val userId = SPUtils.readString(requireContext(), EXTRA_USER_ID)
         // 本地没缓存
         if (TextUtils.isEmpty(token) || TextUtils.isEmpty(userId)) {
             return initGuest()
@@ -336,8 +338,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 }
                 binding.rlGuessingContent.setOnClickListener {
                     open(ARoutePath.ACTIVITY_GUESSING) {
-                        withString("token", token)
-                        withString("userId", userId)
+                        withString(EXTRA_TOKEN, token)
+                        withString(EXTRA_USER_ID, userId)
                     }
                 }
             }
