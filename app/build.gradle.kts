@@ -127,7 +127,7 @@ dependencies {
     implementation("com.github.dora4:dview-skins:1.12")
     implementation("com.github.dora4:dview-bottom-dialog:1.13")
     implementation("com.github.dora4:dview-avatar:1.5")
-    implementation("com.github.dora4:dview-flipper-view:1.10")
+    implementation("com.github.dora4:dview-flipper-view:1.13")
     implementation("com.github.dora4:dview-coupon-view:1.16")
     implementation("com.github.dora4:dview-sidebar:1.7")
     implementation("com.github.dora4:dview-rotate-view:1.12")
