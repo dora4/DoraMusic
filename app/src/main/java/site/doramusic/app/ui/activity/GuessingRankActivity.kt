@@ -43,7 +43,7 @@ class GuessingRankActivity : BaseSkinActivity<ActivityGuessingRankBinding>() {
     }
 
     private fun showWinFragment() {
-        hideFragment()
+        hideFragments()
         if (winFragment == null) {
             winFragment = GuessingRankWinFragment()
             FragmentUtils.add(supportFragmentManager, winFragment!!, R.id.fl_container)
@@ -52,7 +52,7 @@ class GuessingRankActivity : BaseSkinActivity<ActivityGuessingRankBinding>() {
     }
 
     private fun showProfitFragment() {
-        hideFragment()
+        hideFragments()
         if (profitFragment == null) {
             profitFragment = GuessingRankProfitFragment()
             FragmentUtils.add(supportFragmentManager, profitFragment!!, R.id.fl_container)
@@ -61,7 +61,7 @@ class GuessingRankActivity : BaseSkinActivity<ActivityGuessingRankBinding>() {
     }
 
     private fun showBetFragment() {
-        hideFragment()
+        hideFragments()
         if (betFragment == null) {
             betFragment = GuessingRankBetFragment()
             FragmentUtils.add(supportFragmentManager, betFragment!!, R.id.fl_container)
@@ -69,7 +69,7 @@ class GuessingRankActivity : BaseSkinActivity<ActivityGuessingRankBinding>() {
         FragmentUtils.show(betFragment!!)
     }
 
-    private fun hideFragment() {
+    private fun hideFragments() {
         if (winFragment != null) {
             FragmentUtils.hide(winFragment!!)
         }
