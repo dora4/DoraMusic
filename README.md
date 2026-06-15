@@ -47,16 +47,6 @@ Android7.0+
 - 用户版（稳定）：[查看详情](https://www.pgyer.com/doramusic) 
 - 开发版（内测）：[点此下载](https://github.com/dora4/DoraMusic/releases)
 
-### 版本发布流程
-
-1. 修改并提交代码，推送标签
-
-2. CI/CD构建自动发布开发版到GitHub Release
-
-3. 真机体验，如果不稳定则退回第一步，稳定则进入下一步
-
-4. 从GitHub Release下载，然后上传稳定的用户版到蒲公英分发平台，如果和GitHub Release公示的sha256值不一致请不要使用
-
 ### 社区搭建
 
 DoraChat（[种子用户体验版](https://www.pgyer.com/dorachat-android)），引领下一代互联网登录方式，无需披露个人信息，即可在官方聊天室匿名聊天。连接Web3钱包自动获取ERC20地址，替代手动输入用户名。
