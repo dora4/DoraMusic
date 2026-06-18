@@ -47,7 +47,7 @@ Android7.0+
 - 用户版（稳定）：[查看详情](https://www.pgyer.com/doramusic) 
 - 开发版（内测）：[点此下载](https://github.com/dora4/DoraMusic/releases)
 
-### 社区搭建
+### 社区
 
 DoraChat（[种子用户体验版](https://www.pgyer.com/dorachat-android)），引领下一代互联网登录方式，无需披露个人信息，即可在官方聊天室匿名聊天。连接Web3钱包自动获取ERC20地址，替代手动输入用户名。
 
