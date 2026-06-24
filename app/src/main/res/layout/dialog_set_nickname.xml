@@ -25,6 +25,8 @@
         android:maxLength="16"
         android:maxLines="1"
         android:textSize="15sp"
+        android:textColor="@color/colorTextPrimary"
+        android:textColorHint="@color/colorTextSecondary"
         android:paddingHorizontal="12dp" />
 
     <TextView
