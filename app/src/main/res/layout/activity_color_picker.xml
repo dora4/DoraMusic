@@ -1,221 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
-    <!-- 允许访问互联网 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 文件管理权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
-    <!-- Android 13版本适配，细化存储权限 -->
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!-- 媒体播放的时候加了WakeLock -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.SENSOR_ENABLE" />
-    <uses-permission android:name="android.permission.SENSOR_INFO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <!-- 蓝牙耳机断开连接，暂停播放歌曲用 -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <!-- Android 13+通知权限 -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- 前台服务权限 -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- Android 14+前台服务权限 -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
-    <application
-            android:name=".MusicApp"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:networkSecurityConfig="@xml/network_config"
-            android:requestLegacyExternalStorage="true"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <!-- 此meta-data告诉系统我已经适配了Android 13的细分权限 -->
-        <meta-data
-                android:name="ScopedStorage"
-                android:value="true" />
-        <meta-data
-                android:name="dora.lifecycle.config.ARouterGlobalConfig"
-                android:value="GlobalConfig" />
-        <activity
-                android:name=".ui.activity.SplashActivity"
-                android:exported="true"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.Launch">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!-- 选择颜色界面 -->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-                android:name=".ui.activity.MainActivity"
-                android:exported="false"
-                android:label="主界面"
-                android:launchMode="singleTask"
-                android:screenOrientation="portrait" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <activity
-            android:name=".chat.ChatRoomActivity"
-            android:exported="false"
-            android:label="聊天室"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-                android:name=".ui.activity.EqualizerActivity"
-                android:exported="false"
-                android:label="均衡器"
-                android:launchMode="singleTop"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".ui.activity.ColorPickerActivity"
-                android:exported="false"
-                android:label="选择颜色"
-                android:launchMode="singleTop"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".ui.activity.SettingsActivity"
-                android:exported="false"
-                android:label="设置"
-                android:launchMode="singleTop"
-                android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.GuessingActivity"
-            android:exported="false"
-            android:label="竞猜"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.GuessingRankActivity"
-            android:exported="false"
-            android:label="竞猜排行榜"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.GuessingRewardActivity"
-            android:exported="false"
-            android:label="竞猜奖励"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".feedback.FeedbackActivity"
-            android:exported="false"
-            android:label="反馈"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-                android:name=".ui.activity.BrowserActivity"
-                android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
-                android:exported="false"
-                android:label="浏览器"
-                android:launchMode="singleTop"
-                android:screenOrientation="portrait"
-                android:supportsPictureInPicture="true" />
-        <activity
-                android:name=".ui.activity.ProtocolActivity"
-                android:exported="false"
-                android:label="用户协议和隐私政策"
-                android:launchMode="singleTop"
-                android:screenOrientation="portrait" />
-        <activity
-            android:name=".score.GalleryListActivity"
-            android:exported="false"
-            android:label="图鉴列表"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".score.DrawCardActivity"
-            android:exported="false"
-            android:label="抽卡"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+    <data>
 
-        <activity
-            android:name=".ui.activity.DonationActivity"
-            android:exported="false"
-            android:label="捐赠列表"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.ProxyPlayActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:exported="true">
+    </data>
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPanelFg">
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+        <View
+            android:id="@+id/statusbar_color_picker"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/skin_theme_color" />
 
-                <data android:mimeType="audio/*" />
-                <data android:scheme="content" />
-                <data android:scheme="file" />
-            </intent-filter>
+        <dora.widget.DoraTitleBar
+            android:id="@+id/titlebar_color_picker"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/statusbar_color_picker"
+            android:background="@color/skin_theme_color"
+            app:dview_backIconTint="@color/white"
+            app:dview_title="@string/choose_color" />
 
-        </activity>
+        <LinearLayout
+            android:id="@+id/ll_color_picker_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPanelFg"
+            android:orientation="vertical">
 
-        <service
-                android:name=".media.MediaService"
-                android:exported="false"
-                android:foregroundServiceType="mediaPlayback"
-                android:label="DoraMusic Media">
-            <intent-filter>
-                <action android:name="site.doramusic.app.service.ACTION_MEDIA_SERVICE" />
-            </intent-filter>
-        </service>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_color" />
 
-        <service android:name=".media.FloatingPlayer" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_color_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:scrollbars="none" />
+        </LinearLayout>
 
-        <service android:name=".service.DownloadService" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll_color_picker_bottom"
+            android:layout_below="@+id/titlebar_color_picker"
+            android:layout_weight="1"
+            android:background="@color/black"
+            android:padding="30dp">
 
-        <receiver
-                android:name=".receiver.BatteryReceiver"
-                android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BATTERY_LOW" />
-            </intent-filter>
-        </receiver>
-        <receiver
-                android:name=".receiver.EarphoneReceiver"
-                android:exported="false">
-            <intent-filter>
-                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
-                <action android:name="android.intent.action.HEADSET_PLUG" />
-                <action android:name="android.bluetooth.headset.profile.action.CONNECTION_STATE_CHANGED" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-                android:name=".receiver.MusicPlayReceiver"
-                android:exported="false">
-            <intent-filter>
-                <action android:name="site.doramusic.app.intent.ACTION_PREV" />
-                <action android:name="site.doramusic.app.intent.ACTION_NEXT" />
-                <action android:name="site.doramusic.app.intent.ACTION_PAUSE_RESUME" />
-            </intent-filter>
-        </receiver>
-
-        <provider
-                android:name="androidx.core.content.FileProvider"
-                android:authorities="${applicationId}.file-provider"
-                android:exported="false"
-                android:grantUriPermissions="true">
-            <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths" />
-        </provider>
-    </application>
-
-</manifest>
+            <dora.widget.ColorRingPickerView
+                android:id="@+id/color_ring_view"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center" />
+        </FrameLayout>
+    </RelativeLayout>
+</layout>
