@@ -54,6 +54,7 @@
     <color name="transparent">#00000000</color>
     <color name="trans_white">#afffffff</color>
     <color name="home_menu_icon">@color/black</color>
+    <color name="color_equalizer_normal">@color/light_gray</color>
     <color name="letterview_preview_bg_color">#7f000000</color>
     <color name="letterview_preview_text_color">@color/white</color>
     <color name="rotate_view_text_color">#9CBDCC</color>
@@ -62,5 +63,5 @@
     <color name="dview_loading_text_color">@color/white</color>
     <color name="color_guessing_bet_normal">@color/colorPanelFg</color>
     <color name="color_guessing_bet_disabled">#F5F5F5</color>
-    <color name="color_guessing_bet_pressed">#0F04D5D5</color>
+    <color name="color_guessing_bet_pressed">#04D5D5</color>
 </resources>
