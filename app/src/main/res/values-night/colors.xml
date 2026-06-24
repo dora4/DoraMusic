@@ -56,20 +56,21 @@
     <color name="colorPrimary">@color/skin_theme_color</color>
     <color name="colorPrimaryDark">@color/skin_theme_color</color>
     <color name="colorAccent">@color/skin_theme_color</color>
-    <color name="colorTextPrimary">#1A2025</color>
+    <color name="colorTextPrimary">@color/white</color>
     <color name="colorTextSecondary">@color/white</color>
     <color name="half_transparent">@color/white</color>
     <color name="divider_color">@color/colorPanelBg</color>
     <color name="transparent">#00000000</color>
     <color name="trans_white">#afffffff</color>
     <color name="home_menu_icon">@color/white</color>
+    <color name="color_equalizer_normal">@color/colorPanelBg</color>
     <color name="letterview_preview_bg_color">@color/white</color>
     <color name="letterview_preview_text_color">@color/black</color>
     <color name="rotate_view_text_color">@color/colorPanelBg</color>
     <color name="loading_bg_color">@color/colorPanelFg</color>
     <color name="dview_loading_bg_color">@color/colorPanelFg</color>
     <color name="dview_loading_text_color">@color/white</color>
-    <color name="color_guessing_bet_normal">@color/light_gray</color>
+    <color name="color_guessing_bet_normal">@color/colorPanelBg</color>
     <color name="color_guessing_bet_disabled">@color/colorPanelFg</color>
-    <color name="color_guessing_bet_pressed">#F5F5F5</color>
+    <color name="color_guessing_bet_pressed">#2B2D30</color>
 </resources>
