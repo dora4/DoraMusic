@@ -30,6 +30,6 @@
         android:layout_gravity="end|bottom"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="5dp"
-        android:tint="#61B15A"
+        app:tint="#61B15A"
         android:src="@drawable/ic_skin_selected" />
 </FrameLayout>
