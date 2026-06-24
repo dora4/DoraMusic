@@ -6,7 +6,7 @@
         <!-- colorPrimaryDark决定状态栏的默认颜色等 -->
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:forceDarkAllowed" tools:targetApi="Q">true</item>
+<!--        <item name="android:forceDarkAllowed" tools:targetApi="Q">true</item>-->
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
