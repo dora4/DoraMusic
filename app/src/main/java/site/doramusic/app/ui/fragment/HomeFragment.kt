@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +20,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.dorachat.auth.AuthManager
 import com.dorachat.auth.UserManager
 import com.youth.banner.adapter.BannerAdapter
 import com.youth.banner.listener.OnPageChangeListener
@@ -70,6 +70,8 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MusicControl
 import site.doramusic.app.sysmsg.DoraSysMsg
 import site.doramusic.app.sysmsg.SysMsgService
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.BrowserActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
@@ -332,11 +334,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     token = guestSession?.token
                     userId = guestSession?.userId
                 } else {
-                    // 由于SDK v1.1.2版本暂未将访问token加载到user对象，直接从AuthManager拿
-                    token = AuthManager.getAccessToken()
+                    token = UserManager.ins?.currentUser?.accessToken
                     userId = UserManager.ins?.currentUser?.erc20
                 }
                 binding.rlGuessingContent.setOnClickListener {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_GUESSING)
                     open(ARoutePath.ACTIVITY_GUESSING) {
                         withString(EXTRA_TOKEN, token)
                         withString(EXTRA_USER_ID, userId)
@@ -356,6 +358,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             val visible = data?.visible
             val adEnable = data?.configValue
             if (visible == 1 && adEnable == "true") {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_AD_EXPOSURE)
                 // 广告印象
                 spmAdImpression("official")
                 binding.clBanner.visibility = View.VISIBLE

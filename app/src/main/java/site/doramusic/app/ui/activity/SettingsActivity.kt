@@ -2,8 +2,6 @@ package site.doramusic.app.ui.activity
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -30,13 +28,15 @@ import site.doramusic.app.media.MediaManager
 import site.doramusic.app.model.Donation
 import site.doramusic.app.util.PrefsManager
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.dorachat.auth.UserManager
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.util.ApkUtils
-import dora.util.ToastUtils
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.feedback.FeedbackActivity
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.upgrade.ApkService
 import site.doramusic.app.util.ThemeSelector
 
@@ -91,8 +91,10 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsAutoPlay.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_AUTO_PLAY)
                     spmSelectContent("打开自动播放开关")
                 } else {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_AUTO_PLAY)
                     spmSelectContent("关闭自动播放开关")
                 }
                 binding.tbSettingsAutoPlay.isChecked = isChecked
@@ -113,8 +115,10 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsShake.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_SHAKING)
                     spmSelectContent("打开摇一摇切歌开关")
                 } else {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_SHAKING)
                     spmSelectContent("关闭摇一摇切歌开关")
                 }
                 binding.tbSettingsShake.isChecked = isChecked
@@ -124,9 +128,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsDarkMode.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_DARK_MODE)
                     spmSelectContent("打开深色模式开关")
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 } else {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_DARK_MODE)
                     spmSelectContent("关闭深色模式开关")
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 }
@@ -138,8 +144,10 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsBassBoost.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_BASS_BOOST)
                     spmSelectContent("打开重低音开关")
                 } else {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_BASS_BOOST)
                     spmSelectContent("关闭重低音开关")
                 }
                 binding.tbSettingsBassBoost.isChecked = isChecked
@@ -155,8 +163,10 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsCloseBanner.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_BANNER)
                     spmSelectContent("关闭横幅")
                 } else {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_BANNER)
                     spmSelectContent("开启横幅")
                 }
                 binding.tbSettingsCloseBanner.isChecked = isChecked
@@ -166,8 +176,10 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsKeepAlive.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_KEEPING_SCREEN_ON)
                     spmSelectContent("关闭保持屏幕常亮")
                 } else {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_KEEPING_SCREEN_ON)
                     spmSelectContent("开启保持屏幕常亮")
                 }
                 binding.tbSettingsKeepAlive.isChecked = isChecked
@@ -219,8 +231,9 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 prefsManager.saveKeepOn(!isChecked)
             }
             R.id.rl_settings_share -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SHARE)
                 var shareIntent = Intent(Intent.ACTION_SEND)
-                shareIntent.setType("text/plain")
+                shareIntent.type = "text/plain"
                 shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_content))
                 shareIntent = Intent.createChooser(shareIntent,
                     getString(R.string.select_sharing_method))
@@ -299,6 +312,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 DeepLinkUtils.openDiscordGroup(this@SettingsActivity, DISCORD_GROUP_INVITE_CODE)
             }
             R.id.rl_settings_check_update -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHECK_UPDATE)
                 net {
                     val appInfo = result(ApkService::class) { checkUpdate(PRODUCT_NAME) }?.data
                     if (appInfo != null) {
@@ -319,11 +333,13 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 }
             }
             R.id.rl_settings_user_protocol -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_AGREEMENT)
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
                     withString(EXTRA_TITLE, getString(R.string.user_agreement_title))
                 }
             }
             R.id.rl_settings_privacy_policy -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_AGREEMENT)
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
                     withString(EXTRA_TITLE, getString(R.string.privacy_policy_title))
                 }

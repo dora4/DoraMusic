@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.dorachat.auth.ARouterPath
 import com.dorachat.auth.AuthManager
@@ -61,6 +62,8 @@ import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.score.PointsManager
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.IBackNavigator
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.ui.layout.IMenuDrawer
@@ -306,6 +309,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 DoraDoubleButtonDialog(this, listener = object : DoraDoubleButtonDialog.DialogListener {
                     override fun onConfirm(eventType: String) {
                         if (eventType == EVENT_TYPE_SIGN_OUT) {
+                            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_OUT)
                             AuthManager.signOut()
                             closeDrawer()
                         }
@@ -318,6 +322,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                     themeColor(skinThemeColor)
                 }
             } else {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_IN)
                 open(ARouterPath.ACTIVITY_SIGN_IN)
                 closeDrawer()
             }
@@ -330,11 +335,13 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 R.id.menu_scan_music -> performScanMusic()
                 // 聊天室
                 R.id.menu_chat_room -> {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHAT_ROOM)
                     net {
                         try {
                             val user = UserManager.ins?.currentUser
                             if (user == null) {
                                 showLongToast("请先登录")
+                                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_IN)
                                 open(ARouterPath.ACTIVITY_SIGN_IN)
                                 closeDrawer()
                                 return@net
@@ -356,11 +363,20 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                     }
                 }
                 // 我的图鉴
-                R.id.menu_gallery_list -> open(ARoutePath.ACTIVITY_GALLERY_LIST)
+                R.id.menu_gallery_list -> {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_GALLERY)
+                    open(ARoutePath.ACTIVITY_GALLERY_LIST)
+                }
                 // 更换皮肤
-                R.id.menu_change_skin -> open(ARoutePath.ACTIVITY_COLOR_PICKER)
+                R.id.menu_change_skin -> {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN)
+                    open(ARoutePath.ACTIVITY_COLOR_PICKER)
+                }
                 // 均衡器
-                R.id.menu_equalizer -> open(ARoutePath.ACTIVITY_EQUALIZER)
+                R.id.menu_equalizer -> {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_EQUALIZER)
+                    open(ARoutePath.ACTIVITY_EQUALIZER)
+                }
                 // 设置
                 R.id.menu_settings -> open(ARoutePath.ACTIVITY_SETTINGS)
             }
@@ -426,6 +442,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
      * 扫描歌曲。
      */
     private fun performScanMusic() {
+        TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SCAN_MUSIC)
         mBinding.dlMain.closeDrawer(GravityCompat.START)
         scanMusic()
     }

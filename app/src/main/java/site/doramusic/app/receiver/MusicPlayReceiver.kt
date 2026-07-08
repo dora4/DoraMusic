@@ -4,12 +4,16 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import androidx.lifecycle.lifecycleScope
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
 import dora.firebase.SpmUtils
 import dora.util.LogUtils
 import dora.util.RxBus
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig.Companion.ACTION_FAVORITE
 import site.doramusic.app.conf.AppConfig.Companion.ACTION_PAUSE_RESUME
@@ -21,6 +25,8 @@ import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MediaService.Companion.NOTIFICATION_NAME
 import site.doramusic.app.media.MediaService.Companion.NOTIFICATION_TITLE
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.util.MusicUtils
 
 /**
@@ -66,10 +72,13 @@ class MusicPlayReceiver : BroadcastReceiver() {
                     return
                 }
                 curMusic.let {
+                    val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
                     if (it.favorite == 1) {
+                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_STAR_FROM_NOTIFICATION)
                         SpmUtils.selectContent(context, "通知栏取消收藏歌曲")
                         it.favorite = 0
                     } else {
+                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_UNSTAR_FROM_NOTIFICATION)
                         SpmUtils.selectContent(context, "通知栏收藏歌曲")
                         it.favorite = 1
                     }

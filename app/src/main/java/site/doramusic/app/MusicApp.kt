@@ -41,6 +41,7 @@ import site.doramusic.app.score.GalleryCard
 import site.doramusic.app.score.PointsRecord
 import site.doramusic.app.score.UserPoints
 import site.doramusic.app.sysmsg.SysMsgService
+import site.doramusic.app.track.TrackService
 import site.doramusic.app.upgrade.ApkService
 import site.doramusic.app.util.ThemeSelector
 import java.util.concurrent.TimeUnit
@@ -92,6 +93,8 @@ class MusicApp : BaseApplication(), AppConfig {
             themeColor = ContextCompat.getColor(this, R.color.colorPrimary)
         )
             .enableLog(true)
+            .showBrand(false)
+            .loadAccessToken(true)
             .autoRefreshToken(true)
             .build()
         DoraChatSDK.init(this, config)
@@ -155,6 +158,8 @@ class MusicApp : BaseApplication(), AppConfig {
             mappingBaseUrl(FileService::class.java, AppConfig.URL_FILE_SERVER)
             // 竞猜
             mappingBaseUrl(GuessingService::class.java, GuessingService.SERVER_URL)
+            // 埋点统计
+            mappingBaseUrl(TrackService::class.java, TrackService.SERVER_URL)
         }
     }
 

@@ -24,6 +24,9 @@ import dora.firebase.SpmUtils
 import dora.widget.DoraLetterView
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
@@ -38,6 +41,8 @@ import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.media.MediaManager
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.MusicItemAdapter
@@ -166,31 +171,38 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         val listener = createMusicTaskListener(activity) { musics ->
             updateMusicListUI(musics)
         }
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         when (from) {
             ROUTE_START_FROM_LOCAL -> {
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_LOCAL)
                 SpmUtils.selectContent(activity, "从【我的歌曲】进入歌曲列表")
                 musicDao.selectAllAsync(listener)
             }
             ROUTE_START_FROM_ARTIST -> {
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_ARTIST)
                 SpmUtils.selectContent(activity, "从【歌手】进入歌曲列表")
                 val artist = table as Artist
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ARTIST, artist.name), listener)
             }
             ROUTE_START_FROM_ALBUM -> {
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_ALBUM)
                 SpmUtils.selectContent(activity, "从【专辑】进入歌曲列表")
                 val album = table as Album
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ALBUM_ID, album.album_id), listener)
             }
             ROUTE_START_FROM_FOLDER -> {
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_FOLDER)
                 SpmUtils.selectContent(activity, "从【文件夹】进入歌曲列表")
                 val folder = table as Folder
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FOLDER, folder.path), listener)
             }
             ROUTE_START_FROM_FAVORITE -> {
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_FAVORITE)
                 SpmUtils.selectContent(activity, "从【我的收藏】进入歌曲列表")
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FAVORITE, Music.IS_FAVORITE), listener)
             }
             ROUTE_START_FROM_LATEST -> {
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_LATEST)
                 SpmUtils.selectContent(activity, "从【最近播放】进入歌曲列表")
                 musicDao.selectAsync(
                     QueryBuilder.create()

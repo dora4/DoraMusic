@@ -112,7 +112,7 @@ dependencies {
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.6")
     implementation("com.github.dora4:dora-glide-support:1.7")
-    implementation("com.github.dora4:dora-walletconnect-support:2.1.35") {
+    implementation("com.github.dora4:dora-walletconnect-support:2.1.37") {
         exclude(group = "com.madgag.spongycastle", module = "core")
     }
 
@@ -121,7 +121,7 @@ dependencies {
     implementation("com.github.dora4:dview-titlebar:1.40")
     implementation("com.github.dora4:dview-menu-panel:1.47")
     implementation("com.github.dora4:dview-toggle-button:1.5")
-    implementation("com.github.dora4:dview-alert-dialog:1.35")
+    implementation("com.github.dora4:dview-alert-dialog:1.40")
     implementation("com.github.dora4:dview-loading-dialog:1.7")
     implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.12")
@@ -134,15 +134,15 @@ dependencies {
     implementation("com.github.dora4:dview-equalizer-view:1.2")
     implementation("com.github.dora4:dview-radio-group:1.0")
     implementation("com.github.dora4:dview-color-picker:1.1")
-    implementation("com.github.dora4:dview-popup-window:1.5")
+    implementation("com.github.dora4:dview-popup-window:1.8")
     implementation("com.github.dora4:dview-indicator-view:1.1")
-    implementation("com.github.dora4:dview-poker-view:1.1")
+    implementation("com.github.dora4:dview-poker-view:1.2")
     implementation("com.github.dora4:dview-flow-layout:1.3")
     implementation("com.github.dora4:dview-mark-view:1.2")
     implementation("com.github.dora4:dview-empty-layout:1.14")
     implementation("com.github.dora4:dview-swipe-layout:1.1")
 
-    implementation("com.github.dora4:dorachat-authsdk:1.1.2")
+    implementation("com.github.dora4:dorachat-authsdk:1.1.3")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")

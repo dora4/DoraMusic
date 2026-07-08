@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.lifecycle.lifecycleScope
 
 import dora.firebase.SpmUtils
 import dora.http.DoraHttp.api
@@ -27,6 +28,8 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityFeedbackBinding
 import site.doramusic.app.http.SecureRequestBuilder
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.activity.BaseSkinActivity
 import site.doramusic.app.util.ThemeSelector
 
@@ -56,6 +59,7 @@ class FeedbackActivity : BaseSkinActivity<ActivityFeedbackBinding>() {
                         showLongToast(getString(R.string.no_internet_connection))
                         return
                     }
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_FEEDBACK)
                     SpmUtils.selectContent(this@FeedbackActivity, "提交反馈信息")
                     val etInput = binding.menuPanel.getViewByPosition(
                         0,

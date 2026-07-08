@@ -3,9 +3,15 @@ package site.doramusic.app.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import dora.util.IntentUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URI
 import site.doramusic.app.media.FloatingPlayer
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 
 /**
  * 点击音乐文件用朵拉音乐打开，中转的界面，用于启动悬浮播放器。
@@ -19,6 +25,8 @@ class ProxyPlayActivity : Activity() {
     }
 
     private fun handleIntent(intent: Intent?) {
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        TrackAnalysis.report(scope, EventType.EVENT_TYPE_PROXY_PLAYBACK)
         if (intent?.action == Intent.ACTION_VIEW) {
             val uri = intent.data ?: return
             if (IntentUtils.hasOverlayPermission(this)) {

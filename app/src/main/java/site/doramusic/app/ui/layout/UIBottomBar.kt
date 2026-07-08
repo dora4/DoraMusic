@@ -17,6 +17,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,12 +29,17 @@ import dora.skin.SkinManager
 import dora.util.LogUtils
 import dora.util.ScreenUtils
 import dora.util.TextUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Music
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.PlayModeControl
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.PlaylistItemAdapter
@@ -218,12 +224,15 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     fun showPlay(flag: Boolean) {
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         if (flag) {
+            TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAY_MUSIC)
             // 核心功能不再纳入统计
 //            SpmUtils.selectContent(manager.view.context, "暂停音乐")
             btnHomeBottomPlay.visibility = View.VISIBLE
             btnHomeBottomPause.visibility = View.GONE
         } else {
+            TrackAnalysis.report(scope, EventType.EVENT_TYPE_PAUSE_MUSIC)
             // 核心功能不再纳入统计
 //            SpmUtils.selectContent(manager.view.context, "播放音乐")
             btnHomeBottomPlay.visibility = View.GONE
@@ -247,6 +256,8 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             if (bottomSheetDialog?.isShowing == true) {
                 return
             }
+            val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+            TrackAnalysis.report(scope, EventType.EVENT_TYPE_SHOW_QUICK_PLAYLIST)
             SpmUtils.selectContent(context, "打开快捷播放列表")
             bottomSheetDialog = BottomSheetDialog(context)
             val contentView = LayoutInflater.from(context).inflate(R.layout.view_popup_playlist, null)
