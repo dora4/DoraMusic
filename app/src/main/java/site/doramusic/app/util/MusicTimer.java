@@ -6,6 +6,8 @@ import android.os.Message;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import site.doramusic.app.conf.AppConfig;
+import site.doramusic.app.media.MediaManager;
 import site.doramusic.app.score.PointsManager;
 import site.doramusic.app.score.PointsSource;
 
@@ -34,9 +36,9 @@ public class MusicTimer {
     private static final long REWARD_INTERVAL = 60_000L;
 
     /**
-     * 每次奖励积分数量。
+     * 每次奖励音符数量。
      */
-    private static final int REWARD_POINTS = 10;
+    private static final int REWARD_POINTS = 1;
 
     private final Handler[] mHandler;
 
@@ -55,11 +57,6 @@ public class MusicTimer {
      * 已累计播放时长。
      */
     private long playDuration = 0L;
-
-    /**
-     * 是否正在播放。
-     */
-    private boolean isPlaying = false;
 
     public MusicTimer(Handler... handler) {
         this.mHandler = handler;
@@ -115,14 +112,16 @@ public class MusicTimer {
 
         @Override
         public void run() {
-            playDuration += INTERVAL_TIME;
-            // 每分钟奖励一次积分
-            if (playDuration >= REWARD_INTERVAL) {
-                playDuration = 0L;
-                PointsManager.INSTANCE.addPoints(
-                        PointsSource.LISTEN_MUSIC.desc,
-                        REWARD_POINTS
-                );
+            if (MediaManager.INSTANCE.getPlayState() == AppConfig.MPS_PLAYING) {
+                playDuration += INTERVAL_TIME;
+                // 每分钟奖励一次音符
+                if (playDuration >= REWARD_INTERVAL) {
+                    playDuration = 0L;
+                    PointsManager.INSTANCE.addPoints(
+                            PointsSource.LISTEN_MUSIC.desc,
+                            REWARD_POINTS
+                    );
+                }
             }
             // 刷新UI
             if (mHandler != null) {

@@ -246,6 +246,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_item_common"
                 android:clickable="true"
+                android:visibility="gone"
                 android:onClick="@{v}"
                 android:padding="5dp">
 

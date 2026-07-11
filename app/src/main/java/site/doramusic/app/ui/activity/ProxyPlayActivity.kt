@@ -3,7 +3,6 @@ package site.doramusic.app.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import dora.util.IntentUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
