@@ -156,8 +156,8 @@ class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
             }
             val totalPoints = PointsManager.getTotalPoints()
             // 先扣除积分
-            if (totalPoints >= 100) {
-                PointsManager.addPoints(PointsSource.GACHA.desc, -100)
+            if (totalPoints >= 10) {
+                PointsManager.addPoints(PointsSource.GACHA.desc, -10)
                 binding.tvMyPoints.text = getString(R.string.my_points_format, PointsManager.getTotalPoints())
 
             } else {
