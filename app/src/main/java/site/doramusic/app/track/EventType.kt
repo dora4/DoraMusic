@@ -42,6 +42,18 @@ interface EventType {
          */
         const val EVENT_TYPE_SHOW_QUICK_PLAYLIST = "show_quick_playlist"
 
+
+        /**
+         * 打开播放控制界面。
+         */
+        const val EVENT_TYPE_OPEN_PLAYER = "open_player"
+
+
+        /**
+         * 关闭播放控制界面。
+         */
+        const val EVENT_TYPE_CLOSE_PLAYER = "close_player"
+
         /**
          * 从「我的歌曲」进入歌曲列表。
          */

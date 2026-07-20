@@ -616,6 +616,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     override fun showDrawer() {
         if (!musicPlay.isOpened) {
+            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_OPEN_PLAYER)
             spmSelectContent("打开播放控制器界面")
             musicPlay.open()
         }
@@ -623,6 +624,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     override fun hideDrawer() {
         if (musicPlay.isOpened) {
+            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CLOSE_PLAYER)
             spmSelectContent("关闭播放控制器界面")
             musicPlay.close()
         }
