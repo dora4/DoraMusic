@@ -157,7 +157,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 mBinding.fpHome.visibility = View.GONE
             }
 
-            override fun onClickText(index: Int, text: String) {
+            override fun onItemClick(index: Int, text: String) {
                 val sysMsg = sysMsgList[index]
                 tipDialog.show(
                     EVENT_TYPE_SHOW_SYS_MSG_CONTENT, sysMsg.content
