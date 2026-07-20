@@ -221,7 +221,7 @@
                     android:background="#AA222831"
                     android:visibility="gone"
                     app:dview_fv_flipInterval="5000"
-                    app:dview_fv_textColor="@color/white"
+                    app:dview_fv_textColor="@color/colorTextPrimary"
                     app:dview_fv_textSize="15sp" />
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_banner"
