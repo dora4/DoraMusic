@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.Gravity
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -15,6 +16,7 @@ class GuessingRewardAdapter(
     R.layout.item_guessing_reward,
     data
 ) {
+    @SuppressLint("DefaultLocale")
     override fun convert(
         holder: BaseViewHolder,
         item: DoraGuessingReward
@@ -27,17 +29,32 @@ class GuessingRewardAdapter(
         holder.setGone(R.id.tv_reward, !item.win)
         holder.setGone(R.id.tv_odds, !item.win)
         holder.setGone(R.id.tv_bonus, !item.win || item.winBonusScore <= 0)
-        if (item.win) {
-            holder.setText(R.id.tv_reward,
-                context.getString(R.string.reward_format, item.totalRewardScore))
-            holder.setText(R.id.tv_odds, context.getString(R.string.odds_format, "${item.totalRewardScore * 1f / item.totalScore}"))
-            if (item.winBonusScore > 0) {
-                holder.setText(
-                    R.id.tv_bonus,
-                    context.getString(R.string.bonus_format, item.winBonusScore)
-                )
-            }
+        // 未开奖
+        if (!item.opened) {
+            holder.setGone(R.id.tv_reward, true)
+            holder.setGone(R.id.tv_odds, true)
+            holder.setGone(R.id.tv_bonus, true)
+            btn.visibility = View.GONE
+            return
         }
+        // 已开奖
+        holder.setText(R.id.tv_reward,
+            context.getString(R.string.reward_format, item.totalRewardScore))
+        val odds = String.format(
+            "%.2f",
+            item.totalRewardScore.toDouble() / item.totalScore.toDouble()
+        )
+        holder.setText(
+            R.id.tv_odds,
+            context.getString(R.string.odds_format, odds)
+        )
+        holder.setText(
+            R.id.tv_bonus,
+            context.getString(R.string.bonus_format, item.winBonusScore)
+        )
+        holder.setGone(R.id.tv_reward, !item.win)
+        holder.setGone(R.id.tv_odds, !item.win)
+        holder.setGone(R.id.tv_bonus, !item.win || item.winBonusScore <= 0)
         markView.addDrawableMark(
             ContextCompat.getDrawable(
                 context,

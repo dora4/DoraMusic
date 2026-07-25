@@ -156,4 +156,8 @@ The [Dora Music] Team</string>
     <string name="set_nickname">Set nickname</string>
     <string name="please_input_nickanme">Please input nickname</string>
     <string name="bonus_format">Bonus: %1$d</string>
+    <plurals name="my_bet_format">
+        <item quantity="one">My choice: %1$s %2$d point</item>
+        <item quantity="other">My choice: %1$s %2$d points</item>
+    </plurals>
 </resources>

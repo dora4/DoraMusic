@@ -27,6 +27,9 @@ import site.doramusic.app.score.PointsSource
 import site.doramusic.app.ui.adapter.GuessingRewardAdapter
 import site.doramusic.app.util.ThemeSelector
 
+/**
+ * 我的竞猜。
+ */
 @Route(path = ARoutePath.ACTIVITY_GUESSING_REWARD)
 class GuessingRewardActivity :
     BaseSkinActivity<ActivityGuessingRewardBinding>() {

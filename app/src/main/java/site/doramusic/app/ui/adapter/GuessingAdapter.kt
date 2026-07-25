@@ -71,6 +71,8 @@ class GuessingAdapter(private val token: String,
             holder.getView<FlowLayout>(
                 R.id.fl_options
             )
+        val tvMyBet =
+            holder.getView<TextView>(R.id.tv_my_bet)
         markView.clearDrawableMarks()
         if (item.status == 2) {
             if (item.isBet) {
@@ -112,6 +114,28 @@ class GuessingAdapter(private val token: String,
         }
         flow.removeAllViews()
         val items = item.items
+        val myOptionId = selectedOptionCache[item.id]
+        if (myOptionId != null) {
+            val myOption = items.firstOrNull {
+                it.id == myOptionId
+            }
+            if (myOption != null) {
+                val score =
+                    betCache[myOptionId]
+                        ?: myOption.totalScore
+                tvMyBet.text = context.resources.getQuantityString(
+                    R.plurals.my_bet_format,
+                    score.toInt(),
+                    myOption.itemDesc,
+                    score
+                )
+                tvMyBet.visibility = View.VISIBLE
+            } else {
+                tvMyBet.visibility = View.GONE
+            }
+        } else {
+            tvMyBet.visibility = View.GONE
+        }
         items.forEach { option ->
             val chip = LayoutInflater
                 .from(context)

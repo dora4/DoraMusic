@@ -149,5 +149,7 @@
     <string name="set_nickname">设置昵称</string>
     <string name="please_input_nickanme">请输入昵称</string>
     <string name="bonus_format">赠送：%1$d</string>
-
+    <plurals name="my_bet_format">
+        <item quantity="other">我的投注：%1$s %2$d积分</item>
+    </plurals>
 </resources>
