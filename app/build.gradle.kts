@@ -121,7 +121,7 @@ dependencies {
     implementation("com.github.dora4:dview-titlebar:1.40")
     implementation("com.github.dora4:dview-menu-panel:1.47")
     implementation("com.github.dora4:dview-toggle-button:1.5")
-    implementation("com.github.dora4:dview-alert-dialog:1.41")
+    implementation("com.github.dora4:dview-alert-dialog:1.42")
     implementation("com.github.dora4:dview-loading-dialog:1.7")
     implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.12")
