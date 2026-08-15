@@ -309,7 +309,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             breathingView.setText(getString(R.string.click_here))
             breathingView.setTextColor(ContextCompat.getColor(this, R.color.colorTextPrimary))
             breathingView.setTextSizeSp(12f)
-            breathingView.blink(10)
+            breathingView.blink(4)
         }
         avatarView.setOnClickListener {
             val user = UserManager.ins?.currentUser
