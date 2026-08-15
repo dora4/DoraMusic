@@ -300,14 +300,16 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         pointsView!!.text = getString(R.string.my_points_format, PointsManager.getTotalPoints())
         versionNameView.text = BuildConfig.APP_VERSION
-        val breathingView = headerView.findViewById<DoraBreathingView>(R.id.breathingView)
-        breathingView.setText(getString(R.string.click_here))
-        breathingView.setTextColor(ContextCompat.getColor(this, R.color.colorTextPrimary))
-        breathingView.setTextSizeSp(12f)
-        breathingView.blink(10)
         val user = UserManager.ins?.currentUser
         if (user != null) {
             erc20AddrView!!.text = user.erc20
+        } else {
+            // 仅在未登录状态下显示呼吸灯
+            val breathingView = headerView.findViewById<DoraBreathingView>(R.id.breathingView)
+            breathingView.setText(getString(R.string.click_here))
+            breathingView.setTextColor(ContextCompat.getColor(this, R.color.colorTextPrimary))
+            breathingView.setTextSizeSp(12f)
+            breathingView.blink(10)
         }
         avatarView.setOnClickListener {
             val user = UserManager.ins?.currentUser
