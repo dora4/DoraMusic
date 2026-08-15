@@ -9,14 +9,25 @@
     android:layout_width="match_parent"
     android:layout_height="240dp"
     android:background="@color/colorPanelFg">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_drawer_header_avatar"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+    <LinearLayout
+        android:id="@+id/ll_drawer_header_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_centerInParent="true"
-        app:tint="@color/colorTextPrimary"
-        android:src="@drawable/logo_black" />
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_drawer_header_avatar"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            app:tint="@color/colorTextPrimary"
+            android:src="@drawable/logo_black" />
+        <dora.widget.DoraBreathingView
+            android:id="@+id/breathingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:dview_bv_blinkDuration="1000"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/tv_drawer_header_nickname"
         android:layout_width="wrap_content"
@@ -25,7 +36,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="10dp"
         android:textColor="@color/colorTextPrimary"
-        android:layout_below="@id/iv_drawer_header_avatar"/>
+        android:layout_below="@id/ll_drawer_header_avatar"/>
     <dora.widget.DoraMarqueeTextView
         android:id="@+id/tv_drawer_header_my_points"
         android:layout_width="wrap_content"

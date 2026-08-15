@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -37,6 +38,7 @@ import dora.util.PermissionHelper
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.util.ToastUtils
+import dora.widget.DoraBreathingView
 import dora.widget.DoraDoubleButtonDialog
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraSingleButtonDialog
@@ -298,6 +300,12 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         pointsView!!.text = getString(R.string.my_points_format, PointsManager.getTotalPoints())
         versionNameView.text = BuildConfig.APP_VERSION
+
+        val breathingView = headerView.findViewById<DoraBreathingView>(R.id.breathingView)
+        breathingView.setText(getString(R.string.click_here))
+        breathingView.setTextColor(ContextCompat.getColor(this, R.color.colorTextPrimary))
+        breathingView.setTextSizeSp(12f)
+        breathingView.blink(10)
         val user = UserManager.ins?.currentUser
         if (user != null) {
             erc20AddrView!!.text = user.erc20
