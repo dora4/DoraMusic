@@ -300,7 +300,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         pointsView!!.text = getString(R.string.my_points_format, PointsManager.getTotalPoints())
         versionNameView.text = BuildConfig.APP_VERSION
-
         val breathingView = headerView.findViewById<DoraBreathingView>(R.id.breathingView)
         breathingView.setText(getString(R.string.click_here))
         breathingView.setTextColor(ContextCompat.getColor(this, R.color.colorTextPrimary))
