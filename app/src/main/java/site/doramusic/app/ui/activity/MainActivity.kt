@@ -459,20 +459,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         mBinding.dlMain.closeDrawer(
             GravityCompat.START
         )
-        openSongSearch()
-    }
-
-    private fun openSongSearch() {
-        val fragment = ScanMusicFragment()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(
-                R.id.fl_main,
-                fragment,
-                "SongSearchFragment"
-            )
-            .addToBackStack("SongSearchFragment")
-            .commit()
+        open(ARoutePath.ACTIVITY_SCAN_MUSIC)
     }
 
     /**
