@@ -456,4 +456,34 @@ object MusicScanner : AppConfig {
         cursor.close()
         return list
     }
+
+    /**
+     * 仅扫描，不修改数据库。
+     */
+    @JvmStatic
+    fun scanMediaStore(context: Context): List<Music> {
+        val sp = PrefsManager(context)
+        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val cr = context.contentResolver
+        val select = StringBuilder(DEFENSE_SQL_INJECTION_HEADER)
+        if (sp.getFilterSize()) {
+            select.append(
+                " AND ${MediaStore.Audio.Media.SIZE} > ${AppConfig.SCANNER_FILTER_SIZE}"
+            )
+        }
+        if (sp.getFilterTime()) {
+            select.append(
+                " AND ${MediaStore.Audio.Media.DURATION} > ${AppConfig.SCANNER_FILTER_DURATION}"
+            )
+        }
+        return getMusicList(
+            cr.query(
+                uri,
+                projMusic,
+                select.toString(),
+                null,
+                MediaStore.Audio.Media.ARTIST_KEY
+            )
+        )
+    }
 }

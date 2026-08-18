@@ -21,5 +21,6 @@ interface ARoutePath {
         const val ACTIVITY_GUESSING_RANK = "$GROUP_APP/GuessingRankActivity"
 
         const val ACTIVITY_GUESSING_REWARD = "$GROUP_APP/GuessingRewardActivity"
+        const val ACTIVITY_SCAN_MUSIC = "$GROUP_APP/ScanMusicActivity"
     }
 }

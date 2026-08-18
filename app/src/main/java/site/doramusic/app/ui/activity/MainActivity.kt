@@ -64,6 +64,7 @@ import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.score.PointsManager
+import site.doramusic.app.search.ScanMusicFragment
 import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.IBackNavigator
@@ -451,9 +452,27 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
      * 扫描歌曲。
      */
     private fun performScanMusic() {
-        TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SCAN_MUSIC)
-        mBinding.dlMain.closeDrawer(GravityCompat.START)
-        scanMusic()
+        TrackAnalysis.report(
+            lifecycleScope,
+            EventType.EVENT_TYPE_SCAN_MUSIC
+        )
+        mBinding.dlMain.closeDrawer(
+            GravityCompat.START
+        )
+        openSongSearch()
+    }
+
+    private fun openSongSearch() {
+        val fragment = ScanMusicFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.fl_main,
+                fragment,
+                "SongSearchFragment"
+            )
+            .addToBackStack("SongSearchFragment")
+            .commit()
     }
 
     /**

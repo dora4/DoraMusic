@@ -142,6 +142,7 @@ dependencies {
     implementation("com.github.dora4:dview-empty-layout:1.14")
     implementation("com.github.dora4:dview-swipe-layout:1.1")
     implementation("com.github.dora4:dview-breathing-view:1.2")
+    implementation("com.github.dora4:dview-radar-view:1.0")
 
     implementation("com.github.dora4:dorachat-authsdk:1.1.4")
 

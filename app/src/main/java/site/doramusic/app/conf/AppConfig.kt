@@ -12,8 +12,7 @@ interface AppConfig {
         const val APP_NAME = "Dora Music"
         const val PRODUCT_NAME = "doramusic"
         const val APP_PACKAGE_NAME = "site.doramusic.app"
-        const val ALBUM_TEXT =
-            "仅用于学习交流，禁止用于包括但不仅限于商业用途，本产品由https://dorachat.com赞助"
+        const val ALBUM_TEXT = "效率和专注神器，生产力工具"
         const val APP_SLOGAN = "版权所有，侵权必究"
         val COPY_RIGHT = "doramusic ©2023~${Calendar.getInstance().get(Calendar.YEAR)}"
 
