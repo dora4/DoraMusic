@@ -10,13 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <dora.widget.DoraTitleBar
-            android:id="@+id/titleBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="添加本地歌曲" />
+        android:orientation="vertical"
+        android:background="@color/colorPanelBg">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,6 +69,7 @@
             android:layout_height="40dp"
             android:gravity="center"
             android:text="准备扫描本地歌曲"
+            android:textColor="@color/colorTextSecondary"
             android:textSize="13sp" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -87,7 +83,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="@android:color/white"
+            android:background="@color/colorPanelFg"
             android:elevation="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -100,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="已选择 0 / 1000"
+                android:textColor="@color/colorTextSecondary"
                 android:textSize="14sp" />
 
             <TextView
@@ -109,7 +106,7 @@
                 android:background="@drawable/shape_theme_btn"
                 android:gravity="center"
                 android:text="添加到我的音乐"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
 
         </LinearLayout>

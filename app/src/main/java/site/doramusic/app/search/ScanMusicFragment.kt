@@ -17,7 +17,9 @@ import dora.BaseFragment
 import dora.util.RxBus
 import dora.widget.DoraRadarView
 import dora.widget.DoraTitleBar
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import site.doramusic.app.R
 import site.doramusic.app.databinding.FragmentScanMusicBinding
 import site.doramusic.app.db.Music
@@ -151,27 +153,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * 初始化监听。
      */
     private fun initListeners() {
-
-        mBinding.titleBar.setOnIconClickListener(
-            object : DoraTitleBar.OnIconClickListener {
-
-                override fun onIconBackClick(
-                    icon: androidx.appcompat.widget.AppCompatImageView
-                ) {
-                    requireActivity()
-                        .onBackPressedDispatcher
-                        .onBackPressed()
-                }
-
-                override fun onIconMenuClick(
-                    position: Int,
-                    icon: androidx.appcompat.widget.AppCompatImageView
-                ) {
-                    // 暂无菜单
-                }
-            }
-        )
-
         /**
          * 重新扫描。
          */
@@ -224,34 +205,103 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * 扫描过程中显示雷达，
      * 扫描完成后隐藏雷达。
      */
+    /**
+     * 开始扫描本地歌曲。
+     *
+     * 进入页面自动执行。
+     *
+     * 注意：
+     * scanMediaStore() 是耗时操作，
+     * 必须放到 Dispatchers.IO。
+     *
+     * UI 更新全部回到主线程。
+     */
     private fun startScan() {
 
         if (!hasMusicPermission()) {
             requestMusicPermission()
             return
         }
+
+        /**
+         * 开始扫描。
+         */
         radarView.visibility = View.VISIBLE
         radarView.start()
         radarView.setCenterText("扫描中")
+
         tvStatus.text = "正在扫描本地歌曲..."
+
         mBinding.btnScan.isEnabled = false
-        val result = MusicScanner.scanMediaStore(requireContext())
-        if (result.isNotEmpty()) {
-            allSongs.clear()
-            allSongs.addAll(result)
-            displaySongs.clear()
-            displaySongs.addAll(result)
-            adapter.notifyDataSetChanged()
-            mBinding.btnScan.isEnabled = true
-            tvStatus.text =
-                "共找到 ${result.size} 首歌曲"
-            updateSelectedUI()
-        } else {
-            mBinding.btnScan.isEnabled = true
-            tvStatus.text = "未搜索到歌曲"
+
+        lifecycleScope.launch {
+
+            try {
+
+                /**
+                 * 真正的 MediaStore 查询放到 IO 线程。
+                 *
+                 * scanMediaStore()：
+                 *
+                 * 1. 查询 MediaStore
+                 * 2. 创建 Music
+                 * 3. 生成拼音
+                 * 4. 返回 List<Music>
+                 *
+                 * 不操作 UI。
+                 */
+                val result = withContext(Dispatchers.IO) {
+                    MusicScanner.scanMediaStore(
+                        requireContext()
+                    )
+                }
+
+                /**
+                 * 回到主线程。
+                 *
+                 * 更新歌曲列表。
+                 */
+                allSongs.clear()
+                allSongs.addAll(result)
+
+                displaySongs.clear()
+                displaySongs.addAll(result)
+
+                adapter.notifyDataSetChanged()
+
+                /**
+                 * 扫描完成。
+                 */
+                radarView.stop()
+                radarView.visibility = View.GONE
+
+                mBinding.btnScan.isEnabled = true
+
+                tvStatus.text =
+                    "共找到 ${result.size} 首歌曲"
+
+                updateSelectedUI()
+
+            } catch (e: Exception) {
+
+                e.printStackTrace()
+
+                /**
+                 * 即使扫描失败，
+                 * 也必须停止雷达。
+                 */
+                radarView.stop()
+                radarView.visibility = View.GONE
+
+                mBinding.btnScan.isEnabled = true
+
+                tvStatus.text = "扫描失败"
+
+                showShortToast(
+                    "扫描歌曲失败：${e.message ?: "未知错误"}"
+                )
+            }
         }
-        radarView.stop()
-        radarView.visibility = View.GONE
     }
 
     /**
