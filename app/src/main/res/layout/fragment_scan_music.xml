@@ -47,21 +47,16 @@
 
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="220dp">
-
-            <dora.widget.DoraRadarView
-                android:id="@+id/radarView"
-                android:layout_width="220dp"
-                android:layout_height="220dp"
-                android:layout_gravity="center"
-                app:dview_rv_radarColor="#4CAF50"
-                app:dview_rv_radarDuration="1800"
-                app:dview_rv_radarRingCount="4"
-                app:dview_rv_radarSweepWidth="35" />
-
-        </FrameLayout>
+        <dora.widget.DoraRadarView
+            android:id="@+id/radarView"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:dview_rv_radarColor="#4CAF50"
+            app:dview_rv_radarDuration="1800"
+            app:dview_rv_radarRingCount="4"
+            app:dview_rv_radarSweepWidth="35" />
 
         <TextView
             android:id="@+id/tvStatus"
@@ -77,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginTop="10dp"
             android:clipToPadding="false"
             android:paddingBottom="80dp" />
 
@@ -87,8 +83,8 @@
             android:elevation="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
 
             <TextView
                 android:id="@+id/tvSelected"
@@ -100,14 +96,37 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tvAdd"
-                android:layout_width="120dp"
+                android:id="@+id/tvSelectAll"
+                android:layout_width="72dp"
                 android:layout_height="42dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/shape_theme_btn"
+                android:gravity="center"
+                android:text="全部添加"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvCancelAll"
+                android:layout_width="72dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/shape_theme_btn"
+                android:gravity="center"
+                android:text="全部取消"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvAdd"
+                android:layout_width="96dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/shape_theme_btn"
                 android:gravity="center"
                 android:text="添加到我的音乐"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
         </LinearLayout>
 

@@ -16,6 +16,7 @@ class MusicResultAdapter(
 ) {
 
     interface Listener {
+
         fun onChecked(song: Music)
     }
 
@@ -24,17 +25,14 @@ class MusicResultAdapter(
         item: Music
     ) {
         holder.setText(
-            R.id.tv_title,
+            R.id.tv_song_title,
             item.musicName ?: "未知歌曲"
         )
-
         holder.setText(
             R.id.tv_song_subtitle,
-            "${item.artist ?: "未知歌手"} · ${getAlbumName(item)}"
+            "${item.artist ?: "未知歌手"}"
         )
-
-        val selected = selectedIds.contains(item.songId)
-
+        val selected = selectedIds.contains(item.id)
         holder.setText(
             R.id.tv_song_check,
             if (selected) {
@@ -43,31 +41,13 @@ class MusicResultAdapter(
                 "添加"
             }
         )
-
         holder.itemView.setOnClickListener {
             listener.onChecked(item)
         }
-
-        holder.getView<TextView>(R.id.tv_song_check)
-            .setOnClickListener {
-                listener.onChecked(item)
-            }
-    }
-
-    private fun getAlbumName(item: Music): String {
-        /*
-         * 你当前 MusicScanner 中没有给 Music 设置 album 名称，
-         * 只有 albumId，所以这里暂时显示 albumId。
-         *
-         * 如果 Music 实体实际存在 album 字段，
-         * 可以直接改成：
-         *
-         * return item.album ?: "未知专辑"
-         */
-        return if (item.albumId > 0) {
-            "专辑 ${item.albumId}"
-        } else {
-            "未知专辑"
+        holder.getView<TextView>(
+            R.id.tv_song_check
+        ).setOnClickListener {
+            listener.onChecked(item)
         }
     }
 }

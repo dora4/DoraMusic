@@ -32,10 +32,16 @@ import kotlin.collections.ArrayList
 object MusicScanner : AppConfig {
 
     private val projMusic = arrayOf(
-            MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.ALBUM_ID,
-            MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.ARTIST_ID,
-            MediaStore.Audio.Media.DURATION)
+        MediaStore.Audio.Media._ID,
+        MediaStore.Audio.Media.TITLE,
+        MediaStore.Audio.Media.DATA,
+        MediaStore.Audio.Media.ALBUM_ID,
+        MediaStore.Audio.Media.ALBUM,
+        MediaStore.Audio.Media.ARTIST,
+        MediaStore.Audio.Media.ARTIST_ID,
+        MediaStore.Audio.Media.DURATION
+    )
+
     private val projAlbum = arrayOf(MediaStore.Audio.Albums.ALBUM,
             MediaStore.Audio.Albums.NUMBER_OF_SONGS, MediaStore.Audio.Albums._ID,
             MediaStore.Audio.Albums.ALBUM_ART)
@@ -485,5 +491,210 @@ object MusicScanner : AppConfig {
                 MediaStore.Audio.Media.ARTIST_KEY
             )
         )
+    }
+
+    /**
+     * 将用户选择的歌曲保存到本地数据库。
+     *
+     * 注意：
+     * 1. 只添加用户选择的歌曲
+     * 2. 不重建 music 表
+     * 3. 已经存在的歌曲按照 data 文件路径去重
+     * 4. 同步 Artist / Album / Folder
+     *
+     * @return 实际新增的歌曲数量
+     */
+    @JvmStatic
+    fun addSelectedSongs(
+        context: Context,
+        songs: List<Music>
+    ): Int {
+        if (songs.isEmpty()) {
+            return 0
+        }
+        var addedSongs = emptyList<Music>()
+        Transaction.execute {
+            /**
+             * 数据库中已经存在的歌曲。
+             *
+             * data = 文件绝对路径，
+             * 对本地歌曲来说是最稳定的唯一标识。
+             */
+            val existingPaths = musicDao
+                .selectAll()
+                .mapNotNull { it.data }
+                .toHashSet()
+            /**
+             * 去掉：
+             *
+             * 1. 数据库已经存在的歌曲
+             * 2. 当前选择列表内部重复的歌曲
+             * 3. data 为空的歌曲
+             */
+            val newSongs = songs
+                .filter { song ->
+                    !song.data.isNullOrBlank() &&
+                            !existingPaths.contains(song.data)
+                }
+                .distinctBy { it.data }
+            if (newSongs.isEmpty()) {
+                return@execute
+            }
+            musicDao.insert(newSongs)
+            addedSongs = newSongs
+        }
+        if (addedSongs.isEmpty()) {
+            return 0
+        }
+        val albumNameMap = queryAlbumNameMap(
+            context,
+            addedSongs
+        )
+        Transaction.execute {
+            val existingArtists = artistDao
+                .selectAll()
+                .mapNotNull { it.name }
+                .toHashSet()
+            val artists = addedSongs
+                .filter {
+                    !it.artist.isNullOrBlank()
+                }
+                .groupBy {
+                    it.artist!!
+                }
+                .filterKeys {
+                    !existingArtists.contains(it)
+                }
+                .map { (artistName, group) ->
+                    val artist = Artist()
+                    artist.name = artistName
+                    artist.number_of_tracks = group.size
+                    artist
+                }
+            if (artists.isNotEmpty()) {
+                artistDao.insert(artists)
+            }
+            val existingAlbums = albumDao
+                .selectAll()
+                .map {
+                    it.album_id
+                }
+                .toHashSet()
+            val albums = addedSongs
+                .filter {
+                    it.albumId > 0
+                }
+                .groupBy {
+                    it.albumId
+                }
+                .filterKeys {
+                    !existingAlbums.contains(it)
+                }
+                .map { (albumId, group) ->
+                    val album = Album()
+                    album.album_id = albumId
+                    album.album_name = albumNameMap[albumId] ?: "未知专辑"
+                    album.number_of_songs = group.size
+                    album
+                }
+            if (albums.isNotEmpty()) {
+                albumDao.insert(albums)
+            }
+            val existingFolders = folderDao
+                .selectAll()
+                .mapNotNull {
+                    it.path
+                }
+                .toHashSet()
+            val folders = addedSongs
+                .filter {
+                    !it.folder.isNullOrBlank()
+                }
+                .groupBy {
+                    it.folder!!
+                }
+                .filterKeys {
+                    !existingFolders.contains(it)
+                }
+                .map { (path, group) ->
+                    val folder = Folder()
+                    folder.path = path
+                    folder.name =
+                        path.substringAfterLast(
+                            File.separator
+                        )
+                    folder
+                }
+            if (folders.isNotEmpty()) {
+                folderDao.insert(folders)
+            }
+        }
+        return addedSongs.size
+    }
+
+    /**
+     * 根据歌曲的 albumId 查询 MediaStore 中对应的专辑名称。
+     *
+     * @return albumId -> albumName
+     */
+    @SuppressLint("Range")
+    private fun queryAlbumNameMap(
+        context: Context,
+        songs: List<Music>
+    ): Map<Int, String> {
+        val albumIds = songs
+            .map { it.albumId }
+            .filter { it > 0 }
+            .distinct()
+        if (albumIds.isEmpty()) {
+            return emptyMap()
+        }
+        val result = HashMap<Int, String>()
+        val uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(
+            MediaStore.Audio.Albums._ID,
+            MediaStore.Audio.Albums.ALBUM
+        )
+        /**
+         * 构造：
+         *
+         * _id IN (?, ?, ?)
+         */
+        val placeholders = albumIds
+            .joinToString(",") {
+                "?"
+            }
+        val selection =
+            "${MediaStore.Audio.Albums._ID} IN ($placeholders)"
+        val selectionArgs =
+            albumIds
+                .map { it.toString() }
+                .toTypedArray()
+        val cursor = context.contentResolver.query(
+            uri,
+            projection,
+            selection,
+            selectionArgs,
+            null
+        )
+        cursor?.use {
+            val idIndex =
+                it.getColumnIndex(
+                    MediaStore.Audio.Albums._ID
+                )
+            val nameIndex =
+                it.getColumnIndex(
+                    MediaStore.Audio.Albums.ALBUM
+                )
+            while (it.moveToNext()) {
+                val albumId = it.getInt(idIndex)
+                val albumName =
+                    it.getString(nameIndex)
+                if (!albumName.isNullOrBlank()) {
+                    result[albumId] = albumName
+                }
+            }
+        }
+        return result
     }
 }

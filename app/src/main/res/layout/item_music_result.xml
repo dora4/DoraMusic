@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@color/colorPanelFg"
     android:gravity="center_vertical"
     android:paddingStart="16dp"
     android:paddingTop="10dp"
@@ -20,6 +22,7 @@
             android:id="@+id/tv_song_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorTextPrimary"
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="16sp" />
@@ -32,6 +35,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:alpha="0.65"
+            android:textColor="@color/colorTextSecondary"
             android:textSize="13sp" />
 
     </LinearLayout>
@@ -47,6 +51,7 @@
         android:paddingEnd="12dp"
         android:paddingBottom="6dp"
         android:text="添加"
+        android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
 
 </LinearLayout>
