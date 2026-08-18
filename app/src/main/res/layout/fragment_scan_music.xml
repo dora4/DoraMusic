@@ -107,17 +107,6 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/tvCancelAll"
-                android:layout_width="72dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="6dp"
-                android:background="@drawable/shape_theme_btn"
-                android:gravity="center"
-                android:text="全部取消"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
-
-            <TextView
                 android:id="@+id/tvAdd"
                 android:layout_width="96dp"
                 android:layout_height="42dp"
