@@ -44,8 +44,7 @@ import java.util.Locale
  * 3. 多选
  * 4. 通知 Home 刷新
  */
-class ScanMusicFragment :
-    BaseFragment<FragmentScanMusicBinding>() {
+class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
 
     companion object {
 
@@ -77,22 +76,19 @@ class ScanMusicFragment :
     /**
      * MusicScanner 扫描出来的全部歌曲。
      */
-    private val allSongs =
-        mutableListOf<Music>()
+    private val allSongs = mutableListOf<Music>()
 
     /**
      * 当前搜索结果。
      */
-    private val displaySongs =
-        mutableListOf<Music>()
+    private val displaySongs = mutableListOf<Music>()
 
     /**
      * 当前选中的歌曲。
      *
      * Key 使用 Music.id。
      */
-    private val selectedSongs =
-        LinkedHashMap<Int, Music>()
+    private val selectedSongs = LinkedHashMap<Int, Music>()
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_scan_music
@@ -102,9 +98,8 @@ class ScanMusicFragment :
         savedInstanceState: Bundle?,
         binding: FragmentScanMusicBinding
     ) {
-        initView(binding)
-        initListener()
-
+        initViews(binding)
+        initListeners()
         if (hasMusicPermission()) {
             startScan()
         } else {
@@ -115,7 +110,7 @@ class ScanMusicFragment :
     /**
      * 初始化 View。
      */
-    private fun initView(
+    private fun initViews(
         binding: FragmentScanMusicBinding
     ) {
         radarView = binding.radarView
@@ -155,7 +150,7 @@ class ScanMusicFragment :
     /**
      * 初始化监听。
      */
-    private fun initListener() {
+    private fun initListeners() {
 
         mBinding.titleBar.setOnIconClickListener(
             object : DoraTitleBar.OnIconClickListener {
@@ -235,73 +230,28 @@ class ScanMusicFragment :
             requestMusicPermission()
             return
         }
-
-        /**
-         * 开始扫描：
-         * 显示雷达。
-         */
         radarView.visibility = View.VISIBLE
         radarView.start()
         radarView.setCenterText("扫描中")
-
-        tvStatus.text =
-            "正在扫描本地歌曲..."
-
+        tvStatus.text = "正在扫描本地歌曲..."
         mBinding.btnScan.isEnabled = false
-
-        MusicScanner.scan(requireContext())
-            .subscribe(
-                { result ->
-
-                    allSongs.clear()
-                    allSongs.addAll(result)
-
-                    displaySongs.clear()
-                    displaySongs.addAll(result)
-
-                    adapter.notifyDataSetChanged()
-
-                    /**
-                     * 扫描结束。
-                     */
-                    radarView.stop()
-
-                    /**
-                     * 隐藏雷达。
-                     */
-                    radarView.visibility = View.GONE
-
-                    mBinding.btnScan.isEnabled = true
-
-                    tvStatus.text =
-                        "共找到 ${result.size} 首歌曲"
-
-                    updateSelectedUI()
-                },
-                { error ->
-
-                    /**
-                     * 扫描失败也停止雷达。
-                     */
-                    radarView.stop()
-
-                    /**
-                     * 隐藏雷达。
-                     */
-                    radarView.visibility = View.GONE
-
-                    mBinding.btnScan.isEnabled = true
-
-                    tvStatus.text =
-                        "扫描失败"
-
-                    error.printStackTrace()
-
-                    showShortToast(
-                        "扫描歌曲失败：${error.message ?: "未知错误"}"
-                    )
-                }
-            )
+        val result = MusicScanner.scanMediaStore(requireContext())
+        if (result.isNotEmpty()) {
+            allSongs.clear()
+            allSongs.addAll(result)
+            displaySongs.clear()
+            displaySongs.addAll(result)
+            adapter.notifyDataSetChanged()
+            mBinding.btnScan.isEnabled = true
+            tvStatus.text =
+                "共找到 ${result.size} 首歌曲"
+            updateSelectedUI()
+        } else {
+            mBinding.btnScan.isEnabled = true
+            tvStatus.text = "未搜索到歌曲"
+        }
+        radarView.stop()
+        radarView.visibility = View.GONE
     }
 
     /**
@@ -310,26 +260,18 @@ class ScanMusicFragment :
     private fun filterSongs(
         keyword: String?
     ) {
-
-        val text =
-            keyword
+        val text = keyword
                 ?.trim()
                 ?.lowercase(Locale.getDefault())
                 ?: ""
-
         displaySongs.clear()
-
         if (text.isEmpty()) {
-
             displaySongs.addAll(
                 allSongs
             )
-
         } else {
-
             displaySongs.addAll(
                 allSongs.filter { song ->
-
                     song.musicName
                         ?.lowercase(Locale.getDefault())
                         ?.contains(text) == true ||
@@ -344,9 +286,7 @@ class ScanMusicFragment :
                 }
             )
         }
-
         adapter.notifyDataSetChanged()
-
         tvStatus.text =
             if (text.isEmpty()) {
                 "共找到 ${allSongs.size} 首歌曲"
@@ -363,28 +303,21 @@ class ScanMusicFragment :
     ) {
         val id = song.id
         if (selectedSongs.containsKey(id)) {
-
             /**
              * 已选择 -> 取消。
              */
             selectedSongs.remove(id)
 
         } else {
-
             if (selectedSongs.size >= MAX_SELECT_COUNT) {
-
                 showShortToast(
                     "最多选择 $MAX_SELECT_COUNT 首歌曲"
                 )
-
                 return
             }
-
             selectedSongs[id] = song
         }
-
         updateSelectedUI()
-
         adapter.notifyDataSetChanged()
     }
 
@@ -392,82 +325,41 @@ class ScanMusicFragment :
      * 更新底部选择状态。
      */
     private fun updateSelectedUI() {
-
-        val count =
-            selectedSongs.size
-
-        tvSelected.text =
-            "已选择 $count / $MAX_SELECT_COUNT"
-
+        val count = selectedSongs.size
+        tvSelected.text = "已选择 $count / $MAX_SELECT_COUNT"
         tvAdd.text =
             if (count == 0) {
                 "添加到我的音乐"
             } else {
                 "添加 $count 首"
             }
-
         tvAdd.alpha =
             if (count == 0) {
                 0.5f
             } else {
                 1f
             }
-
         tvAdd.isEnabled =
             count > 0
     }
 
-    /**
-     * 添加选中的歌曲。
-     *
-     * ============================================================
-     * 注意：
-     *
-     * MusicScanner.scan() 已经把扫描到的 Music 全部写入数据库。
-     *
-     * 因此这里不能再次 insert Music，否则会产生重复数据。
-     *
-     * 这里的“添加”实际意义是：
-     *
-     * 1. 确认用户选择
-     * 2. 清空选择
-     * 3. 通知 Home 刷新
-     *
-     * 如果以后你要实现“扫描但不入库，只有点击添加才入库”，
-     * 那么需要让 MusicScanner 增加一个纯 MediaStore 查询方法。
-     * ============================================================
-     */
     private fun addSelectedSongs() {
-
         if (selectedSongs.isEmpty()) {
             return
         }
-
-        val count =
-            selectedSongs.size
-
+        val count = selectedSongs.size
         tvAdd.isEnabled = false
-
         lifecycleScope.launch {
-
             selectedSongs.clear()
-
             updateSelectedUI()
-
             adapter.notifyDataSetChanged()
-
             /**
              * 通知 Home 刷新。
              */
-            RxBus.getInstance()
-                .post(
-                    RefreshHomeItemEvent()
-                )
-
+            RxBus.getInstance().post(RefreshHomeItemEvent())
             showShortToast(
                 "已添加 $count 首歌曲"
             )
-
             tvAdd.isEnabled = false
         }
     }
@@ -476,25 +368,19 @@ class ScanMusicFragment :
      * 是否拥有音乐读取权限。
      */
     private fun hasMusicPermission(): Boolean {
-
         return if (
             Build.VERSION.SDK_INT >=
             Build.VERSION_CODES.TIRAMISU
         ) {
-
             ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.READ_MEDIA_AUDIO
-            ) ==
-                    PackageManager.PERMISSION_GRANTED
-
+            ) == PackageManager.PERMISSION_GRANTED
         } else {
-
             ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE
-            ) ==
-                    PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_GRANTED
         }
     }
 
@@ -502,21 +388,14 @@ class ScanMusicFragment :
      * 请求音乐读取权限。
      */
     private fun requestMusicPermission() {
-
-        if (
-            Build.VERSION.SDK_INT >=
-            Build.VERSION_CODES.TIRAMISU
-        ) {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissions(
                 arrayOf(
                     Manifest.permission.READ_MEDIA_AUDIO
                 ),
                 REQUEST_READ_MUSIC
             )
-
         } else {
-
             requestPermissions(
                 arrayOf(
                     Manifest.permission.READ_EXTERNAL_STORAGE
@@ -534,30 +413,20 @@ class ScanMusicFragment :
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-
         super.onRequestPermissionsResult(
             requestCode,
             permissions,
             grantResults
         )
-
-        if (
-            requestCode !=
-            REQUEST_READ_MUSIC
-        ) {
+        if (requestCode != REQUEST_READ_MUSIC) {
             return
         }
-
-        if (
-            grantResults.isNotEmpty() &&
+        if (grantResults.isNotEmpty() &&
             grantResults[0] ==
             PackageManager.PERMISSION_GRANTED
         ) {
-
             startScan()
-
         } else {
-
             showShortToast(
                 "需要音乐读取权限才能扫描本地歌曲"
             )
