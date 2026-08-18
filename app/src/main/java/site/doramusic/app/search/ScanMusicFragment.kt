@@ -284,8 +284,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
 
             } catch (e: Exception) {
 
-                e.printStackTrace()
-
                 /**
                  * 即使扫描失败，
                  * 也必须停止雷达。
