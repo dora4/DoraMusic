@@ -22,7 +22,7 @@
             android:paddingEnd="16dp"
             android:paddingBottom="10dp">
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etSearch"
                 android:layout_width="0dp"
                 android:layout_height="44dp"
@@ -36,13 +36,13 @@
 
             <TextView
                 android:id="@+id/btnScan"
-                android:layout_width="64dp"
-                android:layout_height="44dp"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                android:background="@drawable/shape_theme_btn"
+                android:background="@drawable/shape_normal_btn"
                 android:gravity="center"
                 android:text="扫描"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -100,7 +100,7 @@
                 android:layout_width="72dp"
                 android:layout_height="42dp"
                 android:layout_marginStart="6dp"
-                android:background="@drawable/shape_theme_btn"
+                android:background="@drawable/shape_normal_btn"
                 android:gravity="center"
                 android:text="全部添加"
                 android:textColor="@color/white"
@@ -111,7 +111,7 @@
                 android:layout_width="96dp"
                 android:layout_height="42dp"
                 android:layout_marginStart="6dp"
-                android:background="@drawable/shape_theme_btn"
+                android:background="@drawable/shape_normal_btn"
                 android:gravity="center"
                 android:text="添加到我的音乐"
                 android:textColor="@color/white"

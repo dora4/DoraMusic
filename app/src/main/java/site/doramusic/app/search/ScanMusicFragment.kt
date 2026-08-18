@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import site.doramusic.app.R
+import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.FragmentScanMusicBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshHomeItemEvent
@@ -36,7 +37,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
         /**
          * 最大选择数量。
          */
-        private const val MAX_SELECT_COUNT = 1000
+        private const val MAX_SELECT_COUNT = AppConfig.MUSIC_LIST_MAX_LIST
     }
 
     private lateinit var radarView: DoraRadarView
@@ -75,8 +76,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      *
      * 使用 data，也就是歌曲文件绝对路径作为 Key。
      */
-    private val selectedSongs =
-        LinkedHashMap<String, Music>()
+    private val selectedSongs = LinkedHashMap<String, Music>()
 
     private lateinit var helper: PermissionHelper
 
@@ -111,28 +111,22 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      *     READ_EXTERNAL_STORAGE
      */
     private fun requestMusicPermission() {
-
         if (!isAdded) {
             return
         }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-
             /**
-             * Android 13+
+             * Android 13+。
              */
             val granted = helper.hasPermission(
                 requireActivity(),
                 PermissionHelper.Permission.READ_MEDIA_AUDIO
             )
-
             if (granted) {
                 startScan()
                 return
             }
-
-            helper
-                .permissions(
+            helper.permissions(
                     PermissionHelper.Permission.READ_MEDIA_AUDIO
                 )
                 .request { grantedResult ->
@@ -143,7 +137,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                         tvStatus.text = "没有音乐读取权限"
                     }
                 }
-
             return
         }
 
@@ -165,15 +158,12 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
          * 跳系统设置。
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-
             tvStatus.text = "请开启存储权限"
-
             startActivity(
                 IntentUtils.getRequestStoragePermissionIntent(
                     requireActivity().packageName
                 )
             )
-
             return
         }
 
@@ -201,21 +191,13 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     private fun initViews(
         binding: FragmentScanMusicBinding
     ) {
-
         radarView = binding.radarView
-
         etSearch = binding.etSearch
-
         tvStatus = binding.tvStatus
-
         tvSelected = binding.tvSelected
-
         tvAdd = binding.tvAdd
-
         recyclerView = binding.recyclerView
-
         tvSelectAll = binding.tvSelectAll
-
         adapter = MusicResultAdapter(
             list = displaySongs,
             selectedIds = selectedSongs.keys,
@@ -227,20 +209,15 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 }
             }
         )
-
         recyclerView.layoutManager =
             LinearLayoutManager(requireContext())
-
         recyclerView.adapter = adapter
-
         radarView.setRadarColor(
             ThemeSelector.getThemeColor(
                 requireContext()
             )
         )
-
         radarView.setCenterText("扫描")
-
         updateSelectedUI()
     }
 
@@ -308,31 +285,23 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     /**
      * 开始扫描本地歌曲。
      *
-     * 保证扫描动画至少持续 1 秒。
+     * 保证扫描动画至少持续1秒。
      */
     private fun startScan() {
-
         if (!isAdded) {
             return
         }
-
         /**
          * 记录扫描开始时间。
          */
         val startTime = System.currentTimeMillis()
-
         radarView.visibility = View.VISIBLE
         radarView.start()
         radarView.setCenterText("扫描中")
-
         tvStatus.text = "正在扫描本地歌曲..."
-
         mBinding.btnScan.isEnabled = false
-
         lifecycleScope.launch {
-
             try {
-
                 /**
                  * 真正的 MediaStore 扫描放到 IO 线程。
                  */
@@ -342,41 +311,33 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                         requireContext()
                     )
                 }
-
                 /**
                  * 计算扫描已经耗时多久。
                  */
                 val elapsed =
                     System.currentTimeMillis() - startTime
-
                 /**
-                 * 至少显示 1000ms。
+                 * 至少显示1秒。
                  */
                 val remainTime =
                     1000L - elapsed
-
                 if (remainTime > 0) {
                     kotlinx.coroutines.delay(remainTime)
                 }
-
                 /**
                  * 保存扫描结果。
                  */
                 allSongs.clear()
-
                 allSongs.addAll(
                     result.filter {
                         !it.data.isNullOrBlank()
                     }
                 )
-
                 /**
                  * 当前显示列表恢复为全部歌曲。
                  */
                 displaySongs.clear()
-
                 displaySongs.addAll(allSongs)
-
                 /**
                  * 重新扫描后，
                  * 清除已经不存在的选择。
@@ -387,66 +348,47 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                             it.data
                         }
                         .toHashSet()
-
                 selectedSongs.keys
                     .toList()
                     .forEach { key ->
-
                         if (!validPaths.contains(key)) {
                             selectedSongs.remove(key)
                         }
                     }
-
                 /**
                  * 刷新列表。
                  */
                 adapter.notifyDataSetChanged()
-
                 /**
                  * 停止扫描动画。
                  */
                 radarView.stop()
-
                 radarView.visibility = View.GONE
-
                 /**
                  * 恢复扫描按钮。
                  */
                 mBinding.btnScan.isEnabled = true
-
                 /**
                  * 更新状态。
                  */
-                tvStatus.text =
-                    "共找到 ${allSongs.size} 首歌曲"
-
+                tvStatus.text = "共找到 ${allSongs.size} 首歌曲"
                 updateSelectedUI()
-
             } catch (e: Exception) {
-
                 e.printStackTrace()
-
                 /**
-                 * 即使扫描异常，也保证动画至少显示 1 秒。
+                 * 即使扫描异常，也保证动画至少显示1秒。
                  */
                 val elapsed =
                     System.currentTimeMillis() - startTime
-
                 val remainTime =
                     1000L - elapsed
-
                 if (remainTime > 0) {
                     kotlinx.coroutines.delay(remainTime)
                 }
-
                 radarView.stop()
-
                 radarView.visibility = View.GONE
-
                 mBinding.btnScan.isEnabled = true
-
                 tvStatus.text = "扫描失败"
-
                 showShortToast(
                     "扫描歌曲失败：${e.message ?: "未知错误"}"
                 )
@@ -460,55 +402,38 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     private fun filterSongs(
         keyword: String?
     ) {
-
         val text =
             keyword
                 ?.trim()
                 ?.lowercase(Locale.getDefault())
                 ?: ""
-
         displaySongs.clear()
-
         if (text.isEmpty()) {
-
             displaySongs.addAll(allSongs)
-
         } else {
-
             displaySongs.addAll(
                 allSongs.filter { song ->
-
                     song.musicName
                         ?.lowercase(Locale.getDefault())
                         ?.contains(text) == true
-
                             ||
-
                             song.artist
                                 ?.lowercase(Locale.getDefault())
                                 ?.contains(text) == true
-
                             ||
-
                             song.data
                                 ?.lowercase(Locale.getDefault())
                                 ?.contains(text) == true
                 }
             )
         }
-
         adapter.notifyDataSetChanged()
-
         tvStatus.text =
             if (text.isEmpty()) {
-
                 "共找到 ${allSongs.size} 首歌曲"
-
             } else {
-
                 "显示 ${displaySongs.size} / ${allSongs.size} 首歌曲"
             }
-
         updateSelectAllUI()
     }
 
@@ -520,42 +445,31 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     private fun toggleSong(
         song: Music
     ) {
-
         val key = song.data
-
         /**
          * 没有文件路径无法进行唯一识别。
          */
         if (key.isNullOrBlank()) {
             return
         }
-
         if (selectedSongs.containsKey(key)) {
-
             /**
              * 已选择 -> 取消。
              */
             selectedSongs.remove(key)
-
         } else {
-
             /**
              * 未选择 -> 添加。
              */
             if (selectedSongs.size >= MAX_SELECT_COUNT) {
-
                 showShortToast(
                     "最多选择 $MAX_SELECT_COUNT 首歌曲"
                 )
-
                 return
             }
-
             selectedSongs[key] = song
         }
-
         updateSelectedUI()
-
         adapter.notifyDataSetChanged()
     }
 
@@ -563,29 +477,21 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * 更新底部选择状态。
      */
     private fun updateSelectedUI() {
-
         val count = selectedSongs.size
-
-        tvSelected.text =
-            "已选择 $count / $MAX_SELECT_COUNT"
-
+        tvSelected.text = "已选择 $count / $MAX_SELECT_COUNT"
         tvAdd.text =
             if (count == 0) {
                 "添加到我的音乐"
             } else {
                 "添加 $count 首"
             }
-
         tvAdd.alpha =
             if (count == 0) {
                 0.5f
             } else {
                 1f
             }
-
-        tvAdd.isEnabled =
-            count > 0
-
+        tvAdd.isEnabled = count > 0
         updateSelectAllUI()
     }
 
@@ -599,34 +505,24 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      *     全部选择
      */
     private fun updateSelectAllUI() {
-
         if (displaySongs.isEmpty()) {
-
             tvSelectAll.text = "全部选择"
-
             return
         }
-
         val validSongs =
             displaySongs.filter {
                 !it.data.isNullOrBlank()
             }
-
         if (validSongs.isEmpty()) {
-
             tvSelectAll.text = "全部选择"
-
             return
         }
-
         val allSelected =
             validSongs.all { song ->
-
                 selectedSongs.containsKey(
                     song.data
                 )
             }
-
         tvSelectAll.text =
             if (allSelected) {
                 "取消全选"
@@ -639,88 +535,65 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * 将选中的歌曲保存到本地数据库。
      */
     private fun addSelectedSongs() {
-
         if (selectedSongs.isEmpty()) {
             return
         }
-
         /**
          * 拷贝一份。
          *
          * 避免异步过程中 selectedSongs 被修改。
          */
-        val songs =
-            selectedSongs.values.toList()
-
+        val songs = selectedSongs.values.toList()
         tvAdd.isEnabled = false
-
         lifecycleScope.launch {
-
             try {
-
                 /**
                  * 数据库操作放到 IO。
                  */
                 val addedCount =
                     withContext(Dispatchers.IO) {
-
                         MusicScanner.addSelectedSongs(
                             requireContext(),
                             songs
                         )
                     }
-
                 /**
                  * 保存成功后清空选择。
                  */
                 selectedSongs.clear()
-
                 updateSelectedUI()
-
                 adapter.notifyDataSetChanged()
-
                 /**
                  * 通知 Home 刷新。
                  */
-                RxBus
-                    .getInstance()
+                RxBus.getInstance()
                     .post(
                         RefreshHomeItemEvent()
                     )
-
                 if (addedCount == songs.size) {
-
                     showShortToast(
                         "已添加 $addedCount 首歌曲"
                     )
 
                 } else if (addedCount > 0) {
-
                     showShortToast(
                         "已添加 $addedCount 首歌曲，" +
                                 "其中 ${songs.size - addedCount} 首已存在"
                     )
 
                 } else {
-
                     showShortToast(
                         "所选歌曲已经添加"
                     )
                 }
-
                 requireActivity().finish()
-
             } catch (e: Exception) {
-
                 e.printStackTrace()
-
                 showShortToast(
                     "添加歌曲失败：" +
                             "${e.message ?: "未知错误"}"
                 )
-
             } finally {
-
                 /**
                  * 如果 Fragment 还存在，
                  * 根据当前选择状态恢复按钮。
@@ -745,43 +618,31 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * 5. 搜索状态下，只操作搜索结果。
      */
     private fun selectAllSongs() {
-
         if (displaySongs.isEmpty()) {
-
             showShortToast(
                 "没有可添加的歌曲"
             )
-
             return
         }
-
-        val validSongs =
-            displaySongs.filter {
+        val validSongs = displaySongs.filter {
                 !it.data.isNullOrBlank()
             }
-
         if (validSongs.isEmpty()) {
-
             showShortToast(
                 "没有可添加的歌曲"
             )
-
             return
         }
-
         /**
          * 当前显示列表是否全部选中。
          */
         val allSelected =
             validSongs.all { song ->
-
                 selectedSongs.containsKey(
                     song.data
                 )
             }
-
         if (allSelected) {
-
             /**
              * 当前列表全部取消。
              *
@@ -789,54 +650,39 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
              * 只取消当前搜索结果。
              */
             validSongs.forEach { song ->
-
                 song.data?.let { key ->
                     selectedSongs.remove(key)
                 }
             }
-
         } else {
-
             /**
              * 当前列表全部选择。
              */
             var reachedLimit = false
-
             for (song in validSongs) {
-
-                val key =
-                    song.data ?: continue
-
+                val key = song.data ?: continue
                 /**
                  * 已经选择。
                  */
                 if (selectedSongs.containsKey(key)) {
                     continue
                 }
-
                 /**
                  * 达到最大选择数量。
                  */
                 if (selectedSongs.size >= MAX_SELECT_COUNT) {
-
                     reachedLimit = true
-
                     break
                 }
-
                 selectedSongs[key] = song
             }
-
             if (reachedLimit) {
-
                 showShortToast(
                     "最多选择 $MAX_SELECT_COUNT 首歌曲"
                 )
             }
         }
-
         updateSelectedUI()
-
         adapter.notifyDataSetChanged()
     }
 
@@ -844,15 +690,11 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * 取消全部选择。
      */
     private fun clearAllSelectedSongs() {
-
         if (selectedSongs.isEmpty()) {
             return
         }
-
         selectedSongs.clear()
-
         updateSelectedUI()
-
         adapter.notifyDataSetChanged()
     }
 }

@@ -51,7 +51,7 @@
         android:paddingEnd="12dp"
         android:paddingBottom="6dp"
         android:text="添加"
-        android:textColor="@color/colorPrimary"
+        android:textColor="#61B15A"
         android:textSize="14sp" />
 
 </LinearLayout>
