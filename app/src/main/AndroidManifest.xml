@@ -143,6 +143,12 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".search.ScanMusicActivity"
+            android:exported="false"
+            android:label="扫描歌曲"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.DonationActivity"
             android:exported="false"
             android:label="捐赠列表"
