@@ -47,6 +47,10 @@ Android7.0+
 - 用户版（稳定）：[查看详情](https://www.pgyer.com/doramusic) 
 - 开发版（内测）：[点此下载](https://github.com/dora4/DoraMusic/releases)
 
+### 合作方案
+
+凡粉丝数大于1万的社媒账号音乐类主播，可以免费申请定制专属粉丝应援软件。内容需正能量，可包括原声、写真等，具体掘金（https://juejin.cn/）@dora 私信了解细则。非官方改版需要提供源代码获取授权，版权所有，侵权必究！
+
 ### 社区
 
 DoraChat（[用于生态账号注册](https://www.pgyer.com/dorachat-android)），引领下一代互联网登录方式，无需披露个人信息，即可在官方聊天室匿名聊天。连接Web3钱包自动获取ERC20地址(https://docs.openzeppelin.com/contracts/4.x/api/token/erc20) ，替代手动输入用户名。
