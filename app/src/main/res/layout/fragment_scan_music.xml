@@ -54,6 +54,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             app:dview_rv_radarColor="#4CAF50"
+            app:dview_rv_radarCenterTextColor="@color/colorTextSecondary"
             app:dview_rv_radarDuration="1800"
             app:dview_rv_radarRingCount="4"
             app:dview_rv_radarSweepWidth="35" />

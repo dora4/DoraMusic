@@ -95,7 +95,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 PermissionHelper.Permission.READ_EXTERNAL_STORAGE,
                 PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE
             )
-
         initViews(binding)
         initListeners()
         requestMusicPermission()
@@ -130,7 +129,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                     PermissionHelper.Permission.READ_MEDIA_AUDIO
                 )
                 .request { grantedResult ->
-
                     if (grantedResult) {
                         startScan()
                     } else {
@@ -143,10 +141,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
         /**
          * Android 12 及以下。
          */
-        if (PermissionHelper.hasStoragePermission(
-                requireActivity()
-            )
-        ) {
+        if (PermissionHelper.hasStoragePermission(requireActivity())) {
             startScan()
             return
         }
@@ -225,33 +220,27 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * 初始化监听器。
      */
     private fun initListeners() {
-
         /**
          * 全选 / 取消当前列表。
          */
         tvSelectAll.setOnClickListener {
             selectAllSongs()
         }
-
         /**
          * 重新扫描。
          */
         mBinding.btnScan.setOnClickListener {
-
             if (!mBinding.btnScan.isEnabled) {
                 return@setOnClickListener
             }
-
             startScan()
         }
-
         /**
          * 添加。
          */
         tvAdd.setOnClickListener {
             addSelectedSongs()
         }
-
         /**
          * 搜索。
          */
@@ -282,6 +271,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             }
         )
     }
+
     /**
      * 开始扫描本地歌曲。
      *
@@ -306,21 +296,16 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                  * 真正的 MediaStore 扫描放到 IO 线程。
                  */
                 val result = withContext(Dispatchers.IO) {
-
-                    MusicScanner.scanMediaStore(
-                        requireContext()
-                    )
+                    MusicScanner.scanMediaStore(requireContext())
                 }
                 /**
                  * 计算扫描已经耗时多久。
                  */
-                val elapsed =
-                    System.currentTimeMillis() - startTime
+                val elapsed = System.currentTimeMillis() - startTime
                 /**
                  * 至少显示1秒。
                  */
-                val remainTime =
-                    1000L - elapsed
+                val remainTime = 1000L - elapsed
                 if (remainTime > 0) {
                     kotlinx.coroutines.delay(remainTime)
                 }
@@ -342,8 +327,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                  * 重新扫描后，
                  * 清除已经不存在的选择。
                  */
-                val validPaths =
-                    allSongs
+                val validPaths = allSongs
                         .mapNotNull {
                             it.data
                         }
@@ -378,10 +362,8 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 /**
                  * 即使扫描异常，也保证动画至少显示1秒。
                  */
-                val elapsed =
-                    System.currentTimeMillis() - startTime
-                val remainTime =
-                    1000L - elapsed
+                val elapsed = System.currentTimeMillis() - startTime
+                val remainTime = 1000L - elapsed
                 if (remainTime > 0) {
                     kotlinx.coroutines.delay(remainTime)
                 }
@@ -399,31 +381,20 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     /**
      * 根据关键字过滤歌曲。
      */
-    private fun filterSongs(
-        keyword: String?
-    ) {
-        val text =
-            keyword
-                ?.trim()
-                ?.lowercase(Locale.getDefault())
-                ?: ""
+    private fun filterSongs(keyword: String?) {
+        val text = keyword
+            ?.trim()
+            ?.lowercase(Locale.getDefault())
+            ?: ""
         displaySongs.clear()
         if (text.isEmpty()) {
             displaySongs.addAll(allSongs)
         } else {
             displaySongs.addAll(
                 allSongs.filter { song ->
-                    song.musicName
-                        ?.lowercase(Locale.getDefault())
-                        ?.contains(text) == true
-                            ||
-                            song.artist
-                                ?.lowercase(Locale.getDefault())
-                                ?.contains(text) == true
-                            ||
-                            song.data
-                                ?.lowercase(Locale.getDefault())
-                                ?.contains(text) == true
+                    buildSongSearchText(song)
+                        .lowercase(Locale.getDefault())
+                        .contains(text)
                 }
             )
         }
@@ -438,13 +409,22 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     }
 
     /**
+     * 构造歌曲完整搜索文本。
+     */
+    private fun buildSongSearchText(song: Music): String {
+        return buildString {
+            append(song.musicName ?: "")
+            append(" ")
+            append(song.artist ?: "")
+        }
+    }
+
+    /**
      * 选择 / 取消选择。
      *
      * 使用歌曲文件路径 data 作为唯一 Key。
      */
-    private fun toggleSong(
-        song: Music
-    ) {
+    private fun toggleSong(song: Music) {
         val key = song.data
         /**
          * 没有文件路径无法进行唯一识别。
@@ -517,8 +497,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             tvSelectAll.text = "全部选择"
             return
         }
-        val allSelected =
-            validSongs.all { song ->
+        val allSelected = validSongs.all { song ->
                 selectedSongs.containsKey(
                     song.data
                 )
