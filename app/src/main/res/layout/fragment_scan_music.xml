@@ -28,7 +28,7 @@
                 android:layout_height="44dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_search_input"
-                android:hint="搜索歌曲、歌手或专辑"
+                android:hint="搜索歌曲/歌手"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
                 android:singleLine="true"

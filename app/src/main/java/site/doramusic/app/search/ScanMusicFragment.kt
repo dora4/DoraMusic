@@ -425,8 +425,8 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             append(song.musicName ?: "")
             append(" ")
             append(song.artist ?: "")
-            append(" ")
-            append(albumNameMap[song.albumId] ?: "")
+//            append(" ")
+//            append(albumNameMap[song.albumId] ?: "")
         }
     }
 
