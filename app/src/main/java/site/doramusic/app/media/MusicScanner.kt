@@ -60,7 +60,6 @@ object MusicScanner : AppConfig {
         MediaStore.Audio.Media.TITLE,
         MediaStore.Audio.Media.DATA,
         MediaStore.Audio.Media.ALBUM_ID,
-        MediaStore.Audio.Media.ALBUM,
         MediaStore.Audio.Media.ARTIST,
         MediaStore.Audio.Media.ARTIST_ID,
         MediaStore.Audio.Media.DURATION
@@ -1270,7 +1269,7 @@ object MusicScanner : AppConfig {
      * albumId -> albumName
      */
     @SuppressLint("Range")
-    private fun queryAlbumNameMap(
+    fun queryAlbumNameMap(
         context: Context,
         songs: List<Music>
     ): Map<Int, String> {

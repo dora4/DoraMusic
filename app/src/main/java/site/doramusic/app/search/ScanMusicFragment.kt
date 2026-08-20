@@ -78,6 +78,8 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      */
     private val selectedSongs = LinkedHashMap<String, Music>()
 
+    private var albumNameMap = emptyMap<Int, String>()
+
     private lateinit var helper: PermissionHelper
 
     override fun getLayoutId(): Int {
@@ -298,6 +300,13 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 val result = withContext(Dispatchers.IO) {
                     MusicScanner.scanMediaStore(requireContext())
                 }
+                val albumMap = withContext(Dispatchers.IO) {
+                    MusicScanner.queryAlbumNameMap(
+                        requireContext(),
+                        result
+                    )
+                }
+                albumNameMap = albumMap
                 /**
                  * 计算扫描已经耗时多久。
                  */
@@ -416,6 +425,8 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             append(song.musicName ?: "")
             append(" ")
             append(song.artist ?: "")
+            append(" ")
+            append(albumNameMap[song.albumId] ?: "")
         }
     }
 
