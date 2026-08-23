@@ -13,12 +13,18 @@
         android:background="@color/black"
         android:orientation="vertical">
 
+        <View
+            android:id="@+id/statusbar_play_video"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/skin_theme_color" />
 
         <dora.widget.DoraTitleBar
             android:id="@+id/titleBar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/black"
+            android:layout_height="45dp"
+            android:background="@color/skin_theme_color"
+            app:dview_backIconTint="@color/white"
             app:dview_title="@string/app_name" />
 
         <com.google.android.exoplayer2.ui.StyledPlayerView

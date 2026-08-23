@@ -412,7 +412,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                                         startActivity(IntentUtils.getRequestOverlayPermissionIntent(requireContext().packageName))
                                     }
                                 }
-                                "mp4" -> {
+                                "mp4", "mov", "m4v", "webm", "mkv" -> {
                                     val intent = Intent(activity, PlayVideoActivity::class.java)
                                     intent.putExtra(AppConfig.EXTRA_TITLE, APP_NAME)
                                     intent.putExtra(AppConfig.EXTRA_URL, url)

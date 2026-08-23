@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.RelativeLayout
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
@@ -15,6 +17,7 @@ import dora.util.StatusBarUtils
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityPlayVideoBinding
+import site.doramusic.app.util.ThemeSelector
 
 class PlayVideoActivity : BaseActivity<ActivityPlayVideoBinding>() {
 
@@ -46,6 +49,11 @@ class PlayVideoActivity : BaseActivity<ActivityPlayVideoBinding>() {
         binding: ActivityPlayVideoBinding
     ) {
         binding.titleBar.title = videoTitle ?: getString(R.string.app_name)
+        binding.statusbarPlayVideo.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            StatusBarUtils.getStatusBarHeight())
+        ThemeSelector.applyViewTheme(binding.statusbarPlayVideo)
+        ThemeSelector.applyViewTheme(binding.titleBar)
+
         if (!videoUrl.isNullOrEmpty()) {
             player = ExoPlayer.Builder(this).build()
             binding.videoView.player = player
