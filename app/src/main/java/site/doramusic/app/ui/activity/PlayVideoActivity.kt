@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -49,7 +50,7 @@ class PlayVideoActivity : BaseActivity<ActivityPlayVideoBinding>() {
         binding: ActivityPlayVideoBinding
     ) {
         binding.titleBar.title = videoTitle ?: getString(R.string.app_name)
-        binding.statusbarPlayVideo.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        binding.statusbarPlayVideo.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight())
         ThemeSelector.applyViewTheme(binding.statusbarPlayVideo)
         ThemeSelector.applyViewTheme(binding.titleBar)
