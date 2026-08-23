@@ -129,6 +129,14 @@
                 android:label="用户协议和隐私政策"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.PlayVideoActivity"
+            android:exported="false"
+            android:label="视频播放器"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"  />
+
         <activity
             android:name=".score.GalleryListActivity"
             android:exported="false"

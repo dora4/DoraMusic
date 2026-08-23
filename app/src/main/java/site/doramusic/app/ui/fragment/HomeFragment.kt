@@ -74,6 +74,7 @@ import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.activity.BrowserActivity
+import site.doramusic.app.ui.activity.PlayVideoActivity
 import site.doramusic.app.ui.adapter.HomeAdapter
 import site.doramusic.app.ui.layout.IPlayerLyricDrawer
 import site.doramusic.app.ui.layout.IMenuDrawer
@@ -410,6 +411,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                                     } else {
                                         startActivity(IntentUtils.getRequestOverlayPermissionIntent(requireContext().packageName))
                                     }
+                                }
+                                "mp4" -> {
+                                    val intent = Intent(activity, PlayVideoActivity::class.java)
+                                    intent.putExtra(AppConfig.EXTRA_TITLE, APP_NAME)
+                                    intent.putExtra(AppConfig.EXTRA_URL, url)
+                                    startActivity(intent)
                                 }
                                 else -> {
                                     val intent = Intent(activity, BrowserActivity::class.java)

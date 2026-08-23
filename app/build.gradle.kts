@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 162
-    val version = "2.3.3"
+    val code = 163
+    val version = "2.3.4"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -160,6 +160,9 @@ dependencies {
 
     // leakcanary
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.10")
+
+    // exoplayer
+    implementation("com.google.android.exoplayer:exoplayer:2.19.1")
 
     // banner
     implementation("io.github.youth5201314:banner:2.2.3")
