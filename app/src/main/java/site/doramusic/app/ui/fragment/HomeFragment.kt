@@ -1,5 +1,6 @@
 package site.doramusic.app.ui.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -21,8 +22,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.dorachat.auth.UserManager
-import com.youth.banner.adapter.BannerAdapter
-import com.youth.banner.listener.OnPageChangeListener
 import dora.BaseFragment
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
@@ -36,9 +35,11 @@ import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.pay.DoraFund
 import dora.util.*
+import dora.widget.DoraBannerView
 import dora.widget.DoraFlipperView
 import dora.widget.DoraSingleButtonDialog
 import dora.widget.DoraTitleBar
+import dora.widget.banner.BannerAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
@@ -379,7 +380,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 }
                 // 宽高比固定16:9，便于展示图片
                 binding.clBanner.layoutParams.height = (ScreenUtils.getScreenWidth() - DensityUtils.dp2px(48f)) * 9 / 16
-                binding.banner.addOnPageChangeListener(object : OnPageChangeListener {
+                binding.banner.addOnPageChangeListener(object : DoraBannerView.OnPageChangeListener {
                     override fun onPageScrolled(
                         position: Int,
                         positionOffset: Float,
@@ -397,9 +398,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                         binding.indicator.pageChangeCallback.onPageScrollStateChanged(state)
                     }
                 })
-                val imageAdapter = ImageAdapter(result)
-                imageAdapter.setOnBannerListener { _, position ->
-                    val url = banners?.get(position)?.detailUrl
+                binding.banner.setOnBannerClickListener(object : DoraBannerView.OnBannerClickListener {
+                    override fun onBannerClick(view: DoraBannerView, position: Int) {
+                        val url = banners?.get(position)?.detailUrl
                         url?.let {
                             val ext = getFileExtension(url)
                             when (ext) {
@@ -426,7 +427,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                                 }
                             }
                         }
-                }
+                    }
+                })
+                val imageAdapter = ImageAdapter(result)
                 binding.banner.setAdapter(imageAdapter)
             }
         }
@@ -553,31 +556,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         }
     }
 
-    class ImageAdapter(banners: List<String>) :
-        BannerAdapter<String, ImageAdapter.BannerViewHolder>(banners) {
-        // 创建ViewHolder，可以用viewType这个字段来区分不同的ViewHolder
-        override fun onCreateHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
-            val imageView = ImageView(parent.context)
+    class ImageAdapter(val banners: List<String>) : BannerAdapter<String, ImageView>() {
+
+        override fun getItemCount(): Int {
+            return banners.size
+        }
+
+        override fun onCreateView(context: Context): ImageView {
+            val imageView = ImageView(context)
             // 注意，必须设置为match_parent，这个是viewpager2强制要求的
             imageView.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            return BannerViewHolder(imageView)
+            return imageView
         }
 
-        override fun onBindView(holder: BannerViewHolder, data: String, position: Int, size: Int) {
-            Glide.with(holder.itemView)
-                .load(data)
+        override fun onBindView(view: ImageView, model: String, position: Int) {
+            Glide.with(view)
+                .load(model)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(holder.imageView)
+                .into(view as ImageView)
         }
-
-        class BannerViewHolder(var imageView: ImageView) : RecyclerView.ViewHolder(
-            imageView
-        )
     }
 
     /**

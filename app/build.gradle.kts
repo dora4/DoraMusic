@@ -143,6 +143,7 @@ dependencies {
     implementation("com.github.dora4:dview-swipe-layout:1.1")
     implementation("com.github.dora4:dview-breathing-view:1.2")
     implementation("com.github.dora4:dview-radar-view:1.0")
+    implementation("com.github.dora4:dview-banner-view:1.3")
 
     implementation("com.github.dora4:dorachat-authsdk:1.1.4")
 
@@ -163,7 +164,4 @@ dependencies {
 
     // exoplayer
     implementation("com.google.android.exoplayer:exoplayer:2.19.1")
-
-    // banner
-    implementation("io.github.youth5201314:banner:2.2.3")
 }

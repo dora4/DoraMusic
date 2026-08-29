@@ -234,7 +234,7 @@
                     android:layout_marginTop="24dp"
                     android:visibility="gone">
 
-                    <com.youth.banner.Banner
+                    <dora.widget.DoraBannerView
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
