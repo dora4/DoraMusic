@@ -32,7 +32,6 @@ import android.widget.SeekBar
 import android.widget.SlidingDrawer
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import dora.db.builder.WhereBuilder
@@ -65,6 +64,7 @@ import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.SlidingView
 import androidx.core.graphics.createBitmap
+import dora.widget.DoraIndicatorView
 
 /**
  * 音乐播放控制、歌词滚动界面。
@@ -102,6 +102,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private lateinit var slidingView: SlidingView
     private var curMusic: Music? = null
     private lateinit var viewPager: ViewPager
+    private lateinit var indicatorView: DoraIndicatorView
     private lateinit var coverContainer: FrameLayout
     private lateinit var sceneContainer: FrameLayout
     private lateinit var lrcContainer: FrameLayout
@@ -210,6 +211,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             getStatusBarHeight())
         rotateCoverView = DoraRotateView(context)
         viewPager = findViewById(R.id.vp_music_play_cover_lyric) as ViewPager
+        indicatorView = findViewById(R.id.indicator) as DoraIndicatorView
         lrcEmptyView = TextView(context)
         lrcEmptyView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT)
@@ -254,6 +256,24 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
 //        pageViews.add(lrcContainer)
         pageViews.add(sceneContainer)
         viewPager.adapter = MusicPlayPagerAdapter(pageViews)
+        indicatorView.setIndicatorCount(pageViews.size)
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                indicatorView.pageChangeCallback.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+
+            override fun onPageSelected(position: Int) {
+                indicatorView.pageChangeCallback.onPageSelected(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                indicatorView.pageChangeCallback.onPageScrollStateChanged(state)
+            }
+        })
         slidingView.setOnDrawerCloseListener(this)
         slidingView.setOnDrawerOpenListener(this)
         slidingView.setOnTouchListener { v, event ->

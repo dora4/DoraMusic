@@ -139,16 +139,34 @@
                 app:tint="@color/white" />
         </LinearLayout>
     </LinearLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_music_play_cover_lyric"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/ll_music_play_bottom"
-        android:layout_below="@id/ll_music_play_volume"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:overScrollMode="never" />
+        android:layout_below="@id/ll_music_play_volume">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_music_play_cover_lyric"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:overScrollMode="never" />
+        <dora.widget.DoraIndicatorView
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="bottom|center_horizontal"
+            app:dview_iv_indicatorAlphaFactor="0.6"
+            app:dview_iv_indicatorHeight="6dp"
+            app:dview_iv_indicatorScaleFactor="1.2"
+            app:dview_iv_indicatorSelectedColor="#DADADA"
+            app:dview_iv_indicatorShape="circle"
+            app:dview_iv_indicatorSpacing="4dp"
+            app:dview_iv_indicatorUnselectedColor="#E1E1E1"
+            app:dview_iv_indicatorWidth="6dp"/>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/ll_music_play_volume"
