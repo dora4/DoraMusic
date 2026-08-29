@@ -102,8 +102,9 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private lateinit var slidingView: SlidingView
     private var curMusic: Music? = null
     private lateinit var viewPager: ViewPager
-    private lateinit var coverLrcContainer: FrameLayout
     private lateinit var coverContainer: FrameLayout
+    private lateinit var sceneContainer: FrameLayout
+    private lateinit var lrcContainer: FrameLayout
     private lateinit var rotateCoverView: DoraRotateView
     private lateinit var lrcEmptyView: TextView
     private lateinit var lrcListView: ListView
@@ -113,7 +114,6 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private var musicTimer: MusicTimer? = null
     private var playAuto: Boolean = false
     private var seekBarProgress: Int = 0
-    private lateinit var rvHomeModule: RecyclerView
     private val musicDao: OrmDao<Music> by lazy {
         DaoFactory.getDao(Music::class.java)
     }
@@ -164,7 +164,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     init {
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-        initViews()
+        initViews(manager.view.context)
         handler = object : Handler(Looper.getMainLooper()) {
             override fun handleMessage(msg: Message) {
                 super.handleMessage(msg)
@@ -192,14 +192,12 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun initViews() {
-        rvHomeModule = findViewById(R.id.rv_home_module) as RecyclerView
+    private fun initViews(context: Context) {
         slidingView = findViewById(R.id.sv_home_drawer) as SlidingView
         statusBarLyric = findViewById(R.id.statusbar_lyric)
         tvSlidingMusicName = findViewById(R.id.tv_sliding_music_name) as TextView
         tvSlidingArtist = findViewById(R.id.tv_sliding_artist) as TextView
         llBottomLayout = findViewById(R.id.ll_player_bottom_layout) as LinearLayout
-        updateBottomBarColor()
         btnMusicPlayPrev = findViewById(R.id.btn_music_play_prev) as ImageButton
         btnMusicPlayNext = findViewById(R.id.btn_music_play_next) as ImageButton
         btnMusicPlayPlay = findViewById(R.id.btn_music_play_play) as ImageButton
@@ -207,45 +205,54 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         btnMusicPlayVolume = findViewById(R.id.btn_music_play_volume) as ImageButton
         btnMusicPlayMode = findViewById(R.id.btn_music_play_mode) as ImageButton
         btnMusicPlayFavorite = findViewById(R.id.btn_music_play_favorite) as ImageButton
+        updateBottomBarColor()
         statusBarLyric.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             getStatusBarHeight())
-        rotateCoverView = DoraRotateView(manager.view.context)
+        rotateCoverView = DoraRotateView(context)
         viewPager = findViewById(R.id.vp_music_play_cover_lyric) as ViewPager
-
-        lrcEmptyView = TextView(manager.view.context)
+        lrcEmptyView = TextView(context)
         lrcEmptyView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT)
         lrcEmptyView.gravity = Gravity.CENTER
-        lrcEmptyView.text = ContextCompat.getString(manager.view.context, R.string.no_lyrics)
-        lrcEmptyView.setTextColor(ContextCompat.getColor(manager.view.context, R.color.colorTextSecondary))
-        lrcListView = ListView(manager.view.context)
+        lrcEmptyView.text = ContextCompat.getString(context, R.string.no_lyrics)
+        lrcEmptyView.setTextColor(ContextCompat.getColor(context, R.color.colorTextSecondary))
+        lrcListView = ListView(context)
         lrcListView.isVerticalScrollBarEnabled = false
         lrcListView.adapter = lyricAdapter
         lrcListView.emptyView = lrcEmptyView
         lrcListView.overScrollMode = AbsListView.OVER_SCROLL_NEVER
-        lrcListView.startAnimation(AnimationUtils.loadAnimation(manager.view.context,
+        lrcListView.startAnimation(AnimationUtils.loadAnimation(context,
             android.R.anim.fade_in))
-        coverLrcContainer = FrameLayout(manager.view.context)
-        coverLrcContainer.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT)
-        coverContainer = FrameLayout(manager.view.context)
+        // 封面
+        coverContainer = FrameLayout(context)
         coverContainer.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT)
+        // 歌词
+//        lrcContainer = FrameLayout(context)
+//        lrcContainer.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//            ViewGroup.LayoutParams.MATCH_PARENT)
+
+        // 场景
+        sceneContainer = FrameLayout(context)
+        sceneContainer.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT)
+
         val dp40 = DensityUtils.dp2px(40f)
         val lp = FrameLayout.LayoutParams(ScreenUtils.getScreenWidth() - dp40,
             ScreenUtils.getScreenWidth() - dp40)
         lp.gravity = Gravity.CENTER
-        rotateCoverView.setTextColor(ContextCompat.getColor(manager.view.context, R.color.rotate_view_text_color))
+        rotateCoverView.setTextColor(ContextCompat.getColor(context, R.color.rotate_view_text_color))
         rotateCoverView.setAppName(AppConfig.APP_NAME)
         rotateCoverView.setAlbumText(AppConfig.ALBUM_TEXT)
         rotateCoverView.setAppSlogan(AppConfig.APP_SLOGAN)
         rotateCoverView.setCopyRight(AppConfig.COPY_RIGHT)
         coverContainer.addView(rotateCoverView, lp)
-        coverLrcContainer.addView(lrcListView)
-        coverLrcContainer.addView(lrcEmptyView)
+//        lrcContainer.addView(lrcListView)
+//        lrcContainer.addView(lrcEmptyView)
         val pageViews: MutableList<View>  = ArrayList()
         pageViews.add(coverContainer)
-        pageViews.add(coverLrcContainer)
+//        pageViews.add(lrcContainer)
+        pageViews.add(sceneContainer)
         viewPager.adapter = MusicPlayPagerAdapter(pageViews)
         slidingView.setOnDrawerCloseListener(this)
         slidingView.setOnDrawerOpenListener(this)
