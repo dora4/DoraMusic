@@ -59,6 +59,7 @@ import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.SlidingView
 import androidx.core.graphics.createBitmap
 import dora.widget.DoraIndicatorView
+import site.doramusic.app.event.PlayerBackgroundChangedEvent
 import site.doramusic.app.score.GalleryBackgroundManager
 
 /**
@@ -184,6 +185,13 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     refreshFavorite(curMusic?.favorite ?: 0)
+                })
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(PlayerBackgroundChangedEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    refreshPlayerBackground(it.backgroundRes)
                 })
     }
 
@@ -339,6 +347,15 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 }
             }
             false
+        }
+    }
+
+    private fun refreshPlayerBackground(backgroundRes: Int?) {
+        if (backgroundRes == null) {
+            // 恢复默认：移除背景 Drawable。
+            slidingView.clearHandleContentBackground()
+        } else {
+            slidingView.setHandleContentBackground(backgroundRes)
         }
     }
 

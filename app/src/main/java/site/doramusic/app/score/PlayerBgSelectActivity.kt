@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import dora.util.RxBus
 import dora.util.SPUtils
 import dora.util.StatusBarUtils
 import dora.widget.DoraTitleBar
@@ -13,6 +14,7 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityPlayerBgSelectBinding
+import site.doramusic.app.event.PlayerBackgroundChangedEvent
 import site.doramusic.app.ui.activity.BaseSkinActivity
 import site.doramusic.app.util.ThemeSelector
 
@@ -22,14 +24,15 @@ import site.doramusic.app.util.ThemeSelector
  * 已集齐对应画廊后，可以使用该画廊的播放器背景。
  */
 @Route(path = ARoutePath.ACTIVITY_PLAYER_BG_SELECT)
-class PlayerBgSelectActivity : BaseSkinActivity<ActivityPlayerBgSelectBinding>(), AppConfig {
+class PlayerBgSelectActivity :
+    BaseSkinActivity<ActivityPlayerBgSelectBinding>(), AppConfig {
 
     private lateinit var adapter: GalleryBackgroundAdapter
 
     /**
      * 当前选中的背景。
      */
-    private var selectedBackground: String = ""
+    private var selectedBackground: String = DEFAULT_BACKGROUND
 
     override fun getLayoutId(): Int {
         return R.layout.activity_player_bg_select
@@ -43,19 +46,25 @@ class PlayerBgSelectActivity : BaseSkinActivity<ActivityPlayerBgSelectBinding>()
         savedInstanceState: Bundle?,
         binding: ActivityPlayerBgSelectBinding
     ) {
-        binding.statusbarPlayerBgSelect.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            StatusBarUtils.getStatusBarHeight())
+        binding.statusbarPlayerBgSelect.layoutParams =
+            LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                StatusBarUtils.getStatusBarHeight()
+            )
         ThemeSelector.applyViewTheme(binding.statusbarPlayerBgSelect)
         ThemeSelector.applyViewTheme(binding.titlebarPlayerBgSelect)
         binding.titlebarPlayerBgSelect
             .addMenuButton(R.drawable.ic_clear_bg)
             .setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+
                 override fun onIconBackClick(icon: AppCompatImageView) {
                 }
 
-                override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
-                    SPUtils.remove(this@PlayerBgSelectActivity, KEY_SELECTED_BACKGROUND)
-                    showShortToast(getString(R.string.background_reset))
+                override fun onIconMenuClick(
+                    position: Int,
+                    icon: AppCompatImageView
+                ) {
+                    resetBackground()
                 }
             })
         // 当前选择的背景。
@@ -64,10 +73,20 @@ class PlayerBgSelectActivity : BaseSkinActivity<ActivityPlayerBgSelectBinding>()
             KEY_SELECTED_BACKGROUND,
             DEFAULT_BACKGROUND
         ) ?: DEFAULT_BACKGROUND
-        binding.recyclerView.layoutManager = GridLayoutManager(this@PlayerBgSelectActivity, 2)
-        adapter = GalleryBackgroundAdapter(backgrounds = createBackgrounds().toMutableList())
-        adapter.setOnItemClickListener { adapter, view, i ->
-            selectBackground(adapter.getItem(i) as GalleryBackground)
+        val backgrounds = createBackgrounds().toMutableList()
+        binding.recyclerView.layoutManager =
+            GridLayoutManager(
+                this@PlayerBgSelectActivity,
+                2
+            )
+        // 将当前已保存的背景传给 Adapter，
+        // 页面打开时立即显示正确的选中状态。
+        adapter = GalleryBackgroundAdapter(
+            backgrounds = backgrounds,
+            selectedBackground = selectedBackground
+        )
+        adapter.setOnItemClickListener { adapter, _, position ->
+            selectBackground(adapter.getItem(position) as GalleryBackground)
         }
         binding.recyclerView.adapter = adapter
     }
@@ -77,7 +96,9 @@ class PlayerBgSelectActivity : BaseSkinActivity<ActivityPlayerBgSelectBinding>()
      */
     private fun selectBackground(background: GalleryBackground) {
         if (!isBackgroundUnlocked(background)) {
-            showShortToast(getString(R.string.background_not_unlocked))
+            showShortToast(
+                getString(R.string.background_not_unlocked)
+            )
             return
         }
         selectedBackground = background.id
@@ -87,12 +108,38 @@ class PlayerBgSelectActivity : BaseSkinActivity<ActivityPlayerBgSelectBinding>()
             selectedBackground
         )
         adapter.setSelectedBackground(selectedBackground)
+        // 通知播放器立即刷新背景。
+        RxBus.getInstance().post(
+            PlayerBackgroundChangedEvent(
+                backgroundRes = background.imageRes.takeIf { it != 0 }
+            )
+        )
         showShortToast(
             getString(
                 R.string.background_selected,
                 background.name
             )
         )
+    }
+
+    /**
+     * 清空当前背景，恢复默认背景。
+     */
+    private fun resetBackground() {
+        selectedBackground = DEFAULT_BACKGROUND
+        SPUtils.remove(
+            this,
+            KEY_SELECTED_BACKGROUND
+        )
+        // 刷新选择页面。
+        adapter.setSelectedBackground(DEFAULT_BACKGROUND)
+        // 通知播放器恢复默认背景。
+        RxBus.getInstance().post(
+            PlayerBackgroundChangedEvent(
+                backgroundRes = null
+            )
+        )
+        showShortToast(getString(R.string.background_reset))
     }
 
     /**
@@ -107,6 +154,7 @@ class PlayerBgSelectActivity : BaseSkinActivity<ActivityPlayerBgSelectBinding>()
         if (background.id == DEFAULT_BACKGROUND) {
             return true
         }
+
         return SPUtils.readBoolean(
             this,
             background.galleryId

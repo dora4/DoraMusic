@@ -14,6 +14,7 @@ import android.widget.SlidingDrawer
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
+import site.doramusic.app.R
 
 /**
  * 播放控制界面滑动容器。
@@ -116,6 +117,17 @@ class SlidingView @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 resId
             ) ?: return
         setHandleContentBackground(drawable)
+    }
+
+    /**
+     * 清空 handle + content 背景。
+     *
+     * 清空后恢复 View 原本的背景色/背景状态。
+     */
+    fun clearHandleContentBackground() {
+        handle.background = null
+        content.background = null
+        setBackgroundColor(ContextCompat.getColor(context, R.color.colorPanelBg))
     }
 
     /**

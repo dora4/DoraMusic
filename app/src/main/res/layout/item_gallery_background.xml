@@ -43,8 +43,10 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:text="@string/current_background"
-                android:textColor="@color/colorTextSecondary"
-                android:textSize="12sp" />
+                android:background="@drawable/select_bg"
+                android:textStyle="bold"
+                android:textColor="@color/colorDefault"
+                android:textSize="14sp" />
 
         </FrameLayout>
 
