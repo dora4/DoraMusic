@@ -150,6 +150,16 @@
     <string name="please_input_nickanme">请输入昵称</string>
     <string name="bonus_format">赠送：%1$d</string>
     <string name="click_here">点此登录</string>
+    <string name="player_bg">播放器背景</string>
+    <string name="set_background">设置背景</string>
+    <string name="background_default">默认背景</string>
+    <string name="background_unlocked">已解锁</string>
+    <string name="background_locked">未解锁</string>
+    <string name="current_background">当前使用</string>
+    <string name="background_not_unlocked">该背景尚未解锁</string>
+    <string name="background_selected">已选择 %1$s</string>
+    <string name="change_bg">更换背景</string>
+    <string name="background_reset">背景已重置</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d积分</item>
     </plurals>

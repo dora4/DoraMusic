@@ -180,6 +180,11 @@ interface EventType {
         const val EVENT_TYPE_CHANGE_SKIN = "change_skin"
 
         /**
+         * 更换背景。
+         */
+        const val EVENT_TYPE_CHANGE_BG = "change_bg"
+
+        /**
          * 均衡器。
          */
         const val EVENT_TYPE_EQUALIZER = "equalizer"

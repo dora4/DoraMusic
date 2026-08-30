@@ -64,7 +64,6 @@ import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.score.PointsManager
-import site.doramusic.app.search.ScanMusicFragment
 import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.IBackNavigator
@@ -381,6 +380,11 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 R.id.menu_change_skin -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN)
                     open(ARoutePath.ACTIVITY_COLOR_PICKER)
+                }
+                // 更换背景
+                R.id.menu_change_bg -> {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_BG)
+                    open(ARoutePath.ACTIVITY_PLAYER_BG_SELECT)
                 }
                 // 均衡器
                 R.id.menu_equalizer -> {

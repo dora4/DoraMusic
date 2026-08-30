@@ -17,6 +17,9 @@
                 android:id="@+id/menu_change_skin"
                 android:title="@string/change_skin" />
         <item
+            android:id="@+id/menu_change_bg"
+            android:title="@string/change_bg" />
+        <item
                 android:id="@+id/menu_equalizer"
                 android:title="@string/equalizer" />
         <item

@@ -157,6 +157,16 @@ The [Dora Music] Team</string>
     <string name="please_input_nickanme">Please input nickname</string>
     <string name="bonus_format">Bonus: %1$d</string>
     <string name="click_here">CLICK HERE</string>
+    <string name="player_bg">Player Background</string>
+    <string name="set_background">Set Background</string>
+    <string name="background_default">Default</string>
+    <string name="background_unlocked">Unlocked</string>
+    <string name="background_locked">Locked</string>
+    <string name="current_background">Current Background</string>
+    <string name="background_not_unlocked">Background not unlocked</string>
+    <string name="background_selected">Selected %1$s</string>
+    <string name="change_bg">Change Background</string>
+    <string name="background_reset">Background has been reset</string>
     <plurals name="my_bet_format">
         <item quantity="one">My choice: %1$s %2$d point</item>
         <item quantity="other">My choice: %1$s %2$d points</item>

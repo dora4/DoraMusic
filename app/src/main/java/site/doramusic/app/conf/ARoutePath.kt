@@ -17,6 +17,7 @@ interface ARoutePath {
 
         const val ACTIVITY_GALLERY_LIST = "$GROUP_APP/GalleryListActivity"
         const val ACTIVITY_DRAW_CARD = "$GROUP_APP/DrawCardActivity"
+        const val ACTIVITY_PLAYER_BG_SELECT = "$GROUP_APP/PlayerBgSelectActivity"
         const val ACTIVITY_GUESSING = "$GROUP_APP/GuessingActivity"
         const val ACTIVITY_GUESSING_RANK = "$GROUP_APP/GuessingRankActivity"
 

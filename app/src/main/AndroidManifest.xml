@@ -144,6 +144,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".score.PlayerBgSelectActivity"
+            android:exported="false"
+            android:label="播放器背景设置"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".score.DrawCardActivity"
             android:exported="false"
             android:label="抽卡"

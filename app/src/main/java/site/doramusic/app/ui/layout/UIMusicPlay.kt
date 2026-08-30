@@ -1,6 +1,5 @@
 package site.doramusic.app.ui.layout
 
-//import site.doramusic.app.annotation.SingleClick
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
@@ -17,12 +16,7 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
-import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
-import android.view.animation.ScaleAnimation
-import android.view.animation.TranslateAnimation
 import android.widget.AbsListView
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -65,6 +59,7 @@ import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.SlidingView
 import androidx.core.graphics.createBitmap
 import dora.widget.DoraIndicatorView
+import site.doramusic.app.score.GalleryBackgroundManager
 
 /**
  * 音乐播放控制、歌词滚动界面。
@@ -282,6 +277,10 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         pageViews.add(coverContainer)
 //        pageViews.add(lrcContainer)
         pageViews.add(sceneContainer)
+        // 设置播放器背景
+        GalleryBackgroundManager.getSelectedBackground(context)?.let {
+            slidingView.setHandleContentBackground(it.backgroundRes)
+        }
         viewPager.adapter = MusicPlayPagerAdapter(pageViews)
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -325,7 +324,6 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         sbMusicPlayVolume.setOnSeekBarChangeListener(this)
         tvMusicPlayCurTime = findViewById(R.id.tv_music_play_cur_time) as TextView
         tvMusicPlayTotalTime = findViewById(R.id.tv_music_play_total_time) as TextView
-
         llMusicPlayVolume = findViewById(R.id.ll_music_play_volume) as LinearLayout
         sbMusicPlayVolume.setOnTouchListener { _, motionEvent ->
             when (motionEvent.action) {
