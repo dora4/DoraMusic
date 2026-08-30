@@ -562,9 +562,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             return banners.size
         }
 
+        override fun getItem(position: Int): String {
+            return banners[position]
+        }
+
         override fun onCreateView(context: Context): ImageView {
             val imageView = ImageView(context)
-            // 注意，必须设置为match_parent，这个是viewpager2强制要求的
             imageView.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -578,7 +581,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 .load(model)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(view as ImageView)
+                .into(view)
         }
     }
 

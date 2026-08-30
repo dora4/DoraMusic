@@ -135,7 +135,7 @@ dependencies {
     implementation("com.github.dora4:dview-radio-group:1.0")
     implementation("com.github.dora4:dview-color-picker:1.1")
     implementation("com.github.dora4:dview-popup-window:1.8")
-    implementation("com.github.dora4:dview-indicator-view:1.2")
+    implementation("com.github.dora4:dview-indicator-view:1.3")
     implementation("com.github.dora4:dview-poker-view:1.2")
     implementation("com.github.dora4:dview-flow-layout:1.3")
     implementation("com.github.dora4:dview-mark-view:1.2")
@@ -143,7 +143,7 @@ dependencies {
     implementation("com.github.dora4:dview-swipe-layout:1.1")
     implementation("com.github.dora4:dview-breathing-view:1.2")
     implementation("com.github.dora4:dview-radar-view:1.0")
-    implementation("com.github.dora4:dview-banner-view:1.3")
+    implementation("com.github.dora4:dview-banner-view:1.12")
 
     implementation("com.github.dora4:dorachat-authsdk:1.1.4")
 

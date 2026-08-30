@@ -70,8 +70,8 @@ import dora.widget.DoraIndicatorView
  * 音乐播放控制、歌词滚动界面。
  */
 class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
-        View.OnClickListener, AppConfig, SeekBar.OnSeekBarChangeListener,
-        SlidingDrawer.OnDrawerCloseListener, SlidingDrawer.OnDrawerOpenListener {
+    View.OnClickListener, AppConfig, SeekBar.OnSeekBarChangeListener,
+    SlidingDrawer.OnDrawerCloseListener, SlidingDrawer.OnDrawerOpenListener {
 
     /**
      * 外部要用，不能private。
@@ -130,7 +130,12 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
 
     private var r: Runnable = Runnable {
         llMusicPlayVolume.visibility = View.INVISIBLE
-        llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(this.manager.view.context, R.anim.anim_fade_out))
+        llMusicPlayVolume.startAnimation(
+            AnimationUtils.loadAnimation(
+                this.manager.view.context,
+                R.anim.anim_fade_out
+            )
+        )
     }
 
     private var disposable: CompositeDisposable? = null
@@ -157,8 +162,10 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         override fun onLyricSentenceChanged(indexOfCurSentence: Int) {
             lyricAdapter.setCurrentSentenceIndex(indexOfCurSentence)
             lyricAdapter.notifyDataSetChanged()
-            lrcListView.smoothScrollToPositionFromTop(indexOfCurSentence,
-                lrcListView.height / 2, 500)
+            lrcListView.smoothScrollToPositionFromTop(
+                indexOfCurSentence,
+                lrcListView.height / 2, 500
+            )
         }
     }
 
@@ -171,16 +178,18 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 super.handleMessage(msg)
                 refreshSeekProgress(
                     MediaManager.position(),
-                    MediaManager.duration())
+                    MediaManager.duration()
+                )
             }
         }
         lyricLoader = DoraLyricLoader(lyricScroller, lyricListener)
-        addDisposable(RxBus.getInstance()
-            .toObservable(RefreshFavoriteEvent::class.java)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                refreshFavorite(curMusic?.favorite ?: 0)
-            })
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(RefreshFavoriteEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    refreshFavorite(curMusic?.favorite ?: 0)
+                })
     }
 
     fun updateBottomBarColor() {
@@ -207,14 +216,18 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         btnMusicPlayMode = findViewById(R.id.btn_music_play_mode) as ImageButton
         btnMusicPlayFavorite = findViewById(R.id.btn_music_play_favorite) as ImageButton
         updateBottomBarColor()
-        statusBarLyric.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            getStatusBarHeight())
+        statusBarLyric.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            getStatusBarHeight()
+        )
         rotateCoverView = DoraRotateView(context)
         viewPager = findViewById(R.id.vp_music_play_cover_lyric) as ViewPager
         indicatorView = findViewById(R.id.indicator) as DoraIndicatorView
         lrcEmptyView = TextView(context)
-        lrcEmptyView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT)
+        lrcEmptyView.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         lrcEmptyView.gravity = Gravity.CENTER
         lrcEmptyView.text = ContextCompat.getString(context, R.string.no_lyrics)
         lrcEmptyView.setTextColor(ContextCompat.getColor(context, R.color.colorTextSecondary))
@@ -223,12 +236,18 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         lrcListView.adapter = lyricAdapter
         lrcListView.emptyView = lrcEmptyView
         lrcListView.overScrollMode = AbsListView.OVER_SCROLL_NEVER
-        lrcListView.startAnimation(AnimationUtils.loadAnimation(context,
-            android.R.anim.fade_in))
+        lrcListView.startAnimation(
+            AnimationUtils.loadAnimation(
+                context,
+                android.R.anim.fade_in
+            )
+        )
         // 封面
         coverContainer = FrameLayout(context)
-        coverContainer.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT)
+        coverContainer.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         // 歌词
 //        lrcContainer = FrameLayout(context)
 //        lrcContainer.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -236,14 +255,22 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
 
         // 场景
         sceneContainer = FrameLayout(context)
-        sceneContainer.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT)
-
+        sceneContainer.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         val dp40 = DensityUtils.dp2px(40f)
-        val lp = FrameLayout.LayoutParams(ScreenUtils.getScreenWidth() - dp40,
-            ScreenUtils.getScreenWidth() - dp40)
+        val lp = FrameLayout.LayoutParams(
+            ScreenUtils.getScreenWidth() - dp40,
+            ScreenUtils.getScreenWidth() - dp40
+        )
         lp.gravity = Gravity.CENTER
-        rotateCoverView.setTextColor(ContextCompat.getColor(context, R.color.rotate_view_text_color))
+        rotateCoverView.setTextColor(
+            ContextCompat.getColor(
+                context,
+                R.color.rotate_view_text_color
+            )
+        )
         rotateCoverView.setAppName(AppConfig.APP_NAME)
         rotateCoverView.setAlbumText(AppConfig.ALBUM_TEXT)
         rotateCoverView.setAppSlogan(AppConfig.APP_SLOGAN)
@@ -251,19 +278,23 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         coverContainer.addView(rotateCoverView, lp)
 //        lrcContainer.addView(lrcListView)
 //        lrcContainer.addView(lrcEmptyView)
-        val pageViews: MutableList<View>  = ArrayList()
+        val pageViews: MutableList<View> = ArrayList()
         pageViews.add(coverContainer)
 //        pageViews.add(lrcContainer)
         pageViews.add(sceneContainer)
         viewPager.adapter = MusicPlayPagerAdapter(pageViews)
-        indicatorView.setIndicatorCount(pageViews.size)
+
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
-                indicatorView.pageChangeCallback.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                indicatorView.pageChangeCallback.onPageScrolled(
+                    position,
+                    positionOffset,
+                    positionOffsetPixels
+                )
             }
 
             override fun onPageSelected(position: Int) {
@@ -301,7 +332,12 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 MotionEvent.ACTION_DOWN -> volumeHandler.removeCallbacks(r)
                 MotionEvent.ACTION_UP -> {
                     llMusicPlayVolume.visibility = View.INVISIBLE
-                    llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_out))
+                    llMusicPlayVolume.startAnimation(
+                        AnimationUtils.loadAnimation(
+                            manager.view.context,
+                            R.anim.anim_fade_out
+                        )
+                    )
                 }
             }
             false
@@ -357,54 +393,6 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         }
     }
 
-    private fun startAnimation(view: View) {
-        view.visibility = View.VISIBLE
-        val fromX = view.left
-        val fromY = view.top
-
-        val animSet = AnimationSet(true)
-        // 注：ABSOLUTE表示离当前自己的View绝对的像素单位
-        // 使用RELATIVE_TO_SELF和RELATIVE_TO_PARENT时一般用倍数关系 一般用1f 0f
-        // 表示相对于自身或父控件几倍的移动
-        val transAnim = TranslateAnimation(
-                Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, (-fromX).toFloat(),
-                Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, (-fromY).toFloat())
-
-        val alphaAnim1 = AlphaAnimation(0f, 1f)
-        val scaleAnim1 = ScaleAnimation(0f, 1f, 0f, 1f,
-                Animation.RELATIVE_TO_PARENT.toFloat(), Animation.RELATIVE_TO_PARENT.toFloat())
-
-        val alphaAnim2 = AlphaAnimation(1f, 0f)
-        val scaleAnim2 = ScaleAnimation(1f, 0f, 1f, 0f,
-                Animation.RELATIVE_TO_PARENT.toFloat(), Animation.RELATIVE_TO_PARENT.toFloat())
-
-        scaleAnim1.duration = 600
-        alphaAnim1.duration = 600
-
-        scaleAnim2.duration = 800
-        scaleAnim2.startOffset = 600
-
-        alphaAnim2.duration = 800
-        alphaAnim2.startOffset = 600
-
-        transAnim.duration = 600
-        transAnim.startOffset = 600
-
-        animSet.addAnimation(scaleAnim1)
-        animSet.addAnimation(alphaAnim1)
-
-        animSet.addAnimation(scaleAnim2)
-        animSet.addAnimation(alphaAnim2)
-        animSet.addAnimation(transAnim)
-        view.startAnimation(animSet)
-        view.visibility = View.GONE
-    }
-
-    private fun stopAnimation(view: View) {
-        view.visibility = View.GONE
-        view.clearAnimation()
-    }
-
     private fun refreshFavorite(favorite: Int) {
         if (favorite == 1) {
             btnMusicPlayFavorite.setImageResource(R.drawable.ic_favorite_checked)
@@ -424,8 +412,10 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         musicDao.update(WhereBuilder.create().addWhereEqualTo(OrmTable.INDEX_ID, music.id), music)
     }
 
-    override fun onProgressChanged(seekBar: SeekBar, progress: Int,
-                                   fromUser: Boolean) {
+    override fun onProgressChanged(
+        seekBar: SeekBar, progress: Int,
+        fromUser: Boolean
+    ) {
         if (seekBar === sbMusicPlayPlayback) {
             if (!playAuto) {
                 seekBarProgress = progress
@@ -458,7 +448,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         playModeControl.refreshButtonStatus(btnMusicPlayMode)
         lyricLoader.searchLrc(curMusic)
     }
-    
+
     override fun onDrawerClosed() {
         lrcListView.visibility = View.VISIBLE
         slidingView.visibility = View.GONE
@@ -500,15 +490,17 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         time /= 1000
         val totalMinute = time / 60
         val totalSecond = time % 60
-        val totalTimeString = String.format("%02d:%02d", totalMinute,
-                totalSecond)
+        val totalTimeString = String.format(
+            "%02d:%02d", totalMinute,
+            totalSecond
+        )
         tvMusicPlayTotalTime.text = totalTimeString
         tvSlidingMusicName.text = music.musicName
         tvSlidingArtist.text = music.artist
         refreshSeekProgress(curTime, tempTotalTime)
     }
 
-//    @SingleClick
+    //    @SingleClick
     override fun onClick(v: View) {
         when (v.id) {
             // 上一首
@@ -538,10 +530,20 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             R.id.btn_music_play_volume -> if (llMusicPlayVolume.isShown) {
                 volumeHandler.removeCallbacks(r)
                 llMusicPlayVolume.visibility = View.INVISIBLE
-                llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_out))
+                llMusicPlayVolume.startAnimation(
+                    AnimationUtils.loadAnimation(
+                        manager.view.context,
+                        R.anim.anim_fade_out
+                    )
+                )
             } else {
                 llMusicPlayVolume.visibility = View.VISIBLE
-                llMusicPlayVolume.startAnimation(AnimationUtils.loadAnimation(manager.view.context, R.anim.anim_fade_in))
+                llMusicPlayVolume.startAnimation(
+                    AnimationUtils.loadAnimation(
+                        manager.view.context,
+                        R.anim.anim_fade_in
+                    )
+                )
                 volumeHandler.postDelayed(r, 3000)
             }
             // 播放模式
@@ -594,8 +596,11 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     /**
      * 创建默认的转盘封面。
      */
-    fun createDefaultCover() : Bitmap {
-        val bmp = BitmapFactory.decodeResource(manager.view.context.resources, R.drawable.cover_rotating_bg)
+    fun createDefaultCover(): Bitmap {
+        val bmp = BitmapFactory.decodeResource(
+            manager.view.context.resources,
+            R.drawable.cover_rotating_bg
+        )
         val width = bmp.width + DensityUtils.DP50
         val height = bmp.height + DensityUtils.DP100
         // 创建一个空的Bitmap(内存区域),宽度等于第一张图片的宽度，高度等于两张图片高度总和

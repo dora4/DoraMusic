@@ -30,8 +30,7 @@ class PlayVideoActivity : BaseActivity<ActivityPlayVideoBinding>() {
     }
 
     override fun onSetStatusBar() {
-        super.onSetStatusBar()
-        StatusBarUtils.setStatusBar(this, Color.BLACK)
+        StatusBarUtils.setTransparencyStatusBar(this)
     }
 
     override fun onSetNavigationBar() {
@@ -53,7 +52,6 @@ class PlayVideoActivity : BaseActivity<ActivityPlayVideoBinding>() {
             StatusBarUtils.getStatusBarHeight())
         ThemeSelector.applyViewTheme(binding.statusbarPlayVideo)
         ThemeSelector.applyViewTheme(binding.titleBar)
-
         if (!videoUrl.isNullOrEmpty()) {
             player = ExoPlayer.Builder(this).build()
             binding.videoView.player = player
