@@ -197,6 +197,7 @@
         </service>
 
         <service android:name=".media.FloatingPlayer" />
+        <service android:name=".media.FloatingAutoPause" />
 
         <service android:name=".service.DownloadService" />
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.media.audiofx.Equalizer
 import android.os.Bundle
@@ -11,8 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
@@ -37,6 +40,7 @@ import dora.pay.DoraFund
 import dora.util.*
 import dora.widget.DoraBannerView
 import dora.widget.DoraFlipperView
+import dora.widget.DoraPopupWindow
 import dora.widget.DoraSingleButtonDialog
 import dora.widget.DoraTitleBar
 import dora.widget.banner.BannerAdapter
@@ -65,6 +69,7 @@ import site.doramusic.app.http.GuestSession
 import site.doramusic.app.sysmsg.SysMsgEvent
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.GuessingService
+import site.doramusic.app.media.FloatingAutoPause
 import site.doramusic.app.media.FloatingPlayer
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
@@ -210,12 +215,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             0, 0, ScreenUtils.getScreenWidth(context),
             DensityUtils.DP26
         )
+        binding.titlebarHome.addMenuButton(R.drawable.ic_alarm,
+            tintColor = ContextCompat.getColor(requireContext(), R.color.home_menu_icon))
         binding.titlebarHome.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
                 (context as IMenuDrawer).openDrawer()
             }
 
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
+                if (position == 0) {
+                    showAutoPausePopup(icon)
+                }
             }
         })
         loadSysMsg(binding)
@@ -284,6 +294,53 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             .subscribe {
                 onPlayMusic(it.playState, it.pendingProgress)
             })
+    }
+
+    private fun showAutoPausePopup(anchorView: View) {
+        val popup = DoraPopupWindow.create(anchorView.context)
+            .contentView(R.layout.popup_auto_pause)
+            .cornerRadius(12f)
+            .backgroundColor(Color.WHITE)
+            .onBind { view ->
+                view.findViewById<TextView>(
+                    R.id.tv_auto_pause_30
+                ).setOnClickListener {
+                    startAutoPause(30)
+                    dismiss()
+                }
+                view.findViewById<TextView>(
+                    R.id.tv_auto_pause_45
+                ).setOnClickListener {
+                    startAutoPause(45)
+                    dismiss()
+                }
+                view.findViewById<TextView>(
+                    R.id.tv_auto_pause_60
+                ).setOnClickListener {
+                    startAutoPause(60)
+                    dismiss()
+                }
+            }
+            .build()
+        popup.show(anchorView)
+    }
+
+    private fun startAutoPause(minutes: Int) {
+        if (IntentUtils.hasOverlayPermission(requireContext())) {
+            val intent = Intent(
+                context,
+                FloatingAutoPause::class.java
+            ).apply {
+                action = FloatingAutoPause.ACTION_START
+                putExtra(
+                    FloatingAutoPause.EXTRA_DURATION,
+                    minutes * 60 * 1000L
+                )
+            }
+            requireContext().startService(intent)
+        } else {
+            startActivity(IntentUtils.getRequestOverlayPermissionIntent(requireContext().packageName))
+        }
     }
 
     override fun isAutoDispose(): Boolean {
