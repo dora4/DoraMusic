@@ -27,7 +27,7 @@
 - 鸳鸯戏 https://www.youtube.com/watch?v=D038bYY7h-U
 - 野孩子 https://www.youtube.com/watch?v=KYZW55KJrK0
 - 赤伶 https://www.youtube.com/watch?v=HOBOBgmzuGo
-- 外婆的澎湖湾 https://www.youtube.com/watch?v=kJg2e3U86Cg
+- 外婆的澎湖湾 https://www.youtube.com/watch?v=oCDg1-HdFYY
 - 火红的萨日朗 https://www.youtube.com/watch?v=qiYwASqE960
 - 女孩 https://www.youtube.com/watch?v=NszjMg8vVhA
 - 从前说 https://www.youtube.com/watch?v=qjAKle8bz2E
