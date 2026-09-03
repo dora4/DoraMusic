@@ -117,11 +117,17 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         val tvPlus = findViewById<TextView>(
             R.id.tv_floating_auto_pause_plus
         )
+        val tvCancel = findViewById<TextView>(
+            R.id.tv_floating_auto_pause_cancel
+        )
         tvMinus.setOnClickListener {
             decreaseTime()
         }
         tvPlus.setOnClickListener {
             increaseTime()
+        }
+        tvCancel.setOnClickListener {
+            cancelAutoPause()
         }
         updateTime()
     }
@@ -132,7 +138,7 @@ class FloatingAutoPause : BaseFloatingWindowService() {
     private fun startCountdown(duration: Long) {
         countDownTimer?.cancel()
         remainingTime = duration.coerceIn(
-            MIN_DURATION,
+            0L,
             MAX_DURATION
         )
         updateTime()
@@ -166,10 +172,10 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         stopCountdown()
         if (MediaManager.playState == AppConfig.MPS_PLAYING) {
             MediaManager.pause()
-            stopSelf()
         } else {
             waitingForResume = true
         }
+        stopSelf()
     }
 
     /**
@@ -202,10 +208,12 @@ class FloatingAutoPause : BaseFloatingWindowService() {
     /**
      * 减少 15 分钟。
      *
-     * 小于等于 15 分钟时，直接暂停播放。
+     * 如果减少后仍大于 0，则继续倒计时。
+     * 如果减少后小于等于 0，则直接暂停播放。
      */
     private fun decreaseTime() {
-        if (remainingTime <= MIN_DURATION) {
+        val duration = remainingTime - STEP_DURATION
+        if (duration <= 0L) {
             waitingForResume = false
             stopCountdown()
             remainingTime = 0L
@@ -214,8 +222,18 @@ class FloatingAutoPause : BaseFloatingWindowService() {
             stopSelf()
             return
         }
-        val duration = remainingTime - STEP_DURATION
-        startCountdown(duration.coerceAtLeast(MIN_DURATION))
+        startCountdown(duration)
+    }
+
+    /**
+     * 取消自动暂停。
+     */
+    private fun cancelAutoPause() {
+        waitingForResume = false
+        stopCountdown()
+        remainingTime = 0L
+        updateTime()
+        stopSelf()
     }
 
     private fun updateTime() {

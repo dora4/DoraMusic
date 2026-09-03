@@ -1,6 +1,7 @@
 package site.doramusic.app.ui.activity
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.net.VpnService
@@ -13,6 +14,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +34,7 @@ import dora.http.DoraHttp.rxApi
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
+import dora.util.ApkUtils
 import dora.util.IntentUtils
 import dora.util.NetUtils
 import dora.util.PermissionHelper
@@ -69,6 +72,7 @@ import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.IBackNavigator
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.ui.layout.IMenuDrawer
+import site.doramusic.app.upgrade.ApkService
 import site.doramusic.app.util.IPFSUtils
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.util.ThemeSelector
@@ -135,6 +139,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         const val EVENT_TYPE_SCAN_PROMPT = "scan_prompt"
 
         const val EVENT_TYPE_SIGN_OUT = "sign_out"
+
+        const val EVENT_TYPE_SHOW_UPDATE_INFO = "show_update_info"
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -182,6 +188,45 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 }
             } else {
                 requestVPNPermission()
+            }
+        }
+    }
+
+    /**
+     * 检测应用更新。
+     */
+    private fun checkUpdate() {
+        net {
+            val appInfo = result(ApkService::class) {
+                checkUpdate(PRODUCT_NAME)
+            }?.data ?: return@net
+            val curVerCode = ApkUtils.getVersionCode(this@MainActivity)
+            if (appInfo.versionCode > curVerCode) {
+                val tipDialog = DoraSingleButtonDialog(
+                    this@MainActivity,
+                    listener = object : DoraSingleButtonDialog.DialogListener {
+
+                        override fun onButtonClick(eventType: String) {
+                            if (eventType == EVENT_TYPE_SHOW_UPDATE_INFO) {
+                                val intent = Intent(Intent.ACTION_VIEW)
+                                intent.data = appInfo.downloadUrl.toUri()
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                try {
+                                    startActivity(intent)
+                                } catch (ignore: ActivityNotFoundException) {
+                                }
+                            }
+                        }
+                    }
+                )
+                tipDialog.show(
+                    EVENT_TYPE_SHOW_UPDATE_INFO,
+                    appInfo.updateLog
+                ) {
+                    themeColor(
+                        ThemeSelector.getThemeColor(this@MainActivity)
+                    )
+                }
             }
         }
     }
@@ -606,6 +651,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 }
             }
         })
+        // 拉取最新版本信息
+        checkUpdate()
     }
 
     override fun registerBackListener(listener: OnBackListener) {

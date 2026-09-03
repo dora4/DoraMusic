@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<dora.widget.DraggableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<dora.widget.DraggableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
@@ -10,6 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape_floating_player_border"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:padding="12dp">
 
         <TextView
@@ -49,6 +51,13 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_floating_auto_pause_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="取消自动暂停"
+            android:textSize="13sp" />
     </LinearLayout>
 
 </dora.widget.DraggableLayout>

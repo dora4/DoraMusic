@@ -11,8 +11,8 @@ android {
     namespace = "site.doramusic.app"
     compileSdk = 36
 
-    val code = 168
-    val version = "2.3.9"
+    val code = 169
+    val version = "2.3.10"
     defaultConfig {
         applicationId = "site.doramusic.app"
         minSdk = 24
@@ -103,11 +103,11 @@ fun libFileTree() : ConfigurableFileTree {
 
 dependencies {
     implementation(libFileTree())
-    implementation("androidx.appcompat:appcompat:1.7.1")
-    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.8.0")
+    implementation("com.google.android.material:material:1.14.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dora:1.3.68")
+    implementation("com.github.dora4:dora:1.3.69")
     implementation("com.github.dora4:dora-arouter-support:1.11")
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.6")
@@ -160,7 +160,7 @@ dependencies {
 //    implementation("org.aspectj:aspectjrt:1.9.19")
 
     // leakcanary
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.10")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 
     // exoplayer
     implementation("com.google.android.exoplayer:exoplayer:2.19.1")
