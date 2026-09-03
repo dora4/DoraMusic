@@ -48,7 +48,7 @@
 - 别让爱凋落 https://www.youtube.com/watch?v=93U7ifus358
 - 跳楼机 https://www.youtube.com/watch?v=Hkd45-teUzg
 - 列车开往春天 https://www.youtube.com/watch?v=ZQg0ezB-q8g
-- 初恋情人 https://www.youtube.com/watch?v=3xAUJ69WNOw
+- 初恋情人 https://www.youtube.com/watch?v=BLXzmw3a3h8
 - 赐我 https://www.youtube.com/watch?v=UwQjBW5pm1A
 - 樱花树下的约定 https://www.youtube.com/watch?v=8plzbfMYkCU
 - 忘川彼岸 https://www.youtube.com/watch?v=dhF0ANt9erI
