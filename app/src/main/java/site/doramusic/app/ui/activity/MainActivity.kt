@@ -201,7 +201,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 checkUpdate(PRODUCT_NAME)
             }?.data ?: return@net
             val curVerCode = ApkUtils.getVersionCode(this@MainActivity)
-            if (appInfo.versionCode > curVerCode) {
+            // 这里的强制更新是在启动时一直弹更新信息，而不是必须更新了才能继续用
+            if (appInfo.forceUpdate && appInfo.versionCode > curVerCode) {
                 val tipDialog = DoraSingleButtonDialog(
                     this@MainActivity,
                     listener = object : DoraSingleButtonDialog.DialogListener {

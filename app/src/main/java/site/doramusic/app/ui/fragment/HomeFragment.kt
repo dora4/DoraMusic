@@ -2,6 +2,7 @@ package site.doramusic.app.ui.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -285,6 +286,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 bottomBar.updateProgressColor()
                 musicPlay.updateBottomBarColor()
                 val skinThemeColor = ThemeSelector.getThemeColor(requireContext())
+                // 更新自动暂停倒计时按钮的颜色
+                (mBinding.titlebarHome.getMenuBoxList()[0].getChildAt(0) as ImageView).imageTintList =
+                    ColorStateList.valueOf(skinThemeColor)
                 DoraFund.setThemeColor(skinThemeColor)
             })
         addDisposable(RxBus.getInstance()
