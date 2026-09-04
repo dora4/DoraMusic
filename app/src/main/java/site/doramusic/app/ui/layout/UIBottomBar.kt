@@ -259,7 +259,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             TrackAnalysis.report(scope, EventType.EVENT_TYPE_SHOW_QUICK_PLAYLIST)
             SpmUtils.selectContent(context, "打开快捷播放列表")
             bottomSheetDialog = BottomSheetDialog(context)
-            val contentView = LayoutInflater.from(context).inflate(R.layout.view_popup_playlist, null)
+            val contentView = LayoutInflater.from(context).inflate(R.layout.dialog_playlist, null)
             val height = ScreenUtils.getContentHeight() * 2 / 5
             val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
             contentView.layoutParams = layoutParams

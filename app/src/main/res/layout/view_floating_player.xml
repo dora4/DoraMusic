@@ -9,8 +9,8 @@
         android:id="@+id/ll_floating_player"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/shape_floating_border"
         android:orientation="horizontal"
-        android:background="@drawable/shape_floating_player_border"
         android:padding="5dp">
         <ImageView
             android:id="@+id/iv_floating_pause_resume"

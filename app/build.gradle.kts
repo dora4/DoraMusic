@@ -134,7 +134,7 @@ dependencies {
     implementation("com.github.dora4:dview-equalizer-view:1.2")
     implementation("com.github.dora4:dview-radio-group:1.0")
     implementation("com.github.dora4:dview-color-picker:1.1")
-    implementation("com.github.dora4:dview-popup-window:1.8")
+    implementation("com.github.dora4:dview-popup-window:1.9")
     implementation("com.github.dora4:dview-indicator-view:1.3")
     implementation("com.github.dora4:dview-poker-view:1.2")
     implementation("com.github.dora4:dview-flow-layout:1.3")

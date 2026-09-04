@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_floating_player_border"
         android:orientation="vertical"
+        android:background="@drawable/shape_floating_border"
         android:gravity="center_horizontal"
         android:padding="12dp">
 
@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="取消自动暂停"
+            android:textColor="@color/colorDefault"
             android:textSize="13sp" />
     </LinearLayout>
 

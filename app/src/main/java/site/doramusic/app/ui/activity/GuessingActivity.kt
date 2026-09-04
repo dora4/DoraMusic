@@ -56,7 +56,7 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
 
     private fun showRulePopup(anchor: View) {
         val contentView = LayoutInflater.from(this)
-            .inflate(R.layout.popup_guessing_rule, null)
+            .inflate(R.layout.view_popup_guessing_rule, null)
 
         val tvRuleContent = contentView.findViewById<TextView>(R.id.tvRuleContent)
         val ivRuleClose = contentView.findViewById<ImageView>(R.id.ivRuleClose)

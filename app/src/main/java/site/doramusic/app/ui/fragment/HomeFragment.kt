@@ -16,6 +16,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
@@ -312,9 +313,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     private fun showAutoPausePopup(anchorView: View) {
         val popup = DoraPopupWindow.create(anchorView.context)
-            .contentView(R.layout.popup_auto_pause)
+            .contentView(R.layout.view_popup_auto_pause)
             .cornerRadius(12f)
-            .backgroundColor(Color.WHITE)
+            .strokeWidth(1)
+            .strokeColor(ContextCompat.getColor(anchorView.context, R.color.divider_color))
+            .backgroundColor(ContextCompat.getColor(anchorView.context, R.color.colorPanelFg))
             .onBind { view ->
                 view.findViewById<TextView>(
                     R.id.tv_auto_pause_30
@@ -336,7 +339,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 }
             }
             .build()
-        popup.show(anchorView)
+        popup.show(anchorView, 0, DensityUtils.DP6)
     }
 
     private fun startAutoPause(minutes: Int) {

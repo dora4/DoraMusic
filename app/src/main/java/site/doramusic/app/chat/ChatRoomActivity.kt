@@ -183,7 +183,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 position: Int
             ): Boolean {
                 val popup = DoraPopupWindow.create(this@ChatRoomActivity)
-                    .contentView(R.layout.layout_msg_op)
+                    .contentView(R.layout.view_popup_msg_op)
                     .cornerRadius(12f)
                     .backgroundColor(Color.WHITE)
                     .build()

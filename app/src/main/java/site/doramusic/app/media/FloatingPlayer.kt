@@ -91,7 +91,7 @@ class FloatingPlayer : BaseFloatingWindowService() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.layout_floating_player
+        return R.layout.view_floating_player
     }
 
     override fun getInitialPosition(): IntArray {

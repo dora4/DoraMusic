@@ -97,7 +97,7 @@ class FloatingAutoPause : BaseFloatingWindowService() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.layout_floating_auto_pause
+        return R.layout.view_floating_auto_pause
     }
 
     override fun getInitialPosition(): IntArray {
