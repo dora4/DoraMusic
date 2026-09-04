@@ -20,7 +20,7 @@
 - 敢爱敢做 https://www.youtube.com/watch?v=HGmTVMZR0hE
 - 春不晚 https://www.youtube.com/watch?v=uYGN77Cww-w
 - 安和桥 https://www.youtube.com/watch?v=L8bz8oUNKOk
-- 大天蓬 https://www.youtube.com/watch?v=7-_4NcjDlBs
+- 大天蓬 https://www.youtube.com/watch?v=fTrnoFKULuU
 - 你的万水千山 https://www.youtube.com/watch?v=BZQkb7KpOf0
 - 相思遥 https://www.youtube.com/watch?v=ToyWa0Of1ns
 - 典狱司 https://www.youtube.com/watch?v=3H7YHwep2hk
