@@ -118,7 +118,7 @@ dependencies {
 
     implementation("com.github.dora4:dcache-android:3.6.16")
 
-    implementation("com.github.dora4:dview-titlebar:1.40")
+    implementation("com.github.dora4:dview-titlebar:1.41")
     implementation("com.github.dora4:dview-menu-panel:1.47")
     implementation("com.github.dora4:dview-toggle-button:1.5")
     implementation("com.github.dora4:dview-alert-dialog:1.42")
@@ -144,6 +144,7 @@ dependencies {
     implementation("com.github.dora4:dview-breathing-view:1.2")
     implementation("com.github.dora4:dview-radar-view:1.0")
     implementation("com.github.dora4:dview-banner-view:1.12")
+    implementation("com.github.dora4:dview-marquee-view:1.1")
 
     implementation("com.github.dora4:dorachat-authsdk:1.1.4")
 

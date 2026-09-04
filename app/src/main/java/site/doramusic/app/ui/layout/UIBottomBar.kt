@@ -17,7 +17,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +28,7 @@ import dora.skin.SkinManager
 import dora.util.LogUtils
 import dora.util.ScreenUtils
 import dora.util.TextUtils
+import dora.widget.DoraMarqueeTextView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -46,7 +46,6 @@ import site.doramusic.app.ui.adapter.PlaylistItemAdapter
 import site.doramusic.app.util.MusicUtils
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.util.ThemeSelector
-import site.doramusic.app.widget.MarqueeTextView
 import java.util.Locale
 
 /**
@@ -60,8 +59,8 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
      */
     var handler: Handler
     private val contentView: View = manager.view
-    private lateinit var tvHomeBottomMusicName: MarqueeTextView
-    private lateinit var tvHomeBottomArtist: MarqueeTextView
+    private lateinit var tvHomeBottomMusicName: DoraMarqueeTextView
+    private lateinit var tvHomeBottomArtist: DoraMarqueeTextView
     private lateinit var tvHomeBottomPosition: TextView
     private lateinit var tvHomeBottomDuration: TextView
     private lateinit var btnHomeBottomPlay: ImageButton
@@ -137,8 +136,8 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     private fun initViews() {
-        tvHomeBottomMusicName = findViewById(R.id.tv_home_bottom_music_name) as MarqueeTextView
-        tvHomeBottomArtist = findViewById(R.id.tv_home_bottom_artist) as MarqueeTextView
+        tvHomeBottomMusicName = findViewById(R.id.tv_home_bottom_music_name) as DoraMarqueeTextView
+        tvHomeBottomArtist = findViewById(R.id.tv_home_bottom_artist) as DoraMarqueeTextView
         tvHomeBottomPosition = findViewById(R.id.tv_home_bottom_position) as TextView
         tvHomeBottomDuration = findViewById(R.id.tv_home_bottom_duration) as TextView
         btnHomeBottomPlay = findViewById(R.id.btn_home_bottom_play) as ImageButton

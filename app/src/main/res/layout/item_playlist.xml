@@ -33,7 +33,7 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="14sp" />
 
-            <site.doramusic.app.widget.MarqueeTextView
+            <dora.widget.DoraMarqueeTextView
                 android:id="@+id/tv_playlist_music_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

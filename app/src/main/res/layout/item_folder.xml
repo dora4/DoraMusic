@@ -24,7 +24,7 @@
         android:ellipsize="end"
         android:textSize="15sp" />
 
-    <site.doramusic.app.widget.MarqueeTextView
+    <dora.widget.DoraMarqueeTextView
         android:id="@+id/tv_folder_path"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
