@@ -32,7 +32,7 @@
 - 女孩 https://www.youtube.com/watch?v=NszjMg8vVhA
 - 从前说 https://www.youtube.com/watch?v=qjAKle8bz2E
 - 风催雨 https://www.youtube.com/watch?v=h0tojPD-65g
-- 美人画卷 https://www.youtube.com/watch?v=Ai8dlJlWeuE
+- 美人画卷 https://www.youtube.com/watch?v=KaLTaCN-r-w
 - 选择失忆 https://www.youtube.com/watch?v=Sfd8qBKvdMg
 - 黄昏 https://www.youtube.com/watch?v=BmhL3-_nDZw
 - 爱情有时很残忍 https://www.youtube.com/watch?v=H6TUN01DoQQ
