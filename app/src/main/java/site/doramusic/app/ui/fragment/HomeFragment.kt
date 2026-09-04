@@ -61,6 +61,7 @@ import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.ChangeSkinEvent
+import site.doramusic.app.event.HomeBannerEvent
 import site.doramusic.app.event.PlayMusicEvent
 import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
@@ -296,6 +297,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 onPlayMusic(it.playState, it.pendingProgress)
+            })
+        addDisposable(RxBus.getInstance()
+            .toObservable(HomeBannerEvent::class.java)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if (it.isHidden) {
+                    binding.clBanner.visibility = View.GONE
+                } else {
+                    loadAds(binding)
+                }
             })
     }
 

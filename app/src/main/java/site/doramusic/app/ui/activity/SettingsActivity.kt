@@ -33,7 +33,9 @@ import com.dorachat.auth.UserManager
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.util.ApkUtils
+import dora.util.RxBus
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
+import site.doramusic.app.event.HomeBannerEvent
 import site.doramusic.app.feedback.FeedbackActivity
 import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
@@ -163,9 +165,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsCloseBanner.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
+                    RxBus.getInstance().post(HomeBannerEvent(true))
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_BANNER)
                     spmSelectContent("关闭横幅")
                 } else {
+                    RxBus.getInstance().post(HomeBannerEvent(false))
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_BANNER)
                     spmSelectContent("开启横幅")
                 }
