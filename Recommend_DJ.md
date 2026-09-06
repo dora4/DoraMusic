@@ -37,7 +37,7 @@
 - 黄昏 https://www.youtube.com/watch?v=BmhL3-_nDZw
 - 爱情有时很残忍 https://www.youtube.com/watch?v=H6TUN01DoQQ
 - 孤城 https://www.youtube.com/watch?v=ChRYTbz67IE
-- 虞兮叹 https://www.youtube.com/watch?v=ACmrAE4ov94
+- 虞兮叹 https://www.youtube.com/watch?v=3j1HIUJnxLs
 - 科目三 https://www.youtube.com/watch?v=b3rFbkFjRrA
 - 起风了 https://www.youtube.com/watch?v=s5nFn4RgelA
 - 游京 https://www.youtube.com/watch?v=OjQ0KqCJOjk
