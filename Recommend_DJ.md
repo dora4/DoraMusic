@@ -42,7 +42,7 @@
 - 起风了 https://www.youtube.com/watch?v=s5nFn4RgelA
 - 游京 https://www.youtube.com/watch?v=OjQ0KqCJOjk
 - Everytime We Touch https://www.youtube.com/watch?v=TQ_oIxIDKTA
-- 须尽欢 https://www.youtube.com/watch?v=LXDi5qNu4xA
+- 须尽欢 https://www.youtube.com/watch?v=Lgq_moXSL-Q
 - 夜色 https://www.youtube.com/watch?v=aatVmb9ZCws
 - 快乐阿拉蕾 https://www.youtube.com/watch?v=4haZeezqMio
 - 别让爱凋落 https://www.youtube.com/watch?v=93U7ifus358
