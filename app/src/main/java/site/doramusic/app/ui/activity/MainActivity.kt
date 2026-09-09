@@ -193,7 +193,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     private fun checkUpdate() {
         net {
             val appInfo = result(ApkService::class) {
-                checkUpdate(PRODUCT_NAME)
+                checkUpdate(PRODUCT_NAME, "cn")
             }?.data ?: return@net
             val curVerCode = ApkUtils.getVersionCode(this@MainActivity)
             // 这里的强制更新是在启动时一直弹更新信息，而不是必须更新了才能继续用
