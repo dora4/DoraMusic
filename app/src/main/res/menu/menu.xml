@@ -7,9 +7,9 @@
         <item
                 android:id="@+id/menu_scan_music"
                 android:title="@string/scan_music" />
-        <item
-            android:id="@+id/menu_chat_room"
-            android:title="@string/chat_room" />
+<!--        <item-->
+<!--            android:id="@+id/menu_chat_room"-->
+<!--            android:title="@string/chat_room" />-->
         <item
             android:id="@+id/menu_gallery_list"
             android:title="@string/my_gallery" />

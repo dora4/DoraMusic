@@ -30,7 +30,6 @@ import dora.http.DoraHttp
 import dora.http.DoraHttp.api
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
-import dora.http.DoraHttp.rxApi
 import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
 import dora.pay.DoraFund
@@ -51,18 +50,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import site.doramusic.app.BuildConfig
 import site.doramusic.app.R
-import site.doramusic.app.chat.ChatService
-import site.doramusic.app.chat.ReqJoinChannel
 import site.doramusic.app.ui.OnBackListener
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
 import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
-import site.doramusic.app.conf.AppConfig.Companion.EXTRA_ERC20
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.event.RefreshHomeItemEvent
-import site.doramusic.app.http.SecureRequestBuilder
 import site.doramusic.app.http.service.FileService
 import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
@@ -346,42 +341,42 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         val versionNameView = headerView.findViewById<TextView>(R.id.tv_drawer_header_version_name)
         pointsView!!.text = getString(R.string.my_points_format, PointsManager.getTotalPoints())
         versionNameView.text = BuildConfig.APP_VERSION
-        val user = UserManager.ins?.currentUser
-        if (user != null) {
-            erc20AddrView!!.text = user.erc20
-        } else {
-            // 仅在未登录状态下显示呼吸灯
-            val breathingView = headerView.findViewById<DoraBreathingView>(R.id.breathingView)
-            breathingView.setText(getString(R.string.click_here))
-            breathingView.setTextColor(ContextCompat.getColor(this, R.color.colorTextPrimary))
-            breathingView.setTextSizeSp(12f)
-            breathingView.blink(4)
-        }
-        avatarView.setOnClickListener {
-            val user = UserManager.ins?.currentUser
-            if (user != null) {
-                val skinThemeColor = ThemeSelector.getThemeColor(this)
-                DoraDoubleButtonDialog(this, listener = object : DoraDoubleButtonDialog.DialogListener {
-                    override fun onConfirm(eventType: String) {
-                        if (eventType == EVENT_TYPE_SIGN_OUT) {
-                            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_OUT)
-                            AuthManager.signOut()
-                            closeDrawer()
-                        }
-                    }
-
-                    override fun onCancel(eventType: String) {
-                    }
-
-                }).show(EVENT_TYPE_SIGN_OUT, getString(R.string.are_you_sure_sign_out)) {
-                    themeColor(skinThemeColor)
-                }
-            } else {
-                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_IN)
-                open(ARouterPath.ACTIVITY_SIGN_IN)
-                closeDrawer()
-            }
-        }
+//        val user = UserManager.ins?.currentUser
+//        if (user != null) {
+//            erc20AddrView!!.text = user.erc20
+//        } else {
+//            // 仅在未登录状态下显示呼吸灯
+//            val breathingView = headerView.findViewById<DoraBreathingView>(R.id.breathingView)
+//            breathingView.setText(getString(R.string.click_here))
+//            breathingView.setTextColor(ContextCompat.getColor(this, R.color.colorTextPrimary))
+//            breathingView.setTextSizeSp(12f)
+//            breathingView.blink(4)
+//        }
+//        avatarView.setOnClickListener {
+//            val user = UserManager.ins?.currentUser
+//            if (user != null) {
+//                val skinThemeColor = ThemeSelector.getThemeColor(this)
+//                DoraDoubleButtonDialog(this, listener = object : DoraDoubleButtonDialog.DialogListener {
+//                    override fun onConfirm(eventType: String) {
+//                        if (eventType == EVENT_TYPE_SIGN_OUT) {
+//                            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_OUT)
+//                            AuthManager.signOut()
+//                            closeDrawer()
+//                        }
+//                    }
+//
+//                    override fun onCancel(eventType: String) {
+//                    }
+//
+//                }).show(EVENT_TYPE_SIGN_OUT, getString(R.string.are_you_sure_sign_out)) {
+//                    themeColor(skinThemeColor)
+//                }
+//            } else {
+//                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_IN)
+//                open(ARouterPath.ACTIVITY_SIGN_IN)
+//                closeDrawer()
+//            }
+//        }
         mBinding.nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
 //                // 上传歌曲
@@ -389,34 +384,34 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 // 扫描歌曲
                 R.id.menu_scan_music -> performScanMusic()
                 // 聊天室
-                R.id.menu_chat_room -> {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHAT_ROOM)
-                    net {
-                        try {
-                            val user = UserManager.ins?.currentUser
-                            if (user == null) {
-                                showLongToast("请先登录")
-                                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_IN)
-                                open(ARouterPath.ACTIVITY_SIGN_IN)
-                                closeDrawer()
-                                return@net
-                            }
-                            val req = ReqJoinChannel(roomId = PRODUCT_NAME)
-                            val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
-                                ?: return@net
-                            val ok = rxApi(ChatService::class) { joinChannel(body.toRequestBody()) }?.data
-                            if (ok == true) {
-                                open(ARoutePath.ACTIVITY_CHAT_ROOM) {
-                                    withString(EXTRA_ERC20, user.erc20)
-                                }
-                            } else {
-                                showLongToast("加入聊天室失败")
-                            }
-                        } catch (e: Exception) {
-                            showLongToast(e.toString())
-                        }
-                    }
-                }
+//                R.id.menu_chat_room -> {
+//                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHAT_ROOM)
+//                    net {
+//                        try {
+//                            val user = UserManager.ins?.currentUser
+//                            if (user == null) {
+//                                showLongToast("请先登录")
+//                                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_IN)
+//                                open(ARouterPath.ACTIVITY_SIGN_IN)
+//                                closeDrawer()
+//                                return@net
+//                            }
+//                            val req = ReqJoinChannel(roomId = PRODUCT_NAME)
+//                            val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC)
+//                                ?: return@net
+//                            val ok = rxApi(ChatService::class) { joinChannel(body.toRequestBody()) }?.data
+//                            if (ok == true) {
+//                                open(ARoutePath.ACTIVITY_CHAT_ROOM) {
+//                                    withString(EXTRA_ERC20, user.erc20)
+//                                }
+//                            } else {
+//                                showLongToast("加入聊天室失败")
+//                            }
+//                        } catch (e: Exception) {
+//                            showLongToast(e.toString())
+//                        }
+//                    }
+//                }
                 // 我的图鉴
                 R.id.menu_gallery_list -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_GALLERY)
