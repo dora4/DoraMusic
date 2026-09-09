@@ -53,6 +53,7 @@ import site.doramusic.app.R
 import site.doramusic.app.ui.OnBackListener
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
+import site.doramusic.app.conf.AppConfig.Companion.CHANNEL_CN
 import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
 import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
@@ -193,7 +194,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     private fun checkUpdate() {
         net {
             val appInfo = result(ApkService::class) {
-                checkUpdate(PRODUCT_NAME, "cn")
+                checkUpdate(PRODUCT_NAME, CHANNEL_CN)
             }?.data ?: return@net
             val curVerCode = ApkUtils.getVersionCode(this@MainActivity)
             // 这里的强制更新是在启动时一直弹更新信息，而不是必须更新了才能继续用

@@ -34,6 +34,7 @@ import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.util.ApkUtils
 import dora.util.RxBus
+import site.doramusic.app.conf.AppConfig.Companion.CHANNEL_CN
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.event.HomeBannerEvent
 import site.doramusic.app.feedback.FeedbackActivity
@@ -318,7 +319,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             R.id.rl_settings_check_update -> {
                 TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHECK_UPDATE)
                 net {
-                    val appInfo = result(ApkService::class) { checkUpdate(PRODUCT_NAME) }?.data
+                    val appInfo = result(ApkService::class) { checkUpdate(PRODUCT_NAME, CHANNEL_CN) }?.data
                     if (appInfo != null) {
                         val curVerCode = ApkUtils.getVersionCode(this)
                         if (appInfo.versionCode > curVerCode) {

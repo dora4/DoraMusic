@@ -11,6 +11,9 @@ interface AppConfig {
         // 产品和版权
         const val APP_NAME = "Dora Music"
         const val PRODUCT_NAME = "doramusic"
+
+        // 国行版
+        const val CHANNEL_CN = "cn"
         const val APP_PACKAGE_NAME = "site.doramusic.app"
         const val ALBUM_TEXT = "效率和专注神器，生产力工具"
         const val APP_SLOGAN = "版权所有，侵权必究"
