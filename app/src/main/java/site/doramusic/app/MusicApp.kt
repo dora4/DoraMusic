@@ -11,9 +11,11 @@ import dora.db.Orm
 import dora.db.OrmConfig
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
+import dora.http.log.FormatLogInterceptor
 import dora.http.retrofit.RetrofitManager
 import dora.pay.DoraFund
 import dora.pay.EVMChains
+import dora.util.ApkUtils
 import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
@@ -136,6 +138,7 @@ class MusicApp : BaseApplication(), AppConfig {
                 connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 addInterceptor(AuthInterceptor())
+                addInterceptor(FormatLogInterceptor())
                 build()
             }
             // 支持Observable请求
