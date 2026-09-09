@@ -41,21 +41,21 @@ android {
         create("beta") {
             dimension = "app"
             versionNameSuffix = "-beta"
-            buildConfigField("String", "APP_VERSION", "\"V$version\"")
+            buildConfigField("String", "APP_VERSION", "\"v$version\"")
         }
         // 内测/预发环境
         create("alpha") {
             dimension = "app"
             applicationIdSuffix = ".alpha"
             versionNameSuffix = "-alpha"
-            buildConfigField("String", "APP_VERSION", "\"V$version\"")
+            buildConfigField("String", "APP_VERSION", "\"v$version\"")
         }
         // 开发/调试环境
         create("dev") {
             dimension = "app"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "APP_VERSION", "\"V$version\"")
+            buildConfigField("String", "APP_VERSION", "\"v$version\"")
         }
     }
     signingConfigs {
