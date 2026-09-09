@@ -48,6 +48,7 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
+import site.doramusic.app.conf.AppConfig.Companion.CHANNEL_CN
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TOKEN
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URL
@@ -437,7 +438,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 // 广告印象
                 spmAdImpression("official")
                 binding.clBanner.visibility = View.VISIBLE
-                val banners = result(AdService::class) { getBannerAds(PRODUCT_NAME) }?.data
+                val banners = result(AdService::class) {
+                    getBannerAds(PRODUCT_NAME, CHANNEL_CN)
+                }?.data
                 val result = arrayListOf<String>()
                 if (banners != null) {
                     if (banners.isNotEmpty()) {
