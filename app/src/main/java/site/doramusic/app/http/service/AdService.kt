@@ -21,10 +21,11 @@ interface AdService : ApiService {
 
     /**
      * 获取该应用的横幅列表。
-     * 示例：http://dorachat.com:9696/api/ad/banner/list?productName=doramusic
+     * 示例：http://dorachat.com:9696/api/ad/banner/list?productName=doramusic&channel=
      */
     @GET("ad/banner/list")
-    fun getBannerAds(@Query("productName") productName: String): Call<ApiResult<MutableList<DoraBannerAd>>>
+    fun getBannerAds(@Query("productName") productName: String,
+                     @Query("channel") channel: String = ""): Call<ApiResult<MutableList<DoraBannerAd>>>
 
     /**
      * 检测是否显示该应用的横幅广告。
