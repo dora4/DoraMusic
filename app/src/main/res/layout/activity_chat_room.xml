@@ -60,7 +60,7 @@
                 android:layout_marginStart="15dp"
                 android:imeOptions="actionSend"
                 android:inputType="text"
-                android:hint="输入内容"/>
+                android:hint="@string/input_content"/>
         </RelativeLayout>
     </LinearLayout>
 </layout>

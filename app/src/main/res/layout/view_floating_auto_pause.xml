@@ -37,7 +37,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="-15 分钟"
+                android:text="@string/minus_15_minutes"
                 android:textSize="13sp" />
 
             <TextView
@@ -46,7 +46,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="+15 分钟"
+                android:text="@string/plus_15_minutes"
                 android:textSize="13sp" />
 
         </LinearLayout>
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="取消自动暂停"
+            android:text="@string/cancel_auto_pause"
             android:textColor="@color/colorDefault"
             android:textSize="13sp" />
     </LinearLayout>

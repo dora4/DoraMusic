@@ -110,12 +110,12 @@ class DownloadService : Service() {
             } else {
                 isExist = true
                 // 发送回去：已经在加载队列中
-                postMessage("任务已存在")
+                postMessage("Task exists")
             }
         }
         // 重置名字
         if (!isExist) {
-            postMessage("成功添加到缓存队列")
+            postMessage("Added to queue successfully")
         }
         return isExist
     }
@@ -145,14 +145,14 @@ class DownloadService : Service() {
                 // 存储DownloadTask的状态
                 task.status = DownloadTask.STATUS_FINISH
                 // 发送完成状态
-                postDownloadChange(task, DownloadTask.STATUS_FINISH, "下载完成")
+                postDownloadChange(task, DownloadTask.STATUS_FINISH, "Download Complete")
             } else if (result == LOAD_ERROR) {
                 task.status = DownloadTask.STATUS_ERROR
                 // 任务加载失败
-                postDownloadChange(task, DownloadTask.STATUS_ERROR, "资源或网络错误")
+                postDownloadChange(task, DownloadTask.STATUS_ERROR, "Resource error")
             } else if (result == LOAD_PAUSE) {
                 task.status = DownloadTask.STATUS_PAUSE
-                postDownloadChange(task, DownloadTask.STATUS_PAUSE, "暂停加载")
+                postDownloadChange(task, DownloadTask.STATUS_PAUSE, "Pause to load")
             } else if (result == LOAD_DELETE) {
             }
 

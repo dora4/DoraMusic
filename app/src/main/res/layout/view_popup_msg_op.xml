@@ -9,11 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="撤回消息"/>
+        android:text="@string/recall_message"/>
     <TextView
         android:id="@+id/tv_msg_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="删除消息"/>
+        android:text="@string/delete_message"/>
 </LinearLayout>

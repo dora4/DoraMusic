@@ -50,7 +50,7 @@
         android:paddingTop="6dp"
         android:paddingEnd="12dp"
         android:paddingBottom="6dp"
-        android:text="添加"
+        android:text="@string/add"
         android:textColor="#61B15A"
         android:textSize="14sp" />
 

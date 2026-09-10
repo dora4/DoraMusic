@@ -99,7 +99,7 @@ class GuessingRewardActivity :
             } catch (e: Exception) {
                 LogUtils.e(e)
                 ToastUtils.showShort(
-                    e.message ?: "加载失败"
+                    e.message
                 )
             }
         }
@@ -135,11 +135,11 @@ class GuessingRewardActivity :
                         adapter.notifyItemChanged(index)
                     }
                 } else {
-                    ToastUtils.showShort("领取失败")
+                    ToastUtils.showShort(getString(R.string.failed_to_claim))
                 }
             } catch (e: Exception) {
                 LogUtils.e(e)
-                ToastUtils.showShort(e.message ?: "领取失败")
+                ToastUtils.showShort(e.message)
             }
         }
     }
