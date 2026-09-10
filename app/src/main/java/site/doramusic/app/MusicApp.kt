@@ -70,7 +70,7 @@ class MusicApp : BaseApplication(), AppConfig {
             // 耗时操作延迟加载，不影响启动速度，代价是调用之前要先检测是否初始化完成
             val startTime = System.currentTimeMillis()
             LogUtils.d("initPay start time:$startTime")
-            initPay()
+//            initPay()
             val endTime = System.currentTimeMillis()
             LogUtils.d("initPay end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
             isAppInitialized = true
