@@ -15,7 +15,6 @@ import dora.http.log.FormatLogInterceptor
 import dora.http.retrofit.RetrofitManager
 import dora.pay.DoraFund
 import dora.pay.EVMChains
-import dora.util.ApkUtils
 import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
