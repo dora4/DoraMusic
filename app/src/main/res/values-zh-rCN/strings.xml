@@ -66,7 +66,7 @@
     <string name="app_desc">一款开源的Android手机音乐播放器。</string>
     <string name="disconnect_wallet">断开钱包连接</string>
     <string name="share_with_friends">分享给好友</string>
-    <string name="share_content">我发现了一款好用的手机音乐播放器：https://www.pgyer.com/doramusic</string>
+    <string name="share_content">我发现了一款好用的手机音乐播放器：http://www.dorachat.com/doramusic-cn.apk</string>
     <string name="select_sharing_method">选择分享方式</string>
     <string name="music_scan_successfully">已识别%1$d首歌曲</string>
     <string name="no_songs_scanned">未扫描到歌曲</string>
