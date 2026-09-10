@@ -19,6 +19,12 @@ import dora.util.ApkUtils
 import dora.util.LogUtils
 import dora.util.ThreadUtils
 import dora.util.ToastUtils
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import site.doramusic.app.chat.ChatService
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
@@ -47,12 +53,17 @@ import site.doramusic.app.track.TrackService
 import site.doramusic.app.upgrade.ApkService
 import site.doramusic.app.util.ThemeSelector
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * 朵拉音乐，永久免费！它是一个开源的Android手机本地音乐播放器。极致体验，启动秒播，为专注工作而生。
  * 完全掌控音乐播放内核，体验DIY一个音乐播放器的乐趣。
  */
 class MusicApp : BaseApplication(), AppConfig {
+
+    private val initScope = CoroutineScope(
+        SupervisorJob() + Dispatchers.IO + CoroutineName("AppInit")
+    )
 
     companion object {
 
@@ -67,10 +78,13 @@ class MusicApp : BaseApplication(), AppConfig {
         init()
         // 懒加载
         ThreadUtils.lazyLoad {
-            // 耗时操作延迟加载，不影响启动速度，代价是调用之前要先检测是否初始化完成
             val startTime = System.currentTimeMillis()
             LogUtils.d("initPay start time:$startTime")
-            initPay()
+            initScope.launch {
+                runCatching {
+                    withTimeout(3_000.milliseconds) { initPay() } // 3秒超时
+                }
+            }
             val endTime = System.currentTimeMillis()
             LogUtils.d("initPay end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
             isAppInitialized = true
