@@ -81,7 +81,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                 val target = list[i]
                 if (target.msgId == recalledMsgId) {
                     target.recall = 1
-                    target.msgContent = "[该消息已被撤回]"
+                    target.msgContent = getString(R.string.msg_recalled)
                     adapter.setData(i, target)
                     break
                 }
@@ -296,7 +296,7 @@ class ChatRoomActivity : BaseSkinActivity<ActivityChatRoomBinding>() {
                     // 清空输入框的内容
                     binding.etInput.setText("")
                 } else {
-                    showLongToast("消息未发送")
+                    showLongToast(getString(R.string.msg_not_sent))
                 }
             }
         }

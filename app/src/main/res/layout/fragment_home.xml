@@ -292,7 +292,7 @@
                             android:id="@+id/tv_guessing_topic"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="竞猜活动开启中，点此参与"
+                            android:text="@string/default_guessing_topic"
                             android:textSize="20sp"
                             android:textColor="#FEA44A"/>
                     </LinearLayout>

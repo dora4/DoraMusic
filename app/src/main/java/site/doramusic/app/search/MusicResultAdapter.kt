@@ -1,6 +1,7 @@
 package site.doramusic.app.search
 
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import site.doramusic.app.R
@@ -39,7 +40,7 @@ class MusicResultAdapter(
          */
         holder.setText(
             R.id.tv_song_title,
-            item.musicName ?: "未知歌曲"
+            item.musicName ?: ContextCompat.getString(context, R.string.unknown)
         )
 
         /**
@@ -47,7 +48,7 @@ class MusicResultAdapter(
          */
         holder.setText(
             R.id.tv_song_subtitle,
-            item.artist ?: "未知歌手"
+            item.artist ?: ContextCompat.getString(context, R.string.unknown)
         )
 
         /**
@@ -67,9 +68,9 @@ class MusicResultAdapter(
         holder.setText(
             R.id.tv_song_check,
             if (selected) {
-                "已选择"
+                context.getString(R.string.selected)
             } else {
-                "添加"
+                context.getString(R.string.added)
             }
         )
 

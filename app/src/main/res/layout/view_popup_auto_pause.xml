@@ -13,7 +13,7 @@
         android:layout_height="44dp"
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
-        android:text="30 分钟"
+        android:text="@string/_30_minutes"
         android:textColor="@color/colorTextPrimary"
         android:textSize="14sp" />
 
@@ -23,7 +23,7 @@
         android:layout_height="44dp"
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
-        android:text="45 分钟"
+        android:text="@string/_45_minutes"
         android:textColor="@color/colorTextPrimary"
         android:textSize="14sp" />
 
@@ -33,7 +33,7 @@
         android:layout_height="44dp"
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
-        android:text="60 分钟"
+        android:text="@string/_60_minutes"
         android:textColor="@color/colorTextPrimary"
         android:textSize="14sp" />
 

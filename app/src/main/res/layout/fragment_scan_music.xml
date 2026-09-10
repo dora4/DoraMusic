@@ -28,7 +28,7 @@
                 android:layout_height="44dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_search_input"
-                android:hint="搜索歌曲/歌手"
+                android:hint="@string/search_music_hint"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
                 android:singleLine="true"
@@ -41,7 +41,7 @@
                 android:layout_marginStart="8dp"
                 android:background="@drawable/shape_normal_btn"
                 android:gravity="center"
-                android:text="扫描"
+                android:text="@string/scan"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="准备扫描本地歌曲"
+            android:text="@string/prepare_to_scan_local_music"
             android:textColor="@color/colorTextSecondary"
             android:textSize="13sp" />
 
@@ -92,7 +92,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="已选择 0 / 1000"
+                android:text="@string/selected_0_1000"
                 android:textColor="@color/colorTextSecondary"
                 android:textSize="14sp" />
 
@@ -103,7 +103,7 @@
                 android:layout_marginStart="6dp"
                 android:background="@drawable/shape_normal_btn"
                 android:gravity="center"
-                android:text="全部添加"
+                android:text="@string/add_all"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
 
@@ -114,7 +114,7 @@
                 android:layout_marginStart="6dp"
                 android:background="@drawable/shape_normal_btn"
                 android:gravity="center"
-                android:text="添加到我的音乐"
+                android:text="@string/add_to_local_music"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
 

@@ -134,7 +134,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                     if (grantedResult) {
                         startScan()
                     } else {
-                        tvStatus.text = "没有音乐读取权限"
+                        tvStatus.text = getString(R.string.no_read_music_permission)
                     }
                 }
             return

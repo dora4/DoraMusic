@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="竞猜规则"
+            android:text="@string/guessing_rule"
             android:textColor="@color/colorTextPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
