@@ -11,6 +11,9 @@ class DoraBannerAd : OrmTable {
 
     @Id
     val id: Long = OrmTable.ID_UNASSIGNED
+
+    @Column("channel")
+    val channel: String = ""
     @Column("img_url")
     val imgUrl: String? = null
     @Column("detail_url")
