@@ -183,6 +183,10 @@
     <string name="guessing_rule">竞猜规则</string>
     <string name="recall_message">撤回消息</string>
     <string name="delete_message">删除消息</string>
+    <string name="copy">复制</string>
+    <string name="copied">已复制</string>
+    <string name="duration_colon">时长：%1$s</string>
+    <string name="path_colon">路径：%1$s</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d积分</item>
     </plurals>

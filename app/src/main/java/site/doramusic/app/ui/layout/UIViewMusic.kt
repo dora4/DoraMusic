@@ -2,12 +2,16 @@ package site.doramusic.app.ui.layout
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.media.AudioManager
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +25,8 @@ import dora.db.dao.DaoFactory
 import dora.db.exception.OrmTaskException
 import dora.db.table.OrmTable
 import dora.firebase.SpmUtils
+import dora.util.ToastUtils
+import dora.widget.DoraBottomDialog
 import dora.widget.DoraLetterView
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
@@ -46,6 +52,7 @@ import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.MusicItemAdapter
+import site.doramusic.app.util.MusicUtils
 import site.doramusic.app.util.ThemeSelector
 
 class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
@@ -84,9 +91,39 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     MediaManager.playById(music.songId)
                 }
             }
+            setOnItemLongClickListener { adapter, view, position ->
+                if (position >= MUSIC_LIST_MAX_LIST) {
+                    true
+                }
+                DoraBottomDialog().show(manager.view.context as Activity, R.layout.dialog_music_info) {
+                    val music = adapter.getItem(position) as Music
+                    val tvMusicNameArtist = it.findViewById<TextView>(R.id.tv_music_name_artist)
+                    val tvMusicDuration = it.findViewById<TextView>(R.id.tv_music_duration)
+                    val tvMusicFilePath = it.findViewById<TextView>(R.id.tv_music_file_path)
+                    val tvCopy = it.findViewById<TextView>(R.id.tv_copy)
+                    val musicNameArtist = "${music.musicName} - ${music.artist}"
+                    tvMusicNameArtist.text = musicNameArtist
+                    tvMusicDuration.text = context.getString(
+                        R.string.duration_colon,
+                        MusicUtils.formatTime(music.duration.toLong())
+                    )
+                    tvMusicFilePath.text = context.getString(R.string.path_colon, music.folder)
+                    tvCopy.setOnClickListener {
+                        copyText(musicNameArtist, it.context)
+                    }
+                }
+                false
+            }
         }
         rvMusic.adapter = adapter
         if (!sort) lvMusic.visibility = View.GONE
+    }
+
+    private fun copyText(text: String, context: Context) {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("music_info", text)
+        clipboard.setPrimaryClip(clip)
+        ToastUtils.showShort(context.getString(R.string.copied))
     }
 
     private fun createMusicTaskListener(activity: Activity, updateUI: (MutableList<Music>) -> Unit): OrmTaskListener<Music> {

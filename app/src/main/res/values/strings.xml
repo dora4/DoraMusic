@@ -190,6 +190,10 @@ The [Dora Music] Team</string>
     <string name="guessing_rule">Guessing Rule</string>
     <string name="recall_message">Recall message</string>
     <string name="delete_message">Delete message</string>
+    <string name="copy">Copy</string>
+    <string name="copied">Copied</string>
+    <string name="duration_colon">Duration: %1$s</string>
+    <string name="path_colon">Path: %1$s</string>
     <plurals name="my_bet_format">
         <item quantity="one">My choice: %1$s %2$d point</item>
         <item quantity="other">My choice: %1$s %2$d points</item>
