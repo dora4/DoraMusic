@@ -1,6 +1,5 @@
 package site.doramusic.app.ui.layout
 
-//import site.doramusic.app.annotation.SingleClick
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
