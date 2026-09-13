@@ -17,7 +17,6 @@ import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
-//import site.doramusic.app.annotation.TimeTrace
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.databinding.ActivityColorPickerBinding
 import site.doramusic.app.event.ChangeSkinEvent
