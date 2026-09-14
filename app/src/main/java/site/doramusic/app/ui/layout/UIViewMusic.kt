@@ -24,11 +24,15 @@ import dora.db.dao.DaoFactory
 import dora.db.exception.OrmTaskException
 import dora.db.table.OrmTable
 import dora.firebase.SpmUtils
+import dora.util.RxBus
 import dora.util.ToastUtils
 import dora.widget.DoraBottomDialog
 import dora.widget.DoraLetterView
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraTitleBar
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -45,6 +49,7 @@ import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
+import site.doramusic.app.event.PlayMusicEvent
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
@@ -67,6 +72,29 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private lateinit var tvMusicDialog: TextView
     private val musicDao = DaoFactory.getDao(Music::class.java)
     private val loadingDialog: DoraLoadingDialog by lazy { DoraLoadingDialog(manager.view.context) }
+
+    private var disposable: CompositeDisposable? = null
+
+    private fun addDisposable(d: Disposable) {
+        if (disposable == null) {
+            disposable = CompositeDisposable()
+        }
+        disposable!!.add(d)
+    }
+
+    private fun dispose() {
+        disposable?.dispose()
+    }
+
+    init {
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(PlayMusicEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    adapter.notifyDataSetChanged()
+                })
+    }
 
     private fun updateMusicListUI(musics: MutableList<Music>, sort: Boolean = true) {
         adapter = MusicItemAdapter().apply {
