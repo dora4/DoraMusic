@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -155,7 +156,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
          * 跳系统设置。
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            tvStatus.text = "请开启存储权限"
+            tvStatus.text = getString(R.string.storage_permission_prompt)
             startActivity(
                 IntentUtils.getRequestStoragePermissionIntent(
                     requireActivity().packageName
@@ -177,7 +178,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 if (grantedResult) {
                     startScan()
                 } else {
-                    tvStatus.text = "没有存储读取权限"
+                    tvStatus.text = getString(R.string.storage_permission_prompt)
                 }
             }
     }
@@ -214,7 +215,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 requireContext()
             )
         )
-        radarView.setCenterText("扫描")
+        radarView.setCenterText(ContextCompat.getString(requireContext(), R.string.scan))
         updateSelectedUI()
     }
 
@@ -289,8 +290,8 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
         val startTime = System.currentTimeMillis()
         radarView.visibility = View.VISIBLE
         radarView.start()
-        radarView.setCenterText("扫描中")
-        tvStatus.text = "正在扫描本地歌曲..."
+        radarView.setCenterText(getString(R.string.scaning))
+        tvStatus.text = getString(R.string.now_scaning_local_music)
         mBinding.btnScan.isEnabled = false
         lifecycleScope.launch {
             try {
@@ -364,10 +365,10 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 /**
                  * 更新状态。
                  */
-                tvStatus.text = "共找到 ${allSongs.size} 首歌曲"
+                val count = allSongs.size
+                tvStatus.text = resources.getQuantityString(R.plurals.found_music_template, count, count)
                 updateSelectedUI()
             } catch (e: Exception) {
-                e.printStackTrace()
                 /**
                  * 即使扫描异常，也保证动画至少显示1秒。
                  */
@@ -379,9 +380,9 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 radarView.stop()
                 radarView.visibility = View.GONE
                 mBinding.btnScan.isEnabled = true
-                tvStatus.text = "扫描失败"
+                tvStatus.text = getString(R.string.failed_to_scan)
                 showShortToast(
-                    "扫描歌曲失败：${e.message ?: "未知错误"}"
+                    getString(R.string.scan_music_error_template, e.message ?: getString(R.string.unknown_error))
                 )
             }
         }
@@ -410,9 +411,10 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
         adapter.notifyDataSetChanged()
         tvStatus.text =
             if (text.isEmpty()) {
-                "共找到 ${allSongs.size} 首歌曲"
+                val count = allSongs.size
+                resources.getQuantityString(R.plurals.found_music_template, count, count)
             } else {
-                "显示 ${displaySongs.size} / ${allSongs.size} 首歌曲"
+                getString(R.string.show_music_template, displaySongs.size, allSongs.size)
             }
         updateSelectAllUI()
     }
@@ -453,9 +455,9 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
              * 未选择 -> 添加。
              */
             if (selectedSongs.size >= MAX_SELECT_COUNT) {
-                showShortToast(
-                    "最多选择 $MAX_SELECT_COUNT 首歌曲"
-                )
+                val count = MAX_SELECT_COUNT
+                val tipText = resources.getQuantityString(R.plurals.select_music_limit_template, count, count)
+                showShortToast(tipText)
                 return
             }
             selectedSongs[key] = song
@@ -469,12 +471,12 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      */
     private fun updateSelectedUI() {
         val count = selectedSongs.size
-        tvSelected.text = "已选择 $count / $MAX_SELECT_COUNT"
+        tvSelected.text = getString(R.string.selected_template, count, MAX_SELECT_COUNT)
         tvAdd.text =
             if (count == 0) {
-                "添加到我的音乐"
+                getString(R.string.added_to_my_music)
             } else {
-                "添加 $count 首"
+                resources.getQuantityString(R.plurals.add_template, count, count)
             }
         tvAdd.alpha =
             if (count == 0) {
@@ -497,7 +499,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      */
     private fun updateSelectAllUI() {
         if (displaySongs.isEmpty()) {
-            tvSelectAll.text = "全部选择"
+            tvSelectAll.text = getString(R.string.select_all)
             return
         }
         val validSongs =
@@ -505,7 +507,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 !it.data.isNullOrBlank()
             }
         if (validSongs.isEmpty()) {
-            tvSelectAll.text = "全部选择"
+            tvSelectAll.text = getString(R.string.select_all)
             return
         }
         val allSelected = validSongs.all { song ->
@@ -515,9 +517,9 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             }
         tvSelectAll.text =
             if (allSelected) {
-                "取消全选"
+                getString(R.string.cancel_select_all)
             } else {
-                "全部选择"
+                getString(R.string.select_all)
             }
     }
 
@@ -561,27 +563,24 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                         RefreshHomeItemEvent()
                     )
                 if (addedCount == songs.size) {
-                    showShortToast(
-                        "已添加 $addedCount 首歌曲"
-                    )
-
+                    resources.getQuantityString(R.plurals.added_music_template, addedCount, addedCount)
                 } else if (addedCount > 0) {
-                    showShortToast(
-                        "已添加 $addedCount 首歌曲，" +
-                                "其中 ${songs.size - addedCount} 首已存在"
+                    val text = resources.getQuantityString(
+                        R.plurals.added_music_merge_template,
+                        addedCount,        // 用于判断单复数（plurals quantity）
+                        addedCount,        // 填充 %1$d
+                        songs.size - addedCount // 填充 %2$d
                     )
-
+                    showShortToast(text)
                 } else {
                     showShortToast(
-                        "所选歌曲已经添加"
+                        getString(R.string.selected_music_already_added)
                     )
                 }
                 requireActivity().finish()
             } catch (e: Exception) {
-                e.printStackTrace()
                 showShortToast(
-                    "添加歌曲失败：" +
-                            "${e.message ?: "未知错误"}"
+                    getString(R.string.scan_music_error_template, e.message ?: getString(R.string.unknown_error))
                 )
             } finally {
                 /**

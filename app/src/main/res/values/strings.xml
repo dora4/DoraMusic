@@ -169,8 +169,8 @@ The [Dora Music] Team</string>
     <string name="background_reset">Background has been reset</string>
     <string name="msg_recalled">[Recalled]</string>
     <string name="msg_not_sent">Message not sent</string>
-    <string name="selected">Selected</string>
-    <string name="added">Added</string>
+    <string name="result_adapter_selected">Selected</string>
+    <string name="result_adapter_add">Add</string>
     <string name="no_read_music_permission">No music read permission</string>
     <string name="failed_to_claim">Failed to claim</string>
     <string name="input_content">Input content</string>
@@ -194,8 +194,39 @@ The [Dora Music] Team</string>
     <string name="copied">Copied</string>
     <string name="duration_colon">Duration: %1$s</string>
     <string name="path_colon">Path: %1$s</string>
+    <string name="selected_template">Selected %1$d / %2$d</string>
+    <string name="added_to_my_music">Add to My Music</string>
+    <string name="select_all">Select All</string>
+    <string name="cancel_select_all">Deselect All</string>
+    <string name="failed_to_scan">Scan failed</string>
+    <string name="now_scaning_local_music">Scanning local music…</string>
+    <string name="scan_music_error_template">Failed to scan music: %1$s</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="show_music_template">Showing %1$d / %2$d musics</string>
+    <string name="selected_music_already_added">Selected musics already added</string>
     <plurals name="my_bet_format">
         <item quantity="one">My choice: %1$s %2$d point</item>
         <item quantity="other">My choice: %1$s %2$d points</item>
     </plurals>
+    <plurals name="found_music_template">
+        <item quantity="one">Found %1$d music in total</item>
+        <item quantity="other">Found %1$d musics in total</item>
+    </plurals>
+    <plurals name="add_template">
+        <item quantity="one">Add %1$d music</item>
+        <item quantity="other">Add %1$d musics</item>
+    </plurals>
+    <plurals name="added_music_template">
+        <item quantity="one">%1$d music added</item>
+        <item quantity="other">%1$d musics added</item>
+    </plurals>
+    <plurals name="added_music_merge_template">
+        <item quantity="one">%1$d music added, %2$d already exist</item>
+        <item quantity="other">%1$d musics added, %2$d already exist</item>
+    </plurals>
+    <plurals name="select_music_limit_template">
+        <item quantity="one">Maximum %1$d music can be selected</item>
+        <item quantity="other">Maximum %1$d musics can be selected</item>
+    </plurals>
+
 </resources>
