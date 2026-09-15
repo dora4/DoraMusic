@@ -162,8 +162,8 @@
     <string name="background_reset">背景已重置</string>
     <string name="msg_recalled">[该消息已被撤回]</string>
     <string name="msg_not_sent">消息未发送</string>
-    <string name="selected">已选择</string>
-    <string name="added">添加</string>
+    <string name="result_adapter_selected">已选择</string>
+    <string name="result_adapter_add">添加</string>
     <string name="no_read_music_permission">没有音乐读取权限</string>
     <string name="failed_to_claim">领取失败</string>
     <string name="input_content">输入内容</string>
@@ -187,7 +187,37 @@
     <string name="copied">已复制</string>
     <string name="duration_colon">时长：%1$s</string>
     <string name="path_colon">路径：%1$s</string>
+    <string name="selected_template">已选择 %1$d / %2$d</string>
+    <string name="added_to_my_music">添加到我的音乐</string>
+    <string name="select_all">全部选择</string>
+    <string name="cancel_select_all">取消全选</string>
+    <string name="failed_to_scan">扫描失败</string>
+    <string name="now_scaning_local_music">正在扫描本地歌曲…</string>
+    <string name="scan_music_error_template">扫描歌曲失败：%1$s</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="show_music_template">显示 %1$d / %2$d 首歌曲</string>
+    <string name="selected_music_already_added">所选歌曲已经添加</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d积分</item>
+    </plurals>
+    <plurals name="found_music_template">
+        <item quantity="one">共找到 %1$d 首歌曲</item>
+        <item quantity="other">共找到 %1$d 首歌曲</item>
+    </plurals>
+    <plurals name="add_template">
+        <item quantity="one">添加 %1$d 首</item>
+        <item quantity="other">添加 %1$d 首</item>
+    </plurals>
+    <plurals name="added_music_template">
+        <item quantity="one">已添加 %1$d 首歌曲</item>
+        <item quantity="other">已添加 %1$d 首歌曲</item>
+    </plurals>
+    <plurals name="added_music_merge_template">
+        <item quantity="one">已添加 %1$d 首歌曲，其中 %2$d 首已存在</item>
+        <item quantity="other">已添加 %1$d 首歌曲，其中 %2$d 首已存在</item>
+    </plurals>
+    <plurals name="select_music_limit_template">
+        <item quantity="one">最多选择 %1$d 首歌曲</item>
+        <item quantity="other">最多选择 %1$d 首歌曲</item>
     </plurals>
 </resources>

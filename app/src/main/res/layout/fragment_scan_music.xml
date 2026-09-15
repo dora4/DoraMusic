@@ -75,7 +75,7 @@
             android:layout_weight="1"
             android:layout_marginTop="10dp"
             android:clipToPadding="false"
-            android:paddingBottom="80dp" />
+            android:paddingBottom="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,9 +98,10 @@
 
             <TextView
                 android:id="@+id/tvSelectAll"
-                android:layout_width="72dp"
+                android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:layout_marginStart="6dp"
+                android:paddingHorizontal="10dp"
                 android:background="@drawable/shape_normal_btn"
                 android:gravity="center"
                 android:text="@string/add_all"
@@ -109,9 +110,10 @@
 
             <TextView
                 android:id="@+id/tvAdd"
-                android:layout_width="96dp"
+                android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:layout_marginStart="6dp"
+                android:paddingHorizontal="10dp"
                 android:background="@drawable/shape_normal_btn"
                 android:gravity="center"
                 android:text="@string/add_to_local_music"

@@ -68,12 +68,19 @@ class MusicResultAdapter(
         holder.setText(
             R.id.tv_song_check,
             if (selected) {
-                context.getString(R.string.selected)
+                context.getString(R.string.result_adapter_selected)
             } else {
-                context.getString(R.string.added)
+                context.getString(R.string.result_adapter_add)
             }
         )
-
+        holder.setTextColor(
+            R.id.tv_song_check,
+            if (selected) {
+                context.getColor(dora.widget.colors.R.color.gray)
+            } else {
+                context.getColor(R.color.colorDefault)
+            }
+        )
         /**
          * 点击整行。
          */
