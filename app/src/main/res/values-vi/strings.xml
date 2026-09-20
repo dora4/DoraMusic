@@ -193,6 +193,7 @@
     <string name="unknown_error">Lỗi không xác định</string>
     <string name="show_music_template">Hiển thị %1$d / %2$d bài hát</string>
     <string name="selected_music_already_added">Bài hát đã chọn đã được thêm</string>
+    <string name="no_available_music_to_add">Không có bài hát nào để thêm</string>
     <plurals name="my_bet_format">
         <item quantity="one">Lựa chọn của tôi: %1$s %2$d điểm</item>
         <item quantity="other">Lựa chọn của tôi: %1$s %2$d điểm</item>

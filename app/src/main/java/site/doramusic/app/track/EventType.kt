@@ -208,5 +208,10 @@ interface EventType {
          * 代理播放。
          */
         const val EVENT_TYPE_PROXY_PLAYBACK = "proxy_playback"
+
+        /**
+         * 定时睡眠。
+         */
+        const val EVENT_TYPE_SLEEP_TIMER = "sleep_timer"
     }
 }

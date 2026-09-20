@@ -193,6 +193,7 @@
     <string name="unknown_error">未知錯誤</string>
     <string name="show_music_template">顯示 %1$d / %2$d 首歌曲</string>
     <string name="selected_music_already_added">所選歌曲已經新增</string>
+    <string name="no_available_music_to_add">沒有可新增的歌曲</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d積分</item>
     </plurals>

@@ -193,6 +193,7 @@
     <string name="unknown_error">Неизвестная ошибка</string>
     <string name="show_music_template">Показано %1$d / %2$d песен</string>
     <string name="selected_music_already_added">Выбранные песни уже добавлены</string>
+    <string name="no_available_music_to_add">Нет песен для добавления</string>
     <plurals name="my_bet_format">
         <item quantity="one">Моя ставка: %1$s %2$d очко</item>
         <item quantity="few">Моя ставка: %1$s %2$d очка</item>

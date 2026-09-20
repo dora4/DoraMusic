@@ -44,6 +44,9 @@ import dora.widget.DoraSingleButtonDialog
 import dora.widget.DoraTitleBar
 import dora.widget.banner.BannerAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
@@ -343,6 +346,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     private fun startAutoPause(minutes: Int) {
+        TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SLEEP_TIMER)
         if (IntentUtils.hasOverlayPermission(requireContext())) {
             val intent = Intent(
                 context,

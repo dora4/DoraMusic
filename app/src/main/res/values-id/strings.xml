@@ -193,6 +193,7 @@
     <string name="unknown_error">Kesalahan tidak diketahui</string>
     <string name="show_music_template">Menampilkan %1$d / %2$d lagu</string>
     <string name="selected_music_already_added">Lagu yang dipilih sudah ditambahkan</string>
+    <string name="no_available_music_to_add">Tidak ada lagu yang bisa ditambahkan</string>
     <plurals name="my_bet_format">
         <item quantity="one">Taruhan saya: %1$s %2$d poin</item>
         <item quantity="other">Taruhan saya: %1$s %2$d poin</item>
