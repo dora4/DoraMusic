@@ -1,7 +1,10 @@
 package site.doramusic.app.search
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -34,7 +37,6 @@ import java.util.Locale
 class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
 
     companion object {
-
         /**
          * 最大选择数量。
          */
@@ -42,19 +44,12 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     }
 
     private lateinit var radarView: DoraRadarView
-
     private lateinit var etSearch: EditText
-
     private lateinit var tvStatus: TextView
-
     private lateinit var tvSelected: TextView
-
     private lateinit var tvAdd: TextView
-
     private lateinit var tvSelectAll: TextView
-
     private lateinit var recyclerView: RecyclerView
-
     private lateinit var adapter: MusicResultAdapter
 
     /**
@@ -71,11 +66,9 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * 当前选中的歌曲。
      *
      * 注意：
-     *
-     * 扫描出来的 Music 尚未插入数据库，
-     * 因此不能使用 Music.id 作为唯一 Key。
-     *
-     * 使用 data，也就是歌曲文件绝对路径作为 Key。
+     *      * 扫描出来的 Music 尚未插入数据库，
+     *      * 因此不能使用 Music.id 作为唯一 Key。
+     *      * 使用 data，也就是歌曲文件绝对路径作为 Key。
      */
     private val selectedSongs = LinkedHashMap<String, Music>()
 
@@ -91,8 +84,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
         savedInstanceState: Bundle?,
         binding: FragmentScanMusicBinding
     ) {
-        helper = PermissionHelper
-            .with(this)
+        helper = PermissionHelper.with(this)
             .prepare(
                 PermissionHelper.Permission.READ_MEDIA_AUDIO,
                 PermissionHelper.Permission.READ_EXTERNAL_STORAGE,
@@ -103,84 +95,104 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
         requestMusicPermission()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!isAdded) return
+        // Android11+ 从系统设置页返回，自动校验权限并扫描
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+            && PermissionHelper.hasStoragePermission(requireActivity())
+        ) {
+            startScan()
+        }
+    }
+
     /**
      * 请求本地音乐读取权限。
      *
      * Android 13+：
      *     READ_MEDIA_AUDIO
      *
-     * Android 12 及以下：
+     * Android 11 ~ Android12：
+     *     MANAGE_EXTERNAL_STORAGE（全部文件访问，只能跳系统设置）
+     *
+     * Android 10 及以下：
      *     READ_EXTERNAL_STORAGE
      */
     private fun requestMusicPermission() {
         if (!isAdded) {
             return
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            /**
-             * Android 13+。
-             */
-            val granted = helper.hasPermission(
-                requireActivity(),
-                PermissionHelper.Permission.READ_MEDIA_AUDIO
-            )
-            if (granted) {
-                startScan()
-                return
-            }
-            helper.permissions(
-                    PermissionHelper.Permission.READ_MEDIA_AUDIO
-                )
-                .request { grantedResult ->
-                    if (grantedResult) {
-                        startScan()
-                    } else {
-                        tvStatus.text = getString(R.string.no_read_music_permission)
-                    }
-                }
-            return
-        }
-
-        /**
-         * Android 12 及以下。
-         */
-        if (PermissionHelper.hasStoragePermission(requireActivity())) {
-            startScan()
-            return
-        }
-
-        /**
-         * Android 11 / 12。
-         *
-         * 如果 PermissionHelper 的普通权限请求无法处理，
-         * 跳系统设置。
-         */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            tvStatus.text = getString(R.string.storage_permission_prompt)
-            startActivity(
-                IntentUtils.getRequestStoragePermissionIntent(
-                    requireActivity().packageName
-                )
-            )
-            return
-        }
-
-        /**
-         * Android 10 及以下。
-         */
-        helper
-            .permissions(
-                PermissionHelper.Permission.READ_EXTERNAL_STORAGE,
-                PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE
-            )
-            .request { grantedResult ->
-
-                if (grantedResult) {
+        when {
+//            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+//                val audioPerm = PermissionHelper.Permission.READ_MEDIA_AUDIO
+//                if (helper.hasPermission(requireActivity(), audioPerm)) {
+//                    startScan()
+//                    return
+//                }
+//                helper.permissions(audioPerm)
+//                    .request { grantedResult ->
+//                        if (!isAdded) return@request
+//                        if (grantedResult) {
+//                            startScan()
+//                        } else {
+//                            // 判断是否永久拒绝（不再询问）
+//                            if (!shouldShowRequestPermissionRationale(android.Manifest.permission.READ_MEDIA_AUDIO)) {
+//                                tvStatus.text = getString(R.string.no_read_music_permission)
+//                                // 永久拒绝，跳转应用设置
+//                                gotoAppSetting()
+//                            } else {
+//                                tvStatus.text = getString(R.string.no_read_music_permission)
+//                            }
+//                        }
+//                    }
+//            }
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
+                // Android11 ~ Android12
+                if (PermissionHelper.hasStoragePermission(requireActivity())) {
                     startScan()
-                } else {
-                    tvStatus.text = getString(R.string.storage_permission_prompt)
+                    return
                 }
+                tvStatus.text = getString(R.string.storage_permission_prompt)
+                startActivity(
+                    IntentUtils.getRequestStoragePermissionIntent(
+                        requireActivity().packageName
+                    )
+                )
             }
+            else -> {
+                // Android10及以下
+                val readStorage = PermissionHelper.Permission.READ_EXTERNAL_STORAGE
+                val writeStorage = PermissionHelper.Permission.WRITE_EXTERNAL_STORAGE
+                if (helper.hasPermission(requireActivity(), readStorage)) {
+                    startScan()
+                    return
+                }
+                helper.permissions(readStorage, writeStorage)
+                    .request { grantedResult ->
+                        if (!isAdded) return@request
+                        if (grantedResult) {
+                            startScan()
+                        } else {
+                            if (!shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                                tvStatus.text = getString(R.string.storage_permission_prompt)
+                                gotoAppSetting()
+                            } else {
+                                tvStatus.text = getString(R.string.storage_permission_prompt)
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
+    /**
+     * 跳转应用详情设置页，用于权限永久拒绝场景。
+     */
+    private fun gotoAppSetting() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", requireActivity().packageName, null)
+        }
+        startActivity(intent)
     }
 
     /**
@@ -201,7 +213,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             selectedIds = selectedSongs.keys,
             listener = object :
                 MusicResultAdapter.Listener {
-
                 override fun onChecked(song: Music) {
                     toggleSong(song)
                 }
@@ -249,7 +260,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
          */
         etSearch.addTextChangedListener(
             object : TextWatcher {
-
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
@@ -319,6 +329,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 if (remainTime > 0) {
                     kotlinx.coroutines.delay(remainTime)
                 }
+                if (!isAdded) return@launch
                 /**
                  * 保存扫描结果。
                  */
@@ -338,10 +349,10 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                  * 清除已经不存在的选择。
                  */
                 val validPaths = allSongs
-                        .mapNotNull {
-                            it.data
-                        }
-                        .toHashSet()
+                    .mapNotNull {
+                        it.data
+                    }
+                    .toHashSet()
                 selectedSongs.keys
                     .toList()
                     .forEach { key ->
@@ -377,6 +388,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 if (remainTime > 0) {
                     kotlinx.coroutines.delay(remainTime)
                 }
+                if (!isAdded) return@launch
                 radarView.stop()
                 radarView.visibility = View.GONE
                 mBinding.btnScan.isEnabled = true
@@ -427,8 +439,8 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             append(song.musicName ?: "")
             append(" ")
             append(song.artist ?: "")
-//            append(" ")
-//            append(albumNameMap[song.albumId] ?: "")
+            //            append(" ")
+            //            append(albumNameMap[song.albumId] ?: "")
         }
     }
 
@@ -493,7 +505,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      *
      * 当前搜索结果全部选中：
      *     取消全选
-     *
      * 否则：
      *     全部选择
      */
@@ -511,10 +522,10 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             return
         }
         val allSelected = validSongs.all { song ->
-                selectedSongs.containsKey(
-                    song.data
-                )
-            }
+            selectedSongs.containsKey(
+                song.data
+            )
+        }
         tvSelectAll.text =
             if (allSelected) {
                 getString(R.string.cancel_select_all)
@@ -549,6 +560,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                             songs
                         )
                     }
+                if (!isAdded) return@launch
                 /**
                  * 保存成功后清空选择。
                  */
@@ -563,7 +575,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                         RefreshHomeItemEvent()
                     )
                 if (addedCount == songs.size) {
-                    resources.getQuantityString(R.plurals.added_music_template, addedCount, addedCount)
+                    showShortToast(resources.getQuantityString(R.plurals.added_music_template, addedCount, addedCount))
                 } else if (addedCount > 0) {
                     val text = resources.getQuantityString(
                         R.plurals.added_music_merge_template,
@@ -579,6 +591,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 }
                 requireActivity().finish()
             } catch (e: Exception) {
+                if (!isAdded) return@launch
                 showShortToast(
                     getString(R.string.scan_music_error_template, e.message ?: getString(R.string.unknown_error))
                 )
@@ -599,7 +612,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * 全选 / 取消全选当前显示的歌曲。
      *
      * 规则：
-     *
      * 1. 只操作 displaySongs。
      * 2. selectedSongs 保存全局选择状态。
      * 3. 当前列表全部已选 -> 取消当前列表。
@@ -609,16 +621,16 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     private fun selectAllSongs() {
         if (displaySongs.isEmpty()) {
             showShortToast(
-                "没有可添加的歌曲"
+                getString(R.string.no_available_music_to_add)
             )
             return
         }
         val validSongs = displaySongs.filter {
-                !it.data.isNullOrBlank()
-            }
+            !it.data.isNullOrBlank()
+        }
         if (validSongs.isEmpty()) {
             showShortToast(
-                "没有可添加的歌曲"
+                getString(R.string.no_available_music_to_add)
             )
             return
         }
@@ -666,9 +678,9 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 selectedSongs[key] = song
             }
             if (reachedLimit) {
-                showShortToast(
-                    "最多选择 $MAX_SELECT_COUNT 首歌曲"
-                )
+                val tipText = resources.getQuantityString(R.plurals.select_music_limit_template,
+                    MAX_SELECT_COUNT, MAX_SELECT_COUNT)
+                showShortToast(tipText)
             }
         }
         updateSelectedUI()
