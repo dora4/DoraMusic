@@ -17,9 +17,11 @@
         <dora.widget.DoraTitleBar
             android:id="@+id/titlebar_guessing"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/title_bar_height"
             app:dview_backIconTint="@color/white"
+            app:dview_backIconSize="@dimen/title_bar_icon_size"
             app:dview_title="@string/guessing"
+            app:dview_titleTextSize="@dimen/title_bar_text_size"
             android:background="@color/skin_theme_color"/>
         <RelativeLayout
             android:layout_width="match_parent"

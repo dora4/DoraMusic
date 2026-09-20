@@ -22,10 +22,12 @@
         <dora.widget.DoraTitleBar
             android:id="@+id/titleBar"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/title_bar_height"
             android:background="@color/skin_theme_color"
             app:dview_backIconTint="@color/white"
-            app:dview_title="@string/app_name" />
+            app:dview_backIconSize="@dimen/title_bar_icon_size"
+            app:dview_title="@string/app_name"
+            app:dview_titleTextSize="@dimen/title_bar_text_size"/>
 
         <com.google.android.exoplayer2.ui.StyledPlayerView
             android:id="@+id/videoView"

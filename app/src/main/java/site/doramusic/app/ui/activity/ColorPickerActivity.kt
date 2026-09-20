@@ -55,7 +55,8 @@ class ColorPickerActivity : BaseSkinActivity<ActivityColorPickerBinding>() {
             StatusBarUtils.getStatusBarHeight())
         ThemeSelector.applyViewTheme(binding.statusbarColorPicker)
         ThemeSelector.applyViewTheme(binding.titlebarColorPicker)
-        binding.titlebarColorPicker.addMenuButton(R.drawable.ic_save)
+        binding.titlebarColorPicker.addMenuButton(R.drawable.ic_save,
+            resources.getDimension(R.dimen.title_bar_icon_size).toInt())
         binding.titlebarColorPicker.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
             }

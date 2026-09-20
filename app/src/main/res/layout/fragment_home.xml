@@ -29,19 +29,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="100"
-                android:maxHeight="2dp"
-                android:minHeight="2dp"
+                android:maxHeight="@dimen/home_progress_height"
+                android:minHeight="@dimen/home_progress_height"
                 android:progressDrawable="@drawable/selector_bottom_bar_seekbar" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="@dimen/bottom_bar_height"
                 android:background="@color/colorPanelFg">
 
                 <ImageView
                     android:id="@+id/iv_home_bottom_album"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="@dimen/home_bottom_bar_cover_icon_size"
+                    android:layout_height="@dimen/home_bottom_bar_cover_icon_size"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
@@ -51,8 +51,8 @@
 
                 <ImageButton
                     android:id="@+id/btn_home_bottom_menu"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/home_bottom_bar_player_icon_size"
+                    android:layout_height="@dimen/home_bottom_bar_player_icon_size"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@color/colorPanelFg"
@@ -71,8 +71,8 @@
 
                 <ImageButton
                     android:id="@+id/btn_home_bottom_next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/home_bottom_bar_player_icon_size"
+                    android:layout_height="@dimen/home_bottom_bar_player_icon_size"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@id/view_home_bottom_divider"
                     android:background="@color/colorPanelFg"
@@ -90,20 +90,22 @@
 
                     <ImageButton
                         android:id="@+id/btn_home_bottom_pause"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="@dimen/home_bottom_bar_player_icon_size"
+                        android:layout_height="@dimen/home_bottom_bar_player_icon_size"
                         android:background="@color/colorPanelFg"
                         android:padding="4dp"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_bottom_bar_pause"
                         android:visibility="gone"
                         app:tint="@color/silver" />
 
                     <ImageButton
                         android:id="@+id/btn_home_bottom_play"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="@dimen/home_bottom_bar_player_icon_size"
+                        android:layout_height="@dimen/home_bottom_bar_player_icon_size"
                         android:background="@color/colorPanelFg"
                         android:padding="4dp"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_bottom_bar_play"
                         app:tint="@color/silver" />
                 </FrameLayout>
@@ -126,7 +128,7 @@
                         android:scrollHorizontally="true"
                         android:text="@string/brand"
                         android:textColor="@color/colorTextSecondary"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/home_bottom_bar_music_name_text_size" />
 
                     <dora.widget.DoraMarqueeTextView
                         android:id="@+id/tv_home_bottom_artist"
@@ -138,7 +140,7 @@
                         android:scrollHorizontally="true"
                         android:text="@string/slogan"
                         android:textColor="@color/colorTextSecondary"
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/home_bottom_bar_artist_text_size" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -156,14 +158,14 @@
                             android:gravity="center_horizontal"
                             android:text="00:00"
                             android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
+                            android:textSize="@dimen/home_bottom_bar_duration_text_size" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="-"
                             android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
+                            android:textSize="@dimen/home_bottom_bar_duration_text_size" />
 
                         <TextView
                             android:id="@+id/tv_home_bottom_duration"
@@ -172,7 +174,7 @@
                             android:gravity="center_horizontal"
                             android:text="00:00"
                             android:textColor="@color/colorTextSecondary"
-                            android:textSize="14sp" />
+                            android:textSize="@dimen/home_bottom_bar_duration_text_size" />
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
@@ -196,17 +198,17 @@
             <dora.widget.DoraTitleBar
                 android:id="@+id/titlebar_home"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/title_bar_height"
                 android:layout_below="@+id/statusbar_home"
                 android:background="@color/colorPanelFg"
                 app:dview_backIcon="@drawable/ic_titlebar_menu"
                 app:dview_backIconTint="@color/home_menu_icon"
-                app:dview_backIconSize="24dp"
+                app:dview_backIconSize="@dimen/title_bar_icon_size"
                 app:dview_isClickBackIconClose="false"
                 app:dview_isTitleTextBold="false"
                 app:dview_title="@string/app_name"
                 app:dview_titleTextColor="@color/colorTextPrimary"
-                app:dview_titleTextSize="18sp" />
+                app:dview_titleTextSize="@dimen/title_bar_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -223,9 +225,10 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorPanelFg"
                     android:visibility="gone"
+                    app:dview_fv_padding="@dimen/home_notification_padding"
                     app:dview_fv_flipInterval="5000"
                     app:dview_fv_textColor="@color/colorTextPrimary"
-                    app:dview_fv_textSize="15sp" />
+                    app:dview_fv_textSize="@dimen/home_notification_text_size" />
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_banner"
                     android:layout_width="match_parent"
@@ -306,8 +309,8 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="8dp"
                     android:overScrollMode="never"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="@dimen/home_module_padding"
+                    android:paddingVertical="@dimen/home_module_padding"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3" />
             </LinearLayout>

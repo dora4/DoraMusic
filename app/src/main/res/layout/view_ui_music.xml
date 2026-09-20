@@ -17,12 +17,13 @@
     <dora.widget.DoraTitleBar
         android:id="@+id/titlebar_music"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/title_bar_height"
         app:dview_backIconTint="@color/white"
         app:dview_backIcon="@drawable/ic_back"
         app:dview_backIconSize="30dp"
         app:dview_isClickBackIconClose="false"
-        app:dview_title="@string/music_list"/>
+        app:dview_title="@string/music_list"
+        app:dview_titleTextSize="@dimen/title_bar_text_size"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

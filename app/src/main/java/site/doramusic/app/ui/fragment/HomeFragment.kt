@@ -220,7 +220,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         )
         val skinThemeColor = ThemeSelector.getThemeColor(requireContext())
         binding.titlebarHome.addMenuButton(R.drawable.ic_alarm,
-            tintColor = skinThemeColor)
+            resources.getDimension(R.dimen.title_bar_icon_size).toInt(),
+            skinThemeColor)
         binding.titlebarHome.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
                 (context as IMenuDrawer).openDrawer()

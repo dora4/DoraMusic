@@ -197,14 +197,14 @@ class GuessingActivity : BaseSkinActivity<ActivityGuessingBinding>() {
         }
         binding.titlebarGuessing.addMenuButton(
             iconResId = R.drawable.ic_crown,
-            iconSize = DensityUtils.DP24,
+            iconSize = resources.getDimension(R.dimen.title_bar_icon_size).toInt(),
             tintColor = ContextCompat.getColor(
                 this,
                 R.color.gold_yellow
             ).toInt()
         ).addMenuButton(
             iconResId = R.drawable.ic_reward,
-            iconSize = DensityUtils.DP24,
+            iconSize = resources.getDimension(R.dimen.title_bar_icon_size).toInt(),
             tintColor = ContextCompat.getColor(
                 this,
                 R.color.vibrant_orange

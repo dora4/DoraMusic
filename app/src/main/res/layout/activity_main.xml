@@ -22,7 +22,7 @@
         <!-- 使用透明色去掉item background -->
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nv_main"
-            android:layout_width="240dp"
+            android:layout_width="@dimen/home_navigation_view_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@color/colorPanelBg"

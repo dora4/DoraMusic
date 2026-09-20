@@ -27,10 +27,12 @@
         <dora.widget.DoraTitleBar
             android:id="@+id/titlebar_settings"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/title_bar_height"
             android:background="@color/skin_theme_color"
             app:dview_backIconTint="@color/white"
-            app:dview_title="@string/setting" />
+            app:dview_backIconSize="@dimen/title_bar_icon_size"
+            app:dview_title="@string/setting"
+            app:dview_titleTextSize="@dimen/title_bar_text_size"/>
 
         <!--        <dora.widget.DoraFlexibleScrollView-->
         <!--                android:layout_width="match_parent"-->
