@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <dimen name="title_bar_height">45dp</dimen>
+    <dimen name="title_bar_text_size">18sp</dimen>
+    <dimen name="title_bar_icon_size">24dp</dimen>
+    <dimen name="bottom_bar_height">80dp</dimen>
+    <dimen name="home_navigation_view_width">240dp</dimen>
+    <dimen name="home_navigation_view_header_height">240dp</dimen>
+    <dimen name="home_navigation_view_header_text_size">13sp</dimen>
+    <dimen name="home_navigation_view_icon_size">64dp</dimen>
+    <dimen name="home_notification_padding">10dp</dimen>
+    <dimen name="home_notification_text_size">15sp</dimen>
+    <dimen name="home_module_padding">10dp</dimen>
+    <dimen name="home_module_vertical_fill_gap">10dp</dimen>
+    <dimen name="home_module_icon_size">32dp</dimen>
+    <dimen name="home_module_name_text_size">15sp</dimen>
+    <dimen name="home_module_num_text_size">14sp</dimen>
+    <dimen name="home_progress_height">2dp</dimen>
+    <dimen name="home_bottom_bar_cover_icon_size">60dp</dimen>
+    <dimen name="home_bottom_bar_player_icon_size">45dp</dimen>
+    <dimen name="home_bottom_bar_music_name_text_size">15sp</dimen>
+    <dimen name="home_bottom_bar_artist_text_size">13sp</dimen>
+    <dimen name="home_bottom_bar_duration_text_size">14sp</dimen>
+</resources>

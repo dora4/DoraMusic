@@ -49,7 +49,8 @@ class FeedbackActivity : BaseSkinActivity<ActivityFeedbackBinding>() {
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityFeedbackBinding) {
         ThemeSelector.applyViewTheme(binding.titlebar)
-        binding.titlebar.addMenuButton(R.drawable.ic_save)
+        binding.titlebar.addMenuButton(R.drawable.ic_save,
+            resources.getDimension(R.dimen.title_bar_icon_size).toInt())
             .setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
                 override fun onIconBackClick(icon: AppCompatImageView) {}

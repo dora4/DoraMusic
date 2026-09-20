@@ -70,7 +70,8 @@ class BrowserActivity : BaseSkinActivity<ActivityBrowserBinding>() {
             .createAgentWeb()
             .ready()
             .go(url)
-        binding.titlebar.addMenuButton(R.drawable.ic_min)
+        binding.titlebar.addMenuButton(R.drawable.ic_min,
+                resources.getDimension(R.dimen.title_bar_icon_size).toInt())
         binding.titlebar.setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
             override fun onIconBackClick(icon: AppCompatImageView) {
             }

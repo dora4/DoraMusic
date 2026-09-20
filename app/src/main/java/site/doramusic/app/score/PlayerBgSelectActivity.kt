@@ -54,7 +54,8 @@ class PlayerBgSelectActivity :
         ThemeSelector.applyViewTheme(binding.statusbarPlayerBgSelect)
         ThemeSelector.applyViewTheme(binding.titlebarPlayerBgSelect)
         binding.titlebarPlayerBgSelect
-            .addMenuButton(R.drawable.ic_clear_bg)
+            .addMenuButton(R.drawable.ic_clear_bg,
+                    resources.getDimension(R.dimen.title_bar_icon_size).toInt())
             .setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
                 override fun onIconBackClick(icon: AppCompatImageView) {
