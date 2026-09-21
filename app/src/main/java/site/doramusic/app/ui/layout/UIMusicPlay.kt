@@ -12,6 +12,7 @@ import android.media.AudioManager
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -204,6 +205,13 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         }
     }
 
+    private fun sp2px(spVal: Float): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP,
+            spVal, manager.view.context.resources.displayMetrics
+        ).toInt()
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun initViews(context: Context) {
         slidingView = findViewById(R.id.sv_home_drawer) as SlidingView
@@ -274,10 +282,18 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 R.color.rotate_view_text_color
             )
         )
+        rotateCoverView.setOuterTextSize(context.resources.getDimension(R.dimen.player_cover_album_text_size).toInt())
+        rotateCoverView.setInnerTextSize(context.resources.getDimension(R.dimen.player_cover_text_size).toInt())
+        rotateCoverView.setOuterCircleRadius(context.resources.getDimension(R.dimen.player_cover_outer_circle_radius).toInt())
+        rotateCoverView.setAlbumTextCircleRadius(context.resources.getDimension(R.dimen.player_cover_album_text_circle_radius).toInt())
+        rotateCoverView.setInnerCircleRadius(context.resources.getDimension(R.dimen.player_cover_inner_circle_radius).toInt())
         rotateCoverView.setAppName(AppConfig.APP_NAME)
+        rotateCoverView.setAppNameTextYOffset(context.resources.getDimension(R.dimen.player_cover_app_name_y_offset).toInt())
         rotateCoverView.setAlbumText(AppConfig.ALBUM_TEXT)
         rotateCoverView.setAppSlogan(AppConfig.APP_SLOGAN)
-        rotateCoverView.setCopyRight(AppConfig.COPY_RIGHT)
+        rotateCoverView.setAppSloganTextYOffset(context.resources.getDimension(R.dimen.player_cover_app_slogan_y_offset).toInt())
+        rotateCoverView.setCopyright(AppConfig.COPY_RIGHT)
+        rotateCoverView.setCopyrightTextYOffset(context.resources.getDimension(R.dimen.player_cover_copyright_y_offset).toInt())
         coverContainer.addView(rotateCoverView, lp)
 //        lrcContainer.addView(lrcListView)
 //        lrcContainer.addView(lrcEmptyView)
