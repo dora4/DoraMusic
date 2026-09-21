@@ -61,6 +61,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/auto_play_on_launch"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
 
                 <dora.widget.DoraToggleButton
@@ -95,6 +96,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/auto_connect_vpn_on_launch"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
 
                 <dora.widget.DoraToggleButton
@@ -129,6 +131,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/shake_to_play_next_music"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
 
                 <dora.widget.DoraToggleButton
@@ -162,6 +165,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/enable_dark_mode"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
 
                 <dora.widget.DoraToggleButton
@@ -195,6 +199,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/bass_boost"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
 
                 <dora.widget.DoraToggleButton
@@ -228,6 +233,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/close_banner"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
 
                 <dora.widget.DoraToggleButton
@@ -258,6 +264,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/keep_alive"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
 
                 <dora.widget.DoraToggleButton
@@ -290,6 +297,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/share_with_friends"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
             </RelativeLayout>
 
@@ -314,6 +322,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/feedback"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
             </RelativeLayout>
 
@@ -339,6 +348,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/support_project"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
             </RelativeLayout>
 
@@ -365,6 +375,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/donation_certificate"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
             </RelativeLayout>
 
@@ -391,6 +402,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/discord"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
             </RelativeLayout>
 
@@ -416,6 +428,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/check_update"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
             </RelativeLayout>
 
@@ -437,6 +450,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/user_agreement"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
             </RelativeLayout>
 
@@ -461,6 +475,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:text="@string/privacy_policy"
+                    android:textSize="@dimen/setting_normal_text_size"
                     android:textColor="@color/colorTextPrimary" />
 
             </RelativeLayout>
@@ -482,8 +497,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="@string/logout"
-                    android:textColor="@color/skin_theme_color"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/setting_normal_text_size"
+                    android:textColor="@color/skin_theme_color" />
             </RelativeLayout>
         </LinearLayout>
         <!--        </dora.widget.DoraFlexibleScrollView>-->

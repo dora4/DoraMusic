@@ -23,7 +23,7 @@
         android:layout_marginHorizontal="@dimen/dp_10"
         android:text="@string/brand"
         android:textColor="@color/colorTextPrimary"
-        android:textSize="20sp" />
+        android:textSize="@dimen/player_primary_text_size" />
 
     <TextView
         android:id="@+id/tv_sliding_artist"
@@ -34,6 +34,6 @@
         android:layout_marginHorizontal="@dimen/dp_10"
         android:text="@string/slogan"
         android:textColor="@color/colorTextSecondary"
-        android:textSize="15sp" />
+        android:textSize="@dimen/player_secondary_text_size" />
 
 </LinearLayout>
