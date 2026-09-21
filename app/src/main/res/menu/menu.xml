@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-<!--        <item-->
-<!--                android:id="@+id/menu_upload_music"-->
-<!--                android:title="@string/upload_music" />-->
         <item
-                android:id="@+id/menu_scan_music"
-                android:title="@string/scan_music" />
-<!--        <item-->
-<!--            android:id="@+id/menu_chat_room"-->
-<!--            android:title="@string/chat_room" />-->
+            android:id="@+id/menu_scan_music"
+            android:icon="@drawable/ic_scan_music"
+            android:title="@string/scan_music" />
+        <item
+            android:id="@+id/menu_chat_room"
+            android:icon="@drawable/ic_chat"
+            android:title="@string/chat_room" />
         <item
             android:id="@+id/menu_gallery_list"
+            android:icon="@drawable/ic_puzzle"
             android:title="@string/my_gallery" />
         <item
-                android:id="@+id/menu_change_skin"
-                android:title="@string/change_skin" />
+            android:id="@+id/menu_change_skin"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/change_skin" />
         <item
             android:id="@+id/menu_change_bg"
+            android:icon="@drawable/ic_scene"
             android:title="@string/change_bg" />
         <item
-                android:id="@+id/menu_equalizer"
-                android:title="@string/equalizer" />
+            android:id="@+id/menu_equalizer"
+            android:icon="@drawable/ic_sound_wave"
+            android:title="@string/equalizer" />
         <item
-                android:id="@+id/menu_settings"
-                android:title="@string/setting" />
+            android:id="@+id/menu_settings"
+            android:icon="@drawable/ic_gear"
+            android:title="@string/setting" />
     </group>
 </menu>

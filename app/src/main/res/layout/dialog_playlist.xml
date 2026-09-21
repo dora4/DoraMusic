@@ -30,8 +30,8 @@
 
             <ImageView
                 android:id="@+id/iv_playlist_playmode"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/playlist_dialog_play_mode_icon_size"
+                android:layout_height="@dimen/playlist_dialog_play_mode_icon_size"
                 app:tint="@color/white"
                 android:layout_marginStart="5dp" />
 
@@ -40,14 +40,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:textSize="16sp"
+                android:textSize="@dimen/playlist_dialog_play_mode_text_size"
                 android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/tv_playlist_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="@dimen/playlist_dialog_num_text_size"
                 android:layout_marginStart="5dp"
                 android:textColor="@color/white" />
         </LinearLayout>

@@ -27,7 +27,12 @@
             android:layout_gravity="start"
             android:background="@color/colorPanelBg"
             app:menu="@menu/menu"
+            app:itemVerticalPadding="@dimen/home_navigation_view_menu_item_vertical_padding"
+            app:itemIconSize="@dimen/home_navigation_view_menu_icon_size"
+            app:itemIconPadding="@dimen/home_navigation_view_menu_icon_padding"
+            app:itemIconTint="@color/colorTextSecondary"
             app:itemBackground="@drawable/selector_menu_bg"
+            app:itemTextAppearance="@style/NavMenuItemText"
             app:itemTextColor="@color/colorTextSecondary"
             app:itemTextAppearanceActiveBoldEnabled="false"
             app:headerLayout="@layout/view_drawer_header"/>

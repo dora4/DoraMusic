@@ -27,7 +27,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/colorTextPrimary"
-            android:textSize="15sp" />
+            android:textSize="@dimen/normal_item_primary_text_size" />
 
         <TextView
             android:id="@+id/tv_album_number_of_songs"
@@ -37,7 +37,7 @@
             android:ellipsize="end"
             android:textColor="@color/colorTextSecondary"
             android:layout_marginTop="4dp"
-            android:textSize="12sp" />
+            android:textSize="@dimen/normal_item_secondary_text_size" />
 
     </LinearLayout>
 </layout>
