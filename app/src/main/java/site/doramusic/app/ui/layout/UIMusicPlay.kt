@@ -270,10 +270,10 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
-        val dp40 = DensityUtils.dp2px(40f)
+        val margin = context.resources.getDimension(R.dimen.player_cover_horizontal_margin).toInt()
         val lp = FrameLayout.LayoutParams(
-            ScreenUtils.getScreenWidth() - dp40,
-            ScreenUtils.getScreenWidth() - dp40
+            ScreenUtils.getScreenWidth() - margin,
+            ScreenUtils.getScreenWidth() - margin
         )
         lp.gravity = Gravity.CENTER
         rotateCoverView.setTextColor(

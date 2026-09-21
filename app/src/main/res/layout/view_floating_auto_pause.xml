@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="160dp"
+        android:layout_width="@dimen/auto_pause_floating_view_width"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/shape_floating_border"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="30:00"
-            android:textSize="24sp"
+            android:textSize="@dimen/auto_pause_floating_view_timer_text_size"
             android:textStyle="bold" />
 
 
@@ -34,20 +34,24 @@
             <TextView
                 android:id="@+id/tv_floating_auto_pause_minus"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="5dp"
                 android:text="@string/minus_15_minutes"
-                android:textSize="13sp" />
+                android:textSize="@dimen/auto_pause_floating_view_btn_text_size" />
 
             <TextView
                 android:id="@+id/tv_floating_auto_pause_plus"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="5dp"
                 android:text="@string/plus_15_minutes"
-                android:textSize="13sp" />
+                android:textSize="@dimen/auto_pause_floating_view_btn_text_size" />
 
         </LinearLayout>
 
@@ -56,9 +60,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:padding="@dimen/auto_pause_floating_view_cancel_btn_padding"
             android:text="@string/cancel_auto_pause"
             android:textColor="@color/colorDefault"
-            android:textSize="13sp" />
+            android:textSize="@dimen/auto_pause_floating_view_btn_text_size" />
     </LinearLayout>
 
 </dora.widget.DraggableLayout>
