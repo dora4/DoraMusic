@@ -48,7 +48,7 @@
                 android:id="@+id/rv_color_picker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/color_picker_color_item_margin"
                 android:scrollbars="none" />
         </LinearLayout>
 
@@ -57,14 +57,13 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_color_picker_bottom"
             android:layout_below="@+id/titlebar_color_picker"
-            android:layout_weight="1"
             android:background="@color/black"
             android:padding="30dp">
 
             <dora.widget.ColorRingPickerView
                 android:id="@+id/color_ring_view"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="@dimen/color_picker_palette_size"
+                android:layout_height="@dimen/color_picker_palette_size"
                 android:layout_gravity="center" />
         </FrameLayout>
     </RelativeLayout>

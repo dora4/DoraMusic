@@ -29,6 +29,11 @@
     <dimen name="auto_pause_popup_item_width">300dp</dimen>
     <dimen name="auto_pause_popup_item_height">60dp</dimen>
     <dimen name="auto_pause_popup_item_text_size">20sp</dimen>
+    <dimen name="auto_pause_floating_view_width">300dp</dimen>
+    <dimen name="auto_pause_floating_view_timer_text_size">30sp</dimen>
+    <dimen name="auto_pause_floating_view_btn_text_size">20sp</dimen>
+    <dimen name="auto_pause_floating_view_cancel_btn_padding">10dp</dimen>
+    <dimen name="proxy_play_floating_view_icon_size">40dp</dimen>
     <dimen name="playlist_dialog_play_mode_icon_size">28dp</dimen>
     <dimen name="playlist_dialog_play_mode_text_size">22sp</dimen>
     <dimen name="playlist_dialog_num_text_size">20sp</dimen>
@@ -50,4 +55,16 @@
     <dimen name="player_cover_app_name_y_offset">-8dp</dimen>
     <dimen name="player_cover_app_slogan_y_offset">8dp</dimen>
     <dimen name="player_cover_copyright_y_offset">24dp</dimen>
+    <dimen name="player_cover_horizontal_margin">80dp</dimen>
+    <dimen name="player_duration_text_width">60dp</dimen>
+    <dimen name="player_duration_text_size">20sp</dimen>
+    <dimen name="player_bottom_vertical_padding">15dp</dimen>
+    <dimen name="player_bottom_btn_vertical_padding">10dp</dimen>
+    <dimen name="player_volume_btn_padding">15dp</dimen>
+    <dimen name="color_picker_palette_size">600dp</dimen>
+    <dimen name="color_picker_color_item_text_size">18sp</dimen>
+    <dimen name="color_picker_color_item_margin">12dp</dimen>
+    <dimen name="color_picker_color_item_horizontal_half_gap">5dp</dimen>
+    <dimen name="color_picker_color_item_corner_radius">8dp</dimen>
+    <dimen name="color_picker_color_item_size">90dp</dimen>
 </resources>
