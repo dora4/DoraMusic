@@ -9,6 +9,10 @@
     <dimen name="home_navigation_view_header_height">400dp</dimen>
     <dimen name="home_navigation_view_header_text_size">20sp</dimen>
     <dimen name="home_navigation_view_icon_size">100dp</dimen>
+    <dimen name="home_navigation_view_menu_text_size">22sp</dimen>
+    <dimen name="home_navigation_view_menu_icon_size">36dp</dimen>
+    <dimen name="home_navigation_view_menu_icon_padding">12dp</dimen>
+    <dimen name="home_navigation_view_menu_item_vertical_padding">12dp</dimen>
     <dimen name="home_notification_padding">15dp</dimen>
     <dimen name="home_notification_text_size">22sp</dimen>
     <dimen name="home_module_padding">15dp</dimen>
@@ -22,4 +26,17 @@
     <dimen name="home_bottom_bar_music_name_text_size">17sp</dimen>
     <dimen name="home_bottom_bar_artist_text_size">15sp</dimen>
     <dimen name="home_bottom_bar_duration_text_size">16sp</dimen>
+    <dimen name="auto_pause_popup_item_width">300dp</dimen>
+    <dimen name="auto_pause_popup_item_height">60dp</dimen>
+    <dimen name="auto_pause_popup_item_text_size">20sp</dimen>
+    <dimen name="playlist_dialog_play_mode_icon_size">28dp</dimen>
+    <dimen name="playlist_dialog_play_mode_text_size">22sp</dimen>
+    <dimen name="playlist_dialog_num_text_size">20sp</dimen>
+    <dimen name="playlist_item_height">60dp</dimen>
+    <dimen name="playlist_item_music_number_text_size">20sp</dimen>
+    <dimen name="playlist_item_music_name_text_size">22sp</dimen>
+    <dimen name="playlist_item_music_artist_text_size">20sp</dimen>
+    <dimen name="normal_item_playing_icon_size">30dp</dimen>
+    <dimen name="normal_item_primary_text_size">18sp</dimen>
+    <dimen name="normal_item_secondary_text_size">16sp</dimen>
 </resources>

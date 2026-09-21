@@ -2,7 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="140dp"
+    android:layout_width="@dimen/auto_pause_popup_item_width"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingVertical="6dp">
@@ -10,31 +10,31 @@
     <TextView
         android:id="@+id/tv_auto_pause_30"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/auto_pause_popup_item_height"
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
         android:text="@string/_30_minutes"
         android:textColor="@color/colorTextPrimary"
-        android:textSize="14sp" />
+        android:textSize="@dimen/auto_pause_popup_item_text_size" />
 
     <TextView
         android:id="@+id/tv_auto_pause_45"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/auto_pause_popup_item_height"
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
         android:text="@string/_45_minutes"
         android:textColor="@color/colorTextPrimary"
-        android:textSize="14sp" />
+        android:textSize="@dimen/auto_pause_popup_item_text_size" />
 
     <TextView
         android:id="@+id/tv_auto_pause_60"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/auto_pause_popup_item_height"
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
         android:text="@string/_60_minutes"
         android:textColor="@color/colorTextPrimary"
-        android:textSize="14sp" />
+        android:textSize="@dimen/auto_pause_popup_item_text_size" />
 
 </LinearLayout>
