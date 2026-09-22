@@ -56,7 +56,7 @@
     <dimen name="player_cover_app_slogan_y_offset">4dp</dimen>
     <dimen name="player_cover_copyright_y_offset">12dp</dimen>
     <dimen name="player_cover_horizontal_margin">40dp</dimen>
-    <dimen name="player_duration_text_width">40dp</dimen>
+    <dimen name="player_duration_text_width">45dp</dimen>
     <dimen name="player_duration_text_size">15sp</dimen>
     <dimen name="player_bottom_vertical_padding">5dp</dimen>
     <dimen name="player_bottom_btn_vertical_padding">5dp</dimen>
