@@ -12,7 +12,8 @@
     <View
         android:id="@+id/statusbar_folder"
         android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp" />
+
     <dora.widget.DoraTitleBar
         android:id="@+id/titlebar_folder"
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
         app:dview_backIcon="@drawable/ic_back"
         app:dview_isClickBackIconClose="false"
         app:dview_title="@string/folder"
-        app:dview_titleTextSize="@dimen/title_bar_text_size"/>
+        app:dview_titleTextSize="@dimen/title_bar_text_size" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -31,7 +32,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_folder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <dora.widget.DoraLetterView
             android:id="@+id/lv_folder"

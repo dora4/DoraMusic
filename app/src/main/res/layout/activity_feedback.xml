@@ -17,28 +17,34 @@
             android:id="@+id/titlebar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
+            app:dview_backIcon="@drawable/ic_back"
             app:dview_backIconTint="@color/white"
             app:dview_backIconSize="@dimen/title_bar_icon_size"
             app:dview_title="@string/feedback"
             app:dview_titleTextSize="@dimen/title_bar_text_size"
-            android:background="@color/skin_theme_color"/>
+            android:background="@color/skin_theme_color" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/feedback_bg"/>
+                    android:background="@drawable/feedback_bg" />
+
                 <dora.widget.DoraRadioGroup
                     android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp">
+
                     <RadioButton
                         android:id="@+id/rb_suggestion"
                         android:layout_width="wrap_content"
@@ -50,7 +56,8 @@
                         android:text="@string/suggestion"
                         android:textSize="16sp"
                         android:textColor="@color/selector_theme_rb_color"
-                        android:background="@drawable/selector_theme_rb"/>
+                        android:background="@drawable/selector_theme_rb" />
+
                     <RadioButton
                         android:id="@+id/rb_question"
                         android:layout_width="wrap_content"
@@ -62,19 +69,21 @@
                         android:text="@string/question"
                         android:textSize="16sp"
                         android:textColor="@color/selector_theme_rb_color"
-                        android:background="@drawable/selector_theme_rb"/>
+                        android:background="@drawable/selector_theme_rb" />
                 </dora.widget.DoraRadioGroup>
+
                 <dora.widget.panel.MenuPanel
                     android:id="@+id/menuPanel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <TextView
                     android:id="@+id/tv_input_limit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:gravity="end"
-                    android:textColor="@color/colorTextSecondary"/>
+                    android:textColor="@color/colorTextSecondary" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

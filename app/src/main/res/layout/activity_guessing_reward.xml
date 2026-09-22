@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -9,29 +8,33 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/colorPanelBg">
+
         <View
             android:id="@+id/statusbar_guessing_reward"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/skin_theme_color" />
+
         <dora.widget.DoraTitleBar
             android:id="@+id/titlebar_guessing_reward"
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
+            app:dview_backIcon="@drawable/ic_back"
             app:dview_backIconTint="@color/white"
             app:dview_backIconSize="@dimen/title_bar_icon_size"
             app:dview_title="@string/my_predictions"
             app:dview_titleTextSize="@dimen/title_bar_text_size"
-            android:background="@color/skin_theme_color"/>
+            android:background="@color/skin_theme_color" />
 
         <dora.widget.DoraEmptyLayout
             android:id="@+id/emptyLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </dora.widget.DoraEmptyLayout>
     </LinearLayout>
 </layout>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<dora.widget.DraggableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<dora.widget.DraggableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -19,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="30:00"
+            android:text="@string/_30_00"
             android:textSize="@dimen/auto_pause_floating_view_timer_text_size"
             android:textStyle="bold" />
 

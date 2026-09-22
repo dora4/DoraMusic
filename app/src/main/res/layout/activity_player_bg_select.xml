@@ -25,9 +25,10 @@
             android:layout_height="@dimen/title_bar_height"
             app:dview_title="@string/player_bg"
             app:dview_titleTextSize="@dimen/title_bar_text_size"
+            app:dview_backIcon="@drawable/ic_back"
             app:dview_backIconTint="@color/white"
             app:dview_backIconSize="@dimen/title_bar_icon_size"
-            android:background="@color/skin_theme_color"/>
+            android:background="@color/skin_theme_color" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

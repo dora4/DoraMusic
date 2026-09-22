@@ -194,6 +194,10 @@
     <string name="show_music_template">Memaparkan %1$d / %2$d muzik</string>
     <string name="selected_music_already_added">Muzik yang dipilih sudah ditambah</string>
     <string name="no_available_music_to_add">Tiada lagu boleh ditambah</string>
+    <string name="_30_00">30:00</string>
+    <string name="_00_00">00:00</string>
+    <string name="_0_54">(0/54)</string>
+    <string name="__">-</string>
     <plurals name="my_bet_format">
         <item quantity="one">Pilihan saya: %1$s %2$d mata</item>
         <item quantity="other">Pilihan saya: %1$s %2$d mata</item>

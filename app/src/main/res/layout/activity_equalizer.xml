@@ -5,8 +5,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-    </data>
+    <data></data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,10 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
             android:background="@color/skin_theme_color"
+            app:dview_backIcon="@drawable/ic_back"
             app:dview_backIconTint="@color/white"
             app:dview_backIconSize="@dimen/title_bar_icon_size"
             app:dview_title="@string/equalizer"
-            app:dview_titleTextSize="@dimen/title_bar_text_size"/>
+            app:dview_titleTextSize="@dimen/title_bar_text_size" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -39,13 +39,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/equalizer_height"
                 android:layout_marginTop="20dp" />
+
             <View
                 android:id="@+id/divider_equalizer"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/ev_equalizer"
-                android:background="@color/divider_color"/>
+                android:background="@color/divider_color" />
+
             <HorizontalScrollView
                 android:id="@+id/hsv_equalizer"
                 android:layout_width="match_parent"
@@ -173,11 +175,12 @@
                         android:textColor="@color/equalizer_radio_button_text_color" />
                 </RadioGroup>
             </HorizontalScrollView>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/hsv_equalizer"
-                android:background="@color/divider_color"/>
+                android:background="@color/divider_color" />
         </RelativeLayout>
     </LinearLayout>
 </layout>

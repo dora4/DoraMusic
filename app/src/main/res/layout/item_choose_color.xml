@@ -2,8 +2,7 @@
 
 <!-- 选择皮肤颜色界面的条目 -->
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
@@ -14,6 +13,7 @@
         android:id="@+id/iv_color_picker_skin_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/tv_color_picker_color_name"
         android:layout_width="wrap_content"
@@ -22,8 +22,9 @@
         android:layout_marginTop="5dp"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
-        android:textSize="@dimen/color_picker_color_item_text_size"/>
-    <ImageView
+        android:textSize="@dimen/color_picker_color_item_text_size" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_color_picker_skin_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

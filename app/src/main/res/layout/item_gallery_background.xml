@@ -8,30 +8,30 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/itemGalleryBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
-        android:id="@+id/itemGalleryBackground"
         android:orientation="vertical">
 
         <FrameLayout
+            android:id="@+id/flBackgroundDisplay"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/player_bg_cover_height"
-            android:id="@+id/flBackgroundDisplay">
+            android:layout_height="@dimen/player_bg_cover_height">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivBackground"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivLock"
                 android:layout_width="@dimen/player_bg_lock_icon_size"
                 android:layout_height="@dimen/player_bg_lock_icon_size"
                 android:layout_gravity="center"
-                app:tint="@color/white"
-                android:src="@drawable/ic_lock" />
+                android:src="@drawable/ic_lock"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/tvSelected"
@@ -39,14 +39,14 @@
                 android:layout_height="32dp"
                 android:layout_gravity="top|end"
                 android:layout_margin="8dp"
+                android:background="@drawable/select_bg"
                 android:gravity="center"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:text="@string/current_background"
-                android:background="@drawable/select_bg"
-                android:textStyle="bold"
                 android:textColor="@color/colorDefault"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </FrameLayout>
 

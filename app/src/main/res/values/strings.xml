@@ -205,6 +205,10 @@ The [Dora Music] Team</string>
     <string name="show_music_template">Showing %1$d / %2$d musics</string>
     <string name="selected_music_already_added">Selected musics already added</string>
     <string name="no_available_music_to_add">No songs available to add</string>
+    <string name="_30_00">30:00</string>
+    <string name="_00_00">00:00</string>
+    <string name="_0_54">(0/54)</string>
+    <string name="__">-</string>
     <plurals name="my_bet_format">
         <item quantity="one">My choice: %1$s %2$d point</item>
         <item quantity="other">My choice: %1$s %2$d points</item>

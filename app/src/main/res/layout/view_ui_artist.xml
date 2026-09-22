@@ -2,17 +2,18 @@
 
 <!-- 艺术家列表界面 -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/theme_bg"
     android:orientation="vertical">
+
     <View
         android:id="@+id/statusbar_artist"
         android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp" />
+
     <dora.widget.DoraTitleBar
         android:id="@+id/titlebar_artist"
         android:layout_width="match_parent"
@@ -22,14 +23,17 @@
         app:dview_backIcon="@drawable/ic_back"
         app:dview_isClickBackIconClose="false"
         app:dview_title="@string/artist"
-        app:dview_titleTextSize="@dimen/title_bar_text_size"/>
+        app:dview_titleTextSize="@dimen/title_bar_text_size" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_artist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
         <dora.widget.DoraLetterView
             android:id="@+id/lv_artist"
             android:layout_width="@dimen/sidebar_width"
@@ -42,6 +46,7 @@
             app:dview_lv_textSize="@dimen/sidebar_text_size"
             app:dview_lv_letters="↑ABCDEFGHIJKLMNOPQRSTUVWXYZ#"
             app:dview_lv_textAllCaps="true" />
+
         <TextView
             android:id="@+id/tv_artist_dialog"
             android:layout_width="@dimen/sidebar_dialog_size"
