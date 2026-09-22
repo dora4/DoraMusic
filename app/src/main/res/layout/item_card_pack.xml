@@ -16,13 +16,14 @@
 
         <ImageView
             android:id="@+id/ivIcon"
-            android:layout_width="80dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/card_package_cover_width"
+            android:layout_height="@dimen/card_package_cover_height"
             android:scaleType="fitCenter"/>
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/card_package_text_size"
             android:textColor="@color/colorTextPrimary"
             android:layout_marginTop="5dp"/>
         <TextView
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorTextSecondary"
             android:text="(0/54)"
+            android:textSize="@dimen/card_package_text_size"
             android:layout_marginTop="5dp"/>
     </LinearLayout>
 </FrameLayout>

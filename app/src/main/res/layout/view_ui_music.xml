@@ -35,25 +35,26 @@
 
         <dora.widget.DoraLetterView
             android:id="@+id/lv_music"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/sidebar_width"
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:background="@drawable/shape_letterview_normal_bg"
             app:dview_lv_hoverBackgroundDrawable="@drawable/shape_letterview_hover_bg"
             app:dview_lv_hoverTextColor="@color/skin_theme_color"
             app:dview_lv_textColor="@color/white"
+            app:dview_lv_textSize="@dimen/sidebar_text_size"
             app:dview_lv_letters="↑ABCDEFGHIJKLMNOPQRSTUVWXYZ#"
             app:dview_lv_textAllCaps="true" />
 
         <TextView
             android:id="@+id/tv_music_dialog"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/sidebar_dialog_size"
+            android:layout_height="@dimen/sidebar_dialog_size"
             android:layout_gravity="center"
             android:background="@drawable/shape_letterview_dialog_bg"
             android:gravity="center"
             android:textColor="@color/letterview_preview_text_color"
-            android:textSize="36sp"
+            android:textSize="@dimen/sidebar_dialog_text_size"
             android:visibility="gone" />
     </FrameLayout>
 </LinearLayout>

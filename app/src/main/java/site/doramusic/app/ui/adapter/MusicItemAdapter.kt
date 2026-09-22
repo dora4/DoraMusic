@@ -1,7 +1,6 @@
 package site.doramusic.app.ui.adapter
 
 import android.view.View
-import android.widget.ProgressBar
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import dora.widget.DoraAudioWaveProgressBar
 
