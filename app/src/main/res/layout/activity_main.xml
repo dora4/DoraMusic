@@ -5,8 +5,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-    </data>
+    <data></data>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/dl_main"
@@ -17,7 +16,7 @@
         <FrameLayout
             android:id="@+id/fl_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <!-- 使用透明色去掉item background -->
         <com.google.android.material.navigation.NavigationView
@@ -35,7 +34,7 @@
             app:itemTextAppearance="@style/NavMenuItemText"
             app:itemTextColor="@color/colorTextSecondary"
             app:itemTextAppearanceActiveBoldEnabled="false"
-            app:headerLayout="@layout/view_drawer_header"/>
+            app:headerLayout="@layout/view_drawer_header" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

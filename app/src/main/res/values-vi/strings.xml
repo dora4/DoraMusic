@@ -194,6 +194,10 @@
     <string name="show_music_template">Hiển thị %1$d / %2$d bài hát</string>
     <string name="selected_music_already_added">Bài hát đã chọn đã được thêm</string>
     <string name="no_available_music_to_add">Không có bài hát nào để thêm</string>
+    <string name="_30_00">30:00</string>
+    <string name="_00_00">00:00</string>
+    <string name="_0_54">(0/54)</string>
+    <string name="__">-</string>
     <plurals name="my_bet_format">
         <item quantity="one">Lựa chọn của tôi: %1$s %2$d điểm</item>
         <item quantity="other">Lựa chọn của tôi: %1$s %2$d điểm</item>

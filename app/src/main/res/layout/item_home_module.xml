@@ -5,6 +5,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="m"
             type="site.doramusic.app.ui.fragment.HomeFragment.HomeItem" />
@@ -22,7 +23,7 @@
             android:id="@+id/iv_home_module_icon"
             android:layout_width="@dimen/home_module_icon_size"
             android:layout_height="@dimen/home_module_icon_size"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/tv_home_module_name"

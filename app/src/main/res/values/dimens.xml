@@ -3,7 +3,7 @@
 <resources>
     <dimen name="title_bar_height">45dp</dimen>
     <dimen name="title_bar_text_size">18sp</dimen>
-    <dimen name="title_bar_icon_size">24dp</dimen>
+    <dimen name="title_bar_icon_size">28dp</dimen>
     <dimen name="bottom_bar_height">80dp</dimen>
     <dimen name="home_navigation_view_width">240dp</dimen>
     <dimen name="home_navigation_view_header_height">240dp</dimen>

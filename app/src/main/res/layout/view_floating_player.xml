@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<dora.widget.DraggableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<dora.widget.DraggableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+
     <LinearLayout
         android:id="@+id/ll_floating_player"
         android:layout_width="wrap_content"
@@ -12,19 +12,21 @@
         android:background="@drawable/shape_floating_border"
         android:orientation="horizontal"
         android:padding="5dp">
-        <ImageView
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_floating_pause_resume"
             android:layout_width="@dimen/proxy_play_floating_view_icon_size"
             android:layout_height="@dimen/proxy_play_floating_view_icon_size"
             android:layout_margin="5dp"
             app:tint="@color/colorTextPrimary"
-            android:src="@drawable/ic_player_pause"/>
-        <ImageView
+            android:src="@drawable/ic_player_pause" />
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_floating_stop"
             android:layout_width="@dimen/proxy_play_floating_view_icon_size"
             android:layout_height="@dimen/proxy_play_floating_view_icon_size"
             android:layout_margin="5dp"
             app:tint="@color/colorTextPrimary"
-            android:src="@drawable/ic_player_stop"/>
+            android:src="@drawable/ic_player_stop" />
     </LinearLayout>
 </dora.widget.DraggableLayout>

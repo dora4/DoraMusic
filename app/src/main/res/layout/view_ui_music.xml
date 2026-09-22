@@ -2,8 +2,7 @@
 
 <!-- 歌曲列表 -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,6 +13,7 @@
         android:id="@+id/statusbar_music"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
+
     <dora.widget.DoraTitleBar
         android:id="@+id/titlebar_music"
         android:layout_width="match_parent"
@@ -23,7 +23,8 @@
         app:dview_backIconSize="30dp"
         app:dview_isClickBackIconClose="false"
         app:dview_title="@string/music_list"
-        app:dview_titleTextSize="@dimen/title_bar_text_size"/>
+        app:dview_titleTextSize="@dimen/title_bar_text_size" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -31,7 +32,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_music"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <dora.widget.DoraLetterView
             android:id="@+id/lv_music"

@@ -11,15 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <dora.widget.DoraTitleBar
             android:id="@+id/titlebar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
             android:background="@color/skin_theme_color"
-            app:dview_backIconTint="@color/white"
+            app:dview_backIcon="@drawable/ic_back"
             app:dview_backIconSize="@dimen/title_bar_icon_size"
+            app:dview_backIconTint="@color/white"
             app:dview_title="@string/qr_code_scan_result"
-            app:dview_titleTextSize="@dimen/title_bar_text_size"/>
+            app:dview_titleTextSize="@dimen/title_bar_text_size" />
+
         <RelativeLayout
             android:id="@+id/rl_browser_web_page"
             android:layout_width="match_parent"

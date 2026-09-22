@@ -201,6 +201,10 @@ Dora Musicチーム</string>
     <string name="show_music_template">表示中：%1$d / %2$d曲</string>
     <string name="selected_music_already_added">選択した曲はすでに追加済みです</string>
     <string name="no_available_music_to_add">追加できる曲がありません</string>
+    <string name="_30_00">30:00</string>
+    <string name="_00_00">00:00</string>
+    <string name="_0_54">(0/54)</string>
+    <string name="__">-</string>
     <plurals name="my_bet_format">
         <item quantity="one">私の予想：%1$s %2$dポイント</item>
         <item quantity="other">私の予想：%1$s %2$dポイント</item>

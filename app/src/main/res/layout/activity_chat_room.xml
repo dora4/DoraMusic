@@ -12,15 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <dora.widget.DoraTitleBar
             android:id="@+id/titlebar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
             android:background="@color/skin_theme_color"
+            app:dview_backIcon="@drawable/ic_back"
             app:dview_backIconTint="@color/white"
             app:dview_backIconSize="@dimen/title_bar_icon_size"
             app:dview_title="@string/chat_room"
-            app:dview_titleTextSize="@dimen/title_bar_text_size"/>
+            app:dview_titleTextSize="@dimen/title_bar_text_size" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -29,15 +32,18 @@
             android:overScrollMode="never"
             android:clipToPadding="false"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"/>
+            android:paddingBottom="8dp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/light_gray"/>
+            android:background="@color/light_gray" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/white">
+
             <RelativeLayout
                 android:id="@+id/btnSend"
                 android:layout_width="45dp"
@@ -45,14 +51,16 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true">
-                <ImageView
+
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivSend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     app:tint="@color/colorPrimary"
-                    android:src="@drawable/ic_send_msg"/>
+                    android:src="@drawable/ic_send_msg" />
             </RelativeLayout>
+
             <EditText
                 android:id="@+id/etInput"
                 android:layout_width="match_parent"
@@ -62,7 +70,7 @@
                 android:layout_marginStart="15dp"
                 android:imeOptions="actionSend"
                 android:inputType="text"
-                android:hint="@string/input_content"/>
+                android:hint="@string/input_content" />
         </RelativeLayout>
     </LinearLayout>
 </layout>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<dora.widget.DoraMarkView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<dora.widget.DoraMarkView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/markView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,14 +19,15 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorTextPrimary"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorTextSecondary"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp" />
+
         <TextView
             android:id="@+id/tv_my_choice"
             android:layout_width="wrap_content"
@@ -35,28 +35,32 @@
             android:layout_marginTop="8dp"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_reward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorTextSecondary"
             android:visibility="gone"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp" />
+
         <TextView
             android:id="@+id/tv_odds"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorTextSecondary"
             android:visibility="gone"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp" />
+
         <TextView
             android:id="@+id/tv_bonus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textColor="@color/colorTextSecondary"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_claim"
             android:layout_width="match_parent"
@@ -66,7 +70,7 @@
             android:background="@drawable/selector_claim_btn"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
 </dora.widget.DoraMarkView>

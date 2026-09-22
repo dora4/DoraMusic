@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<dora.widget.DoraMarkView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<dora.widget.DoraMarkView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mv_guessing_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,6 +8,7 @@
     android:padding="12dp"
     android:background="@drawable/shape_guessing_item_border"
     android:layout_margin="5dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="50dp"
             android:textSize="15sp"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary" />
 
         <!-- 时间 + 状态 -->
         <TextView
@@ -29,13 +29,14 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:layout_marginTop="4dp"
-            android:textColor="@color/colorTextSecondary"/>
+            android:textColor="@color/colorTextSecondary" />
 
         <dora.widget.FlowLayout
             android:id="@+id/fl_options"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp" />
+
         <TextView
             android:id="@+id/tv_my_bet"
             android:layout_width="wrap_content"
@@ -43,6 +44,6 @@
             android:layout_marginTop="8dp"
             android:textSize="12sp"
             android:textColor="@color/colorTextSecondary"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 </dora.widget.DoraMarkView>
