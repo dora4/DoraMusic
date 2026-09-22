@@ -67,4 +67,26 @@
     <dimen name="color_picker_color_item_horizontal_half_gap">5dp</dimen>
     <dimen name="color_picker_color_item_corner_radius">8dp</dimen>
     <dimen name="color_picker_color_item_size">90dp</dimen>
+    <dimen name="equalizer_height">600dp</dimen>
+    <dimen name="equalizer_type_text_size">20sp</dimen>
+    <dimen name="scan_music_title_text_size">20sp</dimen>
+    <dimen name="scan_music_subtitle_text_size">16sp</dimen>
+    <dimen name="player_bg_selected_text_size">18sp</dimen>
+    <dimen name="player_bg_name_text_size">20sp</dimen>
+    <dimen name="player_bg_status_text_size">18sp</dimen>
+    <dimen name="player_bg_cover_height">600dp</dimen>
+    <dimen name="player_bg_lock_icon_size">48dp</dimen>
+    <dimen name="card_package_cover_width">160dp</dimen>
+    <dimen name="card_package_cover_height">200dp</dimen>
+    <dimen name="card_package_text_size">20sp</dimen>
+    <dimen name="draw_card_primary_text_size">23sp</dimen>
+    <dimen name="draw_card_secondary_text_size">21sp</dimen>
+    <dimen name="draw_card_card_height">100dp</dimen>
+    <dimen name="draw_card_card_margin">4dp</dimen>
+    <dimen name="draw_card_card_btn_height">60dp</dimen>
+    <dimen name="draw_card_card_btn_text_size">20sp</dimen>
+    <dimen name="sidebar_width">40dp</dimen>
+    <dimen name="sidebar_text_size">20sp</dimen>
+    <dimen name="sidebar_dialog_size">120dp</dimen>
+    <dimen name="sidebar_dialog_text_size">48sp</dimen>
 </resources>

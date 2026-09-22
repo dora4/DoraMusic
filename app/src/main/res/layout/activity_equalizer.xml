@@ -37,7 +37,7 @@
             <dora.widget.DoraEqualizerView
                 android:id="@+id/ev_equalizer"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="@dimen/equalizer_height"
                 android:layout_marginTop="20dp" />
             <View
                 android:id="@+id/divider_equalizer"
@@ -51,11 +51,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/divider_equalizer"
+                android:fillViewport="true"
                 android:scrollbars="none">
 
                 <RadioGroup
                     android:id="@+id/rg_equalizer"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPanelBg"
                     android:checkedButton="@+id/rb_equalizer_close"
@@ -68,6 +69,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/close"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -77,6 +79,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/custom"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -86,6 +89,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/pop"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -95,6 +99,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/dance"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -104,6 +109,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/blue"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -113,6 +119,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/classic"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -122,6 +129,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/jazz"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -131,6 +139,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/slow"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -140,6 +149,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/slots"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -149,6 +159,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/shake"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
 
                     <RadioButton
@@ -158,6 +169,7 @@
                         android:background="@drawable/selector_equalizer_radio_button"
                         android:padding="10dp"
                         android:text="@string/country"
+                        android:textSize="@dimen/equalizer_type_text_size"
                         android:textColor="@color/equalizer_radio_button_text_color" />
                 </RadioGroup>
             </HorizontalScrollView>

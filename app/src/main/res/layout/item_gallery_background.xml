@@ -16,7 +16,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/player_bg_cover_height"
             android:id="@+id/flBackgroundDisplay">
 
             <ImageView
@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/ivLock"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/player_bg_lock_icon_size"
+                android:layout_height="@dimen/player_bg_lock_icon_size"
                 android:layout_gravity="center"
                 app:tint="@color/white"
                 android:src="@drawable/ic_lock" />
@@ -57,7 +57,7 @@
             android:layout_marginTop="6dp"
             android:gravity="center"
             android:textColor="@color/colorTextPrimary"
-            android:textSize="15sp" />
+            android:textSize="@dimen/player_bg_name_text_size" />
 
         <TextView
             android:id="@+id/tvStatus"
@@ -66,6 +66,6 @@
             android:layout_marginTop="3dp"
             android:gravity="center"
             android:textColor="@color/colorTextSecondary"
-            android:textSize="14sp" />
+            android:textSize="@dimen/player_bg_status_text_size" />
     </LinearLayout>
 </layout>

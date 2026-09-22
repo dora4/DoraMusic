@@ -25,7 +25,7 @@
             android:textColor="@color/colorTextPrimary"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textSize="16sp" />
+            android:textSize="@dimen/scan_music_title_text_size" />
 
         <TextView
             android:id="@+id/tv_song_subtitle"
@@ -36,7 +36,7 @@
             android:ellipsize="end"
             android:alpha="0.65"
             android:textColor="@color/colorTextSecondary"
-            android:textSize="13sp" />
+            android:textSize="@dimen/scan_music_subtitle_text_size" />
 
     </LinearLayout>
 
@@ -51,7 +51,7 @@
         android:paddingEnd="12dp"
         android:paddingBottom="6dp"
         android:text="@string/add"
-        android:textColor="#61B15A"
+        android:textColor="@color/colorDefault"
         android:textSize="14sp" />
 
 </LinearLayout>

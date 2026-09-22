@@ -4,12 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="2dp">
+    android:padding="@dimen/draw_card_card_margin">
 
     <dora.widget.DoraPokerView
         android:id="@+id/pokerView"
         android:layout_width="wrap_content"
-        android:layout_height="50dp" />
+        android:layout_height="@dimen/draw_card_card_height" />
 
 </FrameLayout>
 
