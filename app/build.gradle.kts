@@ -143,7 +143,7 @@ dependencies {
     implementation("com.github.dora4:dview-swipe-layout:1.1")
     implementation("com.github.dora4:dview-breathing-view:1.2")
     implementation("com.github.dora4:dview-radar-view:1.0")
-    implementation("com.github.dora4:dview-banner-view:1.12")
+    implementation("com.github.dora4:dview-banner-view:1.13")
     implementation("com.github.dora4:dview-marquee-view:1.1")
     implementation("com.github.dora4:dview-wave-view:1.1")
 
