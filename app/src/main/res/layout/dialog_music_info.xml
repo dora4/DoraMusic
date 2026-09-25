@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:textColor="@color/colorTextPrimary"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/music_info_title_text_size" />
             </LinearLayout>
 
             <TextView
@@ -51,7 +51,7 @@
                 android:gravity="center"
                 android:text="@string/copy"
                 android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="@dimen/music_info_copy_text_size" />
         </LinearLayout>
 
         <!-- 时长 -->
@@ -63,7 +63,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/colorTextSecondary"
-            android:textSize="12sp" />
+            android:textSize="@dimen/music_info_duration_text_size" />
 
         <!-- 文件路径 -->
         <dora.widget.DoraMarqueeTextView
@@ -73,7 +73,7 @@
             android:layout_marginTop="8dp"
             android:maxLines="1"
             android:textColor="@color/colorTextSecondary"
-            android:textSize="12sp" />
+            android:textSize="@dimen/music_info_path_text_size" />
 
     </LinearLayout>
 

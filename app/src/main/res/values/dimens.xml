@@ -89,4 +89,8 @@
     <dimen name="sidebar_text_size">15sp</dimen>
     <dimen name="sidebar_dialog_size">80dp</dimen>
     <dimen name="sidebar_dialog_text_size">36sp</dimen>
+    <dimen name="music_info_title_text_size">15sp</dimen>
+    <dimen name="music_info_copy_text_size">13sp</dimen>
+    <dimen name="music_info_duration_text_size">12sp</dimen>
+    <dimen name="music_info_path_text_size">12sp</dimen>
 </resources>
