@@ -501,10 +501,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                                     startActivity(intent)
                                 }
                                 else -> {
-                                    val intent = Intent(activity, BrowserActivity::class.java)
-                                    intent.putExtra(EXTRA_TITLE, APP_NAME)
-                                    intent.putExtra(EXTRA_URL, url)
-                                    startActivity(intent)
+                                    if (TextUtils.isNotEmpty(url)) {
+                                        val intent = Intent(activity, BrowserActivity::class.java)
+                                        intent.putExtra(EXTRA_TITLE, APP_NAME)
+                                        intent.putExtra(EXTRA_URL, url)
+                                        startActivity(intent)
+                                    }
                                 }
                             }
                         }
