@@ -81,7 +81,7 @@ class MusicApp : BaseApplication(), AppConfig {
             LogUtils.d("initPay start time:$startTime")
             initScope.launch {
                 runCatching {
-                    withTimeout(3_000.milliseconds) { initPay() } // 3秒超时
+                    withTimeout(1_000.milliseconds) { initPay() } // 1秒超时
                 }
             }
             val endTime = System.currentTimeMillis()
