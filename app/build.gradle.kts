@@ -147,7 +147,7 @@ dependencies {
     implementation("com.github.dora4:dview-marquee-view:1.1")
     implementation("com.github.dora4:dview-wave-view:1.1")
 
-    implementation("com.github.dora4:dorachat-authsdk:1.1.6")
+    implementation("com.github.dora4:dorachat-authsdk:1.2.0")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")
