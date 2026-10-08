@@ -33,7 +33,7 @@ Android7.0+
 ### 适用年龄
 
 3+
- 
+
 ### 支持语言
 
 - 简体中文
@@ -50,7 +50,7 @@ Android7.0+
 - 葡萄牙语（巴西）
 - 泰语
 - 越南语
- 
+
 ![初音未来动图](https://github.com/user-attachments/assets/37d10a11-77f8-4a1f-8745-ed730afc31b7)
 
 ### App下载
@@ -76,23 +76,43 @@ DoraChat（[用于生态账号注册](https://www.pgyer.com/dorachat-android)）
 
 ### 软件截图
 
-1. 快捷播放列表（便于单手操作）
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_012819_Dora Music.jpg"></p>
+https://www.toutiao.com/article/7693154244307829309/
 
-2. 主界面
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_012746_Dora Music.jpg"></p>
+### FAQ
 
-3. 字母导航
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_013332_Dora Music.jpg"></p>
+1. Q：**本地歌曲扫描不全，很多歌扫不出来怎么办？**
 
-4. 设置
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_013426_Dora Music.jpg"></p>
+   A：先检查是否授予了应用读取文件的权限，其次尝试移动音乐文件到其它目录，触发系统的媒体库刷新。
 
-5. 更换主题色
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_012805_Dora Music.jpg"></p>
+2. Q：**平台下载的会员加密歌曲（ncm/kgm/ogg）无法播放**
 
-6. 播放控制
-<p><img width="542" height="1206" src="https://doramusic.oss-cn-hangzhou.aliyuncs.com/Screenshot/Screenshot_20260117_013230_Dora Music.jpg"></p>
+   A：抱歉，这种情况任何外部播放器都是无法播放的。请尝试更换歌曲文件。
+
+3. Q：**文件标签乱码，歌曲名、歌手显示问号 / 方框**
+
+   A：我们后期会推出媒体信息编辑功能，修正错误的媒体信息。
+
+4. Q：**本地 LRC 歌词不显示、不自动滚动**
+
+   A：暂不支持歌词显示功能。
+
+5. Q：**专辑封面空白、不显示**
+
+   A：暂不支持封面显示功能，让用户不被不必要的信息干扰。
+
+6. Q：**批量修改歌曲标签（歌手、专辑名、年份）**
+
+   A：我们后期会推出媒体信息编辑功能，修正错误的媒体信息。
+
+7. Q：**删除本地文件后，APP 列表残留灰色失效条目，删不掉**
+
+   A：我们后期会推出删除歌曲列表功能。
+
+8. Q：**安卓存储权限怎么开，才能读取全部文件夹**
+
+   A：可以在「系统设置」或「应用程序」中找到权限，然后打开允许读取文件权限的开关。
+
+
 
 本开源项目带有音效版权和软件著作版权，版权所有，侵权必究！仅在系统预装应用场景下免授权。
 
