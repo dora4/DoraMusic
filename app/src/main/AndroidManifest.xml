@@ -52,7 +52,6 @@
         <activity
                 android:name=".ui.activity.SplashActivity"
                 android:exported="true"
-                android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.Launch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,109 +64,94 @@
                 android:exported="false"
                 android:label="主界面"
                 android:launchMode="singleTask"
-                android:screenOrientation="portrait" />
+                android:configChanges="orientation|screenSize" />
 
         <activity
             android:name=".chat.ChatRoomActivity"
             android:exported="false"
             android:label="聊天室"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
         <activity
                 android:name=".ui.activity.EqualizerActivity"
                 android:exported="false"
                 android:label="均衡器"
-                android:launchMode="singleTop"
-                android:screenOrientation="portrait" />
+                android:launchMode="singleTop" />
         <activity
                 android:name=".ui.activity.ColorPickerActivity"
                 android:exported="false"
                 android:label="选择颜色"
-                android:launchMode="singleTop"
-                android:screenOrientation="portrait" />
+                android:launchMode="singleTop" />
         <activity
                 android:name=".ui.activity.SettingsActivity"
                 android:exported="false"
                 android:label="设置"
-                android:launchMode="singleTop"
-                android:screenOrientation="portrait" />
+                android:launchMode="singleTop" />
         <activity
             android:name=".ui.activity.GuessingActivity"
             android:exported="false"
             android:label="竞猜"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.activity.GuessingRankActivity"
             android:exported="false"
             android:label="竞猜排行榜"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.activity.GuessingRewardActivity"
             android:exported="false"
             android:label="竞猜奖励"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".feedback.FeedbackActivity"
             android:exported="false"
             android:label="反馈"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
         <activity
                 android:name=".ui.activity.BrowserActivity"
                 android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
                 android:exported="false"
                 android:label="浏览器"
                 android:launchMode="singleTop"
-                android:screenOrientation="portrait"
                 android:supportsPictureInPicture="true" />
         <activity
                 android:name=".ui.activity.ProtocolActivity"
                 android:exported="false"
                 android:label="用户协议和隐私政策"
-                android:launchMode="singleTop"
-                android:screenOrientation="portrait" />
+                android:launchMode="singleTop" />
 
         <activity
             android:name=".ui.activity.PlayVideoActivity"
             android:exported="false"
             android:label="视频播放器"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"  />
+            android:launchMode="singleTop"  />
 
         <activity
             android:name=".score.GalleryListActivity"
             android:exported="false"
             android:label="图鉴列表"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".score.PlayerBgSelectActivity"
             android:exported="false"
             android:label="播放器背景设置"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".score.DrawCardActivity"
             android:exported="false"
             android:label="抽卡"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".search.ScanMusicActivity"
             android:exported="false"
             android:label="扫描歌曲"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.activity.DonationActivity"
             android:exported="false"
             android:label="捐赠列表"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.activity.ProxyPlayActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

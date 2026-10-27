@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 主界面 -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/dl_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <FrameLayout
+            android:id="@+id/fl_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- 使用透明色去掉item background -->
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nv_main"
+            android:layout_width="@dimen/home_navigation_view_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/colorPanelBg"
+            app:menu="@menu/menu"
+            app:itemVerticalPadding="@dimen/home_navigation_view_menu_item_vertical_padding"
+            app:itemIconSize="@dimen/home_navigation_view_menu_icon_size"
+            app:itemIconPadding="@dimen/home_navigation_view_menu_icon_padding"
+            app:itemIconTint="@color/colorTextSecondary"
+            app:itemBackground="@drawable/selector_menu_bg"
+            app:itemTextAppearance="@style/NavMenuItemText"
+            app:itemTextColor="@color/colorTextSecondary"
+            app:itemTextAppearanceActiveBoldEnabled="false"
+            app:headerLayout="@layout/view_drawer_header" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>
+

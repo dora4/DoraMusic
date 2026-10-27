@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<dora.widget.DraggableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="@dimen/auto_pause_floating_view_width"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/shape_floating_border"
+        android:gravity="center_horizontal"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_floating_auto_pause_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/_30_00"
+            android:textSize="@dimen/auto_pause_floating_view_timer_text_size"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_floating_auto_pause_minus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="5dp"
+                android:text="@string/minus_15_minutes"
+                android:textSize="@dimen/auto_pause_floating_view_btn_text_size" />
+
+            <TextView
+                android:id="@+id/tv_floating_auto_pause_plus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="5dp"
+                android:text="@string/plus_15_minutes"
+                android:textSize="@dimen/auto_pause_floating_view_btn_text_size" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_floating_auto_pause_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:padding="@dimen/auto_pause_floating_view_cancel_btn_padding"
+            android:text="@string/cancel_auto_pause"
+            android:textColor="@color/colorDefault"
+            android:textSize="@dimen/auto_pause_floating_view_btn_text_size" />
+    </LinearLayout>
+
+</dora.widget.DraggableLayout>
