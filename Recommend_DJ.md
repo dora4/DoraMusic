@@ -1,102 +1,164 @@
+# Recommend_DJ.md
+> 适配 DoraMusic 播放器 DJ/Remix 歌单推荐
+> 这是一份适合导入 DoraMusic 的精选DJ曲目清单，包含国风DJ、流行Remix、外文舞曲，曲风兼顾氛围感、弹跳律动，适合车载、通勤、居家聆听。DoraMusic 是本地音乐播放器，无在线曲库，需要自行获取音频文件导入本地扫描播放。
 
-- 是你 https://www.youtube.com/watch?v=aM0EBp9OaAM
-- 爱错 https://www.youtube.com/watch?v=AQLuz0wamT8
-- 谁 https://www.youtube.com/watch?v=8z-C8dikNjA
-- 离别开出花 https://www.youtube.com/watch?v=ZYt5Cg4Qqbs
-- 阿衣莫 https://www.youtube.com/watch?v=O1kXtPGjOzw
-- 精卫 https://www.youtube.com/watch?v=YtFQZkGZtLc
-- 不谓侠 https://www.youtube.com/watch?v=DgC942kpOsM
-- 春庭雪 https://www.youtube.com/watch?v=h1qD22OK5Qk
-- 卜卦 https://www.youtube.com/watch?v=EWGdVNUVYbE
-- 海市蜃楼 https://www.youtube.com/watch?v=yB8HmL3WSK8
-- 探故知 https://www.youtube.com/watch?v=5ELID57kRPg
-- 难却 https://www.youtube.com/watch?v=_tJ86FMqtsM
-- 莫问归期 https://www.youtube.com/watch?v=j1WifUe_fjQ
-- 无情画 https://www.youtube.com/watch?v=LXFKhiAkmso
-- 辞九门回忆 https://www.youtube.com/watch?v=bQ-SVxu-_DI
-- 飞鸟和蝉 https://www.youtube.com/watch?v=-VjwtAYHzBk
-- 如愿 https://www.youtube.com/watch?v=IOb_IX3u2ag
-- Per te https://www.youtube.com/watch?v=hB7M7k5sJm8
-- 敢爱敢做 https://www.youtube.com/watch?v=HGmTVMZR0hE
-- 春不晚 https://www.youtube.com/watch?v=uYGN77Cww-w
-- 安和桥 https://www.youtube.com/watch?v=L8bz8oUNKOk
-- 大天蓬 https://www.youtube.com/watch?v=fTrnoFKULuU
-- 你的万水千山 https://www.youtube.com/watch?v=BZQkb7KpOf0
-- 相思遥 https://www.youtube.com/watch?v=ToyWa0Of1ns
-- 典狱司 https://www.youtube.com/watch?v=OHKUDtCeaKg
-- 鸳鸯戏 https://www.youtube.com/watch?v=D038bYY7h-U
-- 野孩子 https://www.youtube.com/watch?v=KYZW55KJrK0
-- 赤伶 https://www.youtube.com/watch?v=HOBOBgmzuGo
-- 外婆的澎湖湾 https://www.youtube.com/watch?v=oCDg1-HdFYY
-- 火红的萨日朗 https://www.youtube.com/watch?v=qiYwASqE960
-- 女孩 https://www.youtube.com/watch?v=NszjMg8vVhA
-- 从前说 https://www.youtube.com/watch?v=qjAKle8bz2E
-- 风催雨 https://www.youtube.com/watch?v=h0tojPD-65g
-- 美人画卷 https://www.youtube.com/watch?v=KaLTaCN-r-w
-- 选择失忆 https://www.youtube.com/watch?v=Sfd8qBKvdMg
-- 黄昏 https://www.youtube.com/watch?v=BmhL3-_nDZw
-- 爱情有时很残忍 https://www.youtube.com/watch?v=H6TUN01DoQQ
-- 孤城 https://www.youtube.com/watch?v=ChRYTbz67IE
-- 虞兮叹 https://www.youtube.com/watch?v=3j1HIUJnxLs
-- 科目三 https://www.youtube.com/watch?v=b3rFbkFjRrA
-- 起风了 https://www.youtube.com/watch?v=s5nFn4RgelA
-- 游京 https://www.youtube.com/watch?v=OjQ0KqCJOjk
-- Everytime We Touch https://www.youtube.com/watch?v=TQ_oIxIDKTA
-- 须尽欢 https://www.youtube.com/watch?v=Lgq_moXSL-Q
-- 夜色 https://www.youtube.com/watch?v=aatVmb9ZCws
-- 快乐阿拉蕾 https://www.youtube.com/watch?v=4haZeezqMio
-- 别让爱凋落 https://www.youtube.com/watch?v=93U7ifus358
-- 跳楼机 https://www.youtube.com/watch?v=Hkd45-teUzg
-- 列车开往春天 https://www.youtube.com/watch?v=ZQg0ezB-q8g
-- 初恋情人 https://www.youtube.com/watch?v=PEAdjmC5Z7w
-- 赐我 https://www.youtube.com/watch?v=UwQjBW5pm1A
-- 樱花树下的约定 https://www.youtube.com/watch?v=8plzbfMYkCU
-- 忘川彼岸 https://www.youtube.com/watch?v=dhF0ANt9erI
-- 想某人 https://www.youtube.com/watch?v=xWegMGxyetY
-- 折风渡夜 https://www.youtube.com/watch?v=vNRFV0SITFs
-- 姑娘在远方 https://www.youtube.com/watch?v=dSOz373wvrk
-- 罗曼蒂克的爱情 https://www.youtube.com/watch?v=0tPahfiueJ0
-- 陪我过个冬 https://www.youtube.com/watch?v=o7pyoXc1-CM
-- 末班车 https://www.youtube.com/watch?v=7j16GT6DTEM
-- 最近 https://www.youtube.com/watch?v=nn2Z7EgdRpA
-- 如果爱忘了 https://www.youtube.com/watch?v=cKN20gqTTwk
-- 忘了 https://www.youtube.com/watch?v=paNgLF8tLjs
-- 把回忆拼好给你 https://www.youtube.com/watch?v=rFWcBkBRTkU
-- 满天星辰不及你 https://www.youtube.com/watch?v=bmnRFkpIunI
-- 爱不得忘不舍 https://www.youtube.com/watch?v=h1pzMFgNpcQ
-- 嘉宾 https://www.youtube.com/watch?v=j1wDEcxC2wg
-- 三拜红尘凉 https://www.youtube.com/watch?v=Pzx1tctmFB4
-- 悬溺 https://www.youtube.com/watch?v=U9Z9X_YXaNY
-- 青衣 https://www.youtube.com/watch?v=HSoXfMPhz_w
-- 谪仙 https://www.youtube.com/watch?v=9wJ9uhxoEc4
-- 好心分手 https://www.youtube.com/watch?v=xsmdIPPOIZw
-- 我知道你不爱我 https://www.youtube.com/watch?v=JFRTSDkiSsk
-- 可可托海的牧羊人 https://www.youtube.com/watch?v=L0fytprZrQ0
-- It's My Life https://www.youtube.com/watch?v=vx2u5uUu3DE
-- 三月里的小雨 https://www.youtube.com/watch?v=H-lOpI74KlU
-- 画离弦 https://www.youtube.com/watch?v=0VOmsnmEMOo
-- 流着泪说分手 https://www.youtube.com/watch?v=p6HLYyJjcqo
-- 纸短情长 https://www.youtube.com/watch?v=WQ2v_7IVCUA
-- 我曾用心爱着你 https://www.youtube.com/watch?v=ip9nkfDQSFU
-- 落差 https://www.youtube.com/watch?v=FkK7SLdZpbM
-- 西厢寻他 https://www.youtube.com/watch?v=wnKABkrj9ts
-- 未必 https://www.youtube.com/watch?v=dIWNReIyUL4
-- 先说谎的人 https://www.youtube.com/watch?v=N1ap5mNMuLY
-- 西楼爱情故事 https://www.youtube.com/watch?v=nU2nOCa8qCY
-- Let Me Know https://www.youtube.com/watch?v=aJSvAK6OCgk
-- 爱的专属权 https://www.youtube.com/watch?v=G6TqYDXzKnc
-- 浪子闲话 https://www.youtube.com/watch?v=3Fq7XwrMv3o
-- 孤身 https://www.youtube.com/watch?v=90h0IFof1Do
-- 笑纳 https://www.youtube.com/watch?v=UF8UHdjwmoA
-- 叹云兮 https://www.youtube.com/watch?v=ozfGodF0Wss
-- 清明上河图 https://www.youtube.com/watch?v=TLrFdSjmrHA
-- 若月亮没来 https://www.youtube.com/watch?v=eKcqZUc66ac
-- 欢喜就好 https://www.youtube.com/watch?v=fHIMK2XpyHU
-- 感谢你曾来过 https://www.youtube.com/watch?v=xrvBuhNz7OM
-- 月亮照山川 https://www.youtube.com/watch?v=2MnVDj1anfQ
-- Zombie https://www.youtube.com/watch?v=2Gw71CYEMHs
-- 囧架架 https://www.youtube.com/watch?v=-P0zrrwFGgQ
-- 像鱼 https://www.youtube.com/watch?v=RDzNIvxrLWk
-- 搀扶 https://www.youtube.com/watch?v=g5kIPsb1Tlk
-- New Boy https://www.youtube.com/watch?v=mwYCjjK8g0w
-- 追梦人 https://www.youtube.com/watch?v=kqJMPfoa2NU
+## 📋 歌曲列表
+- 是你
+- 爱错
+- 谁
+- 离别开出花
+- 阿衣莫
+- 精卫
+- 不谓侠
+- 春庭雪
+- 卜卦
+- 海市蜃楼
+- 探故知
+- 难却
+- 莫问归期
+- 无情画
+- 辞九门回忆
+- 飞鸟和蝉
+- 如愿
+- Per te
+- 敢爱敢做
+- 春不晚
+- 安和桥
+- 大天蓬
+- 你的万水千山
+- 相思遥
+- 典狱司
+- 鸳鸯戏
+- 野孩子
+- 赤伶
+- 外婆的澎湖湾
+- 火红的萨日朗
+- 女孩
+- 从前说
+- 风催雨
+- 美人画卷
+- 选择失忆
+- 黄昏
+- 爱情有时很残忍
+- 孤城
+- 虞兮叹
+- 科目三
+- 起风了
+- 游京
+- Everytime We Touch
+- 须尽欢
+- 夜色
+- 快乐阿拉蕾
+- 别让爱凋落
+- 跳楼机
+- 列车开往春天
+- 初恋情人
+- 赐我
+- 樱花树下的约定
+- 忘川彼岸
+- 想某人
+- 折风渡夜
+- 姑娘在远方
+- 罗曼蒂克的爱情
+- 陪我过个冬
+- 末班车
+- 最近
+- 如果爱忘了
+- 忘了
+- 把回忆拼好给你
+- 满天星辰不及你
+- 爱不得忘不舍
+- 嘉宾
+- 三拜红尘凉
+- 悬溺
+- 青衣
+- 谪仙
+- 好心分手
+- 我知道你不爱我
+- 可可托海的牧羊人
+- It's My Life
+- 三月里的小雨
+- 画离弦
+- 流着泪说分手
+- 纸短情长
+- 我曾用心爱着你
+- 落差
+- 西厢寻他
+- 未必
+- 先说谎的人
+- 西楼爱情故事
+- Let Me Know
+- 爱的专属权
+- 浪子闲话
+- 孤身
+- 笑纳
+- 叹云兮
+- 清明上河图
+- 若月亮没来
+- 欢喜就好
+- 感谢你曾来过
+- 月亮照山川
+- Zombie
+- 囧架架
+- 像鱼
+- 搀扶
+- New Boy
+- 追梦人
+- 乱世书
+- 琵琶曲
+- 牡丹亭
+- That's Not My Name
+- Te plac
+- Wither
+- Not A Single Day
+- Loves Me Not
+- Ce frumosa e iubirea
+- Try
+- Alone
+- Remember the Name
+- Numb
+- She Is My Sin
+- I Want My Tears Back
+- In the End
+- Deay
+- Warm
+- The Heart of the Ocean
+- Right Now
+- Häschenparty
+- Insomnia
+- 死一样的痛过
+- Star Sky
+- Poker Face
+- 冰河时代
+- 玩腻
+- Sick Enough to Die
+- Para Para Sakura
+
+## 🎵 歌单简介
+这份歌单收集了大量热门中文Remix、国风DJ、流行舞曲以及少量经典外文DJ曲目。曲风丰富，有古风戏腔DJ、抒情流行改编、弹跳Vina House、经典摇滚舞曲，适合车载、散步、居家休闲场景。
+
+### ✨ 曲风分类
+1. **国风DJ（推荐！）**
+《精卫》《不谓侠》《春庭雪》《卜卦》《辞九门回忆》《赤伶》《虞兮叹》《赐我》《谪仙》《浪子闲话》《笑纳》《乱世书》《牡丹亭》。古风旋律搭配强劲鼓点，氛围感拉满，是这套歌单的核心。
+
+2. **流行抒情Remix**
+《是你》《爱错》《离别开出花》《你的万水千山》《嘉宾》《把回忆拼好给你》，抒情歌曲加入律动鼓点，不会过于吵闹。
+
+3. **弹跳车载DJ**
+《科目三》《夜色》《快乐阿拉蕾》《囧架架》《忘川彼岸》《想某人》《冰河时代》《玩腻》，节奏轻快弹跳，开车听很合适。
+
+4. **外文经典舞曲**
+*Everytime We Touch*、*It's My Life*、*Zombie*、*Per te*、*Loves Me Not*、*Numb*、*In the End*、*Star Sky*，经典欧美曲目，丰富歌单层次。
+
+## 📱 DoraMusic 使用提示
+1. DoraMusic 是**本地播放器**，没有内置下载功能，需要自行准备音频文件，放到手机本地文件夹。
+2. 打开 DoraMusic，扫描音乐目录，扫描完成后新建播放列表，命名为「DJ精选」，批量添加上面曲目。
+3. 推荐音频格式：优先 FLAC / 320kbps MP3，低音质音源会影响DJ低音体验。
+4. 均衡器小建议：
+   - 国风DJ：低频小幅提升，保留人声清晰；
+   - 弹跳车载DJ：适度增强低音，音量不宜过大保护听力；
+   - 外文摇滚舞曲：均衡器平直即可。
+5. 版权提醒：请通过合法渠道获取音频文件，尊重音乐版权。
+
+## 💡 补充
+你可以持续往这个歌单追加喜欢的曲目，不断扩充你的本地舞曲库。DoraMusic 干净无广告，配合这份DJ歌单，享受纯粹的本地音乐聆听体验。

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 歌曲列表 -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/theme_bg"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/statusbar_music"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <dora.widget.DoraTitleBar
+        android:id="@+id/titlebar_music"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:dview_backIconTint="@color/white"
+        app:dview_backIcon="@drawable/ic_back"
+        app:dview_backIconSize="30dp"
+        app:dview_isClickBackIconClose="false"
+        app:dview_title="@string/music_list"
+        app:dview_titleTextSize="@dimen/title_bar_text_size" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_music"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <dora.widget.DoraLetterView
+            android:id="@+id/lv_music"
+            android:layout_width="@dimen/sidebar_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@drawable/shape_letterview_normal_bg"
+            app:dview_lv_hoverBackgroundDrawable="@drawable/shape_letterview_hover_bg"
+            app:dview_lv_hoverTextColor="@color/skin_theme_color"
+            app:dview_lv_textColor="@color/white"
+            app:dview_lv_textSize="@dimen/sidebar_text_size"
+            app:dview_lv_letters="↑ABCDEFGHIJKLMNOPQRSTUVWXYZ#"
+            app:dview_lv_textAllCaps="true" />
+
+        <TextView
+            android:id="@+id/tv_music_dialog"
+            android:layout_width="@dimen/sidebar_dialog_size"
+            android:layout_height="@dimen/sidebar_dialog_size"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_letterview_dialog_bg"
+            android:gravity="center"
+            android:textColor="@color/letterview_preview_text_color"
+            android:textSize="@dimen/sidebar_dialog_text_size"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

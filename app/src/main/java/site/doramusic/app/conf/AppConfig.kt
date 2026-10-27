@@ -113,6 +113,7 @@ interface AppConfig {
         // 基本配置
         const val MUSIC_LIST_MAX_LIST = 1000 // 播放列表的最大限制
         const val MAX_RECENT_MUSIC_NUM = 100    // 最近播放的最大限制
+        const val MUSIC_MENU_PAD_GRID_COLUMN_NUM = 6    // 横屏平板功能网格每行显示的个数
         const val MUSIC_MENU_GRID_COLUMN_NUM = 3    // 功能网格每行显示的个数
         // 换肤
         const val COLOR_THEME = "skin_theme_color" // 主色调的换肤key

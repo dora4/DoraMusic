@@ -1,6 +1,9 @@
 package site.doramusic.app.score
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
@@ -16,6 +19,7 @@ import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityPlayerBgSelectBinding
 import site.doramusic.app.event.PlayerBackgroundChangedEvent
 import site.doramusic.app.ui.activity.BaseSkinActivity
+import site.doramusic.app.util.PadUtils
 import site.doramusic.app.util.ThemeSelector
 
 /**
@@ -55,7 +59,7 @@ class PlayerBgSelectActivity :
         ThemeSelector.applyViewTheme(binding.titlebarPlayerBgSelect)
         binding.titlebarPlayerBgSelect
             .addMenuButton(R.drawable.ic_clear_bg,
-                    resources.getDimension(R.dimen.title_bar_icon_size).toInt())
+                resources.getDimension(R.dimen.title_bar_icon_size).toInt())
             .setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
 
                 override fun onIconBackClick(icon: AppCompatImageView) {
@@ -75,10 +79,13 @@ class PlayerBgSelectActivity :
             DEFAULT_BACKGROUND
         ) ?: DEFAULT_BACKGROUND
         val backgrounds = createBackgrounds().toMutableList()
+
+        // 横屏平板4列，否则2列
+        val spanCount = if (PadUtils.isPadLandscape(this)) 4 else 2
         binding.recyclerView.layoutManager =
             GridLayoutManager(
                 this@PlayerBgSelectActivity,
-                2
+                spanCount
             )
         // 将当前已保存的背景传给 Adapter，
         // 页面打开时立即显示正确的选中状态。
@@ -90,6 +97,16 @@ class PlayerBgSelectActivity :
             selectBackground(adapter.getItem(position) as GalleryBackground)
         }
         binding.recyclerView.adapter = adapter
+    }
+
+    /**
+     * 屏幕旋转，动态更新列数。
+     */
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val spanCount = if (PadUtils.isPadLandscape(this)) 4 else 2
+        mBinding.recyclerView.layoutManager = GridLayoutManager(this, spanCount)
+        adapter.notifyDataSetChanged()
     }
 
     /**
@@ -167,72 +184,72 @@ class PlayerBgSelectActivity :
      */
     private fun createBackgrounds(): List<GalleryBackground> {
         return listOf(
-//            GalleryBackground(
-//                id = DEFAULT_BACKGROUND,
-//                galleryId = "",
-//                name = getString(R.string.background_default),
-//                imageRes = R.drawable.bg_default
-//            ),
+            //            GalleryBackground(
+            //                id = DEFAULT_BACKGROUND,
+            //                galleryId = "",
+            //                name = getString(R.string.background_default),
+            //                imageRes = R.drawable.bg_default
+            //            ),
             GalleryBackground(
                 id = AppConfig.GALLERY_RAIN_FOREST,
                 galleryId = AppConfig.GALLERY_RAIN_FOREST,
                 name = getString(R.string.rain_forest),
                 imageRes = R.drawable.bg_rain_forest
             ),
-//            GalleryBackground(
-//                id = AppConfig.GALLERY_DESERT,
-//                galleryId = AppConfig.GALLERY_DESERT,
-//                name = getString(R.string.desert),
-//                imageRes = R.drawable.bg_desert
-//            ),
-//            GalleryBackground(
-//                id = AppConfig.GALLERY_CITY,
-//                galleryId = AppConfig.GALLERY_CITY,
-//                name = getString(R.string.city),
-//                imageRes = R.drawable.bg_city
-//            ),
-//            GalleryBackground(
-//                id = AppConfig.GALLERY_COUNTRYSIDE,
-//                galleryId = AppConfig.GALLERY_COUNTRYSIDE,
-//                name = getString(R.string.countryside),
-//                imageRes = R.drawable.bg_countryside
-//            ),
-//            GalleryBackground(
-//                id = AppConfig.GALLERY_PLATEAU,
-//                galleryId = AppConfig.GALLERY_PLATEAU,
-//                name = getString(R.string.plateau),
-//                imageRes = R.drawable.bg_plateau
-//            ),
-//            GalleryBackground(
-//                id = AppConfig.GALLERY_BEACH,
-//                galleryId = AppConfig.GALLERY_BEACH,
-//                name = getString(R.string.beach),
-//                imageRes = R.drawable.bg_beach
-//            ),
-//            GalleryBackground(
-//                id = AppConfig.GALLERY_GLACIER,
-//                galleryId = AppConfig.GALLERY_GLACIER,
-//                name = getString(R.string.glacier),
-//                imageRes = R.drawable.bg_glacier
-//            ),
-//            GalleryBackground(
-//                id = AppConfig.GALLERY_MOUNTAIN,
-//                galleryId = AppConfig.GALLERY_MOUNTAIN,
-//                name = getString(R.string.mountain),
-//                imageRes = R.drawable.bg_mountain
-//            ),
-//            GalleryBackground(
-//                id = AppConfig.GALLERY_UNDERSEA,
-//                galleryId = AppConfig.GALLERY_UNDERSEA,
-//                name = getString(R.string.undersea),
-//                imageRes = R.drawable.bg_undersea
-//            ),
-//            GalleryBackground(
-//                id = AppConfig.GALLERY_HIGHWAY,
-//                galleryId = AppConfig.GALLERY_HIGHWAY,
-//                name = getString(R.string.highway),
-//                imageRes = R.drawable.bg_highway
-//            )
+            //            GalleryBackground(
+            //                id = AppConfig.GALLERY_DESERT,
+            //                galleryId = AppConfig.GALLERY_DESERT,
+            //                name = getString(R.string.desert),
+            //                imageRes = R.drawable.bg_desert
+            //            ),
+            //            GalleryBackground(
+            //                id = AppConfig.GALLERY_CITY,
+            //                galleryId = AppConfig.GALLERY_CITY,
+            //                name = getString(R.string.city),
+            //                imageRes = R.drawable.bg_city
+            //            ),
+            //            GalleryBackground(
+            //                id = AppConfig.GALLERY_COUNTRYSIDE,
+            //                galleryId = AppConfig.GALLERY_COUNTRYSIDE,
+            //                name = getString(R.string.countryside),
+            //                imageRes = R.drawable.bg_countryside
+            //            ),
+            //            GalleryBackground(
+            //                id = AppConfig.GALLERY_PLATEAU,
+            //                galleryId = AppConfig.GALLERY_PLATEAU,
+            //                name = getString(R.string.plateau),
+            //                imageRes = R.drawable.bg_plateau
+            //            ),
+            //            GalleryBackground(
+            //                id = AppConfig.GALLERY_BEACH,
+            //                galleryId = AppConfig.GALLERY_BEACH,
+            //                name = getString(R.string.beach),
+            //                imageRes = R.drawable.bg_beach
+            //            ),
+            //            GalleryBackground(
+            //                id = AppConfig.GALLERY_GLACIER,
+            //                galleryId = AppConfig.GALLERY_GLACIER,
+            //                name = getString(R.string.glacier),
+            //                imageRes = R.drawable.bg_glacier
+            //            ),
+            //            GalleryBackground(
+            //                id = AppConfig.GALLERY_MOUNTAIN,
+            //                galleryId = AppConfig.GALLERY_MOUNTAIN,
+            //                name = getString(R.string.mountain),
+            //                imageRes = R.drawable.bg_mountain
+            //            ),
+            //            GalleryBackground(
+            //                id = AppConfig.GALLERY_UNDERSEA,
+            //                galleryId = AppConfig.GALLERY_UNDERSEA,
+            //                name = getString(R.string.undersea),
+            //                imageRes = R.drawable.bg_undersea
+            //            ),
+            //            GalleryBackground(
+            //                id = AppConfig.GALLERY_HIGHWAY,
+            //                galleryId = AppConfig.GALLERY_HIGHWAY,
+            //                name = getString(R.string.highway),
+            //                imageRes = R.drawable.bg_highway
+            //            )
         )
     }
 

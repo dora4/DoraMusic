@@ -62,6 +62,7 @@ import androidx.core.graphics.createBitmap
 import dora.widget.DoraIndicatorView
 import site.doramusic.app.event.PlayerBackgroundChangedEvent
 import site.doramusic.app.score.GalleryBackgroundManager
+import site.doramusic.app.util.PadUtils
 
 /**
  * 音乐播放控制、歌词滚动界面。
@@ -272,8 +273,8 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         )
         val margin = context.resources.getDimension(R.dimen.player_cover_horizontal_margin).toInt()
         val lp = FrameLayout.LayoutParams(
-            ScreenUtils.getScreenWidth() - margin,
-            ScreenUtils.getScreenWidth() - margin
+            if (PadUtils.isPadLandscape(context)) DensityUtils.dp2px(400f) else ScreenUtils.getScreenWidth() - margin,
+            if (PadUtils.isPadLandscape(context)) DensityUtils.dp2px(400f) else ScreenUtils.getScreenWidth() - margin
         )
         lp.gravity = Gravity.CENTER
         rotateCoverView.setTextColor(

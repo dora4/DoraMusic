@@ -51,8 +51,6 @@ Android7.0+
 - 泰语
 - 越南语
 
-![初音未来动图](https://github.com/user-attachments/assets/37d10a11-77f8-4a1f-8745-ed730afc31b7)
-
 ### App下载
 
 <p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
@@ -106,7 +104,7 @@ https://www.toutiao.com/article/7693154244307829309/
 
    A：可以在「系统设置」或「应用程序」中找到权限，然后打开允许读取文件权限的开关。
 
-
+### 版权声明
 
 本开源项目带有音效版权和软件著作版权，版权所有，侵权必究！仅在系统预装应用场景下免授权。
 

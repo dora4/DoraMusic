@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorPanelBg">
+
+        <View
+            android:id="@+id/statusbar_guessing_rank"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/skin_theme_color" />
+
+        <dora.widget.DoraTitleBar
+            android:id="@+id/titlebar_guessing_rank"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_bar_height"
+            android:background="@color/skin_theme_color"
+            app:dview_backIcon="@drawable/ic_back"
+            app:dview_backIconTint="@color/white"
+            app:dview_backIconSize="@dimen/title_bar_icon_size"
+            app:dview_title="@string/guessing_rank"
+            app:dview_titleTextSize="@dimen/title_bar_text_size" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPanelFg"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="fixed"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/colorTextSecondary" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color" />
+
+        <FrameLayout
+            android:id="@+id/fl_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

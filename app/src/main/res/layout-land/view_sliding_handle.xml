@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 歌词滚动播放页面标题 -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_margin="10dp"
+    android:id="@+id/sliding_handle"
+    android:background="@color/colorPanelBg">
+
+    <View
+        android:id="@+id/statusbar_lyric"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:id="@+id/tv_sliding_music_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:text="@string/brand"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/player_primary_text_size" />
+
+    <TextView
+        android:id="@+id/tv_sliding_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:text="@string/slogan"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="@dimen/player_secondary_text_size" />
+
+</LinearLayout>

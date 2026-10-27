@@ -3,11 +3,13 @@ package site.doramusic.app.ui.fragment
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.media.audiofx.Equalizer
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -55,6 +57,7 @@ import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URL
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_USER_ID
 import site.doramusic.app.conf.AppConfig.Companion.MUSIC_MENU_GRID_COLUMN_NUM
 import site.doramusic.app.conf.AppConfig.Companion.MAX_RECENT_MUSIC_NUM
+import site.doramusic.app.conf.AppConfig.Companion.MUSIC_MENU_PAD_GRID_COLUMN_NUM
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.FragmentHomeBinding
 import site.doramusic.app.db.Album
@@ -89,6 +92,7 @@ import site.doramusic.app.ui.layout.UIBottomBar
 import site.doramusic.app.ui.layout.UIMusicPlay
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.MusicUtils
+import site.doramusic.app.util.PadUtils
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.util.ThemeSelector
 import java.util.*
@@ -124,7 +128,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         @DrawableRes val iconRes: Int, val name: String,
         val musicNum: Long = 0
     ) {
-
         fun getMusicNum(): String {
             return musicNum.toString()
         }
@@ -156,7 +159,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             mBinding.fpHome.addText(it.title)
         }
         mBinding.fpHome.setFlipperListener(object : DoraFlipperView.FlipperListener {
-
             override fun onFlipStart() {
             }
 
@@ -235,25 +237,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         binding.rvHomeModule.adapter = adapter
         binding.rvHomeModule.setBackgroundResource(R.drawable.shape_home_module)
         binding.rvHomeModule.itemAnimator = DefaultItemAnimator()
-        binding.rvHomeModule.layoutManager = GridLayoutManager(context, MUSIC_MENU_GRID_COLUMN_NUM)
+        val spanCount = if (PadUtils.isPadLandscape(requireContext()))
+            MUSIC_MENU_PAD_GRID_COLUMN_NUM else MUSIC_MENU_GRID_COLUMN_NUM
+        binding.rvHomeModule.layoutManager = GridLayoutManager(context, spanCount)
         adapter.setOnItemClickListener { _, _, position ->
             var from = -1
             when (position) {
                 0 // 我的音乐
                     -> from = AppConfig.ROUTE_START_FROM_LOCAL
-
                 1 // 歌手
                     -> from = AppConfig.ROUTE_START_FROM_ARTIST
-
                 2 // 专辑
                     -> from = AppConfig.ROUTE_START_FROM_ALBUM
-
                 3 // 文件夹
                     -> from = AppConfig.ROUTE_START_FROM_FOLDER
-
                 4 // 我的最爱
                     -> from = AppConfig.ROUTE_START_FROM_FAVORITE
-
                 5 // 最近播放
                     -> from = AppConfig.ROUTE_START_FROM_LATEST
             }
@@ -312,6 +311,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             })
     }
 
+    /**
+     * 屏幕旋转回调，动态切换网格列数。
+     */
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val spanCount = if (PadUtils.isPadLandscape(requireContext()))
+            MUSIC_MENU_PAD_GRID_COLUMN_NUM else MUSIC_MENU_GRID_COLUMN_NUM
+        mBinding.rvHomeModule.layoutManager = GridLayoutManager(context, spanCount)
+        adapter.notifyDataSetChanged()
+    }
+
     private fun showAutoPausePopup(anchorView: View) {
         val popup = DoraPopupWindow.create(anchorView.context)
             .contentView(R.layout.view_popup_auto_pause)
@@ -368,7 +378,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     private suspend fun initGuest() : GuestSession? {
         val resp = try {
-             api(GuessingService::class) {
+            api(GuessingService::class) {
                 initGuest()
             }?.data
         } catch (e: Exception) {
@@ -637,7 +647,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     class ImageAdapter(val banners: List<String>) : BannerAdapter<String, ImageView>() {
-
         override fun getItemCount(): Int {
             return banners.size
         }
