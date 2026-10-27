@@ -27,8 +27,8 @@
             android:layout_below="@+id/statusbar_color_picker"
             android:background="@color/skin_theme_color"
             app:dview_backIcon="@drawable/ic_back"
-            app:dview_backIconTint="@color/white"
             app:dview_backIconSize="@dimen/title_bar_icon_size"
+            app:dview_backIconTint="@color/white"
             app:dview_title="@string/choose_color"
             app:dview_titleTextSize="@dimen/title_bar_text_size" />
 
@@ -53,19 +53,25 @@
                 android:scrollbars="none" />
         </LinearLayout>
 
-        <FrameLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/ll_color_picker_bottom"
             android:layout_below="@+id/titlebar_color_picker"
-            android:background="@color/black"
-            android:padding="30dp">
+            android:fillViewport="true">
 
-            <dora.widget.ColorRingPickerView
-                android:id="@+id/color_ring_view"
-                android:layout_width="@dimen/color_picker_palette_size"
-                android:layout_height="@dimen/color_picker_palette_size"
-                android:layout_gravity="center" />
-        </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:padding="30dp">
+
+                <dora.widget.ColorRingPickerView
+                    android:id="@+id/color_ring_view"
+                    android:layout_width="@dimen/color_picker_palette_size"
+                    android:layout_height="@dimen/color_picker_palette_size"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+        </ScrollView>
     </RelativeLayout>
 </layout>

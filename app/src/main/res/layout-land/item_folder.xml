@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 文件夹列表条目 -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorPanelFg"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:paddingStart="8dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/tv_folder_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextPrimary"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/normal_item_primary_text_size" />
+
+        <dora.widget.DoraMarqueeTextView
+            android:id="@+id/tv_folder_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginTop="4dp"
+            android:textSize="@dimen/normal_item_secondary_text_size" />
+
+    </LinearLayout>
+</layout>

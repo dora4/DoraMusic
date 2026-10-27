@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 选择皮肤颜色界面的条目 -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/color_picker_color_item_horizontal_half_gap">
+
+    <dora.widget.DoraRoundRectImageView
+        android:id="@+id/iv_color_picker_skin_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_color_picker_color_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/color_name_custom"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:textSize="@dimen/color_picker_color_item_text_size" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_color_picker_skin_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        app:tint="@color/colorDefault"
+        android:src="@drawable/ic_skin_selected" />
+</FrameLayout>
