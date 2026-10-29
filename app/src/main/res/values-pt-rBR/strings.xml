@@ -112,6 +112,7 @@
     <string name="insufficient_points">Pontos insuficientes!</string>
     <string name="you_already_own_this_card">Você já possui essa carta.</string>
     <string name="rain_forest">Floresta tropical</string>
+    <string name="glacier">Geleira</string>
     <string name="gallery_name_format">Nome da coleção: %1$s</string>
     <string name="my_points_format">Meus pontos: %1$d</string>
     <string name="listening_reward">Recompensa por ouvir música</string>

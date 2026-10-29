@@ -59,8 +59,9 @@
     <color name="colorTextPrimary">@color/white</color>
     <color name="colorTextSecondary">@color/light_gray</color>
     <color name="colorDefault">#61B15A</color>
-    <color name="colorSearchBg">#9E9E9E</color>
+    <color name="colorSearchBg">@color/colorPanelFg</color>
     <color name="colorSearchText">@color/white</color>
+    <color name="colorSearchTextHint">#9E9E9E</color>
     <color name="half_transparent">@color/white</color>
     <color name="divider_color">@color/colorPanelBg</color>
     <color name="transparent">#00000000</color>

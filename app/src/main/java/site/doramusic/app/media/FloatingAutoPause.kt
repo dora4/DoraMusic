@@ -2,12 +2,16 @@ package site.doramusic.app.media
 
 import android.content.Intent
 import android.os.CountDownTimer
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import dora.BaseFloatingWindowService
 import dora.util.DensityUtils
 import dora.util.ScreenUtils
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
+import site.doramusic.app.util.PrefsManager
+import androidx.core.graphics.toColorInt
 
 /**
  * 自动暂停倒计时悬浮窗。
@@ -129,6 +133,21 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         tvCancel.setOnClickListener {
             cancelAutoPause()
         }
+        // service要自己更新深色主题
+        val llContainer = findViewById<LinearLayout>(R.id.ll_floating_auto_pause)
+        val drawable = ContextCompat.getDrawable(this, R.drawable.shape_floating_border)
+        applyDarkModeBackground(PrefsManager(this).getDarkMode(),
+            llContainer, drawable, getColor(R.color.obsidian_black), "#F5F5F9".toColorInt())
+        applyDarkModeTextColor(PrefsManager(this).getDarkMode(),
+            findViewById<TextView>(R.id.tv_floating_auto_pause_time)
+            , "#FFFFFF".toColorInt(),
+            getColor(R.color.colorTextPrimary))
+        applyDarkModeTextColors(PrefsManager(this).getDarkMode(),
+            arrayOf(
+                findViewById<TextView>(R.id.tv_floating_auto_pause_plus),
+                findViewById<TextView>(R.id.tv_floating_auto_pause_minus)
+            ), "#FFFFFF".toColorInt(),
+            getColor(R.color.colorTextSecondary))
         updateTime()
     }
 

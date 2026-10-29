@@ -112,6 +112,7 @@
     <string name="insufficient_points">Poin tidak cukup!</string>
     <string name="you_already_own_this_card">Anda sudah memiliki kartu ini.</string>
     <string name="rain_forest">Hutan hujan</string>
+    <string name="glacier">Gletser</string>
     <string name="gallery_name_format">Nama koleksi: %1$s</string>
     <string name="my_points_format">Poin saya: %1$d</string>
     <string name="listening_reward">Hadiah Mendengarkan</string>

@@ -112,6 +112,7 @@
     <string name="insufficient_points">Điểm không đủ!</string>
     <string name="you_already_own_this_card">Bạn đã sở hữu thẻ này.</string>
     <string name="rain_forest">Rừng mưa</string>
+    <string name="glacier">Sông băng</string>
     <string name="gallery_name_format">Tên bộ sưu tập: %1$s</string>
     <string name="my_points_format">Điểm của tôi: %1$d</string>
     <string name="listening_reward">Phần thưởng nghe nhạc</string>

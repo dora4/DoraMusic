@@ -112,6 +112,7 @@
     <string name="insufficient_points">Mata tidak mencukupi!</string>
     <string name="you_already_own_this_card">Anda sudah memiliki kad ini.</string>
     <string name="rain_forest">Hutan Hujan</string>
+    <string name="glacier">Glasier</string>
     <string name="gallery_name_format">Nama Koleksi: %1$s</string>
     <string name="my_points_format">Mata Saya: %1$d</string>
     <string name="listening_reward">Ganjaran Mendengar</string>

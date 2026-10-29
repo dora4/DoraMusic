@@ -60,12 +60,12 @@ class GalleryListActivity : BaseActivity<ActivityGalleryListBinding>() {
         // 新加的卡包排在最前面
         val galleryIds = listOf(
             AppConfig.GALLERY_RAIN_FOREST to getString(R.string.rain_forest),
+            AppConfig.GALLERY_GLACIER to getString(R.string.glacier),
 //            AppConfig.GALLERY_DESERT to "沙漠",
 //            AppConfig.GALLERY_CITY to "都市",
 //            AppConfig.GALLERY_COUNTRYSIDE to "田园",
 //            AppConfig.GALLERY_PLATEAU to "高原",
 //            AppConfig.GALLERY_BEACH to "海滩",
-//            AppConfig.GALLERY_GLACIER to "冰川",
 //            AppConfig.GALLERY_MOUNTAIN to "山地",
 //            AppConfig.GALLERY_UNDERSEA to "海底",
 //            AppConfig.GALLERY_HIGHWAY to "公路"
@@ -77,12 +77,12 @@ class GalleryListActivity : BaseActivity<ActivityGalleryListBinding>() {
                 name = name,
                 drawableRes = when (id) {
                     AppConfig.GALLERY_RAIN_FOREST -> R.drawable.bg_rain_forest
+                    AppConfig.GALLERY_GLACIER -> R.drawable.bg_glacier
 //                    AppConfig.GALLERY_DESERT -> R.drawable.bg_desert
 //                    AppConfig.GALLERY_CITY -> R.drawable.bg_city
 //                    AppConfig.GALLERY_COUNTRYSIDE -> R.drawable.bg_countryside
 //                    AppConfig.GALLERY_PLATEAU -> R.drawable.bg_plateau
 //                    AppConfig.GALLERY_BEACH -> R.drawable.bg_beach
-//                    AppConfig.GALLERY_GLACIER -> R.drawable.bg_glacier
 //                    AppConfig.GALLERY_MOUNTAIN -> R.drawable.bg_mountain
 //                    AppConfig.GALLERY_UNDERSEA -> R.drawable.bg_undersea
 //                    AppConfig.GALLERY_HIGHWAY -> R.drawable.bg_highway

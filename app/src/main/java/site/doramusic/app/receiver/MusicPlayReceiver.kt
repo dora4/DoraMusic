@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import androidx.lifecycle.lifecycleScope
 import dora.db.builder.WhereBuilder
 import dora.db.dao.DaoFactory
 import dora.db.table.OrmTable
@@ -67,10 +66,7 @@ class MusicPlayReceiver : BroadcastReceiver() {
             ACTION_NEXT -> MediaManager.next()
             ACTION_PREV -> MediaManager.prev()
             ACTION_FAVORITE -> {
-                val curMusic = MediaManager.curMusic
-                if (curMusic == null) {
-                    return
-                }
+                val curMusic = MediaManager.curMusic ?: return
                 curMusic.let {
                     val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
                     if (it.favorite == 1) {

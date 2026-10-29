@@ -123,6 +123,7 @@ The [Dora Music] Team</string>
     <string name="insufficient_points">Insufficient points!</string>
     <string name="you_already_own_this_card">You already own this card.</string>
     <string name="rain_forest">Rain Forest</string>
+    <string name="glacier">Glacier</string>
     <string name="gallery_name_format">Collection Name: %1$s</string>
     <string name="my_points_format">My Points: %1$d</string>
     <string name="listening_reward">Listening Reward</string>

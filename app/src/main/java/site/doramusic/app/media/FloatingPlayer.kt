@@ -3,12 +3,16 @@ package site.doramusic.app.media
 import android.content.Intent
 import android.net.Uri
 import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import dora.BaseFloatingWindowService
 import dora.util.DensityUtils
 import dora.util.ScreenUtils
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URI
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URL
+import site.doramusic.app.util.PrefsManager
 
 class FloatingPlayer : BaseFloatingWindowService() {
 
@@ -18,10 +22,13 @@ class FloatingPlayer : BaseFloatingWindowService() {
     private var ivPauseResume: ImageView? = null
 
     private fun updatePlayerIcon(isPlaying: Boolean) {
-        ivPauseResume?.setImageResource(
-            if (isPlaying) R.drawable.ic_player_pause
-            else R.drawable.ic_player_play
-        )
+        ivPauseResume?.let {
+            val darkMode = PrefsManager(this).getDarkMode()
+            applyDarkModeDrawable(darkMode,
+                it, getDrawable(if (isPlaying) R.drawable.ic_player_pause else
+                    R.drawable.ic_player_play),
+                "#FFFFFF".toColorInt(), "#1A2025".toColorInt())
+        }
     }
 
     override fun onCreate() {
@@ -102,6 +109,15 @@ class FloatingPlayer : BaseFloatingWindowService() {
     override fun initViews() {
         ivPauseResume = findViewById(R.id.iv_floating_pause_resume)
         val ivStop = findViewById<ImageView>(R.id.iv_floating_stop)
+        // service要自己更新深色主题
+        val llContainer = findViewById<LinearLayout>(R.id.ll_floating_player)
+        val drawable = ContextCompat.getDrawable(this, R.drawable.shape_floating_border)
+        applyDarkModeBackground(PrefsManager(this).getDarkMode(),
+            llContainer, drawable, getColor(R.color.obsidian_black), "#F5F5F9".toColorInt())
+        applyDarkModeDrawable(PrefsManager(this).getDarkMode(),
+            ivStop, ContextCompat.getDrawable(this,
+                R.drawable.ic_player_stop),
+            "#FFFFFF".toColorInt(), "#1A2025".toColorInt())
         ivPauseResume?.setOnClickListener {
             if (audioPlayer.isPlaying()) {
                 pause()
