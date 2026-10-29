@@ -119,6 +119,7 @@ Dora Musicチーム</string>
     <string name="insufficient_points">ポイントが不足しています！</string>
     <string name="you_already_own_this_card">このカードはすでに所持しています。</string>
     <string name="rain_forest">熱帯雨林</string>
+    <string name="glacier">氷河</string>
     <string name="gallery_name_format">コレクション名：%1$s</string>
     <string name="my_points_format">保有ポイント：%1$d</string>
     <string name="listening_reward">再生報酬</string>

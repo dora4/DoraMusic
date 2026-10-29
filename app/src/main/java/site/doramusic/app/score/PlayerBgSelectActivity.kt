@@ -1,9 +1,7 @@
 package site.doramusic.app.score
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
@@ -196,6 +194,12 @@ class PlayerBgSelectActivity :
                 name = getString(R.string.rain_forest),
                 imageRes = R.drawable.bg_rain_forest
             ),
+            GalleryBackground(
+                id = AppConfig.GALLERY_GLACIER,
+                galleryId = AppConfig.GALLERY_GLACIER,
+                name = getString(R.string.glacier),
+                imageRes = R.drawable.bg_glacier
+            ),
             //            GalleryBackground(
             //                id = AppConfig.GALLERY_DESERT,
             //                galleryId = AppConfig.GALLERY_DESERT,
@@ -225,12 +229,6 @@ class PlayerBgSelectActivity :
             //                galleryId = AppConfig.GALLERY_BEACH,
             //                name = getString(R.string.beach),
             //                imageRes = R.drawable.bg_beach
-            //            ),
-            //            GalleryBackground(
-            //                id = AppConfig.GALLERY_GLACIER,
-            //                galleryId = AppConfig.GALLERY_GLACIER,
-            //                name = getString(R.string.glacier),
-            //                imageRes = R.drawable.bg_glacier
             //            ),
             //            GalleryBackground(
             //                id = AppConfig.GALLERY_MOUNTAIN,

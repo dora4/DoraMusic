@@ -112,6 +112,7 @@
     <string name="insufficient_points">Punkte nicht ausreichend!</string>
     <string name="you_already_own_this_card">Du besitzt diese Karte bereits.</string>
     <string name="rain_forest">Regenwald</string>
+    <string name="glacier">Gletscher</string>
     <string name="gallery_name_format">Sammlungsname: %1$s</string>
     <string name="my_points_format">Meine Punkte: %1$d</string>
     <string name="listening_reward">Belohnung fürs Hören</string>

@@ -112,6 +112,7 @@
     <string name="insufficient_points">คะแนนไม่พอ!</string>
     <string name="you_already_own_this_card">คุณมีการ์ดใบนี้แล้ว</string>
     <string name="rain_forest">ป่าฝน</string>
+    <string name="glacier">ธารน้ำแข็ง</string>
     <string name="gallery_name_format">ชื่อคอลเลกชัน: %1$s</string>
     <string name="my_points_format">คะแนนของฉัน: %1$d</string>
     <string name="listening_reward">รางวัลการฟัง</string>

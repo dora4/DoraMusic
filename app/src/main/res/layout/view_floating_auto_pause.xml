@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/ll_floating_auto_pause"
         android:layout_width="@dimen/auto_pause_floating_view_width"
         android:layout_height="wrap_content"
         android:orientation="vertical"

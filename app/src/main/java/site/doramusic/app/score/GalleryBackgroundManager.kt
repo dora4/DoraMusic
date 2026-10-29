@@ -30,6 +30,11 @@ object GalleryBackgroundManager {
             nameRes = R.string.rain_forest,
             backgroundRes = R.drawable.bg_rain_forest
         ),
+        Background(
+            galleryId = AppConfig.GALLERY_GLACIER,
+            nameRes = R.string.glacier,
+            backgroundRes = R.drawable.bg_glacier
+        ),
 //        Background(
 //            galleryId = AppConfig.GALLERY_DESERT,
 //            nameRes = R.string.desert,
@@ -54,11 +59,6 @@ object GalleryBackgroundManager {
 //            galleryId = AppConfig.GALLERY_BEACH,
 //            nameRes = R.string.beach,
 //            backgroundRes = R.drawable.bg_beach
-//        ),
-//        Background(
-//            galleryId = AppConfig.GALLERY_GLACIER,
-//            nameRes = R.string.glacier,
-//            backgroundRes = R.drawable.bg_glacier
 //        ),
 //        Background(
 //            galleryId = AppConfig.GALLERY_MOUNTAIN,

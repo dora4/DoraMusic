@@ -29,6 +29,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/shape_search_input"
                 android:hint="@string/search_music_hint"
+                android:textColor="@color/colorSearchText"
+                android:textColorHint="@color/colorSearchTextHint"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
                 android:singleLine="true"

@@ -112,6 +112,7 @@
     <string name="insufficient_points">Недостаточно очков!</string>
     <string name="you_already_own_this_card">У вас уже есть эта карта.</string>
     <string name="rain_forest">Тропический лес</string>
+    <string name="glacier">Ледник</string>
     <string name="gallery_name_format">Название коллекции: %1$s</string>
     <string name="my_points_format">Мои очки: %1$d</string>
     <string name="listening_reward">Награда за прослушивание</string>

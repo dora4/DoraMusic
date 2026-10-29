@@ -1,5 +1,6 @@
 package site.doramusic.app.feedback
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -106,7 +107,9 @@ class FeedbackActivity : BaseSkinActivity<ActivityFeedbackBinding>() {
                 }
             }
         })
-        binding.menuPanel.addMenu(
+        binding.menuPanel
+            .setPanelBgColor(getColor(R.color.colorPanelBg))
+            .addMenu(
             InputMenuPanelItem(
                 0,
                 getString(R.string.feedback_title),
@@ -114,6 +117,7 @@ class FeedbackActivity : BaseSkinActivity<ActivityFeedbackBinding>() {
                 getString(R.string.input_feedback_content),
                 "",
                 null,
+                getColor(R.color.colorTextPrimary),
                 watcher = object : InputMenuPanelItem.ContentWatcher {
                     override fun onContentChanged(
                         item: InputMenuPanelItem,

@@ -112,6 +112,7 @@
     <string name="insufficient_points">音符不足！</string>
     <string name="you_already_own_this_card">已有該卡片</string>
     <string name="rain_forest">雨林</string>
+    <string name="glacier">冰川</string>
     <string name="gallery_name_format">圖鑑名稱：%1$s</string>
     <string name="my_points_format">我的音符：%1$d</string>
     <string name="listening_reward">聆聽時長音符</string>

@@ -107,7 +107,7 @@ dependencies {
     implementation("com.google.android.material:material:1.14.0")
 
     // Dora全家桶
-    implementation("com.github.dora4:dora:1.3.69")
+    implementation("com.github.dora4:dora:1.3.71")
     implementation("com.github.dora4:dora-arouter-support:1.11")
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.6")
@@ -119,9 +119,9 @@ dependencies {
     implementation("com.github.dora4:dcache-android:3.6.16")
 
     implementation("com.github.dora4:dview-titlebar:1.41")
-    implementation("com.github.dora4:dview-menu-panel:1.47")
+    implementation("com.github.dora4:dview-menu-panel:1.50")
     implementation("com.github.dora4:dview-toggle-button:1.5")
-    implementation("com.github.dora4:dview-alert-dialog:1.42")
+    implementation("com.github.dora4:dview-alert-dialog:1.43")
     implementation("com.github.dora4:dview-loading-dialog:1.7")
     implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.12")
