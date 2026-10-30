@@ -12,13 +12,13 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.util.PrefsManager
 import androidx.core.graphics.toColorInt
+import dora.util.RxBus
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import site.doramusic.app.event.RefreshDarkModeEvent
+import kotlin.jvm.java
 
-/**
- * 自动暂停倒计时悬浮窗。
- *
- * 仅负责显示和调整倒计时时间。
- * 实际的自动暂停逻辑由外部播放器/定时器负责。
- */
 class FloatingAutoPause : BaseFloatingWindowService() {
 
     companion object {
@@ -31,18 +31,11 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         const val ACTION_STOP =
             "site.doramusic.app.action.FLOATING_AUTO_PAUSE_STOP"
 
-        /**
-         * 播放器开始播放时调用。
-         */
         const val ACTION_PLAY =
             "site.doramusic.app.action.FLOATING_AUTO_PAUSE_PLAY"
 
         const val EXTRA_DURATION =
             "site.doramusic.app.extra.AUTO_PAUSE_DURATION"
-
-        private const val EVENT_TYPE_PAUSE_NOW = "pause_now"
-
-        private const val MIN_DURATION = 15 * 60 * 1000L
         private const val MAX_DURATION = 2 * 60 * 60 * 1000L
         private const val STEP_DURATION = 15 * 60 * 1000L
     }
@@ -53,14 +46,9 @@ class FloatingAutoPause : BaseFloatingWindowService() {
 
     private var countDownTimer: CountDownTimer? = null
 
-    /**
-     * 倒计时结束后，等待播放器重新开始播放。
-     *
-     * 主要用于切歌场景：
-     *
-     * 当前歌曲 -> 切歌 -> 新歌曲开始播放 -> 立即暂停。
-     */
     private var waitingForResume = false
+
+    private val disposable = CompositeDisposable()
 
     override fun onStartCommand(
         intent: Intent?,
@@ -106,7 +94,7 @@ class FloatingAutoPause : BaseFloatingWindowService() {
 
     override fun getInitialPosition(): IntArray {
         return intArrayOf(
-            ScreenUtils.getScreenWidth() - DensityUtils.DP160,
+            ScreenUtils.getScreenWidth() - DensityUtils.DP100,
             ScreenUtils.getScreenHeight() - DensityUtils.DP100
         )
     }
@@ -133,27 +121,52 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         tvCancel.setOnClickListener {
             cancelAutoPause()
         }
-        // service要自己更新深色主题
+        updateTime()
+        // 初始深色模式样式
+        refreshDarkMode()
+        // 监听深色模式变化
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(RefreshDarkModeEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    refreshDarkMode()
+                }
+        )
+    }
+
+    private fun refreshDarkMode() {
+        val darkMode = PrefsManager(this).getDarkMode()
         val llContainer = findViewById<LinearLayout>(R.id.ll_floating_auto_pause)
         val drawable = ContextCompat.getDrawable(this, R.drawable.shape_floating_border)
-        applyDarkModeBackground(PrefsManager(this).getDarkMode(),
-            llContainer, drawable, getColor(R.color.obsidian_black), "#F5F5F9".toColorInt())
-        applyDarkModeTextColor(PrefsManager(this).getDarkMode(),
-            findViewById<TextView>(R.id.tv_floating_auto_pause_time)
-            , "#FFFFFF".toColorInt(),
-            getColor(R.color.colorTextPrimary))
-        applyDarkModeTextColors(PrefsManager(this).getDarkMode(),
+        applyDarkModeBackground(
+            darkMode,
+            llContainer,
+            drawable,
+            "#37393C".toColorInt(),
+            "#E4E6F5".toColorInt()
+        )
+        applyDarkModeTextColor(
+            darkMode,
+            findViewById<TextView>(R.id.tv_floating_auto_pause_time),
+            "#FFFFFF".toColorInt(),
+            getColor(R.color.colorTextPrimary)
+        )
+        applyDarkModeTextColors(
+            darkMode,
             arrayOf(
                 findViewById<TextView>(R.id.tv_floating_auto_pause_plus),
                 findViewById<TextView>(R.id.tv_floating_auto_pause_minus)
-            ), "#FFFFFF".toColorInt(),
-            getColor(R.color.colorTextSecondary))
-        updateTime()
+            ),
+            "#FFFFFF".toColorInt(),
+            getColor(R.color.colorTextSecondary)
+        )
     }
 
-    /**
-     * 开始倒计时。
-     */
+    private fun addDisposable(d: Disposable) {
+        disposable.add(d)
+    }
+
     private fun startCountdown(duration: Long) {
         countDownTimer?.cancel()
         remainingTime = duration.coerceIn(
@@ -179,14 +192,6 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         }.start()
     }
 
-    /**
-     * 倒计时结束。
-     *
-     * 如果当前正在播放，立即暂停。
-     *
-     * 如果当前没有播放，则等待播放器下一次开始播放。
-     * 这样可以覆盖切歌过程中短暂停止播放的情况。
-     */
     private fun handleTimeout() {
         stopCountdown()
         if (MediaManager.playState == AppConfig.MPS_PLAYING) {
@@ -197,12 +202,6 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         stopSelf()
     }
 
-    /**
-     * 播放器开始播放时调用。
-     *
-     * 如果倒计时已经结束，并且正在等待切歌完成，
-     * 则立即暂停新歌曲。
-     */
     private fun handlePlay() {
         if (!waitingForResume) {
             return
@@ -212,11 +211,6 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         stopSelf()
     }
 
-    /**
-     * 增加 15 分钟。
-     *
-     * 最大不超过 2 小时。
-     */
     private fun increaseTime() {
         waitingForResume = false
         val duration = (remainingTime + STEP_DURATION)
@@ -224,12 +218,6 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         startCountdown(duration)
     }
 
-    /**
-     * 减少 15 分钟。
-     *
-     * 如果减少后仍大于 0，则继续倒计时。
-     * 如果减少后小于等于 0，则直接暂停播放。
-     */
     private fun decreaseTime() {
         val duration = remainingTime - STEP_DURATION
         if (duration <= 0L) {
@@ -244,9 +232,6 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         startCountdown(duration)
     }
 
-    /**
-     * 取消自动暂停。
-     */
     private fun cancelAutoPause() {
         waitingForResume = false
         stopCountdown()
@@ -290,6 +275,7 @@ class FloatingAutoPause : BaseFloatingWindowService() {
         stopCountdown()
         waitingForResume = false
         tvTime = null
+        disposable.clear()
         super.onDestroy()
     }
 }

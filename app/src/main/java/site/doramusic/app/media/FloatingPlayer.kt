@@ -8,10 +8,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import dora.BaseFloatingWindowService
 import dora.util.DensityUtils
+import dora.util.RxBus
 import dora.util.ScreenUtils
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URI
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_URL
+import site.doramusic.app.event.RefreshDarkModeEvent
 import site.doramusic.app.util.PrefsManager
 
 class FloatingPlayer : BaseFloatingWindowService() {
@@ -20,6 +25,8 @@ class FloatingPlayer : BaseFloatingWindowService() {
     private var currentUrl: String? = null
     private var isInitialized = false
     private var ivPauseResume: ImageView? = null
+    private var ivStop: ImageView? = null
+    private val disposable = CompositeDisposable()
 
     private fun updatePlayerIcon(isPlaying: Boolean) {
         ivPauseResume?.let {
@@ -76,6 +83,8 @@ class FloatingPlayer : BaseFloatingWindowService() {
 
     override fun onDestroy() {
         audioPlayer.close()
+        ivPauseResume = null
+        disposable.clear()
         super.onDestroy()
     }
 
@@ -108,25 +117,59 @@ class FloatingPlayer : BaseFloatingWindowService() {
 
     override fun initViews() {
         ivPauseResume = findViewById(R.id.iv_floating_pause_resume)
-        val ivStop = findViewById<ImageView>(R.id.iv_floating_stop)
-        // service要自己更新深色主题
-        val llContainer = findViewById<LinearLayout>(R.id.ll_floating_player)
-        val drawable = ContextCompat.getDrawable(this, R.drawable.shape_floating_border)
-        applyDarkModeBackground(PrefsManager(this).getDarkMode(),
-            llContainer, drawable, getColor(R.color.obsidian_black), "#F5F5F9".toColorInt())
-        applyDarkModeDrawable(PrefsManager(this).getDarkMode(),
-            ivStop, ContextCompat.getDrawable(this,
-                R.drawable.ic_player_stop),
-            "#FFFFFF".toColorInt(), "#1A2025".toColorInt())
-        ivPauseResume?.setOnClickListener {
+        ivStop = findViewById<ImageView>(R.id.iv_floating_stop)
+        ivPauseResume!!.setOnClickListener {
             if (audioPlayer.isPlaying()) {
                 pause()
             } else {
                 resume()
             }
         }
-        ivStop.setOnClickListener {
+        ivStop!!.setOnClickListener {
             stopSelf()
         }
+        // 初始深色模式样式
+        refreshDarkMode()
+        // 监听深色模式变化
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(RefreshDarkModeEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    refreshDarkMode()
+                }
+        )
+    }
+
+    private fun addDisposable(d: Disposable) {
+        disposable.add(d)
+    }
+
+    private fun refreshDarkMode() {
+        if (ivPauseResume == null || ivStop == null) return
+        val darkMode = PrefsManager(this).getDarkMode()
+        val llContainer = findViewById<LinearLayout>(R.id.ll_floating_player)
+        val drawable = ContextCompat.getDrawable(this, R.drawable.shape_floating_border)
+        applyDarkModeBackground(
+            darkMode,
+            llContainer,
+            drawable,
+            "#37393C".toColorInt(),
+            "#E4E6F5".toColorInt()
+        )
+        val isPlaying = isInitialized && audioPlayer.isPlaying()
+        applyDarkModeDrawable(
+            darkMode,
+            ivPauseResume!!,
+            getDrawable(
+                if (isPlaying) R.drawable.ic_player_pause else R.drawable.ic_player_play
+            ),
+            "#FFFFFF".toColorInt(),
+            "#1A2025".toColorInt()
+        )
+        applyDarkModeDrawable(darkMode,
+            ivStop!!, ContextCompat.getDrawable(this,
+                R.drawable.ic_player_stop),
+            "#FFFFFF".toColorInt(), "#1A2025".toColorInt())
     }
 }
