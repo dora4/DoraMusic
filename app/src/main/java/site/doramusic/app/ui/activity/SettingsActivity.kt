@@ -37,6 +37,7 @@ import dora.util.RxBus
 import site.doramusic.app.conf.AppConfig.Companion.CHANNEL_CN
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.event.HomeBannerEvent
+import site.doramusic.app.event.RefreshDarkModeEvent
 import site.doramusic.app.feedback.FeedbackActivity
 import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
@@ -134,10 +135,12 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_DARK_MODE)
                     spmSelectContent("打开深色模式开关")
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    RxBus.getInstance().post(RefreshDarkModeEvent())
                 } else {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_DARK_MODE)
                     spmSelectContent("关闭深色模式开关")
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    RxBus.getInstance().post(RefreshDarkModeEvent())
                 }
                 binding.tbSettingsDarkMode.isChecked = isChecked
                 prefsManager.saveDarkMode(isChecked)
