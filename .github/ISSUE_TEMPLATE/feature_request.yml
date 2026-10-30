@@ -1,0 +1,67 @@
+name: " 功能建议"
+description: 为朵拉音乐提出新功能、体验优化或产品改进建议
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        欢迎为朵拉音乐提出建议！请尽量说明使用场景和期望效果，方便维护者评估优先级。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 想解决什么问题
+      description: 当前朵拉音乐在哪些场景下不够好用
+      placeholder: "例如: 在车机等横屏平板上显示不好看，不好用"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+      description: 你希望朵拉音乐增加什么能力，或如何改进现有体验
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: 典型使用场景
+      description: 列举 2-3 个具体场景，帮助维护者理解需求价值
+      placeholder: |
+        1. 具体哪个地方显示不太符合习惯
+        2. 车辆行驶中要注意的细节
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 验收标准
+      description: 功能上线后，如何判断它已经做好
+      placeholder: |
+        - 用户可以在首页看到「XXXX」入口
+    validations:
+      required: true
+
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: 你是否愿意参与实现
+      options:
+        - 只提建议，希望维护者评估
+        - 愿意参与方案讨论
+        - 愿意提交 PR
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考示例
+      description: 可选填其他音乐产品或已有 Issue 链接
+    validations:
+      required: false

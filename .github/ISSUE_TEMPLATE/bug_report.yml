@@ -1,0 +1,97 @@
+name: " 问题报告"
+description: 反馈朵拉音乐运行异常、播放失败、接口报错、崩溃等问题
+title: "[Bug]: "
+labels: ["bug", "triage"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你反馈朵拉音乐的问题！为了让维护者更快定位，请尽量提供完整信息。
+        提交前请确认：日志、截图或配置中不包含账号、密钥、手机号等敏感信息。
+
+  - type: checkboxes
+    id: pre-check
+    attributes:
+      label: 提交前自查
+      options:
+        - label: 我已使用最新稳定版本复现过该问题
+          required: true
+        - label: 我已在现有 Issues 中搜索过相同关键词，未发现重复问题
+          required: true
+        - label: 我已移除日志和截图中的敏感信息
+          required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 使用平台
+      description: 请选择问题出现的平台
+      options:
+        - Android
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 朵拉音乐版本
+      description: 例如 1.0.0、main 分支 commit、或设置页显示的版本号
+      placeholder: "例如: 1.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 用一句话说明遇到了什么问题
+      placeholder: "例如: 点击播放后歌曲没有声音，也没有报错提示"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 请提供能够稳定复现问题的操作步骤
+      placeholder: |
+        1. 打开朵拉音乐
+        2. 进入「歌曲列表」
+        3. 点击某首歌曲播放
+        4. 观察现象
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期结果
+      description: 正常情况下应该发生什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果
+      description: 实际发生了什么，可粘贴关键报错
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志或截图
+      description: 粘贴关键日志、报错堆栈或上传截图。日志请尽量保留从第一处异常到调用栈结束的部分
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其他补充
+      description: 可选填网络环境、是否ROOT、是否使用代理、使用的语言等
+    validations:
+      required: false
