@@ -24,163 +24,169 @@
             android:layout_height="@dimen/title_bar_height"
             android:background="@color/skin_theme_color"
             app:dview_backIcon="@drawable/ic_back"
-            app:dview_backIconTint="@color/white"
             app:dview_backIconSize="@dimen/title_bar_icon_size"
+            app:dview_backIconTint="@color/white"
             app:dview_title="@string/equalizer"
             app:dview_titleTextSize="@dimen/title_bar_text_size" />
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPanelBg">
+            android:fillViewport="true">
 
-            <dora.widget.DoraEqualizerView
-                android:id="@+id/ev_equalizer"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/equalizer_height"
-                android:layout_marginTop="20dp" />
-
-            <View
-                android:id="@+id/divider_equalizer"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:layout_below="@id/ev_equalizer"
-                android:background="@color/divider_color" />
-
-            <HorizontalScrollView
-                android:id="@+id/hsv_equalizer"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/divider_equalizer"
-                android:fillViewport="true"
-                android:scrollbars="none">
+                android:background="@color/colorPanelBg">
 
-                <RadioGroup
-                    android:id="@+id/rg_equalizer"
-                    android:layout_width="wrap_content"
+                <dora.widget.DoraEqualizerView
+                    android:id="@+id/ev_equalizer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/equalizer_height"
+                    android:layout_marginTop="20dp" />
+
+                <View
+                    android:id="@+id/divider_equalizer"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/ev_equalizer"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/divider_color" />
+
+                <HorizontalScrollView
+                    android:id="@+id/hsv_equalizer"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPanelBg"
-                    android:checkedButton="@+id/rb_equalizer_close"
-                    android:orientation="horizontal">
+                    android:layout_below="@id/divider_equalizer"
+                    android:fillViewport="true"
+                    android:scrollbars="none">
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_close"
+                    <RadioGroup
+                        android:id="@+id/rg_equalizer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/close"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        android:background="@color/colorPanelBg"
+                        android:checkedButton="@+id/rb_equalizer_close"
+                        android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_custom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/custom"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/close"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_pop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/pop"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_custom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/custom"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_dance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/dance"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_pop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/pop"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_blue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/blue"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_dance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/dance"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_classic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/classic"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_blue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/blue"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_jazz"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/jazz"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_classic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/classic"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_slow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/slow"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_jazz"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/jazz"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_slots"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/slots"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_slow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/slow"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_shake"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/shake"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_slots"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/slots"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-                    <RadioButton
-                        android:id="@+id/rb_equalizer_country"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/selector_equalizer_radio_button"
-                        android:padding="10dp"
-                        android:text="@string/country"
-                        android:textSize="@dimen/equalizer_type_text_size"
-                        android:textColor="@color/equalizer_radio_button_text_color" />
-                </RadioGroup>
-            </HorizontalScrollView>
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_shake"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/shake"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/hsv_equalizer"
-                android:background="@color/divider_color" />
-        </RelativeLayout>
+                        <RadioButton
+                            android:id="@+id/rb_equalizer_country"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_equalizer_radio_button"
+                            android:padding="10dp"
+                            android:text="@string/country"
+                            android:textColor="@color/equalizer_radio_button_text_color"
+                            android:textSize="@dimen/equalizer_type_text_size" />
+                    </RadioGroup>
+                </HorizontalScrollView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/hsv_equalizer"
+                    android:background="@color/divider_color" />
+            </RelativeLayout>
+        </ScrollView>
     </LinearLayout>
 </layout>
