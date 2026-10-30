@@ -16,6 +16,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
+import androidx.core.view.WindowCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -592,6 +593,10 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         prefsManager = PrefsManager(this)
         StatusBarUtils.setStatusBarWithDrawerLayout(this, binding.dlMain,
             ThemeSelector.getThemeColor(this), StatusBarUtils.ALPHA_FULL)
+        val darkMode = prefsManager.getDarkMode()
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        // isAppearanceLightStatusBars = true → 黑色图标；false → 白色图标（浅色文字，深色模式需要false）
+        controller.isAppearanceLightStatusBars = !darkMode
         homeFragment = HomeFragment()
         supportFragmentManager.beginTransaction().replace(R.id.fl_main, homeFragment).commit()
         // 初始化侧边栏菜单
