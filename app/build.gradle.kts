@@ -112,9 +112,6 @@ dependencies {
     implementation("com.github.dora4:dora-firebase-support:1.14")
     implementation("com.github.dora4:dora-brvah-support:1.6")
     implementation("com.github.dora4:dora-glide-support:1.7")
-    implementation("com.github.dora4:dora-walletconnect-support:2.1.37") {
-        exclude(group = "com.madgag.spongycastle", module = "core")
-    }
 
     implementation("com.github.dora4:dcache-android:3.6.16")
 
@@ -146,8 +143,6 @@ dependencies {
     implementation("com.github.dora4:dview-banner-view:1.13")
     implementation("com.github.dora4:dview-marquee-view:1.1")
     implementation("com.github.dora4:dview-wave-view:1.1")
-
-    implementation("com.github.dora4:dorachat-authsdk:1.2.0")
 
     // ARouter
     implementation("com.alibaba:arouter-api:1.5.2")

@@ -66,12 +66,7 @@ class MusicApp : BaseApplication(), AppConfig {
         init()
         // 懒加载
         ThreadUtils.lazyLoad {
-            // 耗时操作延迟加载，不影响启动速度，代价是调用之前要先检测是否初始化完成
-            val startTime = System.currentTimeMillis()
-            LogUtils.d("initPay start time:$startTime")
-//            initPay()
-            val endTime = System.currentTimeMillis()
-            LogUtils.d("initPay end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
+            // 可以在这里加载耗时操作
             isAppInitialized = true
         }
     }
@@ -80,7 +75,6 @@ class MusicApp : BaseApplication(), AppConfig {
         val startTime = System.currentTimeMillis()
         LogUtils.d("init start time:$startTime")
         initDb()    // 初始化SQLite数据库的表
-        initAuth()  // 初始化Dora Chat认证SDK
         initHttp()   // 初始化网络框架
         val endTime = System.currentTimeMillis()
         LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
@@ -99,33 +93,6 @@ class MusicApp : BaseApplication(), AppConfig {
             .autoRefreshToken(true)
             .build()
         DoraChatSDK.init(this, config)
-    }
-
-    private fun initPay() {
-        val skinThemeColor = ThemeSelector.getThemeColor(applicationContext)
-        DoraFund.init(this, APP_NAME,
-            getString(R.string.app_desc), URL_DOMAIN,
-            arrayOf(EVMChains.ETHEREUM, EVMChains.POLYGON, EVMChains.AVALANCHE, EVMChains.BSC), skinThemeColor,
-            object : DoraFund.PayListener {
-                override fun onPayFailure(orderId: String, msg: String) {
-                }
-
-                override fun onSendTransactionToBlockchain(
-                    orderId: String,
-                    transactionHash: String
-                ) {
-                    val donation = DaoFactory.getDao(Donation::class.java).selectOne(
-                        WhereBuilder.create().addWhereEqualTo(COLUMN_ORDER_ID, orderId)
-                    )
-                    if (donation != null) {
-                        donation.transactionHash = transactionHash
-                        donation.pending = true
-                        DaoFactory.getDao(Donation::class.java).updateAsync(donation)
-                        ToastUtils.showLong(getString(R.string.donate_successfully, transactionHash))
-                    }
-                }
-            })
-        DoraFund.createNotificationChannels(this)
     }
 
     private fun initHttp() {
