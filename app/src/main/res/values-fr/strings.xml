@@ -185,6 +185,7 @@
     <string name="duration_colon">Durée : %1$s</string>
     <string name="path_colon">Chemin : %1$s</string>
     <string name="selected_template">Sélectionné %1$d / %2$d</string>
+    <string name="add">Ajouter</string>
     <string name="added_to_my_music">Ajouter à « Ma musique »</string>
     <string name="select_all">Tout sélectionner</string>
     <string name="cancel_select_all">Annuler la sélection</string>

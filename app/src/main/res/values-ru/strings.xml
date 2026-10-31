@@ -185,6 +185,7 @@
     <string name="duration_colon">Длительность: %1$s</string>
     <string name="path_colon">Путь: %1$s</string>
     <string name="selected_template">Выбрано %1$d / %2$d</string>
+    <string name="add">Добавить</string>
     <string name="added_to_my_music">Добавить в «Мою музыку»</string>
     <string name="select_all">Выбрать всё</string>
     <string name="cancel_select_all">Отменить выбор всего</string>

@@ -192,6 +192,7 @@ Dora Musicチーム</string>
     <string name="duration_colon">再生時間：%1$s</string>
     <string name="path_colon">パス：%1$s</string>
     <string name="selected_template">選択済み：%1$d / %2$d</string>
+    <string name="add">追加</string>
     <string name="added_to_my_music">マイソングに追加</string>
     <string name="select_all">すべて選択</string>
     <string name="cancel_select_all">選択解除</string>
