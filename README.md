@@ -133,4 +133,7 @@ https://www.toutiao.com/article/7693154244307829309/
 
 This open-source project includes sound effect copyrights and software copyright. All rights reserved. Infringement will be prosecuted. Authorization is waived only for system pre-installed application scenarios.
 
+### 资质文件
+
+https://www.toutiao.com/article/7700062039850451485/?log_from=34ab4c7c2af64_1793411719121
 
