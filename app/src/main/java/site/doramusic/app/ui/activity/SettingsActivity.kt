@@ -29,7 +29,6 @@ import site.doramusic.app.model.Donation
 import site.doramusic.app.util.PrefsManager
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
-import com.dorachat.auth.UserManager
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
 import dora.util.ApkUtils
@@ -252,11 +251,11 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 startActivity(feedbackIntent)
             }
             R.id.rl_settings_donate -> {
-                if (UserManager.ins?.currentUser == null) {
-                    showLongToast("请先登录")
-//                    DoraFund.connectWallet(this)
-                    return
-                }
+//                if (UserManager.ins?.currentUser == null) {
+//                    showLongToast("请先登录")
+////                    DoraFund.connectWallet(this)
+//                    return
+//                }
                 val menus = arrayOf(
                     getString(R.string.donation_desc_1),
                     getString(R.string.donation_desc_2),

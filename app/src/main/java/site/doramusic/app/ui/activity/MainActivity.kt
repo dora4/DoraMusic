@@ -13,27 +13,17 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.core.view.WindowCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.dorachat.auth.ARouterPath
-import com.dorachat.auth.AuthManager
-import com.dorachat.auth.SignInEvent
-import com.dorachat.auth.SignOutEvent
-import com.dorachat.auth.UserManager
 import dora.arouter.open
 import dora.firebase.SpmUtils.spmSelectContent
-import dora.http.DoraHttp
-import dora.http.DoraHttp.api
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
-import dora.http.retrofit.RetrofitManager
 import dora.skin.SkinManager
-import dora.pay.DoraFund
 import dora.util.ApkUtils
 import dora.util.IntentUtils
 import dora.util.NetUtils
@@ -41,11 +31,8 @@ import dora.util.PermissionHelper
 import dora.util.RxBus
 import dora.util.StatusBarUtils
 import dora.util.ToastUtils
-import dora.widget.DoraBreathingView
-import dora.widget.DoraDoubleButtonDialog
 import dora.widget.DoraLoadingDialog
 import dora.widget.DoraSingleButtonDialog
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,13 +42,9 @@ import site.doramusic.app.ui.OnBackListener
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.CHANNEL_CN
-import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_ACCESS_KEY
-import site.doramusic.app.conf.AppConfig.Companion.DORA_FUND_SECRET_KEY
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.databinding.ActivityMainBinding
 import site.doramusic.app.event.RefreshHomeItemEvent
-import site.doramusic.app.http.service.FileService
-import site.doramusic.app.http.service.MusicService
 import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.score.PointsManager
 import site.doramusic.app.track.EventType
@@ -70,7 +53,6 @@ import site.doramusic.app.ui.IBackNavigator
 import site.doramusic.app.ui.fragment.HomeFragment
 import site.doramusic.app.ui.layout.IMenuDrawer
 import site.doramusic.app.upgrade.ApkService
-import site.doramusic.app.util.IPFSUtils
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.util.ThemeSelector
 import java.io.File
@@ -98,7 +80,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             uri?.let {
                 // 复制文件到缓存目录
                 val file = copyUriToFile(uri, "selected_music")
-                uploadMusicEmu(file)
+//                uploadMusicEmu(file)
             }
         }
 
@@ -145,8 +127,8 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_VPN_PERMISSION) {
                 CoroutineScope(Dispatchers.IO).launch {
-                    DoraFund.connectVPN(this@MainActivity, DORA_FUND_ACCESS_KEY,
-                        DORA_FUND_SECRET_KEY)
+//                    DoraFund.connectVPN(this@MainActivity, DORA_FUND_ACCESS_KEY,
+//                        DORA_FUND_SECRET_KEY)
                 }
             }
         }
@@ -444,58 +426,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
     }
 
     /**
-     * 上传歌曲模拟。
-     */
-    private fun uploadMusicEmu(file: File) {
-        if (!DoraFund.isWalletConnected()) {
-            showShortToast(getString(R.string.evm_login_first))
-            return
-        }
-        val erc20Address = DoraFund.getCurrentAddress()
-        net {
-            val part = DoraHttp.createFilePart(file, "file", "audio/*")
-            // 模拟上传歌曲到去中心化存储
-            val cid = result(FileService::class) { ipfsEmu(part) }?.data
-            if (cid != null) {
-                try {
-                    val ok = api(MusicService::class) {
-                        saveMusicInfo(erc20Address, cid)
-                    }?.data as Boolean
-                    if (ok) {
-                        showShortToast(getString(R.string.uploaded_successfully))
-                    }
-                } catch (e: Exception) {
-                    showShortToast(e.toString())
-                }
-            }
-        }
-    }
-
-    /**
-     * 上传歌曲。
-     */
-    private fun uploadMusic(file: File) {
-        if (!DoraFund.isWalletConnected()) {
-            showShortToast(getString(R.string.evm_login_first))
-            return
-        }
-        val erc20Address = DoraFund.getCurrentAddress()
-        // 上传歌曲到去中心化存储
-        IPFSUtils.uploadToWeb3Storage(file, {
-            net {
-                val ok = result {
-                    RetrofitManager.getService(MusicService::class.java).saveMusicInfo(erc20Address, it)
-                }?.data as Boolean
-                if (ok) {
-                    showShortToast(getString(R.string.uploaded_successfully))
-                }
-            }
-        }, {
-            showShortToast(it)
-        })
-    }
-
-    /**
      * 扫描歌曲。
      */
     private fun performScanMusic() {
@@ -605,22 +535,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
         applySkin()
         // 关闭电池优化，保活
         IntentUtils.ensureIgnoreBatteryOptimization(this)
-        addDisposable(
-            RxBus.getInstance()
-                .toObservable(SignInEvent::class.java)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    erc20AddrView?.text = it.erc20
-                }
-        )
-        addDisposable(
-            RxBus.getInstance()
-                .toObservable(SignOutEvent::class.java)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    erc20AddrView?.text = ""
-                }
-        )
         // 返回键处理
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

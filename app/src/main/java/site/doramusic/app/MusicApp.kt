@@ -1,33 +1,20 @@
 package site.doramusic.app
 
 import androidx.core.content.ContextCompat
-import com.dorachat.auth.AuthInterceptor
-import com.dorachat.auth.AuthService
-import com.dorachat.auth.DoraChatConfig
-import com.dorachat.auth.DoraChatSDK
-import com.dorachat.auth.DoraUserInfo
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
-import dora.db.builder.WhereBuilder
-import dora.db.dao.DaoFactory
 import dora.http.log.FormatLogInterceptor
 import dora.http.retrofit.RetrofitManager
-import dora.pay.DoraFund
-import dora.pay.EVMChains
 import dora.util.LogUtils
 import dora.util.ThreadUtils
-import dora.util.ToastUtils
-import site.doramusic.app.chat.ChatService
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
-import site.doramusic.app.conf.AppConfig.Companion.COLUMN_ORDER_ID
 import site.doramusic.app.conf.AppConfig.Companion.CONNECT_TIMEOUT
 import site.doramusic.app.conf.AppConfig.Companion.DB_NAME
 import site.doramusic.app.conf.AppConfig.Companion.DB_VERSION
 import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.conf.AppConfig.Companion.READ_TIMEOUT
-import site.doramusic.app.conf.AppConfig.Companion.URL_DOMAIN
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
@@ -44,7 +31,6 @@ import site.doramusic.app.score.UserPoints
 import site.doramusic.app.sysmsg.SysMsgService
 import site.doramusic.app.track.TrackService
 import site.doramusic.app.upgrade.ApkService
-import site.doramusic.app.util.ThemeSelector
 import java.util.concurrent.TimeUnit
 
 /**
@@ -80,27 +66,11 @@ class MusicApp : BaseApplication(), AppConfig {
         LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
     }
 
-    private fun initAuth() {
-        val config = DoraChatConfig.Builder(
-            apiBaseUrl = AppConfig.URL_AUTH_SERVER,
-            partitionId = PRODUCT_NAME,
-            appName = APP_NAME,
-            themeColor = ContextCompat.getColor(this, R.color.colorPrimary)
-        )
-            .enableLog(true)
-            .showBrand(false)
-            .loadAccessToken(true)
-            .autoRefreshToken(true)
-            .build()
-        DoraChatSDK.init(this, config)
-    }
-
     private fun initHttp() {
         RetrofitManager.initConfig {
             okhttp {
                 connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-                addInterceptor(AuthInterceptor())
                 addInterceptor(FormatLogInterceptor())
                 build()
             }
@@ -108,10 +78,6 @@ class MusicApp : BaseApplication(), AppConfig {
             rxJava(true)
             // 支持Flow请求
             flow(true)
-            // 认证
-            mappingBaseUrl(AuthService::class.java, AppConfig.URL_AUTH_SERVER)
-            // 聊天室
-            mappingBaseUrl(ChatService::class.java, AppConfig.URL_CHAT_SERVER)
             // 建议反馈
             mappingBaseUrl(FeedbackService::class.java, AppConfig.URL_FEEDBACK_SERVER)
             // 官方产品簇
@@ -141,7 +107,6 @@ class MusicApp : BaseApplication(), AppConfig {
                 Folder::class.java, // 文件夹
                 Donation::class.java,  // 捐助记录
                 DownloadTask::class.java,   // 下载任务队列（暂未使用）
-                DoraUserInfo::class.java, // 用户资料
                 GalleryCard::class.java,   // 图鉴卡片
                 UserPoints::class.java, // 用户积分
                 PointsRecord::class.java    // 积分变更记录

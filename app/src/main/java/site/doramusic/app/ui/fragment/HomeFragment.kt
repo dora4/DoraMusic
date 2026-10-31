@@ -25,7 +25,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.dorachat.auth.UserManager
 import dora.BaseFragment
 import dora.arouter.open
 import dora.db.builder.QueryBuilder
@@ -37,7 +36,6 @@ import dora.firebase.SpmUtils.spmSelectContent
 import dora.http.DoraHttp.api
 import dora.http.DoraHttp.net
 import dora.http.DoraHttp.result
-import dora.pay.DoraFund
 import dora.util.*
 import dora.widget.DoraBannerView
 import dora.widget.DoraFlipperView
@@ -207,7 +205,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         if (!prefsManager.isBannerClosed()) {
             loadAds(binding)
         }
-        loadGuessing(binding)
+//        loadGuessing(binding)
         binding.statusbarHome.layoutParams = RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             StatusBarUtils.getStatusBarHeight()
@@ -291,7 +289,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 // 更新自动暂停倒计时按钮的颜色
                 (mBinding.titlebarHome.getMenuBoxList()[0].getChildAt(0) as ImageView).imageTintList =
                     ColorStateList.valueOf(skinThemeColor)
-                DoraFund.setThemeColor(skinThemeColor)
             })
         addDisposable(RxBus.getInstance()
             .toObservable(PlayMusicEvent::class.java)
@@ -417,21 +414,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 binding.rlGuessingContent.visibility = View.VISIBLE
                 var token: String?
                 var userId: String?
-                if (UserManager.ins?.currentUser == null) {
-                    val guestSession = getAvailableGuestSession()
-                    token = guestSession?.token
-                    userId = guestSession?.userId
-                } else {
-                    token = UserManager.ins?.currentUser?.accessToken
-                    userId = UserManager.ins?.currentUser?.erc20
-                }
-                binding.rlGuessingContent.setOnClickListener {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_GUESSING)
-                    open(ARoutePath.ACTIVITY_GUESSING) {
-                        withString(EXTRA_TOKEN, token)
-                        withString(EXTRA_USER_ID, userId)
-                    }
-                }
+//                if (UserManager.ins?.currentUser == null) {
+//                    val guestSession = getAvailableGuestSession()
+//                    token = guestSession?.token
+//                    userId = guestSession?.userId
+//                } else {
+//                    token = UserManager.ins?.currentUser?.accessToken
+//                    userId = UserManager.ins?.currentUser?.erc20
+//                }
+//                binding.rlGuessingContent.setOnClickListener {
+//                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_GUESSING)
+//                    open(ARoutePath.ACTIVITY_GUESSING) {
+//                        withString(EXTRA_TOKEN, token)
+//                        withString(EXTRA_USER_ID, userId)
+//                    }
+//                }
             }
             val topic = result(AdService::class) { getGuessingTopic(PRODUCT_NAME) }?.data?.configValue
             if (TextUtils.isNotEmpty(topic)) {
