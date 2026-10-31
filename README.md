@@ -20,6 +20,7 @@
 - 启动秒播
 - 摇一摇切换歌曲
 - 检测耳机与人性化的自动暂停
+- 定时暂停
 - 更换主题色
 - 深色模式
 - 单手操作
@@ -55,8 +56,7 @@ Android7.0+
 
 <p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
 
-- 用户版（稳定）：[查看详情](https://www.pgyer.com/doramusic) 
-- 开发版（内测）：[点此下载](https://github.com/dora4/DoraMusic/releases)
+- 用户版：[用户版](http://dorachat.com/doramusic-2.5.2-cn.apk) 
 
 ### 合作方案
 
@@ -104,10 +104,30 @@ https://www.toutiao.com/article/7693154244307829309/
 
    A：可以在「系统设置」或「应用程序」中找到权限，然后打开允许读取文件权限的开关。
 
+### 和国际版的差别
+
+| 对比维度           | 国际版   | 国行版 |
+| ------------------ | -------- | ------ |
+| 渠道标识           | （空白） | cn     |
+| 支持语言           | 14种     | 14种   |
+| 登录账号           | ✅        | ❌      |
+| 聊天室             | ✅        | ❌      |
+| 主播合作计划       | ❌        | ✅      |
+| 系统预装免授权     | ❌        | ✅      |
+| 基本的音乐播放控制 | ✅        | ✅      |
+| 更换主题色         | ✅        | ✅      |
+| 深色模式           | ✅        | ✅      |
+| 定时暂停           | ✅        | ✅      |
+| 适配平板           | ✅        | ✅      |
+| 代码开源           | ✅        | ✅      |
+| 代码分支           | main     | cn     |
+| 安装包提交         | 正常     | 较小   |
+
 ### 版权声明
 
-本开源项目带有音效版权和软件著作版权，版权所有，侵权必究！仅在系统预装应用场景下免授权。
+本开源项目带有音效版权和软件著作版权，版权所有，侵权必究！
 
-This open-source project includes sound effect copyrights and software copyright. All rights reserved. Infringement will be prosecuted. Authorization is waived only for system pre-installed application scenarios.
+### 资质文件
 
+https://www.toutiao.com/article/7700062039850451485/?log_from=34ab4c7c2af64_1793411719121
 
