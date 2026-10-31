@@ -196,6 +196,7 @@ The [Dora Music] Team</string>
     <string name="duration_colon">Duration: %1$s</string>
     <string name="path_colon">Path: %1$s</string>
     <string name="selected_template">Selected %1$d / %2$d</string>
+    <string name="add">Add</string>
     <string name="added_to_my_music">Add to My Music</string>
     <string name="select_all">Select All</string>
     <string name="cancel_select_all">Deselect All</string>

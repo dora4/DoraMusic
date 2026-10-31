@@ -185,6 +185,7 @@
     <string name="duration_colon">Thời lượng: %1$s</string>
     <string name="path_colon">Đường dẫn: %1$s</string>
     <string name="selected_template">Đã chọn %1$d / %2$d</string>
+    <string name="add">Thêm</string>
     <string name="added_to_my_music">Thêm vào nhạc của tôi</string>
     <string name="select_all">Chọn tất cả</string>
     <string name="cancel_select_all">Hủy chọn tất cả</string>

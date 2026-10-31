@@ -189,6 +189,7 @@
     <string name="duration_colon">时长：%1$s</string>
     <string name="path_colon">路径：%1$s</string>
     <string name="selected_template">已选择 %1$d / %2$d</string>
+    <string name="add">添加</string>
     <string name="added_to_my_music">添加到我的音乐</string>
     <string name="select_all">全部选择</string>
     <string name="cancel_select_all">取消全选</string>
