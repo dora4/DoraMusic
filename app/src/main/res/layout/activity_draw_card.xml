@@ -32,7 +32,7 @@
             app:dview_title="@string/draw_cards_to_collect_gallery"
             app:dview_titleTextSize="@dimen/title_bar_text_size" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -67,6 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:nestedScrollingEnabled="false"
                     android:clipToPadding="false"
                     android:padding="4dp" />
 
@@ -80,7 +81,7 @@
                     android:textSize="@dimen/draw_card_card_btn_text_size"
                     android:textColor="@color/white" />
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
