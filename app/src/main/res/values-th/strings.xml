@@ -121,7 +121,7 @@
     <string name="event_reward">รางวัลกิจกรรม</string>
     <string name="gacha_cost">ค่าใช้จ่ายในการสุ่ม</string>
     <string name="exchange_cost">ค่าแลกเปลี่ยน</string>
-    <string name="draw_card_btn_text">สุ่มรับการ์ด (ใช้ 100 คะแนน)</string>
+    <string name="draw_card_btn_text">สุ่มรับการ์ด (ใช้ 10 คะแนน)</string>
     <string name="storage_permission_prompt"><![CDATA[ต้องการสิทธิ์เข้าถึงไฟล์เพื่อตรวจจับเพลง คุณสามารถเปิดสิทธิ์เข้าถึงไฟล์ด้วยตนเองที่ [การตั้งค่า] -> [แอป] -> [สิทธิ์] ได้]]></string>
     <string name="guessing">การคาดการณ์</string>
     <string name="guessing_rank">อันดับการคาดการณ์</string>

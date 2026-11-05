@@ -121,7 +121,7 @@
     <string name="event_reward">Hadiah Acara</string>
     <string name="gacha_cost">Biaya tarik</string>
     <string name="exchange_cost">Biaya tukar</string>
-    <string name="draw_card_btn_text">Tarik kartu (biaya 100 poin)</string>
+    <string name="draw_card_btn_text">Tarik kartu (biaya 10 poin)</string>
     <string name="storage_permission_prompt"><![CDATA[Meminta izin akses berkas untuk mengenali lagu. Anda juga bisa mengaktifkannya secara manual di [Pengaturan] -> [Aplikasi] -> [Izin].]]></string>
     <string name="guessing">Prediksi</string>
     <string name="guessing_rank">Peringkat Prediksi</string>
