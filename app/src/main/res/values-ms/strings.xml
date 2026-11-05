@@ -121,7 +121,7 @@
     <string name="event_reward">Ganjaran Acara</string>
     <string name="gacha_cost">Kos Cabutan</string>
     <string name="exchange_cost">Kos Tukar</string>
-    <string name="draw_card_btn_text">Cabut Kad (Guna 100 Mata)</string>
+    <string name="draw_card_btn_text">Cabut Kad (Guna 10 Mata)</string>
     <string name="storage_permission_prompt"><![CDATA[Meminta kebenaran akses fail untuk mengenal pasti lagu. Anda juga boleh aktifkan kebenaran akses fail secara manual di [Tetapan] -> [Aplikasi] -> [Kebenaran].]]></string>
     <string name="guessing">Teka</string>
     <string name="guessing_rank">Kedudukan Teka</string>

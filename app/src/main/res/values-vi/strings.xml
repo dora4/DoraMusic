@@ -121,7 +121,7 @@
     <string name="event_reward">Phần thưởng sự kiện</string>
     <string name="gacha_cost">Chi phí rút thẻ</string>
     <string name="exchange_cost">Chi phí trao đổi</string>
-    <string name="draw_card_btn_text">Rút thẻ (Tốn 100 điểm)</string>
+    <string name="draw_card_btn_text">Rút thẻ (Tốn 10 điểm)</string>
     <string name="storage_permission_prompt"><![CDATA[Yêu cầu quyền truy cập tệp để nhận dạng bài hát. Bạn cũng có thể bật quyền truy cập tệp thủ công tại [Cài đặt] -> [Ứng dụng] -> [Quyền].]]></string>
     <string name="guessing">Dự đoán</string>
     <string name="guessing_rank">Xếp hạng dự đoán</string>

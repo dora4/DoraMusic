@@ -121,7 +121,7 @@
     <string name="event_reward">Награда за события</string>
     <string name="gacha_cost">Стоимость розыгрыша</string>
     <string name="exchange_cost">Стоимость обмена</string>
-    <string name="draw_card_btn_text">Вытянуть карту (стоит 100 очков)</string>
+    <string name="draw_card_btn_text">Вытянуть карту (стоит 10 очков)</string>
     <string name="storage_permission_prompt"><![CDATA[Запрос разрешения на доступ к файлам для распознавания песен. Вы также можете включить разрешение вручную в [Настройки] -> [Приложения] -> [Разрешения].]]></string>
     <string name="guessing">Прогноз</string>
     <string name="guessing_rank">Рейтинг прогнозов</string>

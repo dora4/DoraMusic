@@ -121,7 +121,7 @@
     <string name="event_reward">Eventbelohnung</string>
     <string name="gacha_cost">Kosten für das Ziehen</string>
     <string name="exchange_cost">Tauschkosten</string>
-    <string name="draw_card_btn_text">Karte ziehen (kostet 100 Punkte)</string>
+    <string name="draw_card_btn_text">Karte ziehen (kostet 10 Punkte)</string>
     <string name="storage_permission_prompt"><![CDATA[Berechtigung für den Dateizugriff anfordern, um Lieder zu erkennen. Du kannst die Berechtigung auch manuell aktivieren unter [Einstellungen] -> [Apps] -> [Berechtigungen].]]></string>
     <string name="guessing">Prognose</string>
     <string name="guessing_rank">Prognoseranking</string>

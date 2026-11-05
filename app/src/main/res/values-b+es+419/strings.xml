@@ -121,7 +121,7 @@
     <string name="event_reward">Recompensa de eventos</string>
     <string name="gacha_cost">Costo del sorteo</string>
     <string name="exchange_cost">Costo de intercambio</string>
-    <string name="draw_card_btn_text">Obtener carta (cuesta 100 puntos)</string>
+    <string name="draw_card_btn_text">Obtener carta (cuesta 10 puntos)</string>
     <string name="storage_permission_prompt"><![CDATA[Solicita permiso de acceso a archivos para reconocer canciones. También puedes activarlo manualmente en [Configuración] -> [Aplicaciones] -> [Permisos].]]></string>
     <string name="guessing">Predicción</string>
     <string name="guessing_rank">Ranking de predicciones</string>

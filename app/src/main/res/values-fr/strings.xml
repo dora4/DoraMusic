@@ -121,7 +121,7 @@
     <string name="event_reward">Récompense d’événement</string>
     <string name="gacha_cost">Coût du tirage</string>
     <string name="exchange_cost">Coût de l’échange</string>
-    <string name="draw_card_btn_text">Tirer une carte (coûte 100 points)</string>
+    <string name="draw_card_btn_text">Tirer une carte (coûte 10 points)</string>
     <string name="storage_permission_prompt"><![CDATA[Demande d’autorisation d’accès aux fichiers pour reconnaître les titres. Vous pouvez aussi activer manuellement cette autorisation dans [Paramètres] -> [Applications] -> [Autorisations].]]></string>
     <string name="guessing">Prédiction</string>
     <string name="guessing_rank">Classement des prédictions</string>

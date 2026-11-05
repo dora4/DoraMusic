@@ -128,7 +128,7 @@ Dora Musicチーム</string>
     <string name="event_reward">イベント報酬</string>
     <string name="gacha_cost">ガチャ消費ポイント</string>
     <string name="exchange_cost">交換消費ポイント</string>
-    <string name="draw_card_btn_text">ガチャを引く（消費100ポイント）</string>
+    <string name="draw_card_btn_text">ガチャを引く（消費10ポイント）</string>
     <string name="storage_permission_prompt"><![CDATA[曲を識別するためファイルアクセス権限を要求しています。[設定]→[アプリ]→[権限]から手動でファイルアクセス権限を有効にすることもできます。]]></string>
     <string name="guessing">予想ゲーム</string>
     <string name="guessing_rank">予想ランキング</string>
