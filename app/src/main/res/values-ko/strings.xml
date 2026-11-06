@@ -207,6 +207,10 @@ Dora Musicチーム</string>
     <string name="_00_00">00:00</string>
     <string name="_0_54">(0/54)</string>
     <string name="__">-</string>
+    <string name="not_support_nfc">이 기기는 NFC를 지원하지 않습니다</string>
+    <string name="please_turn_on_nfc">NFC를 먼저 켜주세요</string>
+    <string name="not_an_ndef_tag">NDEF 태그가 아닙니다</string>
+    <string name="failed_to_read_tag">태그 읽기 실패</string>
     <plurals name="my_bet_format">
         <item quantity="one">私の予想：%1$s %2$dポイント</item>
         <item quantity="other">私の予想：%1$s %2$dポイント</item>
