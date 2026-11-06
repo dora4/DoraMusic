@@ -99,11 +99,28 @@ class FloatingPlayer : BaseFloatingWindowService() {
     }
 
     fun playByUrl(url: String) {
+        currentUrl = url
         audioPlayer.playByUrl(url)
     }
 
     fun playByUri(uri: Uri) {
-        audioPlayer.playByUri(uri)
+        when (uri.scheme) {
+            "doramusic" -> {
+                // NFC卡片：doramusic://play?url=xxx
+                val realUrl = uri.getQueryParameter("url")
+                if (!realUrl.isNullOrEmpty()) {
+                    playByUrl(realUrl)
+                }
+            }
+            "http", "https" -> {
+                // 如果音乐卡片那边是一个音乐文件的链接
+                playByUrl(uri.toString())
+            }
+            else -> {
+                // file/content本地文件
+                audioPlayer.playByUri(uri)
+            }
+        }
     }
 
     override fun getLayoutId(): Int {

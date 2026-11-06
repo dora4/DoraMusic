@@ -204,6 +204,10 @@
     <string name="_00_00">00:00</string>
     <string name="_0_54">(0/54)</string>
     <string name="__">-</string>
+    <string name="not_support_nfc">当前设备不支持NFC</string>
+    <string name="please_turn_on_nfc">请先打开NFC开关</string>
+    <string name="not_an_ndef_tag">不是NDEF格式卡片</string>
+    <string name="failed_to_read_tag">读卡失败</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d积分</item>
     </plurals>

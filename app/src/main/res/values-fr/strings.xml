@@ -200,6 +200,10 @@
     <string name="_00_00">00:00</string>
     <string name="_0_54">(0/54)</string>
     <string name="__">-</string>
+    <string name="not_support_nfc">Cet appareil ne prend pas en charge le NFC</string>
+    <string name="please_turn_on_nfc">Activez d’abord le NFC</string>
+    <string name="not_an_ndef_tag">Ce n’est pas une étiquette NDEF</string>
+    <string name="failed_to_read_tag">Échec de la lecture de l’étiquette</string>
     <plurals name="my_bet_format">
         <item quantity="one">Ma mise : %1$s %2$d point</item>
         <item quantity="other">Ma mise : %1$s %2$d points</item>
