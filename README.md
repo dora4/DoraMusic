@@ -56,7 +56,7 @@ Android7.0+
 
 <p><img width="128" height="128" src="https://github.com/user-attachments/assets/b98933b8-6fbe-45d3-8e54-6d181287fe36"></p>
 
-- 用户版：[下载链接](http://dorachat.com/doramusic-2.5.2-cn.apk) 
+- 用户版：[下载链接](http://dorachat.com/doramusic-2.6.1-cn.apk) 
 
 ### 合作方案
 
@@ -103,6 +103,10 @@ https://www.toutiao.com/article/7693154244307829309/
 8. Q：**安卓存储权限怎么开，才能读取全部文件夹**
 
    A：可以在「系统设置」或「应用程序」中找到权限，然后打开允许读取文件权限的开关。
+
+9. Q：**国际版和国行版可以相互覆盖安装吗？**
+
+   A：只要版本号不降级，是可以覆盖安装的，且数据是不会丢失的。
 
 ### 和国际版的差别
 
