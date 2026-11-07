@@ -40,7 +40,7 @@ class PlaylistItemAdapter : BaseSortItemAdapter<Music>(R.layout.item_playlist) {
         if (MediaManager.curMusicId == item.songId && MediaManager.playState == AppConfig.MPS_PLAYING) {
             vIndicator.visibility = View.VISIBLE
         } else {
-            vIndicator.visibility = View.GONE
+            vIndicator.visibility = View.INVISIBLE
         }
     }
 }
