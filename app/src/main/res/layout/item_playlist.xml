@@ -38,6 +38,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginEnd="@dimen/playlist_item_indicator_margin_start"
                 android:orientation="vertical">
 
                 <dora.widget.DoraMarqueeTextView
@@ -62,7 +63,6 @@
                 android:id="@+id/vIndicator"
                 android:layout_width="@dimen/playlist_item_indicator_width"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/playlist_item_indicator_margin_start"
                 android:visibility="invisible" />
 
         </LinearLayout>
