@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!-- 主界面右下角弹出播放列表的条目 -->
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="m"
             type="site.doramusic.app.db.Music" />
@@ -19,52 +16,61 @@
         <LinearLayout
             android:id="@+id/ll_playlist"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/playlist_item_height"
+            android:layout_height="wrap_content"
             android:background="@drawable/selector_item_common"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:paddingVertical="@dimen/playlist_item_vertical_padding">
 
+            <!-- 序号 -->
             <TextView
-                android:id="@+id/tv_playlist_music_number"
+                android:id="@+id/tvIndex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="@dimen/playlist_item_music_number_text_size" />
+                android:gravity="center_horizontal"
+                android:minWidth="@dimen/playlist_item_index_width"
+                android:paddingHorizontal="10dp"
+                android:singleLine="true"
+                android:textSize="@dimen/playlist_item_index_text_size" />
 
-            <dora.widget.DoraMarqueeTextView
-                android:id="@+id/tv_playlist_music_name"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="2dp"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@{m.musicName}"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="@dimen/playlist_item_music_name_text_size" />
-
-            <TextView
-                android:id="@+id/tv_playlist_music_artist"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="5dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:maxLength="10"
-                android:maxLines="1"
-                android:text="@{m.artist}"
-                android:textColor="@color/colorTextSecondary"
-                android:textSize="@dimen/playlist_item_music_artist_text_size" />
+                android:orientation="vertical">
+
+                <dora.widget.DoraMarqueeTextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{m.musicName}"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="@dimen/playlist_item_title_text_size" />
+
+                <dora.widget.DoraMarqueeTextView
+                    android:id="@+id/tvSubTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@{m.artist}"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="@dimen/playlist_item_subtitle_text_size" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/vIndicator"
+                android:layout_width="@dimen/playlist_item_indicator_width"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/playlist_item_indicator_margin_start"
+                android:visibility="invisible" />
+
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/colorPanelBg" />
+            android:layout_height="@dimen/playlist_item_divider_width"
+            android:background="@color/divider_color" />
 
     </LinearLayout>
 </layout>
