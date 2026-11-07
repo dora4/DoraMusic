@@ -289,7 +289,9 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             }
             adapter.setList(MediaManager.playlist)
             adapter.setOnItemClickListener { _, _, position ->
-                MediaManager.playById(MediaManager.playlist[position].songId)
+                val targetMusic = MediaManager.playlist[position]
+                MediaManager.playById(targetMusic.songId)
+                adapter.notifyDataSetChanged()
             }
             recyclerView.setLayoutManager(LinearLayoutManager(recyclerView.context))
             recyclerView.setHasFixedSize(true)

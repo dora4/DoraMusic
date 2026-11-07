@@ -37,7 +37,14 @@
     <dimen name="playlist_dialog_play_mode_icon_size">28dp</dimen>
     <dimen name="playlist_dialog_play_mode_text_size">22sp</dimen>
     <dimen name="playlist_dialog_num_text_size">20sp</dimen>
-    <dimen name="playlist_item_height">60dp</dimen>
+    <dimen name="playlist_item_index_width">90dp</dimen>
+    <dimen name="playlist_item_index_text_size">18sp</dimen>
+    <dimen name="playlist_item_title_text_size">20sp</dimen>
+    <dimen name="playlist_item_subtitle_text_size">16sp</dimen>
+    <dimen name="playlist_item_indicator_width">5dp</dimen>
+    <dimen name="playlist_item_indicator_margin_start">12dp</dimen>
+    <dimen name="playlist_item_divider_width">1.5dp</dimen>
+    <dimen name="playlist_item_vertical_padding">10dp</dimen>
     <dimen name="playlist_item_music_number_text_size">20sp</dimen>
     <dimen name="playlist_item_music_name_text_size">22sp</dimen>
     <dimen name="playlist_item_music_artist_text_size">20sp</dimen>
