@@ -204,6 +204,17 @@
     <string name="please_turn_on_nfc">請先開啟NFC</string>
     <string name="not_an_ndef_tag">不是NDEF格式標籤</string>
     <string name="failed_to_read_tag">讀取標籤失敗</string>
+    <string name="bg_name_system_1">葉片露珠</string>
+    <string name="bg_name_system_2">花瓣</string>
+    <string name="bg_name_system_3">紫羅蘭</string>
+    <string name="bg_name_system_4">極光</string>
+    <string name="bg_name_mall_1">喜羊羊與灰太狼</string>
+    <string name="bg_name_mall_2">憤怒鳥</string>
+    <string name="bg_name_mall_3">海綿寶寶</string>
+    <string name="bg_name_mall_4">卡卡西</string>
+    <string name="tab_title_bg_gallery">圖鑑背景</string>
+    <string name="tab_title_bg_mall">商城背景</string>
+    <string name="tab_title_bg_system">系統背景</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d積分</item>
     </plurals>

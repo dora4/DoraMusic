@@ -204,6 +204,17 @@
     <string name="please_turn_on_nfc">Vui lòng bật NFC trước</string>
     <string name="not_an_ndef_tag">Không phải thẻ NDEF</string>
     <string name="failed_to_read_tag">Đọc thẻ thất bại</string>
+    <string name="bg_name_system_1">Sương trên lá</string>
+    <string name="bg_name_system_2">Cánh hoa</string>
+    <string name="bg_name_system_3">Hoa violet</string>
+    <string name="bg_name_system_4">Cực quang</string>
+    <string name="bg_name_mall_1">Dê Hạnh Phúc và Sói Xám</string>
+    <string name="bg_name_mall_2">Angry Birds</string>
+    <string name="bg_name_mall_3">SpongeBob</string>
+    <string name="bg_name_mall_4">Kakashi</string>
+    <string name="tab_title_bg_gallery">Nền bộ sưu tập</string>
+    <string name="tab_title_bg_mall">Nền cửa hàng</string>
+    <string name="tab_title_bg_system">Nền hệ thống</string>
     <plurals name="my_bet_format">
         <item quantity="one">Lựa chọn của tôi: %1$s %2$d điểm</item>
         <item quantity="other">Lựa chọn của tôi: %1$s %2$d điểm</item>

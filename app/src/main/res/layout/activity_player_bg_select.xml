@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,13 +25,39 @@
             app:dview_backIconSize="@dimen/title_bar_icon_size"
             android:background="@color/skin_theme_color" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <dora.widget.DoraTabBar
+            android:id="@+id/tabBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPanelFg"
+            android:paddingVertical="10dp"
+            app:dview_tb_tabIsDivided="false"
+            app:dview_tb_tabTextSize="16sp"
+            app:dview_tb_tabUnselectedTextColor="@color/colorTextSecondary"
+            app:dview_tb_tabSelectedTextColor="@color/skin_theme_color"
+            app:dview_tb_indicatorType="NORMAL"
+            app:dview_tb_indicatorColor="@color/skin_theme_color"
+            app:dview_tb_tabPadding="15dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"/>
+
+        <!-- ViewPager2 模式容器 -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!-- dview TabLayoutActivity风格：Fragment切换容器，默认隐藏 -->
+        <FrameLayout
+            android:id="@+id/flFragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:clipToPadding="false"
-            android:padding="8dp" />
+            android:visibility="gone"/>
 
     </LinearLayout>
 </layout>

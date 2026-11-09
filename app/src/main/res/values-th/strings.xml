@@ -204,6 +204,17 @@
     <string name="please_turn_on_nfc">กรุณาเปิด NFC ก่อน</string>
     <string name="not_an_ndef_tag">ไม่ใช่แท็ก NDEF</string>
     <string name="failed_to_read_tag">อ่านแท็กไม่สำเร็จ</string>
+    <string name="bg_name_system_1">น้ำค้างบนใบไม้</string>
+    <string name="bg_name_system_2">กลีบดอกไม้</string>
+    <string name="bg_name_system_3">ดอกไวโอเล็ต</string>
+    <string name="bg_name_system_4">ออโรร่า</string>
+    <string name="bg_name_mall_1">เพลแซนต์โกตกับบิ๊กบิ๊กวูลฟ์</string>
+    <string name="bg_name_mall_2">แองกรีเบิร์ด</string>
+    <string name="bg_name_mall_3">สพันจ์บ็อบ</string>
+    <string name="bg_name_mall_4">คาคาชิ</string>
+    <string name="tab_title_bg_gallery">พื้นหลังแกลเลอรี</string>
+    <string name="tab_title_bg_mall">พื้นหลังร้านค้า</string>
+    <string name="tab_title_bg_system">พื้นหลังระบบ</string>
     <plurals name="my_bet_format">
         <item quantity="one">การคาดการณ์ของฉัน: %1$s %2$d คะแนน</item>
         <item quantity="other">การคาดการณ์ของฉัน: %1$s %2$d คะแนน</item>

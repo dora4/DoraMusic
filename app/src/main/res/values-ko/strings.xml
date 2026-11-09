@@ -211,6 +211,17 @@ Dora Musicチーム</string>
     <string name="please_turn_on_nfc">NFC를 먼저 켜주세요</string>
     <string name="not_an_ndef_tag">NDEF 태그가 아닙니다</string>
     <string name="failed_to_read_tag">태그 읽기 실패</string>
+    <string name="bg_name_system_1">잎의 이슬</string>
+    <string name="bg_name_system_2">꽃잎</string>
+    <string name="bg_name_system_3">제비꽃</string>
+    <string name="bg_name_system_4">오로라</string>
+    <string name="bg_name_mall_1">쾌락양과 회색늑대</string>
+    <string name="bg_name_mall_2">앵그리 버드</string>
+    <string name="bg_name_mall_3">스폰지밥</string>
+    <string name="bg_name_mall_4">카카시</string>
+    <string name="tab_title_bg_gallery">도감 배경</string>
+    <string name="tab_title_bg_mall">몰 배경</string>
+    <string name="tab_title_bg_system">시스템 배경</string>
     <plurals name="my_bet_format">
         <item quantity="one">私の予想：%1$s %2$dポイント</item>
         <item quantity="other">私の予想：%1$s %2$dポイント</item>
