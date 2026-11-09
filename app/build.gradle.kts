@@ -146,6 +146,7 @@ dependencies {
     implementation("com.github.dora4:dview-banner-view:1.13")
     implementation("com.github.dora4:dview-marquee-view:1.1")
     implementation("com.github.dora4:dview-wave-view:1.1")
+    implementation("com.github.dora4:dview-tabbar:1.14")
 
     implementation("com.github.dora4:dorachat-authsdk:1.2.0")
 

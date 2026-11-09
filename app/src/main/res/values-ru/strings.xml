@@ -204,6 +204,17 @@
     <string name="please_turn_on_nfc">Сначала включите NFC</string>
     <string name="not_an_ndef_tag">Не тег NDEF</string>
     <string name="failed_to_read_tag">Ошибка чтения тега</string>
+    <string name="bg_name_system_1">Роса на листе</string>
+    <string name="bg_name_system_2">Лепесток</string>
+    <string name="bg_name_system_3">Фиалка</string>
+    <string name="bg_name_system_4">Аврора</string>
+    <string name="bg_name_mall_1">Весёлый Козлик и Серый Волк</string>
+    <string name="bg_name_mall_2">Злые птицы</string>
+    <string name="bg_name_mall_3">Губка Боб</string>
+    <string name="bg_name_mall_4">Какаси</string>
+    <string name="tab_title_bg_gallery">Фон галереи</string>
+    <string name="tab_title_bg_mall">Фон магазина</string>
+    <string name="tab_title_bg_system">Системный фон</string>
     <plurals name="my_bet_format">
         <item quantity="one">Моя ставка: %1$s %2$d очко</item>
         <item quantity="few">Моя ставка: %1$s %2$d очка</item>

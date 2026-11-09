@@ -9,38 +9,27 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import dora.util.SPUtils
 import site.doramusic.app.R
 
-class GalleryBackgroundAdapter(
-    backgrounds: MutableList<PlayerBgSelectActivity.GalleryBackground>,
+class PlayerBackgroundAdapter(
+    backgrounds: MutableList<PlayerBackground>,
     private var selectedBackground: String = DEFAULT_BACKGROUND
-) : BaseQuickAdapter<PlayerBgSelectActivity.GalleryBackground, BaseViewHolder>(
-    R.layout.item_gallery_background,
+) : BaseQuickAdapter<PlayerBackground, BaseViewHolder>(
+    R.layout.item_player_background,
     backgrounds
 ) {
 
     override fun convert(
         holder: BaseViewHolder,
-        item: PlayerBgSelectActivity.GalleryBackground
+        item: PlayerBackground
     ) {
         val itemView = holder.itemView
         val context = itemView.context
-        val ivBackground =
-            itemView.findViewById<ImageView>(R.id.ivBackground)
-        val tvName =
-            itemView.findViewById<TextView>(R.id.tvName)
-        val ivLock =
-            itemView.findViewById<ImageView>(R.id.ivLock)
-        val tvStatus =
-            itemView.findViewById<TextView>(R.id.tvStatus)
-        val flBackgroundDisplay =
-            itemView.findViewById<FrameLayout>(R.id.flBackgroundDisplay)
-        val tvSelected =
-            itemView.findViewById<TextView>(R.id.tvSelected)
-        val unlocked =
-            item.id == DEFAULT_BACKGROUND ||
-                    SPUtils.readBoolean(
-                        context,
-                        item.galleryId
-                    )
+        val ivBackground = itemView.findViewById<ImageView>(R.id.ivBackground)
+        val tvName = itemView.findViewById<TextView>(R.id.tvName)
+        val ivLock = itemView.findViewById<ImageView>(R.id.ivLock)
+        val tvStatus = itemView.findViewById<TextView>(R.id.tvStatus)
+        val flBackgroundDisplay = itemView.findViewById<FrameLayout>(R.id.flBackgroundDisplay)
+        val tvSelected = itemView.findViewById<TextView>(R.id.tvSelected)
+        val unlocked = item.id == DEFAULT_BACKGROUND || SPUtils.readBoolean(context, item.galleryId)
         if (item.imageRes != 0) {
             ivBackground.visibility = View.VISIBLE
             ivBackground.setImageResource(item.imageRes)
@@ -88,6 +77,10 @@ class GalleryBackgroundAdapter(
     }
 
     companion object {
+
+        /**
+         * 没有设置背景时的面板默认背景色。
+         */
         private const val DEFAULT_BACKGROUND = "default"
     }
 }

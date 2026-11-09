@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import dora.BaseActivity
 import dora.util.RxBus
 import dora.util.SPUtils
 import dora.util.StatusBarUtils
@@ -16,29 +16,23 @@ import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityPlayerBgSelectBinding
 import site.doramusic.app.event.PlayerBackgroundChangedEvent
-import site.doramusic.app.ui.activity.BaseSkinActivity
-import site.doramusic.app.util.PadUtils
 import site.doramusic.app.util.ThemeSelector
 
-/**
- * 播放器背景设置。
- *
- * 已集齐对应画廊后，可以使用该画廊的播放器背景。
- */
 @Route(path = ARoutePath.ACTIVITY_PLAYER_BG_SELECT)
 class PlayerBgSelectActivity :
-    BaseSkinActivity<ActivityPlayerBgSelectBinding>(), AppConfig {
+    BaseActivity<ActivityPlayerBgSelectBinding>(), AppConfig {
 
-    private lateinit var adapter: GalleryBackgroundAdapter
+    // 切换开关
+    private val useViewPager2 = false
+//     private val useViewPager2 = true
 
-    /**
-     * 当前选中的背景。
-     */
+    private lateinit var galleryBgFragment: BackgroundListFragment
+    private lateinit var mallBgFragment: BackgroundListFragment
+    private lateinit var systemBgFragment: BackgroundListFragment
+    private lateinit var tabStrategy: TabRenderStrategy
     private var selectedBackground: String = DEFAULT_BACKGROUND
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_player_bg_select
-    }
+    override fun getLayoutId(): Int = R.layout.activity_player_bg_select
 
     override fun onSetStatusBar() {
         StatusBarUtils.setTransparencyStatusBar(this)
@@ -59,8 +53,8 @@ class PlayerBgSelectActivity :
             .addMenuButton(R.drawable.ic_clear_bg,
                 resources.getDimension(R.dimen.title_bar_icon_size).toInt())
             .setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
-
                 override fun onIconBackClick(icon: AppCompatImageView) {
+                    finish()
                 }
 
                 override fun onIconMenuClick(
@@ -70,72 +64,74 @@ class PlayerBgSelectActivity :
                     resetBackground()
                 }
             })
-        // 当前选择的背景。
+        binding.tabBar?.setTabTextSelectedColor(ThemeSelector.getThemeColor(this))
+        binding.tabBar?.setIndicatorColor(ThemeSelector.getThemeColor(this))
         selectedBackground = SPUtils.readString(
-            this@PlayerBgSelectActivity,
+            this,
             KEY_SELECTED_BACKGROUND,
             DEFAULT_BACKGROUND
         ) ?: DEFAULT_BACKGROUND
-        val backgrounds = createBackgrounds().toMutableList()
-
-        // 横屏平板4列，否则2列
-        val spanCount = if (PadUtils.isPadLandscape(this)) 4 else 2
-        binding.recyclerView.layoutManager =
-            GridLayoutManager(
-                this@PlayerBgSelectActivity,
-                spanCount
-            )
-        // 将当前已保存的背景传给 Adapter，
-        // 页面打开时立即显示正确的选中状态。
-        adapter = GalleryBackgroundAdapter(
-            backgrounds = backgrounds,
-            selectedBackground = selectedBackground
-        )
-        adapter.setOnItemClickListener { adapter, _, position ->
-            selectBackground(adapter.getItem(position) as GalleryBackground)
+        val galleryBgList = createGalleryBackgrounds()
+        val mallBgList = createMallBackgrounds()
+        val systemBgList = createSystemBackgrounds()
+        galleryBgFragment = BackgroundListFragment(galleryBgList.toMutableList(), selectedBackground) {
+            selectBackground(it)
         }
-        binding.recyclerView.adapter = adapter
+        mallBgFragment = BackgroundListFragment(mallBgList.toMutableList(), selectedBackground) {
+            selectBackground(it)
+        }
+        systemBgFragment = BackgroundListFragment(systemBgList.toMutableList(), selectedBackground) {
+            selectBackground(it)
+        }
+        val fragmentList = listOf(galleryBgFragment, mallBgFragment, systemBgFragment)
+        val tabTitles = arrayListOf(
+            getString(R.string.tab_title_bg_gallery),
+            getString(R.string.tab_title_bg_mall),
+            getString(R.string.tab_title_bg_system)
+        )
+        binding.tabBar?.setTextTabs(tabTitles)
+        // 根据开关选择策略，不再写大段if-else内部逻辑
+        tabStrategy = if (useViewPager2) {
+            ViewPager2TabStrategy(this)
+        } else {
+            FragmentTabStrategy(this)
+        }
+        tabStrategy.initTab(binding, tabTitles, fragmentList)
     }
 
     /**
-     * 屏幕旋转，动态更新列数。
+     * 屏幕旋转，动态更新列数。交给策略处理。
      */
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        val spanCount = if (PadUtils.isPadLandscape(this)) 4 else 2
-        mBinding.recyclerView.layoutManager = GridLayoutManager(this, spanCount)
-        adapter.notifyDataSetChanged()
+        tabStrategy.onConfigurationChanged()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(::tabStrategy.isInitialized){
+            tabStrategy.release()
+        }
     }
 
     /**
      * 选择背景。
      */
-    private fun selectBackground(background: GalleryBackground) {
+    private fun selectBackground(background: PlayerBackground) {
         if (!isBackgroundUnlocked(background)) {
-            showShortToast(
-                getString(R.string.background_not_unlocked)
-            )
+            showShortToast(getString(R.string.background_not_unlocked))
             return
         }
         selectedBackground = background.id
-        SPUtils.writeString(
-            this,
-            KEY_SELECTED_BACKGROUND,
-            selectedBackground
-        )
-        adapter.setSelectedBackground(selectedBackground)
-        // 通知播放器立即刷新背景。
+        SPUtils.writeString(this, KEY_SELECTED_BACKGROUND, selectedBackground)
+        // fragment同步选中状态
+        galleryBgFragment.updateSelectId(selectedBackground)
+        mallBgFragment.updateSelectId(selectedBackground)
+        systemBgFragment.updateSelectId(selectedBackground)
         RxBus.getInstance().post(
-            PlayerBackgroundChangedEvent(
-                backgroundRes = background.imageRes.takeIf { it != 0 }
-            )
+            PlayerBackgroundChangedEvent(backgroundRes = background.imageRes.takeIf { it != 0 })
         )
-        showShortToast(
-            getString(
-                R.string.background_selected,
-                background.name
-            )
-        )
+        showShortToast(getString(R.string.background_selected, background.name))
     }
 
     /**
@@ -143,126 +139,123 @@ class PlayerBgSelectActivity :
      */
     private fun resetBackground() {
         selectedBackground = DEFAULT_BACKGROUND
-        SPUtils.remove(
-            this,
-            KEY_SELECTED_BACKGROUND
-        )
-        // 刷新选择页面。
-        adapter.setSelectedBackground(DEFAULT_BACKGROUND)
-        // 通知播放器恢复默认背景。
-        RxBus.getInstance().post(
-            PlayerBackgroundChangedEvent(
-                backgroundRes = null
-            )
-        )
+        SPUtils.remove(this, KEY_SELECTED_BACKGROUND)
+        galleryBgFragment.updateSelectId(DEFAULT_BACKGROUND)
+        mallBgFragment.updateSelectId(DEFAULT_BACKGROUND)
+        systemBgFragment.updateSelectId(DEFAULT_BACKGROUND)
+        RxBus.getInstance().post(PlayerBackgroundChangedEvent(backgroundRes = null))
         showShortToast(getString(R.string.background_reset))
     }
 
-    /**
-     * 判断背景是否已经解锁。
-     *
-     * 默认背景始终解锁。
-     * 其他背景要求对应画廊已经集齐。
-     */
-    private fun isBackgroundUnlocked(
-        background: GalleryBackground
-    ): Boolean {
-        if (background.id == DEFAULT_BACKGROUND) {
-            return true
+    private fun isBackgroundUnlocked(background: PlayerBackground): Boolean {
+        if (background.id == DEFAULT_BACKGROUND) return true
+        if (background.bgType == PlayerBackground.BACKGROUND_TYPE_SYSTEM) return true
+        return when (background.bgType) {
+            PlayerBackground.BACKGROUND_TYPE_GALLERY -> {
+                SPUtils.readBoolean(this, background.galleryId, false)
+            }
+            else -> { // PlayerBackground.BACKGROUND_TYPE_MALL
+                SPUtils.readBoolean(this, "$PREFIX_MALL_BACKGROUND${background.id}", false)
+            }
         }
-
-        return SPUtils.readBoolean(
-            this,
-            background.galleryId
-        )
     }
 
-    /**
-     * 创建所有播放器背景。
-     */
-    private fun createBackgrounds(): List<GalleryBackground> {
+    private fun createGalleryBackgrounds(): List<PlayerBackground> {
         return listOf(
-            //            GalleryBackground(
-            //                id = DEFAULT_BACKGROUND,
-            //                galleryId = "",
-            //                name = getString(R.string.background_default),
-            //                imageRes = R.drawable.bg_default
-            //            ),
-            GalleryBackground(
+            PlayerBackground(
                 id = AppConfig.GALLERY_RAIN_FOREST,
                 galleryId = AppConfig.GALLERY_RAIN_FOREST,
                 name = getString(R.string.rain_forest),
-                imageRes = R.drawable.bg_rain_forest
+                imageRes = R.drawable.bg_rain_forest,
+                bgType = PlayerBackground.BACKGROUND_TYPE_GALLERY
             ),
-            GalleryBackground(
+            PlayerBackground(
                 id = AppConfig.GALLERY_GLACIER,
                 galleryId = AppConfig.GALLERY_GLACIER,
                 name = getString(R.string.glacier),
-                imageRes = R.drawable.bg_glacier
-            ),
-            //            GalleryBackground(
-            //                id = AppConfig.GALLERY_DESERT,
-            //                galleryId = AppConfig.GALLERY_DESERT,
-            //                name = getString(R.string.desert),
-            //                imageRes = R.drawable.bg_desert
-            //            ),
-            //            GalleryBackground(
-            //                id = AppConfig.GALLERY_CITY,
-            //                galleryId = AppConfig.GALLERY_CITY,
-            //                name = getString(R.string.city),
-            //                imageRes = R.drawable.bg_city
-            //            ),
-            //            GalleryBackground(
-            //                id = AppConfig.GALLERY_COUNTRYSIDE,
-            //                galleryId = AppConfig.GALLERY_COUNTRYSIDE,
-            //                name = getString(R.string.countryside),
-            //                imageRes = R.drawable.bg_countryside
-            //            ),
-            //            GalleryBackground(
-            //                id = AppConfig.GALLERY_PLATEAU,
-            //                galleryId = AppConfig.GALLERY_PLATEAU,
-            //                name = getString(R.string.plateau),
-            //                imageRes = R.drawable.bg_plateau
-            //            ),
-            //            GalleryBackground(
-            //                id = AppConfig.GALLERY_BEACH,
-            //                galleryId = AppConfig.GALLERY_BEACH,
-            //                name = getString(R.string.beach),
-            //                imageRes = R.drawable.bg_beach
-            //            ),
-            //            GalleryBackground(
-            //                id = AppConfig.GALLERY_MOUNTAIN,
-            //                galleryId = AppConfig.GALLERY_MOUNTAIN,
-            //                name = getString(R.string.mountain),
-            //                imageRes = R.drawable.bg_mountain
-            //            ),
-            //            GalleryBackground(
-            //                id = AppConfig.GALLERY_UNDERSEA,
-            //                galleryId = AppConfig.GALLERY_UNDERSEA,
-            //                name = getString(R.string.undersea),
-            //                imageRes = R.drawable.bg_undersea
-            //            ),
-            //            GalleryBackground(
-            //                id = AppConfig.GALLERY_HIGHWAY,
-            //                galleryId = AppConfig.GALLERY_HIGHWAY,
-            //                name = getString(R.string.highway),
-            //                imageRes = R.drawable.bg_highway
-            //            )
+                imageRes = R.drawable.bg_glacier,
+                bgType = PlayerBackground.BACKGROUND_TYPE_GALLERY
+            )
         )
     }
 
-    data class GalleryBackground(
-        val id: String,
-        val galleryId: String,
-        val name: String,
-        val imageRes: Int
-    )
+    private fun createSystemBackgrounds(): List<PlayerBackground> {
+        return listOf(
+            PlayerBackground(
+                id = SYSTEM_BACKGROUND_1,
+                galleryId = "",
+                name = getString(R.string.bg_name_system_1),
+                imageRes = R.drawable.bg_system_1,
+                bgType = PlayerBackground.BACKGROUND_TYPE_SYSTEM
+            ),
+            PlayerBackground(
+                id = SYSTEM_BACKGROUND_2,
+                galleryId = "",
+                name = getString(R.string.bg_name_system_2),
+                imageRes = R.drawable.bg_system_2,
+                bgType = PlayerBackground.BACKGROUND_TYPE_SYSTEM
+            ),
+            PlayerBackground(
+                id = SYSTEM_BACKGROUND_3,
+                galleryId = "",
+                name = getString(R.string.bg_name_system_3),
+                imageRes = R.drawable.bg_system_3,
+                bgType = PlayerBackground.BACKGROUND_TYPE_SYSTEM
+            ),
+            PlayerBackground(
+                id = SYSTEM_BACKGROUND_4,
+                galleryId = "",
+                name = getString(R.string.bg_name_system_4),
+                imageRes = R.drawable.bg_system_4,
+                bgType = PlayerBackground.BACKGROUND_TYPE_SYSTEM
+            )
+        )
+    }
+
+    private fun createMallBackgrounds(): List<PlayerBackground> {
+        return listOf(
+            PlayerBackground(
+                id = MALL_BACKGROUND_1,
+                galleryId = "",
+                name = getString(R.string.bg_name_mall_1),
+                imageRes = R.drawable.bg_mall_1,
+                bgType = PlayerBackground.BACKGROUND_TYPE_MALL
+            ),
+            PlayerBackground(
+                id = MALL_BACKGROUND_2,
+                galleryId = "",
+                name = getString(R.string.bg_name_mall_2),
+                imageRes = R.drawable.bg_mall_2,
+                bgType = PlayerBackground.BACKGROUND_TYPE_MALL
+            ),
+            PlayerBackground(
+                id = MALL_BACKGROUND_3,
+                galleryId = "",
+                name = getString(R.string.bg_name_mall_3),
+                imageRes = R.drawable.bg_mall_3,
+                bgType = PlayerBackground.BACKGROUND_TYPE_MALL
+            ),
+            PlayerBackground(
+                id = MALL_BACKGROUND_4,
+                galleryId = "",
+                name = getString(R.string.bg_name_mall_4),
+                imageRes = R.drawable.bg_mall_4,
+                bgType = PlayerBackground.BACKGROUND_TYPE_MALL
+            )
+        )
+    }
 
     companion object {
-        private const val KEY_SELECTED_BACKGROUND =
-            "selected_gallery_background"
-
-        private const val DEFAULT_BACKGROUND =
-            "default"
+        private const val KEY_SELECTED_BACKGROUND = "selected_gallery_background"
+        private const val DEFAULT_BACKGROUND = "default"
+        private const val PREFIX_MALL_BACKGROUND = "mall_bg_"
+        private const val MALL_BACKGROUND_1 = "mall_bg_1"
+        private const val MALL_BACKGROUND_2 = "mall_bg_2"
+        private const val MALL_BACKGROUND_3 = "mall_bg_3"
+        private const val MALL_BACKGROUND_4 = "mall_bg_4"
+        private const val SYSTEM_BACKGROUND_1 = "system_bg_1"
+        private const val SYSTEM_BACKGROUND_2 = "system_bg_2"
+        private const val SYSTEM_BACKGROUND_3 = "system_bg_3"
+        private const val SYSTEM_BACKGROUND_4 = "system_bg_4"
     }
 }

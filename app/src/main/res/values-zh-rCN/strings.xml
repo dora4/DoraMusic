@@ -208,6 +208,17 @@
     <string name="please_turn_on_nfc">请先打开NFC开关</string>
     <string name="not_an_ndef_tag">不是NDEF格式卡片</string>
     <string name="failed_to_read_tag">读卡失败</string>
+    <string name="bg_name_system_1">叶片露珠</string>
+    <string name="bg_name_system_2">花瓣</string>
+    <string name="bg_name_system_3">紫罗兰</string>
+    <string name="bg_name_system_4">极光</string>
+    <string name="bg_name_mall_1">喜羊羊与灰太狼</string>
+    <string name="bg_name_mall_2">愤怒的小鸟</string>
+    <string name="bg_name_mall_3">海绵宝宝</string>
+    <string name="bg_name_mall_4">卡卡西</string>
+    <string name="tab_title_bg_gallery">图鉴背景</string>
+    <string name="tab_title_bg_mall">商城背景</string>
+    <string name="tab_title_bg_system">系统背景</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d积分</item>
     </plurals>

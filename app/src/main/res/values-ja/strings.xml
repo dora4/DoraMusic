@@ -211,6 +211,17 @@ Dora Musicチーム</string>
     <string name="please_turn_on_nfc">NFCをオンにしてください</string>
     <string name="not_an_ndef_tag">NDEFタグではありません</string>
     <string name="failed_to_read_tag">タグの読み取りに失敗しました</string>
+    <string name="bg_name_system_1">葉の露</string>
+    <string name="bg_name_system_2">花びら</string>
+    <string name="bg_name_system_3">スミレ</string>
+    <string name="bg_name_system_4">オーロラ</string>
+    <string name="bg_name_mall_1">喜洋洋とビッグビッグウルフ</string>
+    <string name="bg_name_mall_2">アングリーバード</string>
+    <string name="bg_name_mall_3">スポンジ・ボブ</string>
+    <string name="bg_name_mall_4">カカシ</string>
+    <string name="tab_title_bg_gallery">図鑑背景</string>
+    <string name="tab_title_bg_mall">ショップ背景</string>
+    <string name="tab_title_bg_system">システム背景</string>
     <plurals name="my_bet_format">
         <item quantity="one">私の予想：%1$s %2$dポイント</item>
         <item quantity="other">私の予想：%1$s %2$dポイント</item>

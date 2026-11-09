@@ -204,6 +204,17 @@
     <string name="please_turn_on_nfc">Schalte zuerst NFC ein</string>
     <string name="not_an_ndef_tag">Kein NDEF-Tag</string>
     <string name="failed_to_read_tag">Tag konnte nicht gelesen werden</string>
+    <string name="bg_name_system_1">Blatt-Tau</string>
+    <string name="bg_name_system_2">Blütenblatt</string>
+    <string name="bg_name_system_3">Veilchen</string>
+    <string name="bg_name_system_4">Polarlicht</string>
+    <string name="bg_name_mall_1">Pleasant Goat und Big Big Wolf</string>
+    <string name="bg_name_mall_2">Angry Birds</string>
+    <string name="bg_name_mall_3">SpongeBob</string>
+    <string name="bg_name_mall_4">Kakashi</string>
+    <string name="tab_title_bg_gallery">Galerie-Hintergrund</string>
+    <string name="tab_title_bg_mall">Shop-Hintergrund</string>
+    <string name="tab_title_bg_system">System-Hintergrund</string>
     <plurals name="my_bet_format">
         <item quantity="one">Meine Wette: %1$s %2$d Punkt</item>
         <item quantity="other">Meine Wette: %1$s %2$d Punkte</item>
