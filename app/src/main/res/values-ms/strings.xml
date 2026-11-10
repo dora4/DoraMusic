@@ -215,6 +215,19 @@
     <string name="tab_title_bg_gallery">Latar galeri</string>
     <string name="tab_title_bg_mall">Latar kedai</string>
     <string name="tab_title_bg_system">Latar sistem</string>
+    <string name="bg_mall_buy_confirm">Adakah anda ingin belanjakan 10000 mata untuk membeli【%1$s】?</string>
+    <string name="bg_mall_not_enough_note">Mata tidak mencukupi untuk membeli</string>
+    <string name="bg_mall_buy_success">Pembelian berjaya, latar belakang【%1$s】telah digunakan</string>
+    <string name="bg_mall_cost_format">%1$d mata</string>
+    <string name="bg_system_unlock_rule">Buka kunci setelah mendengar %d minit</string>
+    <string name="bg_system_need_minutes">Perlu %1$d minit lagi untuk buka kunci</string>
+    <string name="background_available">Tersedia</string>
+    <string name="music_stats_title">Statistik Muzik</string>
+    <string name="music_stats_today">Hari ini</string>
+    <string name="music_stats_this_month">Bulan ini</string>
+    <string name="music_stats_this_year">Tahun ini</string>
+    <string name="music_stats_duration">Tempoh mendengar</string>
+    <string name="music_stats_song_count">Bilangan lagu</string>
     <plurals name="my_bet_format">
         <item quantity="one">Pilihan saya: %1$s %2$d mata</item>
         <item quantity="other">Pilihan saya: %1$s %2$d mata</item>
@@ -238,5 +251,14 @@
     <plurals name="select_music_limit_template">
         <item quantity="one">Maksimum %1$d lagu boleh dipilih</item>
         <item quantity="other">Maksimum %1$d lagu boleh dipilih</item>
+    </plurals>
+    <plurals name="stat_hour">
+        <item quantity="other">%d jam</item>
+    </plurals>
+    <plurals name="stat_minute">
+        <item quantity="other">%d minit</item>
+    </plurals>
+    <plurals name="stat_song">
+        <item quantity="other">%d lagu</item>
     </plurals>
 </resources>

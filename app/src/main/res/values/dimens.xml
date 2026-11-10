@@ -26,6 +26,11 @@
     <dimen name="home_bottom_bar_music_name_text_size">15sp</dimen>
     <dimen name="home_bottom_bar_artist_text_size">13sp</dimen>
     <dimen name="home_bottom_bar_duration_text_size">14sp</dimen>
+    <dimen name="home_stat_padding">20dp</dimen>
+    <dimen name="home_stat_item_padding">16dp</dimen>
+    <dimen name="home_stat_title_text_size">20sp</dimen>
+    <dimen name="home_stat_subtitle_text_size">18sp</dimen>
+    <dimen name="home_stat_content_text_size">14sp</dimen>
     <dimen name="auto_pause_popup_item_width">140dp</dimen>
     <dimen name="auto_pause_popup_item_height">44dp</dimen>
     <dimen name="auto_pause_popup_item_text_size">14sp</dimen>

@@ -45,8 +45,12 @@ import site.doramusic.app.http.service.GuessingService
 import site.doramusic.app.model.Donation
 import site.doramusic.app.model.DownloadTask
 import site.doramusic.app.score.GalleryCard
+import site.doramusic.app.score.PlayerBackground
+import site.doramusic.app.score.PlayerBgFactory
+import site.doramusic.app.score.PlayerBgManager
 import site.doramusic.app.score.PointsRecord
 import site.doramusic.app.score.UserPoints
+import site.doramusic.app.stat.PlayRecord
 import site.doramusic.app.sysmsg.SysMsgService
 import site.doramusic.app.track.TrackService
 import site.doramusic.app.upgrade.ApkService
@@ -96,8 +100,17 @@ class MusicApp : BaseApplication(), AppConfig {
         initDb()    // 初始化SQLite数据库的表
         initAuth()  // 初始化Dora Chat认证SDK
         initHttp()   // 初始化网络框架
+        initPlayerBg()  // 初始化播放器背景包
         val endTime = System.currentTimeMillis()
         LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
+    }
+
+    private fun initPlayerBg() {
+        PlayerBgManager.allBgList = mutableListOf<PlayerBackground>().apply {
+            addAll(PlayerBgFactory.createGalleryBackgrounds(applicationContext))
+            addAll(PlayerBgFactory.createSystemBackgrounds(applicationContext))
+            addAll(PlayerBgFactory.createMallBackgrounds(applicationContext))
+        }
     }
 
     private fun initAuth() {
@@ -191,7 +204,8 @@ class MusicApp : BaseApplication(), AppConfig {
                 DoraUserInfo::class.java, // 用户资料
                 GalleryCard::class.java,   // 图鉴卡片
                 UserPoints::class.java, // 用户积分
-                PointsRecord::class.java    // 积分变更记录
+                PointsRecord::class.java,    // 积分变更记录
+                PlayRecord::class.java  // 播放记录
             )
             .build())
     }

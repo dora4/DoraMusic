@@ -7,15 +7,15 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.BaseActivity
-import dora.util.RxBus
 import dora.util.SPUtils
 import dora.util.StatusBarUtils
+import dora.widget.DoraDoubleButtonDialog
 import dora.widget.DoraTitleBar
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityPlayerBgSelectBinding
-import site.doramusic.app.event.PlayerBackgroundChangedEvent
+import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.ThemeSelector
 
 @Route(path = ARoutePath.ACTIVITY_PLAYER_BG_SELECT)
@@ -24,13 +24,13 @@ class PlayerBgSelectActivity :
 
     // 切换开关
     private val useViewPager2 = false
-//     private val useViewPager2 = true
+    // private val useViewPager2 = true
 
     private lateinit var galleryBgFragment: BackgroundListFragment
     private lateinit var mallBgFragment: BackgroundListFragment
     private lateinit var systemBgFragment: BackgroundListFragment
     private lateinit var tabStrategy: TabRenderStrategy
-    private var selectedBackground: String = DEFAULT_BACKGROUND
+    private var selectedBackground: String = PlayerBgManager.DEFAULT_BACKGROUND
 
     override fun getLayoutId(): Int = R.layout.activity_player_bg_select
 
@@ -50,8 +50,10 @@ class PlayerBgSelectActivity :
         ThemeSelector.applyViewTheme(binding.statusbarPlayerBgSelect)
         ThemeSelector.applyViewTheme(binding.titlebarPlayerBgSelect)
         binding.titlebarPlayerBgSelect
-            .addMenuButton(R.drawable.ic_clear_bg,
-                resources.getDimension(R.dimen.title_bar_icon_size).toInt())
+            .addMenuButton(
+                R.drawable.ic_clear_bg,
+                resources.getDimension(R.dimen.title_bar_icon_size).toInt()
+            )
             .setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
                 override fun onIconBackClick(icon: AppCompatImageView) {
                     finish()
@@ -66,21 +68,17 @@ class PlayerBgSelectActivity :
             })
         binding.tabBar?.setTabTextSelectedColor(ThemeSelector.getThemeColor(this))
         binding.tabBar?.setIndicatorColor(ThemeSelector.getThemeColor(this))
-        selectedBackground = SPUtils.readString(
-            this,
-            KEY_SELECTED_BACKGROUND,
-            DEFAULT_BACKGROUND
-        ) ?: DEFAULT_BACKGROUND
-        val galleryBgList = createGalleryBackgrounds()
-        val mallBgList = createMallBackgrounds()
-        val systemBgList = createSystemBackgrounds()
-        galleryBgFragment = BackgroundListFragment(galleryBgList.toMutableList(), selectedBackground) {
+        selectedBackground = PlayerBgManager.getSelectedBgId(this)
+        val galleryBgList = PlayerBgFactory.createGalleryBackgrounds(this)
+        val mallBgList = PlayerBgFactory.createMallBackgrounds(this)
+        val systemBgList = PlayerBgFactory.createSystemBackgrounds(this)
+        galleryBgFragment = BackgroundListFragment(galleryBgList.toMutableList()) {
             selectBackground(it)
         }
-        mallBgFragment = BackgroundListFragment(mallBgList.toMutableList(), selectedBackground) {
+        mallBgFragment = BackgroundListFragment(mallBgList.toMutableList()) {
             selectBackground(it)
         }
-        systemBgFragment = BackgroundListFragment(systemBgList.toMutableList(), selectedBackground) {
+        systemBgFragment = BackgroundListFragment(systemBgList.toMutableList()) {
             selectBackground(it)
         }
         val fragmentList = listOf(galleryBgFragment, mallBgFragment, systemBgFragment)
@@ -109,7 +107,7 @@ class PlayerBgSelectActivity :
 
     override fun onDestroy() {
         super.onDestroy()
-        if(::tabStrategy.isInitialized){
+        if (::tabStrategy.isInitialized) {
             tabStrategy.release()
         }
     }
@@ -118,19 +116,51 @@ class PlayerBgSelectActivity :
      * 选择背景。
      */
     private fun selectBackground(background: PlayerBackground) {
-        if (!isBackgroundUnlocked(background)) {
-            showShortToast(getString(R.string.background_not_unlocked))
+        val isUnlocked = isBackgroundUnlocked(background)
+        // 商城背景、未解锁：走购买兑换流程
+        if (background.bgType == PlayerBackground.BACKGROUND_TYPE_MALL && !isUnlocked) {
+            val costPoints = background.price
+            val totalPoints = PointsManager.getTotalPoints()
+            if (totalPoints < costPoints) {
+                showShortToast(getString(R.string.bg_mall_not_enough_note))
+                return
+            }
+            val skinThemeColor = ThemeSelector.getThemeColor(this)
+            DoraDoubleButtonDialog(this, object : DoraDoubleButtonDialog.DialogListener {
+                override fun onConfirm(eventType: String) {
+                    PointsManager.addPoints(PointsSource.EXCHANGE.desc, -costPoints, background.name)
+                    // 标记商城背景解锁
+                    SPUtils.writeBoolean(this@PlayerBgSelectActivity, background.id, true)
+                    // 购买成功，选中背景
+                    selectBackground(background)
+                    showShortToast(getString(R.string.bg_mall_buy_success, background.name))
+                }
+
+                override fun onCancel(eventType: String) {
+                }
+            }).show(BUY_MALL_BG,
+                getString(R.string.bg_mall_buy_confirm, background.name)
+            ) {
+                themeColor(skinThemeColor)
+            }
+            return
+        }
+        if (!isUnlocked) {
+            if (background.bgType == PlayerBackground.BACKGROUND_TYPE_SYSTEM) {
+                val totalMin = SPUtils.readInteger(this, MusicTimer.KEY_TOTAL_PLAY_MINUTES, 0)
+                val needMin = getSystemBgRequireMinutes(background.id)
+                val remain = (needMin - totalMin).coerceAtLeast(1)
+                showShortToast(getString(R.string.bg_system_need_minutes, remain))
+            } else {
+                showShortToast(getString(R.string.background_not_unlocked))
+            }
             return
         }
         selectedBackground = background.id
-        SPUtils.writeString(this, KEY_SELECTED_BACKGROUND, selectedBackground)
-        // fragment同步选中状态
+        PlayerBgManager.selectBg(this, background.id)
         galleryBgFragment.updateSelectId(selectedBackground)
         mallBgFragment.updateSelectId(selectedBackground)
         systemBgFragment.updateSelectId(selectedBackground)
-        RxBus.getInstance().post(
-            PlayerBackgroundChangedEvent(backgroundRes = background.imageRes.takeIf { it != 0 })
-        )
         showShortToast(getString(R.string.background_selected, background.name))
     }
 
@@ -138,124 +168,45 @@ class PlayerBgSelectActivity :
      * 清空当前背景，恢复默认背景。
      */
     private fun resetBackground() {
-        selectedBackground = DEFAULT_BACKGROUND
-        SPUtils.remove(this, KEY_SELECTED_BACKGROUND)
-        galleryBgFragment.updateSelectId(DEFAULT_BACKGROUND)
-        mallBgFragment.updateSelectId(DEFAULT_BACKGROUND)
-        systemBgFragment.updateSelectId(DEFAULT_BACKGROUND)
-        RxBus.getInstance().post(PlayerBackgroundChangedEvent(backgroundRes = null))
+        selectedBackground = PlayerBgManager.DEFAULT_BACKGROUND
+        PlayerBgManager.selectBg(this, PlayerBgManager.DEFAULT_BACKGROUND)
+        galleryBgFragment.updateSelectId(PlayerBgManager.DEFAULT_BACKGROUND)
+        mallBgFragment.updateSelectId(PlayerBgManager.DEFAULT_BACKGROUND)
+        systemBgFragment.updateSelectId(PlayerBgManager.DEFAULT_BACKGROUND)
         showShortToast(getString(R.string.background_reset))
     }
 
     private fun isBackgroundUnlocked(background: PlayerBackground): Boolean {
-        if (background.id == DEFAULT_BACKGROUND) return true
-        if (background.bgType == PlayerBackground.BACKGROUND_TYPE_SYSTEM) return true
         return when (background.bgType) {
-            PlayerBackground.BACKGROUND_TYPE_GALLERY -> {
-                SPUtils.readBoolean(this, background.galleryId, false)
+            PlayerBackground.BACKGROUND_TYPE_SYSTEM -> {
+                val totalMinutes = SPUtils.readInteger(this, MusicTimer.KEY_TOTAL_PLAY_MINUTES, 0)
+                val needMinutes = getSystemBgRequireMinutes(background.id)
+                totalMinutes >= needMinutes
             }
-            else -> { // PlayerBackground.BACKGROUND_TYPE_MALL
-                SPUtils.readBoolean(this, "$PREFIX_MALL_BACKGROUND${background.id}", false)
+            PlayerBackground.BACKGROUND_TYPE_GALLERY,
+            PlayerBackground.BACKGROUND_TYPE_MALL -> {
+                SPUtils.readBoolean(this, background.id, false)
             }
+            else -> false
         }
     }
 
-    private fun createGalleryBackgrounds(): List<PlayerBackground> {
-        return listOf(
-            PlayerBackground(
-                id = AppConfig.GALLERY_RAIN_FOREST,
-                galleryId = AppConfig.GALLERY_RAIN_FOREST,
-                name = getString(R.string.rain_forest),
-                imageRes = R.drawable.bg_rain_forest,
-                bgType = PlayerBackground.BACKGROUND_TYPE_GALLERY
-            ),
-            PlayerBackground(
-                id = AppConfig.GALLERY_GLACIER,
-                galleryId = AppConfig.GALLERY_GLACIER,
-                name = getString(R.string.glacier),
-                imageRes = R.drawable.bg_glacier,
-                bgType = PlayerBackground.BACKGROUND_TYPE_GALLERY
-            )
-        )
-    }
-
-    private fun createSystemBackgrounds(): List<PlayerBackground> {
-        return listOf(
-            PlayerBackground(
-                id = SYSTEM_BACKGROUND_1,
-                galleryId = "",
-                name = getString(R.string.bg_name_system_1),
-                imageRes = R.drawable.bg_system_1,
-                bgType = PlayerBackground.BACKGROUND_TYPE_SYSTEM
-            ),
-            PlayerBackground(
-                id = SYSTEM_BACKGROUND_2,
-                galleryId = "",
-                name = getString(R.string.bg_name_system_2),
-                imageRes = R.drawable.bg_system_2,
-                bgType = PlayerBackground.BACKGROUND_TYPE_SYSTEM
-            ),
-            PlayerBackground(
-                id = SYSTEM_BACKGROUND_3,
-                galleryId = "",
-                name = getString(R.string.bg_name_system_3),
-                imageRes = R.drawable.bg_system_3,
-                bgType = PlayerBackground.BACKGROUND_TYPE_SYSTEM
-            ),
-            PlayerBackground(
-                id = SYSTEM_BACKGROUND_4,
-                galleryId = "",
-                name = getString(R.string.bg_name_system_4),
-                imageRes = R.drawable.bg_system_4,
-                bgType = PlayerBackground.BACKGROUND_TYPE_SYSTEM
-            )
-        )
-    }
-
-    private fun createMallBackgrounds(): List<PlayerBackground> {
-        return listOf(
-            PlayerBackground(
-                id = MALL_BACKGROUND_1,
-                galleryId = "",
-                name = getString(R.string.bg_name_mall_1),
-                imageRes = R.drawable.bg_mall_1,
-                bgType = PlayerBackground.BACKGROUND_TYPE_MALL
-            ),
-            PlayerBackground(
-                id = MALL_BACKGROUND_2,
-                galleryId = "",
-                name = getString(R.string.bg_name_mall_2),
-                imageRes = R.drawable.bg_mall_2,
-                bgType = PlayerBackground.BACKGROUND_TYPE_MALL
-            ),
-            PlayerBackground(
-                id = MALL_BACKGROUND_3,
-                galleryId = "",
-                name = getString(R.string.bg_name_mall_3),
-                imageRes = R.drawable.bg_mall_3,
-                bgType = PlayerBackground.BACKGROUND_TYPE_MALL
-            ),
-            PlayerBackground(
-                id = MALL_BACKGROUND_4,
-                galleryId = "",
-                name = getString(R.string.bg_name_mall_4),
-                imageRes = R.drawable.bg_mall_4,
-                bgType = PlayerBackground.BACKGROUND_TYPE_MALL
-            )
-        )
+    /**
+     * 获取系统背景需要的听歌分钟。
+     */
+    private fun getSystemBgRequireMinutes(bgId: String): Int {
+        return when (bgId) {
+            PlayerBgFactory.PlayerBgId.SYSTEM_BACKGROUND_1 -> 1
+            PlayerBgFactory.PlayerBgId.SYSTEM_BACKGROUND_2 -> 10
+            PlayerBgFactory.PlayerBgId.SYSTEM_BACKGROUND_3 -> 60
+            PlayerBgFactory.PlayerBgId.SYSTEM_BACKGROUND_4 -> 120
+            else -> Int.MAX_VALUE
+        }
     }
 
     companion object {
-        private const val KEY_SELECTED_BACKGROUND = "selected_gallery_background"
-        private const val DEFAULT_BACKGROUND = "default"
-        private const val PREFIX_MALL_BACKGROUND = "mall_bg_"
-        private const val MALL_BACKGROUND_1 = "mall_bg_1"
-        private const val MALL_BACKGROUND_2 = "mall_bg_2"
-        private const val MALL_BACKGROUND_3 = "mall_bg_3"
-        private const val MALL_BACKGROUND_4 = "mall_bg_4"
-        private const val SYSTEM_BACKGROUND_1 = "system_bg_1"
-        private const val SYSTEM_BACKGROUND_2 = "system_bg_2"
-        private const val SYSTEM_BACKGROUND_3 = "system_bg_3"
-        private const val SYSTEM_BACKGROUND_4 = "system_bg_4"
+
+        // 购买弹窗标记
+        const val BUY_MALL_BG = "buy_mall_bg"
     }
 }

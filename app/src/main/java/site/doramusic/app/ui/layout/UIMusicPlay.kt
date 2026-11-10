@@ -12,7 +12,6 @@ import android.media.AudioManager
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -61,7 +60,7 @@ import site.doramusic.app.widget.SlidingView
 import androidx.core.graphics.createBitmap
 import dora.widget.DoraIndicatorView
 import site.doramusic.app.event.PlayerBackgroundChangedEvent
-import site.doramusic.app.score.GalleryBackgroundManager
+import site.doramusic.app.score.PlayerBgManager
 import site.doramusic.app.util.PadUtils
 
 /**
@@ -206,13 +205,6 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         }
     }
 
-    private fun sp2px(spVal: Float): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_SP,
-            spVal, manager.view.context.resources.displayMetrics
-        ).toInt()
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private fun initViews(context: Context) {
         slidingView = findViewById(R.id.sv_home_drawer) as SlidingView
@@ -302,9 +294,14 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         pageViews.add(coverContainer)
 //        pageViews.add(lrcContainer)
         pageViews.add(sceneContainer)
-        // 设置播放器背景
-        GalleryBackgroundManager.getSelectedBackground(context)?.let {
-            slidingView.setHandleContentBackground(it.backgroundRes)
+        // 设置播放器背景（走新的PlayerBgManager，自动兼容老用户）
+        val selectedBgId = PlayerBgManager.getSelectedBgId(context)
+        val selectedBg = PlayerBgManager.findBgById(selectedBgId)
+        selectedBg?.imageRes?.let { resId ->
+            slidingView.setHandleContentBackground(resId)
+        } ?: run {
+            // 选中是default，清空背景
+            slidingView.clearHandleContentBackground()
         }
         viewPager.adapter = MusicPlayPagerAdapter(pageViews)
 

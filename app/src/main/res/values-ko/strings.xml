@@ -222,6 +222,19 @@ Dora Musicチーム</string>
     <string name="tab_title_bg_gallery">도감 배경</string>
     <string name="tab_title_bg_mall">몰 배경</string>
     <string name="tab_title_bg_system">시스템 배경</string>
+    <string name="bg_mall_buy_confirm">포인트 10000개를 소모해서【%1$s】을 구매하시겠습니까?</string>
+    <string name="bg_mall_not_enough_note">포인트가 부족하여 구매할 수 없습니다</string>
+    <string name="bg_mall_buy_success">구매 성공, 배경【%1$s】이 적용되었습니다</string>
+    <string name="bg_mall_cost_format">%1$d 포인트</string>
+    <string name="bg_system_unlock_rule">%d분 재생하면 잠금 해제</string>
+    <string name="bg_system_need_minutes">잠금 해제까지 %1$d분 남았습니다</string>
+    <string name="background_available">사용 가능</string>
+    <string name="music_stats_title">음악 통계</string>
+    <string name="music_stats_today">오늘</string>
+    <string name="music_stats_this_month">이번 달</string>
+    <string name="music_stats_this_year">올해</string>
+    <string name="music_stats_duration">청취 시간</string>
+    <string name="music_stats_song_count">청취 곡 수</string>
     <plurals name="my_bet_format">
         <item quantity="one">私の予想：%1$s %2$dポイント</item>
         <item quantity="other">私の予想：%1$s %2$dポイント</item>
@@ -245,5 +258,14 @@ Dora Musicチーム</string>
     <plurals name="select_music_limit_template">
         <item quantity="one">最大%1$d曲選択可能</item>
         <item quantity="other">最大%1$d曲選択可能</item>
+    </plurals>
+    <plurals name="stat_hour">
+        <item quantity="other">%d시간</item>
+    </plurals>
+    <plurals name="stat_minute">
+        <item quantity="other">%d분</item>
+    </plurals>
+    <plurals name="stat_song">
+        <item quantity="other">%d곡</item>
     </plurals>
 </resources>

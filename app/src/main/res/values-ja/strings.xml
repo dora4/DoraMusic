@@ -222,6 +222,19 @@ Dora Musicチーム</string>
     <string name="tab_title_bg_gallery">図鑑背景</string>
     <string name="tab_title_bg_mall">ショップ背景</string>
     <string name="tab_title_bg_system">システム背景</string>
+    <string name="bg_mall_buy_confirm">10000ポイントを消費して【%1$s】を購入しますか？</string>
+    <string name="bg_mall_not_enough_note">ポイントが不足しているため購入できません</string>
+    <string name="bg_mall_buy_success">購入完了、背景【%1$s】を適用しました</string>
+    <string name="bg_mall_cost_format">%1$d ポイント</string>
+    <string name="bg_system_unlock_rule">%d分間再生で解除</string>
+    <string name="bg_system_need_minutes">あと%1$d分で解除できます</string>
+    <string name="background_available">利用可能</string>
+    <string name="music_stats_title">再生統計</string>
+    <string name="music_stats_today">今日</string>
+    <string name="music_stats_this_month">今月</string>
+    <string name="music_stats_this_year">今年</string>
+    <string name="music_stats_duration">再生時間</string>
+    <string name="music_stats_song_count">再生曲数</string>
     <plurals name="my_bet_format">
         <item quantity="one">私の予想：%1$s %2$dポイント</item>
         <item quantity="other">私の予想：%1$s %2$dポイント</item>
@@ -245,5 +258,14 @@ Dora Musicチーム</string>
     <plurals name="select_music_limit_template">
         <item quantity="one">最大%1$d曲選択可能</item>
         <item quantity="other">最大%1$d曲選択可能</item>
+    </plurals>
+    <plurals name="stat_hour">
+        <item quantity="other">%d時間</item>
+    </plurals>
+    <plurals name="stat_minute">
+        <item quantity="other">%d分</item>
+    </plurals>
+    <plurals name="stat_song">
+        <item quantity="other">%d曲</item>
     </plurals>
 </resources>

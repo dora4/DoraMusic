@@ -9,9 +9,13 @@ import dora.util.SPUtils
 /**
  * 抽卡画廊背景管理器。
  */
+@Deprecated("逐步迁移到PlayerBgFactory.createGalleryBackgrounds")
 object GalleryBackgroundManager {
 
-    private const val KEY_SELECTED_BACKGROUND = "selected_gallery_background"
+    /**
+     * 保留此属性的原因是，兼容v2.6.2及以前就获得完整图鉴的老用户，后期版本移除此字段。
+     */
+    const val KEY_SELECTED_GALLERY_BACKGROUND = "selected_gallery_background"
 
     data class Background(
         val galleryId: String?,
@@ -88,7 +92,7 @@ object GalleryBackgroundManager {
     fun getSelectedBackground(context: Context): Background? {
         val galleryId = SPUtils.readString(
             context,
-            KEY_SELECTED_BACKGROUND,
+            KEY_SELECTED_GALLERY_BACKGROUND,
             ""
         )
         return backgrounds.firstOrNull {
@@ -105,7 +109,7 @@ object GalleryBackgroundManager {
         }
         SPUtils.writeString(
             context,
-            KEY_SELECTED_BACKGROUND,
+            KEY_SELECTED_GALLERY_BACKGROUND,
             background.galleryId ?: ""
         )
     }

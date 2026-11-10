@@ -215,6 +215,19 @@
     <string name="tab_title_bg_gallery">Arrière-plan galerie</string>
     <string name="tab_title_bg_mall">Arrière-plan boutique</string>
     <string name="tab_title_bg_system">Arrière-plan système</string>
+    <string name="bg_mall_buy_confirm">Voulez-vous dépenser 10000 points pour acheter【%1$s】?</string>
+    <string name="bg_mall_not_enough_note">Points insuffisants pour acheter</string>
+    <string name="bg_mall_buy_success">Achat réussi, l’arrière-plan【%1$s】est activé</string>
+    <string name="bg_mall_cost_format">%1$d points</string>
+    <string name="bg_system_unlock_rule">Débloquer après %d minutes d\'écoute</string>
+    <string name="bg_system_need_minutes">Il reste %1$d minutes pour débloquer</string>
+    <string name="background_available">Disponible</string>
+    <string name="music_stats_title">Statistiques d\'écoute</string>
+    <string name="music_stats_today">Aujourd\'hui</string>
+    <string name="music_stats_this_month">Ce mois-ci</string>
+    <string name="music_stats_this_year">Cette année</string>
+    <string name="music_stats_duration">Temps d\'écoute</string>
+    <string name="music_stats_song_count">Titres écoutés</string>
     <plurals name="my_bet_format">
         <item quantity="one">Ma mise : %1$s %2$d point</item>
         <item quantity="other">Ma mise : %1$s %2$d points</item>
@@ -238,5 +251,17 @@
     <plurals name="select_music_limit_template">
         <item quantity="one">Maximum %1$d titre</item>
         <item quantity="other">Maximum %1$d titres</item>
+    </plurals>
+    <plurals name="stat_hour">
+        <item quantity="one">%d heure</item>
+        <item quantity="other">%d heures</item>
+    </plurals>
+    <plurals name="stat_minute">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="stat_song">
+        <item quantity="one">%d chanson</item>
+        <item quantity="other">%d chansons</item>
     </plurals>
 </resources>

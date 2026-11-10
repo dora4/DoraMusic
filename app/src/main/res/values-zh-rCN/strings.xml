@@ -219,6 +219,19 @@
     <string name="tab_title_bg_gallery">图鉴背景</string>
     <string name="tab_title_bg_mall">商城背景</string>
     <string name="tab_title_bg_system">系统背景</string>
+    <string name="bg_mall_buy_confirm">是否花费10000音符购买【%1$s】？</string>
+    <string name="bg_mall_not_enough_note">音符不足，无法购买</string>
+    <string name="bg_mall_buy_success">购买成功，已使用背景【%1$s】</string>
+    <string name="bg_mall_cost_format">%1$d 音符</string>
+    <string name="bg_system_unlock_rule">听歌%d分钟解锁</string>
+    <string name="bg_system_need_minutes">还需 %1$d 分钟解锁</string>
+    <string name="background_available">可用</string>
+    <string name="music_stats_title">听歌统计</string>
+    <string name="music_stats_today">今天</string>
+    <string name="music_stats_this_month">本月</string>
+    <string name="music_stats_this_year">今年</string>
+    <string name="music_stats_duration">听歌时长</string>
+    <string name="music_stats_song_count">听歌数量</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d积分</item>
     </plurals>
@@ -241,5 +254,14 @@
     <plurals name="select_music_limit_template">
         <item quantity="one">最多选择 %1$d 首歌曲</item>
         <item quantity="other">最多选择 %1$d 首歌曲</item>
+    </plurals>
+    <plurals name="stat_hour">
+        <item quantity="other">%d小时</item>
+    </plurals>
+    <plurals name="stat_minute">
+        <item quantity="other">%d分钟</item>
+    </plurals>
+    <plurals name="stat_song">
+        <item quantity="other">%d首</item>
     </plurals>
 </resources>
