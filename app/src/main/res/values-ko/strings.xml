@@ -211,7 +211,7 @@ Dora Musicチーム</string>
     <string name="please_turn_on_nfc">NFC를 먼저 켜주세요</string>
     <string name="not_an_ndef_tag">NDEF 태그가 아닙니다</string>
     <string name="failed_to_read_tag">태그 읽기 실패</string>
-    <string name="bg_name_system_1">잎의 이슬</string>
+    <string name="bg_name_system_1">잎</string>
     <string name="bg_name_system_2">꽃잎</string>
     <string name="bg_name_system_3">제비꽃</string>
     <string name="bg_name_system_4">오로라</string>

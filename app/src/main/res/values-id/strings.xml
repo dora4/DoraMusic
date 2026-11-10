@@ -204,7 +204,7 @@
     <string name="please_turn_on_nfc">Aktifkan NFC terlebih dahulu</string>
     <string name="not_an_ndef_tag">Bukan tag NDEF</string>
     <string name="failed_to_read_tag">Gagal membaca tag</string>
-    <string name="bg_name_system_1">Embun di daun</string>
+    <string name="bg_name_system_1">Daun</string>
     <string name="bg_name_system_2">Kelopak bunga</string>
     <string name="bg_name_system_3">Violet</string>
     <string name="bg_name_system_4">Aurora</string>
