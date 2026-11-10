@@ -215,6 +215,19 @@
     <string name="tab_title_bg_gallery">Nền bộ sưu tập</string>
     <string name="tab_title_bg_mall">Nền cửa hàng</string>
     <string name="tab_title_bg_system">Nền hệ thống</string>
+    <string name="bg_mall_buy_confirm">Bạn có muốn dùng 10000 điểm để mua【%1$s】không?</string>
+    <string name="bg_mall_not_enough_note">Không đủ điểm để mua</string>
+    <string name="bg_mall_buy_success">Mua thành công, đã áp dụng nền【%1$s】</string>
+    <string name="bg_mall_cost_format">%1$d điểm</string>
+    <string name="bg_system_unlock_rule">Mở khóa sau khi nghe %d phút</string>
+    <string name="bg_system_need_minutes">Cần thêm %1$d phút nữa để mở khóa</string>
+    <string name="background_available">Có sẵn</string>
+    <string name="music_stats_title">Thống kê nghe nhạc</string>
+    <string name="music_stats_today">Hôm nay</string>
+    <string name="music_stats_this_month">Tháng này</string>
+    <string name="music_stats_this_year">Năm nay</string>
+    <string name="music_stats_duration">Thời gian nghe</string>
+    <string name="music_stats_song_count">Số bài hát</string>
     <plurals name="my_bet_format">
         <item quantity="one">Lựa chọn của tôi: %1$s %2$d điểm</item>
         <item quantity="other">Lựa chọn của tôi: %1$s %2$d điểm</item>
@@ -238,5 +251,14 @@
     <plurals name="select_music_limit_template">
         <item quantity="one">Tối đa chọn %1$d bài hát</item>
         <item quantity="other">Tối đa chọn %1$d bài hát</item>
+    </plurals>
+    <plurals name="stat_hour">
+        <item quantity="other">%d giờ</item>
+    </plurals>
+    <plurals name="stat_minute">
+        <item quantity="other">%d phút</item>
+    </plurals>
+    <plurals name="stat_song">
+        <item quantity="other">%d bài hát</item>
     </plurals>
 </resources>

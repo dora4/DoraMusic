@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.media.audiofx.Equalizer
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -44,6 +43,9 @@ import dora.widget.DoraSingleButtonDialog
 import dora.widget.DoraTitleBar
 import dora.widget.banner.BannerAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
@@ -67,8 +69,8 @@ import site.doramusic.app.event.HomeBannerEvent
 import site.doramusic.app.event.PlayMusicEvent
 import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.event.RefreshHomeItemEvent
+import site.doramusic.app.event.RefreshStatEvent
 import site.doramusic.app.http.GuestSession
-import site.doramusic.app.sysmsg.SysMsgEvent
 import site.doramusic.app.http.service.AdService
 import site.doramusic.app.http.service.GuessingService
 import site.doramusic.app.media.FloatingAutoPause
@@ -76,7 +78,9 @@ import site.doramusic.app.media.FloatingPlayer
 import site.doramusic.app.media.IMediaService
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.MusicControl
+import site.doramusic.app.stat.PlayStatManager
 import site.doramusic.app.sysmsg.DoraSysMsg
+import site.doramusic.app.sysmsg.SysMsgEvent
 import site.doramusic.app.sysmsg.SysMsgService
 import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
@@ -112,6 +116,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     private val sysMsgList = mutableListOf<DoraSysMsg>()
     private lateinit var tipDialog: DoraSingleButtonDialog
 
+    // 防抖标记，防止短时间多次刷新统计
+    private var isRefreshingStat = false
+
     val isHome: Boolean
         get() = uiManager.isLocal && !musicPlay.isOpened
 
@@ -126,6 +133,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
         @DrawableRes val iconRes: Int, val name: String,
         val musicNum: Long = 0
     ) {
+
         fun getMusicNum(): String {
             return musicNum.toString()
         }
@@ -232,6 +240,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             }
         })
         loadSysMsg(binding)
+        loadStatData(binding)
         binding.rvHomeModule.adapter = adapter
         binding.rvHomeModule.setBackgroundResource(R.drawable.shape_home_module)
         binding.rvHomeModule.itemAnimator = DefaultItemAnimator()
@@ -291,10 +300,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     ColorStateList.valueOf(skinThemeColor)
             })
         addDisposable(RxBus.getInstance()
+            .toObservable(RefreshStatEvent::class.java)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                loadStatData(binding)
+            })
+        addDisposable(RxBus.getInstance()
             .toObservable(PlayMusicEvent::class.java)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 onPlayMusic(it.playState, it.pendingProgress)
+                // 播放完成后刷新统计
+                // onCompletion 之后会变成 MPS_INVALID / MPS_NO_FILE，代表一首歌统计入库完毕
+                if ((it.playState == AppConfig.MPS_INVALID || it.playState == AppConfig.MPS_NO_FILE) && !isRefreshingStat) {
+                    refreshStatAsync()
+                }
             })
         addDisposable(RxBus.getInstance()
             .toObservable(HomeBannerEvent::class.java)
@@ -306,6 +326,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                     loadAds(binding)
                 }
             })
+    }
+
+    /**
+     * 异步刷新统计面板，带防抖。
+     */
+    private fun refreshStatAsync() {
+        isRefreshingStat = true
+        lifecycleScope.launch(Dispatchers.IO) {
+            val today = PlayStatManager.getDailyStat()
+            val month = PlayStatManager.getMonthlyStat()
+            val year = PlayStatManager.getAnnualStat()
+            withContext(Dispatchers.Main) {
+                val ctx = requireContext()
+                mBinding.tvDailyDuration.text = today.formatDuration(ctx)
+                mBinding.tvDailyCount.text = ctx.resources.getQuantityString(R.plurals.stat_song, today.totalCount, today.totalCount)
+                mBinding.tvMonthlyDuration.text = month.formatDuration(ctx)
+                mBinding.tvMonthlyCount.text = ctx.resources.getQuantityString(R.plurals.stat_song, month.totalCount, month.totalCount)
+                mBinding.tvAnnualDuration.text = year.formatDuration(ctx)
+                mBinding.tvAnnualCount.text = ctx.resources.getQuantityString(R.plurals.stat_song, year.totalCount, year.totalCount)
+            }
+            isRefreshingStat = false
+        }
     }
 
     /**
@@ -366,6 +408,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
             requireContext().startService(intent)
         } else {
             startActivity(IntentUtils.getRequestOverlayPermissionIntent(requireContext().packageName))
+        }
+    }
+
+    private fun loadStatData(binding: FragmentHomeBinding) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val today = PlayStatManager.getDailyStat()
+            val month = PlayStatManager.getMonthlyStat()
+            val year = PlayStatManager.getAnnualStat()
+            withContext(Dispatchers.Main) {
+                val ctx = requireContext()
+                binding.tvDailyDuration.text = today.formatDuration(ctx)
+                binding.tvDailyCount.text = ctx.resources.getQuantityString(R.plurals.stat_song, today.totalCount, today.totalCount)
+                binding.tvMonthlyDuration.text = month.formatDuration(ctx)
+                binding.tvMonthlyCount.text = ctx.resources.getQuantityString(R.plurals.stat_song, month.totalCount, month.totalCount)
+                binding.tvAnnualDuration.text = year.formatDuration(ctx)
+                binding.tvAnnualCount.text = ctx.resources.getQuantityString(R.plurals.stat_song, year.totalCount, year.totalCount)
+            }
         }
     }
 

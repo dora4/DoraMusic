@@ -215,6 +215,19 @@
     <string name="tab_title_bg_gallery">พื้นหลังแกลเลอรี</string>
     <string name="tab_title_bg_mall">พื้นหลังร้านค้า</string>
     <string name="tab_title_bg_system">พื้นหลังระบบ</string>
+    <string name="bg_mall_buy_confirm">คุณต้องการใช้ 10000 คะแนนเพื่อซื้อ【%1$s】หรือไม่?</string>
+    <string name="bg_mall_not_enough_note">คะแนนไม่พอสำหรับการซื้อ</string>
+    <string name="bg_mall_buy_success">ซื้อสำเร็จ ได้ใช้พื้นหลัง【%1$s】แล้ว</string>
+    <string name="bg_mall_cost_format">%1$d คะแนน</string>
+    <string name="bg_system_unlock_rule">ปลดล็อกเมื่อฟังไป %d นาที</string>
+    <string name="bg_system_need_minutes">เหลืออีก %1$d นาทีจึงจะปลดล็อก</string>
+    <string name="background_available">ใช้งานได้</string>
+    <string name="music_stats_title">สถิติการฟังเพลง</string>
+    <string name="music_stats_today">วันนี้</string>
+    <string name="music_stats_this_month">เดือนนี้</string>
+    <string name="music_stats_this_year">ปีนี้</string>
+    <string name="music_stats_duration">ระยะเวลาฟัง</string>
+    <string name="music_stats_song_count">จำนวนเพลง</string>
     <plurals name="my_bet_format">
         <item quantity="one">การคาดการณ์ของฉัน: %1$s %2$d คะแนน</item>
         <item quantity="other">การคาดการณ์ของฉัน: %1$s %2$d คะแนน</item>
@@ -238,5 +251,14 @@
     <plurals name="select_music_limit_template">
         <item quantity="one">เลือกได้สูงสุด %1$d เพลง</item>
         <item quantity="other">เลือกได้สูงสุด %1$d เพลง</item>
+    </plurals>
+    <plurals name="stat_hour">
+        <item quantity="other">%dชั่วโมง</item>
+    </plurals>
+    <plurals name="stat_minute">
+        <item quantity="other">%dนาที</item>
+    </plurals>
+    <plurals name="stat_song">
+        <item quantity="other">%dเพลง</item>
     </plurals>
 </resources>

@@ -1,6 +1,5 @@
 package site.doramusic.app
 
-import androidx.core.content.ContextCompat
 import dora.BaseApplication
 import dora.db.Orm
 import dora.db.OrmConfig
@@ -9,11 +8,9 @@ import dora.http.retrofit.RetrofitManager
 import dora.util.LogUtils
 import dora.util.ThreadUtils
 import site.doramusic.app.conf.AppConfig
-import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.conf.AppConfig.Companion.CONNECT_TIMEOUT
 import site.doramusic.app.conf.AppConfig.Companion.DB_NAME
 import site.doramusic.app.conf.AppConfig.Companion.DB_VERSION
-import site.doramusic.app.conf.AppConfig.Companion.PRODUCT_NAME
 import site.doramusic.app.conf.AppConfig.Companion.READ_TIMEOUT
 import site.doramusic.app.db.Album
 import site.doramusic.app.db.Artist
@@ -26,11 +23,16 @@ import site.doramusic.app.http.service.GuessingService
 import site.doramusic.app.model.Donation
 import site.doramusic.app.model.DownloadTask
 import site.doramusic.app.score.GalleryCard
+import site.doramusic.app.score.PlayerBackground
+import site.doramusic.app.score.PlayerBgFactory
+import site.doramusic.app.score.PlayerBgManager
 import site.doramusic.app.score.PointsRecord
 import site.doramusic.app.score.UserPoints
+import site.doramusic.app.stat.PlayRecord
 import site.doramusic.app.sysmsg.SysMsgService
 import site.doramusic.app.track.TrackService
 import site.doramusic.app.upgrade.ApkService
+import site.doramusic.app.util.ThemeSelector
 import java.util.concurrent.TimeUnit
 
 /**
@@ -62,8 +64,17 @@ class MusicApp : BaseApplication(), AppConfig {
         LogUtils.d("init start time:$startTime")
         initDb()    // 初始化SQLite数据库的表
         initHttp()   // 初始化网络框架
+        initPlayerBg()  // 初始化播放器背景包
         val endTime = System.currentTimeMillis()
         LogUtils.d("init end time:$endTime,cost ${(endTime - startTime) / 1000.0}s")
+    }
+
+    private fun initPlayerBg() {
+        PlayerBgManager.allBgList = mutableListOf<PlayerBackground>().apply {
+            addAll(PlayerBgFactory.createGalleryBackgrounds(applicationContext))
+            addAll(PlayerBgFactory.createSystemBackgrounds(applicationContext))
+            addAll(PlayerBgFactory.createMallBackgrounds(applicationContext))
+        }
     }
 
     private fun initHttp() {
@@ -109,7 +120,8 @@ class MusicApp : BaseApplication(), AppConfig {
                 DownloadTask::class.java,   // 下载任务队列（暂未使用）
                 GalleryCard::class.java,   // 图鉴卡片
                 UserPoints::class.java, // 用户积分
-                PointsRecord::class.java    // 积分变更记录
+                PointsRecord::class.java,    // 积分变更记录
+                PlayRecord::class.java  // 播放记录
             )
             .build())
     }

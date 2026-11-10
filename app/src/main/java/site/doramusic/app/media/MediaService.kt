@@ -96,7 +96,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         RxBus.getInstance().toObservable(SysMsgEvent::class.java)
             .subscribe { event ->
                 val msg = event.sysMsg
-                val title = msg.title.ifBlank { "系统消息" }
+                val title = msg.title.ifBlank { "System Notification" }
                 val content = msg.content.orEmpty()
                 showSysMsgNotification(title, content)
             }
@@ -397,7 +397,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
     private fun showSysMsgNotification(title: String, content: String) {
         val channelId = "$APP_PACKAGE_NAME-sysmsg"
-        val channelName = "${APP_NAME}系统消息"
+        val channelName = "${APP_NAME} System Notification"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,

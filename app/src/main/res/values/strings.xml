@@ -226,6 +226,19 @@ The [Dora Music] Team</string>
     <string name="tab_title_bg_gallery">Gallery Background</string>
     <string name="tab_title_bg_mall">Mall Background</string>
     <string name="tab_title_bg_system">System Background</string>
+    <string name="bg_mall_buy_confirm">Spend 10000 points to buy【%1$s】?</string>
+    <string name="bg_mall_not_enough_note">Insufficient points to purchase</string>
+    <string name="bg_mall_buy_success">Purchase successful, background【%1$s】applied</string>
+    <string name="bg_mall_cost_format">%1$d points</string>
+    <string name="bg_system_unlock_rule">Unlock after %d minutes of listening</string>
+    <string name="bg_system_need_minutes">%1$d minutes remaining to unlock</string>
+    <string name="background_available">Available</string>
+    <string name="music_stats_title">Music Stats</string>
+    <string name="music_stats_today">Today</string>
+    <string name="music_stats_this_month">This Month</string>
+    <string name="music_stats_this_year">This Year</string>
+    <string name="music_stats_duration">Listening Time</string>
+    <string name="music_stats_song_count">Songs Played</string>
     <plurals name="my_bet_format">
         <item quantity="one">My choice: %1$s %2$d point</item>
         <item quantity="other">My choice: %1$s %2$d points</item>
@@ -250,5 +263,16 @@ The [Dora Music] Team</string>
         <item quantity="one">Maximum %1$d music can be selected</item>
         <item quantity="other">Maximum %1$d musics can be selected</item>
     </plurals>
-
+    <plurals name="stat_hour">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="stat_minute">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="stat_song">
+        <item quantity="one">%d song</item>
+        <item quantity="other">%d songs</item>
+    </plurals>
 </resources>

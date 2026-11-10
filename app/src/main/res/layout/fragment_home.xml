@@ -211,10 +211,12 @@
                 app:dview_titleTextColor="@color/colorTextPrimary"
                 app:dview_titleTextSize="@dimen/title_bar_text_size" />
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/titlebar_home"
+                android:overScrollMode="never"
+                android:scrollbars="none"
                 android:fillViewport="true">
 
                 <LinearLayout
@@ -321,12 +323,208 @@
                         android:layout_marginTop="24dp"
                         android:layout_marginBottom="8dp"
                         android:overScrollMode="never"
+                        android:nestedScrollingEnabled="false"
                         android:paddingHorizontal="@dimen/home_module_padding"
                         android:paddingVertical="@dimen/home_module_padding"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="3" />
+
+                    <!-- 听歌统计开始 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/home_stat_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/music_stats_title"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="@dimen/home_stat_title_text_size" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/music_stats_today"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="@dimen/home_stat_subtitle_text_size" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/shape_home_module"
+                            android:orientation="vertical"
+                            android:padding="@dimen/home_stat_item_padding">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/music_stats_duration"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+
+                                <TextView
+                                    android:id="@+id/tvDailyDuration"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/music_stats_song_count"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+
+                                <TextView
+                                    android:id="@+id/tvDailyCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/music_stats_this_month"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="@dimen/home_stat_subtitle_text_size"  />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/shape_home_module"
+                            android:orientation="vertical"
+                            android:padding="@dimen/home_stat_item_padding" >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/music_stats_duration"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+
+                                <TextView
+                                    android:id="@+id/tvMonthlyDuration"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/music_stats_song_count"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+
+                                <TextView
+                                    android:id="@+id/tvMonthlyCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/music_stats_this_year"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="@dimen/home_stat_subtitle_text_size"  />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/shape_home_module"
+                            android:orientation="vertical"
+                            android:padding="@dimen/home_stat_item_padding" >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/music_stats_duration"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+
+                                <TextView
+                                    android:id="@+id/tvAnnualDuration"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/music_stats_song_count"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+
+                                <TextView
+                                    android:id="@+id/tvAnnualCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/home_stat_content_text_size"
+                                    android:textColor="@color/colorTextSecondary" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <!-- 听歌统计结束 -->
                 </LinearLayout>
-            </ScrollView>
+
+            </androidx.core.widget.NestedScrollView>
         </RelativeLayout>
 
         <androidx.viewpager.widget.ViewPager

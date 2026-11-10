@@ -1,9 +1,12 @@
 package site.doramusic.app.score
 
 data class PlayerBackground(
+    // ID，全局唯一
     val id: String,
-    val galleryId: String,
+    // 背景名称
     val name: String,
+    // 商城购买的背景才有价格
+    val price: Int = 0,
     val imageRes: Int,
     val bgType: Int     // 0：系统背景，1：图鉴背景，2：商城背景
 ) {

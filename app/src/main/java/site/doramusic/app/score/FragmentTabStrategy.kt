@@ -54,7 +54,7 @@ class FragmentTabStrategy(
     }
 
     override fun onConfigurationChanged() {
-        fragments.forEach { it.adapter.notifyDataSetChanged() }
+        fragments.forEach { it.adapter?.notifyDataSetChanged() }
     }
 
     override fun release() {

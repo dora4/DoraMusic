@@ -215,6 +215,19 @@
     <string name="tab_title_bg_gallery">Фон галереи</string>
     <string name="tab_title_bg_mall">Фон магазина</string>
     <string name="tab_title_bg_system">Системный фон</string>
+    <string name="bg_mall_buy_confirm">Хотите потратить 10000 баллов, чтобы купить【%1$s】?</string>
+    <string name="bg_mall_not_enough_note">Недостаточно баллов для покупки</string>
+    <string name="bg_mall_buy_success">Покупка успешна, фон【%1$s】установлен</string>
+    <string name="bg_mall_cost_format">%1$d баллов</string>
+    <string name="bg_system_unlock_rule">Разблокировать после прослушивания %d минут</string>
+    <string name="bg_system_need_minutes">Осталось %1$d минут до разблокировки</string>
+    <string name="background_available">Доступно</string>
+    <string name="music_stats_title">Статистика прослушивания</string>
+    <string name="music_stats_today">Сегодня</string>
+    <string name="music_stats_this_month">В этом месяце</string>
+    <string name="music_stats_this_year">В этом году</string>
+    <string name="music_stats_duration">Время прослушивания</string>
+    <string name="music_stats_song_count">Количество треков</string>
     <plurals name="my_bet_format">
         <item quantity="one">Моя ставка: %1$s %2$d очко</item>
         <item quantity="few">Моя ставка: %1$s %2$d очка</item>
@@ -250,5 +263,23 @@
         <item quantity="few">Максимум %1$d песни</item>
         <item quantity="many">Максимум %1$d песен</item>
         <item quantity="other">Максимум %1$d песен</item>
+    </plurals>
+    <plurals name="stat_hour">
+        <item quantity="one">%d час</item>
+        <item quantity="few">%d часа</item>
+        <item quantity="many">%d часов</item>
+        <item quantity="other">%d часа</item>
+    </plurals>
+    <plurals name="stat_minute">
+        <item quantity="one">%d минута</item>
+        <item quantity="few">%d минуты</item>
+        <item quantity="many">%d минут</item>
+        <item quantity="other">%d минуты</item>
+    </plurals>
+    <plurals name="stat_song">
+        <item quantity="one">%d песня</item>
+        <item quantity="few">%d песни</item>
+        <item quantity="many">%d песен</item>
+        <item quantity="other">%d песни</item>
     </plurals>
 </resources>
