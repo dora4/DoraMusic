@@ -215,7 +215,7 @@ The [Dora Music] Team</string>
     <string name="please_turn_on_nfc">Please turn on NFC</string>
     <string name="not_an_ndef_tag">Not an NDEF tag</string>
     <string name="failed_to_read_tag">Failed to read tag</string>
-    <string name="bg_name_system_1">Dew on Leaf</string>
+    <string name="bg_name_system_1">Leaf</string>
     <string name="bg_name_system_2">Petal</string>
     <string name="bg_name_system_3">Violet</string>
     <string name="bg_name_system_4">Aurora</string>

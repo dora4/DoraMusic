@@ -208,7 +208,7 @@
     <string name="please_turn_on_nfc">请先打开NFC开关</string>
     <string name="not_an_ndef_tag">不是NDEF格式卡片</string>
     <string name="failed_to_read_tag">读卡失败</string>
-    <string name="bg_name_system_1">叶片露珠</string>
+    <string name="bg_name_system_1">叶片</string>
     <string name="bg_name_system_2">花瓣</string>
     <string name="bg_name_system_3">紫罗兰</string>
     <string name="bg_name_system_4">极光</string>

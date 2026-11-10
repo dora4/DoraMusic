@@ -204,7 +204,7 @@
     <string name="please_turn_on_nfc">Activez d’abord le NFC</string>
     <string name="not_an_ndef_tag">Ce n’est pas une étiquette NDEF</string>
     <string name="failed_to_read_tag">Échec de la lecture de l’étiquette</string>
-    <string name="bg_name_system_1">Rosée sur feuille</string>
+    <string name="bg_name_system_1">Feuille</string>
     <string name="bg_name_system_2">Pétale</string>
     <string name="bg_name_system_3">Violette</string>
     <string name="bg_name_system_4">Aurore polaire</string>

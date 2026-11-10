@@ -204,7 +204,7 @@
     <string name="please_turn_on_nfc">กรุณาเปิด NFC ก่อน</string>
     <string name="not_an_ndef_tag">ไม่ใช่แท็ก NDEF</string>
     <string name="failed_to_read_tag">อ่านแท็กไม่สำเร็จ</string>
-    <string name="bg_name_system_1">น้ำค้างบนใบไม้</string>
+    <string name="bg_name_system_1">ใบ</string>
     <string name="bg_name_system_2">กลีบดอกไม้</string>
     <string name="bg_name_system_3">ดอกไวโอเล็ต</string>
     <string name="bg_name_system_4">ออโรร่า</string>

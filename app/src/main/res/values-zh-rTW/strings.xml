@@ -204,7 +204,7 @@
     <string name="please_turn_on_nfc">請先開啟NFC</string>
     <string name="not_an_ndef_tag">不是NDEF格式標籤</string>
     <string name="failed_to_read_tag">讀取標籤失敗</string>
-    <string name="bg_name_system_1">葉片露珠</string>
+    <string name="bg_name_system_1">葉片</string>
     <string name="bg_name_system_2">花瓣</string>
     <string name="bg_name_system_3">紫羅蘭</string>
     <string name="bg_name_system_4">極光</string>

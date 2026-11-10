@@ -204,7 +204,7 @@
     <string name="please_turn_on_nfc">Сначала включите NFC</string>
     <string name="not_an_ndef_tag">Не тег NDEF</string>
     <string name="failed_to_read_tag">Ошибка чтения тега</string>
-    <string name="bg_name_system_1">Роса на листе</string>
+    <string name="bg_name_system_1">Лист</string>
     <string name="bg_name_system_2">Лепесток</string>
     <string name="bg_name_system_3">Фиалка</string>
     <string name="bg_name_system_4">Аврора</string>
