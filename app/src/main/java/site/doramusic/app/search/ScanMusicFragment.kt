@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dora.BaseFragment
+import dora.brvah.decoration.DividerItemDecoration
 import dora.util.IntentUtils
 import dora.util.PermissionHelper
 import dora.util.RxBus
@@ -220,6 +221,8 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
         )
         recyclerView.layoutManager =
             LinearLayoutManager(requireContext())
+        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(),
+            DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
         radarView.setRadarColor(
             ThemeSelector.getThemeColor(
