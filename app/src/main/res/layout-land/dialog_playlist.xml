@@ -52,7 +52,10 @@
                 android:layout_marginStart="5dp"
                 android:textColor="@color/white" />
         </LinearLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_playlist"
             android:layout_width="match_parent"

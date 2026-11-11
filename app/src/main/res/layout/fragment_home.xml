@@ -210,11 +210,17 @@
                 app:dview_title="@string/app_name"
                 app:dview_titleTextColor="@color/colorTextPrimary"
                 app:dview_titleTextSize="@dimen/title_bar_text_size" />
+            <View
+                android:id="@+id/view_home_top_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/divider_color"
+                android:layout_below="@+id/titlebar_home"/>
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/titlebar_home"
+                android:layout_below="@+id/view_home_top_divider"
                 android:overScrollMode="never"
                 android:scrollbars="none"
                 android:fillViewport="true">
