@@ -71,7 +71,7 @@ interface AppConfig {
 
         // 数据库相关
         const val DB_NAME = "db_doramusic"
-        const val DB_VERSION = 8
+        const val DB_VERSION = 9
         const val COLUMN_ORDER_ID = "order_id"
         const val COLUMN_TOKEN_AMOUNT = "token_amount"
         const val COLUMN_TOKEN_SYMBOL = "token_symbol"

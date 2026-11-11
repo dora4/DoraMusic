@@ -47,7 +47,11 @@ import kotlin.collections.ArrayList
  * 2. id 是本地数据库主键
  * 3. data 是本地文件路径，也是添加歌曲时的去重依据
  *
- * 扫描页面选择歌曲时，不应该使用 Music.id。
+ * 专辑：
+ *     扫描 Music 时直接从 MediaStore.Audio.Media.ALBUM 写入 Music.albumName，
+ *     Album 表由 Music 按 albumId 分组派生（album_name 取组内 Music.albumName），
+ *     不再用 MediaStore.Albums._ID 反查专辑名，避免部分机型 albumId 与
+ *     Albums._ID 关联不上导致全部“未知专辑”。
  */
 @SuppressLint("Range")
 object MusicScanner : AppConfig {
@@ -60,6 +64,7 @@ object MusicScanner : AppConfig {
         MediaStore.Audio.Media.TITLE,
         MediaStore.Audio.Media.DATA,
         MediaStore.Audio.Media.ALBUM_ID,
+        MediaStore.Audio.Media.ALBUM,
         MediaStore.Audio.Media.ARTIST,
         MediaStore.Audio.Media.ARTIST_ID,
         MediaStore.Audio.Media.DURATION
@@ -95,9 +100,6 @@ object MusicScanner : AppConfig {
      */
     private const val DEFENSE_SQL_INJECTION_HEADER = " 1=1 "
 
-    /**
-     * DAO。
-     */
     private val musicDao = DaoFactory.getDao(Music::class.java)
 
     private val artistDao = DaoFactory.getDao(Artist::class.java)
@@ -121,10 +123,6 @@ object MusicScanner : AppConfig {
         }
     }
 
-    // ============================================================
-    // 完整扫描
-    // ============================================================
-
     /**
      * 完整扫描本地音乐，并重建音乐相关数据库。
      *
@@ -142,7 +140,6 @@ object MusicScanner : AppConfig {
     @JvmStatic
     fun scan(context: Context): Observable<List<Music>> {
         return Observable.fromCallable {
-
             /**
              * 1. 保存旧收藏。
              *
@@ -157,7 +154,6 @@ object MusicScanner : AppConfig {
                         Music.IS_FAVORITE
                     )
             )
-
             val favoriteMap = oldFavorites
                 .filter {
                     !it.data.isNullOrBlank()
@@ -165,27 +161,19 @@ object MusicScanner : AppConfig {
                 .associateBy {
                     it.data
                 }
-
             /**
              * 2. 重建表。
              */
             try {
                 recreateTables()
             } catch (ignored: Exception) {
-                // 保持原有容错逻辑
             }
-
             var musics: List<Music> = emptyList()
-
             /**
              * 3. 扫描并插入 Music。
              */
             Transaction.execute(Music::class.java) {
-                musics = queryMusic(
-                    context,
-                    AppConfig.ROUTE_START_FROM_LOCAL
-                )
-
+                musics = queryMusic(context, AppConfig.ROUTE_START_FROM_LOCAL)
                 /**
                  * 4. 恢复收藏状态。
                  */
@@ -197,7 +185,6 @@ object MusicScanner : AppConfig {
                         music.favorite = Music.IS_FAVORITE
                     }
                 }
-
                 /**
                  * 5. 插入音乐。
                  */
@@ -205,9 +192,8 @@ object MusicScanner : AppConfig {
                     it.insert(musics)
                 }
             }
-
             /**
-             * 6. 保存 Artist / Album / Folder。
+             * 6. 同步 Artist / Album / Folder。
              */
             if (musics.isNotEmpty()) {
                 Transaction.execute {
@@ -215,7 +201,7 @@ object MusicScanner : AppConfig {
                     if (artists.isNotEmpty()) {
                         artistDao.insert(artists)
                     }
-                    val albums = queryAlbum(context)
+                    val albums = buildAlbumsFromMusic(musics)
                     if (albums.isNotEmpty()) {
                         albumDao.insert(albums)
                     }
@@ -231,9 +217,32 @@ object MusicScanner : AppConfig {
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    // ============================================================
-    // Music 查询
-    // ============================================================
+    /**
+     * 由扫描出的 Music 列表派生 Album 列表。
+     *
+     * 规则：
+     * - 以 Music.albumId 分组（albumId > 0）
+     * - album_name 取组内第一条非空 Music.albumName，缺失时兜底“未知专辑”
+     * - number_of_songs = 当前库内属于该专辑的歌曲数量
+     *
+     * 这样专辑名与歌曲强一致，彻底避免“未知专辑”。
+     */
+    private fun buildAlbumsFromMusic(musics: List<Music>): List<Album> {
+        return musics
+            .filter { it.albumId > 0 }
+            .groupBy { it.albumId }
+            .map { (albumId, groupMusics) ->
+                val album = Album()
+                album.album_id = albumId
+                album.album_name = groupMusics
+                    .firstOrNull { !it.albumName.isNullOrBlank() }
+                    ?.albumName
+                    ?: "<unknown>"
+                // number_of_songs = 当前APP库内属于这个专辑的歌曲数量
+                album.number_of_songs = groupMusics.size
+                album
+            }
+    }
 
     @JvmStatic
     fun queryMusic(
@@ -258,17 +267,10 @@ object MusicScanner : AppConfig {
         selection: String?,
         from: Int
     ): List<Music> {
-
         val sp = PrefsManager(context)
-
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-
         val cr = context.contentResolver
-
-        val select = StringBuilder(
-            DEFENSE_SQL_INJECTION_HEADER
-        )
-
+        val select = StringBuilder(DEFENSE_SQL_INJECTION_HEADER)
         /**
          * 文件大小过滤。
          */
@@ -278,7 +280,6 @@ object MusicScanner : AppConfig {
                         AppConfig.SCANNER_FILTER_SIZE
             )
         }
-
         /**
          * 时长过滤。
          */
@@ -288,16 +289,13 @@ object MusicScanner : AppConfig {
                         AppConfig.SCANNER_FILTER_DURATION
             )
         }
-
         /**
          * 自定义 SQL 条件。
          */
         if (TextUtils.isNotEmpty(selections)) {
             select.append(selections)
         }
-
         return when (from) {
-
             /**
              * 本地音乐。
              */
@@ -316,7 +314,6 @@ object MusicScanner : AppConfig {
                     )
                 }
             }
-
             /**
              * 歌手。
              */
@@ -338,7 +335,6 @@ object MusicScanner : AppConfig {
                     )
                 }
             }
-
             /**
              * 专辑。
              */
@@ -360,7 +356,6 @@ object MusicScanner : AppConfig {
                     )
                 }
             }
-
             /**
              * 文件夹。
              */
@@ -382,7 +377,6 @@ object MusicScanner : AppConfig {
                     )
                 }
             }
-
             /**
              * 收藏。
              */
@@ -396,7 +390,6 @@ object MusicScanner : AppConfig {
                     emptyList()
                 }
             }
-
             /**
              * 最近播放。
              */
@@ -415,10 +408,6 @@ object MusicScanner : AppConfig {
             }
         }
     }
-
-    // ============================================================
-    // Raw SQL
-    // ============================================================
 
     @JvmStatic
     fun rawQueryMusic(
@@ -469,10 +458,6 @@ object MusicScanner : AppConfig {
         }
     }
 
-    // ============================================================
-    // Cursor -> Music
-    // ============================================================
-
     /**
      * 将数据库 Cursor 转成 Music。
      */
@@ -496,6 +481,11 @@ object MusicScanner : AppConfig {
                 music.albumId = it.getInt(
                     it.getColumnIndex(
                         Music.COLUMN_ALBUM_ID
+                    )
+                )
+                music.albumName = it.getString(
+                    it.getColumnIndex(
+                        Music.COLUMN_ALBUM_NAME
                     )
                 )
                 music.duration = it.getInt(
@@ -549,22 +539,13 @@ object MusicScanner : AppConfig {
         return list
     }
 
-    // ============================================================
-    // DAO Query
-    // ============================================================
-
     @JvmStatic
     fun queryMusic(
         value: String?,
         type: Int
     ): List<Music> {
-        val queryBuilder = createQueryBuilder(
-            value,
-            type
-        )
-        return musicDao.select(
-            queryBuilder
-        )
+        val queryBuilder = createQueryBuilder(value, type)
+        return musicDao.select(queryBuilder)
     }
 
     private fun createQueryBuilder(
@@ -606,9 +587,7 @@ object MusicScanner : AppConfig {
                 }
             }
         }
-        val builder = QueryBuilder
-            .create()
-            .where(whereBuilder)
+        val builder = QueryBuilder.create().where(whereBuilder)
         if (type == AppConfig.ROUTE_START_FROM_LATEST) {
             builder.orderBy(
                 "-${Music.COLUMN_LAST_PLAY_TIME}"
@@ -618,10 +597,6 @@ object MusicScanner : AppConfig {
         return builder
     }
 
-    // ============================================================
-    // Folder
-    // ============================================================
-
     /**
      * 查询歌曲文件夹。
      */
@@ -630,9 +605,7 @@ object MusicScanner : AppConfig {
         context: Context
     ): List<Folder> {
         val sp = PrefsManager(context)
-        val uri = MediaStore.Files.getContentUri(
-            "external"
-        )
+        val uri = MediaStore.Files.getContentUri("external")
         val cr = context.contentResolver
         val audioExtensions = listOf(
             "mp3",
@@ -682,10 +655,6 @@ object MusicScanner : AppConfig {
         }
     }
 
-    // ============================================================
-    // Artist
-    // ============================================================
-
     /**
      * 查询歌手。
      */
@@ -711,22 +680,21 @@ object MusicScanner : AppConfig {
         }
     }
 
-    // ============================================================
-    // Album
-    // ============================================================
-
     /**
      * 查询专辑。
+     *
+     * 优先从本地 Album 表读取（Album 由 Music 派生，见 scan() / buildAlbumsFromMusic）。
+     * 仅在本地表为空时，退化为直接查 MediaStore（此时拿不到派生数量，仅兜底）。
      */
     @JvmStatic
     fun queryAlbum(
         context: Context
     ): List<Album> {
-        val uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
-        val cr = context.contentResolver
         return if (albumDao.count() > 0) {
             albumDao.selectAll()
         } else {
+            val uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
+            val cr = context.contentResolver
             getAlbumList(
                 cr.query(
                     uri,
@@ -738,10 +706,6 @@ object MusicScanner : AppConfig {
             )
         }
     }
-
-    // ============================================================
-    // MediaStore -> Music
-    // ============================================================
 
     /**
      * 将 MediaStore Cursor 转成 Music。
@@ -756,6 +720,9 @@ object MusicScanner : AppConfig {
      *
      * Music.id 是本地数据库主键，
      * 等插入数据库之后再由 ORM 处理。
+     *
+     * 同时写入 Music.albumName（来自 MediaStore.Audio.Media.ALBUM），
+     * 供专辑页派生专辑名使用。
      */
     private fun getMusicList(
         cursor: Cursor?
@@ -790,6 +757,18 @@ object MusicScanner : AppConfig {
                             MediaStore.Audio.Media.ALBUM_ID
                         )
                     )
+                    // 专辑名称：直接与歌曲一起从 MediaStore 读取，避免后续反查失败
+                    val albumName = it.getString(
+                        it.getColumnIndex(
+                            MediaStore.Audio.Media.ALBUM
+                        )
+                    )
+                    music.albumName =
+                        if (albumName.isNullOrBlank()) {
+                            "<unknown>"
+                        } else {
+                            albumName
+                        }
                     // 歌曲名称
                     music.musicName = it.getString(
                         it.getColumnIndex(
@@ -814,15 +793,13 @@ object MusicScanner : AppConfig {
                         // 获取不到时不要丢弃歌曲
                         music.duration = 0
                         try {
-                            music.duration =
-                                MusicUtils.getDuration(filePath)
+                            music.duration = MusicUtils.getDuration(filePath)
                         } catch (ignored: Exception) {
                             // 保留 0，歌曲依然加入扫描结果
                         }
                     }
                     // Folder
-                    val separatorIndex =
-                        filePath.lastIndexOf(File.separator)
+                    val separatorIndex = filePath.lastIndexOf(File.separator)
                     music.folder =
                         if (separatorIndex > 0) {
                             filePath.substring(
@@ -842,8 +819,7 @@ object MusicScanner : AppConfig {
                             music.artist
                         )
                     list.add(music)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                } catch (ignore: Exception) {
                     // 单首歌曲失败，不影响其他歌曲
                 }
             }
@@ -851,13 +827,7 @@ object MusicScanner : AppConfig {
         return list
     }
 
-    // ============================================================
-    // Album Cursor
-    // ============================================================
-
-    private fun getAlbumList(
-        cursor: Cursor?
-    ): List<Album> {
+    private fun getAlbumList(cursor: Cursor?): List<Album> {
         val list = ArrayList<Album>()
         if (cursor == null) {
             return list
@@ -895,10 +865,6 @@ object MusicScanner : AppConfig {
         return list
     }
 
-    // ============================================================
-    // Artist Cursor
-    // ============================================================
-
     private fun getArtistList(
         cursor: Cursor?
     ): List<Artist> {
@@ -926,10 +892,6 @@ object MusicScanner : AppConfig {
         }
         return list
     }
-
-    // ============================================================
-    // Folder Cursor
-    // ============================================================
 
     private fun getFolderList(
         cursor: Cursor?
@@ -973,10 +935,6 @@ object MusicScanner : AppConfig {
         return list
     }
 
-    // ============================================================
-    // 仅扫描 MediaStore
-    // ============================================================
-
     /**
      * 仅扫描 MediaStore。
      *
@@ -1016,7 +974,6 @@ object MusicScanner : AppConfig {
                         AppConfig.SCANNER_FILTER_SIZE
             )
         }
-
         /**
          * 时长过滤。
          */
@@ -1026,7 +983,6 @@ object MusicScanner : AppConfig {
                         AppConfig.SCANNER_FILTER_DURATION
             )
         }
-
         /**
          * 执行 MediaStore 查询。
          */
@@ -1041,10 +997,6 @@ object MusicScanner : AppConfig {
         )
     }
 
-    // ============================================================
-    // 添加用户选择的歌曲
-    // ============================================================
-
     /**
      * 将用户选择的歌曲保存到本地数据库。
      *
@@ -1055,14 +1007,13 @@ object MusicScanner : AppConfig {
      * 3. data 作为文件唯一标识
      * 4. 当前选择内部重复歌曲自动去重
      * 5. 同步 Artist
-     * 6. 同步 Album
+     * 6. 同步 Album（由新增 Music 派生）
      * 7. 同步 Folder
      *
      * @return 实际新增歌曲数量
      */
     @JvmStatic
     fun addSelectedSongs(
-        context: Context,
         songs: List<Music>
     ): Int {
         if (songs.isEmpty()) {
@@ -1083,12 +1034,10 @@ object MusicScanner : AppConfig {
                         it.data
                     }
                     .toHashSet()
-
             /**
              * 新歌曲。
              *
-             * data：
-             *     文件绝对路径
+             * data：文件绝对路径
              *
              * 作为唯一标识。
              */
@@ -1109,34 +1058,13 @@ object MusicScanner : AppConfig {
             /**
              * 插入数据库。
              */
-            musicDao.insert(
-                newSongs
-            )
+            musicDao.insert(newSongs)
             addedSongs = newSongs
         }
-
         if (addedSongs.isEmpty()) {
             return 0
         }
-
-        /**
-         * 查询专辑名称。
-         */
-        val albumNameMap =
-            queryAlbumNameMap(
-                context,
-                addedSongs
-            )
-
-        /**
-         * 同步 Artist / Album / Folder。
-         */
         Transaction.execute {
-
-            // ----------------------------------------------------
-            // Artist
-            // ----------------------------------------------------
-
             val existingArtists =
                 artistDao
                     .selectAll()
@@ -1165,15 +1093,8 @@ object MusicScanner : AppConfig {
                         artist
                     }
             if (artists.isNotEmpty()) {
-                artistDao.insert(
-                    artists
-                )
+                artistDao.insert(artists)
             }
-
-            // ----------------------------------------------------
-            // Album
-            // ----------------------------------------------------
-
             val existingAlbums =
                 albumDao
                     .selectAll()
@@ -1181,42 +1102,14 @@ object MusicScanner : AppConfig {
                         it.album_id
                     }
                     .toHashSet()
-
             val albums =
-                addedSongs
+                buildAlbumsFromMusic(addedSongs)
                     .filter {
-                        it.albumId > 0
-                    }
-                    .groupBy {
-                        it.albumId
-                    }
-                    .filterKeys {
-                        !existingAlbums.contains(
-                            it
-                        )
-                    }
-                    .map { (albumId, group) ->
-                        val album = Album()
-                        album.album_id =
-                            albumId
-                        album.album_name =
-                            albumNameMap[
-                                albumId
-                            ] ?: "未知专辑"
-                        album.number_of_songs =
-                            group.size
-                        album
+                        !existingAlbums.contains(it.album_id)
                     }
             if (albums.isNotEmpty()) {
-                albumDao.insert(
-                    albums
-                )
+                albumDao.insert(albums)
             }
-
-            // ----------------------------------------------------
-            // Folder
-            // ----------------------------------------------------
-
             val existingFolders =
                 folderDao
                     .selectAll()
@@ -1230,7 +1123,7 @@ object MusicScanner : AppConfig {
                         !it.folder.isNullOrBlank()
                     }
                     .groupBy {
-                        it.folder!!
+                        it.folder
                     }
                     .filterKeys {
                         !existingFolders.contains(
@@ -1240,12 +1133,8 @@ object MusicScanner : AppConfig {
                     .map { (path, group) ->
                         val folder =
                             Folder()
-                        folder.path =
-                            path
-                        folder.name =
-                            path.substringAfterLast(
-                                File.separator
-                            )
+                        folder.path = path
+                        folder.name = path.substringAfterLast(File.separator)
                         folder
                     }
             if (folders.isNotEmpty()) {
@@ -1255,96 +1144,5 @@ object MusicScanner : AppConfig {
             }
         }
         return addedSongs.size
-    }
-
-    // ============================================================
-    // 查询 Album Name
-    // ============================================================
-
-    /**
-     * 根据歌曲的 albumId 查询 MediaStore 中对应的专辑名称。
-     *
-     * 返回：
-     *
-     * albumId -> albumName
-     */
-    @SuppressLint("Range")
-    fun queryAlbumNameMap(
-        context: Context,
-        songs: List<Music>
-    ): Map<Int, String> {
-        val albumIds =
-            songs
-                .map {
-                    it.albumId
-                }
-                .filter {
-                    it > 0
-                }
-                .distinct()
-        if (albumIds.isEmpty()) {
-            return emptyMap()
-        }
-        val result =
-            HashMap<Int, String>()
-        val uri =
-            MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
-        val projection =
-            arrayOf(
-                MediaStore.Audio.Albums._ID,
-                MediaStore.Audio.Albums.ALBUM
-            )
-        /**
-         * 创建：
-         *
-         * _id IN (?, ?, ?)
-         */
-        val placeholders =
-            albumIds.joinToString(",") {
-                "?"
-            }
-        val selection =
-            "${MediaStore.Audio.Albums._ID} " +
-                    "IN ($placeholders)"
-        val selectionArgs =
-            albumIds
-                .map {
-                    it.toString()
-                }
-                .toTypedArray()
-        val cursor =
-            context.contentResolver.query(
-                uri,
-                projection,
-                selection,
-                selectionArgs,
-                null
-            )
-        cursor?.use {
-            val idIndex =
-                it.getColumnIndex(
-                    MediaStore.Audio.Albums._ID
-                )
-            val nameIndex =
-                it.getColumnIndex(
-                    MediaStore.Audio.Albums.ALBUM
-                )
-            while (it.moveToNext()) {
-                val albumId =
-                    it.getInt(
-                        idIndex
-                    )
-                val albumName =
-                    it.getString(
-                        nameIndex
-                    )
-                if (!albumName.isNullOrBlank()) {
-                    result[
-                        albumId
-                    ] = albumName
-                }
-            }
-        }
-        return result
     }
 }

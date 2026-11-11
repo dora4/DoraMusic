@@ -38,6 +38,7 @@ import java.util.Locale
 class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
 
     companion object {
+
         /**
          * 最大选择数量。
          */
@@ -72,8 +73,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      *      * 使用 data，也就是歌曲文件绝对路径作为 Key。
      */
     private val selectedSongs = LinkedHashMap<String, Music>()
-
-    private var albumNameMap = emptyMap<Int, String>()
 
     private lateinit var helper: PermissionHelper
 
@@ -199,9 +198,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     /**
      * 初始化 View。
      */
-    private fun initViews(
-        binding: FragmentScanMusicBinding
-    ) {
+    private fun initViews(binding: FragmentScanMusicBinding) {
         radarView = binding.radarView
         etSearch = binding.etSearch
         tvStatus = binding.tvStatus
@@ -263,6 +260,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
          */
         etSearch.addTextChangedListener(
             object : TextWatcher {
+
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
@@ -314,13 +312,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 val result = withContext(Dispatchers.IO) {
                     MusicScanner.scanMediaStore(requireContext())
                 }
-                val albumMap = withContext(Dispatchers.IO) {
-                    MusicScanner.queryAlbumNameMap(
-                        requireContext(),
-                        result
-                    )
-                }
-                albumNameMap = albumMap
                 /**
                  * 计算扫描已经耗时多久。
                  */
@@ -442,8 +433,8 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             append(song.musicName ?: "")
             append(" ")
             append(song.artist ?: "")
-            //            append(" ")
-            //            append(albumNameMap[song.albumId] ?: "")
+            append(" ")
+            append(song.albumName ?: "")
         }
     }
 
@@ -558,10 +549,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                  */
                 val addedCount =
                     withContext(Dispatchers.IO) {
-                        MusicScanner.addSelectedSongs(
-                            requireContext(),
-                            songs
-                        )
+                        MusicScanner.addSelectedSongs(songs)
                     }
                 if (!isAdded) return@launch
                 /**
