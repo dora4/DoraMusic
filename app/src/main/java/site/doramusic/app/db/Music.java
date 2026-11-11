@@ -13,6 +13,7 @@ import dora.db.migration.OrmMigration;
 import dora.db.table.Column;
 import dora.db.table.Ignore;
 import dora.db.table.OrmTable;
+import dora.db.table.Since;
 import dora.db.table.Table;
 import site.doramusic.app.sort.Sort;
 
@@ -25,6 +26,7 @@ public class Music implements OrmTable, Parcelable, Sort {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_SONG_ID = "song_id";
     public static final String COLUMN_ALBUM_ID = "album_id";
+    public static final String COLUMN_ALBUM_NAME = "album_name";
     public static final String COLUMN_DURATION = "duration";
     public static final String COLUMN_MUSIC_NAME = "music_name";
     public static final String COLUMN_ARTIST = "artist";
@@ -48,6 +50,18 @@ public class Music implements OrmTable, Parcelable, Sort {
 
     @Column(COLUMN_ALBUM_ID)
     public int albumId = -1;
+
+    /**
+     * 专辑名称。
+     * <p>
+     * 扫描时直接从 MediaStore.Audio.Media.ALBUM 写入，
+     * 专辑页（Album）据此派生，不再依赖 MediaStore.Albums._ID 反查，
+     * 避免部分机型上 ALBUM_ID 与 Albums._ID 关联不上导致“未知专辑”。
+     * </p>
+     */
+    @Since(version = 9)
+    @Column(COLUMN_ALBUM_NAME)
+    public String albumName;
 
     @Column(COLUMN_DURATION)
     public int duration;
@@ -107,6 +121,7 @@ public class Music implements OrmTable, Parcelable, Sort {
         bundle.putInt(COLUMN_ID, id);
         bundle.putInt(COLUMN_SONG_ID, songId);
         bundle.putInt(COLUMN_ALBUM_ID, albumId);
+        bundle.putString(COLUMN_ALBUM_NAME, albumName);
         bundle.putInt(COLUMN_DURATION, duration);
         bundle.putString(COLUMN_MUSIC_NAME, musicName);
         bundle.putString(COLUMN_ARTIST, artist);
@@ -134,6 +149,7 @@ public class Music implements OrmTable, Parcelable, Sort {
             music.id = bundle.getInt(COLUMN_ID);
             music.songId = bundle.getInt(COLUMN_SONG_ID);
             music.albumId = bundle.getInt(COLUMN_ALBUM_ID);
+            music.albumName = bundle.getString(COLUMN_ALBUM_NAME);
             music.duration = bundle.getInt(COLUMN_DURATION);
             music.musicName = bundle.getString(COLUMN_MUSIC_NAME);
             music.artist = bundle.getString(COLUMN_ARTIST);
