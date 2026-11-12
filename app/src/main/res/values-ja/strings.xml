@@ -235,8 +235,9 @@ Dora Musicチーム</string>
     <string name="music_stats_this_year">今年</string>
     <string name="music_stats_duration">再生時間</string>
     <string name="music_stats_song_count">再生曲数</string>
-    <string name="deleted">削除しました</string>
-    <string name="delete_failed">削除に失敗しました</string>
+    <string name="remove">削除する</string>
+    <string name="removed">削除済み</string>
+    <string name="remove_failed">削除に失敗しました</string>
     <plurals name="my_bet_format">
         <item quantity="one">私の予想：%1$s %2$dポイント</item>
         <item quantity="other">私の予想：%1$s %2$dポイント</item>

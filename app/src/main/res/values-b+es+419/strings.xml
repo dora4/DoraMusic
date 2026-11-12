@@ -228,8 +228,9 @@
     <string name="music_stats_this_year">Este año</string>
     <string name="music_stats_duration">Tiempo de escucha</string>
     <string name="music_stats_song_count">Canciones escuchadas</string>
-    <string name="deleted">Eliminado</string>
-    <string name="delete_failed">No se pudo eliminar</string>
+    <string name="remove">Quitar</string>
+    <string name="removed">Quitado</string>
+    <string name="remove_failed">Error al Quitar</string>
     <plurals name="my_bet_format">
         <item quantity="one">Mi apuesta: %1$s %2$d punto</item>
         <item quantity="other">Mi apuesta: %1$s %2$d puntos</item>

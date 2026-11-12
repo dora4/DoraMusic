@@ -232,8 +232,9 @@
     <string name="music_stats_this_year">今年</string>
     <string name="music_stats_duration">听歌时长</string>
     <string name="music_stats_song_count">听歌数量</string>
-    <string name="deleted">已删除</string>
-    <string name="delete_failed">删除失败</string>
+    <string name="remove">移除</string>
+    <string name="removed">已移除</string>
+    <string name="remove_failed">移除失败</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d积分</item>
     </plurals>

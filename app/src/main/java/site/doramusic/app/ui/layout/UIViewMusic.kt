@@ -40,7 +40,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
-import site.doramusic.app.conf.AppConfig.Companion.MAX_RECENT_MUSIC_NUM
 import site.doramusic.app.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.conf.AppConfig.Companion.ROUTE_START_FROM_ALBUM
 import site.doramusic.app.conf.AppConfig.Companion.ROUTE_START_FROM_ARTIST
@@ -104,14 +103,8 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
 
     private fun updateMusicListUI(musics: MutableList<Music>, sort: Boolean = true) {
         adapter = MusicItemAdapter().apply {
-            // 为了防止这里数据量过大，Binder无法传输，限制只加载前1000首歌曲
-            val optMusics = if (musics.size > MUSIC_LIST_MAX_LIST) {
-                musics.take(MUSIC_LIST_MAX_LIST).toMutableList()
-            } else {
-                musics
-            }
             setNeedSort(sort)
-            setList(optMusics)
+            setList(musics)
             setOnItemClickListener { _, _, position ->
                 if (position >= adapter.data.size) {
                     return@setOnItemClickListener
@@ -120,24 +113,10 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 if (music.songId == -1) {
                     return@setOnItemClickListener
                 }
-                if (from == ROUTE_START_FROM_LATEST) {
-                    if (position == 0) {
-                        // 第一首（最新）：队列已是最近列表则直接播，支持再次点击暂停
-                        if (!isLatestPlaylistReady()) {
-                            refreshLatestPlaylistAndPlay(music, 0)
-                        } else {
-                            MediaManager.play(0)
-                        }
-                    } else {
-                        // 非第一首：更新列表后再播放
-                        refreshLatestPlaylistAndPlay(music, position)
-                    }
-                } else {
-                    if (MediaManager.playlist != data) {
-                        MediaManager.refreshPlaylist(data)
-                    }
-                    MediaManager.play(position)
+                if (MediaManager.playlist != data) {
+                    MediaManager.refreshPlaylist(data)
                 }
+                MediaManager.playById(music.songId)
             }
             setOnItemLongClickListener { adapter, view, position ->
                 if (position >= MUSIC_LIST_MAX_LIST) {
@@ -174,68 +153,6 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     /**
-     * 判断当前播放队列是否已是最近播放列表（按 data 顺序比对前若干首）。
-     */
-    private fun isLatestPlaylistReady(): Boolean {
-        val playlist = MediaManager.playlist
-        val uiData = adapter.data
-        if (playlist.isEmpty() || playlist.size != uiData.size) return false
-        for (i in uiData.indices) {
-            val a = uiData[i]
-            val b = playlist[i]
-            if (!a.data.isNullOrBlank() && a.data != b.data) return false
-        }
-        return true
-    }
-
-    private fun refreshLatestPlaylistAndPlay(music: Music, fallbackPosition: Int) {
-        MediaManager.playById(music.songId)
-        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-        scope.launch {
-            val latest = try {
-                musicDao.select(
-                    QueryBuilder.create()
-                        .where(
-                            WhereBuilder.create()
-                                .addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0)
-                        )
-                        .orderBy("-${Music.COLUMN_LAST_PLAY_TIME}")
-                        .limit(MAX_RECENT_MUSIC_NUM)
-                )
-            } catch (e: Exception) {
-                emptyList<Music>()
-            }
-            withContext(Dispatchers.Main) {
-                if (latest.isNotEmpty()) {
-                    MediaManager.refreshPlaylist(ArrayList(latest))
-                }
-                val target = resolveInPlaylist(music, fallbackPosition)
-                if (target >= 0) {
-                    MediaManager.play(target)
-                } else {
-                    MediaManager.playById(music.songId)
-                }
-            }
-        }
-    }
-
-    /**
-     * 在播放队列中定位目标：先按 data 匹配，再按 songId，最后兜底下标。
-     */
-    private fun resolveInPlaylist(music: Music, fallbackPosition: Int): Int {
-        val playlist = MediaManager.playlist
-        if (playlist.isEmpty()) return -1
-        for (i in playlist.indices) {
-            val m = playlist[i]
-            if (!music.data.isNullOrBlank() && music.data == m.data) return i
-        }
-        for (i in playlist.indices) {
-            if (playlist[i].songId == music.songId && music.songId != -1) return i
-        }
-        return if (fallbackPosition in playlist.indices) fallbackPosition else -1
-    }
-
-    /**
      * 删除指定位置的歌曲：
      * 1. 若正在播放的是这首歌，先停播并取消通知。
      * 2. 后台删除数据库记录及关联信息。
@@ -261,9 +178,9 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     adapter.remove(position)
                     adapter.notifyItemRemoved(position)
                     RxBus.getInstance().post(RefreshHomeItemEvent())
-                    ToastUtils.showShort(activity.getString(R.string.deleted))
+                    ToastUtils.showShort(activity.getString(R.string.removed))
                 } else {
-                    ToastUtils.showShort(activity.getString(R.string.delete_failed))
+                    ToastUtils.showShort(activity.getString(R.string.remove_failed))
                 }
             }
         }
@@ -395,9 +312,10 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     QueryBuilder.create()
                         .where(WhereBuilder.create().addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0))
                         // 按最后播放时间降序
-                        .orderBy("-${Music.COLUMN_LAST_PLAY_TIME}"),
+                        .orderBy("-${Music.COLUMN_LAST_PLAY_TIME}")
+                        .limit(AppConfig.MAX_RECENT_MUSIC_NUM),
                     createMusicTaskListener(activity) { musics ->
-                        updateMusicListUI(musics, sort = false)
+                        updateMusicListUI(musics, false)
                     }
                 )
             }
