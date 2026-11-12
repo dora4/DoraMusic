@@ -90,6 +90,11 @@ interface AppConfig {
         const val ROUTE_ALBUM_TO_LOCAL = 8
         const val ROUTE_FOLDER_TO_LOCAL = 9
 
+        /**
+         * 从通知栏启动。
+         */
+        const val LAUNCH_FROM_NOTIFICATION = "launch_from_notification"
+
         // 播放状态
         const val MPS_NO_FILE = -1 // 无音乐文件
         const val MPS_INVALID = 0 // 当前音乐文件无效

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 
@@ -16,6 +17,8 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityGalleryListBinding
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.util.ThemeSelector
 
 /**
@@ -39,6 +42,9 @@ class GalleryListActivity : BaseActivity<ActivityGalleryListBinding>() {
         ThemeSelector.applyViewTheme(binding.titlebarGalleryList)
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         adapter = CardPackAdapter(getCardPacks()) { pack ->
+            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_WANNA_DRAW_CARD,
+                mapOf("gallery_id" to pack.id)
+            )
             val intent = Intent(this, DrawCardActivity::class.java)
             intent.putExtra(DrawCardActivity.GALLERY_ID, pack.id)
             intent.putExtra(DrawCardActivity.GALLERY_NAME, pack.name)

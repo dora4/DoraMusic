@@ -59,9 +59,14 @@ import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.SlidingView
 import androidx.core.graphics.createBitmap
 import dora.widget.DoraIndicatorView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import site.doramusic.app.event.PlayerBackgroundChangedEvent
 import site.doramusic.app.event.PlaylistChangedEvent
 import site.doramusic.app.score.PlayerBgManager
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.util.PadUtils
 
 /**
@@ -122,6 +127,8 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private val playModeControl: PlayModeControl by lazy {
         PlayModeControl(manager.view.context)
     }
+
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     val isOpened: Boolean
         get() = slidingView.isOpened
@@ -480,6 +487,23 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             refreshSeekProgress(MediaManager.position(), MediaManager.duration())
             MediaManager.replay()
             musicTimer?.startTimer()
+            curMusic?.let { _ ->
+                TrackAnalysis.report(scope,
+                    EventType.EVENT_TYPE_SEEK_MUSIC_PROGRESS_BAR,
+                    mapOf("source" to "player")
+                )
+            }
+        } else if (seekBar === sbMusicPlayVolume) {
+            val volumeProgress = seekBar.progress
+            TrackAnalysis.report(
+                scope,
+                EventType.EVENT_TYPE_SEEK_VOLUME_PROGRESS_BAR,
+                mapOf(
+                    "source" to "player",
+                    "volume" to volumeProgress,
+                    "max_volume" to maxVolume
+                )
+            )
         }
     }
 
@@ -577,6 +601,10 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     )
                 )
             } else {
+                TrackAnalysis.report(scope,
+                    EventType.EVENT_TYPE_VOLUME_PROGRESS_BAR,
+                    mapOf("source" to "player")
+                )
                 llMusicPlayVolume.visibility = View.VISIBLE
                 llMusicPlayVolume.startAnimation(
                     AnimationUtils.loadAnimation(
@@ -595,8 +623,14 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 }
                 curMusic?.let {
                     if (it.favorite == 0) {
+                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_STAR_MUSIC,
+                            mapOf("source" to "player")
+                        )
                         refreshFavorite(1)
                     } else {
+                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_UNSTAR_MUSIC,
+                            mapOf("source" to "player")
+                        )
                         refreshFavorite(0)
                     }
                     RxBus.getInstance().post(RefreshFavoriteEvent())

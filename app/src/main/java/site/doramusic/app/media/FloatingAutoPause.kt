@@ -12,11 +12,17 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.util.PrefsManager
 import androidx.core.graphics.toColorInt
+import androidx.lifecycle.lifecycleScope
 import dora.util.RxBus
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import site.doramusic.app.event.RefreshDarkModeEvent
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import kotlin.jvm.java
 
 class FloatingAutoPause : BaseFloatingWindowService() {
@@ -49,6 +55,7 @@ class FloatingAutoPause : BaseFloatingWindowService() {
     private var waitingForResume = false
 
     private val disposable = CompositeDisposable()
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onStartCommand(
         intent: Intent?,
@@ -113,12 +120,15 @@ class FloatingAutoPause : BaseFloatingWindowService() {
             R.id.tv_floating_auto_pause_cancel
         )
         tvMinus.setOnClickListener {
+            TrackAnalysis.report(scope, EventType.EVENT_TYPE_DECREASE_SLEEP_TIMER)
             decreaseTime()
         }
         tvPlus.setOnClickListener {
+            TrackAnalysis.report(scope, EventType.EVENT_TYPE_INCREASE_SLEEP_TIMER)
             increaseTime()
         }
         tvCancel.setOnClickListener {
+            TrackAnalysis.report(scope, EventType.EVENT_TYPE_CANCEL_SLEEP_TIMER)
             cancelAutoPause()
         }
         updateTime()

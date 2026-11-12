@@ -272,6 +272,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(AppConfig.LAUNCH_FROM_NOTIFICATION, true)
         }
         val pi = PendingIntent.getActivity(
             this, 0, intent,
@@ -293,7 +294,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
     private fun updateNotification(bitmap: Bitmap? = null, title: String, name: String) {
         val channelId = APP_PACKAGE_NAME
         val channelName = APP_NAME
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // 创建通知频道
@@ -331,6 +332,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(AppConfig.LAUNCH_FROM_NOTIFICATION, true)
         }
         val pi = PendingIntent.getActivity(
             this, 0, intent,
@@ -417,6 +419,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(AppConfig.LAUNCH_FROM_NOTIFICATION, true)
         }
         val pi = PendingIntent.getActivity(
             this, 0, intent,

@@ -18,7 +18,7 @@ import site.doramusic.app.sort.Sort;
 /**
  * 专辑表。
  */
-@Table("album")
+@Table("album_v2")
 public class Album implements OrmTable, Parcelable, Sort {
 
     public static final String COLUMN_ID = "_id";

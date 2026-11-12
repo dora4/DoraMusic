@@ -20,7 +20,7 @@ import site.doramusic.app.sort.Sort;
 /**
  * 文件夹表。
  */
-@Table("folder")
+@Table("folder_v2")
 public class Folder implements OrmTable, Parcelable, Sort {
 
     public static final String COLUMN_ID = "_id";

@@ -24,7 +24,10 @@ import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.ui.adapter.ColorAdapter
 import site.doramusic.app.util.PrefsManager
 import androidx.core.graphics.drawable.toDrawable
+import androidx.lifecycle.lifecycleScope
 import dora.widget.colorpicker.listener.OnColorSelectListener
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.util.ThemeSelector
 
 /**
@@ -163,46 +166,112 @@ class ColorPickerActivity : BaseSkinActivity<ActivityColorPickerBinding>() {
     private fun changeSkin() {
         when (colorAdapter.selectedPosition) {
             0 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "custom",
+                        "select_color" to selectColor
+                    )
+                )
                 prefsManager.saveSkinType(0)
                 SkinManager.changeSkin("custom")
             }
             1 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "cyan"
+                    )
+                )
                 prefsManager.saveSkinType(1)
                 SkinManager.changeSkin("cyan")
             }
             2 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "orange"
+                    )
+                )
                 prefsManager.saveSkinType(2)
                 SkinManager.changeSkin("orange")
             }
             3 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "black"
+                    )
+                )
                 prefsManager.saveSkinType(3)
                 SkinManager.changeSkin("black")
             }
             4 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "green"
+                    )
+                )
                 prefsManager.saveSkinType(4)
                 SkinManager.changeSkin("green")
             }
             5 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "red"
+                    )
+                )
                 prefsManager.saveSkinType(5)
                 SkinManager.changeSkin("red")
             }
             6 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "blue"
+                    )
+                )
                 prefsManager.saveSkinType(6)
                 SkinManager.changeSkin("blue")
             }
             7 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "purple"
+                    )
+                )
                 prefsManager.saveSkinType(7)
                 SkinManager.changeSkin("purple")
             }
             8 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "yellow"
+                    )
+                )
                 prefsManager.saveSkinType(8)
                 SkinManager.changeSkin("yellow")
             }
             9 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "pink"
+                    )
+                )
                 prefsManager.saveSkinType(9)
                 SkinManager.changeSkin("pink")
             }
             10 -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN,
+                    mapOf(
+                        "skin_type" to "system",
+                        "color" to "gold"
+                    )
+                )
                 prefsManager.saveSkinType(10)
                 SkinManager.changeSkin("gold")
             }
