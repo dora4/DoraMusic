@@ -189,6 +189,10 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
             mc.refreshPlaylist(playlist)
         }
 
+        override fun removeFromPlaylist(music: Music?): Boolean {
+            return mc.removeFromPlaylist(music)
+        }
+
         @Throws(RemoteException::class)
         override fun setBassBoost(strength: Int) {
             mc.setBassBoost(strength)

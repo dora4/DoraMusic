@@ -60,6 +60,7 @@ import site.doramusic.app.widget.SlidingView
 import androidx.core.graphics.createBitmap
 import dora.widget.DoraIndicatorView
 import site.doramusic.app.event.PlayerBackgroundChangedEvent
+import site.doramusic.app.event.PlaylistChangedEvent
 import site.doramusic.app.score.PlayerBgManager
 import site.doramusic.app.util.PadUtils
 
@@ -194,6 +195,16 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 .subscribe {
                     refreshPlayerBackground(it.backgroundRes)
                 })
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(PlaylistChangedEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (MediaManager.playlist.isEmpty() || MediaManager.curMusic == null) {
+                        resetToDefault()
+                    }
+                }
+        )
     }
 
     fun updateBottomBarColor() {
@@ -643,5 +654,37 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         // 将canvas传递进去并设置其边框
         setBitmapBorder(canvas)
         return bitmap
+    }
+
+    /**
+     * 删除当前播放歌曲后，播放页（handle + content）恢复默认状态。
+     */
+    fun resetToDefault() {
+        val context = contentView.context
+        // ---- handle 区：歌名 / 歌手回占位文案 ----
+        tvSlidingMusicName.text = context.getString(R.string.brand)
+        tvSlidingArtist.text = context.getString(R.string.slogan)
+
+        // ---- content 区：进度归零 ----
+        tvMusicPlayCurTime.text = context.getString(R.string._00_00)
+        tvMusicPlayTotalTime.text = context.getString(R.string._00_00)
+        btnMusicPlayFavorite.setImageResource(R.drawable.ic_favorite_unchecked)
+        sbMusicPlayPlayback.progress = 0
+        sbMusicPlayPlayback.secondaryProgress = 0
+
+        // ---- 封面回默认图 ----
+//        try {
+//            loadRotateCover(createDefaultCover())
+//        } catch (ignored: Exception) {
+//        }
+
+        // ---- 按钮回“播放”态 ----
+        showPlay(true)
+
+        // ---- 清空歌词 ----
+//        try {
+//            loadLyric(null)
+//        } catch (ignored: Exception) {
+//        }
     }
 }

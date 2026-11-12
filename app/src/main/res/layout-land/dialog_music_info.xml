@@ -42,11 +42,23 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/shape_delete_btn"
+                android:gravity="center"
+                android:text="@string/delete"
+                android:textColor="@color/white"
+                android:textSize="@dimen/music_info_copy_text_size" />
+
+            <TextView
                 android:id="@+id/tv_copy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
-                android:layout_marginStart="3dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/shape_normal_btn"
                 android:gravity="center"
                 android:text="@string/copy"

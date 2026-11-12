@@ -228,6 +228,8 @@
     <string name="music_stats_this_year">Tahun ini</string>
     <string name="music_stats_duration">Durasi mendengarkan</string>
     <string name="music_stats_song_count">Jumlah lagu</string>
+    <string name="deleted">Dihapus</string>
+    <string name="delete_failed">Gagal menghapus</string>
     <plurals name="my_bet_format">
         <item quantity="one">Taruhan saya: %1$s %2$d poin</item>
         <item quantity="other">Taruhan saya: %1$s %2$d poin</item>

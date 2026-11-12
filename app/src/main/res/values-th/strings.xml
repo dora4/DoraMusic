@@ -228,6 +228,8 @@
     <string name="music_stats_this_year">ปีนี้</string>
     <string name="music_stats_duration">ระยะเวลาฟัง</string>
     <string name="music_stats_song_count">จำนวนเพลง</string>
+    <string name="deleted">ลบแล้ว</string>
+    <string name="delete_failed">ลบไม่สำเร็จ</string>
     <plurals name="my_bet_format">
         <item quantity="one">การคาดการณ์ของฉัน: %1$s %2$d คะแนน</item>
         <item quantity="other">การคาดการณ์ของฉัน: %1$s %2$d คะแนน</item>

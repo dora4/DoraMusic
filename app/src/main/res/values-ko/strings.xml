@@ -235,6 +235,8 @@ Dora Musicチーム</string>
     <string name="music_stats_this_year">올해</string>
     <string name="music_stats_duration">청취 시간</string>
     <string name="music_stats_song_count">청취 곡 수</string>
+    <string name="deleted">삭제되었습니다</string>
+    <string name="delete_failed">삭제하지 못했습니다</string>
     <plurals name="my_bet_format">
         <item quantity="one">私の予想：%1$s %2$dポイント</item>
         <item quantity="other">私の予想：%1$s %2$dポイント</item>

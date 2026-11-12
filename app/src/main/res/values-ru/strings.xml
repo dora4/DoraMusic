@@ -228,6 +228,8 @@
     <string name="music_stats_this_year">В этом году</string>
     <string name="music_stats_duration">Время прослушивания</string>
     <string name="music_stats_song_count">Количество треков</string>
+    <string name="deleted">Удалено</string>
+    <string name="delete_failed">Не удалось удалить</string>
     <plurals name="my_bet_format">
         <item quantity="one">Моя ставка: %1$s %2$d очко</item>
         <item quantity="few">Моя ставка: %1$s %2$d очка</item>

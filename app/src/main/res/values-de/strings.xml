@@ -228,6 +228,8 @@
     <string name="music_stats_this_year">Dieses Jahr</string>
     <string name="music_stats_duration">Hörzeit</string>
     <string name="music_stats_song_count">Gehörte Titel</string>
+    <string name="deleted">Gelöscht</string>
+    <string name="delete_failed">Löschen fehlgeschlagen</string>
     <plurals name="my_bet_format">
         <item quantity="one">Meine Wette: %1$s %2$d Punkt</item>
         <item quantity="other">Meine Wette: %1$s %2$d Punkte</item>
