@@ -1145,4 +1145,88 @@ object MusicScanner : AppConfig {
         }
         return addedSongs.size
     }
+
+    /**
+     * 删除指定歌曲及其关联信息。
+     *
+     * 规则：
+     * 1. 按 data(文件路径) 删除 music 记录，避免 id 变化导致误删。
+     * 2. 若删除的是当前正在播放的歌曲，由调用方先停止播放。
+     * 3. 同步 Album / Artist / Folder：
+     *    - 该分类下还有歌：仅把歌曲数 -1
+     *    - 该分类下没歌了：删除该分类
+     *
+     * @return 是否删除成功
+     */
+    @JvmStatic
+    fun deleteMusic(context: Context, music: Music): Boolean {
+        if (music.data.isNullOrBlank()) return false
+        var ok = false
+        Transaction.execute {
+            val path = music.data!!
+            // 删除前先取出该歌曲的分类信息，用于后续同步
+            val target = musicDao.select(
+                WhereBuilder.create().addWhereEqualTo(Music.COLUMN_DATA, path)
+            ).firstOrNull() ?: return@execute
+            // 1. 删除歌曲
+            ok = musicDao.delete(
+                WhereBuilder.create().addWhereEqualTo(Music.COLUMN_DATA, path)
+            )
+            if (!ok) return@execute
+            // 2. 同步 Album
+            if (target.albumId > 0) {
+                val left = musicDao.select(
+                    WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ALBUM_ID, target.albumId)
+                )
+                if (left.isEmpty()) {
+                    albumDao.delete(
+                        WhereBuilder.create().addWhereEqualTo(Album.COLUMN_ALBUM_ID, target.albumId)
+                    )
+                } else {
+                    updateAlbumCount(target.albumId, left.size)
+                }
+            }
+            // 3. 同步 Artist
+            if (!target.artist.isNullOrBlank()) {
+                val left = musicDao.select(
+                    WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ARTIST, target.artist)
+                )
+                if (left.isEmpty()) {
+                    artistDao.delete(
+                        WhereBuilder.create().addWhereEqualTo(Artist.COLUMN_ARTIST_NAME, target.artist)
+                    )
+                } else {
+                    updateArtistCount(target.artist!!, left.size)
+                }
+            }
+            // 4. 同步 Folder
+            if (!target.folder.isNullOrBlank()) {
+                val left = musicDao.select(
+                    WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FOLDER, target.folder)
+                )
+                if (left.isEmpty()) {
+                    folderDao.delete(
+                        WhereBuilder.create().addWhereEqualTo(Folder.COLUMN_FOLDER_PATH, target.folder)
+                    )
+                }
+            }
+        }
+        return ok
+    }
+
+    private fun updateAlbumCount(albumId: Int, count: Int) {
+        val album = albumDao.select(
+            WhereBuilder.create().addWhereEqualTo(Album.COLUMN_ALBUM_ID, albumId)
+        ).firstOrNull() ?: return
+        album.number_of_songs = count
+        albumDao.update(album)
+    }
+
+    private fun updateArtistCount(artistName: String, count: Int) {
+        val artist = artistDao.select(
+            WhereBuilder.create().addWhereEqualTo(Artist.COLUMN_ARTIST_NAME, artistName)
+        ).firstOrNull() ?: return
+        artist.number_of_tracks = count
+        artistDao.update(artist)
+    }
 }

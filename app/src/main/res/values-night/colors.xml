@@ -59,6 +59,7 @@
     <color name="colorTextPrimary">@color/white</color>
     <color name="colorTextSecondary">@color/light_gray</color>
     <color name="colorDefault">#61B15A</color>
+    <color name="colorDelete">#F44336</color>
     <color name="colorSearchBg">@color/colorPanelFg</color>
     <color name="colorSearchText">@color/white</color>
     <color name="colorSearchTextHint">#9E9E9E</color>

@@ -228,6 +228,8 @@
     <string name="music_stats_this_year">Cette année</string>
     <string name="music_stats_duration">Temps d\'écoute</string>
     <string name="music_stats_song_count">Titres écoutés</string>
+    <string name="deleted">Supprimé</string>
+    <string name="delete_failed">Échec de la suppression</string>
     <plurals name="my_bet_format">
         <item quantity="one">Ma mise : %1$s %2$d point</item>
         <item quantity="other">Ma mise : %1$s %2$d points</item>

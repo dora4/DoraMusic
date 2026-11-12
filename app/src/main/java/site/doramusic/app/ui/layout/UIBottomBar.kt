@@ -25,9 +25,13 @@ import dora.db.dao.DaoFactory
 import dora.firebase.SpmUtils
 import dora.skin.SkinManager
 import dora.util.LogUtils
+import dora.util.RxBus
 import dora.util.ScreenUtils
 import dora.util.TextUtils
 import dora.widget.DoraMarqueeTextView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -35,10 +39,12 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Music
+import site.doramusic.app.event.PlaylistChangedEvent
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.PlayModeControl
 import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
+
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.PlaylistItemAdapter
@@ -51,11 +57,9 @@ import java.util.Locale
  * 底部控制条。
  */
 class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(drawer, manager),
-        View.OnClickListener, AppConfig {
+    View.OnClickListener, AppConfig {
 
-    /**
-     * 外部要用，不能private。
-     */
+    /** 外部要用，不能 private。 */
     var handler: Handler
     private val contentView: View = manager.view
     private lateinit var tvHomeBottomMusicName: DoraMarqueeTextView
@@ -73,6 +77,19 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private val adapter = PlaylistItemAdapter()
     @Volatile
     private var bottomSheetDialog: BottomSheetDialog? = null
+    private var disposable: CompositeDisposable? = null
+
+    private fun addDisposable(d: Disposable) {
+        if (disposable == null) {
+            disposable = CompositeDisposable()
+        }
+        disposable!!.add(d)
+    }
+
+    private fun dispose() {
+        disposable?.dispose()
+        disposable = null
+    }
 
     init {
         initViews()
@@ -89,6 +106,15 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             }
             false
         }
+        addDisposable(
+            RxBus.getInstance()
+                .toObservable(PlaylistChangedEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (MediaManager.playlist.isEmpty() || MediaManager.curMusic == null) {
+                        resetToDefault()
+                    }
+                })
     }
 
     fun setSecondaryProgress(progress: Int) {
@@ -118,7 +144,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                         .resources
                 )
                 LogUtils.e(e.toString())
-//                     java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
+                // java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }
             refreshUI(0, music.duration, music)
             // 这次播放来不及应用均衡器参数，主打一个启动时以最快速度进行播放
@@ -131,7 +157,8 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     fun updateProgressColor() {
-        playbackProgress.progressTintList = ColorStateList.valueOf(ThemeSelector.getThemeColor(contentView.context))
+        playbackProgress.progressTintList =
+            ColorStateList.valueOf(ThemeSelector.getThemeColor(contentView.context))
     }
 
     private fun initViews() {
@@ -152,7 +179,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         playbackProgress = findViewById(R.id.sb_home_bottom_playback) as ProgressBar
         updateProgressColor()
         defaultAlbumIcon = BitmapFactory.decodeResource(
-                manager.view.context.resources, R.drawable.bottom_bar_cover_bg)
+            manager.view.context.resources, R.drawable.bottom_bar_cover_bg)
 
         ivHomeBottomAlbum = findViewById(R.id.iv_home_bottom_album) as ImageView
         ivHomeBottomAlbum.setOnClickListener {
@@ -188,7 +215,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         val totalSecond = tempTotalTime % 60
         val totalTimeString = String.format(
             Locale.getDefault(), "%02d:%02d", totalMinute,
-                totalSecond)
+            totalSecond)
         tvHomeBottomDuration.text = totalTimeString
         if (TextUtils.isNotEqualTo(tvHomeBottomMusicName.text.toString(), music.musicName)) {
             tvHomeBottomMusicName.text = music.musicName
@@ -208,10 +235,10 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                         ))
                 }
                 MediaManager.updateNotification(bitmap, music.musicName, music.artist)
-            } catch (e:UnsupportedOperationException) {
+            } catch (e: UnsupportedOperationException) {
                 MediaManager.updateNotification(defaultAlbumIcon, music.musicName, music.artist)
                 LogUtils.e(e.toString())
-//                java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
+                // java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }
         } else {
             defaultAlbumIcon.let {
@@ -221,18 +248,43 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         refreshSeekProgress(curTime, tempTotalTime, MediaManager.pendingProgress())
     }
 
+    /**
+     * 删除当前歌曲后，底部控制条恢复默认（无播放）状态。
+     */
+    private fun resetToDefault() {
+        // 1. 文本恢复默认
+        tvHomeBottomMusicName.text = contentView.context.getString(R.string.brand)
+        tvHomeBottomArtist.text = contentView.context.getString(R.string.slogan)
+        tvHomeBottomPosition.text = contentView.context.getString(R.string._00_00)
+        tvHomeBottomDuration.text = contentView.context.getString(R.string._00_00)
+        // 2. 进度归零
+        playbackProgress.progress = 0
+        playbackProgress.secondaryProgress = 0
+        // 3. 封面恢复默认
+        ivHomeBottomAlbum.background = defaultAlbumIcon.toDrawable(
+            contentView.context.resources
+        )
+        // 4. 按钮恢复为“播放”
+        showPlay(true)
+        // 5. 取消通知栏
+        try {
+            MediaManager.cancelNotification()
+        } catch (ignored: Exception) {
+        }
+    }
+
     fun showPlay(flag: Boolean) {
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         if (flag) {
             TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAY_MUSIC)
             // 核心功能不再纳入统计
-//            SpmUtils.selectContent(manager.view.context, "暂停音乐")
+            // SpmUtils.selectContent(manager.view.context, "暂停音乐")
             btnHomeBottomPlay.visibility = View.VISIBLE
             btnHomeBottomPause.visibility = View.GONE
         } else {
             TrackAnalysis.report(scope, EventType.EVENT_TYPE_PAUSE_MUSIC)
             // 核心功能不再纳入统计
-//            SpmUtils.selectContent(manager.view.context, "播放音乐")
+            // SpmUtils.selectContent(manager.view.context, "播放音乐")
             btnHomeBottomPlay.visibility = View.GONE
             btnHomeBottomPause.visibility = View.VISIBLE
         }
@@ -244,6 +296,33 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             R.id.btn_home_bottom_pause -> MediaManager.pause()
             R.id.btn_home_bottom_next -> MediaManager.next()
             R.id.btn_home_bottom_menu -> showBottomSheetDialog(manager.view.context)
+        }
+    }
+
+    /**
+     * 刷新快捷播放列表头部的歌曲数量。
+     */
+    private fun updatePlaylistCount(tvPlaylistCount: TextView) {
+        tvPlaylistCount.text =
+            "(${String.format(
+                ContextCompat.getString(manager.view.context, R.string.items),
+                MediaManager.playlist.size
+            )})"
+    }
+
+    /**
+     * 播放队列变化后，若快捷播放列表弹窗正开着，实时刷新列表与数量。
+     */
+    private fun refreshBottomSheetPlaylist() {
+        val dialog = bottomSheetDialog ?: return
+        if (!dialog.isShowing) return
+        adapter.setList(ArrayList(MediaManager.playlist))
+        adapter.notifyDataSetChanged()
+        dialog.window?.decorView?.let { root ->
+            val tvPlaylistCount = root.findViewById<TextView?>(R.id.tv_playlist_count)
+            if (tvPlaylistCount != null) {
+                updatePlaylistCount(tvPlaylistCount)
+            }
         }
     }
 
@@ -260,7 +339,8 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             bottomSheetDialog = BottomSheetDialog(context)
             val contentView = LayoutInflater.from(context).inflate(R.layout.dialog_playlist, null)
             val height = ScreenUtils.getContentHeight() * 2 / 5
-            val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
+            val layoutParams =
+                LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
             contentView.layoutParams = layoutParams
             val llPlaylist: LinearLayout = contentView.findViewById(R.id.ll_playlist)
             val prefsManager = PrefsManager(contentView.context)
@@ -271,7 +351,8 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             }
             val tvPlaylistPlayMode: TextView = contentView.findViewById(R.id.tv_playlist_playmode)
             val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
-            val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
+            val ivPlaylistPlayMode: ImageView =
+                contentView.findViewById(R.id.iv_playlist_playmode)
             val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
             val playModeText = playModeControl.printPlayMode(MediaManager.playMode)
             if (playModeText.isNotEmpty()) {
@@ -279,9 +360,12 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 ivPlaylistPlayMode.visibility = View.VISIBLE
                 tvPlaylistCount.visibility = View.VISIBLE
                 tvPlaylistPlayMode.text = playModeText
-                ivPlaylistPlayMode.setImageResource(playModeControl.getPlayModeImage(MediaManager.playMode))
+                ivPlaylistPlayMode.setImageResource(
+                    playModeControl.getPlayModeImage(MediaManager.playMode)
+                )
                 tvPlaylistCount.text =
-                    "(${String.format(ContextCompat.getString(context, R.string.items), MediaManager.playlist.size)})"
+                    "(${String.format(ContextCompat.getString(context, R.string.items),
+                        MediaManager.playlist.size)})"
             } else {
                 tvPlaylistPlayMode.visibility = View.INVISIBLE
                 ivPlaylistPlayMode.visibility = View.INVISIBLE

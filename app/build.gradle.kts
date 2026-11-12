@@ -122,7 +122,7 @@ dependencies {
     implementation("com.github.dora4:dview-loading-dialog:1.7")
     implementation("com.github.dora4:dview-colors:1.1")
     implementation("com.github.dora4:dview-skins:1.12")
-    implementation("com.github.dora4:dview-bottom-dialog:1.13")
+    implementation("com.github.dora4:dview-bottom-dialog:1.14")
     implementation("com.github.dora4:dview-avatar:1.5")
     implementation("com.github.dora4:dview-flipper-view:1.10")
     implementation("com.github.dora4:dview-coupon-view:1.16")

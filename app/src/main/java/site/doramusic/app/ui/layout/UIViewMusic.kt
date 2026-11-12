@@ -36,6 +36,8 @@ import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
@@ -50,7 +52,10 @@ import site.doramusic.app.db.Artist
 import site.doramusic.app.db.Folder
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.PlayMusicEvent
+import site.doramusic.app.event.PlaylistChangedEvent
+import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.media.MediaManager
+import site.doramusic.app.media.MusicScanner
 import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.UIFactory
@@ -128,6 +133,7 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     val tvMusicDuration = it.findViewById<TextView>(R.id.tv_music_duration)
                     val tvMusicFilePath = it.findViewById<TextView>(R.id.tv_music_file_path)
                     val tvCopy = it.findViewById<TextView>(R.id.tv_copy)
+                    val tvDelete = it.findViewById<TextView>(R.id.tv_delete)
                     val musicNameArtist = "${music.musicName} - ${music.artist}"
                     tvMusicNameArtist.text = musicNameArtist
                     tvMusicDuration.text = context.getString(
@@ -136,7 +142,12 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     )
                     tvMusicFilePath.text = context.getString(R.string.path_colon, music.folder)
                     tvCopy.setOnClickListener {
+                        dismiss()
                         copyText(musicNameArtist, it.context)
+                    }
+                    tvDelete.setOnClickListener {
+                        dismiss()
+                        deleteMusicAt(position)
                     }
                 }
                 false
@@ -144,6 +155,56 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         }
         rvMusic.adapter = adapter
         if (!sort) lvMusic.visibility = View.GONE
+    }
+
+    /**
+     * 删除指定位置的歌曲：
+     * 1. 若正在播放的是这首歌，先停播并取消通知。
+     * 2. 后台删除数据库记录及关联信息。
+     * 3. 成功后从当前列表移除并刷新。
+     */
+    private fun deleteMusicAt(position: Int) {
+        if (position < 0 || position >= adapter.data.size) return
+        val activity = manager.view.context as? Activity ?: return
+        val music = adapter.getItem(position) as Music
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        scope.launch {
+            val ok = try {
+                // 从播放队列移除（当前播放会停，非当前不停）
+                MediaManager.removeFromPlaylist(music)
+                RxBus.getInstance().post(PlaylistChangedEvent())
+                // 删数据库
+                MusicScanner.deleteMusic(activity, music)
+            } catch (e: Exception) {
+                false
+            }
+            withContext(Dispatchers.Main) {
+                if (ok) {
+                    adapter.remove(position)
+                    adapter.notifyItemRemoved(position)
+                    RxBus.getInstance().post(RefreshHomeItemEvent())
+                    ToastUtils.showShort(activity.getString(R.string.deleted))
+                } else {
+                    ToastUtils.showShort(activity.getString(R.string.delete_failed))
+                }
+            }
+        }
+    }
+
+    /**
+     * 若删除的正是当前播放歌曲，先停止播放并取消通知。
+     */
+    private fun handlePlayingOnDelete(music: Music) {
+        try {
+            val cur = MediaManager.curMusic
+            if (cur != null && cur.songId == music.songId && !music.data.isNullOrBlank()
+                && cur.data == music.data
+            ) {
+                MediaManager.stop()
+                MediaManager.cancelNotification()
+            }
+        } catch (ignored: Exception) {
+        }
     }
 
     private fun copyText(text: String, context: Context) {

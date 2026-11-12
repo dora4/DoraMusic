@@ -185,6 +185,15 @@ object MediaManager : IMediaService.Stub(), AppConfig {
         }
     }
 
+    override fun removeFromPlaylist(music: Music?): Boolean {
+        return try {
+            mediaService?.removeFromPlaylist(music) ?: false
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+            false
+        }
+    }
+
     override fun setBassBoost(strength: Int) {
         try {
             mediaService?.setBassBoost(strength)

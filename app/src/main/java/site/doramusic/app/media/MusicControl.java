@@ -890,4 +890,58 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         }
         return result;
     }
+
+    /**
+     * 从播放队列移除指定歌曲。
+     * 若移除的是当前正在播放的歌曲，则先停止播放并结算时长。
+     * 若移除的是其它歌曲，仅从队列移除，不影响当前播放。
+     *
+     * @return 是否发生了移除
+     */
+    public synchronized boolean removeFromPlaylist(Music music) {
+        if (music == null || music.data == null) return false;
+        int index = -1;
+        for (int i = 0; i < mPlaylist.size(); i++) {
+            Music m = mPlaylist.get(i);
+            if (m != null && music.data.equals(m.data)) {
+                index = i;
+                break;
+            }
+        }
+        if (index == -1) return false;
+        boolean isCur = (index == mCurPlayIndex);
+        if (isCur) {
+            // 删的是当前播放：停止 + 结算
+            commitCurrentPlayDuration();
+            if (mMediaPlayer.isPlaying()) {
+                mMediaPlayer.stop();
+            }
+            mMediaPlayer.reset();
+        }
+        mPlaylist.remove(index);
+        if (isCur) {
+            // 删当前：队列空了才置无文件；否则停在“已移除”状态，索引落到新位置
+            if (mPlaylist.isEmpty()) {
+                mPlayState = MPS_NO_FILE;
+                mCurPlayIndex = -1;
+                mCurMusic = null;
+                mPlaying = false;
+            } else {
+                // 让索引指向移除后的同一位置（越界则钳到末尾），供上层决定播下一首
+                if (mCurPlayIndex >= mPlaylist.size()) {
+                    mCurPlayIndex = mPlaylist.size() - 1;
+                }
+                mCurMusic = mPlaylist.get(mCurPlayIndex);
+                mPlayState = MPS_PREPARE;
+                mPlaying = false;
+            }
+        } else {
+            // 删非当前：仅修正索引，当前播放与 mCurMusic 均不变
+            if (index < mCurPlayIndex) {
+                mCurPlayIndex--;
+            }
+        }
+        sendPlayMusicEvent();
+        return true;
+    }
 }

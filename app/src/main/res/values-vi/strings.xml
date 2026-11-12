@@ -228,6 +228,8 @@
     <string name="music_stats_this_year">Năm nay</string>
     <string name="music_stats_duration">Thời gian nghe</string>
     <string name="music_stats_song_count">Số bài hát</string>
+    <string name="deleted">Đã xóa</string>
+    <string name="delete_failed">Xóa thất bại</string>
     <plurals name="my_bet_format">
         <item quantity="one">Lựa chọn của tôi: %1$s %2$d điểm</item>
         <item quantity="other">Lựa chọn của tôi: %1$s %2$d điểm</item>

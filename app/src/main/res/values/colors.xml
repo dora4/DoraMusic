@@ -50,6 +50,7 @@
     <color name="colorTextPrimary">#1A2025</color>
     <color name="colorTextSecondary">#8A8A8A</color>
     <color name="colorDefault">#61B15A</color>
+    <color name="colorDelete">#F44336</color>
     <color name="colorSearchBg">@color/trans_white</color>
     <color name="colorSearchText">@color/colorTextPrimary</color>
     <color name="colorSearchTextHint">@color/gray</color>

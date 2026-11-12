@@ -20,6 +20,8 @@ interface IMediaService {
     int pendingProgress();
     boolean seekTo(int progress);
     void refreshPlaylist(in List<Music> playlist);
+    /** 从播放队列移除指定歌曲（不停止当前播放）。 */
+    boolean removeFromPlaylist(in Music music);
 
     void setBassBoost(int strength);
     void setEqualizer(in int[] bandLevels);

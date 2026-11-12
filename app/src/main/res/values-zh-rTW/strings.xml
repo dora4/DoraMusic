@@ -228,6 +228,8 @@
     <string name="music_stats_this_year">今年</string>
     <string name="music_stats_duration">聽歌時長</string>
     <string name="music_stats_song_count">聽歌數量</string>
+    <string name="deleted">已刪除</string>
+    <string name="delete_failed">刪除失敗</string>
     <plurals name="my_bet_format">
         <item quantity="other">我的投注：%1$s %2$d積分</item>
     </plurals>
