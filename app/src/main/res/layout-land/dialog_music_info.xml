@@ -49,7 +49,7 @@
                 android:layout_marginStart="6dp"
                 android:background="@drawable/shape_delete_btn"
                 android:gravity="center"
-                android:text="@string/delete"
+                android:text="@string/remove"
                 android:textColor="@color/white"
                 android:textSize="@dimen/music_info_copy_text_size" />
 

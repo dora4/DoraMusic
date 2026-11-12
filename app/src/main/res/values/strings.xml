@@ -239,8 +239,9 @@ The [Dora Music] Team</string>
     <string name="music_stats_this_year">This Year</string>
     <string name="music_stats_duration">Listening Time</string>
     <string name="music_stats_song_count">Songs Played</string>
-    <string name="deleted">Deleted</string>
-    <string name="delete_failed">Failed to delete</string>
+    <string name="remove">Remove</string>
+    <string name="removed">Removed</string>
+    <string name="remove_failed">Remove Failed</string>
     <plurals name="my_bet_format">
         <item quantity="one">My choice: %1$s %2$d point</item>
         <item quantity="other">My choice: %1$s %2$d points</item>
