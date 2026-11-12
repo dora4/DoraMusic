@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.BaseActivity
@@ -16,6 +17,8 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityDrawCardBinding
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.util.ThemeSelector
 
 /**
@@ -205,6 +208,10 @@ class DrawCardActivity : BaseActivity<ActivityDrawCardBinding>() {
                                 .andWhereEqualTo("is_drawn", true)
                         )
                         if (num >= 54 && !SPUtils.readBoolean(this@DrawCardActivity, galleryId)) {
+                            // 完成图鉴
+                            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_COMPLETE_GALLERY,
+                                mapOf("gallery_id" to galleryId)
+                            )
                             SPUtils.writeBoolean(this@DrawCardActivity, galleryId, true)
                             showLongToast(getString(R.string.collection_complete))
                         }

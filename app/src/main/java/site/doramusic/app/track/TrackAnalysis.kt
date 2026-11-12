@@ -12,6 +12,10 @@ import site.doramusic.app.http.SecureRequestBuilder
 object TrackAnalysis {
 
     fun report(scope: CoroutineScope, eventName: String) {
+        report(scope, eventName, null)
+    }
+
+    fun report(scope: CoroutineScope, eventName: String, extraData: Map<String, Any?>? = null) {
         val brand = Build.BRAND ?: ""
         val model = Build.MODEL ?: ""
         val os = "Android"
@@ -21,7 +25,7 @@ object TrackAnalysis {
             val req = ReqTrackEvent(
                 AppConfig.PRODUCT_NAME, "$brand-$model-$os-$osVersion-$appVersion",
                 arrayListOf(
-                    TrackEventItem(eventName, System.currentTimeMillis(), null)
+                    TrackEventItem(eventName, System.currentTimeMillis(), extraData)
                 )
             )
             val body = SecureRequestBuilder.build(req, SecureRequestBuilder.SecureMode.ENC) ?: return@launch

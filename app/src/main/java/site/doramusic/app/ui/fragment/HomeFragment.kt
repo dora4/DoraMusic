@@ -235,6 +235,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
             override fun onIconMenuClick(position: Int, icon: AppCompatImageView) {
                 if (position == 0) {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SLEEP_TIMER_POPUP)
                     showAutoPausePopup(icon)
                 }
             }
@@ -393,8 +394,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
     }
 
     private fun startAutoPause(minutes: Int) {
-        TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SLEEP_TIMER)
         if (IntentUtils.hasOverlayPermission(requireContext())) {
+            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_START_SLEEP_TIMER,
+                mapOf("minutes" to minutes)
+            )
             val intent = Intent(
                 context,
                 FloatingAutoPause::class.java
@@ -545,6 +548,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
                 binding.banner.setOnBannerClickListener(object : DoraBannerView.OnBannerClickListener {
                     override fun onBannerClick(view: DoraBannerView, position: Int) {
                         val url = banners?.get(position)?.detailUrl
+                        TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CLICK_AD,
+                            mapOf("detail_url" to url))
                         url?.let {
                             val ext = getFileExtension(url)
                             when (ext) {
@@ -773,7 +778,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     override fun showDrawer() {
         if (!musicPlay.isOpened) {
-            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_OPEN_PLAYER)
+            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_PLAYER)
             spmSelectContent("打开播放控制器界面")
             musicPlay.open()
         }
@@ -781,7 +786,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), AppConfig,
 
     override fun hideDrawer() {
         if (musicPlay.isOpened) {
-            TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CLOSE_PLAYER)
             spmSelectContent("关闭播放控制器界面")
             musicPlay.close()
         }

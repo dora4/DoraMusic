@@ -77,6 +77,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     @Volatile
     private var bottomSheetDialog: BottomSheetDialog? = null
     private var disposable: CompositeDisposable? = null
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     private fun addDisposable(d: Disposable) {
         if (disposable == null) {
@@ -268,16 +269,16 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     fun showPlay(flag: Boolean) {
-        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+//        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         if (flag) {
-            TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAY_MUSIC)
-            // 核心功能不再纳入统计
+            // 极高频功能不再纳入统计
+//            TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAY_MUSIC)
             // SpmUtils.selectContent(manager.view.context, "暂停音乐")
             btnHomeBottomPlay.visibility = View.VISIBLE
             btnHomeBottomPause.visibility = View.GONE
         } else {
-            TrackAnalysis.report(scope, EventType.EVENT_TYPE_PAUSE_MUSIC)
-            // 核心功能不再纳入统计
+            // 极高频功能不再纳入统计
+//            TrackAnalysis.report(scope, EventType.EVENT_TYPE_PAUSE_MUSIC)
             // SpmUtils.selectContent(manager.view.context, "播放音乐")
             btnHomeBottomPlay.visibility = View.GONE
             btnHomeBottomPause.visibility = View.VISIBLE
@@ -322,8 +323,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             if (bottomSheetDialog?.isShowing == true) {
                 return
             }
-            val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-            TrackAnalysis.report(scope, EventType.EVENT_TYPE_SHOW_QUICK_PLAYLIST)
+            TrackAnalysis.report(scope, EventType.EVENT_TYPE_QUICK_PLAYLIST)
             SpmUtils.selectContent(context, "打开快捷播放列表")
             bottomSheetDialog = BottomSheetDialog(context)
             val contentView = LayoutInflater.from(context).inflate(R.layout.dialog_playlist, null)
@@ -365,6 +365,10 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             adapter.setNeedSort(false)
             adapter.setList(MediaManager.playlist)
             adapter.setOnItemClickListener { _, _, position ->
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_CLICK_MUSIC_ITEM,
+                    mapOf("source" to "quick")
+                )
+                adapter.notifyDataSetChanged()
                 val targetMusic = MediaManager.playlist[position]
                 MediaManager.playById(targetMusic.songId)
             }

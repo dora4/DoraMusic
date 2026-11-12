@@ -140,6 +140,21 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 通知栏点击拉起APP埋点
+        if (intent.getBooleanExtra(AppConfig.LAUNCH_FROM_NOTIFICATION, false)) {
+            intent.removeExtra(AppConfig.LAUNCH_FROM_NOTIFICATION)
+            TrackAnalysis.report(
+                lifecycleScope,
+                EventType.EVENT_TYPE_LAUNCH,
+                mapOf("source" to "notification")
+            )
+        } else {
+            TrackAnalysis.report(
+                lifecycleScope,
+                EventType.EVENT_TYPE_LAUNCH,
+                mapOf("source" to "direct")
+            )
+        }
         helper = PermissionHelper.with(this).prepare(
             PermissionHelper.Permission.READ_MEDIA_AUDIO,
             PermissionHelper.Permission.READ_EXTERNAL_STORAGE,
@@ -304,6 +319,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
             }
 
             override fun onDrawerOpened(drawerView: android.view.View) {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SLIDING_DRAWER)
                 // 打开状态
                 mBinding.dlMain.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             }
@@ -356,7 +372,9 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
 //                    themeColor(skinThemeColor)
 //                }
 //            } else {
-//                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_IN)
+//                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_WANNA_SIGN_IN,
+//                    mapOf("source" to "direct")
+//                )
 //                open(ARouterPath.ACTIVITY_SIGN_IN)
 //                closeDrawer()
 //            }
@@ -369,13 +387,15 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 R.id.menu_scan_music -> performScanMusic()
                 // 聊天室
 //                R.id.menu_chat_room -> {
-//                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHAT_ROOM)
+//                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_WANNA_CHAT_ROOM)
 //                    net {
 //                        try {
 //                            val user = UserManager.ins?.currentUser
 //                            if (user == null) {
 //                                showLongToast("请先登录")
-//                                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SIGN_IN)
+//                                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_WANNA_SIGN_IN,
+//                                    mapOf("source" to "sign in")
+//                                )
 //                                open(ARouterPath.ACTIVITY_SIGN_IN)
 //                                closeDrawer()
 //                                return@net
@@ -385,6 +405,7 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
 //                                ?: return@net
 //                            val ok = rxApi(ChatService::class) { joinChannel(body.toRequestBody()) }?.data
 //                            if (ok == true) {
+//                                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHAT_ROOM)
 //                                open(ARoutePath.ACTIVITY_CHAT_ROOM) {
 //                                    withString(EXTRA_ERC20, user.erc20)
 //                                }
@@ -403,12 +424,12 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                 }
                 // 更换皮肤
                 R.id.menu_change_skin -> {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_SKIN)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SELECT_THEME_COLOR)
                     open(ARoutePath.ACTIVITY_COLOR_PICKER)
                 }
                 // 更换背景
                 R.id.menu_change_bg -> {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_BG)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SELECT_PLAYER_BG)
                     open(ARoutePath.ACTIVITY_PLAYER_BG_SELECT)
                 }
                 // 均衡器
@@ -417,7 +438,10 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
                     open(ARoutePath.ACTIVITY_EQUALIZER)
                 }
                 // 设置
-                R.id.menu_settings -> open(ARoutePath.ACTIVITY_SETTINGS)
+                R.id.menu_settings -> {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SETTINGS)
+                    open(ARoutePath.ACTIVITY_SETTINGS)
+                }
             }
             // 不选中
             mBinding.dlMain.closeDrawers()

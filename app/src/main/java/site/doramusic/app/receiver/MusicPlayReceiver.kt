@@ -33,6 +33,8 @@ import site.doramusic.app.util.MusicUtils
  */
 class MusicPlayReceiver : BroadcastReceiver() {
 
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             ACTION_PAUSE_RESUME -> {
@@ -68,13 +70,16 @@ class MusicPlayReceiver : BroadcastReceiver() {
             ACTION_FAVORITE -> {
                 val curMusic = MediaManager.curMusic ?: return
                 curMusic.let {
-                    val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
                     if (it.favorite == 1) {
-                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_STAR_FROM_NOTIFICATION)
+                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_STAR_MUSIC,
+                            mapOf("source" to "notification")
+                        )
                         SpmUtils.selectContent(context, "通知栏取消收藏歌曲")
                         it.favorite = 0
                     } else {
-                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_UNSTAR_FROM_NOTIFICATION)
+                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_UNSTAR_MUSIC,
+                            mapOf("source" to "notification")
+                        )
                         SpmUtils.selectContent(context, "通知栏收藏歌曲")
                         it.favorite = 1
                     }

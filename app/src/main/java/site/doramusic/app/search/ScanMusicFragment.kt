@@ -29,6 +29,8 @@ import site.doramusic.app.databinding.FragmentScanMusicBinding
 import site.doramusic.app.db.Music
 import site.doramusic.app.event.RefreshHomeItemEvent
 import site.doramusic.app.media.MusicScanner
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.util.ThemeSelector
 import java.util.Locale
 
@@ -565,6 +567,9 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                     .post(
                         RefreshHomeItemEvent()
                     )
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ADD_MUSIC,
+                    mapOf("count" to addedCount)
+                )
                 if (addedCount == songs.size) {
                     showShortToast(resources.getQuantityString(R.plurals.added_music_template, addedCount, addedCount))
                 } else if (addedCount > 0) {

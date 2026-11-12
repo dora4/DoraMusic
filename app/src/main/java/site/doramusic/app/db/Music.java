@@ -20,7 +20,7 @@ import site.doramusic.app.sort.Sort;
 /**
  * 歌曲表。
  */
-@Table("music")
+@Table("music_v2")
 public class Music implements OrmTable, Parcelable, Sort {
 
     public static final String COLUMN_ID = "_id";

@@ -77,6 +77,7 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private lateinit var tvMusicDialog: TextView
     private val musicDao = DaoFactory.getDao(Music::class.java)
     private val loadingDialog: DoraLoadingDialog by lazy { DoraLoadingDialog(manager.view.context) }
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     private var disposable: CompositeDisposable? = null
 
@@ -113,6 +114,17 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 if (music.songId == -1) {
                     return@setOnItemClickListener
                 }
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_CLICK_MUSIC_ITEM,
+                    mapOf("source" to when(from) {
+                        ROUTE_START_FROM_ARTIST -> "artist"
+                        ROUTE_START_FROM_ALBUM -> "album"
+                        ROUTE_START_FROM_FOLDER -> "folder"
+                        ROUTE_START_FROM_FAVORITE -> "star"
+                        ROUTE_START_FROM_LATEST -> "recent"
+                        // ROUTE_START_FROM_LOCAL
+                        else -> "local"
+                    })
+                )
                 if (MediaManager.playlist != data) {
                     MediaManager.refreshPlaylist(data)
                 }
@@ -161,8 +173,7 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private fun deleteMusicAt(position: Int) {
         if (position < 0 || position >= adapter.data.size) return
         val activity = manager.view.context as? Activity ?: return
-        val music = adapter.getItem(position) as Music
-        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        val music = adapter.getItem(position)
         scope.launch {
             val ok = try {
                 // 从播放队列移除（当前播放会停，非当前不停）
@@ -267,6 +278,20 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         })
         lvMusic.setOnTouchListener { _, event ->
             tvMusicDialog.visibility = if (event.action == MotionEvent.ACTION_UP) View.GONE else View.VISIBLE
+            if (event.action == MotionEvent.ACTION_UP) {
+                // 用户使用了字母导航
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_LETTER_VIEW,
+                    mapOf("source" to when(from) {
+                        ROUTE_START_FROM_ARTIST -> "artist"
+                        ROUTE_START_FROM_ALBUM -> "album"
+                        ROUTE_START_FROM_FOLDER -> "folder"
+                        ROUTE_START_FROM_FAVORITE -> "star"
+                        ROUTE_START_FROM_LATEST -> "recent" // 理论上是不会出现这个的
+                        // ROUTE_START_FROM_LOCAL
+                        else -> "local"
+                    })
+                )
+            }
             false
         }
     }
@@ -275,38 +300,43 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         val listener = createMusicTaskListener(activity) { musics ->
             updateMusicListUI(musics)
         }
-        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         when (from) {
             ROUTE_START_FROM_LOCAL -> {
-                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_LOCAL)
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_MUSIC_LIST,
+                    mapOf("source" to "local"))
                 SpmUtils.selectContent(activity, "从【我的歌曲】进入歌曲列表")
                 musicDao.selectAllAsync(listener)
             }
             ROUTE_START_FROM_ARTIST -> {
-                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_ARTIST)
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_MUSIC_LIST,
+                    mapOf("source" to "artist"))
                 SpmUtils.selectContent(activity, "从【歌手】进入歌曲列表")
                 val artist = table as Artist
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ARTIST, artist.name), listener)
             }
             ROUTE_START_FROM_ALBUM -> {
-                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_ALBUM)
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_MUSIC_LIST,
+                    mapOf("source" to "album"))
                 SpmUtils.selectContent(activity, "从【专辑】进入歌曲列表")
                 val album = table as Album
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_ALBUM_ID, album.album_id), listener)
             }
             ROUTE_START_FROM_FOLDER -> {
-                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_FOLDER)
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_MUSIC_LIST,
+                    mapOf("source" to "folder"))
                 SpmUtils.selectContent(activity, "从【文件夹】进入歌曲列表")
                 val folder = table as Folder
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FOLDER, folder.path), listener)
             }
             ROUTE_START_FROM_FAVORITE -> {
-                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_FAVORITE)
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_MUSIC_LIST,
+                    mapOf("source" to "favorite"))
                 SpmUtils.selectContent(activity, "从【我的收藏】进入歌曲列表")
                 musicDao.selectAsync(WhereBuilder.create().addWhereEqualTo(Music.COLUMN_FAVORITE, Music.IS_FAVORITE), listener)
             }
             ROUTE_START_FROM_LATEST -> {
-                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PLAYLIST_FROM_LATEST)
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_MUSIC_LIST,
+                    mapOf("source" to "recent"))
                 SpmUtils.selectContent(activity, "从【最近播放】进入歌曲列表")
                 musicDao.selectAsync(
                     QueryBuilder.create()
