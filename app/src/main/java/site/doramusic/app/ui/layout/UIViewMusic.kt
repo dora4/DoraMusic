@@ -40,6 +40,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
+import site.doramusic.app.conf.AppConfig.Companion.MAX_RECENT_MUSIC_NUM
 import site.doramusic.app.conf.AppConfig.Companion.MUSIC_LIST_MAX_LIST
 import site.doramusic.app.conf.AppConfig.Companion.ROUTE_START_FROM_ALBUM
 import site.doramusic.app.conf.AppConfig.Companion.ROUTE_START_FROM_ARTIST
@@ -112,15 +113,30 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             setNeedSort(sort)
             setList(optMusics)
             setOnItemClickListener { _, _, position ->
-                if (position >= MUSIC_LIST_MAX_LIST) {
+                if (position >= adapter.data.size) {
                     return@setOnItemClickListener
                 }
-                if (MediaManager.playlist != data) {
-                    MediaManager.refreshPlaylist(data)
+                val music = adapter.getItem(position)
+                if (music.songId == -1) {
+                    return@setOnItemClickListener
                 }
-                val music = data[position]
-                if (music.songId != -1) {
-                    MediaManager.playById(music.songId)
+                if (from == ROUTE_START_FROM_LATEST) {
+                    if (position == 0) {
+                        // 第一首（最新）：队列已是最近列表则直接播，支持再次点击暂停
+                        if (!isLatestPlaylistReady()) {
+                            refreshLatestPlaylistAndPlay(music, 0)
+                        } else {
+                            MediaManager.play(0)
+                        }
+                    } else {
+                        // 非第一首：更新列表后再播放
+                        refreshLatestPlaylistAndPlay(music, position)
+                    }
+                } else {
+                    if (MediaManager.playlist != data) {
+                        MediaManager.refreshPlaylist(data)
+                    }
+                    MediaManager.play(position)
                 }
             }
             setOnItemLongClickListener { adapter, view, position ->
@@ -158,6 +174,68 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     /**
+     * 判断当前播放队列是否已是最近播放列表（按 data 顺序比对前若干首）。
+     */
+    private fun isLatestPlaylistReady(): Boolean {
+        val playlist = MediaManager.playlist
+        val uiData = adapter.data
+        if (playlist.isEmpty() || playlist.size != uiData.size) return false
+        for (i in uiData.indices) {
+            val a = uiData[i]
+            val b = playlist[i]
+            if (!a.data.isNullOrBlank() && a.data != b.data) return false
+        }
+        return true
+    }
+
+    private fun refreshLatestPlaylistAndPlay(music: Music, fallbackPosition: Int) {
+        MediaManager.playById(music.songId)
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        scope.launch {
+            val latest = try {
+                musicDao.select(
+                    QueryBuilder.create()
+                        .where(
+                            WhereBuilder.create()
+                                .addWhereGreaterThan(Music.COLUMN_LAST_PLAY_TIME, 0)
+                        )
+                        .orderBy("-${Music.COLUMN_LAST_PLAY_TIME}")
+                        .limit(MAX_RECENT_MUSIC_NUM)
+                )
+            } catch (e: Exception) {
+                emptyList<Music>()
+            }
+            withContext(Dispatchers.Main) {
+                if (latest.isNotEmpty()) {
+                    MediaManager.refreshPlaylist(ArrayList(latest))
+                }
+                val target = resolveInPlaylist(music, fallbackPosition)
+                if (target >= 0) {
+                    MediaManager.play(target)
+                } else {
+                    MediaManager.playById(music.songId)
+                }
+            }
+        }
+    }
+
+    /**
+     * 在播放队列中定位目标：先按 data 匹配，再按 songId，最后兜底下标。
+     */
+    private fun resolveInPlaylist(music: Music, fallbackPosition: Int): Int {
+        val playlist = MediaManager.playlist
+        if (playlist.isEmpty()) return -1
+        for (i in playlist.indices) {
+            val m = playlist[i]
+            if (!music.data.isNullOrBlank() && music.data == m.data) return i
+        }
+        for (i in playlist.indices) {
+            if (playlist[i].songId == music.songId && music.songId != -1) return i
+        }
+        return if (fallbackPosition in playlist.indices) fallbackPosition else -1
+    }
+
+    /**
      * 删除指定位置的歌曲：
      * 1. 若正在播放的是这首歌，先停播并取消通知。
      * 2. 后台删除数据库记录及关联信息。
@@ -188,22 +266,6 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     ToastUtils.showShort(activity.getString(R.string.delete_failed))
                 }
             }
-        }
-    }
-
-    /**
-     * 若删除的正是当前播放歌曲，先停止播放并取消通知。
-     */
-    private fun handlePlayingOnDelete(music: Music) {
-        try {
-            val cur = MediaManager.curMusic
-            if (cur != null && cur.songId == music.songId && !music.data.isNullOrBlank()
-                && cur.data == music.data
-            ) {
-                MediaManager.stop()
-                MediaManager.cancelNotification()
-            }
-        } catch (ignored: Exception) {
         }
     }
 
