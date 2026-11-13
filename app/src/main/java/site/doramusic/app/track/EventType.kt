@@ -187,14 +187,26 @@ interface EventType {
         /**
          * 播放音乐。
          */
-        @Deprecated("")
+        @Deprecated("使用 EVENT_TYPE_PLAY_FINISH_COMPLETE 和 EVENT_TYPE_PLAY_FINISH_PARTIAL替换")
         const val EVENT_TYPE_PLAY_MUSIC = "play_music"
 
         /**
          * 暂停音乐。
          */
-        @Deprecated("")
+        @Deprecated("使用 EVENT_TYPE_PLAY_FINISH_COMPLETE 和 EVENT_TYPE_PLAY_FINISH_PARTIAL替换")
         const val EVENT_TYPE_PAUSE_MUSIC = "pause_music"
+
+        /**
+         * 完整听完一首歌（播放结束回调onCompletion）。
+         * params: played_ms
+         */
+        const val EVENT_TYPE_PLAY_FINISH_COMPLETE = "play_finish_complete"
+
+        /**
+         * 未听完歌曲（切歌/停止/退出/失去焦点等中途结束）。
+         * params: played_ms
+         */
+        const val EVENT_TYPE_PLAY_FINISH_PARTIAL = "play_finish_partial"
 
         /**
          * 打开登录页面。
@@ -227,64 +239,34 @@ interface EventType {
         const val EVENT_TYPE_CHECK_UPDATE = "check_update"
 
         /**
-         * 开启自动播放。
+         * 切换自动播放开关。
          */
-        const val EVENT_TYPE_ENABLE_AUTO_PLAY = "enable_auto_play"
+        const val EVENT_TYPE_SWITCH_AUTO_PLAY = "switch_auto_play"
 
         /**
-         * 开启摇一摇。
+         * 切换摇一摇开关。
          */
-        const val EVENT_TYPE_ENABLE_SHAKING = "enable_shaking"
+        const val EVENT_TYPE_SWITCH_SHAKING = "switch_shaking"
 
         /**
-         * 开启深色模式。
+         * 切换深色模式开关。
          */
-        const val EVENT_TYPE_ENABLE_DARK_MODE = "enable_dark_mode"
+        const val EVENT_TYPE_SWITCH_DARK_MODE = "switch_dark_mode"
 
         /**
-         * 开启重低音。
+         * 切换重低音开关。
          */
-        const val EVENT_TYPE_ENABLE_BASS_BOOST = "enable_bass_boost"
+        const val EVENT_TYPE_SWITCH_BASS_BOOST = "switch_bass_boost"
 
         /**
-         * 显示横幅。
+         * 切换横幅开关（反过来）。
          */
-        const val EVENT_TYPE_ENABLE_BANNER = "enable_banner"
+        const val EVENT_TYPE_SWITCH_BANNER = "switch_banner"
 
         /**
          * 保持屏幕常亮。
          */
-        const val EVENT_TYPE_ENABLE_KEEPING_SCREEN_ON = "enable_keeping_screen_on"
-
-        /**
-         * 关闭自动播放。
-         */
-        const val EVENT_TYPE_DISABLE_AUTO_PLAY = "disable_auto_play"
-
-        /**
-         * 关闭摇一摇。
-         */
-        const val EVENT_TYPE_DISABLE_SHAKING = "disable_shaking"
-
-        /**
-         * 关闭深色模式。
-         */
-        const val EVENT_TYPE_DISABLE_DARK_MODE = "disable_dark_mode"
-
-        /**
-         * 关闭重低音。
-         */
-        const val EVENT_TYPE_DISABLE_BASS_BOOST = "disable_bass_boost"
-
-        /**
-         * 不显示横幅。
-         */
-        const val EVENT_TYPE_DISABLE_BANNER = "disable_banner"
-
-        /**
-         * 不保持屏幕常亮。
-         */
-        const val EVENT_TYPE_DISABLE_KEEPING_SCREEN_ON = "disable_keeping_screen_on"
+        const val EVENT_TYPE_SWITCH_KEEPING_SCREEN_ON = "switch_keeping_screen_on"
 
         /**
          * 竞猜。

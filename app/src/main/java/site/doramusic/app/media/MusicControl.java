@@ -27,12 +27,25 @@ import site.doramusic.app.event.PlayMusicEvent;
 import site.doramusic.app.event.RefreshHomeItemEvent;
 import site.doramusic.app.event.RefreshStatEvent;
 import site.doramusic.app.stat.PlayStatManager;
+import site.doramusic.app.track.EventType;
 import site.doramusic.app.util.PrefsManager;
 
 /**
  * 音乐播放流程控制。
  */
 public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig {
+
+    /**
+     * 完整听完一首歌（播放结束回调onCompletion）。
+     * params: played_ms
+     */
+    public static final String EVENT_TYPE_PLAY_FINISH_COMPLETE = "play_finish_complete";
+
+    /**
+     * 未听完歌曲（切歌/停止/退出/失去焦点等中途结束）。
+     * params: played_ms
+     */
+    public static final String EVENT_TYPE_PLAY_FINISH_PARTIAL = "play_finish_partial";
 
     private final Random mRandom;
     private int mPlayMode;
@@ -48,12 +61,16 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     private final AudioManager mAudioManager;
     private final OrmDao<Music> mDao;
     private final PrefsManager mPrefsManager;
-    // 用于播放计时
-    private long mPlayStartTs;
-    private boolean mIsTiming;
-    // 暂停时累计的播放时长，同一次播放会话累加
-    private long mPausedAccumulatedMs = 0;
-    // 最小有效播放时长，过滤误触（太短不统计，单位ms）
+
+    /**
+     * 用于埋点计时：本次会话累计有效播放毫秒。
+     */
+    private int mLastPos;
+    private long mTotalWatchMs = 0;
+
+    /**
+     * 最小有效播放时长，过滤误触（单位ms）。
+     */
     private static final long MIN_VALID_PLAY_MS = 3000;
 
     public MusicControl(Context context) {
@@ -79,30 +96,35 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     }
 
     /**
-     * 结算当前歌曲已播放时长。
-     * 调用时机：切歌、播放完成、停止、退出。
-     * ⚠️ 暂停不要调用这个！
+     * 结算当前歌曲已播放时长，分发埋点事件。
+     * @param isComplete true = 整首播放完成 EVENT_TYPE_PLAY_FINISH_COMPLETE
+     *                   false = 中途停止 EVENT_TYPE_PLAY_FINISH_PARTIAL
      */
-    private void commitCurrentPlayDuration() {
+    private void commitCurrentPlayDuration(boolean isComplete) {
         if (mCurMusic == null) {
             resetTimer();
             return;
         }
-        long totalPlayed = mPausedAccumulatedMs;
-        if (mIsTiming) {
-            totalPlayed += System.currentTimeMillis() - mPlayStartTs;
+        // 如果当前正在播放，先把最后这一段增量算进去
+        if (mPlayState == MPS_PLAYING) {
+            int nowPos = mMediaPlayer.getCurrentPosition();
+            int delta = nowPos - mLastPos;
+            if (delta > 0) {
+                mTotalWatchMs += delta;
+            }
         }
-        if (totalPlayed < MIN_VALID_PLAY_MS) {
+        // 封顶，不能超过歌曲总时长
+        long playedMs = Math.min(mTotalWatchMs, mCurMusic.duration);
+        if (playedMs < MIN_VALID_PLAY_MS) {
             resetTimer();
             return;
         }
-        // 调用新增的中途记录方法
-        PlayStatManager.INSTANCE.addPartialPlayRecord(
-                mCurMusic.songId,
-                mCurMusic.musicName,
-                mCurMusic.duration, // 歌曲原始全长
-                totalPlayed
-        );
+        // 分发两种不同埋点事件
+        if (isComplete) {
+            PlayStatManager.sendPlayEvent(EventType.EVENT_TYPE_PLAY_FINISH_COMPLETE, playedMs);
+        } else {
+            PlayStatManager.sendPlayEvent(EventType.EVENT_TYPE_PLAY_FINISH_PARTIAL, playedMs);
+        }
         resetTimer();
         RxBus.getInstance().post(new RefreshStatEvent());
     }
@@ -111,13 +133,12 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * 重置计时器，清空本次会话计时数据。
      */
     private void resetTimer() {
-        mIsTiming = false;
-        mPausedAccumulatedMs = 0;
-        mPlayStartTs = 0;
+        mTotalWatchMs = 0;
+        mLastPos = 0;
     }
 
     /**
-     * 设置重低音参数。
+     * 用于设置重低音参数。
      *
      * @param strength
      */
@@ -276,8 +297,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         if (pos == -1 || pos >= mPlaylist.size()) {
             return false;
         }
-        // 切歌前先结算上一首
-        commitCurrentPlayDuration();
+        // 切歌：中途结束，partial事件
+        commitCurrentPlayDuration(false);
         mCurPlayIndex = pos;
         mPendingProgress = 0;
         mMediaPlayer.reset();
@@ -337,10 +358,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             mCurPlayIndex = position;
             if (mCurMusicId == id) {
                 if (!mMediaPlayer.isPlaying()) {
-                    // 从暂停恢复播放，重新开启计时
-                    mPlayStartTs = System.currentTimeMillis();
-                    mIsTiming = true;
-
+                    // 从暂停恢复播放，记录基准位置
+                    mLastPos = mMediaPlayer.getCurrentPosition();
                     mMediaPlayer.start();
                     mPlayState = MPS_PLAYING;
                     mCurMusic = mPlaylist.get(mCurPlayIndex);
@@ -383,13 +402,13 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 mMediaPlayer.reset();
                 mMediaPlayer.setDataSource(localProxyUrl);
                 mMediaPlayer.prepareAsync();
-                mMediaPlayer.start();
-                mPlayState = MPS_PLAYING;
-                // 开始计时
-                mPlayStartTs = System.currentTimeMillis();
-                mIsTiming = true;
-                mPausedAccumulatedMs = 0;
-                sendPlayMusicEvent();
+                mMediaPlayer.setOnPreparedListener(mp -> {
+                    mMediaPlayer.start();
+                    mPlayState = MPS_PLAYING;
+                    mLastPos = mMediaPlayer.getCurrentPosition();
+                    mTotalWatchMs = 0;
+                    sendPlayMusicEvent();
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -411,9 +430,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 mMediaPlayer.setOnPreparedListener(mp -> {
                     mMediaPlayer.start();
                     mPlayState = MPS_PLAYING;
-                    mPlayStartTs = System.currentTimeMillis();
-                    mIsTiming = true;
-                    mPausedAccumulatedMs = 0;
+                    mLastPos = mMediaPlayer.getCurrentPosition();
+                    mTotalWatchMs = 0;
                     sendPlayMusicEvent();
                 });
             } catch (IOException e) {
@@ -426,8 +444,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * 停止播放歌曲。
      */
     public void stop() {
-        // 停止前结算时长
-        commitCurrentPlayDuration();
+        // 停止：中途结束
+        commitCurrentPlayDuration(false);
         if (mMediaPlayer.isPlaying()) {
             mMediaPlayer.stop();
         }
@@ -442,8 +460,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 replay();
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                 mAudioManager.abandonAudioFocus(audioFocusListener);
-                // 永久失去焦点，结算
-                commitCurrentPlayDuration();
+                // 永久失去焦点：中途结束
+                commitCurrentPlayDuration(false);
                 pause();
             }
         }
@@ -474,10 +492,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         if (requestFocus()) {
             if (mCurPlayIndex == pos) {
                 if (!mMediaPlayer.isPlaying()) {
-                    // 暂停后恢复播放
-                    mPlayStartTs = System.currentTimeMillis();
-                    mIsTiming = true;
-
+                    // 暂停后恢复播放，记录基准位置
+                    mLastPos = mMediaPlayer.getCurrentPosition();
                     mMediaPlayer.start();
                     mPlayState = MPS_PLAYING;
                     mCurMusic = mPlaylist.get(mCurPlayIndex);
@@ -560,8 +576,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         int time = mMediaPlayer.getDuration();
         int curTime = (int) ((float) pro / 100 * time);
         mMediaPlayer.seekTo(curTime);
-        // seek跳转之后，计时起点重置，不影响累计
-        mPlayStartTs = System.currentTimeMillis();
+        // seek后更新基准，已累计播放时长mTotalWatchMs保留不变
+        mLastPos = curTime;
         return true;
     }
 
@@ -587,7 +603,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * 清空播放列表。
      */
     public void clear() {
-        commitCurrentPlayDuration();
+        commitCurrentPlayDuration(false);
         mMediaPlayer.stop();
         mMediaPlayer.reset();
     }
@@ -625,7 +641,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     }
 
     /**
-     * 暂停当前歌曲的播放。暂停只累加时长，不入库。
+     * 暂停当前歌曲的播放。暂停只累加时长，不入库、不上报事件。
      *
      * @return
      */
@@ -633,13 +649,14 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         if (mPlayState != MPS_PLAYING) {
             return false;
         }
-        // 把当前这段播放时间加到累计，不commit入库
-        if (mIsTiming) {
-            mPausedAccumulatedMs += System.currentTimeMillis() - mPlayStartTs;
-            mIsTiming = false;
+        int nowPos = mMediaPlayer.getCurrentPosition();
+        int delta = nowPos - mLastPos;
+        if (delta > 0) {
+            mTotalWatchMs += delta;
         }
         mMediaPlayer.pause();
         mPlayState = MPS_PAUSE;
+        mLastPos = nowPos;
         mCurMusic = mPlaylist.get(mCurPlayIndex);
         sendPlayMusicEvent();
         return true;
@@ -651,8 +668,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * @return
      */
     public boolean prev() {
-        // 先结算当前这首的播放时长
-        commitCurrentPlayDuration();
+        // 切上一首：中途结束
+        commitCurrentPlayDuration(false);
         switch (mPlayMode) {
             case AppConfig.MPM_PLAYLIST_LOOP:    // 列表循环
                 return moveLeft();
@@ -687,8 +704,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * @return
      */
     public boolean next() {
-        // 先结算当前这首的播放时长
-        commitCurrentPlayDuration();
+        // 切下一首：中途结束
+        commitCurrentPlayDuration(false);
         switch (mPlayMode) {
             case MPM_PLAYLIST_LOOP:    // 列表循环
                 return moveRight();
@@ -719,8 +736,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        // 整首播放完毕，结算时长并计入完整播放记录
-        commitCurrentPlayDuration();
+        // 整首播放完毕：完整事件
+        commitCurrentPlayDuration(true);
         if (mCurMusic != null) {
             PlayStatManager.INSTANCE.insertPlayRecord(mCurMusic.songId, mCurMusic.musicName,
                     mCurMusic.duration);
@@ -819,10 +836,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             mPlayState = MPS_PLAYING;
             mCurMusic = mPlaylist.get(mCurPlayIndex);
             saveLatest(mCurMusic);
-            // 歌曲重新开始播放，重置起始时间，开启计时，清空累计
-            mPlayStartTs = System.currentTimeMillis();
-            mIsTiming = true;
-            mPausedAccumulatedMs = 0;
+            // 歌曲重新开始播放，重置基准，清空累计
+            mLastPos = mMediaPlayer.getCurrentPosition();
+            mTotalWatchMs = 0;
             sendPlayMusicEvent();
             return true;
         } else {
@@ -861,7 +877,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * 退出媒体播放。
      */
     public void exit() {
-        commitCurrentPlayDuration();
+        commitCurrentPlayDuration(false);
         mMediaPlayer.stop();
         mMediaPlayer.release();
         mCurPlayIndex = -1;
@@ -911,8 +927,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         if (index == -1) return false;
         boolean isCur = (index == mCurPlayIndex);
         if (isCur) {
-            // 删的是当前播放：停止 + 结算
-            commitCurrentPlayDuration();
+            // 删除当前播放歌曲：中途结束
+            commitCurrentPlayDuration(false);
             if (mMediaPlayer.isPlaying()) {
                 mMediaPlayer.stop();
             }

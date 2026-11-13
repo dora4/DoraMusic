@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import dora.BaseActivity
 import dora.util.SPUtils
@@ -15,6 +16,8 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.databinding.ActivityPlayerBgSelectBinding
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.util.MusicTimer
 import site.doramusic.app.util.ThemeSelector
 
@@ -55,6 +58,7 @@ class PlayerBgSelectActivity :
                 resources.getDimension(R.dimen.title_bar_icon_size).toInt()
             )
             .setOnIconClickListener(object : DoraTitleBar.OnIconClickListener {
+
                 override fun onIconBackClick(icon: AppCompatImageView) {
                     finish()
                 }
@@ -147,6 +151,9 @@ class PlayerBgSelectActivity :
         }
         if (!isUnlocked) {
             if (background.bgType == PlayerBackground.BACKGROUND_TYPE_SYSTEM) {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHANGE_BG,
+                    mapOf("id" to background.id)
+                )
                 val totalMin = SPUtils.readInteger(this, MusicTimer.KEY_TOTAL_PLAY_MINUTES, 0)
                 val needMin = getSystemBgRequireMinutes(background.id)
                 val remain = (needMin - totalMin).coerceAtLeast(1)
