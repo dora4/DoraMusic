@@ -2,11 +2,17 @@ package site.doramusic.app.stat
 
 import dora.db.dao.DaoFactory
 import dora.db.dao.OrmDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import java.util.Calendar
 
 object PlayStatManager {
 
     private val recordDao: OrmDao<PlayRecord> = DaoFactory.getDao(PlayRecord::class.java)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     private object Sql {
 
@@ -160,5 +166,19 @@ object PlayStatManager {
             calendar.set(Calendar.MILLISECOND, 999)
             return calendar.timeInMillis
         }
+    }
+
+    /**
+     * 发送播放埋点事件。
+     *
+     * @param eventType EVENT_TYPE_PLAY_FINISH_COMPLETE / EVENT_TYPE_PLAY_FINISH_PARTIAL
+     * @param playedMs 本次实际播放时长ms
+     */
+    @JvmStatic
+    fun sendPlayEvent(eventType: String, playedMs: Long) {
+        val params = mapOf(
+            "played_ms" to playedMs
+        )
+        TrackAnalysis.report(scope, eventType, params)
     }
 }

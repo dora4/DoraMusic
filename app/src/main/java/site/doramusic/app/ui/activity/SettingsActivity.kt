@@ -94,10 +94,18 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsAutoPlay.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_AUTO_PLAY)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_AUTO_PLAY,
+                        mapOf(
+                            "enable" to true
+                        )
+                    )
                     spmSelectContent("打开自动播放开关")
                 } else {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_AUTO_PLAY)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_AUTO_PLAY,
+                        mapOf(
+                            "enable" to false
+                        )
+                    )
                     spmSelectContent("关闭自动播放开关")
                 }
                 binding.tbSettingsAutoPlay.isChecked = isChecked
@@ -118,10 +126,14 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsShake.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_SHAKING)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_SHAKING,
+                        mapOf("enable" to true)
+                    )
                     spmSelectContent("打开摇一摇切歌开关")
                 } else {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_SHAKING)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_SHAKING,
+                        mapOf("enable" to false)
+                    )
                     spmSelectContent("关闭摇一摇切歌开关")
                 }
                 binding.tbSettingsShake.isChecked = isChecked
@@ -131,12 +143,16 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsDarkMode.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_DARK_MODE)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_DARK_MODE,
+                        mapOf("enable" to true)
+                    )
                     spmSelectContent("打开深色模式开关")
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     RxBus.getInstance().post(RefreshDarkModeEvent())
                 } else {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_DARK_MODE)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_DARK_MODE,
+                        mapOf("enable" to false)
+                    )
                     spmSelectContent("关闭深色模式开关")
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     RxBus.getInstance().post(RefreshDarkModeEvent())
@@ -149,10 +165,14 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsBassBoost.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_BASS_BOOST)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_BASS_BOOST,
+                        mapOf("enable" to true)
+                    )
                     spmSelectContent("打开重低音开关")
                 } else {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_BASS_BOOST)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_BASS_BOOST,
+                        mapOf("enable" to false)
+                    )
                     spmSelectContent("关闭重低音开关")
                 }
                 binding.tbSettingsBassBoost.isChecked = isChecked
@@ -169,11 +189,15 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
                     RxBus.getInstance().post(HomeBannerEvent(true))
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_BANNER)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_BANNER,
+                        mapOf("enable" to false)
+                    )
                     spmSelectContent("关闭横幅")
                 } else {
                     RxBus.getInstance().post(HomeBannerEvent(false))
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_BANNER)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_BANNER,
+                        mapOf("enable" to true)
+                    )
                     spmSelectContent("开启横幅")
                 }
                 binding.tbSettingsCloseBanner.isChecked = isChecked
@@ -183,11 +207,15 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
         binding.tbSettingsKeepAlive.setOnCheckedChangeListener(object : DoraToggleButton.OnCheckedChangeListener {
             override fun onCheckedChanged(view: DoraToggleButton?, isChecked: Boolean) {
                 if (isChecked) {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ENABLE_KEEPING_SCREEN_ON)
-                    spmSelectContent("关闭保持屏幕常亮")
-                } else {
-                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DISABLE_KEEPING_SCREEN_ON)
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_KEEPING_SCREEN_ON,
+                        mapOf("enable" to true)
+                    )
                     spmSelectContent("开启保持屏幕常亮")
+                } else {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_SWITCH_KEEPING_SCREEN_ON,
+                        mapOf("enable" to false)
+                    )
+                    spmSelectContent("关闭保持屏幕常亮")
                 }
                 binding.tbSettingsKeepAlive.isChecked = isChecked
                 prefsManager.saveKeepOn(isChecked)
