@@ -60,6 +60,10 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
         webSettings?.domStorageEnabled = true
         webSettings?.allowFileAccess = true
         webSettings?.mediaPlaybackRequiresUserGesture = false
+        // 禁止用户缩放
+        webSettings?.setSupportZoom(false)
+        webSettings?.builtInZoomControls = false
+        webSettings?.displayZoomControls = false
         webView?.addJavascriptInterface(JsBridge(), "Android")
         webView?.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -72,10 +76,16 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
         // 动态添加WebView，解决在xml引用WebView持有Activity的Context对象，导致内存泄露
         binding.webViewContainer.addView(webView)
         binding.titlebarPrivacyPolicy.title = title.toString()
-        if (title.equals(getString(R.string.user_agreement_title))) {
-            webView?.loadUrl("file:///android_asset/user_agreement.html")
-        } else if (title.equals(getString(R.string.privacy_policy_title))) {
-            webView?.loadUrl("file:///android_asset/privacy_policy.html")
+        val dark = prefsManager.getDarkMode()
+        binding.titlebarPrivacyPolicy.title = title.toString()
+        val base = when (title) {
+            getString(R.string.user_agreement_title) -> "file:///android_asset/user_agreement.html"
+            getString(R.string.privacy_policy_title) -> "file:///android_asset/privacy_policy.html"
+            else -> null
+        }
+        base?.let {
+            val separator = if (it.contains("?")) "&" else "?"
+            webView?.loadUrl("$it${separator}dark=$dark")
         }
     }
 

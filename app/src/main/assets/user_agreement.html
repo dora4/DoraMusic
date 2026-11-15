@@ -2,8 +2,23 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>朵拉音乐用户条款与免责声明</title>
+    <script>
+        // 首屏渲染前确定深浅色，避免“先浅后深”闪烁
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
     <style>
         :root {
             --bg-color: #f9f9f9;
@@ -12,21 +27,12 @@
             --link-color: #007BFF;
             --code-bg: #eee;
         }
-        .dark {
+        :root.dark {
             --bg-color: #2B2D30;
             --text-color: #c4c6ca;
             --heading-color: #ffffff;
             --link-color: #73a8ff;
             --code-bg: #383a3f;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #2B2D30;
-                --text-color: #c4c6ca;
-                --heading-color: #ffffff;
-                --link-color: #73a8ff;
-                --code-bg: #383a3f;
-            }
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -61,7 +67,7 @@
 
 <h2>1. 上传内容要求</h2>
 <ul>
-    <li>您不得上传任何侵犯他人著作权、肖像权、商标权、隐私权或其他合法权益的内容，包括但不限于未经授权的音乐、音频、视频、图片；</li>
+    <li>您不得上传任何侵犯他人著作权、肖像权、商标权、商标权、隐私权或其他合法权益的内容，包括但不限于未经授权的音乐、音频、视频、图片；</li>
     <li>不得上传法律法规禁止上传或传播的内容；</li>
     <li>上传内容应符合法律法规及社区规范，<strong>您应对上传内容的合法性、合规性和真实性负责</strong>。</li>
 </ul>
@@ -94,12 +100,14 @@
 
 <script>
     function setDarkMode(isDark) {
-        if(isDark) {
-            document.body.classList.add('dark');
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
         } else {
-            document.body.classList.remove('dark');
+            root.classList.remove('dark');
         }
     }
+    setDarkMode(window.__dark === true);
 </script>
 </body>
 </html>
