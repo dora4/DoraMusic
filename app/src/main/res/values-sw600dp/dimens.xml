@@ -41,6 +41,7 @@
     <dimen name="proxy_play_floating_view_icon_size">40dp</dimen>
     <dimen name="playlist_dialog_play_mode_icon_size">28dp</dimen>
     <dimen name="playlist_dialog_play_mode_text_size">22sp</dimen>
+    <dimen name="playlist_dialog_locate_icon_size">28dp</dimen>
     <dimen name="playlist_dialog_num_text_size">20sp</dimen>
     <dimen name="playlist_item_index_width">90dp</dimen>
     <dimen name="playlist_item_index_text_size">18sp</dimen>

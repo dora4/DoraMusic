@@ -125,15 +125,20 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     fun initData() {
+        val spManager = PrefsManager(manager.view.context)
+        val coldLaunchAutoPlay = spManager.isColdLaunchAutoPlay()
+        loadCurMusic(coldLaunchAutoPlay)
+    }
+
+    private fun loadCurMusic(autoPlay: Boolean) {
         val music = DaoFactory.getDao(Music::class.java).selectOne(
             QueryBuilder.create()
                 .orderBy("-${Music.COLUMN_LAST_PLAY_TIME}"))
-        val spManager = PrefsManager(manager.view.context)
-        val coldLaunchAutoPlay = spManager.isColdLaunchAutoPlay()
-        if (music != null && coldLaunchAutoPlay) {
+        if (music != null) {
             MediaManager.refreshPlaylist(arrayListOf(music))
             tvHomeBottomMusicName.text = music.musicName
             tvHomeBottomArtist.text = music.artist
+            MediaManager.loadCurMusic(music)
             try {
                 val bitmap = MusicUtils.getCachedArtwork(contentView.context, music.albumId.toLong(),
                     defaultAlbumIcon)
@@ -150,7 +155,9 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 // java.lang.UnsupportedOperationException: Unknown or unsupported URL: content://media/external/audio/albumart/-840129354
             }
             refreshUI(0, music.duration, music)
-            MediaManager.playById(music.songId)
+            if (autoPlay) {
+                MediaManager.playById(music.songId)
+            }
         }
     }
 
@@ -381,7 +388,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
             val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
             val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
-            val btnLocate: View? = contentView.findViewById(R.id.btn_playlist_locate)
+            val ivPlaylistLocate: ImageView = contentView.findViewById(R.id.iv_playlist_locate)
             sheetRv = recyclerView
             sheetCountTv = tvPlaylistCount
             val adapter = PlaylistItemAdapter()
@@ -401,7 +408,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 ivPlaylistPlayMode.visibility = View.INVISIBLE
                 tvPlaylistCount.visibility = View.INVISIBLE
             }
-            btnLocate?.setOnClickListener {
+            ivPlaylistLocate.setOnClickListener {
                 TrackAnalysis.report(scope, EventType.EVENT_TYPE_LOCATE_CURRENT,
                     mapOf("source" to "quick")
                 )
