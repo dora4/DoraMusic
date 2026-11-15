@@ -56,12 +56,11 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <ImageButton
-                android:id="@+id/btn_playlist_locate"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+            <ImageView
+                android:id="@+id/iv_playlist_locate"
+                android:layout_width="@dimen/playlist_dialog_locate_icon_size"
+                android:layout_height="@dimen/playlist_dialog_locate_icon_size"
                 android:layout_marginEnd="5dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_locate"
                 app:tint="@color/white" />
         </LinearLayout>
