@@ -1,8 +1,10 @@
 package site.doramusic.app.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
+import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
@@ -12,6 +14,7 @@ import site.doramusic.app.R
 import site.doramusic.app.conf.ARoutePath
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_TITLE
 import site.doramusic.app.databinding.ActivityProtocolBinding
+import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.util.ThemeSelector
 
 /**
@@ -22,6 +25,7 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
 
     private var webView: WebView? = null
     private var title: String? = null
+    private lateinit var prefsManager: PrefsManager
 
     override fun onGetExtras(action: String?, bundle: Bundle?, intent: Intent) {
         title = intent.getStringExtra(EXTRA_TITLE)
@@ -37,11 +41,13 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
         StatusBarUtils.setTransparencyStatusBar(this)
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun initData(savedInstanceState: Bundle?, binding: ActivityProtocolBinding) {
         binding.statusbarPrivacyPolicy.layoutParams = LinearLayout
             .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, StatusBarUtils.getStatusBarHeight())
         ThemeSelector.applyViewTheme(binding.statusbarPrivacyPolicy)
         ThemeSelector.applyViewTheme(binding.titlebarPrivacyPolicy)
+        prefsManager = PrefsManager(this)
         webView = WebView(applicationContext)
         val params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -49,7 +55,20 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
         )
         webView?.setOnLongClickListener { true }
         webView?.layoutParams = params
-        webView?.webViewClient = WebViewClient()
+        val webSettings = webView?.settings
+        webSettings?.javaScriptEnabled = true
+        webSettings?.domStorageEnabled = true
+        webSettings?.allowFileAccess = true
+        webSettings?.mediaPlaybackRequiresUserGesture = false
+        webView?.addJavascriptInterface(JsBridge(), "Android")
+        webView?.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                // 页面加载完成，把App保存的深色状态传给html
+                val dark = prefsManager.getDarkMode()
+                webView?.evaluateJavascript("javascript:setDarkMode($dark)", null)
+            }
+        }
         // 动态添加WebView，解决在xml引用WebView持有Activity的Context对象，导致内存泄露
         binding.webViewContainer.addView(webView)
         binding.titlebarPrivacyPolicy.title = title.toString()
@@ -62,5 +81,13 @@ class ProtocolActivity : BaseSkinActivity<ActivityProtocolBinding>() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_protocol
+    }
+
+    inner class JsBridge {
+
+        @JavascriptInterface
+        fun isDark(): Boolean {
+            return prefsManager.getDarkMode()
+        }
     }
 }

@@ -5,20 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>朵拉音乐隐私政策</title>
     <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+        }
+        .dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #2B2D30;
+                --text-color: #c4c6ca;
+                --heading-color: #ffffff;
+                --link-color: #73a8ff;
+            }
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             max-width: 720px;
             margin: 20px auto;
             line-height: 1.6;
-            color: #333;
-            background: #f9f9f9;
+            color: var(--text-color);
+            background: var(--bg-color);
             padding: 15px;
+            transition: background 0.2s ease, color 0.2s ease;
         }
         h1, h2 {
-            color: #222;
+            color: var(--heading-color);
         }
         a {
-            color: #007BFF;
+            color: var(--link-color);
             text-decoration: none;
         }
         a:hover {
@@ -54,5 +75,15 @@
 
 <h2>6. 联系我们</h2>
 <p>如对隐私政策有疑问或建议，请通过邮箱 <a href="mailto:dorachat@163.com">dorachat@163.com</a> 联系我们。</p>
+
+<script>
+    function setDarkMode(isDark) {
+        if (isDark) {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    }
+</script>
 </body>
 </html>
