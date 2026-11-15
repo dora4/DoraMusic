@@ -15,7 +15,11 @@ data class PlayStat(
 ) {
 
     /**
-     * 毫秒格式化：6小时23分钟。
+     * 毫秒格式化：
+     * - h>0, m=0 → 只显示小时，例：6小时
+     * - h>0, m>0 → 6小时23分钟（中文无空格，其他语言空格分隔）
+     * - h=0, m>0 → 23分钟
+     * - h=0, m=0 → 0分钟
      * 使用plurals资源自动适配各语言单复数
      */
     fun formatDuration(context: Context): String {
@@ -23,18 +27,25 @@ data class PlayStat(
         val h = (totalMin / 60).toInt()
         val m = (totalMin % 60).toInt()
         val res = context.resources
-        return if (h > 0) {
-            val hourText = res.getQuantityString(R.plurals.stat_hour, h, h)
-            val minuteText = res.getQuantityString(R.plurals.stat_minute, m, m)
-            if (Locale.getDefault().language == "zh") {
-                // 中文无空格拼接
-                "$hourText$minuteText"
-            } else {
-                // 其他语言中间加空格
-                "$hourText $minuteText"
+
+        return when {
+            h > 0 && m == 0 -> {
+                // 只有小时，分钟为0，只展示小时
+                res.getQuantityString(R.plurals.stat_hour, h, h)
             }
-        } else {
-            res.getQuantityString(R.plurals.stat_minute, m, m)
+            h > 0 && m > 0 -> {
+                val hourText = res.getQuantityString(R.plurals.stat_hour, h, h)
+                val minuteText = res.getQuantityString(R.plurals.stat_minute, m, m)
+                if (Locale.getDefault().language == "zh") {
+                    "$hourText$minuteText"
+                } else {
+                    "$hourText $minuteText"
+                }
+            }
+            else -> {
+                // h=0，只展示分钟（包含m=0，输出0分钟）
+                res.getQuantityString(R.plurals.stat_minute, m, m)
+            }
         }
     }
 }
