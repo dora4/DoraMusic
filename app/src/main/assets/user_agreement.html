@@ -5,27 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>朵拉音乐用户条款与免责声明</title>
     <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        .dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #2B2D30;
+                --text-color: #c4c6ca;
+                --heading-color: #ffffff;
+                --link-color: #73a8ff;
+                --code-bg: #383a3f;
+            }
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             max-width: 720px;
             margin: 0 auto;
             padding: 20px;
             line-height: 1.7;
-            color: #333;
-            background: #f9f9f9;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
         }
         h1, h2 {
-            color: #222;
+            color: var(--heading-color);
         }
         a {
-            color: #007BFF;
+            color: var(--link-color);
             text-decoration: none;
         }
         a:hover {
             text-decoration: underline;
         }
         code {
-            background: #eee;
+            background: var(--code-bg);
             padding: 2px 4px;
             border-radius: 4px;
         }
@@ -67,5 +91,15 @@
 
 <h2>5. 条款修改</h2>
 <p>本平台有权根据法律法规或运营需要修改本条款，并在平台上进行公示。修改后的条款自公示起生效，若您继续使用本平台，视为您同意修改后的条款内容。</p>
+
+<script>
+    function setDarkMode(isDark) {
+        if(isDark) {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    }
+</script>
 </body>
 </html>

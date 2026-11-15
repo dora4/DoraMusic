@@ -127,7 +127,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private val playModeControl: PlayModeControl by lazy {
         PlayModeControl(manager.view.context)
     }
-
+    private lateinit var defaultArtwork: Bitmap
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     val isOpened: Boolean
@@ -647,10 +647,36 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     /**
-     * 加载转盘封面。
+     * 加载转盘封面，等View布局完成再设置，自动缩放到控件大小，防止偶发放大。
      */
     fun loadRotateCover(bitmap: Bitmap) {
-        rotateCoverView.setImageBitmap(bitmap)
+        rotateCoverView.post {
+            val viewW = rotateCoverView.width
+            val viewH = rotateCoverView.height
+            val targetSize = minOf(viewW, viewH)
+            if (targetSize <= 0) {
+                // 还没拿到尺寸，放弃本次，等待下一次layout
+                return@post
+            }
+            val srcW = bitmap.width.toFloat()
+            val srcH = bitmap.height.toFloat()
+            val scale = if (srcW > srcH) {
+                targetSize / srcH
+            } else {
+                targetSize / srcW
+            }
+            val matrix = android.graphics.Matrix().apply {
+                postScale(scale, scale)
+            }
+            val scaledBmp = Bitmap.createBitmap(
+                bitmap,
+                0, 0,
+                bitmap.width, bitmap.height,
+                matrix,
+                true
+            )
+            rotateCoverView.setImageBitmap(scaledBmp)
+        }
     }
 
     /**
@@ -707,10 +733,11 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         sbMusicPlayPlayback.secondaryProgress = 0
 
         // ---- 封面回默认图 ----
-//        try {
-//            loadRotateCover(createDefaultCover())
-//        } catch (ignored: Exception) {
-//        }
+        defaultArtwork = BitmapFactory.decodeResource(
+            context.resources,
+            R.drawable.bottom_bar_cover_bg
+        )
+        loadRotateCover(defaultArtwork)
 
         // ---- 按钮回“播放”态 ----
         showPlay(true)
