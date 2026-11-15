@@ -1,6 +1,5 @@
 package site.doramusic.app.feedback
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned

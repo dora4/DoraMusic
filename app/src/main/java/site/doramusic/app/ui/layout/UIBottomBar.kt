@@ -402,11 +402,13 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 tvPlaylistCount.visibility = View.INVISIBLE
             }
             btnLocate?.setOnClickListener {
-                TrackAnalysis.report(scope, EventType.EVENT_TYPE_LOCATE_CURRENT)
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_LOCATE_CURRENT,
+                    mapOf("source" to "quick")
+                )
                 SpmUtils.selectContent(context, "快捷播放列表定位当前")
                 scrollToCurrentPlaying(true)
             }
-            // 重要！给到的列表就是排序好的，不需要排序。再次排序会把最近播放按时间顺序排序的整。
+            // 重要！给到的列表就是排序好的，不需要排序。再次排序会把最近播放按时间顺序排序打乱
             adapter.setNeedSort(false)
             adapter.setList(MediaManager.playlist)
             adapter.setOnItemClickListener { _, _, position ->
