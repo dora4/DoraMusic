@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dora.db.builder.QueryBuilder
@@ -310,12 +312,46 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private var sheetCountTv: TextView? = null
 
     /**
-     * 播放队列变化后，弹窗刷新
+     * 播放队列变化后，弹窗刷新.
      */
     private fun refreshBottomSheetPlaylist() {
         sheetAdapter?.setList(ArrayList(MediaManager.playlist))
         sheetAdapter?.notifyDataSetChanged()
         sheetCountTv?.let { updatePlaylistCount(it) }
+    }
+
+    /**
+     * 快速定位：把当前播放条目以平滑动画滚动到列表第一条（顶部）。
+     * 若其后剩余条目不足以填满一屏，RecyclerView 会停在最大滚动位置（即列表底部）。
+     */
+    private fun scrollToCurrentPlaying() {
+        val rv = sheetRv ?: return
+        val adapter = sheetAdapter ?: return
+        val cur = MediaManager.curMusic ?: return
+        val position = MediaManager.playlist.indexOfFirst { it.songId == cur.songId }
+        if (position < 0) return
+        adapter.notifyDataSetChanged()
+        rv.post {
+            val lm = rv.layoutManager as? LinearLayoutManager ?: return@post
+            val scroller = object : LinearSmoothScroller(rv.context) {
+
+                // 目标项贴到顶部；剩余条目不足一屏时自动停在最大滚动位置（底部）
+                override fun getVerticalSnapPreference(): Int = SNAP_TO_START
+
+                override fun calculateDtToFit(
+                    viewStart: Int, viewEnd: Int,
+                    boxStart: Int, boxEnd: Int,
+                    snapPreference: Int
+                ): Int = boxStart - viewStart
+
+                // 放慢一点，滚动动画更明显
+                override fun calculateSpeedPerPixel(dm: DisplayMetrics?): Float {
+                    return super.calculateSpeedPerPixel(dm) * 1.5f
+                }
+            }
+            scroller.targetPosition = position
+            lm.startSmoothScroll(scroller)
+        }
     }
 
     private fun showBottomSheetDialog(context: Context) {
@@ -340,12 +376,11 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             val tvPlaylistCount: TextView = contentView.findViewById(R.id.tv_playlist_count)
             val ivPlaylistPlayMode: ImageView = contentView.findViewById(R.id.iv_playlist_playmode)
             val recyclerView: RecyclerView = contentView.findViewById(R.id.rv_playlist)
-
+            val btnLocate: View? = contentView.findViewById(R.id.btn_playlist_locate)
             sheetRv = recyclerView
             sheetCountTv = tvPlaylistCount
             val adapter = PlaylistItemAdapter()
             sheetAdapter = adapter
-
             val playModeText = playModeControl.printPlayMode(MediaManager.playMode)
             if (playModeText.isNotEmpty()) {
                 tvPlaylistPlayMode.visibility = View.VISIBLE
@@ -361,7 +396,11 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 ivPlaylistPlayMode.visibility = View.INVISIBLE
                 tvPlaylistCount.visibility = View.INVISIBLE
             }
-            // 重要！给到的列表就是排序好的，不需要排序。再次排序会把最近播放按时间顺序排序的打乱。
+            btnLocate?.setOnClickListener {
+                SpmUtils.selectContent(context, "快捷播放列表定位当前")
+                scrollToCurrentPlaying()
+            }
+            // 重要！给到的列表就是排序好的，不需要排序。再次排序会把最近播放按时间顺序排序的整。
             adapter.setNeedSort(false)
             adapter.setList(MediaManager.playlist)
             adapter.setOnItemClickListener { _, _, position ->
