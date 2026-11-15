@@ -321,10 +321,12 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     }
 
     /**
-     * 快速定位：把当前播放条目以平滑动画滚动到列表第一条（顶部）。
-     * 若其后剩余条目不足以填满一屏，RecyclerView 会停在最大滚动位置（即列表底部）。
+     * 定位到当前播放条目：把当前播放项移到列表第一条（顶部）。
+     * smooth = true  带平滑滚动动画（点击定位按钮）
+     * smooth = false 瞬移置顶，无动画（打开弹窗 / 队列变化）
+     * 若其后剩余条目不足一屏，RecyclerView 会停在最大滚动位置（即列表底部）。
      */
-    private fun scrollToCurrentPlaying() {
+    private fun scrollToCurrentPlaying(smooth: Boolean = false) {
         val rv = sheetRv ?: return
         val adapter = sheetAdapter ?: return
         val cur = MediaManager.curMusic ?: return
@@ -333,9 +335,12 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         adapter.notifyDataSetChanged()
         rv.post {
             val lm = rv.layoutManager as? LinearLayoutManager ?: return@post
+            if (!smooth) {
+                // 无动画：直接把目标项贴到顶部
+                lm.scrollToPositionWithOffset(position, 0)
+                return@post
+            }
             val scroller = object : LinearSmoothScroller(rv.context) {
-
-                // 目标项贴到顶部；剩余条目不足一屏时自动停在最大滚动位置（底部）
                 override fun getVerticalSnapPreference(): Int = SNAP_TO_START
 
                 override fun calculateDtToFit(
@@ -397,8 +402,9 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 tvPlaylistCount.visibility = View.INVISIBLE
             }
             btnLocate?.setOnClickListener {
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_LOCATE_CURRENT)
                 SpmUtils.selectContent(context, "快捷播放列表定位当前")
-                scrollToCurrentPlaying()
+                scrollToCurrentPlaying(true)
             }
             // 重要！给到的列表就是排序好的，不需要排序。再次排序会把最近播放按时间顺序排序的整。
             adapter.setNeedSort(false)
@@ -432,6 +438,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 }
             }
             bottomSheetDialog?.show()
+            scrollToCurrentPlaying()
         }
     }
 }

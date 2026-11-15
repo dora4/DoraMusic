@@ -138,6 +138,11 @@ interface EventType {
         const val EVENT_TYPE_CHANGE_PLAY_MODE = "change_play_mode"
 
         /**
+         * 定位当前歌曲。
+         */
+        const val EVENT_TYPE_LOCATE_CURRENT = "locate_current"
+
+        /**
          * 打开播放控制界面。
          */
         const val EVENT_TYPE_PLAYER = "player"
@@ -285,6 +290,8 @@ interface EventType {
 
         /**
          * 代理播放。
+         *
+         * 参数：type，file - 本地文件，nfc - NFC标签
          */
         const val EVENT_TYPE_PROXY_PLAYBACK = "proxy_playback"
     }

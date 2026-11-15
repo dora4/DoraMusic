@@ -347,11 +347,14 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 DeepLinkUtils.openDiscordGroup(this@SettingsActivity, DISCORD_GROUP_INVITE_CODE)
             }
             R.id.rl_settings_check_update -> {
-                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHECK_UPDATE)
                 net {
                     val appInfo = result(ApkService::class) { checkUpdate(PRODUCT_NAME, CHANNEL_CN) }?.data
                     if (appInfo != null) {
                         val curVerCode = ApkUtils.getVersionCode(this)
+                        val curVerName = ApkUtils.getVersionName(this)
+                        TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CHECK_UPDATE,
+                            mapOf("current_version" to curVerName)
+                        )
                         if (appInfo.versionCode > curVerCode) {
                             // 有更新
                             val intent = Intent(Intent.ACTION_VIEW)

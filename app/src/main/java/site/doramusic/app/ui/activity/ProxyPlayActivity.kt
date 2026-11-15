@@ -84,9 +84,13 @@ class ProxyPlayActivity : Activity() {
 
     private fun handleIntent(intent: Intent?) {
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-        TrackAnalysis.report(scope, EventType.EVENT_TYPE_PROXY_PLAYBACK)
         when (intent?.action) {
             Intent.ACTION_VIEW -> {
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PROXY_PLAYBACK,
+                    mapOf(
+                        "type" to "file"
+                    )
+                )
                 val uri = intent.data ?: return
                 startPlayByUri(uri)
                 finish()
@@ -94,6 +98,11 @@ class ProxyPlayActivity : Activity() {
             NfcAdapter.ACTION_NDEF_DISCOVERED,
             NfcAdapter.ACTION_TAG_DISCOVERED,
             NfcAdapter.ACTION_TECH_DISCOVERED -> {
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_PROXY_PLAYBACK,
+                    mapOf(
+                        "type" to "nfc"
+                    )
+                )
                 if (!hasNfcSupport) {
                     Toast.makeText(this, getString(R.string.not_support_nfc), Toast.LENGTH_SHORT).show()
                     finish()
