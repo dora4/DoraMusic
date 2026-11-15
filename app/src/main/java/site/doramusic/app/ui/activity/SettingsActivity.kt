@@ -275,6 +275,7 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 startActivity(shareIntent)
             }
             R.id.rl_settings_feedback -> {
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_WANNA_FEEDBACK)
                 val feedbackIntent = Intent(this, FeedbackActivity::class.java)
                 startActivity(feedbackIntent)
             }
@@ -371,13 +372,17 @@ class SettingsActivity : BaseSkinActivity<ActivitySettingsBinding>(), AppConfig,
                 }
             }
             R.id.rl_settings_user_protocol -> {
-                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_AGREEMENT)
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DOCUMENT,
+                    mapOf("type" to "user protocol")
+                )
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
                     withString(EXTRA_TITLE, getString(R.string.user_agreement_title))
                 }
             }
             R.id.rl_settings_privacy_policy -> {
-                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_AGREEMENT)
+                TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_DOCUMENT,
+                    mapOf("type" to "privacy policy")
+                )
                 open(ARoutePath.ACTIVITY_PROTOCOL) {
                     withString(EXTRA_TITLE, getString(R.string.privacy_policy_title))
                 }

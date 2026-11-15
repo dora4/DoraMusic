@@ -406,7 +406,10 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
 //                // 上传歌曲
 //                R.id.menu_upload_music -> selectMusicFile()
                 // 扫描歌曲
-                R.id.menu_scan_music -> performScanMusic()
+                R.id.menu_scan_music -> {
+                    TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_WANNA_SCAN_MUSIC)
+                    performScanMusic()
+                }
                 // 聊天室
                 R.id.menu_chat_room -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_WANNA_CHAT_ROOM)
@@ -527,10 +530,6 @@ class MainActivity : BaseSkinActivity<ActivityMainBinding>(), IMenuDrawer, IBack
      * 扫描歌曲。
      */
     private fun performScanMusic() {
-        TrackAnalysis.report(
-            lifecycleScope,
-            EventType.EVENT_TYPE_SCAN_MUSIC
-        )
         mBinding.dlMain.closeDrawer(
             GravityCompat.START
         )

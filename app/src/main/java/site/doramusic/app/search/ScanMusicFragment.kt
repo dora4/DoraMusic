@@ -246,6 +246,10 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
          * 重新扫描。
          */
         mBinding.btnScan.setOnClickListener {
+            TrackAnalysis.report(
+                lifecycleScope,
+                EventType.EVENT_TYPE_SCAN_MUSIC
+            )
             if (!mBinding.btnScan.isEnabled) {
                 return@setOnClickListener
             }
