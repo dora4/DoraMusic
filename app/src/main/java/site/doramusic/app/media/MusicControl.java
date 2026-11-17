@@ -35,18 +35,6 @@ import site.doramusic.app.util.PrefsManager;
  */
 public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig {
 
-    /**
-     * 完整听完一首歌（播放结束回调onCompletion）。
-     * params: played_ms
-     */
-    public static final String EVENT_TYPE_PLAY_FINISH_COMPLETE = "play_finish_complete";
-
-    /**
-     * 未听完歌曲（切歌/停止/退出/失去焦点等中途结束）。
-     * params: played_ms
-     */
-    public static final String EVENT_TYPE_PLAY_FINISH_PARTIAL = "play_finish_partial";
-
     private final Random mRandom;
     private int mPlayMode;
     private final MediaPlayerProxy mMediaPlayer;
@@ -122,11 +110,28 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             resetTimer();
             return;
         }
-        // 分发两种不同埋点事件（时长都上报；是否算“一首”由 isComplete 决定）
+        // 分发埋点事件
         if (isComplete) {
             PlayStatManager.sendPlayEvent(EventType.EVENT_TYPE_PLAY_FINISH_COMPLETE, playedMs);
         } else {
             PlayStatManager.sendPlayEvent(EventType.EVENT_TYPE_PLAY_FINISH_PARTIAL, playedMs);
+        }
+        // 落库：听完算一首(isFinished=true)，中途切歌只累计时长(isFinished=false)
+        long fullDuration = mCurMusic.duration > 0 ? mCurMusic.duration : playedMs;
+        if (isComplete) {
+            PlayStatManager.insertPlayRecord(
+                    mCurMusic.songId,
+                    mCurMusic.musicName,
+                    fullDuration,
+                    playedMs
+            );
+        } else {
+            PlayStatManager.addPartialPlayRecord(
+                    mCurMusic.songId,
+                    mCurMusic.musicName,
+                    fullDuration,
+                    playedMs
+            );
         }
         resetTimer();
         RxBus.getInstance().post(new RefreshStatEvent());
@@ -745,10 +750,6 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     public void onCompletion(MediaPlayer mp) {
         // 整首播放完毕：计入一首
         commitCurrentPlayDuration(true);
-        if (mCurMusic != null) {
-            PlayStatManager.INSTANCE.insertPlayRecord(mCurMusic.songId, mCurMusic.musicName,
-                    mCurMusic.duration);
-        }
         RxBus.getInstance().post(new RefreshStatEvent());
         next();
     }
