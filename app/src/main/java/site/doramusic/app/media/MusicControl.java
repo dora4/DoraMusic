@@ -113,13 +113,16 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 mTotalWatchMs += delta;
             }
         }
-        // 封顶，不能超过歌曲总时长
-        long playedMs = Math.min(mTotalWatchMs, mCurMusic.duration);
+        long playedMs = mTotalWatchMs;
+        // 封顶：仅在歌曲总时长有效时才裁剪，避免 duration=0 导致时长被清零漏计
+        if (mCurMusic.duration > 0) {
+            playedMs = Math.min(playedMs, mCurMusic.duration);
+        }
         if (playedMs < MIN_VALID_PLAY_MS) {
             resetTimer();
             return;
         }
-        // 分发两种不同埋点事件
+        // 分发两种不同埋点事件（时长都上报；是否算“一首”由 isComplete 决定）
         if (isComplete) {
             PlayStatManager.sendPlayEvent(EventType.EVENT_TYPE_PLAY_FINISH_COMPLETE, playedMs);
         } else {
@@ -388,6 +391,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     public void playByUrl(Music music, String url) {
         if (requestFocus()) {
             try {
+                // 起播新歌前，先结算上一首中途时长
+                commitCurrentPlayDuration(false);
                 mMediaPlayer.setAudioCachePath(music.data);
                 mMediaPlayer.setOnCachedProgressUpdateListener(new MediaPlayerProxy.OnCachedProgressUpdateListener() {
                     @Override
@@ -423,6 +428,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     public void play(String path) {
         if (requestFocus()) {
             try {
+                // 起播新歌前，先把上一首的中途时长结算掉
+                commitCurrentPlayDuration(false);
                 mMediaPlayer.stop();
                 mMediaPlayer.reset();
                 mMediaPlayer.setDataSource(path);
@@ -736,7 +743,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        // 整首播放完毕：完整事件
+        // 整首播放完毕：计入一首
         commitCurrentPlayDuration(true);
         if (mCurMusic != null) {
             PlayStatManager.INSTANCE.insertPlayRecord(mCurMusic.songId, mCurMusic.musicName,

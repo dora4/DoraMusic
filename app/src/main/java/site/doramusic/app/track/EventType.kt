@@ -48,6 +48,16 @@ interface EventType {
         const val EVENT_TYPE_CLICK_MUSIC_ITEM = "click_music_item"
 
         /**
+         * 复制歌曲名称。
+         */
+        const val EVENT_TYPE_COPY_MUSIC_NAME = "copy_music_name"
+
+        /**
+         * 从歌曲列表移除歌曲。
+         */
+        const val EVENT_TYPE_REMOVE_MUSIC = "remove_music"
+
+        /**
          * 想要使用定时暂停。
          */
         const val EVENT_TYPE_SLEEP_TIMER_POPUP = "sleep_timer_popup"

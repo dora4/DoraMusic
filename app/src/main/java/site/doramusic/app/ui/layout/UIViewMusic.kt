@@ -149,10 +149,12 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                     )
                     tvMusicFilePath.text = context.getString(R.string.path_colon, music.folder)
                     tvCopy.setOnClickListener {
+                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_COPY_MUSIC_NAME)
                         dismiss()
                         copyText(musicNameArtist, it.context)
                     }
                     tvDelete.setOnClickListener {
+                        TrackAnalysis.report(scope, EventType.EVENT_TYPE_REMOVE_MUSIC)
                         dismiss()
                         deleteMusicAt(position)
                     }

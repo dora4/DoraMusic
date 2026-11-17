@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dora.BaseFragment
 import dora.brvah.decoration.DividerItemDecoration
+import dora.db.dao.DaoFactory
 import dora.util.IntentUtils
 import dora.util.PermissionHelper
 import dora.util.RxBus
@@ -117,6 +118,9 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * Android 11 ~ Android12：
      *     MANAGE_EXTERNAL_STORAGE（全部文件访问，只能跳系统设置）
      *
+     * Android 11 ~ Android12：
+     *     MANAGE_EXTERNAL_STORAGE（全部文件访问，只能跳系统设置）
+     *
      * Android 10 及以下：
      *     READ_EXTERNAL_STORAGE
      */
@@ -131,7 +135,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
 //                    startScan()
 //                    return
 //                }
-//                helper.permissions(audioPerm)
+//                helper.relativePermissions(audioPerm)
 //                    .request { grantedResult ->
 //                        if (!isAdded) return@request
 //                        if (grantedResult) {
@@ -536,6 +540,10 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
 
     /**
      * 将选中的歌曲保存到本地数据库。
+     *
+     * 勾选阶段不限制数量，
+     * 落库时若“本地已有 + 本次选择”超过 [MAX_SELECT_COUNT]，
+     * 只插入前面的差额部分，补齐到上限即可，其余丢弃。
      */
     private fun addSelectedSongs() {
         if (selectedSongs.isEmpty()) {
@@ -552,10 +560,19 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
             try {
                 /**
                  * 数据库操作放到 IO。
+                 *
+                 * 先查本地已有数量，算出还能补多少首，
+                 * 再对本次选择做截断，保证不破上限。
                  */
                 val addedCount =
                     withContext(Dispatchers.IO) {
-                        MusicScanner.addSelectedSongs(songs)
+                        val localCount = DaoFactory.getDao(Music::class.java).count()
+                        val quota = (MAX_SELECT_COUNT - localCount).coerceAtLeast(0).toInt()
+                        if (quota <= 0) {
+                            0
+                        } else {
+                            MusicScanner.addSelectedSongs(songs.take(quota))
+                        }
                     }
                 if (!isAdded) return@launch
                 /**
@@ -675,6 +692,7 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                     reachedLimit = true
                     break
                 }
+                selectedSongs.size
                 selectedSongs[key] = song
             }
             if (reachedLimit) {
