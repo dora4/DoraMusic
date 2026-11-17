@@ -38,7 +38,7 @@ object PlayStatManager {
      * @param songFullDuration 歌曲原始全长ms
      * @param actualPlayMs 本次实际播放时长（听完一般等于songFullDuration）
      */
-    @JvmOverloads
+    @JvmStatic
     fun insertPlayRecord(songId: Int, songName: String, songFullDuration: Long, actualPlayMs: Long = songFullDuration) {
         if (actualPlayMs <= 0) return
         val record = PlayRecord().apply {
@@ -59,7 +59,7 @@ object PlayStatManager {
      * @param songFullDuration 歌曲原始全长ms
      * @param actualPlayMs 这次实际听了多久ms
      */
-    @JvmOverloads
+    @JvmStatic
     fun addPartialPlayRecord(songId: Int, songName: String, songFullDuration: Long, actualPlayMs: Long) {
         if (actualPlayMs <= 0) return
         val record = PlayRecord().apply {
