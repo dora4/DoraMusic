@@ -146,7 +146,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
         @Throws(RemoteException::class)
         override fun resume(): Boolean {
-            return mc.resumePlay();
+            return mc.resume();
         }
 
         @Throws(RemoteException::class)
@@ -300,7 +300,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
             else PendingIntent.FLAG_UPDATE_CURRENT
         )
-        // 🔄 重新刷新通知
+        // 重新刷新通知
         val notification = NotificationCompat.Builder(this, APP_PACKAGE_NAME)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentIntent(pi)
@@ -424,7 +424,7 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
 
     private fun showSysMsgNotification(title: String, content: String) {
         val channelId = "$APP_PACKAGE_NAME-sysmsg"
-        val channelName = "${APP_NAME} System Notification"
+        val channelName = "$APP_NAME System Notification"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,

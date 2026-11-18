@@ -487,9 +487,9 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
             playAuto = true
             MediaManager.seekTo(seekBarProgress)
             seeking = false
-            MediaManager.setSeeking(false)
+            MediaManager.isSeeking = false
             // 拖动前在播放才续播；拖动前是暂停则停在目标位置，不自动起播
-            if (!MediaManager.isPlaying()) {
+            if (!MediaManager.isPlaying) {
                 MediaManager.resume()
             }
             refreshSeekProgress(MediaManager.position(), MediaManager.duration())
@@ -591,7 +591,7 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 if (curMusic == null) {
                     return
                 }
-                MediaManager.replay()
+                MediaManager.resume()
             }
             // 下一首
             R.id.btn_music_play_next -> {
