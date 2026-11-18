@@ -34,7 +34,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginHorizontal="@dimen/dp_10"
         android:text="@string/slogan"
-        android:textColor="@color/colorTextSecondary"
+        android:textColor="@color/color_player_normal_text"
         android:textSize="@dimen/player_secondary_text_size" />
 
 </LinearLayout>
