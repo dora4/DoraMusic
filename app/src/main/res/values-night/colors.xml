@@ -69,6 +69,8 @@
     <color name="trans_white">#afffffff</color>
     <color name="home_menu_icon">@color/white</color>
     <color name="color_equalizer_normal">@color/colorPanelBg</color>
+    <color name="color_player_title_text">@color/colorTextPrimary</color>
+    <color name="color_player_normal_text">@color/colorTextSecondary</color>
     <color name="letterview_preview_bg_color">#7f000000</color>
     <color name="letterview_preview_text_color">@color/white</color>
     <color name="rotate_view_text_color">@color/colorPanelBg</color>
