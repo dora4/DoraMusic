@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Política de Privacidad</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Política de Privacidad</h1>
+<p>Gracias por usar Dora Music. Damos gran importancia a la protección de su privacidad. Esta Política de Privacidad explica cómo recopilamos, utilizamos y protegemos su información personal, así como la finalidad de los permisos que requiere la aplicación.</p>
+<h2>1. Descripción de los permisos</h2>
+<ul>
+    <li><strong>Permisos de red (INTERNET, ACCESS_NETWORK_STATE, etc.):</strong>Se utilizan para conectarse a los servidores, descargar y reproducir música, y comprobar el estado de la red.</li>
+    <li><strong>Permisos de almacenamiento (READ/WRITE/MANAGE_EXTERNAL_STORAGE):</strong>Se utilizan para leer y guardar archivos de música y la caché en su dispositivo, mejorando la experiencia de reproducción.</li>
+    <li><strong>Permisos de audio (MODIFY_AUDIO_SETTINGS, BLUETOOTH, etc.):</strong>Se utilizan para controlar la reproducción de audio, conectar auriculares Bluetooth y admitir funciones como la pausa automática al desconectar el Bluetooth.</li>
+    <li><strong>Permiso de notificaciones (POST_NOTIFICATIONS):</strong>Se utiliza para enviar el estado de reproducción, avisos de actualización y otras notificaciones.</li>
+    <li><strong>Permiso NFC (NFC):</strong>Se utiliza para reconocer y leer/escribir etiquetas NFC de discos musicales, permitiendo asociar canciones a registros NFC, reproducir con un toque y escribir pistas vinculadas a la tarjeta. No leerá ni cargará otros datos personales no relacionados de otras tarjetas NFC.</li>
+    <li><strong>Otros permisos (WAKE_LOCK, FOREGROUND_SERVICE, etc.):</strong>Se utilizan para mantener la aplicación en funcionamiento durante la reproducción y evitar que la suspensión del dispositivo la interrumpa.</li>
+</ul>
+<h2>2. Recopilación y uso de la información</h2>
+<p>No recopilamos su información personal sensible; todos los permisos se utilizan únicamente para proporcionar las funciones de la aplicación. La información que recopilamos incluye, entre otros, datos del dispositivo y registros de uso de la aplicación, empleados para optimizar la experiencia y los servicios.</p>
+<h2>3. Seguridad de los datos</h2>
+<p>Empleamos tecnologías de nivel industrial para proteger la seguridad de sus datos y evitar accesos, divulgaciones o modificaciones no autorizados.</p>
+<h2>4. Sus derechos</h2>
+<p>Puede gestionar los permisos de la aplicación en los ajustes de su dispositivo. Desactivar permisos innecesarios puede afectar al uso de determinadas funciones.</p>
+<h2>5. Modificaciones de esta política</h2>
+<p>Podemos actualizar esta Política de Privacidad periódicamente. Las actualizaciones se publicarán puntualmente en la aplicación o en el sitio web oficial, y le recomendamos revisarla de forma regular.</p>
+<h2>6. Contáctenos</h2>
+<p>Si tiene alguna pregunta o sugerencia sobre esta Política de Privacidad, póngase en contacto con nosotros en <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a>.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

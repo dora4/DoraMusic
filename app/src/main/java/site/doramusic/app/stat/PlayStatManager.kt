@@ -5,7 +5,6 @@ import dora.db.dao.OrmDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import site.doramusic.app.track.EventType
 import site.doramusic.app.track.TrackAnalysis
 import java.util.Calendar
 
@@ -39,7 +38,7 @@ object PlayStatManager {
      * @param actualPlayMs 本次实际播放时长（听完一般等于songFullDuration）
      */
     @JvmStatic
-    fun insertPlayRecord(songId: Int, songName: String, songFullDuration: Long, actualPlayMs: Long = songFullDuration) {
+    fun addPlayRecord(songId: Int, songName: String, songFullDuration: Long, actualPlayMs: Long = songFullDuration) {
         if (actualPlayMs <= 0) return
         val record = PlayRecord().apply {
             this.songId = songId

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="eq_desc_off">Penyamaan dinyahaktifkan, bunyi asal.</string>
+    <string name="eq_desc_custom">Laraskan kelima-lima jalur secara manual dan simpan tetapan anda sendiri.</string>
+    <string name="eq_desc_pop">Bes dan trebel dinaikkan dengan mid sedikit diturunkan, bentuk V cetek. Vokal jelas dan trebel lapang.</string>
+    <string name="eq_desc_dance">Bes Mantap dengan gendang kick kukuh, mid diredam dan trebel cerah untuk lagu tarian.</string>
+    <string name="eq_desc_blues">Bes dan trebel sedikit dinaikkan dengan mid merosot, hangat dan lembut untuk blues.</string>
+    <string name="eq_desc_classical">Bes diturunkan untuk elak bunyi keruh, trebel dinaikkan untuk ruang dan harmonik.</string>
+    <string name="eq_desc_jazz">Bes dinaikkan dan trebel sedikit diredam, kedengaran semula jadi dan lancar untuk jazz.</string>
+    <string name="eq_desc_slow_rock">Bes dinaikkan secara sederhana dengan mid sedikit diturunkan, groov santai untuk slow rock.</string>
+    <string name="eq_desc_electronic">Bes bertenaga dan mid dinaikkan untuk kick serta synth EDM, trebel sedikit diredam.</string>
+    <string name="eq_desc_rock">Bes dan mid padat, trebel sedikit diredam, padat dan bertenaga untuk rock.</string>
+    <string name="eq_desc_country">Bes dan trebel sedikit dinaikkan dengan mid diturunkan, jernih dan cerah untuk country.</string>
+</resources>

@@ -43,7 +43,6 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     private int mCurPlayIndex;
     private int mPlayState;
     private int mPendingProgress;
-    private final int mCurMusicId;
     private Music mCurMusic;
     private boolean mPlaying;
     private final AudioManager mAudioManager;
@@ -54,12 +53,14 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * 用于埋点计时：本次会话累计有效播放毫秒。
      */
     private int mLastPos;
-    private long mTotalWatchMs = 0;
+    private long mTotalPlayedMs = 0;
 
     /**
-     * 最小有效播放时长，过滤误触（单位ms）。
+     * 最小有效播放时长，过滤刷歌和误触（单位ms）。
      */
     private static final long MIN_VALID_PLAY_MS = 3000;
+
+    private BassBoost bassBoost;
 
     public MusicControl(Context context) {
         this.mContext = context;
@@ -68,7 +69,6 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         this.mPlayMode = MPM_PLAYLIST_LOOP;    // 默认列表循环
         this.mPlayState = MPS_NO_FILE;  // 默认没有音频文件播放
         this.mCurPlayIndex = -1;
-        this.mCurMusicId = -1;
         this.mPlaylist = new ArrayList<>();
         this.mDao = DaoFactory.INSTANCE.getDao(Music.class);
         this.mMediaPlayer = new MediaPlayerProxy();
@@ -85,6 +85,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
 
     /**
      * 结算当前歌曲已播放时长，分发埋点事件。
+     * 唯一结算入口，具备幂等性：结算后立刻脱离 PLAYING 态，避免重复累加/重复上报。
+     *
      * @param isComplete true = 整首播放完成 EVENT_TYPE_PLAY_FINISH_COMPLETE
      *                   false = 中途停止 EVENT_TYPE_PLAY_FINISH_PARTIAL
      */
@@ -93,45 +95,49 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             resetTimer();
             return;
         }
-        // 如果当前正在播放，先把最后这一段增量算进去
+        // 如果当前正在播放，先把最后这一段增量算进去，并立刻脱离 PLAYING，保证幂等
         if (mPlayState == MPS_PLAYING) {
             int nowPos = mMediaPlayer.getCurrentPosition();
             int delta = nowPos - mLastPos;
             if (delta > 0) {
-                mTotalWatchMs += delta;
+                mTotalPlayedMs += delta;
+            }
+            mPlayState = MPS_PAUSE;
+        }
+        long playedMs = mTotalPlayedMs;
+        // 封顶：优先用 MediaPlayer 真实时长，兜底用 MediaStore duration
+        int realDuration = 0;
+        try {
+            realDuration = mMediaPlayer.getDuration();
+        } catch (Exception ignore) {
+        }
+        if (realDuration > 0) {
+            playedMs = Math.min(playedMs, realDuration);
+            mTotalPlayedMs = playedMs;
+        } else if (mCurMusic.duration > 0) {
+            playedMs = Math.min(playedMs, mCurMusic.duration);
+            mTotalPlayedMs = playedMs;
+        }
+        if (!isComplete) {
+            // 中途停止才做最小有效过滤；整首放完不受此限制，避免极短音频被吞
+            if (playedMs < MIN_VALID_PLAY_MS) {
+                resetTimer();
+                return;
+            }
+        } else {
+            // 整首播放完毕：若累计时长明显小于真实时长（如含静音段），按真实时长补正，保证完整播放有效
+            if (realDuration > 0 && playedMs < realDuration / 2) {
+                playedMs = realDuration;
             }
         }
-        long playedMs = mTotalWatchMs;
-        // 封顶：仅在歌曲总时长有效时才裁剪，避免 duration=0 导致时长被清零漏计
-        if (mCurMusic.duration > 0) {
-            playedMs = Math.min(playedMs, mCurMusic.duration);
-        }
-        if (playedMs < MIN_VALID_PLAY_MS) {
-            resetTimer();
-            return;
-        }
-        // 分发埋点事件
+        long fullDuration = realDuration > 0 ? realDuration
+                : (mCurMusic.duration > 0 ? mCurMusic.duration : playedMs);
         if (isComplete) {
             PlayStatManager.sendPlayEvent(EventType.EVENT_TYPE_PLAY_FINISH_COMPLETE, playedMs);
+            PlayStatManager.addPlayRecord(mCurMusic.songId, mCurMusic.musicName, fullDuration, playedMs);
         } else {
             PlayStatManager.sendPlayEvent(EventType.EVENT_TYPE_PLAY_FINISH_PARTIAL, playedMs);
-        }
-        // 落库：听完算一首(isFinished=true)，中途切歌只累计时长(isFinished=false)
-        long fullDuration = mCurMusic.duration > 0 ? mCurMusic.duration : playedMs;
-        if (isComplete) {
-            PlayStatManager.insertPlayRecord(
-                    mCurMusic.songId,
-                    mCurMusic.musicName,
-                    fullDuration,
-                    playedMs
-            );
-        } else {
-            PlayStatManager.addPartialPlayRecord(
-                    mCurMusic.songId,
-                    mCurMusic.musicName,
-                    fullDuration,
-                    playedMs
-            );
+            PlayStatManager.addPartialPlayRecord(mCurMusic.songId, mCurMusic.musicName, fullDuration, playedMs);
         }
         resetTimer();
         RxBus.getInstance().post(new RefreshStatEvent());
@@ -141,7 +147,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * 重置计时器，清空本次会话计时数据。
      */
     private void resetTimer() {
-        mTotalWatchMs = 0;
+        mTotalPlayedMs = 0;
         mLastPos = 0;
     }
 
@@ -150,8 +156,6 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      *
      * @param strength
      */
-    private BassBoost bassBoost;
-
     public void setBassBoost(int strength) {
         try {
             if (mMediaPlayer == null) return;
@@ -195,6 +199,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             int centerFreq = equalizer.getCenterFreq(i) / 1000;
             freqs[i] = centerFreq;
         }
+        equalizer.release();
         return freqs;
     }
 
@@ -232,16 +237,6 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             equalizer.setBandLevel(i, (short) (singleEQLevel * bandLevels[i]));
         }
         return equalizer;
-    }
-
-    /**
-     * 保存收藏。
-     *
-     * @param music
-     */
-    private void saveFavorite(Music music) {
-        music.favorite = 1;
-        mDao.update(WhereBuilder.Companion.create().addWhereEqualTo(OrmTable.INDEX_ID, music.id), music);
     }
 
     /**
@@ -297,6 +292,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
 
     /**
      * 缓冲准备。
+     * 唯一结算点：切换前在此结算上一首中途时长。
      *
      * @param pos
      * @return
@@ -305,7 +301,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         if (pos == -1 || pos >= mPlaylist.size()) {
             return false;
         }
-        // 切歌：中途结束，partial事件
+        // 切歌：中途结束（内部幂等，重复调用不会重复累加）
         commitCurrentPlayDuration(false);
         mCurPlayIndex = pos;
         mPendingProgress = 0;
@@ -352,6 +348,61 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     }
 
     /**
+     * 【新歌从头播放】prepare之后调用，重置计时。
+     */
+    private boolean startNewPlay() {
+        if (requestFocus()) {
+            if (mPlayState == MPS_INVALID || mPlayState == MPS_NO_FILE) {
+                return false;
+            }
+            mMediaPlayer.start();
+            mPlayState = MPS_PLAYING;
+            mCurMusic = mPlaylist.get(mCurPlayIndex);
+            saveLatest(mCurMusic);
+            // 新歌：重置计时
+            mLastPos = mMediaPlayer.getCurrentPosition();
+            mTotalPlayedMs = 0;
+            sendPlayMusicEvent();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 【暂停恢复播放】不重置累计时长，只更新基准起点。
+     */
+    private boolean resumePlay() {
+        if (requestFocus()) {
+            if (mPlayState != MPS_PAUSE) {
+                return false;
+            }
+            mMediaPlayer.start();
+            mPlayState = MPS_PLAYING;
+            mCurMusic = mPlaylist.get(mCurPlayIndex);
+            saveLatest(mCurMusic);
+            // 恢复：不清空 mTotalPlayedMs，只更新本次起点
+            mLastPos = mMediaPlayer.getCurrentPosition();
+            sendPlayMusicEvent();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 重播当前歌曲（从头播放，会重置计时）。
+     */
+    public boolean replay() {
+        if (mCurPlayIndex < 0 || mCurPlayIndex >= mPlaylist.size()) {
+            return false;
+        }
+        // 重播属于重新从头放，结算由 prepare 内部完成
+        if (!prepare(mCurPlayIndex)) {
+            return false;
+        }
+        return startNewPlay();
+    }
+
+    /**
      * 根据歌曲的id来播放。
      *
      * @param id
@@ -364,24 +415,10 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 return false;
             }
             mCurPlayIndex = position;
-            if (mCurMusicId == id) {
-                if (!mMediaPlayer.isPlaying()) {
-                    // 从暂停恢复播放，记录基准位置
-                    mLastPos = mMediaPlayer.getCurrentPosition();
-                    mMediaPlayer.start();
-                    mPlayState = MPS_PLAYING;
-                    mCurMusic = mPlaylist.get(mCurPlayIndex);
-                    saveLatest(mCurMusic);
-                    sendPlayMusicEvent();
-                } else {
-                    pause();
-                }
-                return true;
-            }
             if (!prepare(position)) {
                 return false;
             }
-            return replay();
+            return startNewPlay();
         } else {
             return false;
         }
@@ -396,7 +433,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     public void playByUrl(Music music, String url) {
         if (requestFocus()) {
             try {
-                // 起播新歌前，先结算上一首中途时长
+                // 起播新歌前，先结算上一首中途时长（非 prepare 路径，显式结算一次）
                 commitCurrentPlayDuration(false);
                 mMediaPlayer.setAudioCachePath(music.data);
                 mMediaPlayer.setOnCachedProgressUpdateListener(new MediaPlayerProxy.OnCachedProgressUpdateListener() {
@@ -416,7 +453,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     mMediaPlayer.start();
                     mPlayState = MPS_PLAYING;
                     mLastPos = mMediaPlayer.getCurrentPosition();
-                    mTotalWatchMs = 0;
+                    mTotalPlayedMs = 0;
                     sendPlayMusicEvent();
                 });
             } catch (Exception e) {
@@ -433,7 +470,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     public void play(String path) {
         if (requestFocus()) {
             try {
-                // 起播新歌前，先把上一首的中途时长结算掉
+                // 起播新歌前，先结算上一首中途时长（非 prepare 路径，显式结算一次）
                 commitCurrentPlayDuration(false);
                 mMediaPlayer.stop();
                 mMediaPlayer.reset();
@@ -443,7 +480,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     mMediaPlayer.start();
                     mPlayState = MPS_PLAYING;
                     mLastPos = mMediaPlayer.getCurrentPosition();
-                    mTotalWatchMs = 0;
+                    mTotalPlayedMs = 0;
                     sendPlayMusicEvent();
                 });
             } catch (IOException e) {
@@ -456,7 +493,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * 停止播放歌曲。
      */
     public void stop() {
-        // 停止：中途结束
+        // 停止：中途结束（幂等）
         commitCurrentPlayDuration(false);
         if (mMediaPlayer.isPlaying()) {
             mMediaPlayer.stop();
@@ -469,7 +506,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 // 临时失去焦点，只暂停，不结算
                 pause();
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                replay();
+                // 焦点恢复：恢复播放，不是新歌
+                resumePlay();
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                 mAudioManager.abandonAudioFocus(audioFocusListener);
                 // 永久失去焦点：中途结束
@@ -485,11 +523,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * @return
      */
     private boolean requestFocus() {
-        // Request audio focus for playback
         int result = mAudioManager.requestAudioFocus(audioFocusListener,
-                // Use the music stream.
                 AudioManager.STREAM_MUSIC,
-                // Request permanent focus.
                 AudioManager.AUDIOFOCUS_GAIN);
         return result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
     }
@@ -504,13 +539,8 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         if (requestFocus()) {
             if (mCurPlayIndex == pos) {
                 if (!mMediaPlayer.isPlaying()) {
-                    // 暂停后恢复播放，记录基准位置
-                    mLastPos = mMediaPlayer.getCurrentPosition();
-                    mMediaPlayer.start();
-                    mPlayState = MPS_PLAYING;
-                    mCurMusic = mPlaylist.get(mCurPlayIndex);
-                    saveLatest(mCurMusic);
-                    sendPlayMusicEvent();
+                    // 暂停恢复
+                    return resumePlay();
                 } else {
                     pause();
                 }
@@ -519,7 +549,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
             if (!prepare(pos)) {
                 return false;
             }
-            return replay();
+            return startNewPlay();
         } else {
             return false;
         }
@@ -588,7 +618,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         int time = mMediaPlayer.getDuration();
         int curTime = (int) ((float) pro / 100 * time);
         mMediaPlayer.seekTo(curTime);
-        // seek后更新基准，已累计播放时长mTotalWatchMs保留不变
+        // seek后更新基准，已累计播放时长mTotalPlayedMs保留不变
         mLastPos = curTime;
         return true;
     }
@@ -615,6 +645,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * 清空播放列表。
      */
     public void clear() {
+        // 中途结束（幂等）
         commitCurrentPlayDuration(false);
         mMediaPlayer.stop();
         mMediaPlayer.reset();
@@ -664,12 +695,11 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         int nowPos = mMediaPlayer.getCurrentPosition();
         int delta = nowPos - mLastPos;
         if (delta > 0) {
-            mTotalWatchMs += delta;
+            mTotalPlayedMs += delta;
         }
         mMediaPlayer.pause();
         mPlayState = MPS_PAUSE;
         mLastPos = nowPos;
-        mCurMusic = mPlaylist.get(mCurPlayIndex);
         sendPlayMusicEvent();
         return true;
     }
@@ -680,8 +710,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * @return
      */
     public boolean prev() {
-        // 切上一首：中途结束
-        commitCurrentPlayDuration(false);
+        // 切上一首：结算由 prepare 内部完成
         switch (mPlayMode) {
             case AppConfig.MPM_PLAYLIST_LOOP:    // 列表循环
                 return moveLeft();
@@ -689,7 +718,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 if (mCurPlayIndex != 0) {
                     return moveLeft();
                 } else {
-                    return prepare(mCurPlayIndex);
+                    return prepare(mCurPlayIndex) && startNewPlay();
                 }
             case AppConfig.MPM_SHUFFLE_PLAYBACK:   // 随机播放
                 int index = getRandomIndex();
@@ -699,12 +728,11 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     mCurPlayIndex = 0;
                 }
                 if (prepare(mCurPlayIndex)) {
-                    return replay();
+                    return startNewPlay();
                 }
                 return false;
             case MPM_SINGLE_TRACK_LOOP:  // 单曲循环
-                prepare(mCurPlayIndex);
-                return replay();
+                return prepare(mCurPlayIndex) && startNewPlay();
             default:
                 return false;
         }
@@ -716,8 +744,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * @return
      */
     public boolean next() {
-        // 切下一首：中途结束
-        commitCurrentPlayDuration(false);
+        // 切下一首：结算由 prepare 内部完成
         switch (mPlayMode) {
             case MPM_PLAYLIST_LOOP:    // 列表循环
                 return moveRight();
@@ -725,9 +752,9 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 if (mCurPlayIndex != mPlaylist.size() - 1) {
                     return moveRight();
                 } else {
-                    return prepare(mCurPlayIndex);
+                    return prepare(mCurPlayIndex) && startNewPlay();
                 }
-            case MPM_SHUFFLE_PLAYBACK:   // 随机播放
+            case AppConfig.MPM_SHUFFLE_PLAYBACK:   // 随机播放
                 int index = getRandomIndex();
                 if (index != -1) {
                     mCurPlayIndex = index;
@@ -735,12 +762,11 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     mCurPlayIndex = 0;
                 }
                 if (prepare(mCurPlayIndex)) {
-                    return replay();
+                    return startNewPlay();
                 }
                 return false;
             case MPM_SINGLE_TRACK_LOOP:  // 单曲循环
-                prepare(mCurPlayIndex);
-                return replay();
+                return prepare(mCurPlayIndex) && startNewPlay();
             default:
                 return false;
         }
@@ -810,7 +836,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         if (!prepare(mCurPlayIndex)) {
             return false;
         }
-        return replay();
+        return startNewPlay();
     }
 
     /**
@@ -827,31 +853,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         if (!prepare(mCurPlayIndex)) {
             return false;
         }
-        return replay();
-    }
-
-    /**
-     * 重头开始播放当前歌曲。
-     *
-     * @return
-     */
-    public boolean replay() {
-        if (requestFocus()) {
-            if (mPlayState == MPS_INVALID || mPlayState == MPS_NO_FILE) {
-                return false;
-            }
-            mMediaPlayer.start();
-            mPlayState = MPS_PLAYING;
-            mCurMusic = mPlaylist.get(mCurPlayIndex);
-            saveLatest(mCurMusic);
-            // 歌曲重新开始播放，重置基准，清空累计
-            mLastPos = mMediaPlayer.getCurrentPosition();
-            mTotalWatchMs = 0;
-            sendPlayMusicEvent();
-            return true;
-        } else {
-            return false;
-        }
+        return startNewPlay();
     }
 
     /**
@@ -885,6 +887,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * 退出媒体播放。
      */
     public void exit() {
+        // 中途结束（幂等）
         commitCurrentPlayDuration(false);
         mMediaPlayer.stop();
         mMediaPlayer.release();
@@ -935,7 +938,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         if (index == -1) return false;
         boolean isCur = (index == mCurPlayIndex);
         if (isCur) {
-            // 删除当前播放歌曲：中途结束
+            // 删除当前播放歌曲：中途结束（幂等）
             commitCurrentPlayDuration(false);
             if (mMediaPlayer.isPlaying()) {
                 mMediaPlayer.stop();
@@ -944,7 +947,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         }
         mPlaylist.remove(index);
         if (isCur) {
-            // 删当前：队列空了才置无文件；否则停在“已移除”状态，索引落到新位置
+            // 删当前：队列空了才置无文件；否则停在“已移除”状态，索引落到新位置，供上层决定播下一首
             if (mPlaylist.isEmpty()) {
                 mPlayState = MPS_NO_FILE;
                 mCurPlayIndex = -1;

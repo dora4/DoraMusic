@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Dasar Privasi</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Dasar Privasi</h1>
+<p>Terima kasih kerana menggunakan Dora Music. Kami amat menitikberatkan perlindungan privasi anda. Dasar Privasi ini menerangkan cara kami mengumpul, menggunakan dan melindungi maklumat peribadi anda, serta tujuan kebenaran yang diperlukan oleh apl ini.</p>
+<h2>1. Penerangan kebenaran</h2>
+<ul>
+    <li><strong>Kebenaran rangkaian (INTERNET, ACCESS_NETWORK_STATE, dsb.):</strong>Digunakan untuk menyambung ke pelayan, memuat turun dan memainkan muzik, serta menyemak keadaan rangkaian.</li>
+    <li><strong>Kebenaran storan (READ/WRITE/MANAGE_EXTERNAL_STORAGE):</strong>Digunakan untuk membaca dan menyimpan fail muzik serta cache pada peranti anda bagi meningkatkan pengalaman main balik.</li>
+    <li><strong>Kebenaran audio (MODIFY_AUDIO_SETTINGS, BLUETOOTH, dsb.):</strong>Digunakan untuk mengawal main balik audio, menyambung fon telinga Bluetooth, serta menyokong ciri seperti jeda automatik apabila Bluetooth terputus.</li>
+    <li><strong>Kebenaran pemberitahuan (POST_NOTIFICATIONS):</strong>Digunakan untuk menghantar status main balik, peringatan kemas kini dan pemberitahuan lain.</li>
+    <li><strong>Kebenaran NFC (NFC):</strong>Digunakan untuk mengenali serta membaca/menulis tag NFC cakera muzik, membolehkan lagu dikaitkan dengan rekod NFC, main balik dengan satu ketikan, dan penulisan trek yang dipautkan ke kad. Ia tidak akan membaca atau memuat naik sebarang data peribadi lain yang tidak berkaitan daripada kad NFC lain.</li>
+    <li><strong>Kebenaran lain (WAKE_LOCK, FOREGROUND_SERVICE, dsb.):</strong>Digunakan untuk memastikan apl terus berjalan semasa main balik dan mengelakkan mod tidur peranti daripada mengganggunya.</li>
+</ul>
+<h2>2. Pengumpulan dan penggunaan maklumat</h2>
+<p>Kami tidak mengumpul maklumat peribadi sensitif anda; semua kebenaran hanya digunakan untuk melaksanakan fungsi apl. Maklumat yang dikumpul termasuk tetapi tidak terhad kepada maklumat peranti dan log penggunaan apl, yang digunakan untuk mengoptimumkan pengalaman dan perkhidmatan.</p>
+<h2>3. Keselamatan data</h2>
+<p>Kami menggunakan teknologi standard industri untuk melindungi keselamatan data anda serta mencegah akses, pendedahan atau pengubahsuaian tanpa kebenaran.</p>
+<h2>4. Hak anda</h2>
+<p>Anda boleh mengurus kebenaran apl dalam tetapan peranti. Mematikan kebenaran yang tidak diperlukan mungkin menjejaskan penggunaan sesetengah ciri.</p>
+<h2>5. Perubahan pada Dasar ini</h2>
+<p>Kami mungkin mengemas kini Dasar Privasi ini dari semasa ke semasa. Kemas kini akan diumumkan dengan segera dalam apl atau di laman web rasmi, dan kami menggalakkan anda menyemaknya secara berkala.</p>
+<h2>6. Hubungi kami</h2>
+<p>Jika anda mempunyai sebarang pertanyaan atau cadangan mengenai Dasar Privasi ini, sila hubungi kami di e-mel <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a>.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

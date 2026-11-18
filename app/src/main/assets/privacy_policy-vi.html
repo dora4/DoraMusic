@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Chính sách Quyền riêng tư</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Chính sách Quyền riêng tư</h1>
+<p>Cảm ơn bạn đã sử dụng Dora Music. Chúng tôi rất coi trọng việc bảo vệ quyền riêng tư của bạn. Chính sách Quyền riêng tư này giải thích cách chúng tôi thu thập, sử dụng và bảo vệ thông tin cá nhân của bạn, cũng như mục đích của các quyền mà ứng dụng cần sử dụng.</p>
+<h2>1. Mô tả các quyền</h2>
+<ul>
+    <li><strong>Quyền mạng (INTERNET, ACCESS_NETWORK_STATE, v.v.):</strong>Dùng để kết nối máy chủ, tải và phát nhạc, cũng như kiểm tra trạng thái mạng.</li>
+    <li><strong>Quyền lưu trữ (READ/WRITE/MANAGE_EXTERNAL_STORAGE):</strong>Dùng để đọc và lưu tệp nhạc cùng bộ nhớ đệm trên thiết bị của bạn nhằm cải thiện trải nghiệm phát nhạc.</li>
+    <li><strong>Quyền âm thanh (MODIFY_AUDIO_SETTINGS, BLUETOOTH, v.v.):</strong>Dùng để kiểm soát phát âm thanh, kết nối tai nghe Bluetooth và hỗ trợ các tính năng như tự động tạm dừng khi Bluetooth bị ngắt kết nối.</li>
+    <li><strong>Quyền thông báo (POST_NOTIFICATIONS):</strong>Dùng để gửi trạng thái phát nhạc, thông báo cập nhật và các thông báo khác.</li>
+    <li><strong>Quyền NFC (NFC):</strong>Dùng để nhận diện cũng như đọc/ghi thẻ NFC của đĩa nhạc, cho phép liên kết bài hát với bản ghi NFC, phát nhạc chỉ bằng một lần chạm và ghi các bản nhạc liên kết với thẻ. Ứng dụng sẽ không đọc hay tải lên bất kỳ dữ liệu cá nhân không liên quan nào từ các thẻ NFC khác.</li>
+    <li><strong>Các quyền khác (WAKE_LOCK, FOREGROUND_SERVICE, v.v.):</strong>Dùng để giữ cho ứng dụng tiếp tục hoạt động khi phát nhạc và ngăn chế độ ngủ của thiết bị làm gián đoạn quá trình phát.</li>
+</ul>
+<h2>2. Thu thập và sử dụng thông tin</h2>
+<p>Chúng tôi không thu thập thông tin cá nhân nhạy cảm của bạn; mọi quyền chỉ được dùng để thực hiện các chức năng của ứng dụng. Thông tin chúng tôi thu thập bao gồm nhưng không giới hạn ở thông tin thiết bị và nhật ký sử dụng ứng dụng, được dùng để tối ưu hóa trải nghiệm và dịch vụ.</p>
+<h2>3. Bảo mật dữ liệu</h2>
+<p>Chúng tôi áp dụng công nghệ theo tiêu chuẩn ngành để bảo vệ an toàn dữ liệu của bạn, ngăn chặn việc truy cập, tiết lộ hoặc chỉnh sửa trái phép.</p>
+<h2>4. Quyền của bạn</h2>
+<p>Bạn có thể quản lý các quyền của ứng dụng trong cài đặt của thiết bị. Việc tắt các quyền không cần thiết có thể ảnh hưởng đến việc sử dụng một số tính năng.</p>
+<h2>5. Thay đổi đối với Chính sách này</h2>
+<p>Chúng tôi có thể cập nhật Chính sách Quyền riêng tư này theo thời gian. Nội dung cập nhật sẽ được công bố kịp thời trong ứng dụng hoặc trên trang web chính thức, và chúng tôi khuyến khích bạn xem lại định kỳ.</p>
+<h2>6. Liên hệ với chúng tôi</h2>
+<p>Nếu bạn có bất kỳ câu hỏi hoặc góp ý nào về Chính sách Quyền riêng tư này, vui lòng liên hệ với chúng tôi qua email <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a>.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

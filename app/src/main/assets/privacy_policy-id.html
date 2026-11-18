@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Kebijakan Privasi</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Kebijakan Privasi</h1>
+<p>Terima kasih telah menggunakan Dora Music. Kami sangat memprioritaskan perlindungan privasi Anda. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda, serta tujuan dari izin yang dibutuhkan aplikasi.</p>
+<h2>1. Deskripsi izin</h2>
+<ul>
+    <li><strong>Izin jaringan (INTERNET, ACCESS_NETWORK_STATE, dll.):</strong>Digunakan untuk terhubung ke server, mengunduh dan memutar musik, serta memeriksa status jaringan.</li>
+    <li><strong>Izin penyimpanan (READ/WRITE/MANAGE_EXTERNAL_STORAGE):</strong>Digunakan untuk membaca dan menyimpan file musik serta cache di perangkat Anda guna meningkatkan pengalaman pemutaran.</li>
+    <li><strong>Izin audio (MODIFY_AUDIO_SETTINGS, BLUETOOTH, dll.):</strong>Digunakan untuk mengontrol pemutaran audio, menghubungkan headset Bluetooth, serta mendukung fitur seperti jeda otomatis saat Bluetooth terputus.</li>
+    <li><strong>Izin notifikasi (POST_NOTIFICATIONS):</strong>Digunakan untuk mengirim status pemutaran, pemberitahuan pembaruan, dan notifikasi lainnya.</li>
+    <li><strong>Izin NFC (NFC):</strong>Digunakan untuk mengenali serta membaca/menulis tag NFC piringan musik, sehingga memungkinkan pemetaan lagu ke rekaman NFC, pemutaran dengan satu ketukan, dan penulisan trek yang ditautkan ke kartu. Izin ini tidak akan membaca atau mengunggah data pribadi lain yang tidak terkait dari kartu NFC lainnya.</li>
+    <li><strong>Izin lainnya (WAKE_LOCK, FOREGROUND_SERVICE, dll.):</strong>Digunakan untuk menjaga aplikasi tetap berjalan saat memutar musik dan mencegah perangkat tidur mengganggu pemutaran.</li>
+</ul>
+<h2>2. Pengumpulan dan penggunaan informasi</h2>
+<p>Kami tidak mengumpulkan informasi pribadi Anda yang sensitif; seluruh izin hanya digunakan untuk menghadirkan fungsi aplikasi. Informasi yang dikumpulkan mencakup, namun tidak terbatas pada, informasi perangkat dan log penggunaan aplikasi, yang digunakan untuk mengoptimalkan pengalaman dan layanan.</p>
+<h2>3. Keamanan data</h2>
+<p>Kami menggunakan teknologi tingkat industri untuk melindungi keamanan data Anda serta mencegah akses, pengungkapan, atau perubahan tanpa otorisasi.</p>
+<h2>4. Hak Anda</h2>
+<p>Anda dapat mengelola izin aplikasi melalui pengaturan perangkat. Menonaktifkan izin yang tidak diperlukan dapat memengaruhi penggunaan beberapa fitur.</p>
+<h2>5. Perubahan kebijakan ini</h2>
+<p>Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Pembaruan akan segera diumumkan di dalam aplikasi atau di situs web resmi, dan kami menyarankan Anda untuk meninjaunya secara berkala.</p>
+<h2>6. Hubungi kami</h2>
+<p>Jika Anda memiliki pertanyaan atau saran mengenai Kebijakan Privasi ini, silakan hubungi kami melalui email <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a>.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

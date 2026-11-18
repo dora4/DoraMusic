@@ -82,6 +82,7 @@
     <dimen name="color_picker_color_item_size">60dp</dimen>
     <dimen name="equalizer_height">300dp</dimen>
     <dimen name="equalizer_type_text_size">15sp</dimen>
+    <dimen name="equalizer_desc_text_size">13sp</dimen>
     <dimen name="scan_music_title_text_size">16sp</dimen>
     <dimen name="scan_music_subtitle_text_size">13sp</dimen>
     <dimen name="player_bg_selected_text_size">14sp</dimen>

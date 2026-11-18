@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Politique de confidentialité – Dora Music</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 20px auto;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            padding: 15px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Politique de confidentialité</h1>
+<p>Merci d'utiliser Dora Music. Nous accordons une grande importance à la protection de votre vie privée. La présente politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations personnelles, ainsi que l'objet des autorisations requises par l'application.</p>
+
+<h2>1. Description des autorisations</h2>
+<ul>
+    <li><strong>Autorisations réseau (INTERNET, ACCESS_NETWORK_STATE, etc.) :</strong> utilisées pour se connecter au serveur, télécharger et lire des morceaux de musique et vérifier l'état du réseau.</li>
+    <li><strong>Autorisations de stockage (READ/WRITE/MANAGE_EXTERNAL_STORAGE) :</strong> utilisées pour lire et enregistrer les fichiers musicaux et le cache sur votre appareil afin d'améliorer la lecture.</li>
+    <li><strong>Autorisations audio (MODIFY_AUDIO_SETTINGS, BLUETOOTH, etc.) :</strong> utilisées pour contrôler la lecture audio, connecter des écouteurs Bluetooth et prendre en charge des fonctions telles que la pause automatique lors de la déconnexion Bluetooth.</li>
+    <li><strong>Autorisation de notification (POST_NOTIFICATIONS) :</strong> utilisée pour envoyer l'état de lecture, les rappels de mise à jour et d'autres notifications push.</li>
+    <li><strong>Autorisation NFC (NFC) :</strong> utilisée pour reconnaître, lire et écrire des étiquettes NFC de disques musicaux, afin de permettre l'association de morceaux à des disques NFC, la lecture par effleurement et la liaison de titres lors de l'écriture de la carte. Aucune donnée personnelle non liée à ces fonctions n'est lue ou téléversée depuis d'autres cartes NFC.</li>
+    <li><strong>Autres autorisations (WAKE_LOCK, FOREGROUND_SERVICE, etc.) :</strong> utilisées pour maintenir l'application en cours d'exécution pendant la lecture musicale et empêcher la mise en veille de l'appareil d'interrompre la lecture.</li>
+</ul>
+
+<h2>2. Collecte et utilisation des informations</h2>
+<p>Nous ne collectons pas vos informations personnelles sensibles ; toutes les autorisations sont utilisées uniquement pour assurer les fonctions de l'application. Les informations collectées comprennent, sans s'y limiter, les informations sur l'appareil et les journaux d'utilisation de l'application, qui servent à optimiser l'expérience produit et les services.</p>
+
+<h2>3. Sécurité des données</h2>
+<p>Nous employons des technologies conformes aux standards du secteur pour protéger la sécurité de vos données et prévenir tout accès, toute divulgation ou toute falsification non autorisés.</p>
+
+<h2>4. Vos droits</h2>
+<p>Vous pouvez gérer les autorisations de l'application dans les paramètres de votre appareil. La désactivation d'autorisations non nécessaires peut affecter l'utilisation de certaines fonctions.</p>
+
+<h2>5. Modifications de cette politique</h2>
+<p>Nous pouvons mettre à jour la présente politique de confidentialité de temps à autre. Les mises à jour seront publiées rapidement dans l'application ou sur le site officiel, et nous vous invitons à la consulter régulièrement.</p>
+
+<h2>6. Nous contacter</h2>
+<p>Pour toute question ou suggestion concernant cette politique de confidentialité, contactez-nous par e-mail : <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a>.</p>
+
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

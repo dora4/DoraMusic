@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Términos de Uso y Descargo de Responsabilidad</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Términos de Uso y Descargo de Responsabilidad</h1>
+<p>Bienvenido a <strong>Dora Music</strong> (en adelante, «la Plataforma»). Antes de subir o compartir contenido en la Plataforma, lea atentamente y acepte los siguientes términos:</p>
+<h2>1. Requisitos del contenido subido</h2>
+<ul>
+    <li>La Plataforma solo ofrece servicios técnicos de almacenamiento y compartición de contenido y <strong>no realiza una revisión previa del contenido subido por los usuarios</strong>;</li>
+    <li>La Plataforma no asume ninguna responsabilidad sobre la veracidad, legalidad o exactitud del contenido subido por los usuarios;</li>
+    <li>Cualquier controversia sobre derechos de autor, de imagen o de privacidad derivada del contenido subido o compartido por los usuarios queda fuera de la responsabilidad de la Plataforma;</li>
+</ul>
+<h2>2. Responsabilidades del usuario</h2>
+<ul>
+    <li>En la medida permitida por la ley, la Plataforma no será responsable de ningún daño directo, indirecto o accesorio derivado del uso de sus servicios.</li>
+</ul>
+<h2>3. Descargo de responsabilidad de la plataforma</h2>
+<ul>
+</ul>
+<h2>4. Mecanismo de reclamación por infracción</h2>
+<p>Si considera que algún contenido de la Plataforma infringe sus derechos legítimos, póngase en contacto con nosotros a través del siguiente medio para resolverlo:</p>
+<ul>
+    <li>E-mail de denúncia: <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a></li>
+    <li>Facilite un justificante de sus derechos, el enlace infractor, su información de contacto y una descripción detallada.</li>
+</ul>
+<p>La Plataforma tramitará el contenido de forma oportuna una vez verificado.</p>
+<h2>5. Modificación de estos términos</h2>
+<p>La Plataforma se reserva el derecho a modificar estos Términos de acuerdo con la legislación y la normativa o por necesidades operativas, y publicará dichas modificaciones en la Plataforma. Los términos modificados entrarán en vigor desde su publicación. Si continúa usando la Plataforma, se entenderá que acepta el contenido de los términos modificados.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

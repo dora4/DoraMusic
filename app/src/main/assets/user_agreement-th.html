@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>ข้อกำหนดการใช้งานและข้อจำกัดความรับผิดชอบ</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>ข้อกำหนดการใช้งานและข้อจำกัดความรับผิดชอบ</h1>
+<p>ยินดีต้อนรับสู่ <strong>Dora Music</strong> (ต่อไปนี้เรียกว่า «แพลตฟอร์ม») ก่อนอัปโหลดหรือแชร์เนื้อหาบนแพลตฟอร์ม โปรดอ่านและยอมรับข้อกำหนดต่อไปนี้โดยละเอียด:</p>
+<h2>1. ข้อกำหนดเกี่ยวกับเนื้อหาที่อัปโหลด</h2>
+<ul>
+    <li>แพลตฟอร์มเป็นเพียงผู้ให้บริการด้านเทคนิคสำหรับการจัดเก็บและแชร์เนื้อหา และ<strong>มิได้ตรวจสอบเนื้อหาที่ผู้ใช้อัปโหลดล่วงหน้า</strong></li>
+    <li>แพลตฟอร์มไม่ต้องรับผิดชอบใด ๆ ต่อความเป็นจริง ความถูกต้องตามกฎหมาย หรือความถูกต้องแม่นยำของเนื้อหาที่ผู้ใช้อัปโหลด</li>
+    <li>ข้อพิพาทใด ๆ เกี่ยวกับลิขสิทธิ์ สิทธิ์ในภาพลักษณ์ หรือความเป็นส่วนตัวที่เกิดจากเนื้อหาที่ผู้ใช้อัปโหลดหรือแชร์ ไม่ถือเป็นความรับผิดชอบของแพลตฟอร์ม</li>
+</ul>
+<h2>2. ความรับผิดชอบของผู้ใช้</h2>
+<ul>
+    <li>ภายในขอบเขตที่กฎหมายอนุญาต แพลตฟอร์มไม่ต้องรับผิดชอบต่อความสูญเสียไม่ว่าทางตรง ทางอ้อม หรือที่เกิดขึ้นตามมาซึ่งเกิดจากการใช้บริการของแพลตฟอร์ม</li>
+</ul>
+<h2>3. ข้อจำกัดความรับผิดชอบของแพลตฟอร์ม</h2>
+<ul>
+</ul>
+<h2>4. กลไกการร้องเรียนเรื่องการละเมิดสิทธิ</h2>
+<p>หากคุณเห็นว่าเนื้อหาบนแพลตฟอร์มละเมิดสิทธิอันชอบด้วยกฎหมายของคุณ โปรดติดต่อเราผ่านช่องทางต่อไปนี้เพื่อดำเนินการ:</p>
+<ul>
+    <li>อีเมลสำหรับแจ้งเรื่อง: <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a></li>
+    <li>โปรดระบุหลักฐานแสดงสิทธิ ลิงก์ที่ละเมิด ช่องทางติดต่อ และคำอธิบายรายละเอียดของปัญหา</li>
+</ul>
+<p>แพลตฟอร์มจะดำเนินการกับเนื้อหาที่เกี่ยวข้องโดยเร็วหลังจากตรวจสอบแล้ว</p>
+<h2>5. การแก้ไขข้อกำหนด</h2>
+<p>แพลตฟอร์มสงวนสิทธิในการแก้ไขข้อกำหนดนี้ตามกฎหมาย ระเบียบข้อบังคับ หรือความจำเป็นในการดำเนินงาน และจะประกาศให้ทราบบนแพลตฟอร์ม ข้อกำหนดที่แก้ไขมีผลบังคับใช้ตั้งแต่มีการประกาศ หากคุณยังคงใช้แพลตฟอร์มต่อไป ถือว่าคุณยอมรับข้อกำหนดที่แก้ไขแล้ว</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

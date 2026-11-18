@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>利用規約および免責事項 – Dora Music</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>利用規約および免責事項</h1>
+<p><strong>Dora Music</strong>（以下「本プラットフォーム」といいます）へようこそ。本プラットフォームを通じてコンテンツをアップロードまたは共有する前に、以下の規約をよくお読みいただき、同意してください。</p>
+
+<h2>1. アップロードコンテンツの要件</h2>
+<ul>
+    <li>他者の著作権、肖像権、商標権、プライバシー権、その他の正当な権利を侵害するコンテンツ（無断で使用された音楽、音声、動画、画像などを含みますがこれらに限定されません）をアップロードしてはなりません。</li>
+    <li>法令によりアップロードまたは拡散が禁止されているコンテンツをアップロードしてはなりません。</li>
+    <li>アップロードするコンテンツは法令およびコミュニティ規範に準拠している必要があります。<strong>アップロードしたコンテンツの適法性、コンプライアンス、および真実性についてご自身で責任を負うものとします。</strong></li>
+</ul>
+
+<h2>2. ユーザーの責任</h2>
+<ul>
+    <li>お客様がアップロードしたコンテンツは、お客様個人の見解を示すものであり、本プラットフォームとは一切関係ありません。</li>
+    <li>お客様がアップロードしたコンテンツに起因するいかなる紛争、苦情、法的責任も、お客様ご自身が負うものとします。</li>
+    <li>これにより本プラットフォームに損害が生じた場合、お客様はその全額を賠償する責任を負います。</li>
+</ul>
+
+<h2>3. 本プラットフォームの免責事項</h2>
+<ul>
+    <li>本プラットフォームはコンテンツの保存および共有に関する技術サービスを提供するのみであり、<strong>ユーザーがアップロードしたコンテンツを事前に審査することはありません</strong>。</li>
+    <li>ユーザーがアップロードしたコンテンツの真実性、適法性、正確性について、本プラットフォームは一切の責任を負いません。</li>
+    <li>ユーザーがアップロードまたは共有したコンテンツに起因する著作権、肖像権、プライバシー権に関するいかなる紛争も、本プラットフォームとは関係ありません。</li>
+    <li>法律で認められる範囲において、本プラットフォームは本サービスの利用により生じたいかなる直接的、間接的、または付随的な損害についても責任を負いません。</li>
+</ul>
+
+<h2>4. 権利侵害の申し立て窓口</h2>
+<p>本プラットフォーム上のコンテンツがお客様の正当な権利を侵害していると思われる場合は、以下の窓口までご連絡ください。</p>
+<ul>
+    <li>申し立て用メールアドレス：<a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a></li>
+    <li>権利を証明する資料、侵害コンテンツのリンク、ご連絡先、および具体的な事情をご提供ください</li>
+</ul>
+<p>本プラットフォームは、確認後すみやかに該当コンテンツに対応いたします。</p>
+
+<h2>5. 規約の変更</h2>
+<p>本プラットフォームは、法令または運営上の必要に応じて本規約を変更する権利を有し、その旨をプラットフォーム上で告知します。変更後の規約は告知時に効力を生じます。お客様が本プラットフォームの利用を継続した場合、変更後の規約に同意したものとみなされます。</p>
+
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

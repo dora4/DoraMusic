@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Điều khoản Sử dụng và Miễn trừ Trách nhiệm</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Điều khoản Sử dụng và Miễn trừ Trách nhiệm</h1>
+<p>Chào mừng bạn đến với <strong>Dora Music</strong> (sau đây gọi là «Nền tảng»). Trước khi tải lên hoặc chia sẻ nội dung trên Nền tảng, vui lòng đọc kỹ và đồng ý với các điều khoản sau đây:</p>
+<h2>1. Yêu cầu đối với nội dung tải lên</h2>
+<ul>
+    <li>Nền tảng chỉ cung cấp dịch vụ kỹ thuật lưu trữ và chia sẻ nội dung, <strong>không thực hiện kiểm duyệt trước đối với nội dung do người dùng tải lên</strong>;</li>
+    <li>Nền tảng không chịu bất kỳ trách nhiệm nào về tính xác thực, hợp pháp và chính xác của nội dung do người dùng tải lên;</li>
+    <li>Mọi tranh chấp về quyền tác giả, quyền đối với hình ảnh hoặc quyền riêng tư phát sinh từ nội dung người dùng tải lên hoặc chia sẻ đều không thuộc trách nhiệm của Nền tảng;</li>
+</ul>
+<h2>2. Trách nhiệm của người dùng</h2>
+<ul>
+    <li>Trong phạm vi pháp luật cho phép, Nền tảng không chịu trách nhiệm về bất kỳ thiệt hại trực tiếp, gián tiếp hay ngẫu nhiên nào phát sinh từ việc sử dụng dịch vụ của Nền tảng.</li>
+</ul>
+<h2>3. Miễn trừ trách nhiệm của nền tảng</h2>
+<ul>
+</ul>
+<h2>4. Cơ chế khiếu nại vi phạm</h2>
+<p>Nếu bạn cho rằng có nội dung trên Nền tảng xâm phạm quyền và lợi ích hợp pháp của mình, vui lòng liên hệ với chúng tôi qua kênh sau để được xử lý:</p>
+<ul>
+    <li>Email khiếu nại: <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a></li>
+    <li>Vui lòng cung cấp chứng minh quyền, đường liên kết vi phạm, thông tin liên hệ và mô tả cụ thể.</li>
+</ul>
+<p>Nền tảng sẽ xử lý kịp thời nội dung liên quan sau khi xác minh.</p>
+<h2>5. Sửa đổi điều khoản</h2>
+<p>Nền tảng có quyền sửa đổi các điều khoản này theo pháp luật, quy định hoặc nhu cầu vận hành, đồng thời công bố trên Nền tảng. Điều khoản đã sửa đổi có hiệu lực kể từ khi công bố. Nếu bạn tiếp tục sử dụng Nền tảng, bạn được xem là đã đồng ý với nội dung điều khoản đã sửa đổi.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

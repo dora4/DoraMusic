@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>นโยบายความเป็นส่วนตัว</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>นโยบายความเป็นส่วนตัว</h1>
+<p>ขอบคุณที่ใช้บริการ Dora Music เราให้ความสำคัญอย่างยิ่งต่อการคุ้มครองความเป็นส่วนตัวของคุณ นโยบายความเป็นส่วนตัวนี้อธิบายถึงวิธีที่เราเก็บรวบรวม ใช้ และคุ้มครองข้อมูลส่วนบุคคลของคุณ รวมถึงวัตถุประสงค์ของการขอสิทธิ์ที่แอปต้องใช้งาน</p>
+<h2>1. คำอธิบายการขอสิทธิ์</h2>
+<ul>
+    <li><strong>สิทธิ์ด้านเครือข่าย (INTERNET, ACCESS_NETWORK_STATE ฯลฯ):</strong>ใช้สำหรับเชื่อมต่อกับเซิร์ฟเวอร์ ดาวน์โหลดและเล่นเพลง รวมถึงตรวจสอบสถานะเครือข่าย</li>
+    <li><strong>สิทธิ์ด้านการจัดเก็บข้อมูล (READ/WRITE/MANAGE_EXTERNAL_STORAGE):</strong>ใช้สำหรับอ่านและบันทึกไฟล์เพลงพร้อมแคชในอุปกรณ์ของคุณ เพื่อยกระดับประสบการณ์การเล่นเพลง</li>
+    <li><strong>สิทธิ์ด้านเสียง (MODIFY_AUDIO_SETTINGS, BLUETOOTH ฯลฯ):</strong>ใช้สำหรับควบคุมการเล่นเสียง เชื่อมต่อหูฟังบลูทูธ และรองรับฟีเจอร์ต่าง ๆ เช่น การหยุดชั่วคราวอัตโนมัติเมื่อบลูทูธขาดการเชื่อมต่อ</li>
+    <li><strong>สิทธิ์การแจ้งเตือน (POST_NOTIFICATIONS):</strong>ใช้สำหรับส่งสถานะการเล่นเพลง การแจ้งเตือนการอัปเดต และการแจ้งเตือนอื่น ๆ</li>
+    <li><strong>สิทธิ์ NFC (NFC):</strong>ใช้สำหรับจดจำและอ่าน/เขียนแท็ก NFC ของแผ่นเสียงเพลง เพื่อให้สามารถผูกเพลงเข้ากับบันทึก NFC เล่นเพลงด้วยการแตะ และเขียนแทร็กที่ผูกไว้กับการ์ด โดยจะไม่อ่านหรืออัปโหลดข้อมูลส่วนบุคคลอื่นที่ไม่เกี่ยวข้องจากการ์ด NFC ใบอื่น</li>
+    <li><strong>สิทธิ์อื่น ๆ (WAKE_LOCK, FOREGROUND_SERVICE ฯลฯ):</strong>ใช้เพื่อให้แอปทำงานต่อเนื่องขณะเล่นเพลง และป้องกันไม่ให้การเข้าสู่โหมดพักการทำงานของอุปกรณ์ส่งผลกระทบต่อการเล่น</li>
+</ul>
+<h2>2. การเก็บรวบรวมและการใช้ข้อมูล</h2>
+<p>เราไม่เก็บรวบรวมข้อมูลส่วนบุคคลที่ละเอียดอ่อนของคุณ โดยสิทธิ์ทั้งหมดจะถูกใช้เพื่อให้บริการฟีเจอร์ของแอปเท่านั้น ข้อมูลที่เราเก็บรวบรวมได้แก่ ข้อมูลอุปกรณ์และบันทึกการใช้งานแอป ซึ่งนำไปใช้เพื่อปรับปรุงประสบการณ์และการให้บริการ</p>
+<h2>3. ความปลอดภัยของข้อมูล</h2>
+<p>เราใช้เทคโนโลยีตามมาตรฐานอุตสาหกรรมเพื่อคุ้มครองความปลอดภัยของข้อมูลของคุณ และป้องกันการเข้าถึง การเปิดเผย หรือการแก้ไขโดยไม่ได้รับอนุญาต</p>
+<h2>4. สิทธิของคุณ</h2>
+<p>คุณสามารถจัดการสิทธิ์ของแอปได้ในการตั้งค่าของอุปกรณ์ การปิดสิทธิ์ที่ไม่จำเป็นอาจส่งผลต่อการใช้งานฟีเจอร์บางอย่าง</p>
+<h2>5. การแก้ไขนโยบายนี้</h2>
+<p>เราอาจปรับปรุงนโยบายความเป็นส่วนตัวนี้เป็นครั้งคราว โดยการปรับปรุงจะประกาศให้ทราบภายในแอปหรือบนเว็บไซต์ทางการโดยเร็ว และเราขอแนะนำให้คุณตรวจสอบเป็นระยะ</p>
+<h2>6. ติดต่อเรา</h2>
+<p>หากคุณมีคำถามหรือข้อเสนอแนะเกี่ยวกับนโยบายความเป็นส่วนตัวนี้ โปรดติดต่อเราผ่านอีเมล <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a>.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

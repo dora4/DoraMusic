@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Syarat Penggunaan dan Penafian</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Syarat Penggunaan dan Penafian</h1>
+<p>Selamat datang di <strong>Dora Music</strong> (selanjutnya disebut «Platform»). Sebelum mengunggah atau membagikan konten di Platform, silakan baca dengan saksama dan setujui ketentuan berikut:</p>
+<h2>1. Persyaratan konten yang diunggah</h2>
+<ul>
+    <li>Platform hanya menyediakan layanan teknis penyimpanan dan berbagi konten serta <strong>tidak melakukan peninjauan terlebih dahulu terhadap konten yang diunggah pengguna</strong>;</li>
+    <li>Platform tidak bertanggung jawab atas kebenaran, keabsahan, maupun keakuratan konten yang diunggah pengguna;</li>
+    <li>Segala sengketa hak cipta, hak potret, atau privasi yang timbul akibat konten yang diunggah atau dibagikan pengguna tidak menjadi tanggung jawab Platform;</li>
+</ul>
+<h2>2. Tanggung jawab pengguna</h2>
+<ul>
+    <li>Sepanjang diizinkan oleh hukum, Platform tidak bertanggung jawab atas segala kerugian langsung, tidak langsung, maupun insidental yang timbul akibat penggunaan layanan Platform.</li>
+</ul>
+<h2>3. Penafian tanggung jawab platform</h2>
+<ul>
+</ul>
+<h2>4. Mekanisme pengaduan pelanggaran</h2>
+<p>Apabila Anda berpendapat bahwa terdapat konten di Platform yang melanggar hak sah Anda, silakan hubungi kami melalui cara berikut untuk penanganannya:</p>
+<ul>
+    <li>Email pelaporan: <a href="mailto:dora924666990@gmail.com">dora924666990@gmail.com</a></li>
+    <li>Harap sertakan bukti hak, tautan pelanggaran, informasi kontak, serta keterangan permasalahan secara rinci.</li>
+</ul>
+<p>Platform akan segera menangani konten terkait setelah proses verifikasi.</p>
+<h2>5. Perubahan ketentuan</h2>
+<p>Platform berhak mengubah Ketentuan ini sesuai dengan undang-undang, peraturan, atau kebutuhan operasional, dan akan mengumumkannya di Platform. Ketentuan yang telah diubah berlaku sejak diumumkan. Apabila Anda terus menggunakan Platform, Anda dianggap telah menyetujui ketentuan yang telah diubah.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

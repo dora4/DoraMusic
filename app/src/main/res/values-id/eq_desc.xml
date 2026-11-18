@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="eq_desc_off">Ekualiser nonaktif, suara asli.</string>
+    <string name="eq_desc_custom">Atur kelima pita secara manual dan simpan pengaturan Anda sendiri.</string>
+    <string name="eq_desc_pop">Bas dan treble dinaikkan dengan mid sedikit diturunkan, bentuk V dangkal. Vokal jelas dan treble terbuka.</string>
+    <string name="eq_desc_dance">Bas kuat dengan kick drum padat, mid diredam dan treble cerah untuk lagu dansa.</string>
+    <string name="eq_desc_blues">Bas dan treble sedikit dinaikkan dengan mid merosot, hangat dan lembut untuk blues.</string>
+    <string name="eq_desc_classical">Bas diturunkan agar tidak keruh, treble dinaikkan untuk kelegaan dan harmonik.</string>
+    <string name="eq_desc_jazz">Bas dinaikkan dan treble agak diredam, terdengar alami dan halus untuk jazz.</string>
+    <string name="eq_desc_slow_rock">Bas dinaikkan secukupnya dengan mid sedikit diturunkan, groovy santai untuk slow rock.</string>
+    <string name="eq_desc_electronic">Bas bertenaga dan mid dinaikkan untuk kick serta synth EDM, treble sedikit diredam.</string>
+    <string name="eq_desc_rock">Bas dan mid padat, treble sedikit diredam, padat dan bertenaga untuk rock.</string>
+    <string name="eq_desc_country">Bas dan treble sedikit dinaikkan dengan mid diturunkan, bersih dan cerah untuk country.</string>
+</resources>
