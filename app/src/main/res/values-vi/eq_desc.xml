@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eq_desc_off">Đã tắt bộ chỉnh âm, phát theo âm thanh gốc.</string>
-    <string name="eq_desc_custom">Tự chỉnh 5 dải tần và lưu thiết lập riêng của bạn.</string>
-    <string name="eq_desc_pop">Đẩy cao âm trầm và âm cao, hơi hạ âm trung, dạng chữ V nông. Giọng hát rõ, âm cao sáng cho nhạc pop.</string>
-    <string name="eq_desc_dance">Âm trầm mạnh với tiếng kick chắc chắn, âm trung hạ nhẹ và âm cao sáng cho nhạc dance.</string>
-    <string name="eq_desc_blues">Hơi nâng âm trầm và âm cao, lõm âm trung, ấm áp và tròn trịa cho blues.</string>
-    <string name="eq_desc_classical">Kéo thấp âm trầm để tránh đục, nâng âm cao và độ thoáng để tái tạo lớp nhạc cụ dây.</string>
-    <string name="eq_desc_jazz">Nâng âm trầm của bass, hơi hạ âm cao để đỡ gắt, âm thanh tự nhiên và mượt cho jazz.</string>
-    <string name="eq_desc_slow_rock">Âm trầm nâng vừa phải, âm trung hạ nhẹ, groove thư giãn cho slow rock.</string>
-    <string name="eq_desc_electronic">Âm trầm chắc và âm trung được nâng để kick cùng synth EDM mạnh hơn, âm cao hạ nhẹ.</string>
-    <string name="eq_desc_rock">Âm trầm và âm trung đặc, âm cao hạ nhẹ, gọn và lực cho rock.</string>
-    <string name="eq_desc_country">Hơi nâng âm trầm và âm cao, hạ âm trung, trong và sáng cho nhạc đồng quê.</string>
+    <string name="eq_desc_off">Đã tắt bộ chỉnh âm. Âm thanh phát ra theo chất âm gốc.</string>
+    <string name="eq_desc_custom">Tự điều chỉnh năm dải tần và lưu lại chất âm của riêng bạn.</string>
+    <string name="eq_desc_pop">Nâng đồng thời âm trầm và âm cao, hạ nhẹ âm trung, tạo dạng V nông. Giọng hát rõ ràng, âm cao thoáng.</string>
+    <string name="eq_desc_dance">Đẩy âm trầm lên mạnh để tiếng kick chắc hơn, hơi hạ âm trung và nâng nhẹ âm cao.</string>
+    <string name="eq_desc_blues">Nâng nhẹ âm trầm và âm cao, hạ âm trung, mang lại chất âm ấm áp và tròn trịa.</string>
+    <string name="eq_desc_classical">Hạ âm trầm để tránh đục tiếng, nâng bội âm và độ thoáng của âm cao, làm nổi bật các lớp của nhạc giao hưởng.</string>
+    <string name="eq_desc_jazz">Nâng âm trầm của bass, hơi hạ âm cao để tránh gắt, cho chất âm tự nhiên và mượt mà.</string>
+    <string name="eq_desc_slow_rock">Độ lợi âm trầm vừa phải, hơi hạ âm trung để nhịp điệu thư giãn mà không bị vỡ.</string>
+    <string name="eq_desc_electronic">Nâng đồng thời âm trầm và âm trung, giúp kick và synthesizer trong EDM dứt khoát hơn, hơi hạ âm cao.</string>
+    <string name="eq_desc_rock">Âm trầm và âm trung chắc khỏe, hơi hạ âm cao để chất âm gọn gàng.</string>
+    <string name="eq_desc_country">Nâng nhẹ âm trầm và âm cao, hơi hạ âm trung, cho âm thanh trong trẻo và sáng sủa.</string>
 </resources>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eq_desc_off">Equalizer off, original sound output.</string>
-    <string name="eq_desc_custom">Manually adjust the five bands and save your own preset.</string>
-    <string name="eq_desc_pop">Boosted lows and highs with a dipped mids, a shallow V shape. Clear vocals and a sparkly top for pop.</string>
-    <string name="eq_desc_dance">Strong low end with a firm kick, tamed mids and a bright top for dance tracks.</string>
-    <string name="eq_desc_blues">Slightly raised lows and highs with recessed mids, warm and mellow for blues.</string>
-    <string name="eq_desc_classical">Low frequencies pulled back to avoid muddiness, highs lifted for air and overtones.</string>
-    <string name="eq_desc_jazz">Lifted bass and slightly recessed highs, natural and smooth for jazz.</string>
-    <string name="eq_desc_slow_rock">Gentle low-end lift with restrained mids, a relaxed groove for slow rock.</string>
-    <string name="eq_desc_electronic">Punchy lows and lifted mids for EDM kicks and synths, top slightly pulled back.</string>
-    <string name="eq_desc_rock">Solid lows and mids with pulled-back highs, tight and forceful for rock.</string>
-    <string name="eq_desc_country">Light low and high lift with recessed mids, clean and bright for country.</string>
+    <string name="eq_desc_off">Equalizer is off. Audio is output with its original tone.</string>
+    <string name="eq_desc_custom">Adjust the five bands manually and save your own sound.</string>
+    <string name="eq_desc_pop">Boosts both bass and treble while slightly pulling back the mids, forming a shallow V shape. Clear vocals and an airy top end.</string>
+    <string name="eq_desc_dance">Heavily boosted bass for a punchier kick, slightly pulled-back mids and a gently lifted treble.</string>
+    <string name="eq_desc_blues">A slight lift in bass and treble with recessed mids, giving a warm and mellow tone.</string>
+    <string name="eq_desc_classical">Low frequencies are pulled down to avoid muddiness, while treble harmonics and airiness are lifted to bring out the layering of orchestral music.</string>
+    <string name="eq_desc_jazz">Lifts the bass for deeper low end and slightly tames the treble to avoid harshness, keeping the tone natural and smooth.</string>
+    <string name="eq_desc_slow_rock">Restrained bass gain with slightly recessed mids, so the rhythm stays relaxed without booming.</string>
+    <string name="eq_desc_electronic">Lifts bass and mids together, giving EDM kicks and synths more impact, with the treble slightly pulled back.</string>
+    <string name="eq_desc_rock">Solid and powerful bass and mids, with the treble slightly pulled back for a tight tone.</string>
+    <string name="eq_desc_country">A gentle lift in bass and treble with slightly recessed mids, for a clean and bright sound.</string>
 </resources>

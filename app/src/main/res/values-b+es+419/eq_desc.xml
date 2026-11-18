@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="eq_desc_off">Ecualizador desactivado. El audio se reproduce con su sonido original.</string>
+    <string name="eq_desc_custom">Ajusta las cinco bandas manualmente y guarda tu propio sonido.</string>
+    <string name="eq_desc_pop">Sube los graves y los agudos a la vez mientras baja un poco los medios, formando una V suave. Voces claras y agudos aireados.</string>
+    <string name="eq_desc_dance">Graves muy reforzados para un bombo con más pegada, medios algo atenuados y agudos ligeramente realzados.</string>
+    <string name="eq_desc_blues">Ligero realce de graves y agudos con los medios hundidos, para un sonido cálido y redondo.</string>
+    <string name="eq_desc_classical">Reduce los graves para evitar la turbidez y realza los armónicos y la sensación de aire de los agudos, resaltando las capas de la música orquestal.</string>
+    <string name="eq_desc_jazz">Realza el bajo para unos graves más profundos y suaviza un poco los agudos para evitar la aspereza, con un sonido natural y sedoso.</string>
+    <string name="eq_desc_slow_rock">Ganancia de graves moderada y medios ligeramente atenuados, para un ritmo relajado sin estruendo.</string>
+    <string name="eq_desc_electronic">Sube graves y medios a la vez, dando más impacto a los kicks y sintetizadores del EDM, con los agudos algo atenuados.</string>
+    <string name="eq_desc_rock">Graves y medios sólidos y potentes, con los agudos algo atenuados para un sonido compacto.</string>
+    <string name="eq_desc_country">Un ligero realce de graves y agudos con los medios un poco atenuados, para un sonido limpio y brillante.</string>
+</resources>

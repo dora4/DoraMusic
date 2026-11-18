@@ -107,6 +107,16 @@ object MediaManager : IMediaService.Stub(), AppConfig {
         return false
     }
 
+    /** 暂停后恢复播放，不重新 prepare。  */
+    override fun resume(): Boolean {
+        try {
+            return mediaService?.resume() ?: false
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
     override fun prev(): Boolean {
         try {
             return mediaService?.prev() ?: false
@@ -171,6 +181,24 @@ object MediaManager : IMediaService.Stub(), AppConfig {
     override fun seekTo(progress: Int): Boolean {
         try {
             return mediaService?.seekTo(progress) ?: false
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
+    /** 拖动进度条闸门：拖动中暂停不翻转状态。  */
+    override fun setSeeking(seeking: Boolean) {
+        try {
+            mediaService?.setSeeking(seeking)
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun isSeeking(): Boolean {
+        try {
+            return mediaService?.isSeeking() ?: false
         } catch (e: RemoteException) {
             e.printStackTrace()
         }
@@ -279,6 +307,10 @@ object MediaManager : IMediaService.Stub(), AppConfig {
             e.printStackTrace()
         }
         return arrayListOf()
+    }
+
+    override fun isPlaying(): Boolean {
+        return mediaService?.isPlaying ?: false
     }
 
     override fun updateNotification(bitmap: Bitmap, title: String, name: String) {

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eq_desc_off">Ekualiser nonaktif, suara asli.</string>
-    <string name="eq_desc_custom">Atur kelima pita secara manual dan simpan pengaturan Anda sendiri.</string>
-    <string name="eq_desc_pop">Bas dan treble dinaikkan dengan mid sedikit diturunkan, bentuk V dangkal. Vokal jelas dan treble terbuka.</string>
-    <string name="eq_desc_dance">Bas kuat dengan kick drum padat, mid diredam dan treble cerah untuk lagu dansa.</string>
-    <string name="eq_desc_blues">Bas dan treble sedikit dinaikkan dengan mid merosot, hangat dan lembut untuk blues.</string>
-    <string name="eq_desc_classical">Bas diturunkan agar tidak keruh, treble dinaikkan untuk kelegaan dan harmonik.</string>
-    <string name="eq_desc_jazz">Bas dinaikkan dan treble agak diredam, terdengar alami dan halus untuk jazz.</string>
-    <string name="eq_desc_slow_rock">Bas dinaikkan secukupnya dengan mid sedikit diturunkan, groovy santai untuk slow rock.</string>
-    <string name="eq_desc_electronic">Bas bertenaga dan mid dinaikkan untuk kick serta synth EDM, treble sedikit diredam.</string>
-    <string name="eq_desc_rock">Bas dan mid padat, treble sedikit diredam, padat dan bertenaga untuk rock.</string>
-    <string name="eq_desc_country">Bas dan treble sedikit dinaikkan dengan mid diturunkan, bersih dan cerah untuk country.</string>
+    <string name="eq_desc_off">Ekualiser nonaktif. Audio diputar dengan warna suara aslinya.</string>
+    <string name="eq_desc_custom">Atur kelima band secara manual dan simpan suara milikmu sendiri.</string>
+    <string name="eq_desc_pop">Menaikkan bass dan treble sekaligus sambil sedikit menurunkan mid, membentuk V dangkal. Vokal jernih dan treble lapang.</string>
+    <string name="eq_desc_dance">Bass sangat ditekan untuk kick yang lebih berdentum, mid agak diturunkan dan treble sedikit dinaikkan.</string>
+    <string name="eq_desc_blues">Bass dan treble sedikit dinaikkan dengan mid yang merosot, menghasilkan suara hangat dan berisi.</string>
+    <string name="eq_desc_classical">Meredam bass agar tidak keruh, serta menaikkan harmonik dan kesan lega pada treble untuk menonjolkan lapisan musik orkestra.</string>
+    <string name="eq_desc_jazz">Menaikkan bass untuk low end yang lebih dalam dan sedikit menurunkan treble agar tidak tajam, sehingga suaranya natural dan halus.</string>
+    <string name="eq_desc_slow_rock">Gain bass tertahan dengan mid yang sedikit diturunkan, sehingga ritmenya santai tanpa ledakan.</string>
+    <string name="eq_desc_electronic">Menaikkan bass dan mid sekaligus, memberi pukulan lebih kuat pada kick dan synth EDM, dengan treble sedikit diturunkan.</string>
+    <string name="eq_desc_rock">Bass dan mid padat serta bertenaga, treble sedikit diturunkan untuk suara yang rapat.</string>
+    <string name="eq_desc_country">Bass dan treble sedikit dinaikkan dengan mid yang agak diturunkan, untuk suara yang bersih dan cerah.</string>
 </resources>

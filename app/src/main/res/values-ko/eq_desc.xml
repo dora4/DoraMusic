@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eq_desc_off">이퀄라이저가 꺼져 있으며 원음으로 출력됩니다.</string>
-    <string name="eq_desc_custom">5개 대역을 직접 조절해 나만의 프리셋을 저장하세요.</string>
-    <string name="eq_desc_pop">저음과 고음을 올리고 중음을 약간 낮춘 얕은 V자형. 보컬이 선명하고 고음이 맑아 팝에 어울립니다.</string>
-    <string name="eq_desc_dance">저음을 강하게 살려 킥을 단단하게 만들고, 중음은 누르고 고음을 밝게 한 댄스용입니다.</string>
-    <string name="eq_desc_blues">저음과 고음을 살짝 올리고 중음을 낮춰 따뜻하고 부드러운 블루스 사운드입니다.</string>
-    <string name="eq_desc_classical">저음을 낮춰 탁한 느낌을 줄이고, 고음의 배음과 공간감을 살려 관현악의 층을 표현합니다.</string>
-    <string name="eq_desc_jazz">베이스 저음을 올리고 고음을 약간 줄여 거칠지 않은 자연스럽고 부드러운 재즈 사운드입니다.</string>
-    <string name="eq_desc_slow_rock">저음을 절제되게 올리고 중음을 살짝 낮춘 여유로운 슬로우 록용입니다.</string>
-    <string name="eq_desc_electronic">저음과 중음을 올려 EDM 킥과 신디사이저에 타격감을 더하고 고음은 약간 낮춥니다.</string>
-    <string name="eq_desc_rock">저음과 중음이 단단하고 고음을 살짝 낮춰 조이고 힘 있는 록 사운드입니다.</string>
-    <string name="eq_desc_country">저음과 고음을 살짝 올리고 중음을 낮춰 맑고 밝은 컨트리 사운드입니다.</string>
+    <string name="eq_desc_off">이퀄라이저가 꺼져 있습니다. 원음 그대로 출력됩니다.</string>
+    <string name="eq_desc_custom">5개 밴드를 직접 조절해 나만의 사운드를 저장하세요.</string>
+    <string name="eq_desc_pop">저음과 고음을 동시에 올리고 중음을 살짝 낮춘 얕은 V자형. 보컬이 또렷하고 고음이 청량합니다.</string>
+    <string name="eq_desc_dance">저음을 크게 올려 킥을 힘 있게 만들고, 중음은 살짝 낮추며 고음은 가볍게 올립니다.</string>
+    <string name="eq_desc_blues">저음과 고음을 살짝 올리고 중음을 낮춰 따뜻하고 묵직한音色을 냅니다.</string>
+    <string name="eq_desc_classical">저음을 낮춰 탁함을 없애고, 고음의 배음과 공기감을 살려 관현악의 층위를 되살립니다.</string>
+    <string name="eq_desc_jazz">베이스 저음을 올리고 고음을 살짝 낮춰 거칠지 않게, 자연스럽고 부드러운 소리를 냅니다.</string>
+    <string name="eq_desc_slow_rock">저음 게인을 절제하고 중음을 살짝 낮춰, 리듬이 느슨하게 울립니다.</string>
+    <string name="eq_desc_electronic">저음과 중음을 함께 올려 EDM 킥과 신디사이저의 타격감을 키우고, 고음은 살짝 낮춥니다.</string>
+    <string name="eq_desc_rock">저음과 중음이 단단하고 힘이 넘치며, 고음을 살짝 낮춰 타이트한 음색을 냅니다.</string>
+    <string name="eq_desc_country">저음과 고음을 살짝 올리고 중음을 살짝 낮춰, 깨끗하고 밝은 소리를 냅니다.</string>
 </resources>

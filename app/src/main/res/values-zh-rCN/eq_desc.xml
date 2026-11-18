@@ -2,13 +2,13 @@
 <resources>
     <string name="eq_desc_off">已关闭均衡器，按原始音色输出。</string>
     <string name="eq_desc_custom">手动调节五段频段，保存属于你自己的音效。</string>
-    <string name="eq_desc_pop">低频与高频同时抬升、中频略收，呈浅V型；人声清晰，高频通透，适合流行乐。</string>
-    <string name="eq_desc_dance">大幅强化低频，底鼓更有力，中频稍收、高频提亮，适合舞曲。</string>
-    <string name="eq_desc_blues">低频和高频微微抬起、中频下陷，音色温暖醇厚，适合蓝调。</string>
+    <string name="eq_desc_pop">低频与高频同时抬升、中频略收，呈浅V型；人声清晰，高频通透。</string>
+    <string name="eq_desc_dance">大幅强化低频，底鼓更有力，中频稍收、高频轻微上抬。</string>
+    <string name="eq_desc_blues">低频和高频微微抬起、中频下陷，音色温暖醇厚。</string>
     <string name="eq_desc_classical">压低低频避免浑浊，抬升高频泛音与空气感，还原管弦乐的层次。</string>
-    <string name="eq_desc_jazz">抬高贝斯低频，略收高频防止刺耳，音色自然顺滑，适合爵士。</string>
-    <string name="eq_desc_slow_rock">低频增益克制、中频微收，节奏松弛不炸，适合慢摇。</string>
+    <string name="eq_desc_jazz">抬高贝斯低频，略收高频防止刺耳，音色自然顺滑。</string>
+    <string name="eq_desc_slow_rock">低频增益克制、中频微收，节奏松弛不炸。</string>
     <string name="eq_desc_electronic">低频与中频同时抬升，EDM底鼓与合成器更有冲击力，高频略收。</string>
-    <string name="eq_desc_rock">低频、中频扎实有力，高频略收，音色紧凑，适合摇滚。</string>
-    <string name="eq_desc_country">轻微抬高低频与高频、中频略收，干净明亮，适合乡村。</string>
+    <string name="eq_desc_rock">低频、中频扎实有力，高频略收，音色紧凑。</string>
+    <string name="eq_desc_country">轻微抬高低频与高频、中频略收，干净明亮。</string>
 </resources>

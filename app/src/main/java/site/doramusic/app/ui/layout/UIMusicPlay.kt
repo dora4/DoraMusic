@@ -26,6 +26,7 @@ import android.widget.SeekBar
 import android.widget.SlidingDrawer
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.createBitmap
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import dora.db.builder.WhereBuilder
@@ -36,14 +37,20 @@ import dora.skin.SkinManager
 import dora.util.DensityUtils
 import dora.util.RxBus
 import dora.util.ScreenUtils
+import dora.widget.DoraIndicatorView
 import dora.widget.DoraRotateView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import site.doramusic.app.R
 import site.doramusic.app.conf.AppConfig
 import site.doramusic.app.conf.AppConfig.Companion.COLOR_THEME
 import site.doramusic.app.db.Music
+import site.doramusic.app.event.PlayerBackgroundChangedEvent
+import site.doramusic.app.event.PlaylistChangedEvent
 import site.doramusic.app.event.RefreshFavoriteEvent
 import site.doramusic.app.lrc.LyricLine
 import site.doramusic.app.lrc.LyricScroller
@@ -51,23 +58,16 @@ import site.doramusic.app.lrc.loader.DoraLyricLoader
 import site.doramusic.app.lrc.loader.LyricLoader
 import site.doramusic.app.media.MediaManager
 import site.doramusic.app.media.PlayModeControl
+import site.doramusic.app.score.PlayerBgManager
+import site.doramusic.app.track.EventType
+import site.doramusic.app.track.TrackAnalysis
 import site.doramusic.app.ui.UIFactory
 import site.doramusic.app.ui.UIManager
 import site.doramusic.app.ui.adapter.LyricAdapter
 import site.doramusic.app.util.MusicTimer
+import site.doramusic.app.util.PadUtils
 import site.doramusic.app.util.PrefsManager
 import site.doramusic.app.widget.SlidingView
-import androidx.core.graphics.createBitmap
-import dora.widget.DoraIndicatorView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import site.doramusic.app.event.PlayerBackgroundChangedEvent
-import site.doramusic.app.event.PlaylistChangedEvent
-import site.doramusic.app.score.PlayerBgManager
-import site.doramusic.app.track.EventType
-import site.doramusic.app.track.TrackAnalysis
-import site.doramusic.app.util.PadUtils
 
 /**
  * 音乐播放控制、歌词滚动界面。
@@ -118,6 +118,8 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     private var musicTimer: MusicTimer? = null
     private var playAuto: Boolean = false
     private var seekBarProgress: Int = 0
+    /** 拖动进度条中：期间不回写播放器位置，避免松手后进度弹回起点。 */
+    private var seeking: Boolean = false
     private val musicDao: OrmDao<Music> by lazy {
         DaoFactory.getDao(Music::class.java)
     }
@@ -475,8 +477,8 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
     override fun onStartTrackingTouch(seekBar: SeekBar) {
         if (seekBar === sbMusicPlayPlayback) {
             playAuto = false
-            musicTimer?.stopTimer()
-            MediaManager.pause()
+            seeking = true
+            MediaManager.setSeeking(true)
         }
     }
 
@@ -484,8 +486,13 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
         if (seekBar === sbMusicPlayPlayback) {
             playAuto = true
             MediaManager.seekTo(seekBarProgress)
+            seeking = false
+            MediaManager.setSeeking(false)
+            // 拖动前在播放才续播；拖动前是暂停则停在目标位置，不自动起播
+            if (!MediaManager.isPlaying()) {
+                MediaManager.resume()
+            }
             refreshSeekProgress(MediaManager.position(), MediaManager.duration())
-            MediaManager.replay()
             musicTimer?.startTimer()
             curMusic?.let { _ ->
                 TrackAnalysis.report(scope,
@@ -523,6 +530,11 @@ class UIMusicPlay(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
      */
     @SuppressLint("DefaultLocale")
     fun refreshSeekProgress(curTime: Int, totalTime: Int) {
+        if (seeking) {
+            // 拖动中：以用户拖到的位置为准，不回写播放器位置
+            sbMusicPlayPlayback.progress = seekBarProgress
+            return
+        }
         var localCurTime = curTime
         var localTotalTime = totalTime
         localCurTime /= 1000

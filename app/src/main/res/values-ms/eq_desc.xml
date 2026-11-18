@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eq_desc_off">Penyamaan dinyahaktifkan, bunyi asal.</string>
-    <string name="eq_desc_custom">Laraskan kelima-lima jalur secara manual dan simpan tetapan anda sendiri.</string>
-    <string name="eq_desc_pop">Bes dan trebel dinaikkan dengan mid sedikit diturunkan, bentuk V cetek. Vokal jelas dan trebel lapang.</string>
-    <string name="eq_desc_dance">Bes Mantap dengan gendang kick kukuh, mid diredam dan trebel cerah untuk lagu tarian.</string>
-    <string name="eq_desc_blues">Bes dan trebel sedikit dinaikkan dengan mid merosot, hangat dan lembut untuk blues.</string>
-    <string name="eq_desc_classical">Bes diturunkan untuk elak bunyi keruh, trebel dinaikkan untuk ruang dan harmonik.</string>
-    <string name="eq_desc_jazz">Bes dinaikkan dan trebel sedikit diredam, kedengaran semula jadi dan lancar untuk jazz.</string>
-    <string name="eq_desc_slow_rock">Bes dinaikkan secara sederhana dengan mid sedikit diturunkan, groov santai untuk slow rock.</string>
-    <string name="eq_desc_electronic">Bes bertenaga dan mid dinaikkan untuk kick serta synth EDM, trebel sedikit diredam.</string>
-    <string name="eq_desc_rock">Bes dan mid padat, trebel sedikit diredam, padat dan bertenaga untuk rock.</string>
-    <string name="eq_desc_country">Bes dan trebel sedikit dinaikkan dengan mid diturunkan, jernih dan cerah untuk country.</string>
+    <string name="eq_desc_off">Penyama dinyahaktifkan. Audio dimainkan dengan bunyi asalnya.</string>
+    <string name="eq_desc_custom">Laraskan kelima-lima jalur secara manual dan simpan bunyi anda sendiri.</string>
+    <string name="eq_desc_pop">Meningkatkan bes dan trebel serentak sambil merendahkan pertengahan sedikit, membentuk V cetek. Vokal jelas dan trebel legap.</string>
+    <string name="eq_desc_dance">Bes amat ditebalkan untuk hentakan kick yang kuat, pertengahan sedikit direndahkan dan trebel sedikit ditingkatkan.</string>
+    <string name="eq_desc_blues">Bes dan trebel sedikit ditingkatkan dengan pertengahan yang menurun, menghasilkan bunyi hangat dan pekat.</string>
+    <string name="eq_desc_classical">Merendahkan bes untuk mengelakkan bunyi berkebazan dan menaikkan harmonik serta kesan legap trebel bagi menonjolkan lapisan muzik orkestra.</string>
+    <string name="eq_desc_jazz">Menaikkan bes untuk bunyi bass yang lebih dalam dan merendahkan trebel sedikit agar tidak tajam, menghasilkan bunyi semula jadi dan licin.</string>
+    <string name="eq_desc_slow_rock">Gandaan bes terkawal dengan pertengahan sedikit direndahkan, menjadikan rentaknya santai tanpa letupan.</string>
+    <string name="eq_desc_electronic">Menaikkan bes dan pertengahan serentak, memberikan impak lebih kuat pada kick dan penyintesis EDM, manakala trebel sedikit direndahkan.</string>
+    <string name="eq_desc_rock">Bes dan pertengahan pekat serta bertenaga, trebel sedikit direndahkan untuk bunyi yang padat.</string>
+    <string name="eq_desc_country">Bes dan trebel sedikit ditingkatkan dengan pertengahan yang agak direndahkan, untuk bunyi yang bersih dan cerah.</string>
 </resources>

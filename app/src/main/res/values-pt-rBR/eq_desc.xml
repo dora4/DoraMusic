@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eq_desc_off">Equalizador desligado, som original.</string>
-    <string name="eq_desc_custom">Ajuste as cinco faixas manualmente e salve seu próprio ajuste.</string>
-    <string name="eq_desc_pop">Graves e agudos realçados com médios recuados, curva em V suave. Vocais claros e agudos brilhantes.</string>
-    <string name="eq_desc_dance">Graves fortes com bumbo firme, médios atenuados e agudos brilhantes para música dance.</string>
-    <string name="eq_desc_blues">Graves e agudos levemente realçados com médios recuados, som quente e aveludado para o blues.</string>
-    <string name="eq_desc_classical">Graves reduzidos para evitar embolamento e agudos realçados para ar e harmônicos.</string>
-    <string name="eq_desc_jazz">Baixo realçado e agudos um pouco atenuados, som natural e macio para o jazz.</string>
-    <string name="eq_desc_slow_rock">Graves realçados com moderação e médios levemente recuados, groove relaxado para o slow rock.</string>
-    <string name="eq_desc_electronic">Graves potentes e médios realçados para os kicks e sintetizadores de EDM, agudos levemente atenuados.</string>
-    <string name="eq_desc_rock">Graves e médios firmes, agudos levemente atenuados, som compacto e encorpado para o rock.</string>
-    <string name="eq_desc_country">Graves e agudos levemente realçados com médios recuados, som limpo e brilhante para o country.</string>
+    <string name="eq_desc_off">Equalizador desligado. O áudio é reproduzido com o timbre original.</string>
+    <string name="eq_desc_custom">Ajuste as cinco bandas manualmente e salve o seu próprio som.</string>
+    <string name="eq_desc_pop">Eleva graves e agudos ao mesmo tempo e recua levemente os médios, formando um V suave. Vocais nítidos e agudos arejados.</string>
+    <string name="eq_desc_dance">Graves reforçados com força para um bumbo mais potente, médios levemente recuados e agudos sutilmente elevados.</string>
+    <string name="eq_desc_blues">Leve aumento de graves e agudos com os médios recuados, gerando um som quente e aveludado.</string>
+    <string name="eq_desc_classical">Reduz os graves para evitar embolamento e realça os harmônicos e a sensação de ar dos agudos, revelando as camadas da música orquestral.</string>
+    <string name="eq_desc_jazz">Eleva o contrabaixo para graves mais profundos e suaviza um pouco os agudos para evitar aspereza, mantendo o som natural e aveludado.</string>
+    <string name="eq_desc_slow_rock">Ganho de graves contido e médios levemente recuados, deixando o ritmo solto sem estourar.</string>
+    <string name="eq_desc_electronic">Eleva graves e médios juntos, dando mais impacto aos kicks e sintetizadores do EDM, com os agudos levemente recuados.</string>
+    <string name="eq_desc_rock">Graves e médios encorpados e potentes, com os agudos levemente recuados para um timbre fechado.</string>
+    <string name="eq_desc_country">Leve aumento de graves e agudos com os médios um pouco recuados, para um som limpo e brilhante.</string>
 </resources>
