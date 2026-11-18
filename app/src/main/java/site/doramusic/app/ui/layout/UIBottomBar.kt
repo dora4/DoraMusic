@@ -296,7 +296,7 @@ class UIBottomBar(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.btn_home_bottom_play -> MediaManager.replay()
+            R.id.btn_home_bottom_play -> MediaManager.resume()
             R.id.btn_home_bottom_pause -> MediaManager.pause()
             R.id.btn_home_bottom_next -> MediaManager.next()
             R.id.btn_home_bottom_menu -> showBottomSheetDialog(manager.view.context)

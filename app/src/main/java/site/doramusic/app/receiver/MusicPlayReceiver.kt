@@ -41,7 +41,7 @@ class MusicPlayReceiver : BroadcastReceiver() {
                 if (intent.getBooleanExtra(EXTRA_IS_PLAYING, false)) {
                     MediaManager.pause()
                 } else {
-                    MediaManager.replay()
+                    MediaManager.resume()
                 }
                 val title = intent.getStringExtra(NOTIFICATION_TITLE) ?: ""
                 val name = intent.getStringExtra(NOTIFICATION_NAME) ?: ""
