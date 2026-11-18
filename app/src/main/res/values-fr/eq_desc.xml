@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eq_desc_off">Égaliseur désactivé, son d\'origine.</string>
-    <string name="eq_desc_custom">Réglez manuellement les cinq bandes et enregistrez votre propre réglage.</string>
-    <string name="eq_desc_pop">Graves et aigus relevés avec des médiums creusés, léger V. Voix claires et aigus aérés.</string>
-    <string name="eq_desc_dance">Basses puissantes avec une grosse caisse ferme, médiums atténués et aigus brillants.</string>
-    <string name="eq_desc_blues">Graves et aigus légèrement relevés, médiums en retrait, un son chaud et moelleux.</string>
-    <string name="eq_desc_classical">Graves atténués pour éviter la boue, aigus relevés pour l\'air et les harmoniques.</string>
-    <string name="eq_desc_jazz">Basse relevé et aigus légèrement atténués, un rendu naturel et souple pour le jazz.</string>
-    <string name="eq_desc_slow_rock">Basses relevées avec retenue et médiums légèrement creusés, groove détendu pour le slow rock.</string>
-    <string name="eq_desc_electronic">Graves percutants et médiums relevés pour les kicks et synthés EDM, aigus légèrement atténués.</string>
-    <string name="eq_desc_rock">Graves et médiums solides, aigus légèrement atténués, un son serré et puissant pour le rock.</string>
-    <string name="eq_desc_country">Graves et aigus légèrement relevés, médiums en retrait, un son clair et lumineux pour le country.</string>
+    <string name="eq_desc_off">L'égaliseur est désactivé. L'audio est restitué avec sa sonorité d'origine.</string>
+    <string name="eq_desc_custom">Réglez manuellement les cinq bandes et enregistrez votre propre son.</string>
+    <string name="eq_desc_pop">Augmente simultanément les graves et les aigus tout en atténuant légèrement les médiums, formant un léger profil en V. Des voix claires et des aigus aérés.</string>
+    <string name="eq_desc_dance">Graves fortement renforcés pour une grosse caisse plus percutante, médiums légèrement atténués et aigus relevés en douceur.</string>
+    <string name="eq_desc_blues">Légère hausse des graves et des aigus avec des médiums en retrait, pour un son chaleureux et velouté.</string>
+    <string name="eq_desc_classical">Les basses sont abaissées pour éviter tout brouillage, tandis que les harmoniques et la présence des aigus sont relevées afin de restituer le relief des orchestrations.</string>
+    <string name="eq_desc_jazz">Rehausse la basse pour des graves plus profonds et adoucit légèrement les aigus pour éviter l'agressivité, avec un rendu naturel et soyeux.</string>
+    <string name="eq_desc_slow_rock">Gain de graves mesuré et médiums légèrement creusés, pour un rythme détendu sans saturation.</string>
+    <string name="eq_desc_electronic">Rehausse graves et médiums simultanément, donnant plus d'impact aux kicks et aux synthétiseurs de l'EDM, les aigus étant légèrement atténués.</string>
+    <string name="eq_desc_rock">Des graves et des médiums denses et puissants, des aigus légèrement atténués pour un son compact.</string>
+    <string name="eq_desc_country">Une légère hausse des graves et des aigus avec des médiums en retrait, pour un rendu net et lumineux.</string>
 </resources>

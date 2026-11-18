@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="eq_desc_off">已關閉等化器，依原始音色輸出。</string>
-    <string name="eq_desc_custom">手動調整五個頻段，儲存屬於你自己的音色設定。</string>
-    <string name="eq_desc_pop">低頻與高頻同時提升、中頻略收，呈淺V型；人聲清晰，高頻通透，適合流行樂。</string>
-    <string name="eq_desc_dance">大幅強化低頻，底鼓更有力，中頻稍收、高頻提亮，適合舞曲。</string>
-    <string name="eq_desc_blues">低頻與高頻微微提升、中頻下陷，音色溫暖醇厚，適合藍調。</string>
-    <string name="eq_desc_classical">壓低低頻避免渾濁，提升高頻泛音與空氣感，還原管弦樂層次。</string>
-    <string name="eq_desc_jazz">提升低音貝斯，略收高頻避免刺耳，音色自然順滑，適合爵士。</string>
-    <string name="eq_desc_slow_rock">低頻增益克制、中頻微收，節奏放鬆不炸，適合慢搖。</string>
+    <string name="eq_desc_custom">手動調整五個頻段，儲存屬於你自己的音效。</string>
+    <string name="eq_desc_pop">低頻與高頻同時提升、中頻略收，呈淺V型；人聲清晰，高頻通透。</string>
+    <string name="eq_desc_dance">大幅強化低頻，底鼓更有力，中頻稍收、高頻輕微上抬。</string>
+    <string name="eq_desc_blues">低頻與高頻微微提升、中頻下陷，音色溫暖醇厚。</string>
+    <string name="eq_desc_classical">壓低低頻避免渾濁，提升高頻泛音與空氣感，還原管弦樂的層次。</string>
+    <string name="eq_desc_jazz">提升貝斯低頻，略收高頻避免刺耳，音色自然順滑。</string>
+    <string name="eq_desc_slow_rock">低頻增益克制、中頻微收，節奏放鬆不炸。</string>
     <string name="eq_desc_electronic">低頻與中頻同時提升，EDM底鼓與合成器更有衝擊力，高頻略收。</string>
-    <string name="eq_desc_rock">低頻、中頻紮實有力，高頻略收，音色緊湊，適合搖滾。</string>
-    <string name="eq_desc_country">輕微提升低頻與高頻、中頻略收，乾淨明亮，適合鄉村。</string>
+    <string name="eq_desc_rock">低頻、中頻紮實有力，高頻略收，音色緊湊。</string>
+    <string name="eq_desc_country">輕微提升低頻與高頻、中頻略收，乾淨明亮。</string>
 </resources>

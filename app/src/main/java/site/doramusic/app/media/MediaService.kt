@@ -27,9 +27,9 @@ import site.doramusic.app.conf.AppConfig.Companion.APP_NAME
 import site.doramusic.app.conf.AppConfig.Companion.APP_PACKAGE_NAME
 import site.doramusic.app.conf.AppConfig.Companion.EXTRA_IS_PLAYING
 import site.doramusic.app.db.Music
-import site.doramusic.app.sysmsg.SysMsgEvent
 import site.doramusic.app.receiver.MusicPlayReceiver
 import site.doramusic.app.shake.ShakeDetector
+import site.doramusic.app.sysmsg.SysMsgEvent
 import site.doramusic.app.sysmsg.SysMsgWsManager
 import site.doramusic.app.ui.activity.MainActivity
 import site.doramusic.app.util.PrefsManager
@@ -145,6 +145,11 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
 
         @Throws(RemoteException::class)
+        override fun resume(): Boolean {
+            return mc.resumePlay();
+        }
+
+        @Throws(RemoteException::class)
         override fun prev(): Boolean {
             return mc.prev()
         }
@@ -185,10 +190,21 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         }
 
         @Throws(RemoteException::class)
+        override fun setSeeking(seeking: Boolean) {
+            mc.isSeeking = seeking
+        }
+
+        @Throws(RemoteException::class)
+        override fun isSeeking(): Boolean {
+            return mc.isSeeking
+        }
+
+        @Throws(RemoteException::class)
         override fun refreshPlaylist(playlist: List<Music>) {
             mc.refreshPlaylist(playlist)
         }
 
+        @Throws(RemoteException::class)
         override fun removeFromPlaylist(music: Music?): Boolean {
             return mc.removeFromPlaylist(music)
         }
@@ -245,6 +261,11 @@ class MediaService : Service(), ShakeDetector.OnShakeListener {
         @Throws(RemoteException::class)
         override fun getPlaylist(): List<Music> {
             return mc.playlist
+        }
+
+        @Throws(RemoteException::class)
+        override fun isPlaying(): Boolean {
+            return mc.isPlaying
         }
 
         @Throws(RemoteException::class)

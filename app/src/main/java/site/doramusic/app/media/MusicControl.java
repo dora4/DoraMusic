@@ -48,7 +48,10 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     private final AudioManager mAudioManager;
     private final OrmDao<Music> mDao;
     private final PrefsManager mPrefsManager;
-
+    /**
+     * 拖动进度条期间为 true：暂停只累加时长不翻转状态，避免松手后进度弹回起点。
+     */
+    private boolean mSeeking = false;
     /**
      * 用于埋点计时：本次会话累计有效播放毫秒。
      */
@@ -93,6 +96,18 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     private void commitCurrentPlayDuration(boolean isComplete) {
         if (mCurMusic == null) {
             resetTimer();
+            return;
+        }
+        if (mSeeking) {
+            // 拖动中：只累加增量，不结算、不翻转状态
+            if (mPlayState == MPS_PLAYING) {
+                int nowPos = mMediaPlayer.getCurrentPosition();
+                int delta = nowPos - mLastPos;
+                if (delta > 0) {
+                    mTotalPlayedMs += delta;
+                }
+                mLastPos = nowPos;
+            }
             return;
         }
         // 如果当前正在播放，先把最后这一段增量算进去，并立刻脱离 PLAYING，保证幂等
@@ -151,6 +166,13 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         mLastPos = 0;
     }
 
+    public void setSeeking(boolean seeking) {
+        mSeeking = seeking;
+    }
+
+    public boolean isSeeking() {
+        return mSeeking;
+    }
     /**
      * 用于设置重低音参数。
      *
@@ -371,7 +393,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     /**
      * 【暂停恢复播放】不重置累计时长，只更新基准起点。
      */
-    private boolean resumePlay() {
+    public boolean resumePlay() {
         if (requestFocus()) {
             if (mPlayState != MPS_PAUSE) {
                 return false;
@@ -616,10 +638,21 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
         }
         int pro = reviseSeekValue(progress);
         int time = mMediaPlayer.getDuration();
+        if (time <= 0) {
+            return false;
+        }
         int curTime = (int) ((float) pro / 100 * time);
+        // 拖动前先把这一段真实播放时长结算进累计，避免后面基准被覆盖导致丢时长
+        if (mPlayState == MPS_PLAYING) {
+            int nowPos = mMediaPlayer.getCurrentPosition();
+            int delta = nowPos - mLastPos;
+            if (delta > 0) {
+                mTotalPlayedMs += delta;
+            }
+        }
         mMediaPlayer.seekTo(curTime);
-        // seek后更新基准，已累计播放时长mTotalPlayedMs保留不变
-        mLastPos = curTime;
+        // 以播放器真实落点为准回写基准，避免代理 seek 未生效时进度弹回
+        mLastPos = mMediaPlayer.getCurrentPosition();
         return true;
     }
 
@@ -689,6 +722,18 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
      * @return
      */
     public boolean pause() {
+        if (mSeeking) {
+            // 拖动中调用 pause：只累加时长，不真正暂停、不翻转状态
+            if (mPlayState == MPS_PLAYING) {
+                int nowPos = mMediaPlayer.getCurrentPosition();
+                int delta = nowPos - mLastPos;
+                if (delta > 0) {
+                    mTotalPlayedMs += delta;
+                }
+                mLastPos = nowPos;
+            }
+            return true;
+        }
         if (mPlayState != MPS_PLAYING) {
             return false;
         }
