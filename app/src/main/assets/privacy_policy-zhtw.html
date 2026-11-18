@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>朵拉音樂隱私權政策</title>
+    <script>
+        // 首屏渲染前確定深淺色，避免「先淺後深」閃爍
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 20px auto;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            padding: 15px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>隱私權政策</h1>
+<p>感謝您使用朵拉音樂。我們高度重視您的隱私保護，本隱私權政策旨在說明我們如何收集、使用及保護您的個人資訊，以及應用程式所需權限的用途。</p>
+
+<h2>1. 權限說明</h2>
+<ul>
+    <li><strong>網路權限 (INTERNET, ACCESS_NETWORK_STATE等)：</strong>用於連線伺服器，下載與播放音樂內容，並檢查網路狀態。</li>
+    <li><strong>儲存權限 (READ/WRITE/MANAGE_EXTERNAL_STORAGE)：</strong>用於讀取與儲存您裝置上的音樂檔案和快取，提升播放體驗。</li>
+    <li><strong>音訊權限 (MODIFY_AUDIO_SETTINGS, BLUETOOTH等)：</strong>用於控制音訊播放、連線藍牙耳機，並支援藍牙中斷時自動暫停等功能。</li>
+    <li><strong>通知權限 (POST_NOTIFICATIONS)：</strong>用於傳送播放狀態、更新提醒等推播通知。</li>
+    <li><strong>NFC權限 (NFC)：</strong>用於辨識、讀寫NFC音樂唱片標籤，實現NFC唱片關聯歌曲、刷卡播放、寫卡綁定曲目等功能；不會讀取或上傳其他NFC卡片中的無關個人資料。</li>
+    <li><strong>其他權限 (WAKE_LOCK, FOREGROUND_SERVICE等)：</strong>用於確保音樂播放時應用程式持續執行，避免裝置休眠影響播放。</li>
+</ul>
+
+<h2>2. 資訊收集與使用</h2>
+<p>我們不會收集您的敏感個人資訊，所有權限僅限於實現應用程式功能所需。收集的資訊包括但不限於裝置資訊、應用程式使用日誌，用於優化產品體驗與服務。</p>
+
+<h2>3. 資料安全</h2>
+<p>我們採用業界標準技術保護您的資料安全，防止未經授權的存取、洩露或竄改。</p>
+
+<h2>4. 使用者權利</h2>
+<p>您可以在裝置設定中管理應用程式權限，關閉不必要的權限可能影響部分功能的使用。</p>
+
+<h2>5. 政策變更</h2>
+<p>我們可能會更新本隱私權政策，更新內容將及時在應用程式內或官方網站公布，建議您定期查閱。</p>
+
+<h2>6. 聯絡我們</h2>
+<p>如對隱私權政策有疑問或建議，請透過電子郵件 <a href="mailto:dorachat@163.com">dorachat@163.com</a> 與我們聯絡。</p>
+
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

@@ -45,19 +45,20 @@
                     android:layout_height="@dimen/equalizer_height"
                     android:layout_marginTop="20dp" />
 
+                <!-- tab 上方分割线 -->
                 <View
-                    android:id="@+id/divider_equalizer"
+                    android:id="@+id/divider_equalizer_top"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/ev_equalizer"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:background="@color/divider_color" />
 
                 <HorizontalScrollView
                     android:id="@+id/hsv_equalizer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/divider_equalizer"
+                    android:layout_below="@id/divider_equalizer_top"
                     android:fillViewport="true"
                     android:scrollbars="none">
 
@@ -181,11 +182,27 @@
                     </RadioGroup>
                 </HorizontalScrollView>
 
+                <!-- tab 下方分割线 -->
                 <View
+                    android:id="@+id/divider_equalizer_bottom"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_below="@id/hsv_equalizer"
                     android:background="@color/divider_color" />
+
+                <TextView
+                    android:id="@+id/tv_equalizer_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider_equalizer_bottom"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="4dp"
+                    android:text="@string/eq_desc_off"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="@dimen/equalizer_desc_text_size" />
             </RelativeLayout>
         </ScrollView>
     </LinearLayout>

@@ -48,6 +48,13 @@ interface EventType {
         const val EVENT_TYPE_CLICK_MUSIC_ITEM = "click_music_item"
 
         /**
+         * 长按歌曲条目弹窗操作菜单。
+         *
+         * 参数：source
+         */
+        const val EVENT_TYPE_LONG_CLICK_MUSIC_ITEM = "long_click_music_item"
+
+        /**
          * 复制歌曲名称。
          */
         const val EVENT_TYPE_COPY_MUSIC_NAME = "copy_music_name"

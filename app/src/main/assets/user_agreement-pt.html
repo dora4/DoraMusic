@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Termos de Uso e Isenção de Responsabilidade</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Termos de Uso e Isenção de Responsabilidade</h1>
+<p>Bem-vindo ao <strong>Dora Music</strong> (doravante denominado «Plataforma»). Antes de enviar ou compartilhar conteúdo na Plataforma, leia atentamente e concorde com os seguintes termos:</p>
+<h2>1. Requisitos de conteúdo</h2>
+<ul>
+    <li>A Plataforma fornece apenas serviços técnicos de armazenamento e compartilhamento de conteúdo e <strong>não realiza análise prévia do conteúdo enviado pelos usuários</strong>;</li>
+    <li>A Plataforma não assume nenhuma responsabilidade quanto à veracidade, legalidade ou exatidão do conteúdo enviado pelos usuários;</li>
+    <li>Qualquer disputa sobre direitos autorais, de imagem ou de privacidade decorrente de conteúdo enviado ou compartilhado pelos usuários não é de responsabilidade da Plataforma;</li>
+</ul>
+<h2>2. Responsabilidades do usuário</h2>
+<ul>
+    <li>Na medida permitida por lei, a Plataforma não se responsabiliza por qualquer perda direta, indireta ou incidental resultante do uso de seus serviços.</li>
+</ul>
+<h2>3. Isenção de responsabilidade da plataforma</h2>
+<ul>
+</ul>
+<h2>4. Mecanismo de denúncia de infração</h2>
+<p>Se você considera que algum conteúdo da Plataforma viola seus direitos legítimos, entre em contato conosco pelo seguinte canal:</p>
+<ul>
+    <li>E-mail de denúncia: <a href="mailto:dorachat@163.com">dorachat@163.com</a></li>
+    <li>Forneça comprovação dos seus direitos, o link infrator, seus dados de contato e uma descrição detalhada.</li>
+</ul>
+<p>A Plataforma providenciará o tratamento do conteúdo após a verificação.</p>
+<h2>5. Alterações destes termos</h2>
+<p>A Plataforma reserva-se o direito de alterar estes Termos de acordo com leis e regulamentos ou por necessidades operacionais, e divulgará tais alterações na Plataforma. As alterações entram em vigor a partir de sua publicação. Ao continuar usando a Plataforma, considera-se que você concorda com o conteúdo alterado.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

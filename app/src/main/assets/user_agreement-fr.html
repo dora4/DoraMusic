@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Conditions d'utilisation et clause de non-responsabilité – Dora Music</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Conditions d'utilisation et clause de non-responsabilité</h1>
+<p>Bienvenue sur <strong>Dora Music</strong> (ci-après « la Plateforme »). Avant de téléverser ou de partager du contenu sur la Plateforme, veuillez lire attentivement les conditions suivantes et les accepter :</p>
+
+<h2>1. Exigences relatives au contenu téléversé</h2>
+<ul>
+    <li>Vous ne devez téléverser aucun contenu portant atteinte aux droits d'auteur, au droit à l'image, aux marques, à la vie privée ou à tout autre droit légitime d'un tiers, y compris, sans s'y limiter, de la musique, de l'audio, de la vidéo ou des images non autorisés ;</li>
+    <li>Il est interdit de téléverser tout contenu dont le téléversement ou la diffusion est prohibé par la loi ;</li>
+    <li>Le contenu téléversé doit être conforme aux lois, aux réglementations et aux règles de la communauté. <strong>Vous êtes responsable de la licéité, de la conformité et de l'exactitude du contenu que vous téléversez.</strong></li>
+</ul>
+
+<h2>2. Responsabilités de l'utilisateur</h2>
+<ul>
+    <li>Tout contenu que vous téléversez ne représente que votre propre point de vue et n'a aucun lien avec la Plateforme ;</li>
+    <li>Vous assumez seul toute responsabilité pour tout litige, réclamation ou conséquence juridique découlant du contenu que vous téléversez ;</li>
+    <li>Si un tel contenu cause un préjudice à la Plateforme, vous en assumez la réparation intégrale.</li>
+</ul>
+
+<h2>3. Clause de non-responsabilité de la Plateforme</h2>
+<ul>
+    <li>La Plateforme fournit uniquement des services techniques de stockage et de partage de contenu et <strong>n'effectue aucune vérification préalable du contenu téléversé par les utilisateurs</strong> ;</li>
+    <li>La Plateforme décline toute responsabilité quant à l'authenticité, la licéité ou l'exactitude du contenu téléversé par les utilisateurs ;</li>
+    <li>Tout litige relatif aux droits d'auteur, au droit à l'image ou à la vie privé découlant de contenus téléversés ou partagés par les utilisateurs ne relève pas de la responsabilité de la Plateforme ;</li>
+    <li>Dans les limites autorisées par la loi, la Plateforme ne saurait être tenue responsable de tout dommage direct, indirect ou accessoire résultant de l'utilisation de ses services.</li>
+</ul>
+
+<h2>4. Mécanisme de signalement des atteintes aux droits</h2>
+<p>Si vous estimez qu'un contenu sur la Plateforme porte atteinte à vos droits légitimes, veuillez nous contacter via le canal suivant :</p>
+<ul>
+    <li>E-mail de signalement : <a href="mailto:dorachat@163.com">dorachat@163.com</a></li>
+    <li>Veuillez fournir une preuve de vos droits, le lien du contenu concerné, vos coordonnées et une description détaillée</li>
+</ul>
+<p>La Plateforme traitera rapidement le contenu concerné après vérification.</p>
+
+<h2>5. Modifications des présentes conditions</h2>
+<p>La Plateforme se réserve le droit de modifier les présentes conditions conformément aux lois et réglementations ou à ses besoins opérationnels, et publiera ces modifications sur la Plateforme. Les conditions modifiées entrent en vigueur dès leur publication. Si vous continuez à utiliser la Plateforme, vous êtes réputé avoir accepté les conditions modifiées.</p>
+
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

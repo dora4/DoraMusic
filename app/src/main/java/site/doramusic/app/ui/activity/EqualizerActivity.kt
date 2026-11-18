@@ -28,9 +28,24 @@ import site.doramusic.app.util.ThemeSelector
  */
 @Route(path = ARoutePath.ACTIVITY_EQUALIZER)
 class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
-        DoraEqualizerView.OnUpdateDecibelListener {
+    DoraEqualizerView.OnUpdateDecibelListener {
 
     private lateinit var prefsManager: PrefsManager
+
+    /** RadioButton id -> 简介文案 */
+    private val eqDescMap: Map<Int, Int> = mapOf(
+        R.id.rb_equalizer_off to R.string.eq_desc_off,
+        R.id.rb_equalizer_custom to R.string.eq_desc_custom,
+        R.id.rb_equalizer_pop to R.string.eq_desc_pop,
+        R.id.rb_equalizer_dance to R.string.eq_desc_dance,
+        R.id.rb_equalizer_blues to R.string.eq_desc_blues,
+        R.id.rb_equalizer_classical to R.string.eq_desc_classical,
+        R.id.rb_equalizer_jazz to R.string.eq_desc_jazz,
+        R.id.rb_equalizer_slow_rock to R.string.eq_desc_slow_rock,
+        R.id.rb_equalizer_electronic to R.string.eq_desc_electronic,
+        R.id.rb_equalizer_rock to R.string.eq_desc_rock,
+        R.id.rb_equalizer_country to R.string.eq_desc_country
+    )
 
     override fun getLayoutId(): Int {
         return R.layout.activity_equalizer
@@ -53,7 +68,13 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
             val centerFreq = equalizer.getCenterFreq(i.toShort()) / 1000
             freqs[i] = centerFreq
         }
+        equalizer.release()
         return freqs
+    }
+
+    /** 切换简介文案 */
+    private fun updateEqualizerDesc(checkedId: Int) {
+        mBinding.tvEqualizerDesc.setText(eqDescMap[checkedId] ?: R.string.eq_desc_off)
     }
 
     override fun initData(savedInstanceState: Bundle?, binding: ActivityEqualizerBinding) {
@@ -70,6 +91,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         if (equalizerDecibels == "" || (values.all { it == "0" } && values.size == size)) {
             // 默认选中第一个
             binding.rgEqualizer.check(R.id.rb_equalizer_off)
+            updateEqualizerDesc(R.id.rb_equalizer_off)
             binding.evEqualizer.setDecibels(intArrayOf(0, 0, 0, 0, 0))
             onUpdateDecibel(intArrayOf(0, 0, 0, 0, 0))
             binding.evEqualizer.setTouchable(false)
@@ -80,6 +102,7 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
             }
             // 选中自定义的tab
             binding.rgEqualizer.check(R.id.rb_equalizer_custom)
+            updateEqualizerDesc(R.id.rb_equalizer_custom)
             binding.evEqualizer.setDecibels(decibels)
             onUpdateDecibel(decibels)
             binding.evEqualizer.setTouchable(true)
@@ -120,18 +143,20 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
         binding.rgEqualizer.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rb_equalizer_off   // 关闭
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_CLOSE_EQUALIZER)
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_OFF)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(EQ_PRESET_OFF)
                 }
                 R.id.rb_equalizer_custom  // 自定义
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "custom")
                     )
+                    updateEqualizerDesc(checkedId)
                     val equalizerDecibelsSP = prefsManager.getEqualizerDecibels()
                     val splitDecibels = equalizerDecibelsSP.split(",".toRegex()).toTypedArray()
                     val result = IntArray(splitDecibels.size)
@@ -144,90 +169,99 @@ class EqualizerActivity : BaseSkinActivity<ActivityEqualizerBinding>(),
                     onUpdateDecibel(result)
                 }
                 R.id.rb_equalizer_pop // 流行
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "pop")
                     )
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_POP)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(EQ_PRESET_POP)
                 }
                 R.id.rb_equalizer_dance   // 舞曲
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "dance")
                     )
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_DANCE)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(EQ_PRESET_DANCE)
                 }
                 R.id.rb_equalizer_blues    // 蓝调
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "blues")
                     )
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_BLUES)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(EQ_PRESET_BLUES)
                 }
                 R.id.rb_equalizer_classical // 古典
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "classical")
                     )
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_CLASSICAL)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(EQ_PRESET_CLASSICAL)
                 }
                 R.id.rb_equalizer_jazz    // 爵士
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "jazz")
                     )
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_JAZZ)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(EQ_PRESET_JAZZ)
                 }
                 R.id.rb_equalizer_slow_rock    // 慢摇
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "slow rock")
                     )
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_SLOW_ROCK)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(EQ_PRESET_SLOW_ROCK)
                 }
                 R.id.rb_equalizer_electronic   // 电子
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "electronic")
                     )
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_ELECTRONIC)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(EQ_PRESET_ELECTRONIC)
                 }
                 R.id.rb_equalizer_rock   // 摇滚
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "rock")
                     )
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_ROCK)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()
                     onUpdateDecibel(EQ_PRESET_ROCK)
                 }
                 R.id.rb_equalizer_country // 乡村
-                -> {
+                    -> {
                     TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_USE_EQUALIZER,
                         mapOf("type" to "country")
                     )
+                    updateEqualizerDesc(checkedId)
                     binding.evEqualizer.setDecibels(EQ_PRESET_COUNTRY)
                     binding.evEqualizer.setTouchable(false)
                     binding.evEqualizer.resetState()

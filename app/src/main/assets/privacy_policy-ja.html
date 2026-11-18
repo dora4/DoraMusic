@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>プライバシーポリシー – Dora Music</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 20px auto;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            padding: 15px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>プライバシーポリシー</h1>
+<p>Dora Music をご利用いただきありがとうございます。当アプリはお客様のプライバシーを重要視しています。本プライバシーポリシーは、当アプリがお客様の個人情報をどのように収集・利用・保護するか、およびアプリが必要とする権限の目的について説明するものです。</p>
+
+<h2>1. 権限の説明</h2>
+<ul>
+    <li><strong>ネットワーク権限（INTERNET、ACCESS_NETWORK_STATE など）：</strong>サーバーへの接続、音楽コンテンツのダウンロードと再生、ネットワーク状態の確認に使用します。</li>
+    <li><strong>ストレージ権限（READ/WRITE/MANAGE_EXTERNAL_STORAGE）：</strong>デバイス内の音楽ファイルとキャッシュの読み書きに使用し、再生体験を向上させます。</li>
+    <li><strong>オーディオ権限（MODIFY_AUDIO_SETTINGS、BLUETOOTH など）：</strong>音声再生の制御、Bluetooth イヤホンの接続、Bluetooth 切断時の自動一時停止などの機能に使用します。</li>
+    <li><strong>通知権限（POST_NOTIFICATIONS）：</strong>再生状態、更新のお知らせなどのプッシュ通知を送信するために使用します。</li>
+    <li><strong>NFC 権限（NFC）：</strong>NFC 音楽レコードタグの認識および読み書きに使用し、NFC レコードと楽曲の紐付け、タッチ再生、カード書き込み時の楽曲紐付けなどの機能を実現します。他の NFC カードに含まれる無関係な個人データの読み取りやアップロードは行いません。</li>
+    <li><strong>その他の権限（WAKE_LOCK、FOREGROUND_SERVICE など）：</strong>音楽再生中にアプリを継続的に動作させ、デバイスのスリープによる再生の中断を防ぐために使用します。</li>
+</ul>
+
+<h2>2. 情報の収集と利用</h2>
+<p>当アプリはお客様の機密性の高い個人情報を収集しません。すべての権限はアプリ機能の実現に必要な範囲でのみ使用されます。収集する情報には、デバイス情報やアプリの利用ログなどが含まれ、製品体験とサービスの改善に利用されます。</p>
+
+<h2>3. データの安全性</h2>
+<p>当アプリは業界標準の技術を用いてお客様のデータを保護し、不正なアクセス、漏洩、改ざんを防止します。</p>
+
+<h2>4. お客様の権利</h2>
+<p>デバイスの設定画面からアプリの権限を管理できます。不要な権限をオフにすると、一部の機能がご利用いただけなくなる場合があります。</p>
+
+<h2>5. ポリシーの変更</h2>
+<p>当アプリは本プライバシーポリシーを随時更新する場合があります。更新内容はアプリ内または公式サイトで速やかに公布されますので、定期的にご確認いただくことをお勧めします。</p>
+
+<h2>6. お問い合わせ</h2>
+<p>本プライバシーポリシーに関するご質問やご意見は、メール <a href="mailto:dorachat@163.com">dorachat@163.com</a> までお問い合わせください。</p>
+
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

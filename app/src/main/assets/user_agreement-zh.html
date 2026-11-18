@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>朵拉音乐用户条款与免责声明</title>
+    <script>
+        // 首屏渲染前确定深浅色，避免“先浅后深”闪烁
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>用户条款与免责声明</h1>
+<p>欢迎使用 <strong>朵拉音乐</strong>（以下简称“本平台”）。在使用本平台上传或分享内容前，请您仔细阅读并同意以下条款：</p>
+
+<h2>1. 上传内容要求</h2>
+<ul>
+    <li>您不得上传任何侵犯他人著作权、肖像权、商标权、隐私权或其他合法权益的内容，包括但不限于未经授权的音乐、音频、视频、图片；</li>
+    <li>不得上传法律法规禁止上传或传播的内容；</li>
+    <li>上传内容应符合法律法规及社区规范，<strong>您应对上传内容的合法性、合规性和真实性负责</strong>。</li>
+</ul>
+
+<h2>2. 用户责任</h2>
+<ul>
+    <li>您上传的任何内容仅代表您个人立场，与本平台无关；</li>
+    <li>因您上传内容引发的任何争议、投诉或法律责任，均由您自行承担；</li>
+    <li>若因此给本平台造成损失，您应负责全额赔偿。</li>
+</ul>
+
+<h2>3. 平台免责条款</h2>
+<ul>
+    <li>本平台仅提供内容存储与分享技术服务，<strong>不对用户上传内容进行事先审核</strong>；</li>
+    <li>对用户上传内容的真实性、合法性、准确性，本平台不承担任何责任；</li>
+    <li>因用户上传或分享内容引起的任何版权、肖像权、隐私权纠纷，与本平台无关；</li>
+    <li>在法律允许范围内，本平台不承担因使用本平台服务导致的任何直接、间接或附带损失的责任。</li>
+</ul>
+
+<h2>4. 侵权投诉机制</h2>
+<p>如您认为本平台存在侵犯您合法权益的内容，请通过以下方式联系我们进行处理：</p>
+<ul>
+    <li>举报邮箱：<a href="mailto:dorachat@163.com">dorachat@163.com</a></li>
+    <li>请提供权利证明、侵权链接、联系方式及具体说明</li>
+</ul>
+<p>本平台将在核实后及时处理相关内容。</p>
+
+<h2>5. 条款修改</h2>
+<p>本平台有权根据法律法规或运营需要修改本条款，并在平台上进行公示。修改后的条款自公示起生效，若您继续使用本平台，视为您同意修改后的条款内容。</p>
+
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

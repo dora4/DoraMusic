@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="eq_desc_off">イコライザーはオフです。原音のまま出力します。</string>
+    <string name="eq_desc_custom">5バンドを手動で調整し、自分だけの設定を保存できます。</string>
+    <string name="eq_desc_pop">低域と高域を持ち上げ、中域をやや下げた浅いV字。ボーカルが明瞭で高域が伸びるポップス向け。</string>
+    <string name="eq_desc_dance">低域を強く強調してキックを力強くし、中域を抑えて高域を明るくしたダンス向け。</string>
+    <string name="eq_desc_blues">低域と高域をわずかに持ち上げ、中域を下げた温かくまろやかなブルース向け。</string>
+    <string name="eq_desc_classical">低域を抑えて濁りを防ぎ、高域の倍音と空気感を持ち上げてオーケストラの層を再現します。</string>
+    <string name="eq_desc_jazz">ベースの低域を持ち上げ、高域をやや抑えて刺さりを防ぐ、自然で滑らかなジャズ向け。</string>
+    <string name="eq_desc_slow_rock">低域を控えめに持ち上げ、中域をやや抑えた弛緩したグルーヴのスローロック向け。</string>
+    <string name="eq_desc_electronic">低域と中域を持ち上げ、EDMのキックとシンセに迫力を。高域はわずかに抑えます。</string>
+    <string name="eq_desc_rock">低域と中域が引き締まり、高域をやや抑えたタイトで力強いロック向け。</string>
+    <string name="eq_desc_country">低域と高域をわずかに上げ、中域を抑えた明るく澄んだカントリー向け。</string>
+</resources>

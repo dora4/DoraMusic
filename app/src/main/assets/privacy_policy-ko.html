@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>개인정보 처리방침 – Dora Music</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 20px auto;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            padding: 15px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>개인정보 처리방침</h1>
+<p>Dora Music을 이용해 주셔서 감사합니다. 저희는 귀하의 개인정보를 소중하게 여기며, 본 개인정보 처리방침은 귀하의 개인정보를 어떻게 수집·이용·보호하는지 그리고 앱이 필요로 하는 권한의 용도를 설명합니다.</p>
+
+<h2>1. 권한 안내</h2>
+<ul>
+    <li><strong>네트워크 권한(INTERNET, ACCESS_NETWORK_STATE 등):</strong> 서버 연결, 음악 콘텐츠 다운로드 및 재생, 네트워크 상태 확인에 사용됩니다.</li>
+    <li><strong>저장소 권한(READ/WRITE/MANAGE_EXTERNAL_STORAGE):</strong> 기기에 저장된 음악 파일과 캐시를 읽고 저장하여 재생 환경을 개선하는 데 사용됩니다.</li>
+    <li><strong>오디오 권한(MODIFY_AUDIO_SETTINGS, BLUETOOTH 등):</strong> 오디오 재생 제어, 블루투스 이어폰 연결, 블루투스 연결 해제 시 자동 일시정지 등의 기능에 사용됩니다.</li>
+    <li><strong>알림 권한(POST_NOTIFICATIONS):</strong> 재생 상태, 업데이트 안내 등의 푸시 알림을 발송하는 데 사용됩니다.</li>
+    <li><strong>NFC 권한(NFC):</strong> NFC 음악 레코드 태그를 인식하고 읽고 쓰는 데 사용되며, NFC 레코드와 곡 연결, 터치 재생, 카드에 곡을 기록하여 연결하는 기능을 제공합니다. 다른 NFC 카드에 있는 관련 없는 개인정보는 읽거나 업로드하지 않습니다.</li>
+    <li><strong>기타 권한(WAKE_LOCK, FOREGROUND_SERVICE 등):</strong> 음악 재생 중 앱이 계속 실행되도록 유지하고 기기 절전으로 인한 재생 중단을 방지하는 데 사용됩니다.</li>
+</ul>
+
+<h2>2. 정보 수집 및 이용</h2>
+<p>저희는 귀하의 민감한 개인정보를 수집하지 않으며, 모든 권한은 앱 기능 구현에 필요한 용도로만 사용됩니다. 수집하는 정보에는 기기 정보 및 앱 사용 기록 등이 포함되며, 제품 경험과 서비스를 개선하는 데 활용됩니다.</p>
+
+<h2>3. 데이터 보안</h2>
+<p>저희는 업계 표준 기술을 사용하여 귀하의 데이터를 보호하고 무단 접근, 유출 또는 변조를 방지합니다.</p>
+
+<h2>4. 귀하의 권리</h2>
+<p>기기 설정에서 앱 권한을 관리할 수 있습니다. 불필요한 권한을 끄면 일부 기능 사용이 제한될 수 있습니다.</p>
+
+<h2>5. 방침 변경</h2>
+<p>본 개인정보 처리방침은 수시로 업데이트될 수 있습니다. 변경 사항은 앱 내 또는 공식 웹사이트에 신속히 공지되며, 정기적으로 확인하시기를 권장합니다.</p>
+
+<h2>6. 문의하기</h2>
+<p>본 개인정보 처리방침에 관한 문의나 제안은 <a href="mailto:dorachat@163.com">dorachat@163.com</a>으로 연락해 주세요.</p>
+
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

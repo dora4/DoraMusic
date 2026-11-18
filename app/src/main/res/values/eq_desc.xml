@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="eq_desc_off">Equalizer off, original sound output.</string>
+    <string name="eq_desc_custom">Manually adjust the five bands and save your own preset.</string>
+    <string name="eq_desc_pop">Boosted lows and highs with a dipped mids, a shallow V shape. Clear vocals and a sparkly top for pop.</string>
+    <string name="eq_desc_dance">Strong low end with a firm kick, tamed mids and a bright top for dance tracks.</string>
+    <string name="eq_desc_blues">Slightly raised lows and highs with recessed mids, warm and mellow for blues.</string>
+    <string name="eq_desc_classical">Low frequencies pulled back to avoid muddiness, highs lifted for air and overtones.</string>
+    <string name="eq_desc_jazz">Lifted bass and slightly recessed highs, natural and smooth for jazz.</string>
+    <string name="eq_desc_slow_rock">Gentle low-end lift with restrained mids, a relaxed groove for slow rock.</string>
+    <string name="eq_desc_electronic">Punchy lows and lifted mids for EDM kicks and synths, top slightly pulled back.</string>
+    <string name="eq_desc_rock">Solid lows and mids with pulled-back highs, tight and forceful for rock.</string>
+    <string name="eq_desc_country">Light low and high lift with recessed mids, clean and bright for country.</string>
+</resources>

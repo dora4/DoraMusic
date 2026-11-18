@@ -134,6 +134,17 @@ class UIViewMusic(drawer: IPlayerLyricDrawer, manager: UIManager) : UIFactory(dr
                 if (position >= MUSIC_LIST_MAX_LIST) {
                     true
                 }
+                TrackAnalysis.report(scope, EventType.EVENT_TYPE_LONG_CLICK_MUSIC_ITEM,
+                    mapOf("source" to when(from) {
+                        ROUTE_START_FROM_ARTIST -> "artist"
+                        ROUTE_START_FROM_ALBUM -> "album"
+                        ROUTE_START_FROM_FOLDER -> "folder"
+                        ROUTE_START_FROM_FAVORITE -> "star"
+                        ROUTE_START_FROM_LATEST -> "recent"
+                        // ROUTE_START_FROM_LOCAL
+                        else -> "local"
+                    })
+                )
                 DoraBottomDialog().show(manager.view.context as Activity, R.layout.dialog_music_info) {
                     val music = adapter.getItem(position) as Music
                     val tvMusicNameArtist = it.findViewById<TextView>(R.id.tv_music_name_artist)

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Nutzungsbedingungen und Haftungsausschluss – Dora Music</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Nutzungsbedingungen und Haftungsausschluss</h1>
+<p>Willkommen bei <strong>Dora Music</strong> (nachfolgend „die Plattform“). Bitte lesen Sie die folgenden Bedingungen sorgfältig und stimmen Sie ihnen zu, bevor Sie Inhalte über die Plattform hochladen oder teilen:</p>
+
+<h2>1. Anforderungen an hochgeladene Inhalte</h2>
+<ul>
+    <li>Sie dürfen keine Inhalte hochladen, die Urheberrechte, Persönlichkeitsrechte, Markenrechte, Datenschutzrechte oder andere berechtigte Interessen Dritter verletzen, einschließlich, aber nicht beschränkt auf nicht autorisierte Musik, Audio, Video und Bilder;</li>
+    <li>Es ist untersagt, Inhalte hochzuladen, deren Upload oder Verbreitung gesetzlich verboten ist;</li>
+    <li>Hochgeladene Inhalte müssen Gesetzen, Vorschriften und Community-Standards entsprechen. <strong>Sie sind für die Rechtmäßigkeit, Konformität und Richtigkeit der von Ihnen hochgeladenen Inhalte verantwortlich.</strong></li>
+</ul>
+
+<h2>2. Pflichten des Nutzers</h2>
+<ul>
+    <li>Alle von Ihnen hochgeladenen Inhalte geben ausschließlich Ihre persönliche Meinung wieder und stehen in keinem Zusammenhang mit der Plattform;</li>
+    <li>Sie tragen die alleinige Verantwortung für etwaige Streitigkeiten, Beschwerden oder rechtliche Konsequenzen, die durch von Ihnen hochgeladene Inhalte entstehen;</li>
+    <li>Entsteht der Plattform dadurch ein Schaden, sind Sie zum vollen Schadensersatz verpflichtet.</li>
+</ul>
+
+<h2>3. Haftungsausschluss der Plattform</h2>
+<ul>
+    <li>Die Plattform stellt lediglich technische Dienste zur Speicherung und Verbreitung von Inhalten bereit und <strong>überprüft von Nutzern hochgeladene Inhalte nicht im Voraus</strong>;</li>
+    <li>Die Plattform übernimmt keine Verantwortung für die Richtigkeit, Rechtmäßigkeit oder Genauigkeit von Nutzerinhalten;</li>
+    <li>Streitigkeiten über Urheberrechte, Persönlichkeitsrechte oder Datenschutzrechte, die durch von Nutzern hochgeladene oder geteilte Inhalte entstehen, liegen außerhalb der Verantwortung der Plattform;</li>
+    <li>Soweit gesetzlich zulässig, haftet die Plattform nicht für direkte, indirekte oder Begleitschäden, die aus der Nutzung ihrer Dienste entstehen.</li>
+</ul>
+
+<h2>4. Meldemechanismus bei Rechtsverletzungen</h2>
+<p>Wenn Sie der Ansicht sind, dass Inhalte auf der Plattform Ihre berechtigten Interessen verletzen, kontaktieren Sie uns bitte über folgenden Kanal:</p>
+<ul>
+    <li>Melde-E-Mail: <a href="mailto:dorachat@163.com">dorachat@163.com</a></li>
+    <li>Bitte geben Sie einen Rechtsnachweis, den Link zum betreffenden Inhalt, Ihre Kontaktdaten und eine genaue Beschreibung an</li>
+</ul>
+<p>Die Plattform wird die betreffenden Inhalte nach Prüfung zeitnah behandeln.</p>
+
+<h2>5. Änderungen dieser Bedingungen</h2>
+<p>Die Plattform behält sich das Recht vor, diese Bedingungen entsprechend gesetzlicher Vorgaben oder betrieblicher Anforderungen zu ändern und auf der Plattform bekannt zu geben. Geänderte Bedingungen treten mit der Bekanntgabe in Kraft. Wenn Sie die Plattform weiterhin nutzen, gelten Sie als mit den geänderten Bedingungen einverstanden.</p>
+
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

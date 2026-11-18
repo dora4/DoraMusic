@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="eq_desc_off">Equalizer aus, Originalklang.</string>
+    <string name="eq_desc_custom">Passe die fünf Bänder manuell an und speichere dein eigenes Preset.</string>
+    <string name="eq_desc_pop">Angehobene Tiefen und Höhen bei zurückgenommenen Mitten, flaches V. Klare Stimmen, offener Klang.</string>
+    <string name="eq_desc_dance">Starker Bass mit fester Kick, gedämpfte Mitten und helle Höhen für Dance-Tracks.</string>
+    <string name="eq_desc_blues">Leicht angehobene Tiefen und Höhen, zurückgenommene Mitten, warm und rund für Blues.</string>
+    <string name="eq_desc_classical">Bass zurückgenommen gegen Matsch, Höhen angehoben für Luft und Obertöne.</string>
+    <string name="eq_desc_jazz">Angehobener Bass, leicht gedämpfte Höhen, natürlich und weich für Jazz.</string>
+    <string name="eq_desc_slow_rock">Sanft angehobene Tiefen mit zurückgenommenen Mitten, entspannter Groove für Slow Rock.</string>
+    <string name="eq_desc_electronic">Kräftige Tiefen und angehobene Mitten für EDM-Kicks und Synths, Höhen leicht zurück.</string>
+    <string name="eq_desc_rock">Solide Tiefen und Mitten, Höhen leicht gedämpft, kompakt und druckvoll für Rock.</string>
+    <string name="eq_desc_country">Leicht angehobene Tiefen und Höhen, Mitten zurückgenommen, klar und hell für Country.</string>
+</resources>

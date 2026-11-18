@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Datenschutzerklärung – Dora Music</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 20px auto;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            padding: 15px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Datenschutzerklärung</h1>
+<p>Vielen Dank, dass Sie Dora Music nutzen. Wir legen großen Wert auf den Schutz Ihrer Privatsphäre. Diese Datenschutzerklärung erläutert, wie wir Ihre persönlichen Daten erheben, verwenden und schützen sowie wozu die von der App benötigten Berechtigungen dienen.</p>
+
+<h2>1. Hinweise zu Berechtigungen</h2>
+<ul>
+    <li><strong>Netzwerkberechtigungen (INTERNET, ACCESS_NETWORK_STATE usw.):</strong> werden verwendet, um eine Verbindung zum Server herzustellen, Musikinhalte herunterzuladen und abzuspielen sowie den Netzwerkstatus zu prüfen.</li>
+    <li><strong>Speicherberechtigungen (READ/WRITE/MANAGE_EXTERNAL_STORAGE):</strong> werden verwendet, um Musikdateien und Cache auf Ihrem Gerät zu lesen und zu speichern und so die Wiedergabe zu verbessern.</li>
+    <li><strong>Audioberechtigungen (MODIFY_AUDIO_SETTINGS, BLUETOOTH usw.):</strong> werden verwendet, um die Audiowiedergabe zu steuern, Bluetooth-Kopfhörer zu verbinden und Funktionen wie automatisches Pausieren bei Bluetooth-Trennung zu unterstützen.</li>
+    <li><strong>Benachrichtigungsberechtigung (POST_NOTIFICATIONS):</strong> wird verwendet, um Wiedergabestatus, Update-Hinweise und andere Push-Benachrichtigungen zu senden.</li>
+    <li><strong>NFC-Berechtigung (NFC):</strong> wird verwendet, um NFC-Musikplatten-Tags zu erkennen sowie zu lesen und zu schreiben. Damit werden Funktionen wie das Verknüpfen von Songs mit NFC-Platten, Wiedergabe durch Antippen und das Binden von Titeln beim Schreiben der Karte ermöglicht. Unzusammenhängende persönliche Daten von anderen NFC-Karten werden weder gelesen noch hochgeladen.</li>
+    <li><strong>Weitere Berechtigungen (WAKE_LOCK, FOREGROUND_SERVICE usw.):</strong> dienen dazu, die App während der Musikwiedergabe aktiv zu halten und zu verhindern, dass der Ruhezustand des Geräts die Wiedergabe unterbricht.</li>
+</ul>
+
+<h2>2. Erhebung und Verwendung von Informationen</h2>
+<p>Wir erheben keine sensiblen personenbezogenen Daten; alle Berechtigungen werden ausschließlich zur Erfüllung der App-Funktionen verwendet. Zu den erhobenen Informationen gehören unter anderem Geräteinformationen und App-Nutzungsprotokolle, die zur Optimierung des Produkterlebnisses und der Dienste verwendet werden.</p>
+
+<h2>3. Datensicherheit</h2>
+<p>Wir setzen branchenübliche Technologien ein, um die Sicherheit Ihrer Daten zu schützen und unbefugten Zugriff, unbefugte Offenlegung oder Manipulation zu verhindern.</p>
+
+<h2>4. Ihre Rechte</h2>
+<p>Sie können App-Berechtigungen in den Geräteeinstellungen verwalten. Das Deaktivieren nicht benötigter Berechtigungen kann die Nutzung bestimmter Funktionen beeinträchtigen.</p>
+
+<h2>5. Änderungen dieser Erklärung</h2>
+<p>Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Aktualisierungen werden zeitnah in der App oder auf der offiziellen Website veröffentlicht. Wir empfehlen Ihnen, sie regelmäßig zu prüfen.</p>
+
+<h2>6. Kontakt</h2>
+<p>Bei Fragen oder Anregungen zu dieser Datenschutzerklärung kontaktieren Sie uns bitte per E-Mail: <a href="mailto:dorachat@163.com">dorachat@163.com</a>.</p>
+
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

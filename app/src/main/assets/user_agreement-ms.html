@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Terma Penggunaan dan Penafian</title>
+    <script>
+        // Determine dark/light theme before first paint to avoid "light-then-dark" flicker
+        (function () {
+            var dark = false;
+            try {
+                if (/[?&]dark=(1|true)/i.test(window.location.search || '')) {
+                    dark = true;
+                }
+            } catch (e) {}
+            window.__dark = dark;
+            if (dark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #222;
+            --link-color: #007BFF;
+            --code-bg: #eee;
+        }
+        :root.dark {
+            --bg-color: #2B2D30;
+            --text-color: #c4c6ca;
+            --heading-color: #ffffff;
+            --link-color: #73a8ff;
+            --code-bg: #383a3f;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        h1, h2 {
+            color: var(--heading-color);
+        }
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<h1>Terma Penggunaan dan Penafian</h1>
+<p>Selamat datang ke <strong>Dora Music</strong> (selepas ini dirujuk sebagai «Platform»). Sebelum memuat naik atau berkongsi kandungan di Platform, sila baca dengan teliti dan setuju dengan terma berikut:</p>
+<h2>1. Keperluan kandungan yang dimuat naik</h2>
+<ul>
+    <li>Platform hanya menyediakan perkhidmatan teknikal penyimpanan dan perkongsian kandungan serta <strong>tidak menyemak lebih dahulu kandungan yang dimuat naik oleh pengguna</strong>;</li>
+    <li>Platform tidak bertanggungjawab ke atas ketulenan, kesahihan atau ketepatan kandungan yang dimuat naik oleh pengguna;</li>
+    <li>Sebarang pertikaian hak cipta, hak potret atau privasi yang timbul daripada kandungan yang dimuat naik atau dikongsi oleh pengguna bukanlah tanggungjawab Platform;</li>
+</ul>
+<h2>2. Tanggungjawab pengguna</h2>
+<ul>
+    <li>Setakat yang dibenarkan oleh undang-undang, Platform tidak bertanggungjawab ke atas sebarang kerugian langsung, tidak langsung atau sampingan yang timbul daripada penggunaan perkhidmatan Platform.</li>
+</ul>
+<h2>3. Penafian tanggungjawab platform</h2>
+<ul>
+</ul>
+<h2>4. Mekanisme aduan pelanggaran</h2>
+<p>Jika anda berpendapat bahawa terdapat kandungan di Platform yang melanggar hak sah anda, sila hubungi kami melalui cara berikut untuk tindakan selanjutnya:</p>
+<ul>
+    <li>E-mel aduan: <a href="mailto:dorachat@163.com">dorachat@163.com</a></li>
+    <li>Sila sertakan bukti hak, pautan pelanggaran, maklumat hubungan dan huraian terperinci.</li>
+</ul>
+<p>Platform akan mengambil tindakan ke atas kandungan berkenaan dengan segera selepas pengesahan.</p>
+<h2>5. Pindaan Terma</h2>
+<p>Platform berhak meminda Terma ini mengikut undang-undang, peraturan atau keperluan operasi, dan akan mengumumkannya di Platform. Terma yang dipinda berkuat kuasa mulai tarikh diumumkan. Jika anda terus menggunakan Platform, anda dianggap telah bersetuju dengan terma yang dipinda.</p>
+<script>
+    function setDarkMode(isDark) {
+        var root = document.documentElement;
+        if (isDark) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+    }
+    setDarkMode(window.__dark === true);
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="eq_desc_off">Égaliseur désactivé, son d\'origine.</string>
+    <string name="eq_desc_custom">Réglez manuellement les cinq bandes et enregistrez votre propre réglage.</string>
+    <string name="eq_desc_pop">Graves et aigus relevés avec des médiums creusés, léger V. Voix claires et aigus aérés.</string>
+    <string name="eq_desc_dance">Basses puissantes avec une grosse caisse ferme, médiums atténués et aigus brillants.</string>
+    <string name="eq_desc_blues">Graves et aigus légèrement relevés, médiums en retrait, un son chaud et moelleux.</string>
+    <string name="eq_desc_classical">Graves atténués pour éviter la boue, aigus relevés pour l\'air et les harmoniques.</string>
+    <string name="eq_desc_jazz">Basse relevé et aigus légèrement atténués, un rendu naturel et souple pour le jazz.</string>
+    <string name="eq_desc_slow_rock">Basses relevées avec retenue et médiums légèrement creusés, groove détendu pour le slow rock.</string>
+    <string name="eq_desc_electronic">Graves percutants et médiums relevés pour les kicks et synthés EDM, aigus légèrement atténués.</string>
+    <string name="eq_desc_rock">Graves et médiums solides, aigus légèrement atténués, un son serré et puissant pour le rock.</string>
+    <string name="eq_desc_country">Graves et aigus légèrement relevés, médiums en retrait, un son clair et lumineux pour le country.</string>
+</resources>
