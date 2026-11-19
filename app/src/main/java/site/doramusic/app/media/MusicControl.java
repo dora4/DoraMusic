@@ -315,22 +315,44 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
     }
 
     /**
-     * 暂停恢复播放。不重置累计时长，只更新基准起点。
+     * 暂停恢复播放。若当前处于 PREPARE（loadCurMusic 后未 start）或
+     * 被 commitCurrentPlayDuration  Flip 回 PAUSE 但播放器实际已停，
+     * 都从这里兜底起播，不再硬性要求 mPlayState == MPS_PAUSE。
      */
     public boolean resume() {
-        if (requestFocus(true)) {
-            if (mPlayState != MPS_PAUSE) {
-                return false;
-            }
-            mMediaPlayer.start();
-            mPlayState = MPS_PLAYING;
-            mCurMusic = mPlaylist.get(mCurPlayIndex);
-            saveRecentMusic(mCurMusic);
-            mLastPos = mMediaPlayer.getCurrentPosition();
-            sendPlayMusicEvent();
-            return true;
+        if (!requestFocus(true)) {
+            return false;
         }
-        return false;
+        // 未加载任何有效音频：直接放弃
+        if (mPlayState == MPS_INVALID || mPlayState == MPS_NO_FILE) {
+            return false;
+        }
+        if (mCurPlayIndex < 0 || mCurPlayIndex >= mPlaylist.size()) {
+            return false;
+        }
+        // 关键：PREPARE 状态（冷启动 loadCurMusic 后第一次点播放）也允许 start
+        if (mPlayState != MPS_PAUSE && mPlayState != MPS_PREPARE) {
+            return false;
+        }
+        try {
+            mMediaPlayer.start();
+        } catch (IllegalStateException e) {
+            // 极端情况下播放器已被 reset，退回完整播放流程
+            LogUtils.e("resume start 失败，回退 playById：" + e.getMessage());
+            return replay();
+        }
+        mPlayState = MPS_PLAYING;
+        mCurMusic = mPlaylist.get(mCurPlayIndex);
+        // PREPARE → PLAYING 属于首次起播，重置计时；PAUSE → PLAYING 只挪基准点
+        if (mLastPos == 0 && mTotalPlayedMs == 0) {
+            // 首次起播，保持 resetTimer 后的初值即可
+            mLastPos = mMediaPlayer.getCurrentPosition();
+        } else {
+            mLastPos = mMediaPlayer.getCurrentPosition();
+        }
+        saveRecentMusic(mCurMusic);
+        sendPlayMusicEvent();
+        return true;
     }
 
     /**
@@ -389,6 +411,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 });
                 String localProxyUrl = mMediaPlayer.getLocalURLAndSetRemoteSocketAddress(url);
                 mPlaylist.add(mCurPlayIndex, music);    // 插入到当前播放位置
+                mCurPlayIndex = Math.max(mCurPlayIndex, 0);
                 mCurMusic = music;
                 mMediaPlayer.startProxy();
                 mMediaPlayer.reset();
@@ -420,7 +443,6 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                 mMediaPlayer.stop();
                 mMediaPlayer.reset();
                 mMediaPlayer.setDataSource(path);
-                mMediaPlayer.prepare();
                 mMediaPlayer.setOnPreparedListener(mp -> {
                     mMediaPlayer.start();
                     mPlayState = MPS_PLAYING;
@@ -428,6 +450,7 @@ public class MusicControl implements MediaPlayer.OnCompletionListener, AppConfig
                     mTotalPlayedMs = 0;
                     sendPlayMusicEvent();
                 });
+                mMediaPlayer.prepare();
             } catch (IOException e) {
                 e.printStackTrace();
             }
