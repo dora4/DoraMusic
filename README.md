@@ -26,7 +26,8 @@
 - 单手操作
 - 外部音频文件播放
 - 适配平板界面
-- NFC唱片
+- NFC标签音乐唱片
+- 听歌统计
 
 ### 适用系统
 
@@ -133,9 +134,9 @@ https://www.toutiao.com/article/7693154244307829309/
 
 ### 版权声明
 
-本开源项目带有音效版权和软件著作版权，版权所有，侵权必究！仅在系统预装应用场景下免授权。
+本开源项目带有音效版权和软件著作版权，版权所有，侵权必究！
 
-This open-source project includes sound effect copyrights and software copyright. All rights reserved. Infringement will be prosecuted. Authorization is waived only for system pre-installed application scenarios.
+This open-source project includes sound effect copyrights and software copyright. All rights reserved.
 
 ### 资质文件
 
