@@ -7,6 +7,8 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Locale;
+
 import dora.db.constraint.AssignType;
 import dora.db.constraint.PrimaryKey;
 import dora.db.migration.OrmMigration;
@@ -202,5 +204,22 @@ public class Music implements OrmTable, Parcelable, Sort {
     @Override
     public int compareTo(Sort sort) {
         return getSortLetter().compareTo(sort.getSortLetter());
+    }
+
+    /**
+     * 去重指纹：曲名 + 歌手 + 专辑 + 时长（都 trim + 转小写）。
+     * 曲名或歌手缺失时退化为文件路径。
+     * 两者都无法识别时返回 null，表示不参与去重，避免误判。
+     */
+    @Nullable
+    public String fingerprint() {
+        String name = musicName == null ? "" : musicName.trim().toLowerCase(Locale.getDefault());
+        String artistStr = artist == null ? "" : artist.trim().toLowerCase(Locale.getDefault());
+        String album = albumName == null ? "" : albumName.trim().toLowerCase(Locale.getDefault());
+        if (!name.isEmpty() && !artistStr.isEmpty()) {
+            return name + "|" + artistStr + "|" + album + "|" + duration;
+        }
+        String path = data == null ? "" : data.trim().toLowerCase(Locale.getDefault());
+        return path.isEmpty() ? null : path;
     }
 }

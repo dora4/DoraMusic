@@ -118,9 +118,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
      * Android 11 ~ Android12：
      *     MANAGE_EXTERNAL_STORAGE（全部文件访问，只能跳系统设置）
      *
-     * Android 11 ~ Android12：
-     *     MANAGE_EXTERNAL_STORAGE（全部文件访问，只能跳系统设置）
-     *
      * Android 10 及以下：
      *     READ_EXTERNAL_STORAGE
      */
@@ -141,10 +138,8 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
 //                        if (grantedResult) {
 //                            startScan()
 //                        } else {
-//                            // 判断是否永久拒绝（不再询问）
 //                            if (!shouldShowRequestPermissionRationale(android.Manifest.permission.READ_MEDIA_AUDIO)) {
 //                                tvStatus.text = getString(R.string.no_read_music_permission)
-//                                // 永久拒绝，跳转应用设置
 //                                gotoAppSetting()
 //                            } else {
 //                                tvStatus.text = getString(R.string.no_read_music_permission)
@@ -539,11 +534,23 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
     }
 
     /**
+     * 添加结果，用于区分提示文案。
+     */
+    private data class AddResult(
+        val added: Int,
+        val dup: Int,
+        val dropped: Int,
+        val quotaFull: Boolean
+    )
+
+    /**
      * 将选中的歌曲保存到本地数据库。
      *
-     * 勾选阶段不限制数量，
-     * 落库时若“本地已有 + 本次选择”超过 [MAX_SELECT_COUNT]，
-     * 只插入前面的差额部分，补齐到上限即可，其余丢弃。
+     * 勾选阶段不限制数量，落库时以“本地已有 + 本次去重后的新歌”为准：
+     *      1. 先读取本地已有歌曲，建立去重指纹集合；
+     *      2. 把本次勾选拆成「新歌」和「重复」两组；
+     *      3. 只对「新歌」按剩余配额截断，补齐到上限，其余丢弃；
+     *      4. 因此即使唯一一首新歌排在勾选列表末尾，也不会被前面的重复项挤掉。
      */
     private fun addSelectedSongs() {
         if (selectedSongs.isEmpty()) {
@@ -561,19 +568,50 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                 /**
                  * 数据库操作放到 IO。
                  *
-                 * 先查本地已有数量，算出还能补多少首，
-                 * 再对本次选择做截断，保证不破上限。
+                 * 先查本地已有数量与指纹，算出还能补多少首，
+                 * 再对“去重后的新歌”做截断，保证不破上限且不误删新歌。
                  */
-                val addedCount =
-                    withContext(Dispatchers.IO) {
-                        val localCount = DaoFactory.getDao(Music::class.java).count()
-                        val quota = (MAX_SELECT_COUNT - localCount).coerceAtLeast(0).toInt()
-                        if (quota <= 0) {
-                            0
-                        } else {
-                            MusicScanner.addSelectedSongs(songs.take(quota))
+                val result = withContext(Dispatchers.IO) {
+                    val dao = DaoFactory.getDao(Music::class.java)
+                    @Suppress("UNCHECKED_CAST")
+                    val localList: List<Music> = dao.selectAll()
+                    val localFingerprints = localList.mapNotNull { it.fingerprint() }.toSet()
+                    val localPaths = localList
+                        .mapNotNull { it.data?.trim()?.lowercase(Locale.getDefault()) }
+                        .toSet()
+                    val localCount = localList.size
+                    val quota = (MAX_SELECT_COUNT - localCount).coerceAtLeast(0)
+                    if (quota <= 0) {
+                        AddResult(added = 0, dup = 0, dropped = 0, quotaFull = true)
+                    } else {
+                        val seenInBatch = HashSet<String>()
+                        val newSongs = mutableListOf<Music>()
+                        var dupCount = 0
+                        for (song in songs) {
+                            val fp = song.fingerprint()
+                            val path = song.data?.trim()?.lowercase(Locale.getDefault()).orEmpty()
+                            val duplicated =
+                                (fp != null && localFingerprints.contains(fp)) ||
+                                        localPaths.contains(path) ||
+                                        (fp != null && seenInBatch.contains(fp))
+                            if (duplicated) {
+                                dupCount++
+                            } else {
+                                fp?.let { seenInBatch.add(it) }
+                                newSongs.add(song)
+                            }
                         }
+                        // 只对“新歌”按剩余配额截断，
+                        val toAdd = newSongs.take(quota)
+                        val added = MusicScanner.addSelectedSongs(toAdd)
+                        AddResult(
+                            added = added,
+                            dup = dupCount,
+                            dropped = (newSongs.size - added).coerceAtLeast(0),
+                            quotaFull = false
+                        )
                     }
+                }
                 if (!isAdded) return@launch
                 /**
                  * 保存成功后清空选择。
@@ -589,23 +627,9 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                         RefreshHomeItemEvent()
                     )
                 TrackAnalysis.report(lifecycleScope, EventType.EVENT_TYPE_ADD_MUSIC,
-                    mapOf("count" to addedCount)
+                    mapOf("count" to result.added)
                 )
-                if (addedCount == songs.size) {
-                    showShortToast(resources.getQuantityString(R.plurals.added_music_template, addedCount, addedCount))
-                } else if (addedCount > 0) {
-                    val text = resources.getQuantityString(
-                        R.plurals.added_music_merge_template,
-                        addedCount,        // 用于判断单复数（plurals quantity）
-                        addedCount,        // 填充 %1$d
-                        songs.size - addedCount // 填充 %2$d
-                    )
-                    showShortToast(text)
-                } else {
-                    showShortToast(
-                        getString(R.string.selected_music_already_added)
-                    )
-                }
+                showAddResultToast(result, songs.size)
                 requireActivity().finish()
             } catch (e: Exception) {
                 if (!isAdded) return@launch
@@ -621,6 +645,40 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                     tvAdd.isEnabled =
                         selectedSongs.isNotEmpty()
                 }
+            }
+        }
+    }
+
+    /**
+     * 根据添加结果给出差异化 Toast。
+     */
+    private fun showAddResultToast(result: AddResult, selectedTotal: Int) {
+        when {
+            result.quotaFull -> {
+                showShortToast(getString(R.string.selected_music_already_added))
+            }
+            result.added == selectedTotal -> {
+                // 全部加进去：无重复、无超配额
+                showShortToast(
+                    resources.getQuantityString(
+                        R.plurals.added_music_template, result.added, result.added
+                    )
+                )
+            }
+            result.added > 0 -> {
+                // 部分成功：added 首入库，其余是重复或超配额
+                showShortToast(
+                    resources.getQuantityString(
+                        R.plurals.added_music_merge_template,
+                        result.added,        // 用于判断单复数（plurals quantity）
+                        result.added,        // 填充 %1$d
+                        selectedTotal - result.added  // 填充 %2$d
+                    )
+                )
+            }
+            else -> {
+                // 一首没加：全是重复
+                showShortToast(getString(R.string.selected_music_already_added))
             }
         }
     }
@@ -692,7 +750,6 @@ class ScanMusicFragment : BaseFragment<FragmentScanMusicBinding>() {
                     reachedLimit = true
                     break
                 }
-                selectedSongs.size
                 selectedSongs[key] = song
             }
             if (reachedLimit) {
